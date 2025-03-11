@@ -132,6 +132,10 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                     inlinedTypes
                 };
             default:
+                errorCollector.collect({
+                    message: `Unsupported parameter location: ${this.parameter.in}`,
+                    path: this.breadcrumbs
+                });
                 return undefined;
         }
     }

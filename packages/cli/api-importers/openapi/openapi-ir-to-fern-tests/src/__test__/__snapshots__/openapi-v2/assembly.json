@@ -55140,8 +55140,215 @@
         "parts": []
       },
       "auth": false,
-      "headers": [],
-      "queryParameters": [],
+      "headers": [
+        {
+          "name": {
+            "name": {
+              "originalName": "Authentication",
+              "camelCase": {
+                "unsafeName": "authentication",
+                "safeName": "authentication"
+              },
+              "snakeCase": {
+                "unsafeName": "authentication",
+                "safeName": "authentication"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "AUTHENTICATION",
+                "safeName": "AUTHENTICATION"
+              },
+              "pascalCase": {
+                "unsafeName": "Authentication",
+                "safeName": "Authentication"
+              }
+            },
+            "wireValue": "Authentication"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": {
+            "name": {
+              "originalName": "userId",
+              "camelCase": {
+                "unsafeName": "userId",
+                "safeName": "userId"
+              },
+              "snakeCase": {
+                "unsafeName": "user_id",
+                "safeName": "user_id"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "USER_ID",
+                "safeName": "USER_ID"
+              },
+              "pascalCase": {
+                "unsafeName": "UserId",
+                "safeName": "UserId"
+              }
+            },
+            "wireValue": "userId"
+          },
+          "docs": "The ID of the user.",
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "sample_rate",
+              "camelCase": {
+                "unsafeName": "sampleRate",
+                "safeName": "sampleRate"
+              },
+              "snakeCase": {
+                "unsafeName": "sample_rate",
+                "safeName": "sample_rate"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SAMPLE_RATE",
+                "safeName": "SAMPLE_RATE"
+              },
+              "pascalCase": {
+                "unsafeName": "SampleRate",
+                "safeName": "SampleRate"
+              }
+            },
+            "wireValue": "sample_rate"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "word_boost",
+              "camelCase": {
+                "unsafeName": "wordBoost",
+                "safeName": "wordBoost"
+              },
+              "snakeCase": {
+                "unsafeName": "word_boost",
+                "safeName": "word_boost"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "WORD_BOOST",
+                "safeName": "WORD_BOOST"
+              },
+              "pascalCase": {
+                "unsafeName": "WordBoost",
+                "safeName": "WordBoost"
+              }
+            },
+            "wireValue": "word_boost"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "token",
+              "camelCase": {
+                "unsafeName": "token",
+                "safeName": "token"
+              },
+              "snakeCase": {
+                "unsafeName": "token",
+                "safeName": "token"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TOKEN",
+                "safeName": "TOKEN"
+              },
+              "pascalCase": {
+                "unsafeName": "Token",
+                "safeName": "Token"
+              }
+            },
+            "wireValue": "token"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        }
+      ],
       "pathParameters": [],
       "messages": [],
       "examples": []

@@ -46272,7 +46272,214 @@
       },
       "auth": false,
       "headers": [],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": {
+            "name": {
+              "originalName": "config_id",
+              "camelCase": {
+                "unsafeName": "configId",
+                "safeName": "configId"
+              },
+              "snakeCase": {
+                "unsafeName": "config_id",
+                "safeName": "config_id"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CONFIG_ID",
+                "safeName": "CONFIG_ID"
+              },
+              "pascalCase": {
+                "unsafeName": "ConfigId",
+                "safeName": "ConfigId"
+              }
+            },
+            "wireValue": "config_id"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "config_version",
+              "camelCase": {
+                "unsafeName": "configVersion",
+                "safeName": "configVersion"
+              },
+              "snakeCase": {
+                "unsafeName": "config_version",
+                "safeName": "config_version"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CONFIG_VERSION",
+                "safeName": "CONFIG_VERSION"
+              },
+              "pascalCase": {
+                "unsafeName": "ConfigVersion",
+                "safeName": "ConfigVersion"
+              }
+            },
+            "wireValue": "config_version"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "DOUBLE",
+                  "v2": {
+                    "validation": {},
+                    "type": "double"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "resumed_chat_group_id",
+              "camelCase": {
+                "unsafeName": "resumedChatGroupId",
+                "safeName": "resumedChatGroupId"
+              },
+              "snakeCase": {
+                "unsafeName": "resumed_chat_group_id",
+                "safeName": "resumed_chat_group_id"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "RESUMED_CHAT_GROUP_ID",
+                "safeName": "RESUMED_CHAT_GROUP_ID"
+              },
+              "pascalCase": {
+                "unsafeName": "ResumedChatGroupId",
+                "safeName": "ResumedChatGroupId"
+              }
+            },
+            "wireValue": "resumed_chat_group_id"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "verbose_transcription",
+              "camelCase": {
+                "unsafeName": "verboseTranscription",
+                "safeName": "verboseTranscription"
+              },
+              "snakeCase": {
+                "unsafeName": "verbose_transcription",
+                "safeName": "verbose_transcription"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "VERBOSE_TRANSCRIPTION",
+                "safeName": "VERBOSE_TRANSCRIPTION"
+              },
+              "pascalCase": {
+                "unsafeName": "VerboseTranscription",
+                "safeName": "VerboseTranscription"
+              }
+            },
+            "wireValue": "verbose_transcription"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        },
+        {
+          "name": {
+            "name": {
+              "originalName": "access_token",
+              "camelCase": {
+                "unsafeName": "accessToken",
+                "safeName": "accessToken"
+              },
+              "snakeCase": {
+                "unsafeName": "access_token",
+                "safeName": "access_token"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "ACCESS_TOKEN",
+                "safeName": "ACCESS_TOKEN"
+              },
+              "pascalCase": {
+                "unsafeName": "AccessToken",
+                "safeName": "AccessToken"
+              }
+            },
+            "wireValue": "access_token"
+          },
+          "valueType": {
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "default": "",
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "type": "container"
+          },
+          "allowMultiple": false
+        }
+      ],
       "pathParameters": [],
       "messages": [],
       "examples": []

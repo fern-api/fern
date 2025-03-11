@@ -238,7 +238,11 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [channelPath]: convertedChannel
+                        [channelPath]: convertedChannel.channel
+                    };
+                    this.ir.types = {
+                        ...this.ir.types,
+                        ...convertedChannel.inlinedTypes
                     };
                 }
             } else {
@@ -251,7 +255,11 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [channelPath]: convertedChannel
+                        [channelPath]: convertedChannel.channel
+                    };
+                    this.ir.types = {
+                        ...this.ir.types,
+                        ...convertedChannel.inlinedTypes
                     };
                 }
             }
