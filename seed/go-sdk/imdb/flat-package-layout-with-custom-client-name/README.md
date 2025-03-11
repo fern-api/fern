@@ -4,6 +4,22 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Errors
+
+Structured error types are returned from API calls that return non-success status codes. These errors are compatible
+with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+
+```go
+response, err := client.Imdb.CreateMovie(...)
+if err != nil {
+    var apiError *core.APIError
+    if errors.As(err, apiError) {
+        // Do something with the API error ...
+    }
+    return err
+}
+```
+
 ## Advanced
 
 ### Retries

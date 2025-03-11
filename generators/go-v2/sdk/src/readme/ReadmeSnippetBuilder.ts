@@ -48,6 +48,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // IR v53, which doesn't include the endpoint examples needed to generate
         // dynamic snippets. Therefore, for the time being, the usage section is omitted.
         // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         return snippets;
@@ -59,6 +60,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
         }
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+    }
+
+    private buildErrorSnippets(): string[] {
+        const errorEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
+        return errorEndpoints.map((errorEndpoint) =>
+            this.writeCode(`
+response, err := ${this.getMethodCall(errorEndpoint)}(...)
+if err != nil {
+    var apiError *core.APIError
+    if errors.As(err, apiError) {
+        // Do something with the API error ...
+    }
+    return err
+}
+`)
+        );
     }
 
     private buildRetrySnippets(): string[] {

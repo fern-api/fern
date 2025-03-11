@@ -3,6 +3,11 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ERRORS
+    description: |
+      Structured error types are returned from API calls that return non-success status codes. These errors are compatible
+      with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+
   - id: RETRIES
     advanced: true
     description: |
