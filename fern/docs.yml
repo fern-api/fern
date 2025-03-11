@@ -563,6 +563,9 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
+          - page: Feature Flags
+            path: ./pages/docs/integrations/launchdarkly.mdx
+            icon: fa-regular fa-flag
 
       - section: Developer Tools
         contents:
