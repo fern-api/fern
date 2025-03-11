@@ -1,4 +1,5 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 
@@ -47,7 +48,38 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         // TODO: Enable wire tests, when available.
         // this.generateWireTests(context);
+
+        if (context.config.output.snippetFilepath != null) {
+            try {
+                await this.generateReadme({
+                    context,
+                    // TODO: Support (and indeed require there to be) snippets
+                    endpointSnippets: []
+                });
+            } catch (e) {
+                context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+        }
+
         await context.project.persist();
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+    }): Promise<void> {
+        // TODO: Support (and indeed require there to be) snippets
+        // if (endpointSnippets.length === 0) {
+        //     context.logger.debug("No snippets were produced; skipping README.md generation.");
+        //     return;
+        // }
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 
     private generateWireTests(context: SdkGeneratorContext) {

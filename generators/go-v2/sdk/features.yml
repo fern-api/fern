@@ -1,0 +1,4 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
