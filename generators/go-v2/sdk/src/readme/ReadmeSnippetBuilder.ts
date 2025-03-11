@@ -57,6 +57,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentSnippets();
         }
 
+        snippets[FernGeneratorCli.StructuredFeatureId.RequestOptions] = this.buildRequestOptionsSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
@@ -77,6 +78,29 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.writeCode(`
 ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
     option.WithBaseURL("https://example.com"),
+)
+`)
+        );
+    }
+
+    private buildRequestOptionsSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.RequestOptions);
+        return endpoints.map((endpoint) =>
+            this.writeCode(`
+// Specify default options applied on every request.
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
+    option.WithToken("<YOUR_API_KEY>"),
+    option.WithHTTPClient(
+        &http.Client{
+            Timeout: 5 * time.Second,
+        },
+    ),
+)
+
+// Specify options for an individual request.
+response, err := ${this.getMethodCall(endpoint)}(
+    ...,
+    option.WithToken("<YOUR_API_KEY>"),
 )
 `)
         );
