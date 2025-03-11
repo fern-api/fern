@@ -1,6 +1,4 @@
-import { AbstractConverter, AbstractExtension, ErrorCollector, FernEnumConfig } from "@fern-api/v2-importer-commons";
-
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector, FernEnumConfig } from "../";
 import { FernEnumConfigSchema } from "../schemas/EnumSchema";
 
 export declare namespace FernEnumExtension {
@@ -11,7 +9,7 @@ export declare namespace FernEnumExtension {
     export type Output = FernEnumConfig;
 }
 
-export class FernEnumExtension extends AbstractExtension<OpenAPIConverterContext3_1, FernEnumExtension.Output> {
+export class FernEnumExtension extends AbstractExtension<AbstractConverterContext<object>, FernEnumExtension.Output> {
     private readonly schema: object;
     public readonly key = "x-fern-enum";
 
@@ -24,7 +22,7 @@ export class FernEnumExtension extends AbstractExtension<OpenAPIConverterContext
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): FernEnumExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.schema);

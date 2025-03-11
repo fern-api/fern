@@ -1,6 +1,4 @@
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
-
-import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractConverter.Args {
@@ -8,7 +6,7 @@ export declare namespace FernIgnoreExtension {
     }
 }
 
-export class FernIgnoreExtension extends AbstractExtension<AsyncAPIConverterContext, boolean> {
+export class FernIgnoreExtension extends AbstractExtension<AbstractConverterContext<object>, boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-ignore";
 
@@ -21,7 +19,7 @@ export class FernIgnoreExtension extends AbstractExtension<AsyncAPIConverterCont
         context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
