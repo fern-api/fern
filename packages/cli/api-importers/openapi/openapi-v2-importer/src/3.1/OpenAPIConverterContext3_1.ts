@@ -1,9 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext, ErrorCollector } from "@fern-api/v2-importer-commons";
-
-import { AvailabilityExtension } from "../extensions/x-fern-availability";
+import { AbstractConverterContext, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -109,7 +107,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             node = resolved.value;
         }
 
-        const availabilityExtension = new AvailabilityExtension({
+        const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
             breadcrumbs
         });

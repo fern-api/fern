@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverterContext, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "./2.x";
 import { AsyncAPIV3 } from "./3.1";
@@ -84,6 +84,52 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (schema.writeOnly) {
             return ObjectPropertyAccess.WriteOnly;
+        }
+
+        return undefined;
+    }
+
+    public async getAvailability({
+        node,
+        breadcrumbs,
+        errorCollector
+    }: {
+        node:
+            | OpenAPIV3_1.ReferenceObject
+            | OpenAPIV3_1.SchemaObject
+            | OpenAPIV3_1.OperationObject
+            | OpenAPIV3_1.ParameterObject;
+        breadcrumbs: string[];
+        errorCollector: ErrorCollector;
+    }): Promise<Availability | undefined> {
+        while (this.isReferenceObject(node)) {
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            node = resolved.value;
+        }
+
+        const availabilityExtension = new Extensions.FernAvailabilityExtension({
+            node,
+            breadcrumbs
+        });
+        const availability = await availabilityExtension.convert({
+            context: this,
+            errorCollector
+        });
+        if (availability != null) {
+            return {
+                status: availability,
+                message: undefined
+            };
+        }
+
+        if (node.deprecated === true) {
+            return {
+                status: AvailabilityStatus.Deprecated,
+                message: undefined
+            };
         }
 
         return undefined;
