@@ -53,10 +53,7 @@ export class OperationConverter extends AbstractOperationConverter {
             group,
             method
         });
-        if (convertedRequestBody == null) {
-            return undefined;
-        }
-        const { value: requestBody, examples: requestExamples } = convertedRequestBody;
+        const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
         const response = await this.convertResponseBody({
             context,
