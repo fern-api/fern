@@ -125,7 +125,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (isUndiscriminatedUnionOfLiterals(resolvedSchema)) {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
@@ -290,7 +290,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (isUndiscriminatedUnionOfLiterals(schema.value)) {
+        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
@@ -464,14 +464,4 @@ function isRawTypeReferenceDetailedSchema(
     rawTypeReference: RawSchemas.TypeReferenceSchema
 ): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
     return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
-}
-
-function isUndiscriminatedUnionOfLiterals(
-    schema: Schema
-): schema is Schema.OneOf & { value: { type: "undiscriminated"; schemas: Schema[] } } {
-    return (
-        schema.type === "oneOf" &&
-        schema.value.type === "undiscriminated" &&
-        schema.value.schemas.every((s) => s.type === "literal" && s.value.type === "string")
-    );
 }

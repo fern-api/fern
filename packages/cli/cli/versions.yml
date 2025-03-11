@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Revert only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.16
+
+- changelogEntry:
+  - summary: |
       Only construct an enum when all parameter subtypes are literal string values.
     type: fix
   irVersion: 57
