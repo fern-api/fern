@@ -36,8 +36,6 @@ export declare namespace AbstractOperationConverter {
     }
 }
 
-
-
 interface ConvertedRequestBody {
     value: HttpRequestBody;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
@@ -265,9 +263,9 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 return {
                     value: {
                         statusCode: statusCodeNum,
-                        body: convertedResponseBody.responseBody,
+                        body: convertedResponseBody.responseBody
                     },
-                    examples: convertedResponseBody.examples,
+                    examples: convertedResponseBody.examples
                 };
             }
         }
