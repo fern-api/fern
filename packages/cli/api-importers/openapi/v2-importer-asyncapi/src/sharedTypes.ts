@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 
 import { MessageV2 } from "./2.x/types";
-import { MessageV3 } from "./3.1/types";
+import { MessageV3 } from "./3.0/types";
 
 export type ChannelId = string;
 

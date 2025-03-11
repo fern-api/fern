@@ -4,7 +4,7 @@ import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference }
 import { AbstractConverterContext, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "./2.x";
-import { AsyncAPIV3 } from "./3.1";
+import { AsyncAPIV3 } from "./3.0";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
