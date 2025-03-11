@@ -14,7 +14,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "key";
+    type ConvertedAs = "container" | "key";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -56,10 +56,12 @@ export class DynamicTypeLiteralMapper {
             case "nullable":
                 return java.TypeLiteral.optional({
                     value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
+                    useOf: args.as === "container"
                 });
             case "optional":
                 return java.TypeLiteral.optional({
                     value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
+                    useOf: args.as === "container"
                 });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
@@ -85,7 +87,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: list, value: v });
+                    return this.convert({ typeReference: list, value: v, as: "container" });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -106,7 +108,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v });
+                    return this.convert({ typeReference: set, value: v, as: "container" });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -130,7 +132,7 @@ export class DynamicTypeLiteralMapper {
                 try {
                     return {
                         key: this.convert({ typeReference: map.key, value: key, as: "key" }),
-                        value: this.convert({ typeReference: map.value, value })
+                        value: this.convert({ typeReference: map.value, value, as: "container" })
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -159,7 +161,7 @@ export class DynamicTypeLiteralMapper {
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
-                return this.convertObject({ object_: named, value });
+                return this.convertObject({ object_: named, value, as });
             case "undiscriminatedUnion":
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
@@ -169,7 +171,7 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnion({
         discriminatedUnion,
-        value
+        value,
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
@@ -215,7 +217,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue]
+                                    value: record[unionVariant.discriminantValue.wireValue],
                                 })
                             ]
                         })
@@ -239,10 +241,12 @@ export class DynamicTypeLiteralMapper {
 
     private convertObject({
         object_,
-        value
+        value,
+        as
     }: {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
@@ -257,7 +261,7 @@ export class DynamicTypeLiteralMapper {
                 try {
                     return {
                         name: this.context.getMethodName(property.name.name),
-                        value: this.convert(property)
+                        value: this.convert({ typeReference: property.typeReference, value: property.value, as })
                     };
                 } finally {
                     this.context.errors.unscope();
