@@ -1,10 +1,10 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 import { AbstractConverter } from "../AbstractConverter";
 import { AbstractExtension } from "../AbstractExtension";
 import { ErrorCollector } from "../ErrorCollector";
+import { OpenAPIConverterContext3_1 } from "../openapi_3_1/OpenAPIConverterContext3_1";
 
 const REQUEST_PREFIX = "$request.";
 const RESPONSE_PREFIX = "$response.";

@@ -1,9 +1,9 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 import { AbstractConverter } from "../AbstractConverter";
 import { AbstractExtension } from "../AbstractExtension";
 import { ErrorCollector } from "../ErrorCollector";
+import { OpenAPIConverterContext3_1 } from "../openapi_3_1/OpenAPIConverterContext3_1";
 
 export declare namespace AvailabilityExtension {
     export interface Args extends AbstractConverter.Args {
