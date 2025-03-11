@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix wrapped request paths in flat mode
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.0
+- changelogEntry:
+    - summary: |
         Fix async client builder generation
       type: fix
   createdAt: '2025-03-07'
