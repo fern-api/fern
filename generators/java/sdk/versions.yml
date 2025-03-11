@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add @JsonIgnore to non-serialization getters for nullables
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.1
+- changelogEntry:
+    - summary: |
         Fix wrapped request paths in flat mode
       type: fix
   createdAt: '2025-03-11'
