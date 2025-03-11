@@ -1,0 +1,14 @@
+package com.snippets;
+
+import com.seed.api.wide.base.path.SeedApiWideBasePathClient;
+
+public class Example0 {
+    public static void run() {
+        SeedApiWideBasePathClient client = SeedApiWideBasePathClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
+
+        client.service().post("pathParam", "serviceParam", "resourceParam", 1);
+    }
+}

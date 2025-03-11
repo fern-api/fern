@@ -1,0 +1,30 @@
+package com.snippets;
+
+import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.resources.service.requests.GetMetadataRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
+
+public class Example17 {
+    public static void run() {
+        SeedExamplesClient client = SeedExamplesClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
+
+        client.service().getMetadata(
+            GetMetadataRequest
+                .builder()
+                .xApiVersion("X-API-Version")
+                .shallow(true)
+                .tag(
+                    new ArrayList<Optional<String>>(
+                        Arrays.asList("tag")
+                    )
+                )
+                .build()
+        );
+    }
+}

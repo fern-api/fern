@@ -1,0 +1,31 @@
+package com.snippets;
+
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.types.types.ObjectWithRequiredField;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Example1 {
+    public static void run() {
+        SeedExhaustiveClient client = SeedExhaustiveClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
+
+        client.endpoints().container().getAndReturnListOfObjects(
+            new ArrayList<ObjectWithRequiredField>(
+                Arrays.asList(
+                    ObjectWithRequiredField
+                        .builder()
+                        .string("string")
+                        .build(),
+                    ObjectWithRequiredField
+                        .builder()
+                        .string("string")
+                        .build()
+                )
+            )
+        );
+    }
+}

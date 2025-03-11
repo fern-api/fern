@@ -44,9 +44,10 @@ ${this.buffer}`
     }
 
     private stringifyImports(): string {
-        return Object.entries(this.imports)
-            .filter(([packageName, _]) => packageName !== this.packageName) // Skip the target package.
-            .map(([packageName, alias]) => `import ${packageName};`)
+        return Array.from(this.imports)
+            .filter((packageName) => packageName !== this.packageName) // Skip the target package
+            .map((packageName) => `import ${packageName};`)
+            .sort()
             .join("\n");
     }
 }

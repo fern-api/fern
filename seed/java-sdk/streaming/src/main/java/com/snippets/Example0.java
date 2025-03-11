@@ -1,0 +1,20 @@
+package com.snippets;
+
+import com.seed.streaming.SeedStreamingClient;
+import com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;
+
+public class Example0 {
+    public static void run() {
+        SeedStreamingClient client = SeedStreamingClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
+
+        client.dummy().generateStream(
+            GenerateStreamRequest
+                .builder()
+                .numEvents(1)
+                .build()
+        );
+    }
+}
