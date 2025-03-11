@@ -1,5 +1,6 @@
 package com.fern.java.generators.object;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.Name;
@@ -107,6 +108,8 @@ public interface EnrichedObjectProperty {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
+        } else {
+            getterBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnore.class).build());
         }
         if (fromInterface() && !inline()) {
             getterBuilder.addAnnotation(ClassName.get("", "java.lang.Override"));
