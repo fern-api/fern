@@ -25,16 +25,22 @@ interface Integer {
 
 interface Union {
     type: "union";
-    memberValues: Type[];
+    elems: Type[];
 }
 
 interface Array_ {
     type: "array";
-    value: Type;
+    elem: Type;
+}
+
+interface Hash {
+    type: "hash";
+    keyType: Type;
+    valueType: Type;
 }
 
 export type SingleType = Nil | Boolean_ | Boolish | String_ | Integer | Union;
-export type CollectionType = Array_;
+export type CollectionType = Array_ | Hash;
 
 type InternalType = SingleType | CollectionType;
 
@@ -63,14 +69,21 @@ export class Type extends AstNode {
                     break;
                 case "union":
                     writer.delimit({
-                        nodes: this.internalType.memberValues,
+                        nodes: this.internalType.elems,
                         delimiter: " | ",
                         writeFunction: (argument) => argument.write(writer)
                     });
                     break;
                 case "array":
                     writer.write("Array[");
-                    this.internalType.value.write(writer);
+                    this.internalType.elem.write(writer);
+                    writer.write("]");
+                    break;
+                case "hash":
+                    writer.write("Hash[");
+                    this.internalType.keyType.write(writer);
+                    writer.write(", ");
+                    this.internalType.valueType.write(writer);
                     writer.write("]");
                     break;
                 default:
@@ -109,10 +122,25 @@ export class Type extends AstNode {
         });
     }
 
-    public static union(memberValues: Union["memberValues"]): Type {
+    public static union(memberValues: Union["elems"]): Type {
         return new this({
             type: "union",
-            memberValues
+            elems: memberValues
+        });
+    }
+
+    public static array(elem: Type): Type {
+        return new this({
+            type: "array",
+            elem
+        });
+    }
+
+    public static hash(keyType: Type, valueType: Type): Type {
+        return new this({
+            type: "hash",
+            keyType,
+            valueType
         });
     }
 
