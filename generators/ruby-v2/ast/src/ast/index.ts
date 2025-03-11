@@ -8,6 +8,5 @@ export { Parameter } from "./Parameter";
 export { PositionalParameter } from "./PositionalParameter";
 export { PositionalSplatParameter } from "./PositionalSplatParameter";
 export { Type } from "./Type";
-export { TypeLiteral } from "./TypeLiteral";
 export { Writer } from "./core/Writer";
 export { YieldParameter } from "./YieldParameter";

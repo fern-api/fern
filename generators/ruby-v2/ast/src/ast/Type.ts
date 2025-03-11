@@ -1,14 +1,39 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+
+interface Self {
+    type: "self";
+}
+
+interface Class_ {
+    type: "class";
+}
+
+interface Instance {
+    type: "instance";
+}
+
+interface Boolean_ {
+    type: "boolean";
+}
 
 interface Nil {
     type: "nil";
 }
 
-interface Boolean_ {
-    type: "boolean";
+interface Top {
+    type: "top";
+}
+
+interface Bot {
+    type: "bot";
+}
+
+interface Void {
+    type: "void";
 }
 
 interface Boolish {
@@ -28,6 +53,11 @@ interface Union {
     elems: Type[];
 }
 
+interface Intersection {
+    type: "intersection";
+    elems: Type[];
+}
+
 interface Array_ {
     type: "array";
     elem: Type;
@@ -39,11 +69,37 @@ interface Hash {
     valueType: Type;
 }
 
-export type SingleType = Nil | Boolean_ | Boolish | String_ | Integer | Union;
-export type CollectionType = Array_ | Hash;
+interface Object_ {
+    type: "object";
+    klass: string;
+}
 
-type InternalType = SingleType | CollectionType;
+interface Singleton {
+    type: "singleton";
+    klass: string;
+}
 
+interface Tuple {
+    type: "tuple";
+    elems: Type[];
+}
+
+interface Generic {
+    type: "generic";
+    baseKlass: string;
+    parameters: (Type | TypeParameter)[];
+}
+
+export type BaseType = Self | Class_ | Instance | Boolean_ | Nil | Top | Bot | Void;
+export type SingleType = Boolish | String_ | Integer | Union | Intersection | Singleton | Object_ | Generic;
+// TODO: These conceivably could just be Generics, at the cost of some specificity/usability
+export type CollectionType = Array_ | Hash | Tuple;
+
+type InternalType = BaseType | SingleType | CollectionType;
+
+/**
+ * Reference: https://github.com/ruby/rbs/blob/master/docs/syntax.md
+ */
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType | undefined) {
         super();
@@ -52,11 +108,29 @@ export class Type extends AstNode {
     public write(writer: Writer): void {
         if (this.internalType) {
             switch (this.internalType.type) {
-                case "nil":
-                    writer.write("nil");
+                case "self":
+                    writer.write("self");
+                    break;
+                case "class":
+                    writer.write("class");
+                    break;
+                case "instance":
+                    writer.write("instance");
                     break;
                 case "boolean":
                     writer.write("bool");
+                    break;
+                case "nil":
+                    writer.write("nil");
+                    break;
+                case "top":
+                    writer.write("top");
+                    break;
+                case "bot":
+                    writer.write("bot");
+                    break;
+                case "void":
+                    writer.write("void");
                     break;
                 case "boolish":
                     writer.write("boolish");
@@ -74,6 +148,13 @@ export class Type extends AstNode {
                         writeFunction: (argument) => argument.write(writer)
                     });
                     break;
+                case "intersection":
+                    writer.delimit({
+                        nodes: this.internalType.elems,
+                        delimiter: " & ",
+                        writeFunction: (argument) => argument.write(writer)
+                    });
+                    break;
                 case "array":
                     writer.write("Array[");
                     this.internalType.elem.write(writer);
@@ -84,6 +165,32 @@ export class Type extends AstNode {
                     this.internalType.keyType.write(writer);
                     writer.write(", ");
                     this.internalType.valueType.write(writer);
+                    writer.write("]");
+                    break;
+                case "object":
+                    writer.write(this.internalType.klass);
+                    break;
+                case "singleton":
+                    writer.write("singleton(");
+                    writer.write(this.internalType.klass);
+                    writer.write(")");
+                    break;
+                case "tuple":
+                    writer.write("[");
+                    writer.delimit({
+                        nodes: this.internalType.elems,
+                        delimiter: ", ",
+                        writeFunction: (argument) => argument.write(writer)
+                    });
+                    writer.write("]");
+                    break;
+                case "generic":
+                    writer.write(`${this.internalType.baseKlass}[`);
+                    writer.delimit({
+                        nodes: this.internalType.parameters,
+                        delimiter: ", ",
+                        writeFunction: (argument) => argument.write(writer)
+                    });
                     writer.write("]");
                     break;
                 default:

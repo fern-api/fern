@@ -17,7 +17,7 @@ export type MethodVisibility = "public" | "private" | "protected";
 export const MethodVisibility = { Public: "public", Private: "private", Protected: "protected" } as const;
 
 export declare namespace Method {
-    interface ParameterArgs {
+    export interface ParameterArgs {
         /* An array of this method's positional parameters. */
         positional?: PositionalParameter[];
         /* An array of this method's keyword parameters. */
@@ -30,7 +30,7 @@ export declare namespace Method {
         yield?: YieldParameter;
     }
 
-    interface Args {
+    export interface Args {
         /* The name of the parameter. */
         name: string;
         /* The docstring for the method. */
@@ -102,11 +102,10 @@ export class Method extends TypedAstNode {
         if (this.parameters.length) {
             writer.write("(");
 
-            this.parameters.forEach((parameter, index) => {
-                parameter.write(writer);
-                if (index < this.parameters.length - 1) {
-                    writer.write(", ");
-                }
+            writer.delimit({
+                nodes: this.parameters,
+                delimiter: ", ",
+                writeFunction: (argument) => argument.write(writer)
             });
 
             writer.write(")");
