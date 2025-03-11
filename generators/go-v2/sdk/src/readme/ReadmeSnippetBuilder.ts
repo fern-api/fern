@@ -14,11 +14,14 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
+    private readonly isEnvironmentsEnabled: boolean;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -31,6 +34,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
+        this.isEnvironmentsEnabled = context.ir.environments != null;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -48,6 +52,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // IR v53, which doesn't include the endpoint examples needed to generate
         // dynamic snippets. Therefore, for the time being, the usage section is omitted.
         // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+
+        if (this.isEnvironmentsEnabled) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentSnippets();
+        }
+
         snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
@@ -62,11 +71,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
     }
 
-    private buildErrorSnippets(): string[] {
-        const errorEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
-        return errorEndpoints.map((errorEndpoint) =>
+    private buildEnvironmentSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID);
+        return endpoints.map(() =>
             this.writeCode(`
-response, err := ${this.getMethodCall(errorEndpoint)}(...)
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
+    option.WithBaseURL("https://example.com"),
+)
+`)
+        );
+    }
+
+    private buildErrorSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
+        return endpoints.map((endpoint) =>
+            this.writeCode(`
+response, err := ${this.getMethodCall(endpoint)}(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {

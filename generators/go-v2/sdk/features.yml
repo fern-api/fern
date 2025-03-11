@@ -3,6 +3,12 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ENVIRONMENTS
+    description: |
+      By default, the production environment is used. However, you can choose between different environments by using
+      the `option.WithBaseURL` option. You can configure any arbitrary base URL, which is particularly useful
+      in test environments.
+
   - id: ERRORS
     description: |
       Structured error types are returned from API calls that return non-success status codes. These errors are compatible
