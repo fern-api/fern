@@ -18,6 +18,7 @@ export declare namespace ResponseBodyConverter {
     export interface Output {
         responseBody: HttpResponseBody;
         inlinedTypes: Record<string, TypeDeclaration>;
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }
 }
 
@@ -72,6 +73,20 @@ export class ResponseBodyConverter extends AbstractConverter<
                 continue;
             }
 
+            const examples =
+                mediaTypeObject.examples != null
+                    ? Object.fromEntries(
+                          await Promise.all(
+                              Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
+                                  key,
+                                  context.isReferenceObject(example)
+                                      ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                                      : example
+                              ])
+                          )
+                      )
+                    : undefined;
+
             if (contentType.includes("json")) {
                 const responseBody = HttpResponseBody.json(
                     JsonResponse.response({
@@ -81,7 +96,8 @@ export class ResponseBodyConverter extends AbstractConverter<
                 );
                 return {
                     responseBody,
-                    inlinedTypes: convertedSchema.inlinedTypes
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples
                 };
             }
         }

@@ -287,7 +287,108 @@
         "method": "POST",
         "headers": [],
         "payload": {
-          "type": "reference"
+          "name": {
+            "originalName": "status_updateInlined_Request",
+            "camelCase": {
+              "unsafeName": "statusUpdateInlinedRequest",
+              "safeName": "statusUpdateInlinedRequest"
+            },
+            "snakeCase": {
+              "unsafeName": "status_update_inlined_request",
+              "safeName": "status_update_inlined_request"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS_UPDATE_INLINED_REQUEST",
+              "safeName": "STATUS_UPDATE_INLINED_REQUEST"
+            },
+            "pascalCase": {
+              "unsafeName": "StatusUpdateInlinedRequest",
+              "safeName": "StatusUpdateInlinedRequest"
+            }
+          },
+          "extends": [],
+          "properties": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "stream-inlined",
+                  "camelCase": {
+                    "unsafeName": "streamInlined",
+                    "safeName": "streamInlined"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "stream_inlined",
+                    "safeName": "stream_inlined"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "STREAM_INLINED",
+                    "safeName": "STREAM_INLINED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "StreamInlined",
+                    "safeName": "StreamInlined"
+                  }
+                },
+                "wireValue": "stream-inlined"
+              },
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "message-inlined",
+                  "camelCase": {
+                    "unsafeName": "messageInlined",
+                    "safeName": "messageInlined"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "message_inlined",
+                    "safeName": "message_inlined"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "MESSAGE_INLINED",
+                    "safeName": "MESSAGE_INLINED"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "MessageInlined",
+                    "safeName": "MessageInlined"
+                  }
+                },
+                "wireValue": "message-inlined"
+              },
+              "valueType": {
+                "container": {
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {},
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "container"
+              }
+            }
+          ],
+          "type": "inlinedPayload"
         },
         "examples": []
       }
