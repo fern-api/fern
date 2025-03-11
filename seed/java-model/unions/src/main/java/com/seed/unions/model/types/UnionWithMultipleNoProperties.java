@@ -14,11 +14,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class UnionWithUnknown {
+public final class UnionWithMultipleNoProperties {
     private final Value value;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    private UnionWithUnknown(Value value) {
+    private UnionWithMultipleNoProperties(Value value) {
         this.value = value;
     }
 
@@ -26,20 +26,28 @@ public final class UnionWithUnknown {
         return value.visit(visitor);
     }
 
-    public static UnionWithUnknown foo(Foo value) {
-        return new UnionWithUnknown(new FooValue(value));
+    public static UnionWithMultipleNoProperties foo(Foo value) {
+        return new UnionWithMultipleNoProperties(new FooValue(value));
     }
 
-    public static UnionWithUnknown unknown() {
-        return new UnionWithUnknown(new UnknownValue());
+    public static UnionWithMultipleNoProperties empty1() {
+        return new UnionWithMultipleNoProperties(new Empty1Value());
+    }
+
+    public static UnionWithMultipleNoProperties empty2() {
+        return new UnionWithMultipleNoProperties(new Empty2Value());
     }
 
     public boolean isFoo() {
         return value instanceof FooValue;
     }
 
-    public boolean isUnknown() {
-        return value instanceof UnknownValue;
+    public boolean isEmpty1() {
+        return value instanceof Empty1Value;
+    }
+
+    public boolean isEmpty2() {
+        return value instanceof Empty2Value;
     }
 
     public boolean _isUnknown() {
@@ -68,13 +76,19 @@ public final class UnionWithUnknown {
     public interface Visitor<T> {
         T visitFoo(Foo foo);
 
-        T visitUnknown();
+        T visitEmpty1();
+
+        T visitEmpty2();
 
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({@JsonSubTypes.Type(FooValue.class), @JsonSubTypes.Type(UnknownValue.class)})
+    @JsonSubTypes({
+        @JsonSubTypes.Type(FooValue.class),
+        @JsonSubTypes.Type(Empty1Value.class),
+        @JsonSubTypes.Type(Empty2Value.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -115,30 +129,53 @@ public final class UnionWithUnknown {
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "value: " + value + "}";
+            return "UnionWithMultipleNoProperties{" + "value: " + value + "}";
         }
     }
 
-    @JsonTypeName("unknown")
+    @JsonTypeName("empty1")
     @JsonIgnoreProperties("type")
-    private static final class UnknownValue implements Value {
+    private static final class Empty1Value implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private UnknownValue() {}
+        private Empty1Value() {}
 
         @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitUnknown();
+            return visitor.visitEmpty1();
         }
 
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof UnknownValue;
+            return other instanceof Empty1Value;
         }
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "}";
+            return "UnionWithMultipleNoProperties{" + "}";
+        }
+    }
+
+    @JsonTypeName("empty2")
+    @JsonIgnoreProperties("type")
+    private static final class Empty2Value implements Value {
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Empty2Value() {}
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEmpty2();
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Empty2Value;
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "UnionWithMultipleNoProperties{" + "}";
         }
     }
 
@@ -174,7 +211,7 @@ public final class UnionWithUnknown {
 
         @java.lang.Override
         public String toString() {
-            return "UnionWithUnknown{" + "type: " + type + ", value: " + value + "}";
+            return "UnionWithMultipleNoProperties{" + "type: " + type + ", value: " + value + "}";
         }
     }
 }
