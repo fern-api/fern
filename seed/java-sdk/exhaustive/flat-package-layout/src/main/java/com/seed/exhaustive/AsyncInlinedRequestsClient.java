@@ -12,6 +12,7 @@ import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.core.SeedExhaustiveException;
 import com.seed.exhaustive.errors.BadRequestBody;
 import com.seed.exhaustive.types.BadObjectRequestInfo;
+import com.seed.exhaustive.types.PostWithObjectBody;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
