@@ -54,9 +54,13 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "nullable":
-                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+                return java.TypeLiteral.optional({
+                    value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
+                });
             case "optional":
-                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+                return java.TypeLiteral.optional({
+                    value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
+                });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -244,12 +248,11 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
-        const orderedProperties = this.orderObjectProperties(properties);
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
-            parameters: orderedProperties.map((property) => {
+            parameters: properties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
@@ -589,19 +592,6 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(primitive);
         }
-    }
-
-    /* Sorts the properties in order of required -> optional. */
-    private orderObjectProperties(properties: TypeInstance[]): TypeInstance[] {
-        return properties.sort((a, b) => {
-            if (a.typeReference.type === "optional" && b.typeReference.type !== "optional") {
-                return 1;
-            }
-            if (b.typeReference.type === "optional" && a.typeReference.type !== "optional") {
-                return -1;
-            }
-            return 0;
-        });
     }
 
     private getValueAsNumber({

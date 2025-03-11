@@ -123,6 +123,7 @@ interface MapEntry {
 interface Optional {
     type: "optional";
     value: TypeLiteral;
+    useOf?: boolean;
 }
 
 interface Reference {
@@ -356,14 +357,15 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static optional(value: TypeLiteral): TypeLiteral {
+    public static optional({ value, useOf }: { value: TypeLiteral; useOf?: boolean }): TypeLiteral {
         // Avoids double optional.
         if (this.isAlreadyOptional(value)) {
             return value;
         }
         return new this({
             type: "optional",
-            value
+            value,
+            useOf
         });
     }
 
@@ -461,7 +463,7 @@ export class TypeLiteral extends AstNode {
         writer.indent();
         this.writeBuilderParameters({
             writer,
-            parameters: filterNopBuilderParameters({ parameters: builder.parameters })
+            parameters: this.orderBuilderParameters(filterNopBuilderParameters({ parameters: builder.parameters }))
         });
         writer.dedent();
     }
@@ -483,6 +485,18 @@ export class TypeLiteral extends AstNode {
         }
         writer.writeNewLineIfLastLineNot();
         writer.write(".build()");
+    }
+
+    public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
+        return parameters.sort((a, b) => {
+            if (a.value.isOptional() && !b.value.isOptional()) {
+                return 1;
+            }
+            if (!a.value.isOptional() && b.value.isOptional()) {
+                return -1;
+            }
+            return 0;
+        });
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
@@ -547,6 +561,10 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeOptional({ writer, optional }: { writer: Writer; optional: Optional }): void {
+        if (!optional.useOf) {
+            writer.writeNode(optional.value);
+            return;
+        }
         writer.writeNode(
             java.invokeMethod({
                 on: OptionalClassReference,

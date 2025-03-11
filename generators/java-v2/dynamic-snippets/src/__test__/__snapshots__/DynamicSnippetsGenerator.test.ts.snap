@@ -18,12 +18,12 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
-        .shallow(false)
         .tag(
             new ArrayList<Optional<String>>(
                 Arrays.asList("development", "public")
             )
         )
+        .shallow(false)
         .build()
 );
 "
@@ -47,12 +47,12 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
-        .shallow(false)
         .tag(
             new ArrayList<Optional<String>>(
                 Arrays.asList("development")
             )
         )
+        .shallow(false)
         .build()
 );
 "
@@ -522,6 +522,9 @@ client.nullable().createUser(
     CreateUserRequest
         .builder()
         .username("john.doe")
+        .avatar(
+            Nullable.ofNull()
+        )
         .tags(
             new ArrayList<String>(
                 Arrays.asList("admin")
@@ -539,9 +542,6 @@ client.nullable().createUser(
                     Nullable.ofNull()
                 )
                 .build()
-        )
-        .avatar(
-            Nullable.ofNull()
         )
         .build()
 );
