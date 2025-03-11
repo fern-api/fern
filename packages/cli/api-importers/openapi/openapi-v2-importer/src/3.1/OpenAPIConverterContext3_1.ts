@@ -65,7 +65,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
     ): Promise<ObjectPropertyAccess | undefined> {
         let schema = schemaOrReference;
 
-        // Keep resolving references until we get to a schema object
         while (this.isReferenceObject(schema)) {
             const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
             if (!resolved.resolved) {
@@ -74,9 +73,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             schema = resolved.value;
         }
 
-        // Now we have the actual schema object
         if (schema.readOnly && schema.writeOnly) {
-            // Can't be both readonly and writeonly
             return undefined;
         }
 

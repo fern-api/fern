@@ -1,4 +1,23 @@
 {
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
   "auth": {
     "requirement": "ANY",
     "schemes": [
@@ -43,6 +62,38 @@
         "type": "header"
       }
     ]
+  },
+  "headers": [],
+  "environments": {
+    "defaultEnvironment": "default",
+    "environments": {
+      "environments": [
+        {
+          "id": "default",
+          "name": {
+            "originalName": "Default",
+            "camelCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "snakeCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
+            },
+            "pascalCase": {
+              "unsafeName": "Default",
+              "safeName": "Default"
+            }
+          },
+          "url": "https://api.hume.ai"
+        }
+      ],
+      "type": "singleBaseUrl"
+    }
   },
   "types": {
     "BaseRequestModels": {
@@ -13034,6 +13085,31 @@
       "inline": false
     }
   },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errors": {},
   "services": {
     "": {
       "name": {
@@ -40562,55 +40638,59 @@
       ]
     }
   },
-  "errors": {},
   "webhookGroups": {},
-  "headers": [],
-  "idempotencyHeaders": [],
-  "pathParameters": [],
-  "errorDiscriminationStrategy": {
-    "type": "statusCode"
-  },
-  "variables": [],
-  "serviceTypeReferenceInfo": {
-    "sharedTypes": [],
-    "typesReferencedOnlyByService": {}
-  },
-  "environments": {
-    "defaultEnvironment": "default",
-    "environments": {
-      "environments": [
-        {
-          "id": "default",
-          "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
-          },
-          "url": "https://api.hume.ai"
+  "subpackages": {
+    "Get Job Predictions": {
+      "name": {
+        "originalName": "Get Job Predictions",
+        "camelCase": {
+          "unsafeName": "getJobPredictions",
+          "safeName": "getJobPredictions"
+        },
+        "snakeCase": {
+          "unsafeName": "get_job_predictions",
+          "safeName": "get_job_predictions"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "GET_JOB_PREDICTIONS",
+          "safeName": "GET_JOB_PREDICTIONS"
+        },
+        "pascalCase": {
+          "unsafeName": "GetJobPredictions",
+          "safeName": "GetJobPredictions"
         }
-      ],
-      "type": "singleBaseUrl"
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "Get Job Predictions",
+          "camelCase": {
+            "unsafeName": "getJobPredictions",
+            "safeName": "getJobPredictions"
+          },
+          "snakeCase": {
+            "unsafeName": "get_job_predictions",
+            "safeName": "get_job_predictions"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_JOB_PREDICTIONS",
+            "safeName": "GET_JOB_PREDICTIONS"
+          },
+          "pascalCase": {
+            "unsafeName": "GetJobPredictions",
+            "safeName": "GetJobPredictions"
+          }
+        }
+      },
+      "service": "Get Job Predictions",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
     }
   },
   "rootPackage": {
-    "fernFilepath": {
-      "allParts": [],
-      "packagePath": []
-    },
     "service": "",
     "types": [
       "BaseRequest",
@@ -40683,58 +40763,21 @@
     "subpackages": [
       "Get Job Predictions"
     ],
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
     "hasEndpointsInTree": false
   },
-  "subpackages": {
-    "Get Job Predictions": {
-      "name": {
-        "originalName": "Get Job Predictions",
-        "camelCase": {
-          "unsafeName": "getJobPredictions",
-          "safeName": "getJobPredictions"
-        },
-        "snakeCase": {
-          "unsafeName": "get_job_predictions",
-          "safeName": "get_job_predictions"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "GET_JOB_PREDICTIONS",
-          "safeName": "GET_JOB_PREDICTIONS"
-        },
-        "pascalCase": {
-          "unsafeName": "GetJobPredictions",
-          "safeName": "GetJobPredictions"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "Get Job Predictions",
-          "camelCase": {
-            "unsafeName": "getJobPredictions",
-            "safeName": "getJobPredictions"
-          },
-          "snakeCase": {
-            "unsafeName": "get_job_predictions",
-            "safeName": "get_job_predictions"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_JOB_PREDICTIONS",
-            "safeName": "GET_JOB_PREDICTIONS"
-          },
-          "pascalCase": {
-            "unsafeName": "GetJobPredictions",
-            "safeName": "GetJobPredictions"
-          }
-        }
-      },
-      "service": "Get Job Predictions",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    }
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -40745,49 +40788,6 @@
       "language": "",
       "sdkName": "",
       "sdkVersion": ""
-    }
-  },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
-  "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
     }
   }
 }

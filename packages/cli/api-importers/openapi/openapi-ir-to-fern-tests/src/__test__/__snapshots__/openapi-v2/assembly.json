@@ -1,4 +1,23 @@
 {
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
   "auth": {
     "requirement": "ANY",
     "schemes": [
@@ -43,6 +62,39 @@
         "type": "header"
       }
     ]
+  },
+  "headers": [],
+  "environments": {
+    "defaultEnvironment": "default",
+    "environments": {
+      "environments": [
+        {
+          "id": "default",
+          "name": {
+            "originalName": "Default",
+            "camelCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "snakeCase": {
+              "unsafeName": "default",
+              "safeName": "default_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
+            },
+            "pascalCase": {
+              "unsafeName": "Default",
+              "safeName": "Default"
+            }
+          },
+          "url": "https://api.assemblyai.com",
+          "docs": "AssemblyAI API"
+        }
+      ],
+      "type": "singleBaseUrl"
+    }
   },
   "types": {
     "RedactedAudioResponse": {
@@ -13055,6 +13107,31 @@
       "inline": false
     }
   },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errors": {},
   "services": {
     "files": {
       "name": {
@@ -52932,125 +53009,7 @@
       ]
     }
   },
-  "errors": {},
   "webhookGroups": {},
-  "headers": [],
-  "idempotencyHeaders": [],
-  "pathParameters": [],
-  "errorDiscriminationStrategy": {
-    "type": "statusCode"
-  },
-  "variables": [],
-  "serviceTypeReferenceInfo": {
-    "sharedTypes": [],
-    "typesReferencedOnlyByService": {}
-  },
-  "environments": {
-    "defaultEnvironment": "default",
-    "environments": {
-      "environments": [
-        {
-          "id": "default",
-          "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
-          },
-          "url": "https://api.assemblyai.com",
-          "docs": "AssemblyAI API"
-        }
-      ],
-      "type": "singleBaseUrl"
-    }
-  },
-  "rootPackage": {
-    "fernFilepath": {
-      "allParts": [],
-      "packagePath": []
-    },
-    "types": [
-      "RedactedAudioResponse",
-      "RedactedAudioStatus",
-      "SubtitleFormat",
-      "WordSearchResponse",
-      "WordSearchMatch",
-      "WordSearchTimestamp",
-      "Timestamp",
-      "CreateTranscriptOptionalParameters",
-      "CreateTranscriptParameters",
-      "SummaryModel",
-      "SummaryType",
-      "TranscriptBoostParam",
-      "TranscriptCustomSpelling",
-      "TranscriptUtterance",
-      "SubstitutionPolicy",
-      "PiiPolicy",
-      "TranscriptLanguageCode",
-      "TranscriptStatus",
-      "Transcript",
-      "Chapter",
-      "Entity",
-      "EntityType",
-      "SentimentAnalysisResult",
-      "Sentiment",
-      "TopicDetectionResult",
-      "ContentSafetyLabel",
-      "ContentSafetyLabelResult",
-      "SeverityScoreSummary",
-      "AutoHighlightsResult",
-      "AutoHighlightResult",
-      "TranscriptWord",
-      "TranscriptSentence",
-      "SentencesResponse",
-      "TranscriptParagraph",
-      "ParagraphsResponse",
-      "PageDetails",
-      "TranscriptListParameters",
-      "TranscriptListItem",
-      "TranscriptList",
-      "UploadedFile",
-      "CreateRealtimeTemporaryTokenParameters",
-      "RealtimeTemporaryTokenResponse",
-      "AudioIntelligenceModelStatus",
-      "PurgeLemurRequestDataResponse",
-      "LemurBaseResponse",
-      "LemurSummaryResponse",
-      "LemurQuestionAnswerResponse",
-      "LemurQuestionAnswer",
-      "LemurActionItemsResponse",
-      "LemurTaskResponse",
-      "LemurBaseParameters",
-      "LemurSummaryParameters",
-      "LemurQuestionAnswerParameters",
-      "LemurQuestion",
-      "LemurActionItemsParameters",
-      "LemurTaskParameters",
-      "LemurModel",
-      "Error"
-    ],
-    "errors": [],
-    "subpackages": [
-      "files",
-      "transcript",
-      "realtime",
-      "lemur"
-    ],
-    "hasEndpointsInTree": false
-  },
   "subpackages": {
     "files": {
       "name": {
@@ -53249,6 +53208,90 @@
       "hasEndpointsInTree": false
     }
   },
+  "rootPackage": {
+    "types": [
+      "RedactedAudioResponse",
+      "RedactedAudioStatus",
+      "SubtitleFormat",
+      "WordSearchResponse",
+      "WordSearchMatch",
+      "WordSearchTimestamp",
+      "Timestamp",
+      "CreateTranscriptOptionalParameters",
+      "CreateTranscriptParameters",
+      "SummaryModel",
+      "SummaryType",
+      "TranscriptBoostParam",
+      "TranscriptCustomSpelling",
+      "TranscriptUtterance",
+      "SubstitutionPolicy",
+      "PiiPolicy",
+      "TranscriptLanguageCode",
+      "TranscriptStatus",
+      "Transcript",
+      "Chapter",
+      "Entity",
+      "EntityType",
+      "SentimentAnalysisResult",
+      "Sentiment",
+      "TopicDetectionResult",
+      "ContentSafetyLabel",
+      "ContentSafetyLabelResult",
+      "SeverityScoreSummary",
+      "AutoHighlightsResult",
+      "AutoHighlightResult",
+      "TranscriptWord",
+      "TranscriptSentence",
+      "SentencesResponse",
+      "TranscriptParagraph",
+      "ParagraphsResponse",
+      "PageDetails",
+      "TranscriptListParameters",
+      "TranscriptListItem",
+      "TranscriptList",
+      "UploadedFile",
+      "CreateRealtimeTemporaryTokenParameters",
+      "RealtimeTemporaryTokenResponse",
+      "AudioIntelligenceModelStatus",
+      "PurgeLemurRequestDataResponse",
+      "LemurBaseResponse",
+      "LemurSummaryResponse",
+      "LemurQuestionAnswerResponse",
+      "LemurQuestionAnswer",
+      "LemurActionItemsResponse",
+      "LemurTaskResponse",
+      "LemurBaseParameters",
+      "LemurSummaryParameters",
+      "LemurQuestionAnswerParameters",
+      "LemurQuestion",
+      "LemurActionItemsParameters",
+      "LemurTaskParameters",
+      "LemurModel",
+      "Error"
+    ],
+    "errors": [],
+    "subpackages": [
+      "files",
+      "transcript",
+      "realtime",
+      "lemur"
+    ],
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "hasEndpointsInTree": false
+  },
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
@@ -53258,49 +53301,6 @@
       "language": "",
       "sdkName": "",
       "sdkVersion": ""
-    }
-  },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
-  "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
     }
   }
 }

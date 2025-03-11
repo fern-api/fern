@@ -1,8 +1,7 @@
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractExtension, ErrorCollector, FernEnumConfig } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 import { FernEnumConfigSchema } from "../schemas/EnumSchema";
-import { FernEnumConfig } from "../types/FernEnumConfig";
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractConverter.Args {

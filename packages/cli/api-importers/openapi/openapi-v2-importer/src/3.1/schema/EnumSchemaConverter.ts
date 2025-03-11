@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { Type } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, ErrorCollector, FernEnumConfig } from "@fern-api/v2-importer-commons";
 
-import { FernEnumConfig } from "../../types/FernEnumConfig";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace EnumSchemaConverter {
