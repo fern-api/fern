@@ -77,7 +77,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 headers,
                 requestBody,
                 sdkRequest: undefined,
-                response,
+                response: response?.value,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
                 availability: await context.getAvailability({

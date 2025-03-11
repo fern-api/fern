@@ -42,7 +42,8 @@ interface ConvertedRequestBody {
     value: HttpRequestBody;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
-interface ConvertedResponseBody extends HttpResponse {
+interface ConvertedResponseBody {
+    value: HttpResponse;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -262,8 +263,10 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     ...convertedResponseBody.inlinedTypes
                 };
                 return {
-                    statusCode: statusCodeNum,
-                    body: convertedResponseBody.responseBody,
+                    value: {
+                        statusCode: statusCodeNum,
+                        body: convertedResponseBody.responseBody,
+                    },
                     examples: convertedResponseBody.examples,
                 };
             }
