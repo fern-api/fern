@@ -1,0 +1,98 @@
+---
+title: Feature Flags
+subtitle: Control documentation visibility with LaunchDarkly
+description: Learn how to use Feature Flags in your Fern documentation
+---
+
+Fern supports conditional rendering of documentation content using Feature Flags, powered by LaunchDarkly integration. Control visibility of documentation sections based on feature flag states for different release stages or user segments.
+
+## Use Cases
+
+Feature flags in documentation are particularly useful for:
+
+- **Regional Content**: Show different content based on geographical regions (e.g., EU vs US endpoints)
+- **Product Tiers**: Display features based on customer subscription levels
+- **Beta Features**: Control visibility of beta documentation for specific users
+- **Staged Rollouts**: Gradually release documentation for new features
+- **A/B Testing**: Test different documentation approaches with different user segments
+
+## Configuration
+
+Configure feature flags in your `docs.yml` file:
+
+```yaml
+navigation:
+  # Simple boolean flag
+  - page: Beta Features
+    feature-flag: beta-features
+
+  # Multiple flags
+  - page: Advanced Features
+    feature:
+      - flag: feature-a
+      - flag: feature-b
+
+  # Configurable match
+  - section: Enterprise Features
+    feature-flag:
+      flag: release-stage
+      fallback-value: "ga"
+      match: "beta"
+```
+
+## Using Feature Flags in MDX
+
+Use the `<Feature>` component to conditionally render content:
+
+```mdx
+<Feature flag="deployment-region" match={"commercial"} fallbackValue={"commercial"}>
+  <table class="fern-table">
+    <tr>
+      <th>Service</th>
+      <th>Endpoint</th>
+    </tr>
+    <tr>
+      <td>API Gateway</td>
+      <td><code>https://api.example.com</code></td>
+    </tr>
+  </table>
+</Feature>
+```
+
+### Component Properties
+
+<ParamField path="flag" type="string" required={true}>
+  Name of the feature flag to check against
+</ParamField>
+
+<ParamField path="match" type="boolean | string" required={true}>
+  Value to match against the feature flag's value
+</ParamField>
+
+<ParamField path="fallbackValue" type="boolean | string" required={false}>
+  Default value to use if the feature flag is not defined
+</ParamField>
+
+## Example: Complete Configuration
+
+```yaml
+# docs.yml
+title: API Documentation
+navigation:
+  - section: Features
+    feature-flag: features-enabled
+    layout:
+      - page: Basic Features
+      - page: Advanced Features
+        feature-flag: advanced-features
+      - page: Beta Features
+        feature:
+          - flag: beta-access
+          - flag: beta-opted-in
+
+  - section: Enterprise
+    feature-flag:
+      flag: customer-tier
+      match: "enterprise"
+      fallback-value: "standard"
+```
