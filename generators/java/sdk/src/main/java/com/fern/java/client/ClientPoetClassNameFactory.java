@@ -70,8 +70,7 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         String packageName;
         switch (packageLayout) {
             case FLAT:
-                packageName =
-                        getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+                packageName = getTypesPackageName(httpService.getName().getFernFilepath());
                 break;
             case NESTED:
             default:
