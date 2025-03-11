@@ -1,5 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Method > type definitions > writes type definition for method with no parameters and typed return 1`] = `"def foobar: () -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with no parameters and untyped return type 1`] = `"def foobar: () -> untyped"`;
+
 exports[`Method > writes method with all parameter types 1`] = `
 "def fizzbuzz(one, two:, *three, **four, &five); end
 "

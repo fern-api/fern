@@ -1,6 +1,7 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
 import { MethodKind, MethodVisibility } from "../Method";
+import { Type } from "../Type";
 import { Writer } from "../core/Writer";
 
 describe("Method", () => {
@@ -8,6 +9,20 @@ describe("Method", () => {
 
     beforeEach(() => {
         writerConfig = { customConfig: BaseRubyCustomConfigSchema.parse({ clientClassName: "Example" }) };
+    });
+
+    describe("type definitions", () => {
+        test("writes type definition for method with no parameters and untyped return type", () => {
+            const method = ruby.method({ name: "foobar" });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
+        test("writes type definition for method with no parameters and typed return", () => {
+            const method = ruby.method({ name: "foobar", returnType: Type.boolean() });
+
+            expect(method.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
     });
 
     test("writes method with no parameters", () => {
