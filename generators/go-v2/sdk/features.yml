@@ -5,9 +5,8 @@ features:
 
   - id: ENVIRONMENTS
     description: |
-      By default, the production environment is used. However, you can choose between different environments by using
-      the `option.WithBaseURL` option. You can configure any arbitrary base URL, which is particularly useful
-      in test environments.
+      You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
+      URL, which is particularly useful in test environments.
 
   - id: ERRORS
     description: |

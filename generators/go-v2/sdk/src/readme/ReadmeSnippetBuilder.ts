@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -21,7 +22,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
-    private readonly isEnvironmentsEnabled: boolean;
+    private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -34,7 +35,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isEnvironmentsEnabled = context.ir.environments != null;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -43,6 +43,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.getRootPackageName();
+        this.rootPackageClientName = this.getRootPackageClientName();
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -53,10 +54,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // dynamic snippets. Therefore, for the time being, the usage section is omitted.
         // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
 
-        if (this.isEnvironmentsEnabled) {
-            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentSnippets();
-        }
-
+        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.RequestOptions] = this.buildRequestOptionsSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
@@ -76,8 +74,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const endpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID);
         return endpoints.map(() =>
             this.writeCode(`
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
-    option.WithBaseURL("https://example.com"),
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+    option.WithBaseURL(${this.getBaseUrlOptionValue()}),
 )
 `)
         );
@@ -88,7 +86,7 @@ ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClien
         return endpoints.map((endpoint) =>
             this.writeCode(`
 // Specify default options applied on every request.
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
     option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
@@ -126,7 +124,7 @@ if err != nil {
         const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
         return retryEndpoints.map((retryEndpoint) =>
             this.writeCode(`
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
     option.WithMaxAttempts(1),
 )
 
@@ -225,8 +223,44 @@ response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
         return endpoint.name.pascalCase.unsafeName;
     }
 
+    private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
+        if (this.context.ir.environments == null) {
+            return undefined;
+        }
+
+        return (
+            this.context.ir.environments?.defaultEnvironment ??
+            this.context.ir.environments.environments.environments[0]?.id
+        );
+    }
+
+    private getBaseUrlOptionValue(): string {
+        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
+    }
+
+    private getEnvironmentBaseUrlReference(): string | undefined {
+        const defaultEnvironmentId = this.getDefaultEnvironmentId();
+
+        if (defaultEnvironmentId == null || this.context.ir.environments == null) {
+            return undefined;
+        }
+
+        const { environments } = this.context.ir.environments;
+        const defaultEnvironment = environments.environments.find((env) => env.id === defaultEnvironmentId);
+
+        if (!defaultEnvironment) {
+            return undefined;
+        }
+
+        return `${this.getRootPackageName()}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+    }
+
     private getRootPackageName(): string {
-        return `${this.context.config.organization}client`;
+        return this.context.config.organization;
+    }
+
+    private getRootPackageClientName(): string {
+        return `${this.getRootPackageName()}client`;
     }
 
     private writeCode(s: string): string {
