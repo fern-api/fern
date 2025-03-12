@@ -12,6 +12,23 @@ import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
+const RESERVED_NAMES = new Set([
+    "enum",
+    "extends",
+    "package",
+    "void",
+    "object",
+    "short",
+    "class",
+    "abstract",
+    "return",
+    "import",
+    "for",
+    "assert",
+    "switch",
+    "getClass",
+]);
+
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseJavaCustomConfigSchema | undefined;
@@ -46,19 +63,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+        return this.getName(name.pascalCase.safeName);
     }
 
     public getEnumName(name: FernIr.Name): string {
-        return name.screamingSnakeCase.safeName;
+        return this.getName(name.screamingSnakeCase.safeName);
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return name.camelCase.safeName;
+        return this.getName(name.camelCase.safeName);
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return name.camelCase.safeName;
+        return this.getName(name.camelCase.safeName);
     }
 
     public getRootClientClassReference(): java.ClassReference {
@@ -301,5 +318,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             return this.startsWithNumber(token) ? "_" + token : token;
         });
         return sanitizedTokens.join(".");
+    }
+
+    private getName(name: string): string {
+        if (this.isReservedName(name)) {
+            return "_" + name;
+        }
+        return name;
+    }
+
+    private isReservedName(name: string): boolean {
+        return RESERVED_NAMES.has(name);
     }
 }
