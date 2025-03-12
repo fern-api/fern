@@ -18,6 +18,7 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,7 @@ public class AsyncPutClient {
                 .build();
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("PUT", null)
+                .method("PUT", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
