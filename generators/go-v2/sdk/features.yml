@@ -8,6 +8,10 @@ features:
       You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
       URL, which is particularly useful in test environments.
 
+  - id: PAGINATION
+    description: |
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+
   - id: ERRORS
     description: |
       Structured error types are returned from API calls that return non-success status codes. These errors are compatible

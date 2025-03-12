@@ -59,6 +59,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+
+        if (this.isPaginationEnabled) {
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
+
         return snippets;
     }
 
@@ -144,6 +149,47 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
+`)
+        );
+    }
+
+    private buildPaginationSnippets(): string[] {
+        const paginationEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).filter(
+            (endpoint) => endpoint.endpoint.pagination != null
+        );
+        return paginationEndpoints.map((paginationEndpoint) =>
+            this.writeCode(`
+// Loop over the items using the provided iterator.
+ctx := context.TODO()
+page, err := ${this.getMethodCall(paginationEndpoint)}(
+    ctx,
+    ...
+)
+if err != nil {
+    return nil, err
+}
+iter := page.Iterator()
+for iter.Next(ctx) {
+    item := iter.Current()
+    fmt.Printf("Got item: %v\\n", *item)
+}
+if err := iter.Err(); err != nil {
+    // Handle the error!
+}
+
+// Alternatively, iterate page-by-page.
+for page != nil {
+    for _, item := range page.Results {
+        fmt.Printf("Got item: %v\\n", *item)
+    }
+    page, err = page.GetNextPage(ctx)
+    if errors.Is(err, core.ErrNoPages) {
+        break
+    }
+    if err != nil {
+        // Handle the error!
+    }
+}
 `)
         );
     }
