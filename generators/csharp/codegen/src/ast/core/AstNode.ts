@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 
-import { AbstractAstNode } from "@fern-api/base-generator";
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { Writer } from "./Writer";

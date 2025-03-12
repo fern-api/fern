@@ -1,4 +1,4 @@
-import * as csharp from "../csharp";
+import { csharp } from "@fern-api/csharp-codegen";
 
 export const WELL_KNOWN_PROTO_TYPES_NAMESPACE = "Google.Protobuf.WellKnownTypes";
 

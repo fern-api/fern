@@ -11,9 +11,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { csharp } from "../";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
 
 type WrapperType = "optional" | "list" | "map";

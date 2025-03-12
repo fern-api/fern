@@ -1,4 +1,4 @@
-import { NamedArgument } from "@fern-api/base-generator";
+import { NamedArgument } from "@fern-api/browser-compatible-base-generator";
 
 import { csharp } from "..";
 import { AnonymousFunction } from "../csharp";

@@ -4,8 +4,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorCli<
     CustomConfig extends BaseCsharpCustomConfigSchema,

@@ -11,9 +11,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { csharp } from "../";
-import { ClassReference, Type } from "../ast";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 
 export declare namespace CsharpTypeMapper {
@@ -33,7 +31,7 @@ export class CsharpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): Type {
+    public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): csharp.Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
@@ -54,7 +52,7 @@ export class CsharpTypeMapper {
     public convertToClassReference(
         declaredTypeName: { typeId: TypeId; name: Name },
         { fullyQualified }: { fullyQualified?: boolean } = {}
-    ): ClassReference {
+    ): csharp.ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
         return csharp.classReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
@@ -69,29 +67,29 @@ export class CsharpTypeMapper {
     }: {
         container: ContainerType;
         unboxOptionals: boolean;
-    }): Type {
+    }): csharp.Type {
         switch (container.type) {
             case "list":
-                return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
+                return csharp.Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
                 const value = this.convert({ reference: container.valueType });
                 if (value.internalType.type === "object") {
                     // object map values should be nullable.
-                    return Type.map(key, csharp.Type.optional(value));
+                    return csharp.Type.map(key, csharp.Type.optional(value));
                 }
-                return Type.map(key, value);
+                return csharp.Type.map(key, value);
             }
             case "set":
-                return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
+                return csharp.Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional":
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
-                    : Type.optional(this.convert({ reference: container.optional }));
+                    : csharp.Type.optional(this.convert({ reference: container.optional }));
             case "nullable":
                 return unboxOptionals
                     ? this.convert({ reference: container.nullable, unboxOptionals })
-                    : Type.optional(this.convert({ reference: container.nullable }));
+                    : csharp.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -99,7 +97,7 @@ export class CsharpTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
+    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.Type {
         return PrimitiveTypeV1._visit<csharp.Type>(primitive.v1, {
             integer: () => csharp.Type.integer(),
             long: () => csharp.Type.long(),
@@ -119,7 +117,7 @@ export class CsharpTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): Type {
+    private convertLiteral({ literal }: { literal: Literal }): csharp.Type {
         switch (literal.type) {
             case "boolean":
                 return csharp.Type.boolean();
@@ -128,7 +126,7 @@ export class CsharpTypeMapper {
         }
     }
 
-    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): Type {
+    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): csharp.Type {
         const objectClassReference = this.convertToClassReference(named, { fullyQualified });
         if (this.context.protobufResolver.isWellKnownProtobufType(named.typeId)) {
             if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
