@@ -1,3 +1,5 @@
+import { camelCase } from "lodash-es";
+
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
@@ -11,7 +13,6 @@ import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
-import { camelCase } from "lodash-es";
 
 const RESERVED_NAMES = new Set([
     "enum",
@@ -299,7 +300,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             this.convertKebabCaseToUpperCamelCase(this.getApiName())
         );
     }
-    
+
     private getApiName(): string {
         return camelCase(this.config.workspaceName);
     }
