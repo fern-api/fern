@@ -1,6 +1,9 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -235,7 +238,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
                         enumValue.getName().getName().getScreamingSnakeCase().getSafeName()));
-        nestedValueEnumBuilder.addEnumConstant(UNKNOWN_ENUM_CONSTANT);
+        addUnknown(nestedValueEnumBuilder);
         return nestedValueEnumBuilder.build();
     }
 
@@ -253,5 +256,23 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 })
                 .collect(Collectors.toList());
         return VisitorFactory.buildVisitorInterface(visitMethodArgs);
+    }
+
+    private void addUnknown(TypeSpec.Builder nestedValueEnumBuilder) {
+        Set<String> enumNames = enumTypeDeclaration.getValues().stream()
+                .map(EnumValue::getName)
+                .map(NameAndWireValue::getName)
+                .map(Name::getScreamingSnakeCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .collect(Collectors.toSet());
+
+        nestedValueEnumBuilder.addEnumConstant(resolveName(enumNames, UNKNOWN_ENUM_CONSTANT));
+    }
+
+    private static String resolveName(Set<String> existingNames, String newName) {
+        while (existingNames.contains(newName)) {
+            newName = "_" + newName;
+        }
+        return newName;
     }
 }

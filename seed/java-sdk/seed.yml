@@ -128,13 +128,19 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  enum:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - outputFolder: no-custom-config
 scripts:
   - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
   - alias-extends
-  - enum
+  - enum:forward-compatible-enums
+  - enum:no-custom-config
   - examples
   - exhaustive:signed_publish
   - exhaustive:local-files
