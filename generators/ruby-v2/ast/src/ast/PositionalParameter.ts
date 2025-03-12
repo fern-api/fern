@@ -31,6 +31,6 @@ export class PositionalParameter extends Parameter {
             writer.write("?");
         }
 
-        this.type.write(writer);
+        this.type.writeTypeDefinition(writer);
     }
 }

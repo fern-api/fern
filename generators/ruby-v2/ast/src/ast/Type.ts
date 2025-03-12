@@ -104,7 +104,11 @@ export class Type extends AstNode {
         super();
     }
 
-    public write(writer: Writer): void {
+    public write(_writer: Writer): void {
+        return;
+    }
+
+    public writeTypeDefinition(writer: Writer): void {
         if (this.internalType) {
             switch (this.internalType.type) {
                 case "self":
@@ -144,26 +148,26 @@ export class Type extends AstNode {
                     writer.delimit({
                         nodes: this.internalType.elems,
                         delimiter: " | ",
-                        writeFunction: (argument) => argument.write(writer)
+                        writeFunction: (argument) => argument.writeTypeDefinition(writer)
                     });
                     break;
                 case "intersection":
                     writer.delimit({
                         nodes: this.internalType.elems,
                         delimiter: " & ",
-                        writeFunction: (argument) => argument.write(writer)
+                        writeFunction: (argument) => argument.writeTypeDefinition(writer)
                     });
                     break;
                 case "array":
                     writer.write("Array[");
-                    this.internalType.elem.write(writer);
+                    this.internalType.elem.writeTypeDefinition(writer);
                     writer.write("]");
                     break;
                 case "hash":
                     writer.write("Hash[");
-                    this.internalType.keyType.write(writer);
+                    this.internalType.keyType.writeTypeDefinition(writer);
                     writer.write(", ");
-                    this.internalType.valueType.write(writer);
+                    this.internalType.valueType.writeTypeDefinition(writer);
                     writer.write("]");
                     break;
                 case "object":
@@ -188,7 +192,7 @@ export class Type extends AstNode {
                     writer.delimit({
                         nodes: this.internalType.parameters,
                         delimiter: ", ",
-                        writeFunction: (argument) => argument.write(writer)
+                        writeFunction: (argument) => argument.writeTypeDefinition(writer)
                     });
                     writer.write("]");
                     break;
