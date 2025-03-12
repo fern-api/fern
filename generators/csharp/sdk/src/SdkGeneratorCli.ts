@@ -1,7 +1,8 @@
 import { writeFile } from "fs/promises";
 
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
+import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
     generateTests as generateModelTests,
     generateModels,

@@ -1,19 +1,17 @@
 import path from "path";
 
 import { File } from "@fern-api/base-generator";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
-
-import { Class, Enum, Interface } from "../ast";
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
 
 export type Namespace = string;
 
 export declare namespace CSharpFile {
     interface Args {
         /* The class to be written to the CSharp File */
-        clazz: Class | Enum | Interface;
+        clazz: csharp.Class | csharp.Enum | csharp.Interface;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* All base namespaces. Can be pulled directly from context. */

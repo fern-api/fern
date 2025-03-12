@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 
 import {
     ContainerType,
@@ -11,9 +12,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { csharp } from "../";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
 
 type WrapperType = "optional" | "list" | "map";

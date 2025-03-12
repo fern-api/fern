@@ -2,6 +2,7 @@ import { camelCase, upperFirst } from "lodash-es";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -18,7 +19,6 @@ import {
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
-import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
@@ -29,8 +29,6 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
-import { Type, TypeParameter } from "../ast";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
@@ -568,7 +566,7 @@ export abstract class AbstractCsharpGeneratorContext<
     /**
      * Prints the Type in a simple string format.
      */
-    public printType(type: Type | TypeParameter): string {
+    public printType(type: csharp.Type | csharp.TypeParameter): string {
         return type.toString({
             namespace: this.getNamespace(),
             allNamespaceSegments: this.getAllNamespaceSegments(),

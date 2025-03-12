@@ -3,12 +3,12 @@ import { template } from "lodash-es";
 import path from "path";
 
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext } from "../cli";
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
+import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { CSharpFile } from "./CSharpFile";
 
 const SRC_DIRECTORY_NAME = "src";

@@ -1,11 +1,24 @@
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
+import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
+    public readonly formatter: CsharpFormatter;
+    public constructor(
+        ir: IntermediateRepresentation,
+        config: FernGeneratorExec.config.GeneratorConfig,
+        customConfig: ModelCustomConfigSchema,
+        generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(ir, config, customConfig, generatorNotificationService);
+        this.formatter = new CsharpFormatter();
+    }
+
     /**
      * __package__.yml types are stored at the top level
      * __{{file}}__.yml types are stored in a directory with the same name as the file

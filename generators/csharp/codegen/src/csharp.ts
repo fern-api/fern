@@ -140,6 +140,7 @@ export {
     Enum,
     Field,
     InstantiatedPrimitive,
+    Interface,
     Method,
     AnonymousFunction,
     MethodInvocation,
