@@ -81,6 +81,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                 inlinedTypes = converted.inlinedTypes ?? {};
             }
         }
+        // TODO (Eden): Correctly handle enum parameters
 
         const availability = await context.getAvailability({
             node: this.parameter,
@@ -98,7 +99,9 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
+                        valueType:
+                            typeReference ??
+                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
                         allowMultiple: this.parameter.explode ?? false,
                         availability
                     },
@@ -113,7 +116,9 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
+                        valueType:
+                            typeReference ??
+                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
                         env: undefined,
                         availability
                     },
@@ -125,7 +130,9 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                     parameter: {
                         name: context.casingsGenerator.generateName(this.parameter.name),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? ParameterConverter.STRING,
+                        valueType:
+                            typeReference ??
+                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
                         location: "ENDPOINT",
                         variable: undefined
                     },

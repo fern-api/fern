@@ -115,7 +115,7 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                 displayName: this.channelPath,
                 baseUrl: this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector),
                 path: {
-                    head: this.channelPath,
+                    head: this.channel.address ?? this.channelPath,
                     parts: []
                 },
                 auth: false,
@@ -169,7 +169,8 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                 parameter: {
                     ...parameterObject,
                     name: parameterKey,
-                    in: type
+                    in: type,
+                    required: true
                 }
             });
             const convertedParameter = await parameterConverter.convert({ context, errorCollector });

@@ -109,7 +109,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 // TODO: Correctly feed in servers
                 baseUrl: this.channel.servers?.[0],
                 path: {
-                    head: this.channelPath,
+                    head: this.channel.address ?? this.channelPath,
                     parts: []
                 },
                 auth: false,
@@ -144,6 +144,15 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         breadcrumbName: string;
     }): Promise<WebSocketMessage | undefined> {
         let convertedSchema: SchemaConverter.Output | undefined = undefined;
+
+        if ("$ref" in operation.message) {
+            const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(
+                operation.message as OpenAPIV3.ReferenceObject
+            );
+            if (resolved.resolved) {
+                operation.message = resolved.value;
+            }
+        }
 
         if ("oneOf" in operation.message) {
             const schemaConverter = new SchemaConverter({
@@ -239,7 +248,8 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                     ...parameterObject,
                     name,
                     in: "query",
-                    description: parameter.description
+                    description: parameter.description,
+                    required: parameter.required ?? false
                 }
             });
             const convertedParameter = await parameterConverter.convert({ context, errorCollector });
