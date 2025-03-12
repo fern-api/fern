@@ -54,7 +54,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // dynamic snippets. Therefore, for the time being, the usage section is omitted.
         // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
 
-        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentSnippets();
+        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.RequestOptions] = this.buildRequestOptionsSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
@@ -75,7 +75,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
     }
 
-    private buildEnvironmentSnippets(): string[] {
+    private buildEnvironmentsSnippets(): string[] {
         const endpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID);
         return endpoints.map(() =>
             this.writeCode(`
