@@ -1278,16 +1278,12 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		return nil
 	}
 
-	isPointerRequired := func(typeReference *ir.TypeReference) bool {
-		return !(typeReference.Unknown != nil || (typeReference.Container != nil && typeReference.Container.Literal == nil))
-	}
-
 	// Collapse optional<nullable<...>> or nullable<optional<...>> into a single optional<...>.
 	// We can assume there aren't arbitrary depth nestings. The node being visited is optional or nullable, so we
 	// only need to check if its container is optional or nullable.
 	optionalOrNullableContainer := getOptionalOrNullableContainer(optionalOrNullable)
 	if optionalOrNullableContainer != nil {
-		if !(isPointerRequired(optionalOrNullableContainer)) {
+		if !(isTypeReferencePointerRequired(optionalOrNullableContainer)) {
 			c.value = value
 			return nil
 		}
@@ -1295,7 +1291,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		return nil
 	}
 
-	if !(isPointerRequired(optionalOrNullable)) {
+	if !(isTypeReferencePointerRequired(optionalOrNullable)) {
 		c.value = value
 		return nil
 	}
@@ -2067,6 +2063,10 @@ func defaultValueForTypeDeclaration(typeDeclaration *ir.TypeDeclaration, types m
 		return ""
 	}
 	return "nil"
+}
+
+func isTypeReferencePointerRequired(typeReference *ir.TypeReference) bool {
+	return !(typeReference.Unknown != nil || (typeReference.Container != nil && typeReference.Container.Literal == nil))
 }
 
 func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
