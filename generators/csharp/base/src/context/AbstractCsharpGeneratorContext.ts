@@ -573,7 +573,7 @@ export abstract class AbstractCsharpGeneratorContext<
             allTypeClassReferences: this.getAllTypeClassReferences(),
             rootNamespace: this.getNamespace(),
             customConfig: this.customConfig,
-            skipImports: true
+            skipImports: true,
         });
     }
 
