@@ -8,7 +8,7 @@ import {
     TypeId,
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, ErrorCollector, convertNumberToSnakeCase } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaConverter } from "./SchemaConverter";
@@ -130,7 +130,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         for (const [index, subSchema] of this.schema.oneOf.entries()) {
-            const subBreadcrumbs = [...this.breadcrumbs, "oneOf", index.toString()];
+            const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
             // if subschema is a reference
             if (context.isReferenceObject(subSchema)) {

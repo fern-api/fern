@@ -78,8 +78,8 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 context,
                 errorCollector,
                 operation: this.channel.subscribe,
-                defaultId: "subscribe",
-                breadcrumbName: "subscribe"
+                defaultId: "subscribeEvent",
+                breadcrumbName: "subscribeEvent"
             });
         }
 
@@ -89,8 +89,8 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 context,
                 errorCollector,
                 operation: this.channel.publish,
-                defaultId: "publish",
-                breadcrumbName: "publish"
+                defaultId: "publishEvent",
+                breadcrumbName: "publishEvent"
             });
         }
 
@@ -112,12 +112,12 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                     head: this.channelPath,
                     parts: []
                 },
-                // TODO: Dynamically parse auth from channel
                 auth: false,
                 headers,
                 queryParameters,
                 pathParameters,
                 messages,
+                // TODO: Add examples
                 examples: [],
                 availability: await context.getAvailability({
                     node: this.channel,

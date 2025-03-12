@@ -18527,30 +18527,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "subscribe": {
+    "subscribeEvent": {
       "name": {
-        "typeId": "subscribe",
+        "typeId": "subscribeEvent",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "subscribe",
+          "originalName": "subscribeEvent",
           "camelCase": {
-            "unsafeName": "subscribe",
-            "safeName": "subscribe"
+            "unsafeName": "subscribeEvent",
+            "safeName": "subscribeEvent"
           },
           "snakeCase": {
-            "unsafeName": "subscribe",
-            "safeName": "subscribe"
+            "unsafeName": "subscribe_event",
+            "safeName": "subscribe_event"
           },
           "screamingSnakeCase": {
-            "unsafeName": "SUBSCRIBE",
-            "safeName": "SUBSCRIBE"
+            "unsafeName": "SUBSCRIBE_EVENT",
+            "safeName": "SUBSCRIBE_EVENT"
           },
           "pascalCase": {
-            "unsafeName": "Subscribe",
-            "safeName": "Subscribe"
+            "unsafeName": "SubscribeEvent",
+            "safeName": "SubscribeEvent"
           }
         }
       },
@@ -18864,30 +18864,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "publish": {
+    "publishEvent": {
       "name": {
-        "typeId": "publish",
+        "typeId": "publishEvent",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "publish",
+          "originalName": "publishEvent",
           "camelCase": {
-            "unsafeName": "publish",
-            "safeName": "publish"
+            "unsafeName": "publishEvent",
+            "safeName": "publishEvent"
           },
           "snakeCase": {
-            "unsafeName": "publish",
-            "safeName": "publish"
+            "unsafeName": "publish_event",
+            "safeName": "publish_event"
           },
           "screamingSnakeCase": {
-            "unsafeName": "PUBLISH",
-            "safeName": "PUBLISH"
+            "unsafeName": "PUBLISH_EVENT",
+            "safeName": "PUBLISH_EVENT"
           },
           "pascalCase": {
-            "unsafeName": "Publish",
-            "safeName": "Publish"
+            "unsafeName": "PublishEvent",
+            "safeName": "PublishEvent"
           }
         }
       },
@@ -47102,8 +47102,8 @@
       "pathParameters": [],
       "messages": [
         {
-          "type": "subscribe",
-          "displayName": "subscribe",
+          "type": "subscribeEvent",
+          "displayName": "subscribeEvent",
           "origin": "server",
           "body": {
             "bodyType": {
@@ -47112,25 +47112,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "subscribe",
+                "originalName": "subscribeEvent",
                 "camelCase": {
-                  "unsafeName": "subscribe",
-                  "safeName": "subscribe"
+                  "unsafeName": "subscribeEvent",
+                  "safeName": "subscribeEvent"
                 },
                 "snakeCase": {
-                  "unsafeName": "subscribe",
-                  "safeName": "subscribe"
+                  "unsafeName": "subscribe_event",
+                  "safeName": "subscribe_event"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "SUBSCRIBE",
-                  "safeName": "SUBSCRIBE"
+                  "unsafeName": "SUBSCRIBE_EVENT",
+                  "safeName": "SUBSCRIBE_EVENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "Subscribe",
-                  "safeName": "Subscribe"
+                  "unsafeName": "SubscribeEvent",
+                  "safeName": "SubscribeEvent"
                 }
               },
-              "typeId": "subscribe",
+              "typeId": "subscribeEvent",
               "inline": false,
               "type": "named"
             },
@@ -47138,8 +47138,8 @@
           }
         },
         {
-          "type": "publish",
-          "displayName": "publish",
+          "type": "publishEvent",
+          "displayName": "publishEvent",
           "origin": "server",
           "body": {
             "bodyType": {
@@ -47148,25 +47148,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "publish",
+                "originalName": "publishEvent",
                 "camelCase": {
-                  "unsafeName": "publish",
-                  "safeName": "publish"
+                  "unsafeName": "publishEvent",
+                  "safeName": "publishEvent"
                 },
                 "snakeCase": {
-                  "unsafeName": "publish",
-                  "safeName": "publish"
+                  "unsafeName": "publish_event",
+                  "safeName": "publish_event"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "PUBLISH",
-                  "safeName": "PUBLISH"
+                  "unsafeName": "PUBLISH_EVENT",
+                  "safeName": "PUBLISH_EVENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "Publish",
-                  "safeName": "Publish"
+                  "unsafeName": "PublishEvent",
+                  "safeName": "PublishEvent"
                 }
               },
-              "typeId": "publish",
+              "typeId": "publishEvent",
               "inline": false,
               "type": "named"
             },

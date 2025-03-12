@@ -1,6 +1,14 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
+import {
+    FernIr,
+    HttpHeader,
+    PathParameter,
+    QueryParameter,
+    TypeDeclaration,
+    WebSocketChannel,
+    WebSocketMessage
+} from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV3 } from "..";
@@ -11,6 +19,7 @@ export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractConverter.Args {
         channel: AsyncAPIV3.ChannelV3;
         channelPath: string;
+        operations: Record<string, AsyncAPIV3.Operation>;
     }
 
     export interface Output {
@@ -25,17 +34,20 @@ type ChannelParameterLocation = {
 };
 
 const LOCATION_PREFIX = "$message.";
+const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
 
 export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterContext, ChannelConverter3_0.Output> {
     private readonly channel: AsyncAPIV3.ChannelV3;
     private readonly channelPath: string;
+    private readonly operations: Record<string, AsyncAPIV3.Operation>;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath }: ChannelConverter3_0.Args) {
+    constructor({ breadcrumbs, channel, channelPath, operations }: ChannelConverter3_0.Args) {
         super({ breadcrumbs });
         this.channel = channel;
         this.channelPath = channelPath;
+        this.operations = operations;
     }
 
     public async convert({
@@ -50,46 +62,53 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
         const headers: HttpHeader[] = [];
 
         if (this.channel.parameters) {
-            for (const parameter of Object.values(this.channel.parameters ?? {})) {
-                let parameterObject: OpenAPIV3.ParameterObject = parameter;
-                if (context.isReferenceObject(parameter)) {
-                    const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                    if (resolvedReference.resolved) {
-                        parameterObject = resolvedReference.value;
-                    } else {
-                        continue;
+            await this.convertChannelParameters({
+                context,
+                errorCollector,
+                pathParameters,
+                queryParameters,
+                headers
+            });
+        }
+
+        const channelOperations = Object.entries(this.operations).reduce<Record<string, AsyncAPIV3.Operation>>(
+            (acc, [operationId, operation]) => {
+                try {
+                    if (this.getChannelPathFromOperation(operation) === this.channelPath) {
+                        acc[operationId] = operation;
                     }
-                }
-                const location = this.convertChannelParameterLocation(parameter.location, errorCollector);
-                if (location == null) {
-                    continue;
-                }
-                const { type, parameterKey } = location;
-                const parameterConverter = new ParameterConverter({
-                    breadcrumbs: this.breadcrumbs,
-                    parameter: {
-                        ...parameterObject,
-                        name: parameterKey,
-                        in: type
-                    }
-                });
-                const convertedParameter = await parameterConverter.convert({ context, errorCollector });
-                if (convertedParameter != null) {
-                    this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
-                    switch (convertedParameter.type) {
-                        case "path":
-                            pathParameters.push(convertedParameter.parameter);
-                            break;
-                        case "query":
-                            queryParameters.push(convertedParameter.parameter);
-                            break;
-                        case "header":
-                            headers.push(convertedParameter.parameter);
-                            break;
-                    }
+                } catch {}
+                return acc;
+            },
+            {}
+        );
+
+        const messages: WebSocketMessage[] = [];
+
+        for (const [operationId, operation] of Object.entries(channelOperations)) {
+            for (const message of operation.messages) {
+                const resolved = await context.convertReferenceToTypeReference(message);
+                if (resolved.ok) {
+                    const messageBody = FernIr.WebSocketMessageBody.reference({
+                        bodyType: resolved.reference,
+                        docs: operation.description
+                    });
+                    messages.push({
+                        type: operationId,
+                        displayName: operationId,
+                        origin: operation.action === "send" ? "client" : "server",
+                        body: messageBody,
+                        availability: await context.getAvailability({
+                            node: operation,
+                            breadcrumbs: this.breadcrumbs,
+                            errorCollector
+                        }),
+                        docs: operation.description
+                    });
                 }
             }
         }
+
         return {
             channel: {
                 name: context.casingsGenerator.generateName(this.channelPath),
@@ -99,12 +118,12 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                     head: this.channelPath,
                     parts: []
                 },
-                // TODO: Dynamically parse auth from channel
                 auth: false,
                 headers,
                 queryParameters,
                 pathParameters,
-                messages: [],
+                messages,
+                // TODO: Add examples
                 examples: [],
                 availability: await context.getAvailability({
                     node: this.channel,
@@ -115,6 +134,60 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private async convertChannelParameters({
+        context,
+        errorCollector,
+        pathParameters,
+        queryParameters,
+        headers
+    }: {
+        context: AsyncAPIConverterContext;
+        errorCollector: ErrorCollector;
+        pathParameters: PathParameter[];
+        queryParameters: QueryParameter[];
+        headers: HttpHeader[];
+    }): Promise<void> {
+        for (const parameter of Object.values(this.channel.parameters ?? {})) {
+            let parameterObject: OpenAPIV3.ParameterObject = parameter;
+            if (context.isReferenceObject(parameter)) {
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+                if (resolvedReference.resolved) {
+                    parameterObject = resolvedReference.value;
+                } else {
+                    continue;
+                }
+            }
+            const location = this.convertChannelParameterLocation(parameter.location, errorCollector);
+            if (location == null) {
+                continue;
+            }
+            const { type, parameterKey } = location;
+            const parameterConverter = new ParameterConverter({
+                breadcrumbs: this.breadcrumbs,
+                parameter: {
+                    ...parameterObject,
+                    name: parameterKey,
+                    in: type
+                }
+            });
+            const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+            if (convertedParameter != null) {
+                this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
+                switch (convertedParameter.type) {
+                    case "path":
+                        pathParameters.push(convertedParameter.parameter);
+                        break;
+                    case "query":
+                        queryParameters.push(convertedParameter.parameter);
+                        break;
+                    case "header":
+                        headers.push(convertedParameter.parameter);
+                        break;
+                }
+            }
+        }
     }
 
     private convertChannelParameterLocation(
@@ -185,5 +258,12 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             return undefined;
         }
         return serverName;
+    }
+
+    private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
+        if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
+            throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
+        }
+        return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
     }
 }
