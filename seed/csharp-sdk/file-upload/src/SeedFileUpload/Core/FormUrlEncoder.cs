@@ -4,5 +4,5 @@ namespace SeedFileUpload.Core;
 
 public static class FormUrlEncoder
 {
-    internal static FormUrlEncodedContent Encode(object value) => new(QueryString.ToQueryStringCollection(value));
+    internal static FormUrlEncodedContent Encode(object value) => new(QueryStringConverter.ToQueryStringCollection(value));
 }

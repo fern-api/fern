@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
@@ -89,7 +88,7 @@ internal class RawClient(ClientOptions clientOptions)
         internal IRequestOptions? Options { get; init; }
         internal abstract HttpContent? CreateContent();
     }
-    
+
     internal record EmptyApiRequest : BaseApiRequest
     {
         internal override HttpContent? CreateContent() => null;
@@ -122,10 +121,10 @@ internal class RawClient(ClientOptions clientOptions)
     {
         private readonly List<Action<MultipartFormDataContent>> _partAdders = new();
 
-        internal void AddJsonPart(string? name, object? value)
-            => AddJsonPart(name, value, "application/json");
+        internal void AddJsonPart(string name, object? value)
+            => AddJsonPart(name, value, null);
 
-        internal void AddJsonPart(string? name, object? value, string contentType)
+        internal void AddJsonPart(string name, object? value, string? contentType)
         {
             if (value is null)
             {
@@ -134,55 +133,49 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
+                var (encoding, mediaType) = ParseContentTypeOrDefault(contentType, Encoding.UTF8, "application/json");
                 var content = new StringContent(
                     JsonUtils.Serialize(value),
-                    Encoding.UTF8,
-                    contentType
+                    encoding,
+                    mediaType
                 );
-                if (name is null)
-                {
-                    form.Add(content);
-                }
-                else
-                {
-                    form.Add(content, name);
-                }
+                form.Add(content, name);
             });
         }
 
-        internal void AddJsonParts(string? name, IEnumerable<object?>? value)
-            => AddJsonParts(name, value, "application/json");
+        internal void AddJsonParts(string name, IEnumerable<object?>? value)
+            => AddJsonParts(name, value, null);
 
-        internal void AddJsonParts(string? name, IEnumerable<object?>? value, string contentType)
+        internal void AddJsonParts(string name, IEnumerable<object?>? value, string? contentType)
         {
             if (value is null)
             {
                 return;
             }
-            
+
             foreach (var item in value)
             {
                 AddJsonPart(name, item, contentType);
             }
         }
 
-        internal void AddStringPart(string? name, object? value)
+        internal void AddStringPart(string name, object? value)
             => AddStringPart(name, value, null);
 
-        internal void AddStringPart(string? name, object? value, string? contentType)
+        internal void AddStringPart(string name, object? value, string? contentType)
         {
             if (value is null)
             {
                 return;
             }
-            
-            AddStringPart(name, ValueToStringConverter.Convert(value), contentType);
+
+            AddStringPart(name, ValueConvert.ToString(value), contentType);
         }
 
-        internal void AddStringPart(string? name, string? value)
+        internal void AddStringPart(string name, string? value)
             => AddStringPart(name, value, null);
 
-        internal void AddStringPart(string? name, string? value, string? contentType)
+        internal void AddStringPart(string name, string? value, string? contentType)
         {
             if (value is null)
             {
@@ -191,39 +184,33 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
+                var (encoding, mediaType) = ParseContentTypeOrDefault(contentType, Encoding.UTF8, "text/plain");
                 var content = new StringContent(
                     value,
-                    Encoding.UTF8,
-                    contentType
+                    encoding,
+                    mediaType
                 );
-                if (name is null)
-                {
-                    form.Add(content);
-                }
-                else
-                {
-                    form.Add(content, name);
-                }
+                form.Add(content, name);
             });
         }
 
-        internal void AddStringParts(string? name, IEnumerable<object?>? value)
+        internal void AddStringParts(string name, IEnumerable<object?>? value)
             => AddStringParts(name, value, null);
 
-        internal void AddStringParts(string? name, IEnumerable<object?>? value, string? contentType)
+        internal void AddStringParts(string name, IEnumerable<object?>? value, string? contentType)
         {
             if (value is null)
             {
                 return;
             }
-            
-            AddStringPart(name, ValueToStringConverter.Convert(value), contentType);
+
+            AddStringPart(name, ValueConvert.ToString(value), contentType);
         }
 
-        internal void AddStringParts(string? name, IEnumerable<string?>? value)
-            => AddStringPart(name, value, null);
+        internal void AddStringParts(string name, IEnumerable<string?>? value)
+            => AddStringParts(name, value, null);
 
-        internal void AddStringParts(string? name, IEnumerable<string?>? value, string? contentType)
+        internal void AddStringParts(string name, IEnumerable<string?>? value, string? contentType)
         {
             if (value is null)
             {
@@ -236,10 +223,10 @@ internal class RawClient(ClientOptions clientOptions)
             }
         }
 
-        internal void AddStreamPart(string? name, Stream? stream, string? fileName)
-            => AddStreamPart(name, stream, fileName, "application/octet-stream");
+        internal void AddStreamPart(string name, Stream? stream, string? fileName)
+            => AddStreamPart(name, stream, fileName, null);
 
-        internal void AddStreamPart(string? name, Stream? stream, string? fileName, string contentType)
+        internal void AddStreamPart(string name, Stream? stream, string? fileName, string? contentType)
         {
             if (stream is null)
             {
@@ -248,72 +235,83 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var content = new StreamContent(stream);
-                content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
+                var content = new StreamContent(stream)
+                {
+                    Headers = { ContentType = MediaTypeHeaderValue.Parse(contentType ?? "application/octet-stream") }
+                };
 
-                if (name is not null && fileName is not null)
+                if (fileName is not null)
                 {
                     form.Add(content, name, fileName);
                 }
-                else if (name is not null)
-                {
-                    form.Add(content, name);
-                }
                 else
                 {
-                    form.Add(content);
+                    form.Add(content, name);
                 }
             });
         }
 
-        internal void AddFileParameterPart(string? name, FileParameter? file)
-            => AddFileParameterPart(name, file, "application/octet-stream");
+        internal void AddFileParameterPart(string name, FileParameter? file)
+            => AddFileParameterPart(name, file, null);
 
-        internal void AddFileParameterPart(string? name, FileParameter? file, string fallbackContentType)
+        internal void AddFileParameterPart(string name, FileParameter? file, string? fallbackContentType)
             => AddStreamPart(name, file?.Stream, file?.FileName, file?.ContentType ?? fallbackContentType);
 
-        internal void AddFileParameterParts(string? name, IEnumerable<FileParameter?>? files)
-            => AddFileParameterParts(name, files, "application/octet-stream");
+        internal void AddFileParameterParts(string name, IEnumerable<FileParameter?>? files)
+            => AddFileParameterParts(name, files, null);
 
-        internal void AddFileParameterParts(string? name, IEnumerable<FileParameter?>? files, string fallbackContentType)
+        internal void AddFileParameterParts(string name, IEnumerable<FileParameter?>? files,
+            string? fallbackContentType)
         {
             if (files is null)
             {
                 return;
             }
+
             foreach (var file in files)
             {
                 AddFileParameterPart(name, file, fallbackContentType);
             }
         }
-        
-        internal void AddFormEncodedPart(string? name, object? value)
+
+        internal void AddFormEncodedPart(string name, object? value)
             => AddFormEncodedPart(name, value, null);
 
-        internal void AddFormEncodedPart(string? name, object? value, string? contentType)
+        internal void AddFormEncodedPart(string name, object? value, string? contentType)
         {
-            if(value is null)
+            if (value is null)
             {
                 return;
             }
+
             _partAdders.Add(form =>
             {
                 var content = FormUrlEncoder.Encode(value);
-                if (contentType is not null)
-                { 
+                if (!string.IsNullOrEmpty(contentType))
+                {
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
                 }
-                if (name is null)
-                {
-                    form.Add(content);
-                }
-                else
-                {
-                    form.Add(content, name);
-                }
+
+                form.Add(content, name);
             });
         }
-        
+
+        internal void AddFormEncodedParts(string name, IEnumerable<object?>? value)
+            => AddFormEncodedParts(name, value, null);
+
+        internal void AddFormEncodedParts(string name, IEnumerable<object?>? value, string? contentType)
+        {
+            if (value is null)
+            {
+                return;
+            }
+
+            foreach (var item in value)
+            {
+                AddFormEncodedPart(name, item, contentType);
+            }
+        }
+
         internal override HttpContent CreateContent()
         {
             var form = new MultipartFormDataContent();
@@ -469,5 +467,29 @@ internal class RawClient(ClientOptions clientOptions)
                 httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
             }
         }
+    }
+
+    private static (Encoding encoding, string mediaType) ParseContentTypeOrDefault(string? contentType,
+        Encoding encodingFallback, string mediaTypeFallback)
+    {
+        var encoding = encodingFallback;
+        var mediaType = mediaTypeFallback;
+        if (string.IsNullOrEmpty(contentType))
+        {
+            return (encoding, mediaType);
+        }
+
+        var mediaTypeHeaderValue = MediaTypeHeaderValue.Parse(contentType);
+        if (!string.IsNullOrEmpty(mediaTypeHeaderValue.CharSet))
+        {
+            encoding = Encoding.GetEncoding(mediaTypeHeaderValue.CharSet);
+        }
+
+        if (!string.IsNullOrEmpty(mediaTypeHeaderValue.MediaType))
+        {
+            mediaType = mediaTypeHeaderValue.MediaType;
+        }
+
+        return (encoding, mediaType);
     }
 }

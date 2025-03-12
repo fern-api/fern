@@ -5,11 +5,11 @@ using SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 
-namespace SeedFileUpload.Test.Core;
+namespace SeedFileUpload.Test.Core.RawClientTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class RawClientTests
+public class RetriesTests
 {
     private const int MaxRetries = 3;
     private WireMockServer _server;
