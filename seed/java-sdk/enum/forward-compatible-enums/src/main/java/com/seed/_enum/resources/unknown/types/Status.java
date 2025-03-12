@@ -46,7 +46,7 @@ public final class Status {
                 return visitor.visitUnknown();
             case KNOWN:
                 return visitor.visitKnown();
-            case UNKNOWN:
+            case _UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
         }
@@ -60,7 +60,7 @@ public final class Status {
             case "Known":
                 return KNOWN;
             default:
-                return new Status(Value.UNKNOWN, value);
+                return new Status(Value._UNKNOWN, value);
         }
     }
 

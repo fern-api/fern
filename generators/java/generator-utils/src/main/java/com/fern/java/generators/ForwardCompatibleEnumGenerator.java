@@ -188,7 +188,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                     .unindent();
         });
         CodeBlock acceptCodeBlock = acceptMethodImplementation
-                .add("case UNKNOWN:\n")
+                .add("case $L:\n", resolveName(UNKNOWN_ENUM_CONSTANT))
                 .add("default:\n")
                 .indent()
                 .addStatement("return visitor.visitUnknown(string)")
@@ -217,7 +217,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         CodeBlock valueOfCodeBlock = valueOfCodeBlockBuilder
                 .add("default:\n")
                 .indent()
-                .addStatement("return new $T(Value.UNKNOWN, $L)", className, VALUE_FIELD_NAME)
+                .addStatement("return new $T(Value.$L, $L)", className, resolveName(UNKNOWN_ENUM_CONSTANT), VALUE_FIELD_NAME)
                 .unindent()
                 .endControlFlow()
                 .build();
@@ -238,7 +238,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
                         enumValue.getName().getName().getScreamingSnakeCase().getSafeName()));
-        addUnknown(nestedValueEnumBuilder);
+        nestedValueEnumBuilder.addEnumConstant(resolveName(UNKNOWN_ENUM_CONSTANT));
         return nestedValueEnumBuilder.build();
     }
 
@@ -258,18 +258,13 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         return VisitorFactory.buildVisitorInterface(visitMethodArgs);
     }
 
-    private void addUnknown(TypeSpec.Builder nestedValueEnumBuilder) {
-        Set<String> enumNames = enumTypeDeclaration.getValues().stream()
+    private String resolveName(String newName) {
+        Set<String> existingNames = enumTypeDeclaration.getValues().stream()
                 .map(EnumValue::getName)
                 .map(NameAndWireValue::getName)
                 .map(Name::getScreamingSnakeCase)
                 .map(SafeAndUnsafeString::getSafeName)
                 .collect(Collectors.toSet());
-
-        nestedValueEnumBuilder.addEnumConstant(resolveName(enumNames, UNKNOWN_ENUM_CONSTANT));
-    }
-
-    private static String resolveName(Set<String> existingNames, String newName) {
         while (existingNames.contains(newName)) {
             newName = "_" + newName;
         }
