@@ -1,55 +1,672 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.GetMetadataRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
-exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `"TODO: Implement me!"`;
+client.service().getMetadata(
+    GetMetadataRequest
+        .builder()
+        .xAPIVersion("0.0.1")
+        .tag(
+            new ArrayList<Optional<String>>(
+                Arrays.asList("development", "public")
+            )
+        )
+        .shallow(false)
+        .build()
+);
+"
+`;
 
-exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.GetMetadataRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `"TODO: Implement me!"`;
+client.service().getMetadata(
+    GetMetadataRequest
+        .builder()
+        .xAPIVersion("0.0.1")
+        .tag(
+            new ArrayList<Optional<String>>(
+                Arrays.asList("development")
+            )
+        )
+        .shallow(false)
+        .build()
+);
+"
+`;
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > file-upload > 'POST /' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.Actor;
+import com.acme.acme.types.BigEntity;
+import com.acme.acme.types.CastMember;
+import com.acme.acme.types.ExtendedMovie;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
-exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `"TODO: Implement me!"`;
+client.service().createBigEntity(
+    BigEntity
+        .builder()
+        .castMember(
+            CastMember.ofActor(
+                Actor
+                    .builder()
+                    .id("john.doe")
+                    .name("John Doe")
+                    .build()
+            )
+        )
+        .extendedMovie(
+            ExtendedMovie
+                .builder()
+                .cast(
+                    new ArrayList<String>(
+                        Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
+                    )
+                )
+                .id("movie-sda231x")
+                .title("Pulp Fiction")
+                .from("Quentin Tarantino")
+                .rating(8.5)
+                .type("movie")
+                .tag("tag-12efs9dv")
+                .metadata(
+                    new HashMap<String, Object>() {{
+                        put("academyAward", true);
+                        put("releaseDate", "2023-12-08");
+                        put("ratings", new 
+                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
+                            put("imdb", 7.6);
+                        }});
+                    }}
+                )
+                .revenue(1000000L)
+                .build()
+        )
+        .build()
+);
+"
+`;
 
-exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
 
-exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.Movie;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
-exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `"TODO: Implement me!"`;
+client.service().createMovie(
+    Movie
+        .builder()
+        .id("movie-c06a4ad7")
+        .title("The Boy and the Heron")
+        .from("Hayao Miyazaki")
+        .rating(8)
+        .type("movie")
+        .tag("development")
+        .metadata(
+            new HashMap<String, Object>() {{
+                put("actors", new
+                ArrayList<Object>() {Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")
+                });
+                put("releaseDate", "2023-12-08");
+                put("ratings", new 
+                HashMap<String, Object>() {{put("rottenTomatoes", 97);
+                    put("imdb", 7.6);
+                }});
+            }}
+        )
+        .revenue(1000000L)
+        .prequel("movie-cv9b914f")
+        .build()
+);
+"
+`;
 
-exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.types.ObjectWithOptionalField;
+import java.math.BigInteger;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
 
-exports[`snippets (default) > nullable > 'Body properties' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `"TODO: Implement me!"`;
+client.endpoints().object().getAndReturnWithOptionalField(
+    ObjectWithOptionalField
+        .builder()
+        .string("string")
+        .integer(1)
+        .long(1000000L)
+        .double(1.1)
+        .bool(true)
+        .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+        .date("2023-01-15")
+        .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        .base64("SGVsbG8gd29ybGQh".getBytes())
+        .list(
+            new ArrayList<String>(
+                Arrays.asList("list", "list")
+            )
+        )
+        .set(
+            new HashSet<String>(
+                Arrays.asList("set")
+            )
+        )
+        .map(
+            new HashMap<Integer, String>() {{
+                put(1, "map");
+            }}
+        )
+        .bigint(new BigInteger("1000000"))
+        .build()
+);
+"
+`;
 
-exports[`snippets (default) > nullable > 'Query parameters' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
 
-exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"package com.example.usage;
 
-exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `"TODO: Implement me!"`;
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.types.ObjectWithRequiredField;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `"TODO: Implement me!"`;
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
 
-exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `"TODO: Implement me!"`;
+client.endpoints().container().getAndReturnListOfObjects(
+    new ArrayList<ObjectWithRequiredField>(
+        Arrays.asList(
+            ObjectWithRequiredField
+                .builder()
+                .string("one")
+                .build(),
+            ObjectWithRequiredField
+                .builder()
+                .string("two")
+                .build(),
+            ObjectWithRequiredField
+                .builder()
+                .string("three")
+                .build()
+        )
+    )
+);
+"
+`;
 
-exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
+
+client.endpoints().container().getAndReturnListOfPrimitives(
+    new ArrayList<String>(
+        Arrays.asList("one", "two", "three")
+    )
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.FileStream;
+import com.acme.acme.types.MyRequest;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .build();
+
+client.service().post(
+    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
+    new FileStream(ByteArrayInputStream("First".getBytes(StandardCharsets.UTF_8))),
+    MyRequest
+        .builder()
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.FileStream;
+import com.acme.acme.types.JustFileRequest;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .build();
+
+client.service().justFile(
+    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
+    JustFileRequest
+        .builder()
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.FileStream;
+import com.acme.acme.types.JustFileWithQueryParamsRequest;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .build();
+
+client.service().justFileWithQueryParams(
+    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
+    JustFileWithQueryParamsRequest
+        .builder()
+        .integer(42)
+        .maybeString("exists")
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
+
+client.imdb().getMovie("movie_xyz");
+"
+`;
+
+exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.CreateMovieRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
+
+client.imdb().createMovie(
+    CreateMovieRequest
+        .builder()
+        .title("The Matrix")
+        .rating(8.2)
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Environment;
+import com.acme.acme.types.GetPresignedURLRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .environment(
+        Environment("https://custom.ec2.aws.com", "https://custom.s3.aws.com")
+    )
+    .build();
+
+client.s3().getPresignedURL(
+    GetPresignedURLRequest
+        .builder()
+        .s3Key("xyz")
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Environment.PRODUCTION;
+import com.acme.acme.types.GetPresignedURLRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .environment(
+        Environment.PRODUCTION
+    )
+    .build();
+
+client.s3().getPresignedURL(
+    GetPresignedURLRequest
+        .builder()
+        .s3Key("xyz")
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Environment.STAGING;
+import com.acme.acme.types.GetPresignedURLRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .environment(
+        Environment.STAGING
+    )
+    .build();
+
+client.s3().getPresignedURL(
+    GetPresignedURLRequest
+        .builder()
+        .s3Key("xyz")
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Body properties' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Nullable;
+import com.acme.acme.types.CreateUserRequest;
+import com.acme.acme.types.Metadata;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.nullable().createUser(
+    CreateUserRequest
+        .builder()
+        .username("john.doe")
+        .avatar(
+            Nullable.ofNull()
+        )
+        .tags(
+            new ArrayList<String>(
+                Arrays.asList("admin")
+            )
+        )
+        .metadata(
+            Metadata
+                .builder()
+                .createdAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
+                .updatedAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
+                .avatar(
+                    Nullable.ofNull()
+                )
+                .activated(
+                    Nullable.ofNull()
+                )
+                .build()
+        )
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Nullable;
+import com.acme.acme.types.GetUsersRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.nullable().getUsers(
+    GetUsersRequest
+        .builder()
+        .usernames(
+            new ArrayList<Optional<String>>(
+                Arrays.asList("john.doe", "jane.doe")
+            )
+        )
+        .tags(
+            new ArrayList<Optional<String>>(
+                Arrays.asList(
+                    Nullable.ofNull()
+                )
+            )
+        )
+        .extra(
+            Nullable.ofNull()
+        )
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Environment.PRODUCTION;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .environment(
+        Environment.PRODUCTION
+    )
+    .build();
+
+client.dummy().getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Environment.STAGING;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .environment(
+        Environment.STAGING
+    )
+    .build();
+
+client.dummy().getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .url("http://localhost:8080")
+    .build();
+
+client.dummy().getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;

@@ -26,13 +26,17 @@ export class DynamicTypeLiteralMapper {
 
     public convert(args: DynamicTypeLiteralMapper.Args): csharp.TypeLiteral {
         // eslint-disable-next-line eqeqeq
-        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+        if (args.value === null) {
+            if (this.context.isNullable(args.typeReference)) {
+                return csharp.TypeLiteral.null();
+            }
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "Expected non-null value, but got null"
             });
+            return csharp.TypeLiteral.nop();
         }
-        if (args.value == null) {
+        if (args.value === undefined) {
             return csharp.TypeLiteral.nop();
         }
         switch (args.typeReference.type) {

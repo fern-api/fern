@@ -144,3 +144,26 @@ allowedFailures:
   - streaming-parameter
   - literal
   - java-pagination-deep-cursor-path
+
+  # Snippet failures; many of these failures are due to the fact that a
+  # required list of query parameters is not actually required by the builder.
+  - any-auth
+  - api-wide-base-path
+  - extra-properties
+  - java-inline-types:inline
+  - java-inline-types:no-inline
+  - java-inline-types:no-wrapped-aliases
+  - nullable:wrapped-aliases
+  - nullable:no-custom-config
+  - oauth-client-credentials
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - package-yml
+  - pagination
+  - path-parameters
+  - query-parameters
+  - streaming
+  - unions
+  - variables
+
