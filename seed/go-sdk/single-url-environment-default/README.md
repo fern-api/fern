@@ -6,13 +6,12 @@ The Seed Go library provides convenient access to the Seed API from Go.
 
 ## Environments
 
-By default, the production environment is used. However, you can choose between different environments by using
-the `option.WithBaseURL` option. You can configure any arbitrary base URL, which is particularly useful
-in test environments.
+You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
+URL, which is particularly useful in test environments.
 
 ```go
 client := seedclient.NewClient(
-    option.WithBaseURL("https://example.com"),
+    option.WithBaseURL(seed.Environments.Production),
 )
 ```
 
@@ -30,6 +29,30 @@ if err != nil {
     }
     return err
 }
+```
+
+## Request Options
+
+A variety of request options are included to adapt the behavior of the library, which includes configuring
+authorization tokens, or providing your own instrumented `*http.Client`. These request options can either be
+specified on the client so that they're applied on every request, or for an individual request, like so:
+
+```go
+// Specify default options applied on every request.
+client := seedclient.NewClient(
+    option.WithToken("<YOUR_API_KEY>"),
+    option.WithHTTPClient(
+        &http.Client{
+            Timeout: 5 * time.Second,
+        },
+    ),
+)
+
+// Specify options for an individual request.
+response, err := client.Dummy.GetDummy(
+    ...,
+    option.WithToken("<YOUR_API_KEY>"),
+)
 ```
 
 ## Advanced
