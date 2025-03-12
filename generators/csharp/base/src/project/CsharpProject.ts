@@ -6,9 +6,8 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 
-import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext } from "../cli";
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
+import { AbstractCsharpGeneratorContext, AsIsFiles, BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+
 import { CSharpFile } from "./CSharpFile";
 
 const SRC_DIRECTORY_NAME = "src";
