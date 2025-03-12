@@ -28,7 +28,6 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/ir-sdk": "^57.0.0",
     "lodash-es": "^4.17.21",
     "zod": "^3.22.3"
@@ -36,7 +35,6 @@
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/ir-sdk": "^57.0.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",
