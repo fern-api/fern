@@ -1,0 +1,201 @@
+---
+title: OpenAPI Generator vs Fern
+---
+
+When choosing between OpenAPI Generator and Fern for your SDK generation needs, it's important to understand how these tools compare, especially for modern API development needs. This guide provides an objective comparison to help you make an informed decision.
+
+## Overview
+
+OpenAPI Generator is a widely-used, community-driven tool that generates SDKs from OpenAPI (formerly Swagger) specifications. While it supports over 60 different programming languages and frameworks, the quality and maintenance of these generators can vary significantly. Fern is a modern SDK generator designed from the ground up to create production-ready, type-safe SDKs with an emphasis on exceptional developer experience across its supported languages.
+
+## Key Comparison Areas
+
+### 1. Type Safety & Developer Experience
+
+#### OpenAPI Generator
+- Basic type generation based on OpenAPI schemas
+- Type safety and accuracy can vary significantly between languages
+- May require manual fixes for complex types
+- Type definitions sometimes fall back to generic types
+
+#### Fern
+- Guaranteed type safety across all supported languages
+- Precise, accurate types that match your API exactly
+- Rich type inference and validation
+- Enhanced IDE support with perfect code completion
+- Zero type-related runtime errors
+
+Examples in different languages:
+
+```typescript
+// TypeScript
+
+// OpenAPI Generator - requires type assertion, possible runtime errors
+const response = await client.users.create(data) as UserResponse;
+type UserRole = string; // often uses basic types
+
+// Fern - fully typed, compile-time validation
+const response = await client.users.create({
+    name: "Alice",
+    role: UserRole.ADMIN // enum with exact values
+});
+```
+
+```python
+# Python
+
+# OpenAPI Generator - loose typing
+response = api_instance.create_user(create_user_request)  # type: Any
+
+# Fern - strict typing with runtime validation
+response = client.users.create(
+    name="Alice",
+    role=UserRole.ADMIN  # validated at runtime
+)
+```
+
+### 2. Code Structure & Readability
+
+#### OpenAPI Generator
+- Template-based generation with varying code quality
+- Often requires additional configuration for optimal output
+- Code structure can be verbose and inconsistent
+- May need manual cleanup post-generation
+
+#### Fern
+- Clean, intuitive API design
+- Consistent patterns that feel hand-written
+- Minimal boilerplate code
+- Modern, idiomatic code in each language
+
+Example of API calls:
+
+```python
+# OpenAPI Generator Python
+configuration = Configuration(api_key={'apiKey': 'your-key'})
+api_instance = DefaultApi(ApiClient(configuration))
+result = api_instance.create_user_with_http_info(create_user_request)
+response = result[0]  # Extract actual response
+
+# Fern Python
+client = Client(api_key="your-key")
+user = client.users.create(name="Alice", role="admin")  # Direct, intuitive
+```
+
+### 3. Authentication Handling
+
+#### OpenAPI Generator
+- Basic auth scheme support
+- Manual configuration often needed
+- Inconsistent auth patterns between languages
+- May require additional security handling
+
+#### Fern
+- Built-in security best practices
+- Automatic token refresh and management
+- Consistent auth patterns across languages
+- Built-in support for modern auth flows
+
+### 4. Error Handling
+
+#### OpenAPI Generator
+- Generic error types common
+- Inconsistent error patterns
+- Often requires manual error mapping
+- Error handling varies by template
+
+#### Fern
+- Rich, typed error hierarchies
+- Consistent error patterns across languages
+- Detailed error information preserved
+- Built-in retry mechanisms for transient failures
+
+Example error handling:
+
+```python
+# OpenAPI Generator
+try:
+    result = api_instance.create_user(request)
+except ApiException as e:
+    print(f"Generic error: {e}")  # Limited error information
+
+# Fern
+try:
+    result = client.users.create(name="Alice")
+except InvalidRequestError as e:
+    print(f"Validation failed: {e.code}")  # Specific error types
+    print(f"Fields: {e.fields}")          # Detailed error data
+except RateLimitError as e:
+    print(f"Rate limited, retry after: {e.retry_after}")
+```
+
+### 5. Multi-Language Support
+
+#### OpenAPI Generator
+- Wide language support (60+ languages)
+- Inconsistent maintenance across languages
+- Quality varies significantly between languages
+- Limited testing across languages
+
+#### Fern
+- Focused set of production-ready languages
+- Consistent, high-quality implementations
+- Thoroughly tested in each language
+- Regular updates and improvements
+- New language support added based on production needs
+
+### 6. Documentation
+
+#### OpenAPI Generator
+- Basic documentation generation
+- Documentation quality varies by template
+- Often requires manual enhancement
+- Limited interactive features
+
+#### Fern
+- Beautiful, interactive documentation
+- Consistent docs across languages
+- Real-world examples included
+- Automatic updates with API changes
+- Interactive API playground
+- SDK reference documentation with type information
+
+### 7. Request & Response Handling
+
+#### OpenAPI Generator
+- Basic HTTP client wrapping
+- Manual response parsing often needed
+- Inconsistent request handling
+- Limited built-in optimization
+
+#### Fern
+- Smart request batching and caching
+- Automatic response parsing
+- Consistent patterns across languages
+- Built-in performance optimizations
+- Streaming support where applicable
+
+## Making Your Choice
+
+While both tools can generate SDKs, your choice should align with your priorities for API consumption:
+
+✅ **Choose OpenAPI Generator when:**
+- You absolutely need a language that Fern doesn't yet support
+- You have legacy OpenAPI specifications that must be maintained
+- You need extensive template customization
+- You're willing to trade consistency for broader language support
+
+✅ **Choose Fern when:**
+- You want production-ready SDKs that just work
+- Code quality and developer experience are top priorities
+- You need reliable, type-safe API interactions
+- You want consistent behavior across languages
+- You need modern features like automatic retries and caching
+- Documentation quality matters to your API's adoption
+- You want SDKs that feel hand-crafted rather than generated
+
+## Conclusion
+
+While OpenAPI Generator offers broad language support through its community-driven approach, Fern represents the modern approach to SDK generation with its focus on developer experience, type safety, and production readiness. For teams building APIs that prioritize developer experience and reliability, Fern provides a more polished, maintainable solution that will save development time and reduce API integration errors.
+
+
