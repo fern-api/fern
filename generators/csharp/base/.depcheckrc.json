@@ -1,16 +1,12 @@
 {
   "ignores": [
+    "@fern-fern/ir-sdk",
+    "@trivago/prettier-plugin-sort-imports",
     "@types/jest",
-    "globals",
-    "@trivago/prettier-plugin-sort-imports",
-    "@trivago/prettier-plugin-sort-imports",
-    "globals",
-    "@trivago/prettier-plugin-sort-imports",
-    "@trivago/prettier-plugin-sort-imports",
     "@types/node",
-    "esbuild",
     "@yarnpkg/esbuild-plugin-pnp",
-    "@fern-fern/ir-sdk"
+    "esbuild",
+    "globals"
   ],
   "ignore-patterns": [
     "lib",

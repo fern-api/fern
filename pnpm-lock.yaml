@@ -327,9 +327,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/path-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
