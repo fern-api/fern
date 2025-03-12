@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.multi.line.docs.SeedMultiLineDocsClient;
-import com.seed.multi.line.docs.resources.user.requests.CreateUserRequest;
+import com.seed.multiLineDocs.SeedMultiLineDocsClient;
+import com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;
 
 public class Example1 {
     public static void run() {

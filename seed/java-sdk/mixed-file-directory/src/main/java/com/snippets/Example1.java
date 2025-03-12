@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.mixed.file.directory.SeedMixedFileDirectoryClient;
-import com.seed.mixed.file.directory.resources.user.requests.ListUsersRequest;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;
 
 public class Example1 {
     public static void run() {

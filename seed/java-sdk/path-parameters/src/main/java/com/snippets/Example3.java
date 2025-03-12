@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.path.parameters.SeedPathParametersClient;
-import com.seed.path.parameters.resources.user.requests.GetUsersRequest;
+import com.seed.pathParameters.SeedPathParametersClient;
+import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 
 public class Example3 {
     public static void run() {

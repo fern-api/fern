@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.custom.auth.SeedCustomAuthClient;
+import com.seed.customAuth.SeedCustomAuthClient;
 import java.util.HashMap;
 
 public class Example1 {

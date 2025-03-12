@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.server.sent.events.SeedServerSentEventsClient;
-import com.seed.server.sent.events.resources.completions.requests.StreamCompletionRequest;
+import com.seed.serverSentEvents.SeedServerSentEventsClient;
+import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 
 public class Example1 {
     public static void run() {

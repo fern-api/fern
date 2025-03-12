@@ -1,8 +1,8 @@
 package com.snippets;
 
-import com.seed.idempotency.headers.SeedIdempotencyHeadersClient;
-import com.seed.idempotency.headers.resources.payment.requests.CreatePaymentRequest;
-import com.seed.idempotency.headers.resources.payment.types.Currency;
+import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
+import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
+import com.seed.idempotencyHeaders.resources.payment.types.Currency;
 
 public class Example0 {
     public static void run() {

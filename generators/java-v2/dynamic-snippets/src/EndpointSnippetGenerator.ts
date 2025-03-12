@@ -288,12 +288,8 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter[] {
         return [
             {
-                name: this.context.getMethodName(auth.username),
-                value: java.TypeLiteral.string(values.username)
-            },
-            {
-                name: this.context.getMethodName(auth.password),
-                value: java.TypeLiteral.string(values.password)
+                name: "credentials",
+                value: java.TypeLiteral.raw(`"${values.username}", "${values.password}"`)
             }
         ];
     }

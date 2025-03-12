@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.mixed.case.SeedMixedCaseClient;
-import com.seed.mixed.case.resources.service.requests.ListResourcesRequest;
+import com.seed.mixedCase.SeedMixedCaseClient;
+import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 
 public class Example2 {
     public static void run() {

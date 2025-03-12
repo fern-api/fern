@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.path.parameters.SeedPathParametersClient;
-import com.seed.path.parameters.resources.organizations.requests.SearchOrganizationsRequest;
+import com.seed.pathParameters.SeedPathParametersClient;
+import com.seed.pathParameters.resources.organizations.requests.SearchOrganizationsRequest;
 
 public class Example2 {
     public static void run() {

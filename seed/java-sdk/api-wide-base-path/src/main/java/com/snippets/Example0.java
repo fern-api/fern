@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.api.wide.base.path.SeedApiWideBasePathClient;
+import com.seed.apiWideBasePath.SeedApiWideBasePathClient;
 
 public class Example0 {
     public static void run() {

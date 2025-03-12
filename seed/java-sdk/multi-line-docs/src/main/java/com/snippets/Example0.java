@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.multi.line.docs.SeedMultiLineDocsClient;
+import com.seed.multiLineDocs.SeedMultiLineDocsClient;
 
 public class Example0 {
     public static void run() {

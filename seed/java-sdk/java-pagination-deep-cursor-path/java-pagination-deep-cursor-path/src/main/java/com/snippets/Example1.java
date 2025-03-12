@@ -1,8 +1,8 @@
 package com.snippets;
 
-import com.seed.deep.cursor.path.SeedDeepCursorPathClient;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.IndirectionRequired;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.MainRequired;
+import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
 import java.util.ArrayList;
 import java.util.Arrays;
 

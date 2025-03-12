@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.objects.with.imports.SeedObjectsWithImportsClient;
+import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
 import java.util.HashMap;
 import java.util.Optional;
 

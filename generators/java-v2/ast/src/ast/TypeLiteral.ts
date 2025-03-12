@@ -22,6 +22,7 @@ type InternalTypeLiteral =
     | Long
     | Map
     | Optional
+    | Raw
     | Reference
     | Set
     | String_
@@ -126,6 +127,11 @@ interface Optional {
     useOf?: boolean;
 }
 
+interface Raw {
+    type: "raw";
+    value: string;
+}
+
 interface Reference {
     type: "reference";
     value: AstNode;
@@ -211,6 +217,10 @@ export class TypeLiteral extends AstNode {
             }
             case "optional": {
                 this.writeOptional({ writer, optional: this.internalType });
+                break;
+            }
+            case "raw": {
+                writer.write(this.internalType.value);
                 break;
             }
             case "reference":
@@ -369,6 +379,13 @@ export class TypeLiteral extends AstNode {
         });
     }
 
+    public static raw(value: string): TypeLiteral {
+        return new this({
+            type: "raw",
+            value
+        });
+    }
+
     public static reference(value: AstNode): TypeLiteral {
         return new this({
             type: "reference",
@@ -429,6 +446,7 @@ export class TypeLiteral extends AstNode {
             case "integer":
             case "long":
             case "nop":
+            case "raw":
             case "string":
             case "unknown":
             case "uuid":

@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.auth.environment.variables.SeedAuthEnvironmentVariablesClient;
+import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
 
 public class Example0 {
     public static void run() {

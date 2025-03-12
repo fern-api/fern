@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.any.auth.SeedAnyAuthClient;
-import com.seed.any.auth.resources.auth.requests.GetTokenRequest;
+import com.seed.anyAuth.SeedAnyAuthClient;
+import com.seed.anyAuth.resources.auth.requests.GetTokenRequest;
 
 public class Example0 {
     public static void run() {

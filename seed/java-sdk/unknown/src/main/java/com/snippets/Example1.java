@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.unknown.as.any.SeedUnknownAsAnyClient;
-import com.seed.unknown.as.any.resources.unknown.types.MyObject;
+import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
+import com.seed.unknownAsAny.resources.unknown.types.MyObject;
 import java.util.HashMap;
 
 public class Example1 {

@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.package.yml.SeedPackageYmlClient;
-import com.seed.package.yml.types.EchoRequest;
+import com.seed.packageYml.SeedPackageYmlClient;
+import com.seed.packageYml.types.EchoRequest;
 
 public class Example0 {
     public static void run() {

@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.single.property.SeedSinglePropertyClient;
-import com.seed.single.property.resources.singleproperty.requests.GetThingRequest;
+import com.seed.singleProperty.SeedSinglePropertyClient;
+import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
 
 public class Example0 {
     public static void run() {

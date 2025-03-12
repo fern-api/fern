@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.auth.environment.variables.SeedAuthEnvironmentVariablesClient;
-import com.seed.auth.environment.variables.resources.service.requests.HeaderAuthRequest;
+import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
+import com.seed.authEnvironmentVariables.resources.service.requests.HeaderAuthRequest;
 
 public class Example1 {
     public static void run() {

@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.oauth.client.credentials.SeedOauthClientCredentialsClient;
-import com.seed.oauth.client.credentials.resources.auth.requests.RefreshTokenRequest;
+import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
 
 public class Example1 {
     public static void run() {

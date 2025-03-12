@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.response.property.SeedResponsePropertyClient;
+import com.seed.responseProperty.SeedResponsePropertyClient;
 
 public class Example5 {
     public static void run() {

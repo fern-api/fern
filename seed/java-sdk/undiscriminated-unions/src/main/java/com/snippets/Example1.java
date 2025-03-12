@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.undiscriminated.unions.SeedUndiscriminatedUnionsClient;
+import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
 
 public class Example1 {
     public static void run() {

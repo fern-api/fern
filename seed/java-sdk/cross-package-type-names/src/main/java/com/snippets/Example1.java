@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.cross.package.type.names.SeedCrossPackageTypeNamesClient;
+import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
 
 public class Example1 {
     public static void run() {

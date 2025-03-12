@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.path.parameters.SeedPathParametersClient;
+import com.seed.pathParameters.SeedPathParametersClient;
 
 public class Example0 {
     public static void run() {

@@ -1,10 +1,10 @@
 package com.snippets;
 
-import com.seed.deep.cursor.path.SeedDeepCursorPathClient;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.A;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.B;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.C;
-import com.seed.deep.cursor.path.resources.deepcursorpath.types.D;
+import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.A;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.B;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.D;
 
 public class Example0 {
     public static void run() {

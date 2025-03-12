@@ -1,14 +1,13 @@
 package com.snippets;
 
-import com.seed.basic.auth.SeedBasicAuthClient;
+import com.seed.basicAuth.SeedBasicAuthClient;
 import java.util.HashMap;
 
 public class Example1 {
     public static void run() {
         SeedBasicAuthClient client = SeedBasicAuthClient
             .builder()
-            .username("<username>")
-            .password("<password>")
+            .credentials("<username>", "<password>")
             .url("https://api.fern.com")
             .build();
 

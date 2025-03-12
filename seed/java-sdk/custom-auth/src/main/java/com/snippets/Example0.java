@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.custom.auth.SeedCustomAuthClient;
+import com.seed.customAuth.SeedCustomAuthClient;
 
 public class Example0 {
     public static void run() {

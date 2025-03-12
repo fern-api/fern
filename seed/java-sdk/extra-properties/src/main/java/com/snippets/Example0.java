@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.extra.properties.SeedExtraPropertiesClient;
-import com.seed.extra.properties.resources.user.requests.CreateUserRequest;
+import com.seed.extraProperties.SeedExtraPropertiesClient;
+import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
 
 public class Example0 {
     public static void run() {

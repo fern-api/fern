@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.idempotency.headers.SeedIdempotencyHeadersClient;
+import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
 
 public class Example1 {
     public static void run() {

@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.plain.text.SeedPlainTextClient;
+import com.seed.plainText.SeedPlainTextClient;
 
 public class Example0 {
     public static void run() {

@@ -1,8 +1,8 @@
 package com.snippets;
 
-import com.seed.path.parameters.SeedPathParametersClient;
-import com.seed.path.parameters.resources.user.requests.UpdateUserRequest;
-import com.seed.path.parameters.resources.user.types.User;
+import com.seed.pathParameters.SeedPathParametersClient;
+import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
+import com.seed.pathParameters.resources.user.types.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 

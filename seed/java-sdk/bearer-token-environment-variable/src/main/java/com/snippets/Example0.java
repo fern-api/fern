@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.bearer.token.environment.variable.SeedBearerTokenEnvironmentVariableClient;
+import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;
 
 public class Example0 {
     public static void run() {

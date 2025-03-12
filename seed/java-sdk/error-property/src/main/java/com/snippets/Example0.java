@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.error.property.SeedErrorPropertyClient;
+import com.seed.errorProperty.SeedErrorPropertyClient;
 
 public class Example0 {
     public static void run() {

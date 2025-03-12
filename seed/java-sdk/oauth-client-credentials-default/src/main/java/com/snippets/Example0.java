@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.oauth.client.credentials.default.SeedOauthClientCredentialsDefaultClient;
-import com.seed.oauth.client.credentials.default.resources.auth.requests.GetTokenRequest;
+import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;
+import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 
 public class Example0 {
     public static void run() {

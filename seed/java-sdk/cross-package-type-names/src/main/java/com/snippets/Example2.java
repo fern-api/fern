@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.cross.package.type.names.SeedCrossPackageTypeNamesClient;
-import com.seed.cross.package.type.names.resources.foo.requests.FindRequest;
+import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
+import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
 
 public class Example2 {
     public static void run() {

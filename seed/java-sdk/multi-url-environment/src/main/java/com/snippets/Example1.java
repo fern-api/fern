@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.multi.url.environment.SeedMultiUrlEnvironmentClient;
-import com.seed.multi.url.environment.resources.s3.requests.GetPresignedUrlRequest;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.resources.s3.requests.GetPresignedUrlRequest;
 
 public class Example1 {
     public static void run() {

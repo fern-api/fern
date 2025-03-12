@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.mixed.case.SeedMixedCaseClient;
+import com.seed.mixedCase.SeedMixedCaseClient;
 
 public class Example0 {
     public static void run() {

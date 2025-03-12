@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.mixed.file.directory.SeedMixedFileDirectoryClient;
-import com.seed.mixed.file.directory.resources.organization.types.CreateOrganizationRequest;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
 
 public class Example0 {
     public static void run() {

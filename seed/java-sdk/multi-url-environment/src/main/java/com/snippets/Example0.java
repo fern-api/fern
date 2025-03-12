@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.multi.url.environment.SeedMultiUrlEnvironmentClient;
-import com.seed.multi.url.environment.resources.ec2.requests.BootInstanceRequest;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.resources.ec2.requests.BootInstanceRequest;
 
 public class Example0 {
     public static void run() {

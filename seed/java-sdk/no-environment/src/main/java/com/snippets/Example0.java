@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.no.environment.SeedNoEnvironmentClient;
+import com.seed.noEnvironment.SeedNoEnvironmentClient;
 
 public class Example0 {
     public static void run() {

@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.package.yml.SeedPackageYmlClient;
+import com.seed.packageYml.SeedPackageYmlClient;
 
 public class Example3 {
     public static void run() {

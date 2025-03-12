@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.single.url.environment.default.SeedSingleUrlEnvironmentDefaultClient;
+import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient;
 
 public class Example0 {
     public static void run() {

@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.any.auth.SeedAnyAuthClient;
+import com.seed.anyAuth.SeedAnyAuthClient;
 
 public class Example1 {
     public static void run() {
