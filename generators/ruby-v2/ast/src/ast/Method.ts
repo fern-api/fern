@@ -143,7 +143,7 @@ export class Method extends AstNode {
 
         writer.write(") -> ");
 
-        this.returnType.write(writer);
+        this.returnType.writeTypeDefinition(writer);
     }
 
     /*

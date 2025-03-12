@@ -33,6 +33,6 @@ export class KeywordParameter extends Parameter {
 
         writer.write(`${this.name}: `);
 
-        this.type.write(writer);
+        this.type.writeTypeDefinition(writer);
     }
 }

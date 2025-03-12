@@ -17,6 +17,6 @@ export class KeywordSplatParameter extends Parameter {
 
     public writeTypeDefinition(writer: Writer): void {
         writer.write("**");
-        this.type.write(writer);
+        this.type.writeTypeDefinition(writer);
     }
 }
