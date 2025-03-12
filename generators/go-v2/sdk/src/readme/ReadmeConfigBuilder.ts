@@ -2,6 +2,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -15,22 +16,29 @@ export class ReadmeConfigBuilder {
         featureConfig: FernGeneratorCli.FeatureConfig;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): FernGeneratorCli.ReadmeConfig {
+        const readmeSnippetBuilder = new ReadmeSnippetBuilder({
+            context,
+            endpointSnippets
+        });
+        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
-        // TODO: Support dynamic snippet generation
-        // for (const feature of featureConfig.features) {
-        //     const featureSnippets = snippets[feature.id];
-        //     if (!featureSnippets) {
-        //         continue;
-        //     }
-        //     features.push({
-        //         id: feature.id,
-        //         advanced: feature.advanced,
-        //         description: feature.description,
-        //         snippets: featureSnippets,
-        //         snippetsAreOptional: false
-        //     });
-        // }
+        for (const feature of featureConfig.features) {
+            const snippetForFeature = snippets[feature.id];
+
+            if (snippetForFeature == null) {
+                continue;
+            }
+
+            features.push({
+                id: feature.id,
+                advanced: feature.advanced,
+                description: feature.description,
+                snippets: snippetForFeature,
+                snippetsAreOptional: false
+            });
+        }
+
         return {
             remote,
             language: this.getLanguageInfo({ context }),
