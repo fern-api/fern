@@ -4,6 +4,7 @@ import { KeywordSplatParameter } from "./KeywordSplatParameter";
 import { Parameter } from "./Parameter";
 import { PositionalParameter } from "./PositionalParameter";
 import { PositionalSplatParameter } from "./PositionalSplatParameter";
+import { Type } from "./Type";
 import { YieldParameter } from "./YieldParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -15,7 +16,7 @@ export type MethodVisibility = "public" | "private" | "protected";
 export const MethodVisibility = { Public: "public", Private: "private", Protected: "protected" } as const;
 
 export declare namespace Method {
-    interface ParameterArgs {
+    export interface ParameterArgs {
         /* An array of this method's positional parameters. */
         positional?: PositionalParameter[];
         /* An array of this method's keyword parameters. */
@@ -28,17 +29,19 @@ export declare namespace Method {
         yield?: YieldParameter;
     }
 
-    interface Args {
+    export interface Args {
         /* The name of the parameter. */
         name: string;
         /* The docstring for the method. */
         docstring?: string;
         /* Kind of method (instance or class). */
         kind?: MethodKind;
-        /* If the method will be marked as private. */
+        /* Visibility of the method (public, private, or protected). */
         visibility?: MethodVisibility;
         /* The set of method parameters. */
         parameters?: ParameterArgs;
+        /* The return type of the method. */
+        returnType?: Type;
     }
 }
 
@@ -53,8 +56,9 @@ export class Method extends AstNode {
     public readonly yieldParameter: YieldParameter | undefined;
     private readonly visibility: MethodVisibility;
     private readonly statements: AstNode[] = [];
+    public readonly returnType: Type;
 
-    constructor({ name, docstring, kind, visibility, parameters }: Method.Args) {
+    constructor({ name, docstring, kind, visibility, parameters, returnType }: Method.Args) {
         super();
 
         this.name = name;
@@ -66,6 +70,7 @@ export class Method extends AstNode {
         this.positionalSplatParameter = parameters?.positionalSplat;
         this.keywordSplatParameter = parameters?.keywordSplat;
         this.yieldParameter = parameters?.yield;
+        this.returnType = returnType ?? Type.untyped();
     }
 
     public write(writer: Writer): void {
@@ -96,11 +101,10 @@ export class Method extends AstNode {
         if (this.parameters.length) {
             writer.write("(");
 
-            this.parameters.forEach((parameter, index) => {
-                parameter.write(writer);
-                if (index < this.parameters.length - 1) {
-                    writer.write(", ");
-                }
+            writer.delimit({
+                nodes: this.parameters,
+                delimiter: ", ",
+                writeFunction: (argument) => argument.write(writer)
             });
 
             writer.write(")");
@@ -124,6 +128,22 @@ export class Method extends AstNode {
         }
 
         writer.newLine();
+    }
+
+    public writeTypeDefinition(writer: Writer): void {
+        writer.write(`def ${this.name}: (`);
+
+        this.parameters.forEach((parameter, index) => {
+            parameter.writeTypeDefinition(writer);
+
+            if (index < this.parameters.length - 1) {
+                writer.write(", ");
+            }
+        });
+
+        writer.write(") -> ");
+
+        this.returnType.write(writer);
     }
 
     /*

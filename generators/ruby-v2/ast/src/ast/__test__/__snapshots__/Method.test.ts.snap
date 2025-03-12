@@ -1,5 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Method > type definitions > writes type definition for method with keyword splat parameter 1`] = `"def valid_name?: (**untyped) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with no parameters and typed return 1`] = `"def foobar: () -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with no parameters and untyped return type 1`] = `"def foobar: () -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with positional splat parameter 1`] = `"def valid_name?: (*String) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with typed (but optional) positional parameters 1`] = `"def foobar: (?String, ?Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with typed keyword parameters 1`] = `"def foobar: (biz: String, baz: Integer) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with typed positional parameters 1`] = `"def foobar: (String, Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with untyped positional parameters 1`] = `"def foobar: (untyped) -> untyped"`;
+
 exports[`Method > writes method with all parameter types 1`] = `
 "def fizzbuzz(one, two:, *three, **four, &five); end
 "
