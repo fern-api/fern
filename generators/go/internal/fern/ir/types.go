@@ -6,8 +6,8 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	common "sdk/common"
-	internal "sdk/internal"
+	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 	time "time"
 )
 
