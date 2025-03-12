@@ -185,7 +185,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): AsyncAPIV3.DocumentV3 {
-        const seenMessages: Record<string, Array<{ channelPath: string; message: any }>> = {};
+        const seenMessages: Record<string, Array<{ channelPath: string; message: AsyncAPIV3.MessageV3 }>> = {};
         for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
                 if (!seenMessages[messageId]) {
@@ -207,17 +207,19 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             }
 
             for (const { channelPath, message } of occurrences) {
-                const channel = deduplicatedDocument.channels![channelPath];
+                const channel = deduplicatedDocument.channels[channelPath];
                 if (channel == null || channel.messages == null) {
                     continue;
                 }
 
                 const newMessageId = `${channelPath}_${messageId}`;
-                channel.messages = {
+                const updatedMessages = {
                     ...channel.messages,
                     [newMessageId]: message
                 };
-                delete channel.messages[messageId];
+
+                const { [messageId]: _, ...remainingMessages } = updatedMessages;
+                channel.messages = remainingMessages;
             }
         }
         return deduplicatedDocument;
