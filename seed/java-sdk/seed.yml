@@ -144,3 +144,6 @@ allowedFailures:
   - streaming-parameter
   - literal
   - java-pagination-deep-cursor-path
+
+  # A required list is not actually required by the builder.
+  - query-parameters

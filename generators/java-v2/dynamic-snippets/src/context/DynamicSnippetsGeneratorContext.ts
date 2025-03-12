@@ -11,6 +11,7 @@ import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
+import { camelCase } from "lodash-es";
 
 const RESERVED_NAMES = new Set([
     "enum",
@@ -292,15 +293,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return prefix;
     }
 
-    private getApiName(): string {
-        return this.config.workspaceName;
-    }
-
     private getBaseNamePrefix(): string {
         return (
             this.convertKebabCaseToUpperCamelCase(this.config.organization) +
             this.convertKebabCaseToUpperCamelCase(this.getApiName())
         );
+    }
+    
+    private getApiName(): string {
+        return camelCase(this.config.workspaceName);
     }
 
     private startsWithNumber(token: string): boolean {

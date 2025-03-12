@@ -1,9 +1,9 @@
 package com.snippets;
 
-import com.seed.query.parameters.SeedQueryParametersClient;
-import com.seed.query.parameters.resources.user.requests.GetUsersRequest;
-import com.seed.query.parameters.resources.user.types.NestedUser;
-import com.seed.query.parameters.resources.user.types.User;
+import com.seed.queryParameters.SeedQueryParametersClient;
+import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
+import com.seed.queryParameters.resources.user.types.NestedUser;
+import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
