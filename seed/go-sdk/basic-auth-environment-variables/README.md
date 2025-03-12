@@ -36,10 +36,10 @@ response, err := client.BasicAuth.PostWithBasicAuth(
 Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
 
 ```go
-ctx, cancel := context.WithTimeout(..., time.Second)
+ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.BasicAuth.PostWithBasicAuth(...)
+response, err := client.BasicAuth.PostWithBasicAuth(ctx, ...)
 ```
 
 ## Contributing

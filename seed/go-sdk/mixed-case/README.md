@@ -36,10 +36,10 @@ response, err := client.Service.GetResource(
 Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
 
 ```go
-ctx, cancel := context.WithTimeout(..., time.Second)
+ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Service.GetResource(...)
+response, err := client.Service.GetResource(ctx, ...)
 ```
 
 ## Contributing

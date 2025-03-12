@@ -81,10 +81,10 @@ response, err := ${this.getMethodCall(retryEndpoint)}(
         const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
         return timeoutEndpoints.map((timeoutEndpoint) =>
             this.writeCode(`
-ctx, cancel := context.WithTimeout(..., time.Second)
+ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := ${this.getMethodCall(timeoutEndpoint)}(...)
+response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
 `)
         );
     }
