@@ -23,7 +23,8 @@ export class SnippetJsonGenerator {
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),
                 rootNamespace: this.context.getNamespace(),
-                customConfig: this.context.customConfig
+                customConfig: this.context.customConfig,
+                formatter: this.context.formatter
             });
         const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? [];
 

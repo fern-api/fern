@@ -5,6 +5,7 @@ package com.seed.nullable.resources.nullable.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -64,6 +65,7 @@ public final class GetUsersRequest {
         return activated;
     }
 
+    @JsonIgnore
     public Optional<String> getTags() {
         if (tags == null) {
             return Optional.empty();
@@ -71,6 +73,7 @@ public final class GetUsersRequest {
         return tags;
     }
 
+    @JsonIgnore
     public Optional<Boolean> getExtra() {
         if (extra == null) {
             return Optional.empty();

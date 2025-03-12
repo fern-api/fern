@@ -407,8 +407,11 @@ await client.Nullable.CreateUserAsync(
         },
         Metadata = new Metadata{
             CreatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
-            UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal)
-        }
+            UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
+            Avatar = null,
+            Activated = null
+        },
+        Avatar = null
     }
 );
 "
@@ -443,7 +446,10 @@ await client.Nullable.GetUsersAsync(
             "john.doe",
             "jane.doe",
         },
-        Tags = new List<string?>(){}
+        Tags = new List<string?>(){
+            null,
+        },
+        Extra = null
     }
 );
 "

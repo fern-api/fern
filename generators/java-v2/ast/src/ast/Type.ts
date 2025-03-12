@@ -16,6 +16,7 @@ type InternalType =
     | List
     | Long
     | Map
+    | Object_
     | Optional
     | Reference
     | Set
@@ -67,6 +68,10 @@ interface Map {
     type: "map";
     keyType: Type;
     valueType: Type;
+}
+
+interface Object_ {
+    type: "object";
 }
 
 interface Optional {
@@ -133,6 +138,10 @@ export class Type extends AstNode {
             }
             case "map": {
                 this.writeMap({ writer, map: this.internalType });
+                break;
+            }
+            case "object": {
+                writer.write("Object");
                 break;
             }
             case "optional": {
@@ -228,6 +237,12 @@ export class Type extends AstNode {
             type: "map",
             keyType,
             valueType
+        });
+    }
+
+    public static object(): Type {
+        return new this({
+            type: "object"
         });
     }
 

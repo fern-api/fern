@@ -2,3 +2,49 @@ features:
   - id: USAGE
     description: |
       Instantiate and use the client with the following:
+
+  - id: ENVIRONMENTS
+    description: |
+      You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
+      URL, which is particularly useful in test environments.
+
+  - id: PAGINATION
+    description: |
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+
+  - id: ERRORS
+    description: |
+      Structured error types are returned from API calls that return non-success status codes. These errors are compatible
+      with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+
+  - id: REQUEST_OPTIONS
+    description: |
+      A variety of request options are included to adapt the behavior of the library, which includes configuring
+      authorization tokens, or providing your own instrumented `*http.Client`.
+      
+      These request options can either be specified on the client so that they're applied on every request,
+      or for an individual request, like so:
+
+      > Providing your own `*http.Client` is recommended. Otherwise, the `http.DefaultClient` will be used,
+      > and your client will wait indefinitely for a response (unless the per-request, context-based timeout
+      > is used).
+
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      A request is deemed retryable when any of the following HTTP status codes is returned:
+
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+      Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
+
+  - id: TIMEOUTS
+    advanced: true
+    description: |
+      Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:

@@ -1,13 +1,16 @@
 import {
+    Class_,
     CodeBlock,
     Comment,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
+    Module,
     PositionalParameter,
     PositionalSplatParameter,
     YieldParameter
 } from "./ast";
+import { TypeParameter } from "./ast/TypeParameter";
 
 export { AstNode } from "./ast/core/AstNode";
 export { CodeBlock, Parameter, Method } from "./ast";
@@ -16,32 +19,34 @@ export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
 }
 
-/*
-Helper for positional parameters -- most of the time when you're talking about a "parameter" in Ruby, you're talking
-about positional parameters
-*/
-export function parameter(args: PositionalParameter.Args): PositionalParameter {
-    return new PositionalParameter(args);
+export const parameters = {
+    positional(args: PositionalParameter.Args): PositionalParameter {
+        return new PositionalParameter(args);
+    },
+
+    keyword(args: KeywordParameter.Args): KeywordParameter {
+        return new KeywordParameter(args);
+    },
+
+    positionalSplat(args: PositionalSplatParameter.Args): PositionalSplatParameter {
+        return new PositionalSplatParameter(args);
+    },
+
+    keywordSplat(args: KeywordSplatParameter.Args): KeywordSplatParameter {
+        return new KeywordSplatParameter(args);
+    },
+
+    yield(args: YieldParameter.Args): YieldParameter {
+        return new YieldParameter(args);
+    }
+} as const;
+
+export function class_(args: Class_.Args): Class_ {
+    return new Class_(args);
 }
 
-export function positionalParameter(args: PositionalParameter.Args): PositionalParameter {
-    return new PositionalParameter(args);
-}
-
-export function keywordParameter(args: KeywordParameter.Args): KeywordParameter {
-    return new KeywordParameter(args);
-}
-
-export function positionalSplatParameter(args: PositionalSplatParameter.Args): PositionalSplatParameter {
-    return new PositionalSplatParameter(args);
-}
-
-export function keywordSplatParameter(args: KeywordSplatParameter.Args): KeywordSplatParameter {
-    return new KeywordSplatParameter(args);
-}
-
-export function yieldParameter(args: YieldParameter.Args): YieldParameter {
-    return new YieldParameter(args);
+export function module(args: Module.Args): Module {
+    return new Module(args);
 }
 
 export function method(args: Method.Args): Method {
@@ -50,4 +55,8 @@ export function method(args: Method.Args): Method {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function typeParameter(args: TypeParameter.Args): TypeParameter {
+    return new TypeParameter(args);
 }
