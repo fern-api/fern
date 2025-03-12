@@ -6,7 +6,7 @@ namespace SeedFileUpload;
 public record JustFileWithQueryParamsRequest
 {
     public required FileParameter File { get; set; }
-    
+
     [JsonIgnore]
     public string? MaybeString { get; set; }
 

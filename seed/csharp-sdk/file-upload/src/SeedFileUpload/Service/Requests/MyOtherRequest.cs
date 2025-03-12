@@ -20,6 +20,7 @@ public record MyOtherRequest
     public required MyObject AliasObject { get; set; }
     public IEnumerable<MyObject> ListOfAliasObject { get; set; } = [];
     public required IEnumerable<MyObject> AliasListOfObject { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

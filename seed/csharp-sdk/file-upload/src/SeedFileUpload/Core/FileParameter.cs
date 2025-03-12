@@ -1,5 +1,8 @@
 namespace SeedFileUpload.Core;
 
+/// <summary>
+/// File parameter for uploading files.
+/// </summary>
 public record FileParameter
 {
     /// <summary>
@@ -11,14 +14,11 @@ public record FileParameter
     /// The content type of the file to be uploaded.
     /// </summary>
     public string? ContentType { get; init; }
-    
+
     /// <summary>
     /// The content of the file to be uploaded.
     /// </summary>
     public required Stream Stream { get; init; }
 
-    public static implicit operator FileParameter(Stream stream) => new()
-    {
-        Stream = stream
-    };
+    public static implicit operator FileParameter(Stream stream) => new() { Stream = stream };
 }

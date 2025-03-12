@@ -34,20 +34,23 @@ public partial class ServiceClient
         multipartFormRequest.AddFileParameterPart("maybe_file", request.File);
         multipartFormRequest.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
         multipartFormRequest.AddStringPart("maybe_integer", request.MaybeInteger);
-        multipartFormRequest.AddStringParts("optional_list_of_strings", request.OptionalListOfStrings);
+        multipartFormRequest.AddStringParts(
+            "optional_list_of_strings",
+            request.OptionalListOfStrings
+        );
         multipartFormRequest.AddJsonParts("list_of_objects", request.ListOfObjects);
         multipartFormRequest.AddJsonPart("optional_metadata", request.OptionalMetadata);
         multipartFormRequest.AddJsonPart("optional_object_type", request.OptionalMetadata);
         multipartFormRequest.AddStringPart("optional_id", request.OptionalId);
-        multipartFormRequest.AddJsonParts("list_of_objects_with_optionals", request.ListOfObjectsWithOptionals);
+        multipartFormRequest.AddJsonParts(
+            "list_of_objects_with_optionals",
+            request.ListOfObjectsWithOptionals
+        );
         multipartFormRequest.AddJsonPart("alias_object", request.AliasObject);
         multipartFormRequest.AddJsonParts("list_of_alias_object", request.ListOfAliasObject);
         multipartFormRequest.AddJsonParts("alias_list_of_object", request.AliasListOfObject);
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -79,10 +82,7 @@ public partial class ServiceClient
         };
         multipartFormRequest.AddFileParameterPart("file", request.File);
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -129,10 +129,7 @@ public partial class ServiceClient
         };
         multipartFormRequest.AddFileParameterPart("file", request.File);
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -167,10 +164,7 @@ public partial class ServiceClient
         multipartFormRequest.AddJsonPart("bar", request.Bar, "application/json");
         multipartFormRequest.AddJsonPart("foo_bar", request.FooBar, "application/json");
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -204,10 +198,7 @@ public partial class ServiceClient
         multipartFormRequest.AddStringPart("foo", request.Foo);
         multipartFormRequest.AddFormEncodedPart("bar", request.Bar, "application/json");
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -244,20 +235,23 @@ public partial class ServiceClient
         multipartFormRequest.AddFileParameterPart("maybe_file", request.File);
         multipartFormRequest.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
         multipartFormRequest.AddStringPart("maybe_integer", request.MaybeInteger);
-        multipartFormRequest.AddFormEncodedPart("optional_list_of_strings", request.OptionalListOfStrings);
+        multipartFormRequest.AddFormEncodedPart(
+            "optional_list_of_strings",
+            request.OptionalListOfStrings
+        );
         multipartFormRequest.AddFormEncodedPart("list_of_objects", request.ListOfObjects);
         multipartFormRequest.AddFormEncodedPart("optional_metadata", request.OptionalMetadata);
         multipartFormRequest.AddFormEncodedPart("optional_object_type", request.OptionalMetadata);
         multipartFormRequest.AddStringPart("optional_id", request.OptionalId);
-        multipartFormRequest.AddFormEncodedPart("list_of_objects_with_optionals", request.ListOfObjectsWithOptionals);
+        multipartFormRequest.AddFormEncodedPart(
+            "list_of_objects_with_optionals",
+            request.ListOfObjectsWithOptionals
+        );
         multipartFormRequest.AddFormEncodedPart("alias_object", request.AliasObject);
         multipartFormRequest.AddFormEncodedPart("list_of_alias_object", request.ListOfAliasObject);
         multipartFormRequest.AddFormEncodedPart("alias_list_of_object", request.AliasListOfObject);
         var response = await _client
-            .SendRequestAsync(
-                multipartFormRequest,
-                cancellationToken
-            )
+            .SendRequestAsync(multipartFormRequest, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {

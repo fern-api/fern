@@ -1,8 +1,18 @@
 using System.Text.Json;
-using SeedFileUpload.Core;
 
+namespace SeedFileUpload.Core;
+
+/// <summary>
+/// Converts an object into a query string collection.
+/// </summary>
 internal static class QueryStringConverter
 {
+    /// <summary>
+    /// Converts an object into a query string collection.
+    /// </summary>
+    /// <param name="value">Object to form URL-encode. You can pass in an object or dictionary, but not lists, strings, or primitives.</param>
+    /// <exception cref="Exception">Throws when passing in a list, a string, or a primitive value.</exception>
+    /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
     internal static IEnumerable<KeyValuePair<string, string>> ToQueryStringCollection(object value)
     {
         var queryCollection = new List<KeyValuePair<string, string>>();
@@ -26,21 +36,27 @@ internal static class QueryStringConverter
             case JsonValueKind.False:
             case JsonValueKind.Null:
             default:
-                throw new Exception($"Only objects can be converted to query string collections. Given type is {json.ValueKind}.");
+                throw new Exception(
+                    $"Only objects can be converted to query string collections. Given type is {json.ValueKind}."
+                );
         }
     }
 
-    private static void FlattenJsonElement(JsonElement element, string prefix, List<KeyValuePair<string, string>> parameters)
+    private static void FlattenJsonElement(
+        JsonElement element,
+        string prefix,
+        List<KeyValuePair<string, string>> parameters
+    )
     {
         switch (element.ValueKind)
         {
             case JsonValueKind.Object:
                 foreach (var property in element.EnumerateObject())
                 {
-                    var newPrefix = string.IsNullOrEmpty(prefix) 
-                        ? property.Name 
+                    var newPrefix = string.IsNullOrEmpty(prefix)
+                        ? property.Name
                         : $"{prefix}[{property.Name}]";
-                    
+
                     FlattenJsonElement(property.Value, newPrefix, parameters);
                 }
                 break;
@@ -48,10 +64,15 @@ internal static class QueryStringConverter
                 foreach (var item in element.EnumerateArray())
                 {
                     var newPrefix = $"{prefix}[]";
-                    
-                    if (item.ValueKind != JsonValueKind.Object && item.ValueKind != JsonValueKind.Array)
+
+                    if (
+                        item.ValueKind != JsonValueKind.Object
+                        && item.ValueKind != JsonValueKind.Array
+                    )
                     {
-                        parameters.Add(new KeyValuePair<string, string>(newPrefix, ValueToString(item)));
+                        parameters.Add(
+                            new KeyValuePair<string, string>(newPrefix, ValueToString(item))
+                        );
                     }
                     else
                     {
@@ -81,7 +102,7 @@ internal static class QueryStringConverter
             JsonValueKind.True => "true",
             JsonValueKind.False => "false",
             JsonValueKind.Null => "",
-            _ => element.GetRawText()
+            _ => element.GetRawText(),
         };
     }
 }
