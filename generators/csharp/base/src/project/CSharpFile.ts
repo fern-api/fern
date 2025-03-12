@@ -1,11 +1,10 @@
 import path from "path";
 
 import { File } from "@fern-api/base-generator";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
-
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 
 export type Namespace = string;
 

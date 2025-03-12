@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {

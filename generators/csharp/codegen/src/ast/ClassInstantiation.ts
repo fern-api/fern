@@ -1,4 +1,9 @@
-import { AbstractAstNode, Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    Arguments,
+    hasNamedArgument,
+    isNamedArgument
+} from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";

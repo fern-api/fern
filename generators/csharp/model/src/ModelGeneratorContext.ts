@@ -1,11 +1,11 @@
+import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { CsharpFormatter } from "@fern-api/csharp-formatter";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
     public readonly formatter: CsharpFormatter;

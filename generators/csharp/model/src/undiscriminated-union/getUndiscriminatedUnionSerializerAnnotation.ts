@@ -1,5 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 

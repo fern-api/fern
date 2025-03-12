@@ -1,6 +1,6 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { csharp } from "@fern-api/csharp-codegen";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 

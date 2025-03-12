@@ -1,5 +1,6 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
 import { execSync } from "child_process";
+
+import { AbstractFormatter } from "@fern-api/base-generator";
 
 export class CsharpFormatter extends AbstractFormatter {
     public async format(content: string): Promise<string> {

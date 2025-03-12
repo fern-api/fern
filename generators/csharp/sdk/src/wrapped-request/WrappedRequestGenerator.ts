@@ -1,5 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 

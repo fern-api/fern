@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 
 import {
     ContainerType,
@@ -11,7 +12,6 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { EXTERNAL_PROTO_TIMESTAMP_CLASS_REFERENCE } from "./constants";
 

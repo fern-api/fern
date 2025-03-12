@@ -3,6 +3,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -43,7 +44,6 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "./options/RequestOptionsInterfaceGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { CsharpFormatter } from "@fern-api/csharp-formatter";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";

@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 
 import {
     ContainerType,
@@ -11,7 +12,6 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 
 export declare namespace CsharpTypeMapper {
@@ -126,7 +126,13 @@ export class CsharpTypeMapper {
         }
     }
 
-    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): csharp.Type {
+    private convertNamed({
+        named,
+        fullyQualified
+    }: {
+        named: DeclaredTypeName;
+        fullyQualified?: boolean;
+    }): csharp.Type {
         const objectClassReference = this.convertToClassReference(named, { fullyQualified });
         if (this.context.protobufResolver.isWellKnownProtobufType(named.typeId)) {
             if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {

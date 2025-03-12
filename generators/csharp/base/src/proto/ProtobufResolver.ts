@@ -1,5 +1,7 @@
 import { camelCase } from "lodash-es";
 
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
+
 import {
     ProtobufFile,
     ProtobufService,
@@ -9,7 +11,6 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { CsharpTypeMapper } from "../context/CsharpTypeMapper";

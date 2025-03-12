@@ -2,6 +2,7 @@ import { camelCase, upperFirst } from "lodash-es";
 
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -18,7 +19,6 @@ import {
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
-import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
@@ -573,7 +573,7 @@ export abstract class AbstractCsharpGeneratorContext<
             allTypeClassReferences: this.getAllTypeClassReferences(),
             rootNamespace: this.getNamespace(),
             customConfig: this.customConfig,
-            skipImports: true,
+            skipImports: true
         });
     }
 
