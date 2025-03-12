@@ -1,3 +1,10 @@
 export * from "./project";
 export { FileGenerator } from "./FileGenerator";
 export { TestFileGenerator } from "./TestFileGenerator";
+export { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+export { AbstractCsharpGeneratorCli } from "./cli/AbstractCsharpGeneratorCli";
+export { AsIsFiles } from "./AsIs";
+export { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+export { CsharpProject } from "./project/CsharpProject";
+export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
+export * from "./proto/constants";

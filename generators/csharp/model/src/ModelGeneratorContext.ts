@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";

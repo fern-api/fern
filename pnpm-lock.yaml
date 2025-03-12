@@ -479,6 +479,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen
@@ -536,6 +539,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen

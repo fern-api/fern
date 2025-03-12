@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/csharp-base": "workspace:*",
     "@fern-api/csharp-codegen": "workspace:*",
     "@fern-api/fern-csharp-model": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
