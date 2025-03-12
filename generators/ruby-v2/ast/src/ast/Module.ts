@@ -9,7 +9,7 @@ export declare namespace Module {
         /* The module's name. */
         name: string;
         /* This module's namespace (i.e., the modules/classes it is wrapped in). */
-        namespace?: (Module | Class_)[];
+        namespace?: Set<Module | Class_>;
         /* If this module is generic, it takes a type parameter. */
         typeParameters?: TypeParameter[];
         /* The docstring for the module. */
@@ -21,7 +21,7 @@ export declare namespace Module {
 
 export class Module extends AstNode {
     public readonly name: string;
-    public readonly namespace: (Module | Class_)[];
+    public namespace: Set<Module | Class_>;
     public readonly typeParameters: TypeParameter[];
     public readonly docstring: string | undefined;
     public readonly statements: AstNode[];
@@ -30,10 +30,12 @@ export class Module extends AstNode {
         super();
 
         this.name = name;
-        this.namespace = namespace ?? [];
+        this.namespace = namespace ?? new Set();
         this.typeParameters = typeParameters ?? [];
         this.docstring = docstring;
         this.statements = statements ?? [];
+
+        this.populateChildNamespaces();
     }
 
     public write(writer: Writer): void {
@@ -91,7 +93,23 @@ export class Module extends AstNode {
         writer.write("end");
     }
 
-    public get fullyQualifiedName(): string {
+    /**
+     * Will recursively populate the namespaces of each child module/class
+     */
+    public populateChildNamespaces(): void {
+        this.statements
+            .filter((statement) => statement instanceof Module || statement instanceof Class_)
+            .forEach((child) => {
+                child.namespace = new Set<Module | Class_>([...this.namespace, this]);
+                child.populateChildNamespaces();
+            });
+    }
+
+    /**
+     * Returns the full name of the module/class, including it's namespace. Example would be
+     * `"Grandparent::Parent::Child"`
+     */
+    public get fullyQualifiedNamespace(): string {
         return [...this.namespace, this].map((klass) => klass.name).join("::");
     }
 }

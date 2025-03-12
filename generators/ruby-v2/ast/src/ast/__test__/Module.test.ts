@@ -73,17 +73,29 @@ describe("Module", () => {
         });
     });
 
-    describe("fullyQualifiedName", () => {
+    describe("fullyQualifiedNamespace", () => {
         test("returns only name when not in any namespace", () => {
             const module = ruby.module({ name: "Foobar" });
 
-            expect(module.fullyQualifiedName).toEqual("Foobar");
+            expect(module.fullyQualifiedNamespace).toEqual("Foobar");
         });
 
         test("returns full namespace", () => {
-            const module = ruby.module({ name: "Child", namespace: [ruby.module({ name: "Parent" })] });
+            const module = ruby.module({ name: "Child", namespace: new Set([ruby.module({ name: "Parent" })]) });
 
-            expect(module.fullyQualifiedName).toEqual("Parent::Child");
+            expect(module.fullyQualifiedNamespace).toEqual("Parent::Child");
+        });
+    });
+
+    describe("populateChildNamespaces", () => {
+        test("includes full ancestry", () => {
+            const child = ruby.class_({ name: "Child" });
+            const parent = ruby.module({ name: "Parent", statements: [child] });
+            const grandparent = ruby.module({ name: "Grandparent", statements: [parent] });
+
+            expect(child.namespace).toEqual(new Set([grandparent, parent]));
+            expect(parent.namespace).toEqual(new Set([grandparent]));
+            expect(grandparent.namespace).toEqual(new Set([]));
         });
     });
 });
