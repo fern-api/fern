@@ -310,12 +310,14 @@ func (s *Status) validate() error {
 }
 
 type User struct {
-	Name           string       `json:"name" url:"name"`
-	Id             UserId       `json:"id" url:"id"`
-	Tags           []string     `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email        `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber `json:"favorite-number,omitempty" url:"favorite-number,omitempty"`
+	Name           string                 `json:"name" url:"name"`
+	Id             UserId                 `json:"id" url:"id"`
+	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
+	FavoriteNumber *WeirdNumber           `json:"favorite-number,omitempty" url:"favorite-number,omitempty"`
+	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -361,6 +363,20 @@ func (u *User) GetFavoriteNumber() *WeirdNumber {
 		return nil
 	}
 	return u.FavoriteNumber
+}
+
+func (u *User) GetNumbers() []int {
+	if u == nil {
+		return nil
+	}
+	return u.Numbers
+}
+
+func (u *User) GetStrings() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.Strings
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {

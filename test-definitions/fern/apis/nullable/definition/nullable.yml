@@ -18,6 +18,8 @@ types:
       metadata: optional<nullable<Metadata>>
       email: Email
       favorite-number: WeirdNumber
+      numbers: optional<nullable<list<integer>>>
+      strings: optional<nullable<map<string, unknown>>>
 
   Status:
     union:
