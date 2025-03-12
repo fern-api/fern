@@ -14,7 +14,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "container" | "key";
+    type ConvertedAs = "mapKey" | "mapValue";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -54,14 +54,15 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "nullable":
-                return java.TypeLiteral.optional({
-                    value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
-                    useOf: args.as === "container"
-                });
             case "optional":
                 return java.TypeLiteral.optional({
                     value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
-                    useOf: args.as === "container"
+
+                    // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
+                    //
+                    // This is difficult to use in practice - we should update this to unbox the map values and remove this
+                    // flag.
+                    useOf: args.as === "mapValue"
                 });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
@@ -87,7 +88,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: list, value: v, as: "container" });
+                    return this.convert({ typeReference: list, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -108,7 +109,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v, as: "container" });
+                    return this.convert({ typeReference: set, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -131,8 +132,8 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key);
                 try {
                     return {
-                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
-                        value: this.convert({ typeReference: map.value, value, as: "container" })
+                        key: this.convert({ typeReference: map.key, value: key, as: "mapKey" }),
+                        value: this.convert({ typeReference: map.value, value, as: "mapValue" })
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -605,7 +606,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): number | undefined {
-        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
+        const num = as === "mapKey" ? (typeof value === "string" ? Number(value) : value) : value;
         return this.context.getValueAsNumber({ value: num });
     }
 
@@ -617,7 +618,7 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): boolean | undefined {
         const bool =
-            as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
+            as === "mapKey" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
         return this.context.getValueAsBoolean({ value: bool });
     }
 }
