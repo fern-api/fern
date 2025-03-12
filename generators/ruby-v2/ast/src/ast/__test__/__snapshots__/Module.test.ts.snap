@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Module > type definitions > writes module type definition 1`] = `
+"module Foobar
+end"
+`;
+
+exports[`Module > type definitions > writes module with method type definitions 1`] = `
+"module Foobar
+    def build: (name: String) -> instance
+end"
+`;
+
+exports[`Module > writes empty module 1`] = `
+"module Foobar; end
+"
+`;
+
+exports[`Module > writes module with a body 1`] = `
+"module Foobar
+    def build(name:); end
+end
+"
+`;
+
+exports[`Module > writes module with docstring 1`] = `
+"# A class that does foobar
+module Foobar; end
+"
+`;

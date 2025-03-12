@@ -1,9 +1,11 @@
 import {
+    Class_,
     CodeBlock,
     Comment,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
+    Module,
     PositionalParameter,
     PositionalSplatParameter,
     YieldParameter
@@ -37,6 +39,14 @@ export const parameters = {
         return new YieldParameter(args);
     }
 } as const;
+
+export function class_(args: Class_.Args): Class_ {
+    return new Class_(args);
+}
+
+export function module(args: Module.Args): Module {
+    return new Module(args);
+}
 
 export function method(args: Method.Args): Method {
     return new Method(args);

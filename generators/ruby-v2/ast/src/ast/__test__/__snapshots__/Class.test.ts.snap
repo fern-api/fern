@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Class > type definitions > writes class type definition 1`] = `
+"class Foobar
+end"
+`;
+
+exports[`Class > type definitions > writes class with method type definitions 1`] = `
+"class Foobar
+    def initialize: (String) -> void
+    def build: (name: String) -> instance
+    def call: () -> String
+end"
+`;
+
+exports[`Class > writes class with a body 1`] = `
+"class Foobar
+    def initialize(name); end
+
+    def self.build(name:); end
+
+    def call; end
+end
+"
+`;
+
+exports[`Class > writes class with docstring 1`] = `
+"# A class that does foobar
+class Foobar; end
+"
+`;
+
+exports[`Class > writes class with superclass 1`] = `
+"class Child < Parent; end
+"
+`;
+
+exports[`Class > writes empty class 1`] = `
+"class Foobar; end
+"
+`;
