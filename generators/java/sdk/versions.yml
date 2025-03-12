@@ -1,5 +1,15 @@
 - changelogEntry:
     - summary: |
+        Fix double unknown in forward-compatible enums
+      type: fix
+    - summary: |
+        Prevent enum keyword use in package paths
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.3
+- changelogEntry:
+    - summary: |
         Remove 'object' from Java reserved strings list
       type: fix
   createdAt: '2025-03-12'
