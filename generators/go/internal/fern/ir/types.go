@@ -7,1976 +7,9 @@ import (
 	fmt "fmt"
 	time "time"
 
-	core "github.com/fern-api/fern-go/internal/fern/ir/core"
+	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 	uuid "github.com/google/uuid"
 )
-
-type ApiAuth struct {
-	Docs        *string                `json:"docs,omitempty" url:"docs,omitempty"`
-	Requirement AuthSchemesRequirement `json:"requirement" url:"requirement"`
-	Schemes     []*AuthScheme          `json:"schemes,omitempty" url:"schemes,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (a *ApiAuth) GetDocs() *string {
-	if a == nil {
-		return nil
-	}
-	return a.Docs
-}
-
-func (a *ApiAuth) GetRequirement() AuthSchemesRequirement {
-	if a == nil {
-		return ""
-	}
-	return a.Requirement
-}
-
-func (a *ApiAuth) GetSchemes() []*AuthScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Schemes
-}
-
-func (a *ApiAuth) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
-func (a *ApiAuth) UnmarshalJSON(data []byte) error {
-	type unmarshaler ApiAuth
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*a = ApiAuth(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-
-	return nil
-}
-
-func (a *ApiAuth) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", a)
-}
-
-type AuthScheme struct {
-	Type   string
-	Bearer *BearerAuthScheme
-	Basic  *BasicAuthScheme
-	Header *HeaderAuthScheme
-	Oauth  *OAuthScheme
-}
-
-func NewAuthSchemeFromBearer(value *BearerAuthScheme) *AuthScheme {
-	return &AuthScheme{Type: "bearer", Bearer: value}
-}
-
-func NewAuthSchemeFromBasic(value *BasicAuthScheme) *AuthScheme {
-	return &AuthScheme{Type: "basic", Basic: value}
-}
-
-func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
-	return &AuthScheme{Type: "header", Header: value}
-}
-
-func NewAuthSchemeFromOauth(value *OAuthScheme) *AuthScheme {
-	return &AuthScheme{Type: "oauth", Oauth: value}
-}
-
-func (a *AuthScheme) GetType() string {
-	if a == nil {
-		return ""
-	}
-	return a.Type
-}
-
-func (a *AuthScheme) GetBearer() *BearerAuthScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Bearer
-}
-
-func (a *AuthScheme) GetBasic() *BasicAuthScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Basic
-}
-
-func (a *AuthScheme) GetHeader() *HeaderAuthScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Header
-}
-
-func (a *AuthScheme) GetOauth() *OAuthScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Oauth
-}
-
-func (a *AuthScheme) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"_type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	a.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant _type", a)
-	}
-	switch unmarshaler.Type {
-	case "bearer":
-		value := new(BearerAuthScheme)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Bearer = value
-	case "basic":
-		value := new(BasicAuthScheme)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Basic = value
-	case "header":
-		value := new(HeaderAuthScheme)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Header = value
-	case "oauth":
-		value := new(OAuthScheme)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Oauth = value
-	}
-	return nil
-}
-
-func (a AuthScheme) MarshalJSON() ([]byte, error) {
-	switch a.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "bearer":
-		return core.MarshalJSONWithExtraProperty(a.Bearer, "_type", "bearer")
-	case "basic":
-		return core.MarshalJSONWithExtraProperty(a.Basic, "_type", "basic")
-	case "header":
-		return core.MarshalJSONWithExtraProperty(a.Header, "_type", "header")
-	case "oauth":
-		return core.MarshalJSONWithExtraProperty(a.Oauth, "_type", "oauth")
-	}
-}
-
-type AuthSchemeVisitor interface {
-	VisitBearer(*BearerAuthScheme) error
-	VisitBasic(*BasicAuthScheme) error
-	VisitHeader(*HeaderAuthScheme) error
-	VisitOauth(*OAuthScheme) error
-}
-
-func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
-	switch a.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "bearer":
-		return visitor.VisitBearer(a.Bearer)
-	case "basic":
-		return visitor.VisitBasic(a.Basic)
-	case "header":
-		return visitor.VisitHeader(a.Header)
-	case "oauth":
-		return visitor.VisitOauth(a.Oauth)
-	}
-}
-
-type AuthSchemesRequirement string
-
-const (
-	AuthSchemesRequirementAll AuthSchemesRequirement = "ALL"
-	AuthSchemesRequirementAny AuthSchemesRequirement = "ANY"
-)
-
-func NewAuthSchemesRequirementFromString(s string) (AuthSchemesRequirement, error) {
-	switch s {
-	case "ALL":
-		return AuthSchemesRequirementAll, nil
-	case "ANY":
-		return AuthSchemesRequirementAny, nil
-	}
-	var t AuthSchemesRequirement
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (a AuthSchemesRequirement) Ptr() *AuthSchemesRequirement {
-	return &a
-}
-
-type BasicAuthScheme struct {
-	Docs     *string `json:"docs,omitempty" url:"docs,omitempty"`
-	Username *Name   `json:"username,omitempty" url:"username,omitempty"`
-	// The environment variable the SDK should use to read the username.
-	UsernameEnvVar *EnvironmentVariable `json:"usernameEnvVar,omitempty" url:"usernameEnvVar,omitempty"`
-	Password       *Name                `json:"password,omitempty" url:"password,omitempty"`
-	// The environment variable the SDK should use to read the password.
-	PasswordEnvVar *EnvironmentVariable `json:"passwordEnvVar,omitempty" url:"passwordEnvVar,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (b *BasicAuthScheme) GetDocs() *string {
-	if b == nil {
-		return nil
-	}
-	return b.Docs
-}
-
-func (b *BasicAuthScheme) GetUsername() *Name {
-	if b == nil {
-		return nil
-	}
-	return b.Username
-}
-
-func (b *BasicAuthScheme) GetUsernameEnvVar() *EnvironmentVariable {
-	if b == nil {
-		return nil
-	}
-	return b.UsernameEnvVar
-}
-
-func (b *BasicAuthScheme) GetPassword() *Name {
-	if b == nil {
-		return nil
-	}
-	return b.Password
-}
-
-func (b *BasicAuthScheme) GetPasswordEnvVar() *EnvironmentVariable {
-	if b == nil {
-		return nil
-	}
-	return b.PasswordEnvVar
-}
-
-func (b *BasicAuthScheme) GetExtraProperties() map[string]interface{} {
-	return b.extraProperties
-}
-
-func (b *BasicAuthScheme) UnmarshalJSON(data []byte) error {
-	type unmarshaler BasicAuthScheme
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BasicAuthScheme(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-
-	return nil
-}
-
-func (b *BasicAuthScheme) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BearerAuthScheme struct {
-	Docs  *string `json:"docs,omitempty" url:"docs,omitempty"`
-	Token *Name   `json:"token,omitempty" url:"token,omitempty"`
-	// The environment variable the SDK should use to read the token.
-	TokenEnvVar *EnvironmentVariable `json:"tokenEnvVar,omitempty" url:"tokenEnvVar,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (b *BearerAuthScheme) GetDocs() *string {
-	if b == nil {
-		return nil
-	}
-	return b.Docs
-}
-
-func (b *BearerAuthScheme) GetToken() *Name {
-	if b == nil {
-		return nil
-	}
-	return b.Token
-}
-
-func (b *BearerAuthScheme) GetTokenEnvVar() *EnvironmentVariable {
-	if b == nil {
-		return nil
-	}
-	return b.TokenEnvVar
-}
-
-func (b *BearerAuthScheme) GetExtraProperties() map[string]interface{} {
-	return b.extraProperties
-}
-
-func (b *BearerAuthScheme) UnmarshalJSON(data []byte) error {
-	type unmarshaler BearerAuthScheme
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BearerAuthScheme(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-
-	return nil
-}
-
-func (b *BearerAuthScheme) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type EnvironmentVariable = string
-
-type HeaderAuthScheme struct {
-	Docs      *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Prefix    *string           `json:"prefix,omitempty" url:"prefix,omitempty"`
-	// The environment variable the SDK should use to read the header.
-	HeaderEnvVar *EnvironmentVariable `json:"headerEnvVar,omitempty" url:"headerEnvVar,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HeaderAuthScheme) GetDocs() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Docs
-}
-
-func (h *HeaderAuthScheme) GetName() *NameAndWireValue {
-	if h == nil {
-		return nil
-	}
-	return h.Name
-}
-
-func (h *HeaderAuthScheme) GetValueType() *TypeReference {
-	if h == nil {
-		return nil
-	}
-	return h.ValueType
-}
-
-func (h *HeaderAuthScheme) GetPrefix() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Prefix
-}
-
-func (h *HeaderAuthScheme) GetHeaderEnvVar() *EnvironmentVariable {
-	if h == nil {
-		return nil
-	}
-	return h.HeaderEnvVar
-}
-
-func (h *HeaderAuthScheme) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HeaderAuthScheme) UnmarshalJSON(data []byte) error {
-	type unmarshaler HeaderAuthScheme
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HeaderAuthScheme(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HeaderAuthScheme) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-// The properties required to retrieve an OAuth token.
-type OAuthAccessTokenRequestProperties struct {
-	ClientId     *RequestProperty `json:"clientId,omitempty" url:"clientId,omitempty"`
-	ClientSecret *RequestProperty `json:"clientSecret,omitempty" url:"clientSecret,omitempty"`
-	Scopes       *RequestProperty `json:"scopes,omitempty" url:"scopes,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthAccessTokenRequestProperties) GetClientId() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.ClientId
-}
-
-func (o *OAuthAccessTokenRequestProperties) GetClientSecret() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
-}
-
-func (o *OAuthAccessTokenRequestProperties) GetScopes() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.Scopes
-}
-
-func (o *OAuthAccessTokenRequestProperties) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthAccessTokenRequestProperties) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthAccessTokenRequestProperties
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthAccessTokenRequestProperties(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthAccessTokenRequestProperties) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// The properties to map to the corresponding OAuth token primitive.
-type OAuthAccessTokenResponseProperties struct {
-	AccessToken  *ResponseProperty `json:"accessToken,omitempty" url:"accessToken,omitempty"`
-	ExpiresIn    *ResponseProperty `json:"expiresIn,omitempty" url:"expiresIn,omitempty"`
-	RefreshToken *ResponseProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthAccessTokenResponseProperties) GetAccessToken() *ResponseProperty {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
-}
-
-func (o *OAuthAccessTokenResponseProperties) GetExpiresIn() *ResponseProperty {
-	if o == nil {
-		return nil
-	}
-	return o.ExpiresIn
-}
-
-func (o *OAuthAccessTokenResponseProperties) GetRefreshToken() *ResponseProperty {
-	if o == nil {
-		return nil
-	}
-	return o.RefreshToken
-}
-
-func (o *OAuthAccessTokenResponseProperties) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthAccessTokenResponseProperties) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthAccessTokenResponseProperties
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthAccessTokenResponseProperties(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthAccessTokenResponseProperties) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-type OAuthClientCredentials struct {
-	ClientIdEnvVar     *EnvironmentVariable  `json:"clientIdEnvVar,omitempty" url:"clientIdEnvVar,omitempty"`
-	ClientSecretEnvVar *EnvironmentVariable  `json:"clientSecretEnvVar,omitempty" url:"clientSecretEnvVar,omitempty"`
-	TokenPrefix        *string               `json:"tokenPrefix,omitempty" url:"tokenPrefix,omitempty"`
-	TokenHeader        *string               `json:"tokenHeader,omitempty" url:"tokenHeader,omitempty"`
-	Scopes             []string              `json:"scopes,omitempty" url:"scopes,omitempty"`
-	TokenEndpoint      *OAuthTokenEndpoint   `json:"tokenEndpoint,omitempty" url:"tokenEndpoint,omitempty"`
-	RefreshEndpoint    *OAuthRefreshEndpoint `json:"refreshEndpoint,omitempty" url:"refreshEndpoint,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthClientCredentials) GetClientIdEnvVar() *EnvironmentVariable {
-	if o == nil {
-		return nil
-	}
-	return o.ClientIdEnvVar
-}
-
-func (o *OAuthClientCredentials) GetClientSecretEnvVar() *EnvironmentVariable {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecretEnvVar
-}
-
-func (o *OAuthClientCredentials) GetTokenPrefix() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TokenPrefix
-}
-
-func (o *OAuthClientCredentials) GetTokenHeader() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TokenHeader
-}
-
-func (o *OAuthClientCredentials) GetScopes() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Scopes
-}
-
-func (o *OAuthClientCredentials) GetTokenEndpoint() *OAuthTokenEndpoint {
-	if o == nil {
-		return nil
-	}
-	return o.TokenEndpoint
-}
-
-func (o *OAuthClientCredentials) GetRefreshEndpoint() *OAuthRefreshEndpoint {
-	if o == nil {
-		return nil
-	}
-	return o.RefreshEndpoint
-}
-
-func (o *OAuthClientCredentials) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthClientCredentials) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthClientCredentials
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthClientCredentials(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthClientCredentials) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-type OAuthConfiguration struct {
-	Type              string
-	ClientCredentials *OAuthClientCredentials
-}
-
-func NewOAuthConfigurationFromClientCredentials(value *OAuthClientCredentials) *OAuthConfiguration {
-	return &OAuthConfiguration{Type: "clientCredentials", ClientCredentials: value}
-}
-
-func (o *OAuthConfiguration) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-func (o *OAuthConfiguration) GetClientCredentials() *OAuthClientCredentials {
-	if o == nil {
-		return nil
-	}
-	return o.ClientCredentials
-}
-
-func (o *OAuthConfiguration) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	o.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", o)
-	}
-	switch unmarshaler.Type {
-	case "clientCredentials":
-		value := new(OAuthClientCredentials)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		o.ClientCredentials = value
-	}
-	return nil
-}
-
-func (o OAuthConfiguration) MarshalJSON() ([]byte, error) {
-	switch o.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", o.Type, o)
-	case "clientCredentials":
-		return core.MarshalJSONWithExtraProperty(o.ClientCredentials, "type", "clientCredentials")
-	}
-}
-
-type OAuthConfigurationVisitor interface {
-	VisitClientCredentials(*OAuthClientCredentials) error
-}
-
-func (o *OAuthConfiguration) Accept(visitor OAuthConfigurationVisitor) error {
-	switch o.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", o.Type, o)
-	case "clientCredentials":
-		return visitor.VisitClientCredentials(o.ClientCredentials)
-	}
-}
-
-type OAuthRefreshEndpoint struct {
-	EndpointReference  *EndpointReference                  `json:"endpointReference,omitempty" url:"endpointReference,omitempty"`
-	RequestProperties  *OAuthRefreshTokenRequestProperties `json:"requestProperties,omitempty" url:"requestProperties,omitempty"`
-	ResponseProperties *OAuthAccessTokenResponseProperties `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthRefreshEndpoint) GetEndpointReference() *EndpointReference {
-	if o == nil {
-		return nil
-	}
-	return o.EndpointReference
-}
-
-func (o *OAuthRefreshEndpoint) GetRequestProperties() *OAuthRefreshTokenRequestProperties {
-	if o == nil {
-		return nil
-	}
-	return o.RequestProperties
-}
-
-func (o *OAuthRefreshEndpoint) GetResponseProperties() *OAuthAccessTokenResponseProperties {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseProperties
-}
-
-func (o *OAuthRefreshEndpoint) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthRefreshEndpoint) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthRefreshEndpoint
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthRefreshEndpoint(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthRefreshEndpoint) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// The properties required to retrieve an OAuth refresh token.
-type OAuthRefreshTokenRequestProperties struct {
-	RefreshToken *RequestProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthRefreshTokenRequestProperties) GetRefreshToken() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.RefreshToken
-}
-
-func (o *OAuthRefreshTokenRequestProperties) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthRefreshTokenRequestProperties) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthRefreshTokenRequestProperties
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthRefreshTokenRequestProperties(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthRefreshTokenRequestProperties) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
-type OAuthScheme struct {
-	Docs          *string             `json:"docs,omitempty" url:"docs,omitempty"`
-	Configuration *OAuthConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthScheme) GetDocs() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Docs
-}
-
-func (o *OAuthScheme) GetConfiguration() *OAuthConfiguration {
-	if o == nil {
-		return nil
-	}
-	return o.Configuration
-}
-
-func (o *OAuthScheme) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthScheme) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthScheme
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthScheme(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthScheme) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-type OAuthTokenEndpoint struct {
-	EndpointReference  *EndpointReference                  `json:"endpointReference,omitempty" url:"endpointReference,omitempty"`
-	RequestProperties  *OAuthAccessTokenRequestProperties  `json:"requestProperties,omitempty" url:"requestProperties,omitempty"`
-	ResponseProperties *OAuthAccessTokenResponseProperties `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OAuthTokenEndpoint) GetEndpointReference() *EndpointReference {
-	if o == nil {
-		return nil
-	}
-	return o.EndpointReference
-}
-
-func (o *OAuthTokenEndpoint) GetRequestProperties() *OAuthAccessTokenRequestProperties {
-	if o == nil {
-		return nil
-	}
-	return o.RequestProperties
-}
-
-func (o *OAuthTokenEndpoint) GetResponseProperties() *OAuthAccessTokenResponseProperties {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseProperties
-}
-
-func (o *OAuthTokenEndpoint) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OAuthTokenEndpoint) UnmarshalJSON(data []byte) error {
-	type unmarshaler OAuthTokenEndpoint
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OAuthTokenEndpoint(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OAuthTokenEndpoint) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-type Availability struct {
-	Status  AvailabilityStatus `json:"status" url:"status"`
-	Message *string            `json:"message,omitempty" url:"message,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (a *Availability) GetStatus() AvailabilityStatus {
-	if a == nil {
-		return ""
-	}
-	return a.Status
-}
-
-func (a *Availability) GetMessage() *string {
-	if a == nil {
-		return nil
-	}
-	return a.Message
-}
-
-func (a *Availability) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
-func (a *Availability) UnmarshalJSON(data []byte) error {
-	type unmarshaler Availability
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*a = Availability(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-
-	return nil
-}
-
-func (a *Availability) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", a)
-}
-
-type AvailabilityStatus string
-
-const (
-	AvailabilityStatusInDevelopment       AvailabilityStatus = "IN_DEVELOPMENT"
-	AvailabilityStatusPreRelease          AvailabilityStatus = "PRE_RELEASE"
-	AvailabilityStatusGeneralAvailability AvailabilityStatus = "GENERAL_AVAILABILITY"
-	AvailabilityStatusDeprecated          AvailabilityStatus = "DEPRECATED"
-)
-
-func NewAvailabilityStatusFromString(s string) (AvailabilityStatus, error) {
-	switch s {
-	case "IN_DEVELOPMENT":
-		return AvailabilityStatusInDevelopment, nil
-	case "PRE_RELEASE":
-		return AvailabilityStatusPreRelease, nil
-	case "GENERAL_AVAILABILITY":
-		return AvailabilityStatusGeneralAvailability, nil
-	case "DEPRECATED":
-		return AvailabilityStatusDeprecated, nil
-	}
-	var t AvailabilityStatus
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (a AvailabilityStatus) Ptr() *AvailabilityStatus {
-	return &a
-}
-
-type Declaration struct {
-	Docs         *string       `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability `json:"availability,omitempty" url:"availability,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (d *Declaration) GetDocs() *string {
-	if d == nil {
-		return nil
-	}
-	return d.Docs
-}
-
-func (d *Declaration) GetAvailability() *Availability {
-	if d == nil {
-		return nil
-	}
-	return d.Availability
-}
-
-func (d *Declaration) GetExtraProperties() map[string]interface{} {
-	return d.extraProperties
-}
-
-func (d *Declaration) UnmarshalJSON(data []byte) error {
-	type unmarshaler Declaration
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = Declaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-
-	return nil
-}
-
-func (d *Declaration) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
-type EndpointId = string
-
-type EndpointReference struct {
-	EndpointId EndpointId `json:"endpointId" url:"endpointId"`
-	ServiceId  ServiceId  `json:"serviceId" url:"serviceId"`
-	// The subpackage that defines the endpoint. If empty, the endpoint is
-	// defined in the root package.
-	SubpackageId *SubpackageId `json:"subpackageId,omitempty" url:"subpackageId,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *EndpointReference) GetEndpointId() EndpointId {
-	if e == nil {
-		return ""
-	}
-	return e.EndpointId
-}
-
-func (e *EndpointReference) GetServiceId() ServiceId {
-	if e == nil {
-		return ""
-	}
-	return e.ServiceId
-}
-
-func (e *EndpointReference) GetSubpackageId() *SubpackageId {
-	if e == nil {
-		return nil
-	}
-	return e.SubpackageId
-}
-
-func (e *EndpointReference) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EndpointReference) UnmarshalJSON(data []byte) error {
-	type unmarshaler EndpointReference
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EndpointReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *EndpointReference) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ErrorId = string
-
-// Defines the original string, and its escaped-equivalent (depending on the target programming language).
-// This is particularly relevant to example string literals.
-//
-// For example, in Python we escape strings that contain single or double quotes by using triple quotes,
-// in Go we use backticks, etc.
-type EscapedString struct {
-	Original string `json:"original" url:"original"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *EscapedString) GetOriginal() string {
-	if e == nil {
-		return ""
-	}
-	return e.Original
-}
-
-func (e *EscapedString) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EscapedString) UnmarshalJSON(data []byte) error {
-	type unmarshaler EscapedString
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EscapedString(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *EscapedString) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type FeatureId = string
-
-type FernFilepath struct {
-	AllParts    []*Name `json:"allParts,omitempty" url:"allParts,omitempty"`
-	PackagePath []*Name `json:"packagePath,omitempty" url:"packagePath,omitempty"`
-	File        *Name   `json:"file,omitempty" url:"file,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FernFilepath) GetAllParts() []*Name {
-	if f == nil {
-		return nil
-	}
-	return f.AllParts
-}
-
-func (f *FernFilepath) GetPackagePath() []*Name {
-	if f == nil {
-		return nil
-	}
-	return f.PackagePath
-}
-
-func (f *FernFilepath) GetFile() *Name {
-	if f == nil {
-		return nil
-	}
-	return f.File
-}
-
-func (f *FernFilepath) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FernFilepath) UnmarshalJSON(data []byte) error {
-	type unmarshaler FernFilepath
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FernFilepath(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FernFilepath) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type Name struct {
-	OriginalName       string               `json:"originalName" url:"originalName"`
-	CamelCase          *SafeAndUnsafeString `json:"camelCase,omitempty" url:"camelCase,omitempty"`
-	PascalCase         *SafeAndUnsafeString `json:"pascalCase,omitempty" url:"pascalCase,omitempty"`
-	SnakeCase          *SafeAndUnsafeString `json:"snakeCase,omitempty" url:"snakeCase,omitempty"`
-	ScreamingSnakeCase *SafeAndUnsafeString `json:"screamingSnakeCase,omitempty" url:"screamingSnakeCase,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *Name) GetOriginalName() string {
-	if n == nil {
-		return ""
-	}
-	return n.OriginalName
-}
-
-func (n *Name) GetCamelCase() *SafeAndUnsafeString {
-	if n == nil {
-		return nil
-	}
-	return n.CamelCase
-}
-
-func (n *Name) GetPascalCase() *SafeAndUnsafeString {
-	if n == nil {
-		return nil
-	}
-	return n.PascalCase
-}
-
-func (n *Name) GetSnakeCase() *SafeAndUnsafeString {
-	if n == nil {
-		return nil
-	}
-	return n.SnakeCase
-}
-
-func (n *Name) GetScreamingSnakeCase() *SafeAndUnsafeString {
-	if n == nil {
-		return nil
-	}
-	return n.ScreamingSnakeCase
-}
-
-func (n *Name) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *Name) UnmarshalJSON(data []byte) error {
-	type unmarshaler Name
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = Name(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-
-	return nil
-}
-
-func (n *Name) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type NameAndWireValue struct {
-	WireValue string `json:"wireValue" url:"wireValue"`
-	Name      *Name  `json:"name,omitempty" url:"name,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NameAndWireValue) GetWireValue() string {
-	if n == nil {
-		return ""
-	}
-	return n.WireValue
-}
-
-func (n *NameAndWireValue) GetName() *Name {
-	if n == nil {
-		return nil
-	}
-	return n.Name
-}
-
-func (n *NameAndWireValue) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NameAndWireValue) UnmarshalJSON(data []byte) error {
-	type unmarshaler NameAndWireValue
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NameAndWireValue(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-
-	return nil
-}
-
-func (n *NameAndWireValue) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type SafeAndUnsafeString struct {
-	// this name might overlap with reserved keywords of the language being generated
-	UnsafeName string `json:"unsafeName" url:"unsafeName"`
-	// this name will NOT overlap with reserved keywords of the language being generated
-	SafeName string `json:"safeName" url:"safeName"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SafeAndUnsafeString) GetUnsafeName() string {
-	if s == nil {
-		return ""
-	}
-	return s.UnsafeName
-}
-
-func (s *SafeAndUnsafeString) GetSafeName() string {
-	if s == nil {
-		return ""
-	}
-	return s.SafeName
-}
-
-func (s *SafeAndUnsafeString) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SafeAndUnsafeString) UnmarshalJSON(data []byte) error {
-	type unmarshaler SafeAndUnsafeString
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SafeAndUnsafeString(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SafeAndUnsafeString) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type ServiceId = string
-
-type SubpackageId = string
-
-type TypeId = string
-
-type WebSocketChannelId = string
-
-type WebhookGroupId = string
-
-type WebhookId = string
-
-type WithDocs struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WithDocs) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WithDocs) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WithDocs) UnmarshalJSON(data []byte) error {
-	type unmarshaler WithDocs
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WithDocs(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WithDocs) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WithDocsAndAvailability struct {
-	Docs         *string       `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability `json:"availability,omitempty" url:"availability,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WithDocsAndAvailability) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WithDocsAndAvailability) GetAvailability() *Availability {
-	if w == nil {
-		return nil
-	}
-	return w.Availability
-}
-
-func (w *WithDocsAndAvailability) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WithDocsAndAvailability) UnmarshalJSON(data []byte) error {
-	type unmarshaler WithDocsAndAvailability
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WithDocsAndAvailability(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WithDocsAndAvailability) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WithJsonExample struct {
-	JsonExample interface{} `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WithJsonExample) GetJsonExample() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.JsonExample
-}
-
-func (w *WithJsonExample) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WithJsonExample) UnmarshalJSON(data []byte) error {
-	type unmarshaler WithJsonExample
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WithJsonExample(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WithJsonExample) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type Constants struct {
-	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty" url:"errorInstanceIdKey,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *Constants) GetErrorInstanceIdKey() *NameAndWireValue {
-	if c == nil {
-		return nil
-	}
-	return c.ErrorInstanceIdKey
-}
-
-func (c *Constants) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *Constants) UnmarshalJSON(data []byte) error {
-	type unmarshaler Constants
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = Constants(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-
-	return nil
-}
-
-func (c *Constants) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type EnvironmentBaseUrlId = string
-
-type EnvironmentBaseUrlWithId struct {
-	Id   EnvironmentBaseUrlId `json:"id" url:"id"`
-	Name *Name                `json:"name,omitempty" url:"name,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *EnvironmentBaseUrlWithId) GetId() EnvironmentBaseUrlId {
-	if e == nil {
-		return ""
-	}
-	return e.Id
-}
-
-func (e *EnvironmentBaseUrlWithId) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *EnvironmentBaseUrlWithId) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EnvironmentBaseUrlWithId) UnmarshalJSON(data []byte) error {
-	type unmarshaler EnvironmentBaseUrlWithId
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EnvironmentBaseUrlWithId(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *EnvironmentBaseUrlWithId) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type EnvironmentId = string
-
-type EnvironmentUrl = string
-
-type Environments struct {
-	Type             string
-	SingleBaseUrl    *SingleBaseUrlEnvironments
-	MultipleBaseUrls *MultipleBaseUrlsEnvironments
-}
-
-func NewEnvironmentsFromSingleBaseUrl(value *SingleBaseUrlEnvironments) *Environments {
-	return &Environments{Type: "singleBaseUrl", SingleBaseUrl: value}
-}
-
-func NewEnvironmentsFromMultipleBaseUrls(value *MultipleBaseUrlsEnvironments) *Environments {
-	return &Environments{Type: "multipleBaseUrls", MultipleBaseUrls: value}
-}
-
-func (e *Environments) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *Environments) GetSingleBaseUrl() *SingleBaseUrlEnvironments {
-	if e == nil {
-		return nil
-	}
-	return e.SingleBaseUrl
-}
-
-func (e *Environments) GetMultipleBaseUrls() *MultipleBaseUrlsEnvironments {
-	if e == nil {
-		return nil
-	}
-	return e.MultipleBaseUrls
-}
-
-func (e *Environments) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "singleBaseUrl":
-		value := new(SingleBaseUrlEnvironments)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.SingleBaseUrl = value
-	case "multipleBaseUrls":
-		value := new(MultipleBaseUrlsEnvironments)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.MultipleBaseUrls = value
-	}
-	return nil
-}
-
-func (e Environments) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "singleBaseUrl":
-		return core.MarshalJSONWithExtraProperty(e.SingleBaseUrl, "type", "singleBaseUrl")
-	case "multipleBaseUrls":
-		return core.MarshalJSONWithExtraProperty(e.MultipleBaseUrls, "type", "multipleBaseUrls")
-	}
-}
-
-type EnvironmentsVisitor interface {
-	VisitSingleBaseUrl(*SingleBaseUrlEnvironments) error
-	VisitMultipleBaseUrls(*MultipleBaseUrlsEnvironments) error
-}
-
-func (e *Environments) Accept(visitor EnvironmentsVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "singleBaseUrl":
-		return visitor.VisitSingleBaseUrl(e.SingleBaseUrl)
-	case "multipleBaseUrls":
-		return visitor.VisitMultipleBaseUrls(e.MultipleBaseUrls)
-	}
-}
-
-type EnvironmentsConfig struct {
-	DefaultEnvironment *EnvironmentId `json:"defaultEnvironment,omitempty" url:"defaultEnvironment,omitempty"`
-	Environments       *Environments  `json:"environments,omitempty" url:"environments,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *EnvironmentsConfig) GetDefaultEnvironment() *EnvironmentId {
-	if e == nil {
-		return nil
-	}
-	return e.DefaultEnvironment
-}
-
-func (e *EnvironmentsConfig) GetEnvironments() *Environments {
-	if e == nil {
-		return nil
-	}
-	return e.Environments
-}
-
-func (e *EnvironmentsConfig) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EnvironmentsConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler EnvironmentsConfig
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EnvironmentsConfig(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *EnvironmentsConfig) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type MultipleBaseUrlsEnvironment struct {
-	Docs *string                                 `json:"docs,omitempty" url:"docs,omitempty"`
-	Id   EnvironmentId                           `json:"id" url:"id"`
-	Name *Name                                   `json:"name,omitempty" url:"name,omitempty"`
-	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls,omitempty" url:"urls,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (m *MultipleBaseUrlsEnvironment) GetDocs() *string {
-	if m == nil {
-		return nil
-	}
-	return m.Docs
-}
-
-func (m *MultipleBaseUrlsEnvironment) GetId() EnvironmentId {
-	if m == nil {
-		return ""
-	}
-	return m.Id
-}
-
-func (m *MultipleBaseUrlsEnvironment) GetName() *Name {
-	if m == nil {
-		return nil
-	}
-	return m.Name
-}
-
-func (m *MultipleBaseUrlsEnvironment) GetUrls() map[EnvironmentBaseUrlId]EnvironmentUrl {
-	if m == nil {
-		return nil
-	}
-	return m.Urls
-}
-
-func (m *MultipleBaseUrlsEnvironment) GetExtraProperties() map[string]interface{} {
-	return m.extraProperties
-}
-
-func (m *MultipleBaseUrlsEnvironment) UnmarshalJSON(data []byte) error {
-	type unmarshaler MultipleBaseUrlsEnvironment
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*m = MultipleBaseUrlsEnvironment(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
-	if err != nil {
-		return err
-	}
-	m.extraProperties = extraProperties
-
-	return nil
-}
-
-func (m *MultipleBaseUrlsEnvironment) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", m)
-}
-
-type MultipleBaseUrlsEnvironments struct {
-	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls,omitempty" url:"baseUrls,omitempty"`
-	Environments []*MultipleBaseUrlsEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (m *MultipleBaseUrlsEnvironments) GetBaseUrls() []*EnvironmentBaseUrlWithId {
-	if m == nil {
-		return nil
-	}
-	return m.BaseUrls
-}
-
-func (m *MultipleBaseUrlsEnvironments) GetEnvironments() []*MultipleBaseUrlsEnvironment {
-	if m == nil {
-		return nil
-	}
-	return m.Environments
-}
-
-func (m *MultipleBaseUrlsEnvironments) GetExtraProperties() map[string]interface{} {
-	return m.extraProperties
-}
-
-func (m *MultipleBaseUrlsEnvironments) UnmarshalJSON(data []byte) error {
-	type unmarshaler MultipleBaseUrlsEnvironments
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*m = MultipleBaseUrlsEnvironments(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
-	if err != nil {
-		return err
-	}
-	m.extraProperties = extraProperties
-
-	return nil
-}
-
-func (m *MultipleBaseUrlsEnvironments) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", m)
-}
-
-type SingleBaseUrlEnvironment struct {
-	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Id   EnvironmentId  `json:"id" url:"id"`
-	Name *Name          `json:"name,omitempty" url:"name,omitempty"`
-	Url  EnvironmentUrl `json:"url" url:"url"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SingleBaseUrlEnvironment) GetDocs() *string {
-	if s == nil {
-		return nil
-	}
-	return s.Docs
-}
-
-func (s *SingleBaseUrlEnvironment) GetId() EnvironmentId {
-	if s == nil {
-		return ""
-	}
-	return s.Id
-}
-
-func (s *SingleBaseUrlEnvironment) GetName() *Name {
-	if s == nil {
-		return nil
-	}
-	return s.Name
-}
-
-func (s *SingleBaseUrlEnvironment) GetUrl() EnvironmentUrl {
-	if s == nil {
-		return ""
-	}
-	return s.Url
-}
-
-func (s *SingleBaseUrlEnvironment) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SingleBaseUrlEnvironment) UnmarshalJSON(data []byte) error {
-	type unmarshaler SingleBaseUrlEnvironment
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SingleBaseUrlEnvironment(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SingleBaseUrlEnvironment) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type SingleBaseUrlEnvironments struct {
-	Environments []*SingleBaseUrlEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SingleBaseUrlEnvironments) GetEnvironments() []*SingleBaseUrlEnvironment {
-	if s == nil {
-		return nil
-	}
-	return s.Environments
-}
-
-func (s *SingleBaseUrlEnvironments) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SingleBaseUrlEnvironments) UnmarshalJSON(data []byte) error {
-	type unmarshaler SingleBaseUrlEnvironments
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SingleBaseUrlEnvironments(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SingleBaseUrlEnvironments) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
 
 type DeclaredErrorName struct {
 	ErrorId      ErrorId       `json:"errorId" url:"errorId"`
@@ -2018,18 +51,16 @@ func (d *DeclaredErrorName) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeclaredErrorName(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DeclaredErrorName) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -2099,18 +130,16 @@ func (e *ErrorDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ErrorDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ErrorDeclaration) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -2180,11 +209,14 @@ func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 }
 
 func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "property":
-		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
+		return internal.MarshalJSONWithExtraProperty(e.Property, "type", "property")
 	case "statusCode":
 		var marshaler = struct {
 			Type       string      `json:"type"`
@@ -2211,6 +243,40 @@ func (e *ErrorDeclarationDiscriminantValue) Accept(visitor ErrorDeclarationDiscr
 	case "statusCode":
 		return visitor.VisitStatusCode(e.StatusCode)
 	}
+}
+
+func (e *ErrorDeclarationDiscriminantValue) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Property != nil {
+		fields = append(fields, "property")
+	}
+	if e.StatusCode != nil {
+		fields = append(fields, "statusCode")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExampleError struct {
@@ -2261,7785 +327,19 @@ func (e *ExampleError) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleError(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleError) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-type AutogeneratedEndpointExample struct {
-	Example *ExampleEndpointCall `json:"example,omitempty" url:"example,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (a *AutogeneratedEndpointExample) GetExample() *ExampleEndpointCall {
-	if a == nil {
-		return nil
-	}
-	return a.Example
-}
-
-func (a *AutogeneratedEndpointExample) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
-func (a *AutogeneratedEndpointExample) UnmarshalJSON(data []byte) error {
-	type unmarshaler AutogeneratedEndpointExample
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*a = AutogeneratedEndpointExample(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-
-	return nil
-}
-
-func (a *AutogeneratedEndpointExample) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", a)
-}
-
-type BytesRequest struct {
-	Docs        *string `json:"docs,omitempty" url:"docs,omitempty"`
-	IsOptional  bool    `json:"isOptional" url:"isOptional"`
-	ContentType *string `json:"contentType,omitempty" url:"contentType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (b *BytesRequest) GetDocs() *string {
-	if b == nil {
-		return nil
-	}
-	return b.Docs
-}
-
-func (b *BytesRequest) GetIsOptional() bool {
-	if b == nil {
-		return false
-	}
-	return b.IsOptional
-}
-
-func (b *BytesRequest) GetContentType() *string {
-	if b == nil {
-		return nil
-	}
-	return b.ContentType
-}
-
-func (b *BytesRequest) GetExtraProperties() map[string]interface{} {
-	return b.extraProperties
-}
-
-func (b *BytesRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler BytesRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BytesRequest(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-
-	return nil
-}
-
-func (b *BytesRequest) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-// If set, the endpoint will be generated with auto-pagination features.
-//
-// The page must be defined as a property defined on the request, whereas
-// the next page and results are resolved from properties defined on the
-// response.
-type CursorPagination struct {
-	Page    *RequestProperty  `json:"page,omitempty" url:"page,omitempty"`
-	Next    *ResponseProperty `json:"next,omitempty" url:"next,omitempty"`
-	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *CursorPagination) GetPage() *RequestProperty {
-	if c == nil {
-		return nil
-	}
-	return c.Page
-}
-
-func (c *CursorPagination) GetNext() *ResponseProperty {
-	if c == nil {
-		return nil
-	}
-	return c.Next
-}
-
-func (c *CursorPagination) GetResults() *ResponseProperty {
-	if c == nil {
-		return nil
-	}
-	return c.Results
-}
-
-func (c *CursorPagination) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *CursorPagination) UnmarshalJSON(data []byte) error {
-	type unmarshaler CursorPagination
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = CursorPagination(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-
-	return nil
-}
-
-func (c *CursorPagination) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type DeclaredServiceName struct {
-	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (d *DeclaredServiceName) GetFernFilepath() *FernFilepath {
-	if d == nil {
-		return nil
-	}
-	return d.FernFilepath
-}
-
-func (d *DeclaredServiceName) GetExtraProperties() map[string]interface{} {
-	return d.extraProperties
-}
-
-func (d *DeclaredServiceName) UnmarshalJSON(data []byte) error {
-	type unmarshaler DeclaredServiceName
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = DeclaredServiceName(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-
-	return nil
-}
-
-func (d *DeclaredServiceName) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
-type EndpointName = *Name
-
-type ExampleCodeSample struct {
-	Type     string
-	Language *ExampleCodeSampleLanguage
-	Sdk      *ExampleCodeSampleSdk
-}
-
-func NewExampleCodeSampleFromLanguage(value *ExampleCodeSampleLanguage) *ExampleCodeSample {
-	return &ExampleCodeSample{Type: "language", Language: value}
-}
-
-func NewExampleCodeSampleFromSdk(value *ExampleCodeSampleSdk) *ExampleCodeSample {
-	return &ExampleCodeSample{Type: "sdk", Sdk: value}
-}
-
-func (e *ExampleCodeSample) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleCodeSample) GetLanguage() *ExampleCodeSampleLanguage {
-	if e == nil {
-		return nil
-	}
-	return e.Language
-}
-
-func (e *ExampleCodeSample) GetSdk() *ExampleCodeSampleSdk {
-	if e == nil {
-		return nil
-	}
-	return e.Sdk
-}
-
-func (e *ExampleCodeSample) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "language":
-		value := new(ExampleCodeSampleLanguage)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Language = value
-	case "sdk":
-		value := new(ExampleCodeSampleSdk)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Sdk = value
-	}
-	return nil
-}
-
-func (e ExampleCodeSample) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "language":
-		return core.MarshalJSONWithExtraProperty(e.Language, "type", "language")
-	case "sdk":
-		return core.MarshalJSONWithExtraProperty(e.Sdk, "type", "sdk")
-	}
-}
-
-type ExampleCodeSampleVisitor interface {
-	VisitLanguage(*ExampleCodeSampleLanguage) error
-	VisitSdk(*ExampleCodeSampleSdk) error
-}
-
-func (e *ExampleCodeSample) Accept(visitor ExampleCodeSampleVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "language":
-		return visitor.VisitLanguage(e.Language)
-	case "sdk":
-		return visitor.VisitSdk(e.Sdk)
-	}
-}
-
-// This is intended to co-exist with the auto-generated code samples.
-type ExampleCodeSampleLanguage struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-	// Override the example name.
-	Name     *Name  `json:"name,omitempty" url:"name,omitempty"`
-	Language string `json:"language" url:"language"`
-	Code     string `json:"code" url:"code"`
-	// The command to install the dependencies for the code sample.
-	// For example, `npm install` or `pip install -r requirements.txt`.
-	Install *string `json:"install,omitempty" url:"install,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleCodeSampleLanguage) GetDocs() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Docs
-}
-
-func (e *ExampleCodeSampleLanguage) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleCodeSampleLanguage) GetLanguage() string {
-	if e == nil {
-		return ""
-	}
-	return e.Language
-}
-
-func (e *ExampleCodeSampleLanguage) GetCode() string {
-	if e == nil {
-		return ""
-	}
-	return e.Code
-}
-
-func (e *ExampleCodeSampleLanguage) GetInstall() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Install
-}
-
-func (e *ExampleCodeSampleLanguage) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleCodeSampleLanguage) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleCodeSampleLanguage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleCodeSampleLanguage(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleCodeSampleLanguage) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-// This will be used to replace the auto-generated code samples.
-type ExampleCodeSampleSdk struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-	// Override the example name.
-	Name *Name                `json:"name,omitempty" url:"name,omitempty"`
-	Sdk  SupportedSdkLanguage `json:"sdk" url:"sdk"`
-	Code string               `json:"code" url:"code"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleCodeSampleSdk) GetDocs() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Docs
-}
-
-func (e *ExampleCodeSampleSdk) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleCodeSampleSdk) GetSdk() SupportedSdkLanguage {
-	if e == nil {
-		return ""
-	}
-	return e.Sdk
-}
-
-func (e *ExampleCodeSampleSdk) GetCode() string {
-	if e == nil {
-		return ""
-	}
-	return e.Code
-}
-
-func (e *ExampleCodeSampleSdk) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleCodeSampleSdk) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleCodeSampleSdk
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleCodeSampleSdk(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleCodeSampleSdk) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleEndpointCall struct {
-	Docs                   *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Id                     *string                  `json:"id,omitempty" url:"id,omitempty"`
-	Name                   *Name                    `json:"name,omitempty" url:"name,omitempty"`
-	Url                    string                   `json:"url" url:"url"`
-	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters,omitempty" url:"rootPathParameters,omitempty"`
-	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters,omitempty" url:"servicePathParameters,omitempty"`
-	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters,omitempty" url:"endpointPathParameters,omitempty"`
-	ServiceHeaders         []*ExampleHeader         `json:"serviceHeaders,omitempty" url:"serviceHeaders,omitempty"`
-	EndpointHeaders        []*ExampleHeader         `json:"endpointHeaders,omitempty" url:"endpointHeaders,omitempty"`
-	QueryParameters        []*ExampleQueryParameter `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
-	Request                *ExampleRequestBody      `json:"request,omitempty" url:"request,omitempty"`
-	Response               *ExampleResponse         `json:"response,omitempty" url:"response,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleEndpointCall) GetDocs() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Docs
-}
-
-func (e *ExampleEndpointCall) GetId() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Id
-}
-
-func (e *ExampleEndpointCall) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleEndpointCall) GetUrl() string {
-	if e == nil {
-		return ""
-	}
-	return e.Url
-}
-
-func (e *ExampleEndpointCall) GetRootPathParameters() []*ExamplePathParameter {
-	if e == nil {
-		return nil
-	}
-	return e.RootPathParameters
-}
-
-func (e *ExampleEndpointCall) GetServicePathParameters() []*ExamplePathParameter {
-	if e == nil {
-		return nil
-	}
-	return e.ServicePathParameters
-}
-
-func (e *ExampleEndpointCall) GetEndpointPathParameters() []*ExamplePathParameter {
-	if e == nil {
-		return nil
-	}
-	return e.EndpointPathParameters
-}
-
-func (e *ExampleEndpointCall) GetServiceHeaders() []*ExampleHeader {
-	if e == nil {
-		return nil
-	}
-	return e.ServiceHeaders
-}
-
-func (e *ExampleEndpointCall) GetEndpointHeaders() []*ExampleHeader {
-	if e == nil {
-		return nil
-	}
-	return e.EndpointHeaders
-}
-
-func (e *ExampleEndpointCall) GetQueryParameters() []*ExampleQueryParameter {
-	if e == nil {
-		return nil
-	}
-	return e.QueryParameters
-}
-
-func (e *ExampleEndpointCall) GetRequest() *ExampleRequestBody {
-	if e == nil {
-		return nil
-	}
-	return e.Request
-}
-
-func (e *ExampleEndpointCall) GetResponse() *ExampleResponse {
-	if e == nil {
-		return nil
-	}
-	return e.Response
-}
-
-func (e *ExampleEndpointCall) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleEndpointCall) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleEndpointCall
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleEndpointCall(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleEndpointCall) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleEndpointErrorResponse struct {
-	Error *DeclaredErrorName    `json:"error,omitempty" url:"error,omitempty"`
-	Body  *ExampleTypeReference `json:"body,omitempty" url:"body,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleEndpointErrorResponse) GetError() *DeclaredErrorName {
-	if e == nil {
-		return nil
-	}
-	return e.Error
-}
-
-func (e *ExampleEndpointErrorResponse) GetBody() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Body
-}
-
-func (e *ExampleEndpointErrorResponse) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleEndpointErrorResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleEndpointErrorResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleEndpointErrorResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleEndpointErrorResponse) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleEndpointSuccessResponse struct {
-	Type   string
-	Body   *ExampleTypeReference
-	Stream []*ExampleTypeReference
-	Sse    []*ExampleServerSideEvent
-}
-
-func NewExampleEndpointSuccessResponseFromBody(value *ExampleTypeReference) *ExampleEndpointSuccessResponse {
-	return &ExampleEndpointSuccessResponse{Type: "body", Body: value}
-}
-
-func NewExampleEndpointSuccessResponseFromStream(value []*ExampleTypeReference) *ExampleEndpointSuccessResponse {
-	return &ExampleEndpointSuccessResponse{Type: "stream", Stream: value}
-}
-
-func NewExampleEndpointSuccessResponseFromSse(value []*ExampleServerSideEvent) *ExampleEndpointSuccessResponse {
-	return &ExampleEndpointSuccessResponse{Type: "sse", Sse: value}
-}
-
-func (e *ExampleEndpointSuccessResponse) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleEndpointSuccessResponse) GetBody() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Body
-}
-
-func (e *ExampleEndpointSuccessResponse) GetStream() []*ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Stream
-}
-
-func (e *ExampleEndpointSuccessResponse) GetSse() []*ExampleServerSideEvent {
-	if e == nil {
-		return nil
-	}
-	return e.Sse
-}
-
-func (e *ExampleEndpointSuccessResponse) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "body":
-		var valueUnmarshaler struct {
-			Body *ExampleTypeReference `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		e.Body = valueUnmarshaler.Body
-	case "stream":
-		var valueUnmarshaler struct {
-			Stream []*ExampleTypeReference `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		e.Stream = valueUnmarshaler.Stream
-	case "sse":
-		var valueUnmarshaler struct {
-			Sse []*ExampleServerSideEvent `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		e.Sse = valueUnmarshaler.Sse
-	}
-	return nil
-}
-
-func (e ExampleEndpointSuccessResponse) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "body":
-		var marshaler = struct {
-			Type string                `json:"type"`
-			Body *ExampleTypeReference `json:"value,omitempty"`
-		}{
-			Type: "body",
-			Body: e.Body,
-		}
-		return json.Marshal(marshaler)
-	case "stream":
-		var marshaler = struct {
-			Type   string                  `json:"type"`
-			Stream []*ExampleTypeReference `json:"value,omitempty"`
-		}{
-			Type:   "stream",
-			Stream: e.Stream,
-		}
-		return json.Marshal(marshaler)
-	case "sse":
-		var marshaler = struct {
-			Type string                    `json:"type"`
-			Sse  []*ExampleServerSideEvent `json:"value,omitempty"`
-		}{
-			Type: "sse",
-			Sse:  e.Sse,
-		}
-		return json.Marshal(marshaler)
-	}
-}
-
-type ExampleEndpointSuccessResponseVisitor interface {
-	VisitBody(*ExampleTypeReference) error
-	VisitStream([]*ExampleTypeReference) error
-	VisitSse([]*ExampleServerSideEvent) error
-}
-
-func (e *ExampleEndpointSuccessResponse) Accept(visitor ExampleEndpointSuccessResponseVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "body":
-		return visitor.VisitBody(e.Body)
-	case "stream":
-		return visitor.VisitStream(e.Stream)
-	case "sse":
-		return visitor.VisitSse(e.Sse)
-	}
-}
-
-type ExampleHeader struct {
-	Name  *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleHeader) GetName() *NameAndWireValue {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleHeader) GetValue() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Value
-}
-
-func (e *ExampleHeader) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleHeader) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleHeader
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleHeader(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleHeader) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleInlinedRequestBody struct {
-	JsonExample interface{}                          `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
-	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleInlinedRequestBody) GetJsonExample() interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.JsonExample
-}
-
-func (e *ExampleInlinedRequestBody) GetProperties() []*ExampleInlinedRequestBodyProperty {
-	if e == nil {
-		return nil
-	}
-	return e.Properties
-}
-
-func (e *ExampleInlinedRequestBody) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleInlinedRequestBody) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleInlinedRequestBody
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleInlinedRequestBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleInlinedRequestBody) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleInlinedRequestBodyProperty struct {
-	Name  *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
-	// This property may have been brought in via extension. originalTypeDeclaration
-	// is the name of the type that contains this property
-	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty" url:"originalTypeDeclaration,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleInlinedRequestBodyProperty) GetName() *NameAndWireValue {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleInlinedRequestBodyProperty) GetValue() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Value
-}
-
-func (e *ExampleInlinedRequestBodyProperty) GetOriginalTypeDeclaration() *DeclaredTypeName {
-	if e == nil {
-		return nil
-	}
-	return e.OriginalTypeDeclaration
-}
-
-func (e *ExampleInlinedRequestBodyProperty) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleInlinedRequestBodyProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleInlinedRequestBodyProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleInlinedRequestBodyProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleInlinedRequestBodyProperty) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExamplePathParameter struct {
-	Name  *Name                 `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExamplePathParameter) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExamplePathParameter) GetValue() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Value
-}
-
-func (e *ExamplePathParameter) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExamplePathParameter) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExamplePathParameter
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExamplePathParameter(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExamplePathParameter) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleQueryParameter struct {
-	Name  *NameAndWireValue           `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference       `json:"value,omitempty" url:"value,omitempty"`
-	Shape *ExampleQueryParameterShape `json:"shape,omitempty" url:"shape,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleQueryParameter) GetName() *NameAndWireValue {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleQueryParameter) GetValue() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Value
-}
-
-func (e *ExampleQueryParameter) GetShape() *ExampleQueryParameterShape {
-	if e == nil {
-		return nil
-	}
-	return e.Shape
-}
-
-func (e *ExampleQueryParameter) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleQueryParameter) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleQueryParameter
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleQueryParameter(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleQueryParameter) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleQueryParameterShape struct {
-	Type           string
-	Single         interface{}
-	Exploded       interface{}
-	CommaSeparated interface{}
-}
-
-func NewExampleQueryParameterShapeFromSingle(value interface{}) *ExampleQueryParameterShape {
-	return &ExampleQueryParameterShape{Type: "single", Single: value}
-}
-
-func NewExampleQueryParameterShapeFromExploded(value interface{}) *ExampleQueryParameterShape {
-	return &ExampleQueryParameterShape{Type: "exploded", Exploded: value}
-}
-
-func NewExampleQueryParameterShapeFromCommaSeparated(value interface{}) *ExampleQueryParameterShape {
-	return &ExampleQueryParameterShape{Type: "commaSeparated", CommaSeparated: value}
-}
-
-func (e *ExampleQueryParameterShape) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleQueryParameterShape) GetSingle() interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.Single
-}
-
-func (e *ExampleQueryParameterShape) GetExploded() interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.Exploded
-}
-
-func (e *ExampleQueryParameterShape) GetCommaSeparated() interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.CommaSeparated
-}
-
-func (e *ExampleQueryParameterShape) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "single":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Single = value
-	case "exploded":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Exploded = value
-	case "commaSeparated":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.CommaSeparated = value
-	}
-	return nil
-}
-
-func (e ExampleQueryParameterShape) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "single":
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Single interface{} `json:"single,omitempty"`
-		}{
-			Type:   "single",
-			Single: e.Single,
-		}
-		return json.Marshal(marshaler)
-	case "exploded":
-		var marshaler = struct {
-			Type     string      `json:"type"`
-			Exploded interface{} `json:"exploded,omitempty"`
-		}{
-			Type:     "exploded",
-			Exploded: e.Exploded,
-		}
-		return json.Marshal(marshaler)
-	case "commaSeparated":
-		var marshaler = struct {
-			Type           string      `json:"type"`
-			CommaSeparated interface{} `json:"commaSeparated,omitempty"`
-		}{
-			Type:           "commaSeparated",
-			CommaSeparated: e.CommaSeparated,
-		}
-		return json.Marshal(marshaler)
-	}
-}
-
-type ExampleQueryParameterShapeVisitor interface {
-	VisitSingle(interface{}) error
-	VisitExploded(interface{}) error
-	VisitCommaSeparated(interface{}) error
-}
-
-func (e *ExampleQueryParameterShape) Accept(visitor ExampleQueryParameterShapeVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "single":
-		return visitor.VisitSingle(e.Single)
-	case "exploded":
-		return visitor.VisitExploded(e.Exploded)
-	case "commaSeparated":
-		return visitor.VisitCommaSeparated(e.CommaSeparated)
-	}
-}
-
-type ExampleRequestBody struct {
-	Type               string
-	InlinedRequestBody *ExampleInlinedRequestBody
-	Reference          *ExampleTypeReference
-}
-
-func NewExampleRequestBodyFromInlinedRequestBody(value *ExampleInlinedRequestBody) *ExampleRequestBody {
-	return &ExampleRequestBody{Type: "inlinedRequestBody", InlinedRequestBody: value}
-}
-
-func NewExampleRequestBodyFromReference(value *ExampleTypeReference) *ExampleRequestBody {
-	return &ExampleRequestBody{Type: "reference", Reference: value}
-}
-
-func (e *ExampleRequestBody) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleRequestBody) GetInlinedRequestBody() *ExampleInlinedRequestBody {
-	if e == nil {
-		return nil
-	}
-	return e.InlinedRequestBody
-}
-
-func (e *ExampleRequestBody) GetReference() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Reference
-}
-
-func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "inlinedRequestBody":
-		value := new(ExampleInlinedRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.InlinedRequestBody = value
-	case "reference":
-		value := new(ExampleTypeReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Reference = value
-	}
-	return nil
-}
-
-func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "inlinedRequestBody":
-		return core.MarshalJSONWithExtraProperty(e.InlinedRequestBody, "type", "inlinedRequestBody")
-	case "reference":
-		return core.MarshalJSONWithExtraProperty(e.Reference, "type", "reference")
-	}
-}
-
-type ExampleRequestBodyVisitor interface {
-	VisitInlinedRequestBody(*ExampleInlinedRequestBody) error
-	VisitReference(*ExampleTypeReference) error
-}
-
-func (e *ExampleRequestBody) Accept(visitor ExampleRequestBodyVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "inlinedRequestBody":
-		return visitor.VisitInlinedRequestBody(e.InlinedRequestBody)
-	case "reference":
-		return visitor.VisitReference(e.Reference)
-	}
-}
-
-type ExampleResponse struct {
-	Type  string
-	Ok    *ExampleEndpointSuccessResponse
-	Error *ExampleEndpointErrorResponse
-}
-
-func NewExampleResponseFromOk(value *ExampleEndpointSuccessResponse) *ExampleResponse {
-	return &ExampleResponse{Type: "ok", Ok: value}
-}
-
-func NewExampleResponseFromError(value *ExampleEndpointErrorResponse) *ExampleResponse {
-	return &ExampleResponse{Type: "error", Error: value}
-}
-
-func (e *ExampleResponse) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleResponse) GetOk() *ExampleEndpointSuccessResponse {
-	if e == nil {
-		return nil
-	}
-	return e.Ok
-}
-
-func (e *ExampleResponse) GetError() *ExampleEndpointErrorResponse {
-	if e == nil {
-		return nil
-	}
-	return e.Error
-}
-
-func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "ok":
-		var valueUnmarshaler struct {
-			Ok *ExampleEndpointSuccessResponse `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		e.Ok = valueUnmarshaler.Ok
-	case "error":
-		value := new(ExampleEndpointErrorResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Error = value
-	}
-	return nil
-}
-
-func (e ExampleResponse) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "ok":
-		var marshaler = struct {
-			Type string                          `json:"type"`
-			Ok   *ExampleEndpointSuccessResponse `json:"value,omitempty"`
-		}{
-			Type: "ok",
-			Ok:   e.Ok,
-		}
-		return json.Marshal(marshaler)
-	case "error":
-		return core.MarshalJSONWithExtraProperty(e.Error, "type", "error")
-	}
-}
-
-type ExampleResponseVisitor interface {
-	VisitOk(*ExampleEndpointSuccessResponse) error
-	VisitError(*ExampleEndpointErrorResponse) error
-}
-
-func (e *ExampleResponse) Accept(visitor ExampleResponseVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "ok":
-		return visitor.VisitOk(e.Ok)
-	case "error":
-		return visitor.VisitError(e.Error)
-	}
-}
-
-type ExampleServerSideEvent struct {
-	Event string                `json:"event" url:"event"`
-	Data  *ExampleTypeReference `json:"data,omitempty" url:"data,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleServerSideEvent) GetEvent() string {
-	if e == nil {
-		return ""
-	}
-	return e.Event
-}
-
-func (e *ExampleServerSideEvent) GetData() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Data
-}
-
-func (e *ExampleServerSideEvent) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleServerSideEvent) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleServerSideEvent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleServerSideEvent(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleServerSideEvent) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type FileDownloadResponse struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FileDownloadResponse) GetDocs() *string {
-	if f == nil {
-		return nil
-	}
-	return f.Docs
-}
-
-func (f *FileDownloadResponse) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FileDownloadResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler FileDownloadResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FileDownloadResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FileDownloadResponse) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileProperty struct {
-	Type      string
-	File      *FilePropertySingle
-	FileArray *FilePropertyArray
-}
-
-func NewFilePropertyFromFile(value *FilePropertySingle) *FileProperty {
-	return &FileProperty{Type: "file", File: value}
-}
-
-func NewFilePropertyFromFileArray(value *FilePropertyArray) *FileProperty {
-	return &FileProperty{Type: "fileArray", FileArray: value}
-}
-
-func (f *FileProperty) GetType() string {
-	if f == nil {
-		return ""
-	}
-	return f.Type
-}
-
-func (f *FileProperty) GetFile() *FilePropertySingle {
-	if f == nil {
-		return nil
-	}
-	return f.File
-}
-
-func (f *FileProperty) GetFileArray() *FilePropertyArray {
-	if f == nil {
-		return nil
-	}
-	return f.FileArray
-}
-
-func (f *FileProperty) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	f.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", f)
-	}
-	switch unmarshaler.Type {
-	case "file":
-		value := new(FilePropertySingle)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		f.File = value
-	case "fileArray":
-		value := new(FilePropertyArray)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		f.FileArray = value
-	}
-	return nil
-}
-
-func (f FileProperty) MarshalJSON() ([]byte, error) {
-	switch f.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
-	case "file":
-		return core.MarshalJSONWithExtraProperty(f.File, "type", "file")
-	case "fileArray":
-		return core.MarshalJSONWithExtraProperty(f.FileArray, "type", "fileArray")
-	}
-}
-
-type FilePropertyVisitor interface {
-	VisitFile(*FilePropertySingle) error
-	VisitFileArray(*FilePropertyArray) error
-}
-
-func (f *FileProperty) Accept(visitor FilePropertyVisitor) error {
-	switch f.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", f.Type, f)
-	case "file":
-		return visitor.VisitFile(f.File)
-	case "fileArray":
-		return visitor.VisitFileArray(f.FileArray)
-	}
-}
-
-type FilePropertyArray struct {
-	Key         *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
-	IsOptional  bool              `json:"isOptional" url:"isOptional"`
-	ContentType *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FilePropertyArray) GetKey() *NameAndWireValue {
-	if f == nil {
-		return nil
-	}
-	return f.Key
-}
-
-func (f *FilePropertyArray) GetIsOptional() bool {
-	if f == nil {
-		return false
-	}
-	return f.IsOptional
-}
-
-func (f *FilePropertyArray) GetContentType() *string {
-	if f == nil {
-		return nil
-	}
-	return f.ContentType
-}
-
-func (f *FilePropertyArray) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FilePropertyArray) UnmarshalJSON(data []byte) error {
-	type unmarshaler FilePropertyArray
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FilePropertyArray(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FilePropertyArray) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FilePropertySingle struct {
-	Key         *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
-	IsOptional  bool              `json:"isOptional" url:"isOptional"`
-	ContentType *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FilePropertySingle) GetKey() *NameAndWireValue {
-	if f == nil {
-		return nil
-	}
-	return f.Key
-}
-
-func (f *FilePropertySingle) GetIsOptional() bool {
-	if f == nil {
-		return false
-	}
-	return f.IsOptional
-}
-
-func (f *FilePropertySingle) GetContentType() *string {
-	if f == nil {
-		return nil
-	}
-	return f.ContentType
-}
-
-func (f *FilePropertySingle) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FilePropertySingle) UnmarshalJSON(data []byte) error {
-	type unmarshaler FilePropertySingle
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FilePropertySingle(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FilePropertySingle) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileUploadBodyProperty struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-	ContentType  *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FileUploadBodyProperty) GetDocs() *string {
-	if f == nil {
-		return nil
-	}
-	return f.Docs
-}
-
-func (f *FileUploadBodyProperty) GetAvailability() *Availability {
-	if f == nil {
-		return nil
-	}
-	return f.Availability
-}
-
-func (f *FileUploadBodyProperty) GetName() *NameAndWireValue {
-	if f == nil {
-		return nil
-	}
-	return f.Name
-}
-
-func (f *FileUploadBodyProperty) GetValueType() *TypeReference {
-	if f == nil {
-		return nil
-	}
-	return f.ValueType
-}
-
-func (f *FileUploadBodyProperty) GetContentType() *string {
-	if f == nil {
-		return nil
-	}
-	return f.ContentType
-}
-
-func (f *FileUploadBodyProperty) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FileUploadBodyProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler FileUploadBodyProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FileUploadBodyProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FileUploadBodyProperty) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileUploadRequest struct {
-	Docs       *string                      `json:"docs,omitempty" url:"docs,omitempty"`
-	Name       *Name                        `json:"name,omitempty" url:"name,omitempty"`
-	Properties []*FileUploadRequestProperty `json:"properties,omitempty" url:"properties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *FileUploadRequest) GetDocs() *string {
-	if f == nil {
-		return nil
-	}
-	return f.Docs
-}
-
-func (f *FileUploadRequest) GetName() *Name {
-	if f == nil {
-		return nil
-	}
-	return f.Name
-}
-
-func (f *FileUploadRequest) GetProperties() []*FileUploadRequestProperty {
-	if f == nil {
-		return nil
-	}
-	return f.Properties
-}
-
-func (f *FileUploadRequest) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *FileUploadRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler FileUploadRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FileUploadRequest(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *FileUploadRequest) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileUploadRequestProperty struct {
-	Type         string
-	File         *FileProperty
-	BodyProperty *FileUploadBodyProperty
-}
-
-func NewFileUploadRequestPropertyFromFile(value *FileProperty) *FileUploadRequestProperty {
-	return &FileUploadRequestProperty{Type: "file", File: value}
-}
-
-func NewFileUploadRequestPropertyFromBodyProperty(value *FileUploadBodyProperty) *FileUploadRequestProperty {
-	return &FileUploadRequestProperty{Type: "bodyProperty", BodyProperty: value}
-}
-
-func (f *FileUploadRequestProperty) GetType() string {
-	if f == nil {
-		return ""
-	}
-	return f.Type
-}
-
-func (f *FileUploadRequestProperty) GetFile() *FileProperty {
-	if f == nil {
-		return nil
-	}
-	return f.File
-}
-
-func (f *FileUploadRequestProperty) GetBodyProperty() *FileUploadBodyProperty {
-	if f == nil {
-		return nil
-	}
-	return f.BodyProperty
-}
-
-func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	f.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", f)
-	}
-	switch unmarshaler.Type {
-	case "file":
-		var valueUnmarshaler struct {
-			File *FileProperty `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		f.File = valueUnmarshaler.File
-	case "bodyProperty":
-		value := new(FileUploadBodyProperty)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		f.BodyProperty = value
-	}
-	return nil
-}
-
-func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
-	switch f.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
-	case "file":
-		var marshaler = struct {
-			Type string        `json:"type"`
-			File *FileProperty `json:"value,omitempty"`
-		}{
-			Type: "file",
-			File: f.File,
-		}
-		return json.Marshal(marshaler)
-	case "bodyProperty":
-		return core.MarshalJSONWithExtraProperty(f.BodyProperty, "type", "bodyProperty")
-	}
-}
-
-type FileUploadRequestPropertyVisitor interface {
-	VisitFile(*FileProperty) error
-	VisitBodyProperty(*FileUploadBodyProperty) error
-}
-
-func (f *FileUploadRequestProperty) Accept(visitor FileUploadRequestPropertyVisitor) error {
-	switch f.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", f.Type, f)
-	case "file":
-		return visitor.VisitFile(f.File)
-	case "bodyProperty":
-		return visitor.VisitBodyProperty(f.BodyProperty)
-	}
-}
-
-type GrpcTransport struct {
-	Service *ProtobufService `json:"service,omitempty" url:"service,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (g *GrpcTransport) GetService() *ProtobufService {
-	if g == nil {
-		return nil
-	}
-	return g.Service
-}
-
-func (g *GrpcTransport) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
-}
-
-func (g *GrpcTransport) UnmarshalJSON(data []byte) error {
-	type unmarshaler GrpcTransport
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GrpcTransport(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-
-	return nil
-}
-
-func (g *GrpcTransport) String() string {
-	if value, err := core.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
-}
-
-type HttpEndpoint struct {
-	Docs         *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
-	Id           EndpointId            `json:"id" url:"id"`
-	Name         EndpointName          `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName  *string               `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Method       HttpMethod            `json:"method" url:"method"`
-	Headers      []*HttpHeader         `json:"headers,omitempty" url:"headers,omitempty"`
-	BaseUrl      *EnvironmentBaseUrlId `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
-	// Overrides the service and endpoint level base paths
-	BasePath              *HttpPath                       `json:"basePath,omitempty" url:"basePath,omitempty"`
-	Path                  *HttpPath                       `json:"path,omitempty" url:"path,omitempty"`
-	FullPath              *HttpPath                       `json:"fullPath,omitempty" url:"fullPath,omitempty"`
-	PathParameters        []*PathParameter                `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	AllPathParameters     []*PathParameter                `json:"allPathParameters,omitempty" url:"allPathParameters,omitempty"`
-	QueryParameters       []*QueryParameter               `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
-	RequestBody           *HttpRequestBody                `json:"requestBody,omitempty" url:"requestBody,omitempty"`
-	SdkRequest            *SdkRequest                     `json:"sdkRequest,omitempty" url:"sdkRequest,omitempty"`
-	Response              *HttpResponse                   `json:"response,omitempty" url:"response,omitempty"`
-	Errors                ResponseErrors                  `json:"errors,omitempty" url:"errors,omitempty"`
-	Auth                  bool                            `json:"auth" url:"auth"`
-	Idempotent            bool                            `json:"idempotent" url:"idempotent"`
-	Pagination            *Pagination                     `json:"pagination,omitempty" url:"pagination,omitempty"`
-	UserSpecifiedExamples []*UserSpecifiedEndpointExample `json:"userSpecifiedExamples,omitempty" url:"userSpecifiedExamples,omitempty"`
-	AutogeneratedExamples []*AutogeneratedEndpointExample `json:"autogeneratedExamples,omitempty" url:"autogeneratedExamples,omitempty"`
-	Transport             *Transport                      `json:"transport,omitempty" url:"transport,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpEndpoint) GetDocs() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Docs
-}
-
-func (h *HttpEndpoint) GetAvailability() *Availability {
-	if h == nil {
-		return nil
-	}
-	return h.Availability
-}
-
-func (h *HttpEndpoint) GetId() EndpointId {
-	if h == nil {
-		return ""
-	}
-	return h.Id
-}
-
-func (h *HttpEndpoint) GetName() EndpointName {
-	if h == nil {
-		return nil
-	}
-	return h.Name
-}
-
-func (h *HttpEndpoint) GetDisplayName() *string {
-	if h == nil {
-		return nil
-	}
-	return h.DisplayName
-}
-
-func (h *HttpEndpoint) GetMethod() HttpMethod {
-	if h == nil {
-		return ""
-	}
-	return h.Method
-}
-
-func (h *HttpEndpoint) GetHeaders() []*HttpHeader {
-	if h == nil {
-		return nil
-	}
-	return h.Headers
-}
-
-func (h *HttpEndpoint) GetBaseUrl() *EnvironmentBaseUrlId {
-	if h == nil {
-		return nil
-	}
-	return h.BaseUrl
-}
-
-func (h *HttpEndpoint) GetBasePath() *HttpPath {
-	if h == nil {
-		return nil
-	}
-	return h.BasePath
-}
-
-func (h *HttpEndpoint) GetPath() *HttpPath {
-	if h == nil {
-		return nil
-	}
-	return h.Path
-}
-
-func (h *HttpEndpoint) GetFullPath() *HttpPath {
-	if h == nil {
-		return nil
-	}
-	return h.FullPath
-}
-
-func (h *HttpEndpoint) GetPathParameters() []*PathParameter {
-	if h == nil {
-		return nil
-	}
-	return h.PathParameters
-}
-
-func (h *HttpEndpoint) GetAllPathParameters() []*PathParameter {
-	if h == nil {
-		return nil
-	}
-	return h.AllPathParameters
-}
-
-func (h *HttpEndpoint) GetQueryParameters() []*QueryParameter {
-	if h == nil {
-		return nil
-	}
-	return h.QueryParameters
-}
-
-func (h *HttpEndpoint) GetRequestBody() *HttpRequestBody {
-	if h == nil {
-		return nil
-	}
-	return h.RequestBody
-}
-
-func (h *HttpEndpoint) GetSdkRequest() *SdkRequest {
-	if h == nil {
-		return nil
-	}
-	return h.SdkRequest
-}
-
-func (h *HttpEndpoint) GetResponse() *HttpResponse {
-	if h == nil {
-		return nil
-	}
-	return h.Response
-}
-
-func (h *HttpEndpoint) GetErrors() ResponseErrors {
-	if h == nil {
-		return nil
-	}
-	return h.Errors
-}
-
-func (h *HttpEndpoint) GetAuth() bool {
-	if h == nil {
-		return false
-	}
-	return h.Auth
-}
-
-func (h *HttpEndpoint) GetIdempotent() bool {
-	if h == nil {
-		return false
-	}
-	return h.Idempotent
-}
-
-func (h *HttpEndpoint) GetPagination() *Pagination {
-	if h == nil {
-		return nil
-	}
-	return h.Pagination
-}
-
-func (h *HttpEndpoint) GetUserSpecifiedExamples() []*UserSpecifiedEndpointExample {
-	if h == nil {
-		return nil
-	}
-	return h.UserSpecifiedExamples
-}
-
-func (h *HttpEndpoint) GetAutogeneratedExamples() []*AutogeneratedEndpointExample {
-	if h == nil {
-		return nil
-	}
-	return h.AutogeneratedExamples
-}
-
-func (h *HttpEndpoint) GetTransport() *Transport {
-	if h == nil {
-		return nil
-	}
-	return h.Transport
-}
-
-func (h *HttpEndpoint) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpEndpoint) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpEndpoint
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpEndpoint(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpEndpoint) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpHeader struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Env          *string           `json:"env,omitempty" url:"env,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpHeader) GetDocs() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Docs
-}
-
-func (h *HttpHeader) GetAvailability() *Availability {
-	if h == nil {
-		return nil
-	}
-	return h.Availability
-}
-
-func (h *HttpHeader) GetName() *NameAndWireValue {
-	if h == nil {
-		return nil
-	}
-	return h.Name
-}
-
-func (h *HttpHeader) GetValueType() *TypeReference {
-	if h == nil {
-		return nil
-	}
-	return h.ValueType
-}
-
-func (h *HttpHeader) GetEnv() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Env
-}
-
-func (h *HttpHeader) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpHeader) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpHeader
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpHeader(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpHeader) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpMethod string
-
-const (
-	HttpMethodGet    HttpMethod = "GET"
-	HttpMethodPost   HttpMethod = "POST"
-	HttpMethodPut    HttpMethod = "PUT"
-	HttpMethodPatch  HttpMethod = "PATCH"
-	HttpMethodDelete HttpMethod = "DELETE"
-)
-
-func NewHttpMethodFromString(s string) (HttpMethod, error) {
-	switch s {
-	case "GET":
-		return HttpMethodGet, nil
-	case "POST":
-		return HttpMethodPost, nil
-	case "PUT":
-		return HttpMethodPut, nil
-	case "PATCH":
-		return HttpMethodPatch, nil
-	case "DELETE":
-		return HttpMethodDelete, nil
-	}
-	var t HttpMethod
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (h HttpMethod) Ptr() *HttpMethod {
-	return &h
-}
-
-type HttpPath struct {
-	Head  string          `json:"head" url:"head"`
-	Parts []*HttpPathPart `json:"parts,omitempty" url:"parts,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpPath) GetHead() string {
-	if h == nil {
-		return ""
-	}
-	return h.Head
-}
-
-func (h *HttpPath) GetParts() []*HttpPathPart {
-	if h == nil {
-		return nil
-	}
-	return h.Parts
-}
-
-func (h *HttpPath) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpPath) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpPath
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpPath(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpPath) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpPathPart struct {
-	PathParameter string `json:"pathParameter" url:"pathParameter"`
-	Tail          string `json:"tail" url:"tail"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpPathPart) GetPathParameter() string {
-	if h == nil {
-		return ""
-	}
-	return h.PathParameter
-}
-
-func (h *HttpPathPart) GetTail() string {
-	if h == nil {
-		return ""
-	}
-	return h.Tail
-}
-
-func (h *HttpPathPart) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpPathPart) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpPathPart
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpPathPart(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpPathPart) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpRequestBody struct {
-	Type               string
-	InlinedRequestBody *InlinedRequestBody
-	Reference          *HttpRequestBodyReference
-	FileUpload         *FileUploadRequest
-	Bytes              *BytesRequest
-}
-
-func NewHttpRequestBodyFromInlinedRequestBody(value *InlinedRequestBody) *HttpRequestBody {
-	return &HttpRequestBody{Type: "inlinedRequestBody", InlinedRequestBody: value}
-}
-
-func NewHttpRequestBodyFromReference(value *HttpRequestBodyReference) *HttpRequestBody {
-	return &HttpRequestBody{Type: "reference", Reference: value}
-}
-
-func NewHttpRequestBodyFromFileUpload(value *FileUploadRequest) *HttpRequestBody {
-	return &HttpRequestBody{Type: "fileUpload", FileUpload: value}
-}
-
-func NewHttpRequestBodyFromBytes(value *BytesRequest) *HttpRequestBody {
-	return &HttpRequestBody{Type: "bytes", Bytes: value}
-}
-
-func (h *HttpRequestBody) GetType() string {
-	if h == nil {
-		return ""
-	}
-	return h.Type
-}
-
-func (h *HttpRequestBody) GetInlinedRequestBody() *InlinedRequestBody {
-	if h == nil {
-		return nil
-	}
-	return h.InlinedRequestBody
-}
-
-func (h *HttpRequestBody) GetReference() *HttpRequestBodyReference {
-	if h == nil {
-		return nil
-	}
-	return h.Reference
-}
-
-func (h *HttpRequestBody) GetFileUpload() *FileUploadRequest {
-	if h == nil {
-		return nil
-	}
-	return h.FileUpload
-}
-
-func (h *HttpRequestBody) GetBytes() *BytesRequest {
-	if h == nil {
-		return nil
-	}
-	return h.Bytes
-}
-
-func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	h.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", h)
-	}
-	switch unmarshaler.Type {
-	case "inlinedRequestBody":
-		value := new(InlinedRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.InlinedRequestBody = value
-	case "reference":
-		value := new(HttpRequestBodyReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.Reference = value
-	case "fileUpload":
-		value := new(FileUploadRequest)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.FileUpload = value
-	case "bytes":
-		value := new(BytesRequest)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.Bytes = value
-	}
-	return nil
-}
-
-func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
-	switch h.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
-	case "inlinedRequestBody":
-		return core.MarshalJSONWithExtraProperty(h.InlinedRequestBody, "type", "inlinedRequestBody")
-	case "reference":
-		return core.MarshalJSONWithExtraProperty(h.Reference, "type", "reference")
-	case "fileUpload":
-		return core.MarshalJSONWithExtraProperty(h.FileUpload, "type", "fileUpload")
-	case "bytes":
-		return core.MarshalJSONWithExtraProperty(h.Bytes, "type", "bytes")
-	}
-}
-
-type HttpRequestBodyVisitor interface {
-	VisitInlinedRequestBody(*InlinedRequestBody) error
-	VisitReference(*HttpRequestBodyReference) error
-	VisitFileUpload(*FileUploadRequest) error
-	VisitBytes(*BytesRequest) error
-}
-
-func (h *HttpRequestBody) Accept(visitor HttpRequestBodyVisitor) error {
-	switch h.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", h.Type, h)
-	case "inlinedRequestBody":
-		return visitor.VisitInlinedRequestBody(h.InlinedRequestBody)
-	case "reference":
-		return visitor.VisitReference(h.Reference)
-	case "fileUpload":
-		return visitor.VisitFileUpload(h.FileUpload)
-	case "bytes":
-		return visitor.VisitBytes(h.Bytes)
-	}
-}
-
-type HttpRequestBodyReference struct {
-	Docs            *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	RequestBodyType *TypeReference `json:"requestBodyType,omitempty" url:"requestBodyType,omitempty"`
-	ContentType     *string        `json:"contentType,omitempty" url:"contentType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpRequestBodyReference) GetDocs() *string {
-	if h == nil {
-		return nil
-	}
-	return h.Docs
-}
-
-func (h *HttpRequestBodyReference) GetRequestBodyType() *TypeReference {
-	if h == nil {
-		return nil
-	}
-	return h.RequestBodyType
-}
-
-func (h *HttpRequestBodyReference) GetContentType() *string {
-	if h == nil {
-		return nil
-	}
-	return h.ContentType
-}
-
-func (h *HttpRequestBodyReference) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpRequestBodyReference) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpRequestBodyReference
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpRequestBodyReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpRequestBodyReference) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpResponse struct {
-	StatusCode *int              `json:"status-code,omitempty" url:"status-code,omitempty"`
-	Body       *HttpResponseBody `json:"body,omitempty" url:"body,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpResponse) GetStatusCode() *int {
-	if h == nil {
-		return nil
-	}
-	return h.StatusCode
-}
-
-func (h *HttpResponse) GetBody() *HttpResponseBody {
-	if h == nil {
-		return nil
-	}
-	return h.Body
-}
-
-func (h *HttpResponse) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpResponse) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type HttpResponseBody struct {
-	Type         string
-	Json         *JsonResponse
-	FileDownload *FileDownloadResponse
-	Text         *TextResponse
-	Streaming    *StreamingResponse
-	// If there is a parameter that controls whether the response is streaming or not. Note
-	// that if this is the response then `sdkRequest.streamParameter` will always be populated.
-	StreamParameter *StreamParameterResponse
-}
-
-func NewHttpResponseBodyFromJson(value *JsonResponse) *HttpResponseBody {
-	return &HttpResponseBody{Type: "json", Json: value}
-}
-
-func NewHttpResponseBodyFromFileDownload(value *FileDownloadResponse) *HttpResponseBody {
-	return &HttpResponseBody{Type: "fileDownload", FileDownload: value}
-}
-
-func NewHttpResponseBodyFromText(value *TextResponse) *HttpResponseBody {
-	return &HttpResponseBody{Type: "text", Text: value}
-}
-
-func NewHttpResponseBodyFromStreaming(value *StreamingResponse) *HttpResponseBody {
-	return &HttpResponseBody{Type: "streaming", Streaming: value}
-}
-
-func NewHttpResponseBodyFromStreamParameter(value *StreamParameterResponse) *HttpResponseBody {
-	return &HttpResponseBody{Type: "streamParameter", StreamParameter: value}
-}
-
-func (h *HttpResponseBody) GetType() string {
-	if h == nil {
-		return ""
-	}
-	return h.Type
-}
-
-func (h *HttpResponseBody) GetJson() *JsonResponse {
-	if h == nil {
-		return nil
-	}
-	return h.Json
-}
-
-func (h *HttpResponseBody) GetFileDownload() *FileDownloadResponse {
-	if h == nil {
-		return nil
-	}
-	return h.FileDownload
-}
-
-func (h *HttpResponseBody) GetText() *TextResponse {
-	if h == nil {
-		return nil
-	}
-	return h.Text
-}
-
-func (h *HttpResponseBody) GetStreaming() *StreamingResponse {
-	if h == nil {
-		return nil
-	}
-	return h.Streaming
-}
-
-func (h *HttpResponseBody) GetStreamParameter() *StreamParameterResponse {
-	if h == nil {
-		return nil
-	}
-	return h.StreamParameter
-}
-
-func (h *HttpResponseBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	h.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", h)
-	}
-	switch unmarshaler.Type {
-	case "json":
-		var valueUnmarshaler struct {
-			Json *JsonResponse `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		h.Json = valueUnmarshaler.Json
-	case "fileDownload":
-		value := new(FileDownloadResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.FileDownload = value
-	case "text":
-		value := new(TextResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.Text = value
-	case "streaming":
-		var valueUnmarshaler struct {
-			Streaming *StreamingResponse `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		h.Streaming = valueUnmarshaler.Streaming
-	case "streamParameter":
-		value := new(StreamParameterResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		h.StreamParameter = value
-	}
-	return nil
-}
-
-func (h HttpResponseBody) MarshalJSON() ([]byte, error) {
-	switch h.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
-	case "json":
-		var marshaler = struct {
-			Type string        `json:"type"`
-			Json *JsonResponse `json:"value,omitempty"`
-		}{
-			Type: "json",
-			Json: h.Json,
-		}
-		return json.Marshal(marshaler)
-	case "fileDownload":
-		return core.MarshalJSONWithExtraProperty(h.FileDownload, "type", "fileDownload")
-	case "text":
-		return core.MarshalJSONWithExtraProperty(h.Text, "type", "text")
-	case "streaming":
-		var marshaler = struct {
-			Type      string             `json:"type"`
-			Streaming *StreamingResponse `json:"value,omitempty"`
-		}{
-			Type:      "streaming",
-			Streaming: h.Streaming,
-		}
-		return json.Marshal(marshaler)
-	case "streamParameter":
-		return core.MarshalJSONWithExtraProperty(h.StreamParameter, "type", "streamParameter")
-	}
-}
-
-type HttpResponseBodyVisitor interface {
-	VisitJson(*JsonResponse) error
-	VisitFileDownload(*FileDownloadResponse) error
-	VisitText(*TextResponse) error
-	VisitStreaming(*StreamingResponse) error
-	VisitStreamParameter(*StreamParameterResponse) error
-}
-
-func (h *HttpResponseBody) Accept(visitor HttpResponseBodyVisitor) error {
-	switch h.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", h.Type, h)
-	case "json":
-		return visitor.VisitJson(h.Json)
-	case "fileDownload":
-		return visitor.VisitFileDownload(h.FileDownload)
-	case "text":
-		return visitor.VisitText(h.Text)
-	case "streaming":
-		return visitor.VisitStreaming(h.Streaming)
-	case "streamParameter":
-		return visitor.VisitStreamParameter(h.StreamParameter)
-	}
-}
-
-type HttpService struct {
-	Availability   *Availability        `json:"availability,omitempty" url:"availability,omitempty"`
-	Name           *DeclaredServiceName `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName    *string              `json:"displayName,omitempty" url:"displayName,omitempty"`
-	BasePath       *HttpPath            `json:"basePath,omitempty" url:"basePath,omitempty"`
-	Endpoints      []*HttpEndpoint      `json:"endpoints,omitempty" url:"endpoints,omitempty"`
-	Headers        []*HttpHeader        `json:"headers,omitempty" url:"headers,omitempty"`
-	PathParameters []*PathParameter     `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	Encoding       *Encoding            `json:"encoding,omitempty" url:"encoding,omitempty"`
-	Transport      *Transport           `json:"transport,omitempty" url:"transport,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HttpService) GetAvailability() *Availability {
-	if h == nil {
-		return nil
-	}
-	return h.Availability
-}
-
-func (h *HttpService) GetName() *DeclaredServiceName {
-	if h == nil {
-		return nil
-	}
-	return h.Name
-}
-
-func (h *HttpService) GetDisplayName() *string {
-	if h == nil {
-		return nil
-	}
-	return h.DisplayName
-}
-
-func (h *HttpService) GetBasePath() *HttpPath {
-	if h == nil {
-		return nil
-	}
-	return h.BasePath
-}
-
-func (h *HttpService) GetEndpoints() []*HttpEndpoint {
-	if h == nil {
-		return nil
-	}
-	return h.Endpoints
-}
-
-func (h *HttpService) GetHeaders() []*HttpHeader {
-	if h == nil {
-		return nil
-	}
-	return h.Headers
-}
-
-func (h *HttpService) GetPathParameters() []*PathParameter {
-	if h == nil {
-		return nil
-	}
-	return h.PathParameters
-}
-
-func (h *HttpService) GetEncoding() *Encoding {
-	if h == nil {
-		return nil
-	}
-	return h.Encoding
-}
-
-func (h *HttpService) GetTransport() *Transport {
-	if h == nil {
-		return nil
-	}
-	return h.Transport
-}
-
-func (h *HttpService) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HttpService) UnmarshalJSON(data []byte) error {
-	type unmarshaler HttpService
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HttpService(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HttpService) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-type InlinedRequestBody struct {
-	Docs       *string                       `json:"docs,omitempty" url:"docs,omitempty"`
-	Name       *Name                         `json:"name,omitempty" url:"name,omitempty"`
-	Extends    []*DeclaredTypeName           `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*InlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
-	// A list of properties that all the parents of this request have.
-	ExtendedProperties []*ObjectProperty `json:"extendedProperties,omitempty" url:"extendedProperties,omitempty"`
-	ContentType        *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
-	// Whether to allow extra properties on the request.
-	ExtraProperties bool `json:"extra-properties" url:"extra-properties"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedRequestBody) GetDocs() *string {
-	if i == nil {
-		return nil
-	}
-	return i.Docs
-}
-
-func (i *InlinedRequestBody) GetName() *Name {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedRequestBody) GetExtends() []*DeclaredTypeName {
-	if i == nil {
-		return nil
-	}
-	return i.Extends
-}
-
-func (i *InlinedRequestBody) GetProperties() []*InlinedRequestBodyProperty {
-	if i == nil {
-		return nil
-	}
-	return i.Properties
-}
-
-func (i *InlinedRequestBody) GetExtendedProperties() []*ObjectProperty {
-	if i == nil {
-		return nil
-	}
-	return i.ExtendedProperties
-}
-
-func (i *InlinedRequestBody) GetContentType() *string {
-	if i == nil {
-		return nil
-	}
-	return i.ContentType
-}
-
-func (i *InlinedRequestBody) GetExtraProperties() bool {
-	if i == nil {
-		return false
-	}
-	return i.ExtraProperties
-}
-
-func (i *InlinedRequestBody) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedRequestBody
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedRequestBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedRequestBody) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type InlinedRequestBodyProperty struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedRequestBodyProperty) GetDocs() *string {
-	if i == nil {
-		return nil
-	}
-	return i.Docs
-}
-
-func (i *InlinedRequestBodyProperty) GetAvailability() *Availability {
-	if i == nil {
-		return nil
-	}
-	return i.Availability
-}
-
-func (i *InlinedRequestBodyProperty) GetName() *NameAndWireValue {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedRequestBodyProperty) GetValueType() *TypeReference {
-	if i == nil {
-		return nil
-	}
-	return i.ValueType
-}
-
-func (i *InlinedRequestBodyProperty) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlinedRequestBodyProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedRequestBodyProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedRequestBodyProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedRequestBodyProperty) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type JsonResponse struct {
-	Type                     string
-	Response                 *JsonResponseBody
-	NestedPropertyAsResponse *JsonResponseBodyWithProperty
-}
-
-func NewJsonResponseFromResponse(value *JsonResponseBody) *JsonResponse {
-	return &JsonResponse{Type: "response", Response: value}
-}
-
-func NewJsonResponseFromNestedPropertyAsResponse(value *JsonResponseBodyWithProperty) *JsonResponse {
-	return &JsonResponse{Type: "nestedPropertyAsResponse", NestedPropertyAsResponse: value}
-}
-
-func (j *JsonResponse) GetType() string {
-	if j == nil {
-		return ""
-	}
-	return j.Type
-}
-
-func (j *JsonResponse) GetResponse() *JsonResponseBody {
-	if j == nil {
-		return nil
-	}
-	return j.Response
-}
-
-func (j *JsonResponse) GetNestedPropertyAsResponse() *JsonResponseBodyWithProperty {
-	if j == nil {
-		return nil
-	}
-	return j.NestedPropertyAsResponse
-}
-
-func (j *JsonResponse) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	j.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", j)
-	}
-	switch unmarshaler.Type {
-	case "response":
-		value := new(JsonResponseBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		j.Response = value
-	case "nestedPropertyAsResponse":
-		value := new(JsonResponseBodyWithProperty)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		j.NestedPropertyAsResponse = value
-	}
-	return nil
-}
-
-func (j JsonResponse) MarshalJSON() ([]byte, error) {
-	switch j.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", j.Type, j)
-	case "response":
-		return core.MarshalJSONWithExtraProperty(j.Response, "type", "response")
-	case "nestedPropertyAsResponse":
-		return core.MarshalJSONWithExtraProperty(j.NestedPropertyAsResponse, "type", "nestedPropertyAsResponse")
-	}
-}
-
-type JsonResponseVisitor interface {
-	VisitResponse(*JsonResponseBody) error
-	VisitNestedPropertyAsResponse(*JsonResponseBodyWithProperty) error
-}
-
-func (j *JsonResponse) Accept(visitor JsonResponseVisitor) error {
-	switch j.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", j.Type, j)
-	case "response":
-		return visitor.VisitResponse(j.Response)
-	case "nestedPropertyAsResponse":
-		return visitor.VisitNestedPropertyAsResponse(j.NestedPropertyAsResponse)
-	}
-}
-
-type JsonResponseBody struct {
-	Docs             *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty" url:"responseBodyType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (j *JsonResponseBody) GetDocs() *string {
-	if j == nil {
-		return nil
-	}
-	return j.Docs
-}
-
-func (j *JsonResponseBody) GetResponseBodyType() *TypeReference {
-	if j == nil {
-		return nil
-	}
-	return j.ResponseBodyType
-}
-
-func (j *JsonResponseBody) GetExtraProperties() map[string]interface{} {
-	return j.extraProperties
-}
-
-func (j *JsonResponseBody) UnmarshalJSON(data []byte) error {
-	type unmarshaler JsonResponseBody
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*j = JsonResponseBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
-	if err != nil {
-		return err
-	}
-	j.extraProperties = extraProperties
-
-	return nil
-}
-
-func (j *JsonResponseBody) String() string {
-	if value, err := core.StringifyJSON(j); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", j)
-}
-
-type JsonResponseBodyWithProperty struct {
-	Docs             *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty" url:"responseBodyType,omitempty"`
-	// If set, the SDK will return this property from
-	// the response, rather than the response itself.
-	//
-	// This is particularly useful for JSON API structures
-	// (e.g. configure 'data' to return 'response.data').
-	ResponseProperty *ObjectProperty `json:"responseProperty,omitempty" url:"responseProperty,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (j *JsonResponseBodyWithProperty) GetDocs() *string {
-	if j == nil {
-		return nil
-	}
-	return j.Docs
-}
-
-func (j *JsonResponseBodyWithProperty) GetResponseBodyType() *TypeReference {
-	if j == nil {
-		return nil
-	}
-	return j.ResponseBodyType
-}
-
-func (j *JsonResponseBodyWithProperty) GetResponseProperty() *ObjectProperty {
-	if j == nil {
-		return nil
-	}
-	return j.ResponseProperty
-}
-
-func (j *JsonResponseBodyWithProperty) GetExtraProperties() map[string]interface{} {
-	return j.extraProperties
-}
-
-func (j *JsonResponseBodyWithProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler JsonResponseBodyWithProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*j = JsonResponseBodyWithProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
-	if err != nil {
-		return err
-	}
-	j.extraProperties = extraProperties
-
-	return nil
-}
-
-func (j *JsonResponseBodyWithProperty) String() string {
-	if value, err := core.StringifyJSON(j); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", j)
-}
-
-type JsonStreamChunk struct {
-	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
-	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (j *JsonStreamChunk) GetDocs() *string {
-	if j == nil {
-		return nil
-	}
-	return j.Docs
-}
-
-func (j *JsonStreamChunk) GetPayload() *TypeReference {
-	if j == nil {
-		return nil
-	}
-	return j.Payload
-}
-
-func (j *JsonStreamChunk) GetTerminator() *string {
-	if j == nil {
-		return nil
-	}
-	return j.Terminator
-}
-
-func (j *JsonStreamChunk) GetExtraProperties() map[string]interface{} {
-	return j.extraProperties
-}
-
-func (j *JsonStreamChunk) UnmarshalJSON(data []byte) error {
-	type unmarshaler JsonStreamChunk
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*j = JsonStreamChunk(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
-	if err != nil {
-		return err
-	}
-	j.extraProperties = extraProperties
-
-	return nil
-}
-
-func (j *JsonStreamChunk) String() string {
-	if value, err := core.StringifyJSON(j); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", j)
-}
-
-type NonStreamHttpResponseBody struct {
-	Type         string
-	Json         *JsonResponse
-	FileDownload *FileDownloadResponse
-	Text         *TextResponse
-}
-
-func NewNonStreamHttpResponseBodyFromJson(value *JsonResponse) *NonStreamHttpResponseBody {
-	return &NonStreamHttpResponseBody{Type: "json", Json: value}
-}
-
-func NewNonStreamHttpResponseBodyFromFileDownload(value *FileDownloadResponse) *NonStreamHttpResponseBody {
-	return &NonStreamHttpResponseBody{Type: "fileDownload", FileDownload: value}
-}
-
-func NewNonStreamHttpResponseBodyFromText(value *TextResponse) *NonStreamHttpResponseBody {
-	return &NonStreamHttpResponseBody{Type: "text", Text: value}
-}
-
-func (n *NonStreamHttpResponseBody) GetType() string {
-	if n == nil {
-		return ""
-	}
-	return n.Type
-}
-
-func (n *NonStreamHttpResponseBody) GetJson() *JsonResponse {
-	if n == nil {
-		return nil
-	}
-	return n.Json
-}
-
-func (n *NonStreamHttpResponseBody) GetFileDownload() *FileDownloadResponse {
-	if n == nil {
-		return nil
-	}
-	return n.FileDownload
-}
-
-func (n *NonStreamHttpResponseBody) GetText() *TextResponse {
-	if n == nil {
-		return nil
-	}
-	return n.Text
-}
-
-func (n *NonStreamHttpResponseBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	n.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", n)
-	}
-	switch unmarshaler.Type {
-	case "json":
-		var valueUnmarshaler struct {
-			Json *JsonResponse `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		n.Json = valueUnmarshaler.Json
-	case "fileDownload":
-		value := new(FileDownloadResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		n.FileDownload = value
-	case "text":
-		value := new(TextResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		n.Text = value
-	}
-	return nil
-}
-
-func (n NonStreamHttpResponseBody) MarshalJSON() ([]byte, error) {
-	switch n.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
-	case "json":
-		var marshaler = struct {
-			Type string        `json:"type"`
-			Json *JsonResponse `json:"value,omitempty"`
-		}{
-			Type: "json",
-			Json: n.Json,
-		}
-		return json.Marshal(marshaler)
-	case "fileDownload":
-		return core.MarshalJSONWithExtraProperty(n.FileDownload, "type", "fileDownload")
-	case "text":
-		return core.MarshalJSONWithExtraProperty(n.Text, "type", "text")
-	}
-}
-
-type NonStreamHttpResponseBodyVisitor interface {
-	VisitJson(*JsonResponse) error
-	VisitFileDownload(*FileDownloadResponse) error
-	VisitText(*TextResponse) error
-}
-
-func (n *NonStreamHttpResponseBody) Accept(visitor NonStreamHttpResponseBodyVisitor) error {
-	switch n.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", n.Type, n)
-	case "json":
-		return visitor.VisitJson(n.Json)
-	case "fileDownload":
-		return visitor.VisitFileDownload(n.FileDownload)
-	case "text":
-		return visitor.VisitText(n.Text)
-	}
-}
-
-// The page must be defined as a query parameter included in the request,
-// whereas the results are resolved from properties defined on the response.
-//
-// The page index is auto-incremented between every additional page request.
-type OffsetPagination struct {
-	Page    *RequestProperty  `json:"page,omitempty" url:"page,omitempty"`
-	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
-	// A response property that indicates whether there is a next page or not.
-	HasNextPage *ResponseProperty `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
-	// The step size used to increment the page offset between every new page.
-	Step *RequestProperty `json:"step,omitempty" url:"step,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *OffsetPagination) GetPage() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.Page
-}
-
-func (o *OffsetPagination) GetResults() *ResponseProperty {
-	if o == nil {
-		return nil
-	}
-	return o.Results
-}
-
-func (o *OffsetPagination) GetHasNextPage() *ResponseProperty {
-	if o == nil {
-		return nil
-	}
-	return o.HasNextPage
-}
-
-func (o *OffsetPagination) GetStep() *RequestProperty {
-	if o == nil {
-		return nil
-	}
-	return o.Step
-}
-
-func (o *OffsetPagination) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *OffsetPagination) UnmarshalJSON(data []byte) error {
-	type unmarshaler OffsetPagination
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OffsetPagination(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-
-	return nil
-}
-
-func (o *OffsetPagination) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// If set, the endpoint will be generated with auto-pagination features.
-type Pagination struct {
-	Type   string
-	Cursor *CursorPagination
-	Offset *OffsetPagination
-}
-
-func NewPaginationFromCursor(value *CursorPagination) *Pagination {
-	return &Pagination{Type: "cursor", Cursor: value}
-}
-
-func NewPaginationFromOffset(value *OffsetPagination) *Pagination {
-	return &Pagination{Type: "offset", Offset: value}
-}
-
-func (p *Pagination) GetType() string {
-	if p == nil {
-		return ""
-	}
-	return p.Type
-}
-
-func (p *Pagination) GetCursor() *CursorPagination {
-	if p == nil {
-		return nil
-	}
-	return p.Cursor
-}
-
-func (p *Pagination) GetOffset() *OffsetPagination {
-	if p == nil {
-		return nil
-	}
-	return p.Offset
-}
-
-func (p *Pagination) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	p.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", p)
-	}
-	switch unmarshaler.Type {
-	case "cursor":
-		value := new(CursorPagination)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.Cursor = value
-	case "offset":
-		value := new(OffsetPagination)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.Offset = value
-	}
-	return nil
-}
-
-func (p Pagination) MarshalJSON() ([]byte, error) {
-	switch p.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "cursor":
-		return core.MarshalJSONWithExtraProperty(p.Cursor, "type", "cursor")
-	case "offset":
-		return core.MarshalJSONWithExtraProperty(p.Offset, "type", "offset")
-	}
-}
-
-type PaginationVisitor interface {
-	VisitCursor(*CursorPagination) error
-	VisitOffset(*OffsetPagination) error
-}
-
-func (p *Pagination) Accept(visitor PaginationVisitor) error {
-	switch p.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "cursor":
-		return visitor.VisitCursor(p.Cursor)
-	case "offset":
-		return visitor.VisitOffset(p.Offset)
-	}
-}
-
-type PathParameter struct {
-	Docs      *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *Name                 `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Location  PathParameterLocation `json:"location" url:"location"`
-	Variable  *VariableId           `json:"variable,omitempty" url:"variable,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *PathParameter) GetDocs() *string {
-	if p == nil {
-		return nil
-	}
-	return p.Docs
-}
-
-func (p *PathParameter) GetName() *Name {
-	if p == nil {
-		return nil
-	}
-	return p.Name
-}
-
-func (p *PathParameter) GetValueType() *TypeReference {
-	if p == nil {
-		return nil
-	}
-	return p.ValueType
-}
-
-func (p *PathParameter) GetLocation() PathParameterLocation {
-	if p == nil {
-		return ""
-	}
-	return p.Location
-}
-
-func (p *PathParameter) GetVariable() *VariableId {
-	if p == nil {
-		return nil
-	}
-	return p.Variable
-}
-
-func (p *PathParameter) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *PathParameter) UnmarshalJSON(data []byte) error {
-	type unmarshaler PathParameter
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = PathParameter(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *PathParameter) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type PathParameterLocation string
-
-const (
-	PathParameterLocationRoot     PathParameterLocation = "ROOT"
-	PathParameterLocationService  PathParameterLocation = "SERVICE"
-	PathParameterLocationEndpoint PathParameterLocation = "ENDPOINT"
-)
-
-func NewPathParameterLocationFromString(s string) (PathParameterLocation, error) {
-	switch s {
-	case "ROOT":
-		return PathParameterLocationRoot, nil
-	case "SERVICE":
-		return PathParameterLocationService, nil
-	case "ENDPOINT":
-		return PathParameterLocationEndpoint, nil
-	}
-	var t PathParameterLocation
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (p PathParameterLocation) Ptr() *PathParameterLocation {
-	return &p
-}
-
-type QueryParameter struct {
-	Docs          *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability  *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name          *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType     *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-	AllowMultiple bool              `json:"allowMultiple" url:"allowMultiple"`
-
-	extraProperties map[string]interface{}
-}
-
-func (q *QueryParameter) GetDocs() *string {
-	if q == nil {
-		return nil
-	}
-	return q.Docs
-}
-
-func (q *QueryParameter) GetAvailability() *Availability {
-	if q == nil {
-		return nil
-	}
-	return q.Availability
-}
-
-func (q *QueryParameter) GetName() *NameAndWireValue {
-	if q == nil {
-		return nil
-	}
-	return q.Name
-}
-
-func (q *QueryParameter) GetValueType() *TypeReference {
-	if q == nil {
-		return nil
-	}
-	return q.ValueType
-}
-
-func (q *QueryParameter) GetAllowMultiple() bool {
-	if q == nil {
-		return false
-	}
-	return q.AllowMultiple
-}
-
-func (q *QueryParameter) GetExtraProperties() map[string]interface{} {
-	return q.extraProperties
-}
-
-func (q *QueryParameter) UnmarshalJSON(data []byte) error {
-	type unmarshaler QueryParameter
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*q = QueryParameter(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *q)
-	if err != nil {
-		return err
-	}
-	q.extraProperties = extraProperties
-
-	return nil
-}
-
-func (q *QueryParameter) String() string {
-	if value, err := core.StringifyJSON(q); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", q)
-}
-
-// A property associated with an endpoint's request.
-type RequestProperty struct {
-	// If empty, the property is defined at the top-level.
-	// Otherwise, the property is defined on the nested object identified
-	// by the path.
-	PropertyPath []*Name               `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
-	Property     *RequestPropertyValue `json:"property,omitempty" url:"property,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (r *RequestProperty) GetPropertyPath() []*Name {
-	if r == nil {
-		return nil
-	}
-	return r.PropertyPath
-}
-
-func (r *RequestProperty) GetProperty() *RequestPropertyValue {
-	if r == nil {
-		return nil
-	}
-	return r.Property
-}
-
-func (r *RequestProperty) GetExtraProperties() map[string]interface{} {
-	return r.extraProperties
-}
-
-func (r *RequestProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler RequestProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*r = RequestProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
-	if err != nil {
-		return err
-	}
-	r.extraProperties = extraProperties
-
-	return nil
-}
-
-func (r *RequestProperty) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
-}
-
-type RequestPropertyValue struct {
-	Type  string
-	Query *QueryParameter
-	Body  *ObjectProperty
-}
-
-func NewRequestPropertyValueFromQuery(value *QueryParameter) *RequestPropertyValue {
-	return &RequestPropertyValue{Type: "query", Query: value}
-}
-
-func NewRequestPropertyValueFromBody(value *ObjectProperty) *RequestPropertyValue {
-	return &RequestPropertyValue{Type: "body", Body: value}
-}
-
-func (r *RequestPropertyValue) GetType() string {
-	if r == nil {
-		return ""
-	}
-	return r.Type
-}
-
-func (r *RequestPropertyValue) GetQuery() *QueryParameter {
-	if r == nil {
-		return nil
-	}
-	return r.Query
-}
-
-func (r *RequestPropertyValue) GetBody() *ObjectProperty {
-	if r == nil {
-		return nil
-	}
-	return r.Body
-}
-
-func (r *RequestPropertyValue) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	r.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", r)
-	}
-	switch unmarshaler.Type {
-	case "query":
-		value := new(QueryParameter)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		r.Query = value
-	case "body":
-		value := new(ObjectProperty)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		r.Body = value
-	}
-	return nil
-}
-
-func (r RequestPropertyValue) MarshalJSON() ([]byte, error) {
-	switch r.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", r.Type, r)
-	case "query":
-		return core.MarshalJSONWithExtraProperty(r.Query, "type", "query")
-	case "body":
-		return core.MarshalJSONWithExtraProperty(r.Body, "type", "body")
-	}
-}
-
-type RequestPropertyValueVisitor interface {
-	VisitQuery(*QueryParameter) error
-	VisitBody(*ObjectProperty) error
-}
-
-func (r *RequestPropertyValue) Accept(visitor RequestPropertyValueVisitor) error {
-	switch r.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", r.Type, r)
-	case "query":
-		return visitor.VisitQuery(r.Query)
-	case "body":
-		return visitor.VisitBody(r.Body)
-	}
-}
-
-type ResponseError struct {
-	Docs  *string            `json:"docs,omitempty" url:"docs,omitempty"`
-	Error *DeclaredErrorName `json:"error,omitempty" url:"error,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (r *ResponseError) GetDocs() *string {
-	if r == nil {
-		return nil
-	}
-	return r.Docs
-}
-
-func (r *ResponseError) GetError() *DeclaredErrorName {
-	if r == nil {
-		return nil
-	}
-	return r.Error
-}
-
-func (r *ResponseError) GetExtraProperties() map[string]interface{} {
-	return r.extraProperties
-}
-
-func (r *ResponseError) UnmarshalJSON(data []byte) error {
-	type unmarshaler ResponseError
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*r = ResponseError(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
-	if err != nil {
-		return err
-	}
-	r.extraProperties = extraProperties
-
-	return nil
-}
-
-func (r *ResponseError) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
-}
-
-type ResponseErrors = []*ResponseError
-
-// A property associated with a paginated endpoint's request or response.
-type ResponseProperty struct {
-	// If empty, the property is defined at the top-level.
-	// Otherwise, the property is defined on the nested object identified
-	// by the path.
-	PropertyPath []*Name         `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
-	Property     *ObjectProperty `json:"property,omitempty" url:"property,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (r *ResponseProperty) GetPropertyPath() []*Name {
-	if r == nil {
-		return nil
-	}
-	return r.PropertyPath
-}
-
-func (r *ResponseProperty) GetProperty() *ObjectProperty {
-	if r == nil {
-		return nil
-	}
-	return r.Property
-}
-
-func (r *ResponseProperty) GetExtraProperties() map[string]interface{} {
-	return r.extraProperties
-}
-
-func (r *ResponseProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler ResponseProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*r = ResponseProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
-	if err != nil {
-		return err
-	}
-	r.extraProperties = extraProperties
-
-	return nil
-}
-
-func (r *ResponseProperty) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
-}
-
-type SdkRequest struct {
-	// The request property that controls whether or not the response is streamed.
-	StreamParameter      *RequestProperty `json:"streamParameter,omitempty" url:"streamParameter,omitempty"`
-	RequestParameterName *Name            `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
-	Shape                *SdkRequestShape `json:"shape,omitempty" url:"shape,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SdkRequest) GetStreamParameter() *RequestProperty {
-	if s == nil {
-		return nil
-	}
-	return s.StreamParameter
-}
-
-func (s *SdkRequest) GetRequestParameterName() *Name {
-	if s == nil {
-		return nil
-	}
-	return s.RequestParameterName
-}
-
-func (s *SdkRequest) GetShape() *SdkRequestShape {
-	if s == nil {
-		return nil
-	}
-	return s.Shape
-}
-
-func (s *SdkRequest) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SdkRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler SdkRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SdkRequest(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SdkRequest) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type SdkRequestBodyType struct {
-	Type          string
-	TypeReference *HttpRequestBodyReference
-	Bytes         *BytesRequest
-}
-
-func NewSdkRequestBodyTypeFromTypeReference(value *HttpRequestBodyReference) *SdkRequestBodyType {
-	return &SdkRequestBodyType{Type: "typeReference", TypeReference: value}
-}
-
-func NewSdkRequestBodyTypeFromBytes(value *BytesRequest) *SdkRequestBodyType {
-	return &SdkRequestBodyType{Type: "bytes", Bytes: value}
-}
-
-func (s *SdkRequestBodyType) GetType() string {
-	if s == nil {
-		return ""
-	}
-	return s.Type
-}
-
-func (s *SdkRequestBodyType) GetTypeReference() *HttpRequestBodyReference {
-	if s == nil {
-		return nil
-	}
-	return s.TypeReference
-}
-
-func (s *SdkRequestBodyType) GetBytes() *BytesRequest {
-	if s == nil {
-		return nil
-	}
-	return s.Bytes
-}
-
-func (s *SdkRequestBodyType) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
-	}
-	switch unmarshaler.Type {
-	case "typeReference":
-		value := new(HttpRequestBodyReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.TypeReference = value
-	case "bytes":
-		value := new(BytesRequest)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Bytes = value
-	}
-	return nil
-}
-
-func (s SdkRequestBodyType) MarshalJSON() ([]byte, error) {
-	switch s.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "typeReference":
-		return core.MarshalJSONWithExtraProperty(s.TypeReference, "type", "typeReference")
-	case "bytes":
-		return core.MarshalJSONWithExtraProperty(s.Bytes, "type", "bytes")
-	}
-}
-
-type SdkRequestBodyTypeVisitor interface {
-	VisitTypeReference(*HttpRequestBodyReference) error
-	VisitBytes(*BytesRequest) error
-}
-
-func (s *SdkRequestBodyType) Accept(visitor SdkRequestBodyTypeVisitor) error {
-	switch s.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "typeReference":
-		return visitor.VisitTypeReference(s.TypeReference)
-	case "bytes":
-		return visitor.VisitBytes(s.Bytes)
-	}
-}
-
-type SdkRequestShape struct {
-	Type            string
-	JustRequestBody *SdkRequestBodyType
-	Wrapper         *SdkRequestWrapper
-}
-
-func NewSdkRequestShapeFromJustRequestBody(value *SdkRequestBodyType) *SdkRequestShape {
-	return &SdkRequestShape{Type: "justRequestBody", JustRequestBody: value}
-}
-
-func NewSdkRequestShapeFromWrapper(value *SdkRequestWrapper) *SdkRequestShape {
-	return &SdkRequestShape{Type: "wrapper", Wrapper: value}
-}
-
-func (s *SdkRequestShape) GetType() string {
-	if s == nil {
-		return ""
-	}
-	return s.Type
-}
-
-func (s *SdkRequestShape) GetJustRequestBody() *SdkRequestBodyType {
-	if s == nil {
-		return nil
-	}
-	return s.JustRequestBody
-}
-
-func (s *SdkRequestShape) GetWrapper() *SdkRequestWrapper {
-	if s == nil {
-		return nil
-	}
-	return s.Wrapper
-}
-
-func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
-	}
-	switch unmarshaler.Type {
-	case "justRequestBody":
-		var valueUnmarshaler struct {
-			JustRequestBody *SdkRequestBodyType `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		s.JustRequestBody = valueUnmarshaler.JustRequestBody
-	case "wrapper":
-		value := new(SdkRequestWrapper)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Wrapper = value
-	}
-	return nil
-}
-
-func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
-	switch s.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "justRequestBody":
-		var marshaler = struct {
-			Type            string              `json:"type"`
-			JustRequestBody *SdkRequestBodyType `json:"value,omitempty"`
-		}{
-			Type:            "justRequestBody",
-			JustRequestBody: s.JustRequestBody,
-		}
-		return json.Marshal(marshaler)
-	case "wrapper":
-		return core.MarshalJSONWithExtraProperty(s.Wrapper, "type", "wrapper")
-	}
-}
-
-type SdkRequestShapeVisitor interface {
-	VisitJustRequestBody(*SdkRequestBodyType) error
-	VisitWrapper(*SdkRequestWrapper) error
-}
-
-func (s *SdkRequestShape) Accept(visitor SdkRequestShapeVisitor) error {
-	switch s.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "justRequestBody":
-		return visitor.VisitJustRequestBody(s.JustRequestBody)
-	case "wrapper":
-		return visitor.VisitWrapper(s.Wrapper)
-	}
-}
-
-type SdkRequestWrapper struct {
-	WrapperName           *Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
-	BodyKey               *Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
-	IncludePathParameters *bool `json:"includePathParameters,omitempty" url:"includePathParameters,omitempty"`
-	OnlyPathParameters    *bool `json:"onlyPathParameters,omitempty" url:"onlyPathParameters,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SdkRequestWrapper) GetWrapperName() *Name {
-	if s == nil {
-		return nil
-	}
-	return s.WrapperName
-}
-
-func (s *SdkRequestWrapper) GetBodyKey() *Name {
-	if s == nil {
-		return nil
-	}
-	return s.BodyKey
-}
-
-func (s *SdkRequestWrapper) GetIncludePathParameters() *bool {
-	if s == nil {
-		return nil
-	}
-	return s.IncludePathParameters
-}
-
-func (s *SdkRequestWrapper) GetOnlyPathParameters() *bool {
-	if s == nil {
-		return nil
-	}
-	return s.OnlyPathParameters
-}
-
-func (s *SdkRequestWrapper) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SdkRequestWrapper) UnmarshalJSON(data []byte) error {
-	type unmarshaler SdkRequestWrapper
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SdkRequestWrapper(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SdkRequestWrapper) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type SseStreamChunk struct {
-	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
-	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SseStreamChunk) GetDocs() *string {
-	if s == nil {
-		return nil
-	}
-	return s.Docs
-}
-
-func (s *SseStreamChunk) GetPayload() *TypeReference {
-	if s == nil {
-		return nil
-	}
-	return s.Payload
-}
-
-func (s *SseStreamChunk) GetTerminator() *string {
-	if s == nil {
-		return nil
-	}
-	return s.Terminator
-}
-
-func (s *SseStreamChunk) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SseStreamChunk) UnmarshalJSON(data []byte) error {
-	type unmarshaler SseStreamChunk
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SseStreamChunk(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SseStreamChunk) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type StreamParameterResponse struct {
-	NonStreamResponse *NonStreamHttpResponseBody `json:"nonStreamResponse,omitempty" url:"nonStreamResponse,omitempty"`
-	StreamResponse    *StreamingResponse         `json:"streamResponse,omitempty" url:"streamResponse,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *StreamParameterResponse) GetNonStreamResponse() *NonStreamHttpResponseBody {
-	if s == nil {
-		return nil
-	}
-	return s.NonStreamResponse
-}
-
-func (s *StreamParameterResponse) GetStreamResponse() *StreamingResponse {
-	if s == nil {
-		return nil
-	}
-	return s.StreamResponse
-}
-
-func (s *StreamParameterResponse) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *StreamParameterResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamParameterResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = StreamParameterResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *StreamParameterResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type StreamingResponse struct {
-	Type string
-	Json *JsonStreamChunk
-	Text *TextStreamChunk
-	Sse  *SseStreamChunk
-}
-
-func NewStreamingResponseFromJson(value *JsonStreamChunk) *StreamingResponse {
-	return &StreamingResponse{Type: "json", Json: value}
-}
-
-func NewStreamingResponseFromText(value *TextStreamChunk) *StreamingResponse {
-	return &StreamingResponse{Type: "text", Text: value}
-}
-
-func NewStreamingResponseFromSse(value *SseStreamChunk) *StreamingResponse {
-	return &StreamingResponse{Type: "sse", Sse: value}
-}
-
-func (s *StreamingResponse) GetType() string {
-	if s == nil {
-		return ""
-	}
-	return s.Type
-}
-
-func (s *StreamingResponse) GetJson() *JsonStreamChunk {
-	if s == nil {
-		return nil
-	}
-	return s.Json
-}
-
-func (s *StreamingResponse) GetText() *TextStreamChunk {
-	if s == nil {
-		return nil
-	}
-	return s.Text
-}
-
-func (s *StreamingResponse) GetSse() *SseStreamChunk {
-	if s == nil {
-		return nil
-	}
-	return s.Sse
-}
-
-func (s *StreamingResponse) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
-	}
-	switch unmarshaler.Type {
-	case "json":
-		value := new(JsonStreamChunk)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Json = value
-	case "text":
-		value := new(TextStreamChunk)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Text = value
-	case "sse":
-		value := new(SseStreamChunk)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Sse = value
-	}
-	return nil
-}
-
-func (s StreamingResponse) MarshalJSON() ([]byte, error) {
-	switch s.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "json":
-		return core.MarshalJSONWithExtraProperty(s.Json, "type", "json")
-	case "text":
-		return core.MarshalJSONWithExtraProperty(s.Text, "type", "text")
-	case "sse":
-		return core.MarshalJSONWithExtraProperty(s.Sse, "type", "sse")
-	}
-}
-
-type StreamingResponseVisitor interface {
-	VisitJson(*JsonStreamChunk) error
-	VisitText(*TextStreamChunk) error
-	VisitSse(*SseStreamChunk) error
-}
-
-func (s *StreamingResponse) Accept(visitor StreamingResponseVisitor) error {
-	switch s.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", s.Type, s)
-	case "json":
-		return visitor.VisitJson(s.Json)
-	case "text":
-		return visitor.VisitText(s.Text)
-	case "sse":
-		return visitor.VisitSse(s.Sse)
-	}
-}
-
-type SupportedSdkLanguage string
-
-const (
-	SupportedSdkLanguageCurl       SupportedSdkLanguage = "curl"
-	SupportedSdkLanguagePython     SupportedSdkLanguage = "python"
-	SupportedSdkLanguageJavascript SupportedSdkLanguage = "javascript"
-	SupportedSdkLanguageTypescript SupportedSdkLanguage = "typescript"
-	SupportedSdkLanguageGo         SupportedSdkLanguage = "go"
-	SupportedSdkLanguageRuby       SupportedSdkLanguage = "ruby"
-	SupportedSdkLanguageCsharp     SupportedSdkLanguage = "csharp"
-	SupportedSdkLanguageJava       SupportedSdkLanguage = "java"
-)
-
-func NewSupportedSdkLanguageFromString(s string) (SupportedSdkLanguage, error) {
-	switch s {
-	case "curl":
-		return SupportedSdkLanguageCurl, nil
-	case "python":
-		return SupportedSdkLanguagePython, nil
-	case "javascript":
-		return SupportedSdkLanguageJavascript, nil
-	case "typescript":
-		return SupportedSdkLanguageTypescript, nil
-	case "go":
-		return SupportedSdkLanguageGo, nil
-	case "ruby":
-		return SupportedSdkLanguageRuby, nil
-	case "csharp":
-		return SupportedSdkLanguageCsharp, nil
-	case "java":
-		return SupportedSdkLanguageJava, nil
-	}
-	var t SupportedSdkLanguage
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (s SupportedSdkLanguage) Ptr() *SupportedSdkLanguage {
-	return &s
-}
-
-type TextResponse struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (t *TextResponse) GetDocs() *string {
-	if t == nil {
-		return nil
-	}
-	return t.Docs
-}
-
-func (t *TextResponse) GetExtraProperties() map[string]interface{} {
-	return t.extraProperties
-}
-
-func (t *TextResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler TextResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*t = TextResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
-	if err != nil {
-		return err
-	}
-	t.extraProperties = extraProperties
-
-	return nil
-}
-
-func (t *TextResponse) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", t)
-}
-
-type TextStreamChunk struct {
-	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (t *TextStreamChunk) GetDocs() *string {
-	if t == nil {
-		return nil
-	}
-	return t.Docs
-}
-
-func (t *TextStreamChunk) GetExtraProperties() map[string]interface{} {
-	return t.extraProperties
-}
-
-func (t *TextStreamChunk) UnmarshalJSON(data []byte) error {
-	type unmarshaler TextStreamChunk
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*t = TextStreamChunk(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
-	if err != nil {
-		return err
-	}
-	t.extraProperties = extraProperties
-
-	return nil
-}
-
-func (t *TextStreamChunk) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", t)
-}
-
-type Transport struct {
-	Type string
-	Http interface{}
-	Grpc *GrpcTransport
-}
-
-func NewTransportFromHttp(value interface{}) *Transport {
-	return &Transport{Type: "http", Http: value}
-}
-
-func NewTransportFromGrpc(value *GrpcTransport) *Transport {
-	return &Transport{Type: "grpc", Grpc: value}
-}
-
-func (t *Transport) GetType() string {
-	if t == nil {
-		return ""
-	}
-	return t.Type
-}
-
-func (t *Transport) GetHttp() interface{} {
-	if t == nil {
-		return nil
-	}
-	return t.Http
-}
-
-func (t *Transport) GetGrpc() *GrpcTransport {
-	if t == nil {
-		return nil
-	}
-	return t.Grpc
-}
-
-func (t *Transport) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	t.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", t)
-	}
-	switch unmarshaler.Type {
-	case "http":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		t.Http = value
-	case "grpc":
-		value := new(GrpcTransport)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		t.Grpc = value
-	}
-	return nil
-}
-
-func (t Transport) MarshalJSON() ([]byte, error) {
-	switch t.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
-	case "http":
-		var marshaler = struct {
-			Type string      `json:"type"`
-			Http interface{} `json:"http,omitempty"`
-		}{
-			Type: "http",
-			Http: t.Http,
-		}
-		return json.Marshal(marshaler)
-	case "grpc":
-		return core.MarshalJSONWithExtraProperty(t.Grpc, "type", "grpc")
-	}
-}
-
-type TransportVisitor interface {
-	VisitHttp(interface{}) error
-	VisitGrpc(*GrpcTransport) error
-}
-
-func (t *Transport) Accept(visitor TransportVisitor) error {
-	switch t.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", t.Type, t)
-	case "http":
-		return visitor.VisitHttp(t.Http)
-	case "grpc":
-		return visitor.VisitGrpc(t.Grpc)
-	}
-}
-
-type UserSpecifiedEndpointExample struct {
-	// Manually written code samples specified by the user
-	CodeSamples []*ExampleCodeSample `json:"codeSamples,omitempty" url:"codeSamples,omitempty"`
-	// Manually written example specified by the user
-	Example *ExampleEndpointCall `json:"example,omitempty" url:"example,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (u *UserSpecifiedEndpointExample) GetCodeSamples() []*ExampleCodeSample {
-	if u == nil {
-		return nil
-	}
-	return u.CodeSamples
-}
-
-func (u *UserSpecifiedEndpointExample) GetExample() *ExampleEndpointCall {
-	if u == nil {
-		return nil
-	}
-	return u.Example
-}
-
-func (u *UserSpecifiedEndpointExample) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
-}
-
-func (u *UserSpecifiedEndpointExample) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserSpecifiedEndpointExample
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = UserSpecifiedEndpointExample(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-
-	return nil
-}
-
-func (u *UserSpecifiedEndpointExample) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
-
-type ApiDefinitionSource struct {
-	Type    string
-	Proto   *ProtoSource
-	Openapi interface{}
-}
-
-func NewApiDefinitionSourceFromProto(value *ProtoSource) *ApiDefinitionSource {
-	return &ApiDefinitionSource{Type: "proto", Proto: value}
-}
-
-func NewApiDefinitionSourceFromOpenapi(value interface{}) *ApiDefinitionSource {
-	return &ApiDefinitionSource{Type: "openapi", Openapi: value}
-}
-
-func (a *ApiDefinitionSource) GetType() string {
-	if a == nil {
-		return ""
-	}
-	return a.Type
-}
-
-func (a *ApiDefinitionSource) GetProto() *ProtoSource {
-	if a == nil {
-		return nil
-	}
-	return a.Proto
-}
-
-func (a *ApiDefinitionSource) GetOpenapi() interface{} {
-	if a == nil {
-		return nil
-	}
-	return a.Openapi
-}
-
-func (a *ApiDefinitionSource) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	a.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", a)
-	}
-	switch unmarshaler.Type {
-	case "proto":
-		value := new(ProtoSource)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Proto = value
-	case "openapi":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Openapi = value
-	}
-	return nil
-}
-
-func (a ApiDefinitionSource) MarshalJSON() ([]byte, error) {
-	switch a.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "proto":
-		return core.MarshalJSONWithExtraProperty(a.Proto, "type", "proto")
-	case "openapi":
-		var marshaler = struct {
-			Type    string      `json:"type"`
-			Openapi interface{} `json:"openapi,omitempty"`
-		}{
-			Type:    "openapi",
-			Openapi: a.Openapi,
-		}
-		return json.Marshal(marshaler)
-	}
-}
-
-type ApiDefinitionSourceVisitor interface {
-	VisitProto(*ProtoSource) error
-	VisitOpenapi(interface{}) error
-}
-
-func (a *ApiDefinitionSource) Accept(visitor ApiDefinitionSourceVisitor) error {
-	switch a.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "proto":
-		return visitor.VisitProto(a.Proto)
-	case "openapi":
-		return visitor.VisitOpenapi(a.Openapi)
-	}
-}
-
-// Uniquely identifies a specific API definition source. This allows us to clearly identify
-// what source a given type, endpoint, etc was derived from.
-type ApiDefinitionSourceId = string
-
-// The available set of versions for the API. This is used to generate a special
-// enum that can be used to specify the version of the API to use.
-type ApiVersionScheme struct {
-	Type   string
-	Header *HeaderApiVersionScheme
-}
-
-func NewApiVersionSchemeFromHeader(value *HeaderApiVersionScheme) *ApiVersionScheme {
-	return &ApiVersionScheme{Type: "header", Header: value}
-}
-
-func (a *ApiVersionScheme) GetType() string {
-	if a == nil {
-		return ""
-	}
-	return a.Type
-}
-
-func (a *ApiVersionScheme) GetHeader() *HeaderApiVersionScheme {
-	if a == nil {
-		return nil
-	}
-	return a.Header
-}
-
-func (a *ApiVersionScheme) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	a.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", a)
-	}
-	switch unmarshaler.Type {
-	case "header":
-		value := new(HeaderApiVersionScheme)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Header = value
-	}
-	return nil
-}
-
-func (a ApiVersionScheme) MarshalJSON() ([]byte, error) {
-	switch a.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "header":
-		return core.MarshalJSONWithExtraProperty(a.Header, "type", "header")
-	}
-}
-
-type ApiVersionSchemeVisitor interface {
-	VisitHeader(*HeaderApiVersionScheme) error
-}
-
-func (a *ApiVersionScheme) Accept(visitor ApiVersionSchemeVisitor) error {
-	switch a.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", a.Type, a)
-	case "header":
-		return visitor.VisitHeader(a.Header)
-	}
-}
-
-type ErrorDiscriminationByPropertyStrategy struct {
-	Discriminant    *NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
-	ContentProperty *NameAndWireValue `json:"contentProperty,omitempty" url:"contentProperty,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ErrorDiscriminationByPropertyStrategy) GetDiscriminant() *NameAndWireValue {
-	if e == nil {
-		return nil
-	}
-	return e.Discriminant
-}
-
-func (e *ErrorDiscriminationByPropertyStrategy) GetContentProperty() *NameAndWireValue {
-	if e == nil {
-		return nil
-	}
-	return e.ContentProperty
-}
-
-func (e *ErrorDiscriminationByPropertyStrategy) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ErrorDiscriminationByPropertyStrategy) UnmarshalJSON(data []byte) error {
-	type unmarshaler ErrorDiscriminationByPropertyStrategy
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ErrorDiscriminationByPropertyStrategy(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ErrorDiscriminationByPropertyStrategy) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ErrorDiscriminationStrategy struct {
-	Type       string
-	StatusCode interface{}
-	Property   *ErrorDiscriminationByPropertyStrategy
-}
-
-func NewErrorDiscriminationStrategyFromStatusCode(value interface{}) *ErrorDiscriminationStrategy {
-	return &ErrorDiscriminationStrategy{Type: "statusCode", StatusCode: value}
-}
-
-func NewErrorDiscriminationStrategyFromProperty(value *ErrorDiscriminationByPropertyStrategy) *ErrorDiscriminationStrategy {
-	return &ErrorDiscriminationStrategy{Type: "property", Property: value}
-}
-
-func (e *ErrorDiscriminationStrategy) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ErrorDiscriminationStrategy) GetStatusCode() interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.StatusCode
-}
-
-func (e *ErrorDiscriminationStrategy) GetProperty() *ErrorDiscriminationByPropertyStrategy {
-	if e == nil {
-		return nil
-	}
-	return e.Property
-}
-
-func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "statusCode":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.StatusCode = value
-	case "property":
-		value := new(ErrorDiscriminationByPropertyStrategy)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Property = value
-	}
-	return nil
-}
-
-func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "statusCode":
-		var marshaler = struct {
-			Type       string      `json:"type"`
-			StatusCode interface{} `json:"statusCode,omitempty"`
-		}{
-			Type:       "statusCode",
-			StatusCode: e.StatusCode,
-		}
-		return json.Marshal(marshaler)
-	case "property":
-		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
-	}
-}
-
-type ErrorDiscriminationStrategyVisitor interface {
-	VisitStatusCode(interface{}) error
-	VisitProperty(*ErrorDiscriminationByPropertyStrategy) error
-}
-
-func (e *ErrorDiscriminationStrategy) Accept(visitor ErrorDiscriminationStrategyVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "statusCode":
-		return visitor.VisitStatusCode(e.StatusCode)
-	case "property":
-		return visitor.VisitProperty(e.Property)
-	}
-}
-
-// The version information is sent as an HTTP header (e.g. X-API-Version) on every request.
-//
-// If the enum does _not_ define a default value, the version should be treated like
-// a required global header parameter. The version header should also support any
-// environment variable scanning specified by the header.
-type HeaderApiVersionScheme struct {
-	Header *HttpHeader          `json:"header,omitempty" url:"header,omitempty"`
-	Value  *EnumTypeDeclaration `json:"value,omitempty" url:"value,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (h *HeaderApiVersionScheme) GetHeader() *HttpHeader {
-	if h == nil {
-		return nil
-	}
-	return h.Header
-}
-
-func (h *HeaderApiVersionScheme) GetValue() *EnumTypeDeclaration {
-	if h == nil {
-		return nil
-	}
-	return h.Value
-}
-
-func (h *HeaderApiVersionScheme) GetExtraProperties() map[string]interface{} {
-	return h.extraProperties
-}
-
-func (h *HeaderApiVersionScheme) UnmarshalJSON(data []byte) error {
-	type unmarshaler HeaderApiVersionScheme
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*h = HeaderApiVersionScheme(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
-	if err != nil {
-		return err
-	}
-	h.extraProperties = extraProperties
-
-	return nil
-}
-
-func (h *HeaderApiVersionScheme) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
-// Complete representation of the API schema
-type IntermediateRepresentation struct {
-	// The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
-	FdrApiDefinitionId *string           `json:"fdrApiDefinitionId,omitempty" url:"fdrApiDefinitionId,omitempty"`
-	ApiVersion         *ApiVersionScheme `json:"apiVersion,omitempty" url:"apiVersion,omitempty"`
-	// This is the human readable unique id for the API.
-	ApiName        *Name    `json:"apiName,omitempty" url:"apiName,omitempty"`
-	ApiDisplayName *string  `json:"apiDisplayName,omitempty" url:"apiDisplayName,omitempty"`
-	ApiDocs        *string  `json:"apiDocs,omitempty" url:"apiDocs,omitempty"`
-	Auth           *ApiAuth `json:"auth,omitempty" url:"auth,omitempty"`
-	// API Wide headers that are sent on every request
-	Headers []*HttpHeader `json:"headers,omitempty" url:"headers,omitempty"`
-	// Headers that are sent for idempotent endpoints
-	IdempotencyHeaders []*HttpHeader `json:"idempotencyHeaders,omitempty" url:"idempotencyHeaders,omitempty"`
-	// The types described by this API
-	Types map[TypeId]*TypeDeclaration `json:"types,omitempty" url:"types,omitempty"`
-	// The services exposed by this API
-	Services map[ServiceId]*HttpService `json:"services,omitempty" url:"services,omitempty"`
-	// The webhooks sent by this API
-	WebhookGroups map[WebhookGroupId]WebhookGroup `json:"webhookGroups,omitempty" url:"webhookGroups,omitempty"`
-	// The websocket channels served by this API
-	WebsocketChannels           map[WebSocketChannelId]*WebSocketChannel `json:"websocketChannels,omitempty" url:"websocketChannels,omitempty"`
-	Errors                      map[ErrorId]*ErrorDeclaration            `json:"errors,omitempty" url:"errors,omitempty"`
-	Subpackages                 map[SubpackageId]*Subpackage             `json:"subpackages,omitempty" url:"subpackages,omitempty"`
-	RootPackage                 *Package                                 `json:"rootPackage,omitempty" url:"rootPackage,omitempty"`
-	Constants                   *Constants                               `json:"constants,omitempty" url:"constants,omitempty"`
-	Environments                *EnvironmentsConfig                      `json:"environments,omitempty" url:"environments,omitempty"`
-	BasePath                    *HttpPath                                `json:"basePath,omitempty" url:"basePath,omitempty"`
-	PathParameters              []*PathParameter                         `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	ErrorDiscriminationStrategy *ErrorDiscriminationStrategy             `json:"errorDiscriminationStrategy,omitempty" url:"errorDiscriminationStrategy,omitempty"`
-	SdkConfig                   *SdkConfig                               `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
-	Variables                   []*VariableDeclaration                   `json:"variables,omitempty" url:"variables,omitempty"`
-	ServiceTypeReferenceInfo    *ServiceTypeReferenceInfo                `json:"serviceTypeReferenceInfo,omitempty" url:"serviceTypeReferenceInfo,omitempty"`
-	ReadmeConfig                *ReadmeConfig                            `json:"readmeConfig,omitempty" url:"readmeConfig,omitempty"`
-	SourceConfig                *SourceConfig                            `json:"sourceConfig,omitempty" url:"sourceConfig,omitempty"`
-	PublishConfig               *PublishingConfig                        `json:"publishConfig,omitempty" url:"publishConfig,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *IntermediateRepresentation) GetFdrApiDefinitionId() *string {
-	if i == nil {
-		return nil
-	}
-	return i.FdrApiDefinitionId
-}
-
-func (i *IntermediateRepresentation) GetApiVersion() *ApiVersionScheme {
-	if i == nil {
-		return nil
-	}
-	return i.ApiVersion
-}
-
-func (i *IntermediateRepresentation) GetApiName() *Name {
-	if i == nil {
-		return nil
-	}
-	return i.ApiName
-}
-
-func (i *IntermediateRepresentation) GetApiDisplayName() *string {
-	if i == nil {
-		return nil
-	}
-	return i.ApiDisplayName
-}
-
-func (i *IntermediateRepresentation) GetApiDocs() *string {
-	if i == nil {
-		return nil
-	}
-	return i.ApiDocs
-}
-
-func (i *IntermediateRepresentation) GetAuth() *ApiAuth {
-	if i == nil {
-		return nil
-	}
-	return i.Auth
-}
-
-func (i *IntermediateRepresentation) GetHeaders() []*HttpHeader {
-	if i == nil {
-		return nil
-	}
-	return i.Headers
-}
-
-func (i *IntermediateRepresentation) GetIdempotencyHeaders() []*HttpHeader {
-	if i == nil {
-		return nil
-	}
-	return i.IdempotencyHeaders
-}
-
-func (i *IntermediateRepresentation) GetTypes() map[TypeId]*TypeDeclaration {
-	if i == nil {
-		return nil
-	}
-	return i.Types
-}
-
-func (i *IntermediateRepresentation) GetServices() map[ServiceId]*HttpService {
-	if i == nil {
-		return nil
-	}
-	return i.Services
-}
-
-func (i *IntermediateRepresentation) GetWebhookGroups() map[WebhookGroupId]WebhookGroup {
-	if i == nil {
-		return nil
-	}
-	return i.WebhookGroups
-}
-
-func (i *IntermediateRepresentation) GetWebsocketChannels() map[WebSocketChannelId]*WebSocketChannel {
-	if i == nil {
-		return nil
-	}
-	return i.WebsocketChannels
-}
-
-func (i *IntermediateRepresentation) GetErrors() map[ErrorId]*ErrorDeclaration {
-	if i == nil {
-		return nil
-	}
-	return i.Errors
-}
-
-func (i *IntermediateRepresentation) GetSubpackages() map[SubpackageId]*Subpackage {
-	if i == nil {
-		return nil
-	}
-	return i.Subpackages
-}
-
-func (i *IntermediateRepresentation) GetRootPackage() *Package {
-	if i == nil {
-		return nil
-	}
-	return i.RootPackage
-}
-
-func (i *IntermediateRepresentation) GetConstants() *Constants {
-	if i == nil {
-		return nil
-	}
-	return i.Constants
-}
-
-func (i *IntermediateRepresentation) GetEnvironments() *EnvironmentsConfig {
-	if i == nil {
-		return nil
-	}
-	return i.Environments
-}
-
-func (i *IntermediateRepresentation) GetBasePath() *HttpPath {
-	if i == nil {
-		return nil
-	}
-	return i.BasePath
-}
-
-func (i *IntermediateRepresentation) GetPathParameters() []*PathParameter {
-	if i == nil {
-		return nil
-	}
-	return i.PathParameters
-}
-
-func (i *IntermediateRepresentation) GetErrorDiscriminationStrategy() *ErrorDiscriminationStrategy {
-	if i == nil {
-		return nil
-	}
-	return i.ErrorDiscriminationStrategy
-}
-
-func (i *IntermediateRepresentation) GetSdkConfig() *SdkConfig {
-	if i == nil {
-		return nil
-	}
-	return i.SdkConfig
-}
-
-func (i *IntermediateRepresentation) GetVariables() []*VariableDeclaration {
-	if i == nil {
-		return nil
-	}
-	return i.Variables
-}
-
-func (i *IntermediateRepresentation) GetServiceTypeReferenceInfo() *ServiceTypeReferenceInfo {
-	if i == nil {
-		return nil
-	}
-	return i.ServiceTypeReferenceInfo
-}
-
-func (i *IntermediateRepresentation) GetReadmeConfig() *ReadmeConfig {
-	if i == nil {
-		return nil
-	}
-	return i.ReadmeConfig
-}
-
-func (i *IntermediateRepresentation) GetSourceConfig() *SourceConfig {
-	if i == nil {
-		return nil
-	}
-	return i.SourceConfig
-}
-
-func (i *IntermediateRepresentation) GetPublishConfig() *PublishingConfig {
-	if i == nil {
-		return nil
-	}
-	return i.PublishConfig
-}
-
-func (i *IntermediateRepresentation) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *IntermediateRepresentation) UnmarshalJSON(data []byte) error {
-	type unmarshaler IntermediateRepresentation
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = IntermediateRepresentation(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *IntermediateRepresentation) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type Package struct {
-	Docs               *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *FernFilepath            `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Service            *ServiceId               `json:"service,omitempty" url:"service,omitempty"`
-	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
-	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
-	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
-	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
-	Subpackages        []SubpackageId           `json:"subpackages,omitempty" url:"subpackages,omitempty"`
-	HasEndpointsInTree bool                     `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
-	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty" url:"navigationConfig,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *Package) GetDocs() *string {
-	if p == nil {
-		return nil
-	}
-	return p.Docs
-}
-
-func (p *Package) GetFernFilepath() *FernFilepath {
-	if p == nil {
-		return nil
-	}
-	return p.FernFilepath
-}
-
-func (p *Package) GetService() *ServiceId {
-	if p == nil {
-		return nil
-	}
-	return p.Service
-}
-
-func (p *Package) GetTypes() []TypeId {
-	if p == nil {
-		return nil
-	}
-	return p.Types
-}
-
-func (p *Package) GetErrors() []ErrorId {
-	if p == nil {
-		return nil
-	}
-	return p.Errors
-}
-
-func (p *Package) GetWebhooks() *WebhookGroupId {
-	if p == nil {
-		return nil
-	}
-	return p.Webhooks
-}
-
-func (p *Package) GetWebsocket() *WebSocketChannelId {
-	if p == nil {
-		return nil
-	}
-	return p.Websocket
-}
-
-func (p *Package) GetSubpackages() []SubpackageId {
-	if p == nil {
-		return nil
-	}
-	return p.Subpackages
-}
-
-func (p *Package) GetHasEndpointsInTree() bool {
-	if p == nil {
-		return false
-	}
-	return p.HasEndpointsInTree
-}
-
-func (p *Package) GetNavigationConfig() *PackageNavigationConfig {
-	if p == nil {
-		return nil
-	}
-	return p.NavigationConfig
-}
-
-func (p *Package) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *Package) UnmarshalJSON(data []byte) error {
-	type unmarshaler Package
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = Package(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *Package) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type PackageNavigationConfig struct {
-	PointsTo SubpackageId `json:"pointsTo" url:"pointsTo"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *PackageNavigationConfig) GetPointsTo() SubpackageId {
-	if p == nil {
-		return ""
-	}
-	return p.PointsTo
-}
-
-func (p *PackageNavigationConfig) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *PackageNavigationConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler PackageNavigationConfig
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = PackageNavigationConfig(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *PackageNavigationConfig) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type PlatformHeaders struct {
-	Language   string     `json:"language" url:"language"`
-	SdkName    string     `json:"sdkName" url:"sdkName"`
-	SdkVersion string     `json:"sdkVersion" url:"sdkVersion"`
-	UserAgent  *UserAgent `json:"userAgent,omitempty" url:"userAgent,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *PlatformHeaders) GetLanguage() string {
-	if p == nil {
-		return ""
-	}
-	return p.Language
-}
-
-func (p *PlatformHeaders) GetSdkName() string {
-	if p == nil {
-		return ""
-	}
-	return p.SdkName
-}
-
-func (p *PlatformHeaders) GetSdkVersion() string {
-	if p == nil {
-		return ""
-	}
-	return p.SdkVersion
-}
-
-func (p *PlatformHeaders) GetUserAgent() *UserAgent {
-	if p == nil {
-		return nil
-	}
-	return p.UserAgent
-}
-
-func (p *PlatformHeaders) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *PlatformHeaders) UnmarshalJSON(data []byte) error {
-	type unmarshaler PlatformHeaders
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = PlatformHeaders(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *PlatformHeaders) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type ProtoSource struct {
-	Id ApiDefinitionSourceId `json:"id" url:"id"`
-	// The URL containing the `.proto` root directory source. This can be used
-	// to pull down the original `.proto` source files during code generation.
-	ProtoRootUrl string `json:"protoRootUrl" url:"protoRootUrl"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *ProtoSource) GetId() ApiDefinitionSourceId {
-	if p == nil {
-		return ""
-	}
-	return p.Id
-}
-
-func (p *ProtoSource) GetProtoRootUrl() string {
-	if p == nil {
-		return ""
-	}
-	return p.ProtoRootUrl
-}
-
-func (p *ProtoSource) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *ProtoSource) UnmarshalJSON(data []byte) error {
-	type unmarshaler ProtoSource
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = ProtoSource(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *ProtoSource) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-// The configuration used to generate a README.md file. If present, the generator
-// should call the generator-cli to produce a README.md.
-type ReadmeConfig struct {
-	// If specified, this endpoint should be used in every snippet (if possible).
-	// Note that some endpoints aren't suitable for every feature (e.g. a non-list
-	// endpoint for pagination), so the default is a no-op in those cases.
-	DefaultEndpoint  *EndpointId `json:"defaultEndpoint,omitempty" url:"defaultEndpoint,omitempty"`
-	BannerLink       *string     `json:"bannerLink,omitempty" url:"bannerLink,omitempty"`
-	Introduction     *string     `json:"introduction,omitempty" url:"introduction,omitempty"`
-	ApiReferenceLink *string     `json:"apiReferenceLink,omitempty" url:"apiReferenceLink,omitempty"`
-	// If specified, configures the list of endpoints to associate
-	// with each feature.
-	Features map[FeatureId][]EndpointId `json:"features,omitempty" url:"features,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (r *ReadmeConfig) GetDefaultEndpoint() *EndpointId {
-	if r == nil {
-		return nil
-	}
-	return r.DefaultEndpoint
-}
-
-func (r *ReadmeConfig) GetBannerLink() *string {
-	if r == nil {
-		return nil
-	}
-	return r.BannerLink
-}
-
-func (r *ReadmeConfig) GetIntroduction() *string {
-	if r == nil {
-		return nil
-	}
-	return r.Introduction
-}
-
-func (r *ReadmeConfig) GetApiReferenceLink() *string {
-	if r == nil {
-		return nil
-	}
-	return r.ApiReferenceLink
-}
-
-func (r *ReadmeConfig) GetFeatures() map[FeatureId][]EndpointId {
-	if r == nil {
-		return nil
-	}
-	return r.Features
-}
-
-func (r *ReadmeConfig) GetExtraProperties() map[string]interface{} {
-	return r.extraProperties
-}
-
-func (r *ReadmeConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler ReadmeConfig
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*r = ReadmeConfig(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
-	if err != nil {
-		return err
-	}
-	r.extraProperties = extraProperties
-
-	return nil
-}
-
-func (r *ReadmeConfig) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
-}
-
-type SdkConfig struct {
-	IsAuthMandatory          bool             `json:"isAuthMandatory" url:"isAuthMandatory"`
-	HasStreamingEndpoints    bool             `json:"hasStreamingEndpoints" url:"hasStreamingEndpoints"`
-	HasPaginatedEndpoints    bool             `json:"hasPaginatedEndpoints" url:"hasPaginatedEndpoints"`
-	HasFileDownloadEndpoints bool             `json:"hasFileDownloadEndpoints" url:"hasFileDownloadEndpoints"`
-	PlatformHeaders          *PlatformHeaders `json:"platformHeaders,omitempty" url:"platformHeaders,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SdkConfig) GetIsAuthMandatory() bool {
-	if s == nil {
-		return false
-	}
-	return s.IsAuthMandatory
-}
-
-func (s *SdkConfig) GetHasStreamingEndpoints() bool {
-	if s == nil {
-		return false
-	}
-	return s.HasStreamingEndpoints
-}
-
-func (s *SdkConfig) GetHasPaginatedEndpoints() bool {
-	if s == nil {
-		return false
-	}
-	return s.HasPaginatedEndpoints
-}
-
-func (s *SdkConfig) GetHasFileDownloadEndpoints() bool {
-	if s == nil {
-		return false
-	}
-	return s.HasFileDownloadEndpoints
-}
-
-func (s *SdkConfig) GetPlatformHeaders() *PlatformHeaders {
-	if s == nil {
-		return nil
-	}
-	return s.PlatformHeaders
-}
-
-func (s *SdkConfig) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SdkConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler SdkConfig
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SdkConfig(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SdkConfig) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type ServiceTypeReferenceInfo struct {
-	// Types referenced by exactly one service.
-	TypesReferencedOnlyByService map[ServiceId][]TypeId `json:"typesReferencedOnlyByService,omitempty" url:"typesReferencedOnlyByService,omitempty"`
-	// Types referenced by either zero or multiple services.
-	SharedTypes []TypeId `json:"sharedTypes,omitempty" url:"sharedTypes,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *ServiceTypeReferenceInfo) GetTypesReferencedOnlyByService() map[ServiceId][]TypeId {
-	if s == nil {
-		return nil
-	}
-	return s.TypesReferencedOnlyByService
-}
-
-func (s *ServiceTypeReferenceInfo) GetSharedTypes() []TypeId {
-	if s == nil {
-		return nil
-	}
-	return s.SharedTypes
-}
-
-func (s *ServiceTypeReferenceInfo) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *ServiceTypeReferenceInfo) UnmarshalJSON(data []byte) error {
-	type unmarshaler ServiceTypeReferenceInfo
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = ServiceTypeReferenceInfo(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *ServiceTypeReferenceInfo) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type SourceConfig struct {
-	// The raw API definitions that produced the IR.
-	Sources []*ApiDefinitionSource `json:"sources,omitempty" url:"sources,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *SourceConfig) GetSources() []*ApiDefinitionSource {
-	if s == nil {
-		return nil
-	}
-	return s.Sources
-}
-
-func (s *SourceConfig) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SourceConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler SourceConfig
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SourceConfig(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *SourceConfig) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type Subpackage struct {
-	Docs               *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *FernFilepath            `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Service            *ServiceId               `json:"service,omitempty" url:"service,omitempty"`
-	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
-	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
-	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
-	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
-	Subpackages        []SubpackageId           `json:"subpackages,omitempty" url:"subpackages,omitempty"`
-	HasEndpointsInTree bool                     `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
-	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty" url:"navigationConfig,omitempty"`
-	Name               *Name                    `json:"name,omitempty" url:"name,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (s *Subpackage) GetDocs() *string {
-	if s == nil {
-		return nil
-	}
-	return s.Docs
-}
-
-func (s *Subpackage) GetFernFilepath() *FernFilepath {
-	if s == nil {
-		return nil
-	}
-	return s.FernFilepath
-}
-
-func (s *Subpackage) GetService() *ServiceId {
-	if s == nil {
-		return nil
-	}
-	return s.Service
-}
-
-func (s *Subpackage) GetTypes() []TypeId {
-	if s == nil {
-		return nil
-	}
-	return s.Types
-}
-
-func (s *Subpackage) GetErrors() []ErrorId {
-	if s == nil {
-		return nil
-	}
-	return s.Errors
-}
-
-func (s *Subpackage) GetWebhooks() *WebhookGroupId {
-	if s == nil {
-		return nil
-	}
-	return s.Webhooks
-}
-
-func (s *Subpackage) GetWebsocket() *WebSocketChannelId {
-	if s == nil {
-		return nil
-	}
-	return s.Websocket
-}
-
-func (s *Subpackage) GetSubpackages() []SubpackageId {
-	if s == nil {
-		return nil
-	}
-	return s.Subpackages
-}
-
-func (s *Subpackage) GetHasEndpointsInTree() bool {
-	if s == nil {
-		return false
-	}
-	return s.HasEndpointsInTree
-}
-
-func (s *Subpackage) GetNavigationConfig() *PackageNavigationConfig {
-	if s == nil {
-		return nil
-	}
-	return s.NavigationConfig
-}
-
-func (s *Subpackage) GetName() *Name {
-	if s == nil {
-		return nil
-	}
-	return s.Name
-}
-
-func (s *Subpackage) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *Subpackage) UnmarshalJSON(data []byte) error {
-	type unmarshaler Subpackage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = Subpackage(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-
-	return nil
-}
-
-func (s *Subpackage) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-type UserAgent struct {
-	// The user agent header for ease of access to generators.
-	// Formatted as "<package>/<version>"
-	Value  string `json:"value" url:"value"`
-	header string
-
-	extraProperties map[string]interface{}
-}
-
-func (u *UserAgent) GetValue() string {
-	if u == nil {
-		return ""
-	}
-	return u.Value
-}
-
-func (u *UserAgent) Header() string {
-	return u.header
-}
-
-func (u *UserAgent) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
-}
-
-func (u *UserAgent) UnmarshalJSON(data []byte) error {
-	type embed UserAgent
-	var unmarshaler = struct {
-		embed
-		Header string `json:"header"`
-	}{
-		embed: embed(*u),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*u = UserAgent(unmarshaler.embed)
-	if unmarshaler.Header != "User-Agent" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "User-Agent", unmarshaler.Header)
-	}
-	u.header = unmarshaler.Header
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u, "header")
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-
-	return nil
-}
-
-func (u *UserAgent) MarshalJSON() ([]byte, error) {
-	type embed UserAgent
-	var marshaler = struct {
-		embed
-		Header string `json:"header"`
-	}{
-		embed:  embed(*u),
-		Header: "User-Agent",
-	}
-	return json.Marshal(marshaler)
-}
-
-func (u *UserAgent) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
-
-type CsharpProtobufFileOptions struct {
-	// Populated by the `csharp_namespace` file option, e.g.
-	//
-	// ```protobuf
-	// option csharp_namespace = Grpc.Health.V1;
-	// ```
-	//
-	// This is used to determine what import path is required to reference the
-	// associated type(s).
-	Namespace string `json:"namespace" url:"namespace"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *CsharpProtobufFileOptions) GetNamespace() string {
-	if c == nil {
-		return ""
-	}
-	return c.Namespace
-}
-
-func (c *CsharpProtobufFileOptions) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *CsharpProtobufFileOptions) UnmarshalJSON(data []byte) error {
-	type unmarshaler CsharpProtobufFileOptions
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = CsharpProtobufFileOptions(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-
-	return nil
-}
-
-func (c *CsharpProtobufFileOptions) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type ProtobufFile struct {
-	// The `.proto` source path, relative to the Protobuf root directory.
-	// This is how the file is referenced in `import` statements.
-	Filepath string `json:"filepath" url:"filepath"`
-	// The `.proto` package name. If not specified, a package name was not declared.
-	PackageName *string `json:"packageName,omitempty" url:"packageName,omitempty"`
-	// Specifies a variety of language-specific options.
-	Options *ProtobufFileOptions `json:"options,omitempty" url:"options,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *ProtobufFile) GetFilepath() string {
-	if p == nil {
-		return ""
-	}
-	return p.Filepath
-}
-
-func (p *ProtobufFile) GetPackageName() *string {
-	if p == nil {
-		return nil
-	}
-	return p.PackageName
-}
-
-func (p *ProtobufFile) GetOptions() *ProtobufFileOptions {
-	if p == nil {
-		return nil
-	}
-	return p.Options
-}
-
-func (p *ProtobufFile) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *ProtobufFile) UnmarshalJSON(data []byte) error {
-	type unmarshaler ProtobufFile
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = ProtobufFile(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *ProtobufFile) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type ProtobufFileOptions struct {
-	Csharp *CsharpProtobufFileOptions `json:"csharp,omitempty" url:"csharp,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *ProtobufFileOptions) GetCsharp() *CsharpProtobufFileOptions {
-	if p == nil {
-		return nil
-	}
-	return p.Csharp
-}
-
-func (p *ProtobufFileOptions) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *ProtobufFileOptions) UnmarshalJSON(data []byte) error {
-	type unmarshaler ProtobufFileOptions
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = ProtobufFileOptions(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *ProtobufFileOptions) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-// Defines the information related to a Protobuf service declaration. This is
-// primarily meant to be used to instantiate the internal gRPC client used by
-// the SDK.
-//
-// For example, consider the following C# snippet which instantiates a
-// `UserService` gRPC client:
-//
-// ```csharp
-// using User.Grpc;
-//
-// public class RawGrpcClient
-//
-//	{
-//	    public UserService.UserServiceClient UserServiceClient;
-//
-//	    public RawGrpcClient(...)
-//	    {
-//	        GrpcChannel channel = GrpcChannel.ForAddress(...);
-//	        UserServiceClient = new UserService.UserServiceClient(channel);
-//	    }
-//	}
-//
-// ```
-type ProtobufService struct {
-	// The `.proto` source file that defines this service.
-	File *ProtobufFile `json:"file,omitempty" url:"file,omitempty"`
-	// The name of the service defined in the `.proto` file (e.g. UserService).
-	Name *Name `json:"name,omitempty" url:"name,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *ProtobufService) GetFile() *ProtobufFile {
-	if p == nil {
-		return nil
-	}
-	return p.File
-}
-
-func (p *ProtobufService) GetName() *Name {
-	if p == nil {
-		return nil
-	}
-	return p.Name
-}
-
-func (p *ProtobufService) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *ProtobufService) UnmarshalJSON(data []byte) error {
-	type unmarshaler ProtobufService
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = ProtobufService(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *ProtobufService) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-// A Protobuf type declaration.
-type ProtobufType struct {
-	Type        string
-	WellKnown   *WellKnownProtobufType
-	UserDefined *UserDefinedProtobufType
-}
-
-func NewProtobufTypeFromWellKnown(value *WellKnownProtobufType) *ProtobufType {
-	return &ProtobufType{Type: "wellKnown", WellKnown: value}
-}
-
-func NewProtobufTypeFromUserDefined(value *UserDefinedProtobufType) *ProtobufType {
-	return &ProtobufType{Type: "userDefined", UserDefined: value}
-}
-
-func (p *ProtobufType) GetType() string {
-	if p == nil {
-		return ""
-	}
-	return p.Type
-}
-
-func (p *ProtobufType) GetWellKnown() *WellKnownProtobufType {
-	if p == nil {
-		return nil
-	}
-	return p.WellKnown
-}
-
-func (p *ProtobufType) GetUserDefined() *UserDefinedProtobufType {
-	if p == nil {
-		return nil
-	}
-	return p.UserDefined
-}
-
-func (p *ProtobufType) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	p.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", p)
-	}
-	switch unmarshaler.Type {
-	case "wellKnown":
-		var valueUnmarshaler struct {
-			WellKnown *WellKnownProtobufType `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		p.WellKnown = valueUnmarshaler.WellKnown
-	case "userDefined":
-		value := new(UserDefinedProtobufType)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.UserDefined = value
-	}
-	return nil
-}
-
-func (p ProtobufType) MarshalJSON() ([]byte, error) {
-	switch p.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "wellKnown":
-		var marshaler = struct {
-			Type      string                 `json:"type"`
-			WellKnown *WellKnownProtobufType `json:"value,omitempty"`
-		}{
-			Type:      "wellKnown",
-			WellKnown: p.WellKnown,
-		}
-		return json.Marshal(marshaler)
-	case "userDefined":
-		return core.MarshalJSONWithExtraProperty(p.UserDefined, "type", "userDefined")
-	}
-}
-
-type ProtobufTypeVisitor interface {
-	VisitWellKnown(*WellKnownProtobufType) error
-	VisitUserDefined(*UserDefinedProtobufType) error
-}
-
-func (p *ProtobufType) Accept(visitor ProtobufTypeVisitor) error {
-	switch p.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "wellKnown":
-		return visitor.VisitWellKnown(p.WellKnown)
-	case "userDefined":
-		return visitor.VisitUserDefined(p.UserDefined)
-	}
-}
-
-// Defines the information related to the original `.proto` source file
-// that defines this type. This is primarily meant to be used to generate
-// Protobuf mapper methods, which are used in gRPC-compatbile SDKs.
-//
-// For example, consider the following Go snippet which requires the
-// `go_package` setting:
-//
-// ```go
-// import "github.com/acme/acme-go/proto"
-//
-//	type GetUserRequest struct {
-//	  Username string
-//	  Email    string
-//	}
-//
-//	func (u *GetUserRequest) ToProto() *proto.GetUserRequest {
-//	  if u == nil {
-//	    return nil
-//	  }
-//	  return &proto.GetUserRequest{
-//	    Username u.Username,
-//	    Email:   u.Email,
-//	  }
-//	}
-//
-// ```
-type UserDefinedProtobufType struct {
-	// The `.proto` source file that defines this type.
-	File *ProtobufFile `json:"file,omitempty" url:"file,omitempty"`
-	// This name is _usually_ equivalent to the associated DeclaredTypeName's name.
-	// However, its repeated here just in case the naming convention differs, which
-	// is most relevant for APIs that specify `smart-casing`.
-	Name *Name `json:"name,omitempty" url:"name,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (u *UserDefinedProtobufType) GetFile() *ProtobufFile {
-	if u == nil {
-		return nil
-	}
-	return u.File
-}
-
-func (u *UserDefinedProtobufType) GetName() *Name {
-	if u == nil {
-		return nil
-	}
-	return u.Name
-}
-
-func (u *UserDefinedProtobufType) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
-}
-
-func (u *UserDefinedProtobufType) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserDefinedProtobufType
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = UserDefinedProtobufType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-
-	return nil
-}
-
-func (u *UserDefinedProtobufType) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
-
-// The set of well-known types supported by Protobuf. These types are often included
-// in the target runtime library, so they usually require special handling.
-//
-// The full list of well-known types can be found at https://protobuf.dev/reference/protobuf/google.protobuf
-type WellKnownProtobufType struct {
-	Type_            string
-	Any              interface{}
-	Api              interface{}
-	BoolValue        interface{}
-	BytesValue       interface{}
-	DoubleValue      interface{}
-	Duration         interface{}
-	Empty            interface{}
-	Enum             interface{}
-	EnumValue        interface{}
-	Field            interface{}
-	FieldCardinality interface{}
-	FieldKind        interface{}
-	FieldMask        interface{}
-	FloatValue       interface{}
-	Int32Value       interface{}
-	Int64Value       interface{}
-	ListValue        interface{}
-	Method           interface{}
-	Mixin            interface{}
-	NullValue        interface{}
-	Option           interface{}
-	SourceContext    interface{}
-	StringValue      interface{}
-	Struct           interface{}
-	Syntax           interface{}
-	Timestamp        interface{}
-	Type             interface{}
-	Uint32Value      interface{}
-	Uint64Value      interface{}
-	Value            interface{}
-}
-
-func NewWellKnownProtobufTypeFromAny(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "any", Any: value}
-}
-
-func NewWellKnownProtobufTypeFromApi(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "api", Api: value}
-}
-
-func NewWellKnownProtobufTypeFromBoolValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "boolValue", BoolValue: value}
-}
-
-func NewWellKnownProtobufTypeFromBytesValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "bytesValue", BytesValue: value}
-}
-
-func NewWellKnownProtobufTypeFromDoubleValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "doubleValue", DoubleValue: value}
-}
-
-func NewWellKnownProtobufTypeFromDuration(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "duration", Duration: value}
-}
-
-func NewWellKnownProtobufTypeFromEmpty(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "empty", Empty: value}
-}
-
-func NewWellKnownProtobufTypeFromEnum(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "enum", Enum: value}
-}
-
-func NewWellKnownProtobufTypeFromEnumValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "enumValue", EnumValue: value}
-}
-
-func NewWellKnownProtobufTypeFromField(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "field", Field: value}
-}
-
-func NewWellKnownProtobufTypeFromFieldCardinality(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "fieldCardinality", FieldCardinality: value}
-}
-
-func NewWellKnownProtobufTypeFromFieldKind(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "fieldKind", FieldKind: value}
-}
-
-func NewWellKnownProtobufTypeFromFieldMask(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "fieldMask", FieldMask: value}
-}
-
-func NewWellKnownProtobufTypeFromFloatValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "floatValue", FloatValue: value}
-}
-
-func NewWellKnownProtobufTypeFromInt32Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "int32Value", Int32Value: value}
-}
-
-func NewWellKnownProtobufTypeFromInt64Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "int64Value", Int64Value: value}
-}
-
-func NewWellKnownProtobufTypeFromListValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "listValue", ListValue: value}
-}
-
-func NewWellKnownProtobufTypeFromMethod(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "method", Method: value}
-}
-
-func NewWellKnownProtobufTypeFromMixin(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "mixin", Mixin: value}
-}
-
-func NewWellKnownProtobufTypeFromNullValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "nullValue", NullValue: value}
-}
-
-func NewWellKnownProtobufTypeFromOption(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "option", Option: value}
-}
-
-func NewWellKnownProtobufTypeFromSourceContext(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "sourceContext", SourceContext: value}
-}
-
-func NewWellKnownProtobufTypeFromStringValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "stringValue", StringValue: value}
-}
-
-func NewWellKnownProtobufTypeFromStruct(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "struct", Struct: value}
-}
-
-func NewWellKnownProtobufTypeFromSyntax(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "syntax", Syntax: value}
-}
-
-func NewWellKnownProtobufTypeFromTimestamp(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "timestamp", Timestamp: value}
-}
-
-func NewWellKnownProtobufTypeFromType(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "type", Type: value}
-}
-
-func NewWellKnownProtobufTypeFromUint32Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "uint32Value", Uint32Value: value}
-}
-
-func NewWellKnownProtobufTypeFromUint64Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "uint64Value", Uint64Value: value}
-}
-
-func NewWellKnownProtobufTypeFromValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type_: "value", Value: value}
-}
-
-func (w *WellKnownProtobufType) GetType_() string {
-	if w == nil {
-		return ""
-	}
-	return w.Type_
-}
-
-func (w *WellKnownProtobufType) GetAny() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Any
-}
-
-func (w *WellKnownProtobufType) GetApi() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Api
-}
-
-func (w *WellKnownProtobufType) GetBoolValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.BoolValue
-}
-
-func (w *WellKnownProtobufType) GetBytesValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.BytesValue
-}
-
-func (w *WellKnownProtobufType) GetDoubleValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.DoubleValue
-}
-
-func (w *WellKnownProtobufType) GetDuration() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Duration
-}
-
-func (w *WellKnownProtobufType) GetEmpty() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Empty
-}
-
-func (w *WellKnownProtobufType) GetEnum() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Enum
-}
-
-func (w *WellKnownProtobufType) GetEnumValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.EnumValue
-}
-
-func (w *WellKnownProtobufType) GetField() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Field
-}
-
-func (w *WellKnownProtobufType) GetFieldCardinality() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.FieldCardinality
-}
-
-func (w *WellKnownProtobufType) GetFieldKind() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.FieldKind
-}
-
-func (w *WellKnownProtobufType) GetFieldMask() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.FieldMask
-}
-
-func (w *WellKnownProtobufType) GetFloatValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.FloatValue
-}
-
-func (w *WellKnownProtobufType) GetInt32Value() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Int32Value
-}
-
-func (w *WellKnownProtobufType) GetInt64Value() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Int64Value
-}
-
-func (w *WellKnownProtobufType) GetListValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.ListValue
-}
-
-func (w *WellKnownProtobufType) GetMethod() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Method
-}
-
-func (w *WellKnownProtobufType) GetMixin() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Mixin
-}
-
-func (w *WellKnownProtobufType) GetNullValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.NullValue
-}
-
-func (w *WellKnownProtobufType) GetOption() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Option
-}
-
-func (w *WellKnownProtobufType) GetSourceContext() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.SourceContext
-}
-
-func (w *WellKnownProtobufType) GetStringValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.StringValue
-}
-
-func (w *WellKnownProtobufType) GetStruct() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Struct
-}
-
-func (w *WellKnownProtobufType) GetSyntax() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Syntax
-}
-
-func (w *WellKnownProtobufType) GetTimestamp() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Timestamp
-}
-
-func (w *WellKnownProtobufType) GetType() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Type
-}
-
-func (w *WellKnownProtobufType) GetUint32Value() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Uint32Value
-}
-
-func (w *WellKnownProtobufType) GetUint64Value() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Uint64Value
-}
-
-func (w *WellKnownProtobufType) GetValue() interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.Value
-}
-
-func (w *WellKnownProtobufType) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	w.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", w)
-	}
-	switch unmarshaler.Type {
-	case "any":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Any = value
-	case "api":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Api = value
-	case "boolValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.BoolValue = value
-	case "bytesValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.BytesValue = value
-	case "doubleValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.DoubleValue = value
-	case "duration":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Duration = value
-	case "empty":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Empty = value
-	case "enum":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Enum = value
-	case "enumValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.EnumValue = value
-	case "field":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Field = value
-	case "fieldCardinality":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.FieldCardinality = value
-	case "fieldKind":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.FieldKind = value
-	case "fieldMask":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.FieldMask = value
-	case "floatValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.FloatValue = value
-	case "int32Value":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Int32Value = value
-	case "int64Value":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Int64Value = value
-	case "listValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.ListValue = value
-	case "method":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Method = value
-	case "mixin":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Mixin = value
-	case "nullValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.NullValue = value
-	case "option":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Option = value
-	case "sourceContext":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.SourceContext = value
-	case "stringValue":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.StringValue = value
-	case "struct":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Struct = value
-	case "syntax":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Syntax = value
-	case "timestamp":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Timestamp = value
-	case "type":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Type = value
-	case "uint32Value":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Uint32Value = value
-	case "uint64Value":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Uint64Value = value
-	case "value":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Value = value
-	}
-	return nil
-}
-
-func (w WellKnownProtobufType) MarshalJSON() ([]byte, error) {
-	switch w.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "any":
-		var marshaler = struct {
-			Type string      `json:"type"`
-			Any  interface{} `json:"any,omitempty"`
-		}{
-			Type: "any",
-			Any:  w.Any,
-		}
-		return json.Marshal(marshaler)
-	case "api":
-		var marshaler = struct {
-			Type string      `json:"type"`
-			Api  interface{} `json:"api,omitempty"`
-		}{
-			Type: "api",
-			Api:  w.Api,
-		}
-		return json.Marshal(marshaler)
-	case "boolValue":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			BoolValue interface{} `json:"boolValue,omitempty"`
-		}{
-			Type:      "boolValue",
-			BoolValue: w.BoolValue,
-		}
-		return json.Marshal(marshaler)
-	case "bytesValue":
-		var marshaler = struct {
-			Type       string      `json:"type"`
-			BytesValue interface{} `json:"bytesValue,omitempty"`
-		}{
-			Type:       "bytesValue",
-			BytesValue: w.BytesValue,
-		}
-		return json.Marshal(marshaler)
-	case "doubleValue":
-		var marshaler = struct {
-			Type        string      `json:"type"`
-			DoubleValue interface{} `json:"doubleValue,omitempty"`
-		}{
-			Type:        "doubleValue",
-			DoubleValue: w.DoubleValue,
-		}
-		return json.Marshal(marshaler)
-	case "duration":
-		var marshaler = struct {
-			Type     string      `json:"type"`
-			Duration interface{} `json:"duration,omitempty"`
-		}{
-			Type:     "duration",
-			Duration: w.Duration,
-		}
-		return json.Marshal(marshaler)
-	case "empty":
-		var marshaler = struct {
-			Type  string      `json:"type"`
-			Empty interface{} `json:"empty,omitempty"`
-		}{
-			Type:  "empty",
-			Empty: w.Empty,
-		}
-		return json.Marshal(marshaler)
-	case "enum":
-		var marshaler = struct {
-			Type string      `json:"type"`
-			Enum interface{} `json:"enum,omitempty"`
-		}{
-			Type: "enum",
-			Enum: w.Enum,
-		}
-		return json.Marshal(marshaler)
-	case "enumValue":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			EnumValue interface{} `json:"enumValue,omitempty"`
-		}{
-			Type:      "enumValue",
-			EnumValue: w.EnumValue,
-		}
-		return json.Marshal(marshaler)
-	case "field":
-		var marshaler = struct {
-			Type  string      `json:"type"`
-			Field interface{} `json:"field,omitempty"`
-		}{
-			Type:  "field",
-			Field: w.Field,
-		}
-		return json.Marshal(marshaler)
-	case "fieldCardinality":
-		var marshaler = struct {
-			Type             string      `json:"type"`
-			FieldCardinality interface{} `json:"fieldCardinality,omitempty"`
-		}{
-			Type:             "fieldCardinality",
-			FieldCardinality: w.FieldCardinality,
-		}
-		return json.Marshal(marshaler)
-	case "fieldKind":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			FieldKind interface{} `json:"fieldKind,omitempty"`
-		}{
-			Type:      "fieldKind",
-			FieldKind: w.FieldKind,
-		}
-		return json.Marshal(marshaler)
-	case "fieldMask":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			FieldMask interface{} `json:"fieldMask,omitempty"`
-		}{
-			Type:      "fieldMask",
-			FieldMask: w.FieldMask,
-		}
-		return json.Marshal(marshaler)
-	case "floatValue":
-		var marshaler = struct {
-			Type       string      `json:"type"`
-			FloatValue interface{} `json:"floatValue,omitempty"`
-		}{
-			Type:       "floatValue",
-			FloatValue: w.FloatValue,
-		}
-		return json.Marshal(marshaler)
-	case "int32Value":
-		var marshaler = struct {
-			Type       string      `json:"type"`
-			Int32Value interface{} `json:"int32Value,omitempty"`
-		}{
-			Type:       "int32Value",
-			Int32Value: w.Int32Value,
-		}
-		return json.Marshal(marshaler)
-	case "int64Value":
-		var marshaler = struct {
-			Type       string      `json:"type"`
-			Int64Value interface{} `json:"int64Value,omitempty"`
-		}{
-			Type:       "int64Value",
-			Int64Value: w.Int64Value,
-		}
-		return json.Marshal(marshaler)
-	case "listValue":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			ListValue interface{} `json:"listValue,omitempty"`
-		}{
-			Type:      "listValue",
-			ListValue: w.ListValue,
-		}
-		return json.Marshal(marshaler)
-	case "method":
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Method interface{} `json:"method,omitempty"`
-		}{
-			Type:   "method",
-			Method: w.Method,
-		}
-		return json.Marshal(marshaler)
-	case "mixin":
-		var marshaler = struct {
-			Type  string      `json:"type"`
-			Mixin interface{} `json:"mixin,omitempty"`
-		}{
-			Type:  "mixin",
-			Mixin: w.Mixin,
-		}
-		return json.Marshal(marshaler)
-	case "nullValue":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			NullValue interface{} `json:"nullValue,omitempty"`
-		}{
-			Type:      "nullValue",
-			NullValue: w.NullValue,
-		}
-		return json.Marshal(marshaler)
-	case "option":
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Option interface{} `json:"option,omitempty"`
-		}{
-			Type:   "option",
-			Option: w.Option,
-		}
-		return json.Marshal(marshaler)
-	case "sourceContext":
-		var marshaler = struct {
-			Type          string      `json:"type"`
-			SourceContext interface{} `json:"sourceContext,omitempty"`
-		}{
-			Type:          "sourceContext",
-			SourceContext: w.SourceContext,
-		}
-		return json.Marshal(marshaler)
-	case "stringValue":
-		var marshaler = struct {
-			Type        string      `json:"type"`
-			StringValue interface{} `json:"stringValue,omitempty"`
-		}{
-			Type:        "stringValue",
-			StringValue: w.StringValue,
-		}
-		return json.Marshal(marshaler)
-	case "struct":
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Struct interface{} `json:"struct,omitempty"`
-		}{
-			Type:   "struct",
-			Struct: w.Struct,
-		}
-		return json.Marshal(marshaler)
-	case "syntax":
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Syntax interface{} `json:"syntax,omitempty"`
-		}{
-			Type:   "syntax",
-			Syntax: w.Syntax,
-		}
-		return json.Marshal(marshaler)
-	case "timestamp":
-		var marshaler = struct {
-			Type      string      `json:"type"`
-			Timestamp interface{} `json:"timestamp,omitempty"`
-		}{
-			Type:      "timestamp",
-			Timestamp: w.Timestamp,
-		}
-		return json.Marshal(marshaler)
-	case "type":
-		var marshaler = struct {
-			Type_ string      `json:"type"`
-			Type  interface{} `json:"type,omitempty"`
-		}{
-			Type_: "type",
-			Type:  w.Type,
-		}
-		return json.Marshal(marshaler)
-	case "uint32Value":
-		var marshaler = struct {
-			Type        string      `json:"type"`
-			Uint32Value interface{} `json:"uint32Value,omitempty"`
-		}{
-			Type:        "uint32Value",
-			Uint32Value: w.Uint32Value,
-		}
-		return json.Marshal(marshaler)
-	case "uint64Value":
-		var marshaler = struct {
-			Type        string      `json:"type"`
-			Uint64Value interface{} `json:"uint64Value,omitempty"`
-		}{
-			Type:        "uint64Value",
-			Uint64Value: w.Uint64Value,
-		}
-		return json.Marshal(marshaler)
-	case "value":
-		var marshaler = struct {
-			Type  string      `json:"type"`
-			Value interface{} `json:"value,omitempty"`
-		}{
-			Type:  "value",
-			Value: w.Value,
-		}
-		return json.Marshal(marshaler)
-	}
-}
-
-type WellKnownProtobufTypeVisitor interface {
-	VisitAny(interface{}) error
-	VisitApi(interface{}) error
-	VisitBoolValue(interface{}) error
-	VisitBytesValue(interface{}) error
-	VisitDoubleValue(interface{}) error
-	VisitDuration(interface{}) error
-	VisitEmpty(interface{}) error
-	VisitEnum(interface{}) error
-	VisitEnumValue(interface{}) error
-	VisitField(interface{}) error
-	VisitFieldCardinality(interface{}) error
-	VisitFieldKind(interface{}) error
-	VisitFieldMask(interface{}) error
-	VisitFloatValue(interface{}) error
-	VisitInt32Value(interface{}) error
-	VisitInt64Value(interface{}) error
-	VisitListValue(interface{}) error
-	VisitMethod(interface{}) error
-	VisitMixin(interface{}) error
-	VisitNullValue(interface{}) error
-	VisitOption(interface{}) error
-	VisitSourceContext(interface{}) error
-	VisitStringValue(interface{}) error
-	VisitStruct(interface{}) error
-	VisitSyntax(interface{}) error
-	VisitTimestamp(interface{}) error
-	VisitType(interface{}) error
-	VisitUint32Value(interface{}) error
-	VisitUint64Value(interface{}) error
-	VisitValue(interface{}) error
-}
-
-func (w *WellKnownProtobufType) Accept(visitor WellKnownProtobufTypeVisitor) error {
-	switch w.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "any":
-		return visitor.VisitAny(w.Any)
-	case "api":
-		return visitor.VisitApi(w.Api)
-	case "boolValue":
-		return visitor.VisitBoolValue(w.BoolValue)
-	case "bytesValue":
-		return visitor.VisitBytesValue(w.BytesValue)
-	case "doubleValue":
-		return visitor.VisitDoubleValue(w.DoubleValue)
-	case "duration":
-		return visitor.VisitDuration(w.Duration)
-	case "empty":
-		return visitor.VisitEmpty(w.Empty)
-	case "enum":
-		return visitor.VisitEnum(w.Enum)
-	case "enumValue":
-		return visitor.VisitEnumValue(w.EnumValue)
-	case "field":
-		return visitor.VisitField(w.Field)
-	case "fieldCardinality":
-		return visitor.VisitFieldCardinality(w.FieldCardinality)
-	case "fieldKind":
-		return visitor.VisitFieldKind(w.FieldKind)
-	case "fieldMask":
-		return visitor.VisitFieldMask(w.FieldMask)
-	case "floatValue":
-		return visitor.VisitFloatValue(w.FloatValue)
-	case "int32Value":
-		return visitor.VisitInt32Value(w.Int32Value)
-	case "int64Value":
-		return visitor.VisitInt64Value(w.Int64Value)
-	case "listValue":
-		return visitor.VisitListValue(w.ListValue)
-	case "method":
-		return visitor.VisitMethod(w.Method)
-	case "mixin":
-		return visitor.VisitMixin(w.Mixin)
-	case "nullValue":
-		return visitor.VisitNullValue(w.NullValue)
-	case "option":
-		return visitor.VisitOption(w.Option)
-	case "sourceContext":
-		return visitor.VisitSourceContext(w.SourceContext)
-	case "stringValue":
-		return visitor.VisitStringValue(w.StringValue)
-	case "struct":
-		return visitor.VisitStruct(w.Struct)
-	case "syntax":
-		return visitor.VisitSyntax(w.Syntax)
-	case "timestamp":
-		return visitor.VisitTimestamp(w.Timestamp)
-	case "type":
-		return visitor.VisitType(w.Type)
-	case "uint32Value":
-		return visitor.VisitUint32Value(w.Uint32Value)
-	case "uint64Value":
-		return visitor.VisitUint64Value(w.Uint64Value)
-	case "value":
-		return visitor.VisitValue(w.Value)
-	}
-}
-
-type DirectPublish struct {
-	Target *PublishTarget `json:"target,omitempty" url:"target,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (d *DirectPublish) GetTarget() *PublishTarget {
-	if d == nil {
-		return nil
-	}
-	return d.Target
-}
-
-func (d *DirectPublish) GetExtraProperties() map[string]interface{} {
-	return d.extraProperties
-}
-
-func (d *DirectPublish) UnmarshalJSON(data []byte) error {
-	type unmarshaler DirectPublish
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = DirectPublish(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-
-	return nil
-}
-
-func (d *DirectPublish) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
-type GithubPublish struct {
-	Owner  string         `json:"owner" url:"owner"`
-	Repo   string         `json:"repo" url:"repo"`
-	Target *PublishTarget `json:"target,omitempty" url:"target,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (g *GithubPublish) GetOwner() string {
-	if g == nil {
-		return ""
-	}
-	return g.Owner
-}
-
-func (g *GithubPublish) GetRepo() string {
-	if g == nil {
-		return ""
-	}
-	return g.Repo
-}
-
-func (g *GithubPublish) GetTarget() *PublishTarget {
-	if g == nil {
-		return nil
-	}
-	return g.Target
-}
-
-func (g *GithubPublish) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
-}
-
-func (g *GithubPublish) UnmarshalJSON(data []byte) error {
-	type unmarshaler GithubPublish
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GithubPublish(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-
-	return nil
-}
-
-func (g *GithubPublish) String() string {
-	if value, err := core.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
-}
-
-type PostmanPublishTarget struct {
-	ApiKey       string  `json:"apiKey" url:"apiKey"`
-	WorkspaceId  string  `json:"workspaceId" url:"workspaceId"`
-	CollectionId *string `json:"collectionId,omitempty" url:"collectionId,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *PostmanPublishTarget) GetApiKey() string {
-	if p == nil {
-		return ""
-	}
-	return p.ApiKey
-}
-
-func (p *PostmanPublishTarget) GetWorkspaceId() string {
-	if p == nil {
-		return ""
-	}
-	return p.WorkspaceId
-}
-
-func (p *PostmanPublishTarget) GetCollectionId() *string {
-	if p == nil {
-		return nil
-	}
-	return p.CollectionId
-}
-
-func (p *PostmanPublishTarget) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *PostmanPublishTarget) UnmarshalJSON(data []byte) error {
-	type unmarshaler PostmanPublishTarget
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = PostmanPublishTarget(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-
-	return nil
-}
-
-func (p *PostmanPublishTarget) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-type PublishTarget struct {
-	Type    string
-	Postman *PostmanPublishTarget
-}
-
-func NewPublishTargetFromPostman(value *PostmanPublishTarget) *PublishTarget {
-	return &PublishTarget{Type: "postman", Postman: value}
-}
-
-func (p *PublishTarget) GetType() string {
-	if p == nil {
-		return ""
-	}
-	return p.Type
-}
-
-func (p *PublishTarget) GetPostman() *PostmanPublishTarget {
-	if p == nil {
-		return nil
-	}
-	return p.Postman
-}
-
-func (p *PublishTarget) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	p.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", p)
-	}
-	switch unmarshaler.Type {
-	case "postman":
-		value := new(PostmanPublishTarget)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.Postman = value
-	}
-	return nil
-}
-
-func (p PublishTarget) MarshalJSON() ([]byte, error) {
-	switch p.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "postman":
-		return core.MarshalJSONWithExtraProperty(p.Postman, "type", "postman")
-	}
-}
-
-type PublishTargetVisitor interface {
-	VisitPostman(*PostmanPublishTarget) error
-}
-
-func (p *PublishTarget) Accept(visitor PublishTargetVisitor) error {
-	switch p.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "postman":
-		return visitor.VisitPostman(p.Postman)
-	}
-}
-
-type PublishingConfig struct {
-	Type string
-	// Publish via syncing to a GitHub repo and triggering GitHub workflows
-	Github *GithubPublish
-	// Publish directly from the generator
-	Direct *DirectPublish
-}
-
-func NewPublishingConfigFromGithub(value *GithubPublish) *PublishingConfig {
-	return &PublishingConfig{Type: "github", Github: value}
-}
-
-func NewPublishingConfigFromDirect(value *DirectPublish) *PublishingConfig {
-	return &PublishingConfig{Type: "direct", Direct: value}
-}
-
-func (p *PublishingConfig) GetType() string {
-	if p == nil {
-		return ""
-	}
-	return p.Type
-}
-
-func (p *PublishingConfig) GetGithub() *GithubPublish {
-	if p == nil {
-		return nil
-	}
-	return p.Github
-}
-
-func (p *PublishingConfig) GetDirect() *DirectPublish {
-	if p == nil {
-		return nil
-	}
-	return p.Direct
-}
-
-func (p *PublishingConfig) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	p.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", p)
-	}
-	switch unmarshaler.Type {
-	case "github":
-		value := new(GithubPublish)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.Github = value
-	case "direct":
-		value := new(DirectPublish)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		p.Direct = value
-	}
-	return nil
-}
-
-func (p PublishingConfig) MarshalJSON() ([]byte, error) {
-	switch p.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "github":
-		return core.MarshalJSONWithExtraProperty(p.Github, "type", "github")
-	case "direct":
-		return core.MarshalJSONWithExtraProperty(p.Direct, "type", "direct")
-	}
-}
-
-type PublishingConfigVisitor interface {
-	VisitGithub(*GithubPublish) error
-	VisitDirect(*DirectPublish) error
-}
-
-func (p *PublishingConfig) Accept(visitor PublishingConfigVisitor) error {
-	switch p.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", p.Type, p)
-	case "github":
-		return visitor.VisitGithub(p.Github)
-	case "direct":
-		return visitor.VisitDirect(p.Direct)
-	}
 }
 
 type AliasTypeDeclaration struct {
@@ -10074,18 +374,16 @@ func (a *AliasTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = AliasTypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
 func (a *AliasTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -10106,18 +404,16 @@ func (b *Base64Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Base64Type(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
 func (b *Base64Type) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -10147,18 +443,16 @@ func (b *BigIntegerType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BigIntegerType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
 func (b *BigIntegerType) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -10188,18 +482,16 @@ func (b *BooleanType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BooleanType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
 func (b *BooleanType) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -10209,6 +501,7 @@ type ContainerType struct {
 	Type     string
 	List     *TypeReference
 	Map      *MapType
+	Nullable *TypeReference
 	Optional *TypeReference
 	Set      *TypeReference
 	Literal  *Literal
@@ -10220,6 +513,10 @@ func NewContainerTypeFromList(value *TypeReference) *ContainerType {
 
 func NewContainerTypeFromMap(value *MapType) *ContainerType {
 	return &ContainerType{Type: "map", Map: value}
+}
+
+func NewContainerTypeFromNullable(value *TypeReference) *ContainerType {
+	return &ContainerType{Type: "nullable", Nullable: value}
 }
 
 func NewContainerTypeFromOptional(value *TypeReference) *ContainerType {
@@ -10253,6 +550,13 @@ func (c *ContainerType) GetMap() *MapType {
 		return nil
 	}
 	return c.Map
+}
+
+func (c *ContainerType) GetNullable() *TypeReference {
+	if c == nil {
+		return nil
+	}
+	return c.Nullable
 }
 
 func (c *ContainerType) GetOptional() *TypeReference {
@@ -10302,6 +606,14 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		c.Map = value
+	case "nullable":
+		var valueUnmarshaler struct {
+			Nullable *TypeReference `json:"nullable,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		c.Nullable = valueUnmarshaler.Nullable
 	case "optional":
 		var valueUnmarshaler struct {
 			Optional *TypeReference `json:"optional,omitempty"`
@@ -10331,6 +643,9 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 }
 
 func (c ContainerType) MarshalJSON() ([]byte, error) {
+	if err := c.validate(); err != nil {
+		return nil, err
+	}
 	switch c.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
@@ -10344,7 +659,16 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "map":
-		return core.MarshalJSONWithExtraProperty(c.Map, "_type", "map")
+		return internal.MarshalJSONWithExtraProperty(c.Map, "_type", "map")
+	case "nullable":
+		var marshaler = struct {
+			Type     string         `json:"_type"`
+			Nullable *TypeReference `json:"nullable,omitempty"`
+		}{
+			Type:     "nullable",
+			Nullable: c.Nullable,
+		}
+		return json.Marshal(marshaler)
 	case "optional":
 		var marshaler = struct {
 			Type     string         `json:"_type"`
@@ -10378,6 +702,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 type ContainerTypeVisitor interface {
 	VisitList(*TypeReference) error
 	VisitMap(*MapType) error
+	VisitNullable(*TypeReference) error
 	VisitOptional(*TypeReference) error
 	VisitSet(*TypeReference) error
 	VisitLiteral(*Literal) error
@@ -10391,6 +716,8 @@ func (c *ContainerType) Accept(visitor ContainerTypeVisitor) error {
 		return visitor.VisitList(c.List)
 	case "map":
 		return visitor.VisitMap(c.Map)
+	case "nullable":
+		return visitor.VisitNullable(c.Nullable)
 	case "optional":
 		return visitor.VisitOptional(c.Optional)
 	case "set":
@@ -10398,6 +725,52 @@ func (c *ContainerType) Accept(visitor ContainerTypeVisitor) error {
 	case "literal":
 		return visitor.VisitLiteral(c.Literal)
 	}
+}
+
+func (c *ContainerType) validate() error {
+	if c == nil {
+		return fmt.Errorf("type %T is nil", c)
+	}
+	var fields []string
+	if c.List != nil {
+		fields = append(fields, "list")
+	}
+	if c.Map != nil {
+		fields = append(fields, "map")
+	}
+	if c.Nullable != nil {
+		fields = append(fields, "nullable")
+	}
+	if c.Optional != nil {
+		fields = append(fields, "optional")
+	}
+	if c.Set != nil {
+		fields = append(fields, "set")
+	}
+	if c.Literal != nil {
+		fields = append(fields, "literal")
+	}
+	if len(fields) == 0 {
+		if c.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
+		}
+		return fmt.Errorf("type %T is empty", c)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", c, fields)
+	}
+	if c.Type != "" {
+		field := fields[0]
+		if c.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				c,
+				c.Type,
+				c,
+			)
+		}
+	}
+	return nil
 }
 
 type DateTimeType struct {
@@ -10415,18 +788,16 @@ func (d *DateTimeType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DateTimeType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DateTimeType) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -10447,18 +818,16 @@ func (d *DateType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DateType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DateType) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -10504,18 +873,16 @@ func (d *DeclaredTypeName) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeclaredTypeName(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DeclaredTypeName) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -10553,18 +920,16 @@ func (d *DoubleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DoubleType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DoubleType) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -10626,18 +991,16 @@ func (d *DoubleValidationRules) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DoubleValidationRules(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
 func (d *DoubleValidationRules) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -10675,18 +1038,16 @@ func (e *Encoding) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Encoding(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *Encoding) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -10724,18 +1085,16 @@ func (e *EnumTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnumTypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *EnumTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -10773,18 +1132,16 @@ func (e *EnumTypeReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnumTypeReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *EnumTypeReference) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -10830,18 +1187,16 @@ func (e *EnumValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnumValue(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *EnumValue) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -10871,18 +1226,16 @@ func (e *ExampleAliasType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleAliasType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleAliasType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -10893,6 +1246,7 @@ type ExampleContainer struct {
 	List     *ExampleListContainer
 	Set      *ExampleSetContainer
 	Optional *ExampleOptionalContainer
+	Nullable *ExampleNullableContainer
 	Map      *ExampleMapContainer
 	Literal  *ExampleLiteralContainer
 }
@@ -10907,6 +1261,10 @@ func NewExampleContainerFromSet(value *ExampleSetContainer) *ExampleContainer {
 
 func NewExampleContainerFromOptional(value *ExampleOptionalContainer) *ExampleContainer {
 	return &ExampleContainer{Type: "optional", Optional: value}
+}
+
+func NewExampleContainerFromNullable(value *ExampleNullableContainer) *ExampleContainer {
+	return &ExampleContainer{Type: "nullable", Nullable: value}
 }
 
 func NewExampleContainerFromMap(value *ExampleMapContainer) *ExampleContainer {
@@ -10943,6 +1301,13 @@ func (e *ExampleContainer) GetOptional() *ExampleOptionalContainer {
 		return nil
 	}
 	return e.Optional
+}
+
+func (e *ExampleContainer) GetNullable() *ExampleNullableContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Nullable
 }
 
 func (e *ExampleContainer) GetMap() *ExampleMapContainer {
@@ -10989,6 +1354,12 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		e.Optional = value
+	case "nullable":
+		value := new(ExampleNullableContainer)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		e.Nullable = value
 	case "map":
 		value := new(ExampleMapContainer)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -11006,19 +1377,24 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleContainer) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "list":
-		return core.MarshalJSONWithExtraProperty(e.List, "type", "list")
+		return internal.MarshalJSONWithExtraProperty(e.List, "type", "list")
 	case "set":
-		return core.MarshalJSONWithExtraProperty(e.Set, "type", "set")
+		return internal.MarshalJSONWithExtraProperty(e.Set, "type", "set")
 	case "optional":
-		return core.MarshalJSONWithExtraProperty(e.Optional, "type", "optional")
+		return internal.MarshalJSONWithExtraProperty(e.Optional, "type", "optional")
+	case "nullable":
+		return internal.MarshalJSONWithExtraProperty(e.Nullable, "type", "nullable")
 	case "map":
-		return core.MarshalJSONWithExtraProperty(e.Map, "type", "map")
+		return internal.MarshalJSONWithExtraProperty(e.Map, "type", "map")
 	case "literal":
-		return core.MarshalJSONWithExtraProperty(e.Literal, "type", "literal")
+		return internal.MarshalJSONWithExtraProperty(e.Literal, "type", "literal")
 	}
 }
 
@@ -11026,6 +1402,7 @@ type ExampleContainerVisitor interface {
 	VisitList(*ExampleListContainer) error
 	VisitSet(*ExampleSetContainer) error
 	VisitOptional(*ExampleOptionalContainer) error
+	VisitNullable(*ExampleNullableContainer) error
 	VisitMap(*ExampleMapContainer) error
 	VisitLiteral(*ExampleLiteralContainer) error
 }
@@ -11040,11 +1417,59 @@ func (e *ExampleContainer) Accept(visitor ExampleContainerVisitor) error {
 		return visitor.VisitSet(e.Set)
 	case "optional":
 		return visitor.VisitOptional(e.Optional)
+	case "nullable":
+		return visitor.VisitNullable(e.Nullable)
 	case "map":
 		return visitor.VisitMap(e.Map)
 	case "literal":
 		return visitor.VisitLiteral(e.Literal)
 	}
+}
+
+func (e *ExampleContainer) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.List != nil {
+		fields = append(fields, "list")
+	}
+	if e.Set != nil {
+		fields = append(fields, "set")
+	}
+	if e.Optional != nil {
+		fields = append(fields, "optional")
+	}
+	if e.Nullable != nil {
+		fields = append(fields, "nullable")
+	}
+	if e.Map != nil {
+		fields = append(fields, "map")
+	}
+	if e.Literal != nil {
+		fields = append(fields, "literal")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExampleDatetime struct {
@@ -11076,7 +1501,7 @@ func (e *ExampleDatetime) UnmarshalJSON(data []byte) error {
 	type embed ExampleDatetime
 	var unmarshaler = struct {
 		embed
-		Datetime *core.DateTime `json:"datetime"`
+		Datetime *internal.DateTime `json:"datetime"`
 	}{
 		embed: embed(*e),
 	}
@@ -11085,13 +1510,11 @@ func (e *ExampleDatetime) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleDatetime(unmarshaler.embed)
 	e.Datetime = unmarshaler.Datetime.Time()
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -11099,16 +1522,16 @@ func (e *ExampleDatetime) MarshalJSON() ([]byte, error) {
 	type embed ExampleDatetime
 	var marshaler = struct {
 		embed
-		Datetime *core.DateTime `json:"datetime"`
+		Datetime *internal.DateTime `json:"datetime"`
 	}{
 		embed:    embed(*e),
-		Datetime: core.NewDateTime(e.Datetime),
+		Datetime: internal.NewDateTime(e.Datetime),
 	}
 	return json.Marshal(marshaler)
 }
 
 func (e *ExampleDatetime) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11138,18 +1561,16 @@ func (e *ExampleEnumType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleEnumType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleEnumType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11187,18 +1608,16 @@ func (e *ExampleKeyValuePair) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleKeyValuePair(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleKeyValuePair) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11236,18 +1655,16 @@ func (e *ExampleListContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleListContainer(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleListContainer) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11277,18 +1694,16 @@ func (e *ExampleLiteralContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleLiteralContainer(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleLiteralContainer) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11334,18 +1749,16 @@ func (e *ExampleMapContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleMapContainer(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleMapContainer) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11383,18 +1796,63 @@ func (e *ExampleNamedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleNamedType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleNamedType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type ExampleNullableContainer struct {
+	Nullable  *ExampleTypeReference `json:"nullable,omitempty" url:"nullable,omitempty"`
+	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (e *ExampleNullableContainer) GetNullable() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Nullable
+}
+
+func (e *ExampleNullableContainer) GetValueType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.ValueType
+}
+
+func (e *ExampleNullableContainer) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
+}
+
+func (e *ExampleNullableContainer) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExampleNullableContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExampleNullableContainer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	return nil
+}
+
+func (e *ExampleNullableContainer) String() string {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11442,18 +1900,16 @@ func (e *ExampleObjectProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleObjectProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleObjectProperty) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11483,18 +1939,16 @@ func (e *ExampleObjectType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleObjectType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleObjectType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11532,18 +1986,16 @@ func (e *ExampleObjectTypeWithTypeId) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleObjectTypeWithTypeId(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleObjectTypeWithTypeId) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11581,18 +2033,16 @@ func (e *ExampleOptionalContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleOptionalContainer(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleOptionalContainer) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -11746,7 +2196,7 @@ func (e *ExamplePrimitive) GetDatetime() *ExampleDatetime {
 
 func (e *ExamplePrimitive) GetUuid() uuid.UUID {
 	if e == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return e.Uuid
 }
@@ -11843,7 +2293,7 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.String = valueUnmarshaler.String
 	case "date":
 		var valueUnmarshaler struct {
-			Date *core.Date `json:"date" format:"date"`
+			Date *internal.Date `json:"date" format:"date"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -11884,6 +2334,9 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -11961,15 +2414,15 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "date":
 		var marshaler = struct {
-			Type string     `json:"type"`
-			Date *core.Date `json:"date" format:"date"`
+			Type string         `json:"type"`
+			Date *internal.Date `json:"date" format:"date"`
 		}{
 			Type: "date",
-			Date: core.NewDate(e.Date),
+			Date: internal.NewDate(e.Date),
 		}
 		return json.Marshal(marshaler)
 	case "datetime":
-		return core.MarshalJSONWithExtraProperty(e.Datetime, "type", "datetime")
+		return internal.MarshalJSONWithExtraProperty(e.Datetime, "type", "datetime")
 	case "uuid":
 		var marshaler = struct {
 			Type string    `json:"type"`
@@ -12049,6 +2502,73 @@ func (e *ExamplePrimitive) Accept(visitor ExamplePrimitiveVisitor) error {
 	}
 }
 
+func (e *ExamplePrimitive) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Integer != 0 {
+		fields = append(fields, "integer")
+	}
+	if e.Long != 0 {
+		fields = append(fields, "long")
+	}
+	if e.Uint != 0 {
+		fields = append(fields, "uint")
+	}
+	if e.Uint64 != 0 {
+		fields = append(fields, "uint64")
+	}
+	if e.Float != 0 {
+		fields = append(fields, "float")
+	}
+	if e.Double != 0 {
+		fields = append(fields, "double")
+	}
+	if e.Boolean != false {
+		fields = append(fields, "boolean")
+	}
+	if e.String != nil {
+		fields = append(fields, "string")
+	}
+	if !e.Date.IsZero() {
+		fields = append(fields, "date")
+	}
+	if e.Datetime != nil {
+		fields = append(fields, "datetime")
+	}
+	if e.Uuid != uuid.Nil {
+		fields = append(fields, "uuid")
+	}
+	if e.Base64 != nil {
+		fields = append(fields, "base64")
+	}
+	if e.BigInteger != "" {
+		fields = append(fields, "bigInteger")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
+}
+
 type ExampleSetContainer struct {
 	Set      []*ExampleTypeReference `json:"set,omitempty" url:"set,omitempty"`
 	ItemType *TypeReference          `json:"itemType,omitempty" url:"itemType,omitempty"`
@@ -12081,18 +2601,16 @@ func (e *ExampleSetContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleSetContainer(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleSetContainer) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12130,18 +2648,16 @@ func (e *ExampleSingleUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleSingleUnionType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleSingleUnionType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12229,13 +2745,16 @@ func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "samePropertiesAsObject":
-		return core.MarshalJSONWithExtraProperty(e.SamePropertiesAsObject, "type", "samePropertiesAsObject")
+		return internal.MarshalJSONWithExtraProperty(e.SamePropertiesAsObject, "type", "samePropertiesAsObject")
 	case "singleProperty":
-		return core.MarshalJSONWithExtraProperty(e.SingleProperty, "type", "singleProperty")
+		return internal.MarshalJSONWithExtraProperty(e.SingleProperty, "type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			Type         string      `json:"type"`
@@ -12265,6 +2784,43 @@ func (e *ExampleSingleUnionTypeProperties) Accept(visitor ExampleSingleUnionType
 	case "noProperties":
 		return visitor.VisitNoProperties(e.NoProperties)
 	}
+}
+
+func (e *ExampleSingleUnionTypeProperties) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.SamePropertiesAsObject != nil {
+		fields = append(fields, "samePropertiesAsObject")
+	}
+	if e.SingleProperty != nil {
+		fields = append(fields, "singleProperty")
+	}
+	if e.NoProperties != nil {
+		fields = append(fields, "noProperties")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExampleType struct {
@@ -12315,18 +2871,16 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12364,18 +2918,16 @@ func (e *ExampleTypeReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleTypeReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleTypeReference) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12487,6 +3039,9 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -12518,7 +3073,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(e.Named, "type", "named")
+		return internal.MarshalJSONWithExtraProperty(e.Named, "type", "named")
 	}
 }
 
@@ -12542,6 +3097,46 @@ func (e *ExampleTypeReferenceShape) Accept(visitor ExampleTypeReferenceShapeVisi
 	case "named":
 		return visitor.VisitNamed(e.Named)
 	}
+}
+
+func (e *ExampleTypeReferenceShape) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Primitive != nil {
+		fields = append(fields, "primitive")
+	}
+	if e.Container != nil {
+		fields = append(fields, "container")
+	}
+	if e.Unknown != nil {
+		fields = append(fields, "unknown")
+	}
+	if e.Named != nil {
+		fields = append(fields, "named")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExampleTypeShape struct {
@@ -12662,19 +3257,22 @@ func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
-		return core.MarshalJSONWithExtraProperty(e.Alias, "type", "alias")
+		return internal.MarshalJSONWithExtraProperty(e.Alias, "type", "alias")
 	case "enum":
-		return core.MarshalJSONWithExtraProperty(e.Enum, "type", "enum")
+		return internal.MarshalJSONWithExtraProperty(e.Enum, "type", "enum")
 	case "object":
-		return core.MarshalJSONWithExtraProperty(e.Object, "type", "object")
+		return internal.MarshalJSONWithExtraProperty(e.Object, "type", "object")
 	case "union":
-		return core.MarshalJSONWithExtraProperty(e.Union, "type", "union")
+		return internal.MarshalJSONWithExtraProperty(e.Union, "type", "union")
 	case "undiscriminatedUnion":
-		return core.MarshalJSONWithExtraProperty(e.UndiscriminatedUnion, "type", "undiscriminatedUnion")
+		return internal.MarshalJSONWithExtraProperty(e.UndiscriminatedUnion, "type", "undiscriminatedUnion")
 	}
 }
 
@@ -12703,10 +3301,52 @@ func (e *ExampleTypeShape) Accept(visitor ExampleTypeShapeVisitor) error {
 	}
 }
 
+func (e *ExampleTypeShape) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Alias != nil {
+		fields = append(fields, "alias")
+	}
+	if e.Enum != nil {
+		fields = append(fields, "enum")
+	}
+	if e.Object != nil {
+		fields = append(fields, "object")
+	}
+	if e.Union != nil {
+		fields = append(fields, "union")
+	}
+	if e.UndiscriminatedUnion != nil {
+		fields = append(fields, "undiscriminatedUnion")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
+}
+
 type ExampleUndiscriminatedUnionType struct {
 	// The zero-based index of the undiscriminated union variant.
 	// For the following undiscriminated union
-	//
 	// ```
 	// MyUnion:
 	//
@@ -12716,7 +3356,6 @@ type ExampleUndiscriminatedUnionType struct {
 	//	  - integer
 	//
 	// ```
-	//
 	// a string example would have an index 0 and an integer example
 	// would have an index 1.
 	Index           int                   `json:"index" url:"index"`
@@ -12750,18 +3389,16 @@ func (e *ExampleUndiscriminatedUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleUndiscriminatedUnionType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleUndiscriminatedUnionType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12799,18 +3436,16 @@ func (e *ExampleUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleUnionType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *ExampleUnionType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -12831,18 +3466,16 @@ func (f *FloatType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FloatType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
 func (f *FloatType) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -12880,18 +3513,16 @@ func (i *IntegerType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = IntegerType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
 func (i *IntegerType) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -12953,18 +3584,16 @@ func (i *IntegerValidationRules) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = IntegerValidationRules(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
 func (i *IntegerValidationRules) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -12985,18 +3614,16 @@ func (j *JsonEncoding) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = JsonEncoding(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
+	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
 	j.extraProperties = extraProperties
-
 	return nil
 }
 
 func (j *JsonEncoding) String() string {
-	if value, err := core.StringifyJSON(j); err == nil {
+	if value, err := internal.StringifyJSON(j); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", j)
@@ -13070,6 +3697,9 @@ func (l *Literal) UnmarshalJSON(data []byte) error {
 }
 
 func (l Literal) MarshalJSON() ([]byte, error) {
+	if err := l.validate(); err != nil {
+		return nil, err
+	}
 	switch l.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", l.Type, l)
@@ -13110,6 +3740,40 @@ func (l *Literal) Accept(visitor LiteralVisitor) error {
 	}
 }
 
+func (l *Literal) validate() error {
+	if l == nil {
+		return fmt.Errorf("type %T is nil", l)
+	}
+	var fields []string
+	if l.String != "" {
+		fields = append(fields, "string")
+	}
+	if l.Boolean != false {
+		fields = append(fields, "boolean")
+	}
+	if len(fields) == 0 {
+		if l.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", l, l.Type)
+		}
+		return fmt.Errorf("type %T is empty", l)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", l, fields)
+	}
+	if l.Type != "" {
+		field := fields[0]
+		if l.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				l,
+				l.Type,
+				l,
+			)
+		}
+	}
+	return nil
+}
+
 type LongType struct {
 	Default *int64 `json:"default,omitempty" url:"default,omitempty"`
 
@@ -13134,18 +3798,16 @@ func (l *LongType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = LongType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
 	return nil
 }
 
 func (l *LongType) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -13183,18 +3845,16 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MapType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *MapType) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -13207,7 +3867,8 @@ type NamedType struct {
 	FernFilepath *FernFilepath     `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
 	Name         *Name             `json:"name,omitempty" url:"name,omitempty"`
 	Default      *NamedTypeDefault `json:"default,omitempty" url:"default,omitempty"`
-	Inline       *bool             `json:"inline,omitempty" url:"inline,omitempty"`
+	// Use the inline property on the TypeDeclaration instead.
+	Inline *bool `json:"inline,omitempty" url:"inline,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -13258,18 +3919,16 @@ func (n *NamedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NamedType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
 func (n *NamedType) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -13321,11 +3980,14 @@ func (n *NamedTypeDefault) UnmarshalJSON(data []byte) error {
 }
 
 func (n NamedTypeDefault) MarshalJSON() ([]byte, error) {
+	if err := n.validate(); err != nil {
+		return nil, err
+	}
 	switch n.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "enum":
-		return core.MarshalJSONWithExtraProperty(n.Enum, "type", "enum")
+		return internal.MarshalJSONWithExtraProperty(n.Enum, "type", "enum")
 	}
 }
 
@@ -13342,11 +4004,43 @@ func (n *NamedTypeDefault) Accept(visitor NamedTypeDefaultVisitor) error {
 	}
 }
 
+func (n *NamedTypeDefault) validate() error {
+	if n == nil {
+		return fmt.Errorf("type %T is nil", n)
+	}
+	var fields []string
+	if n.Enum != nil {
+		fields = append(fields, "enum")
+	}
+	if len(fields) == 0 {
+		if n.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", n, n.Type)
+		}
+		return fmt.Errorf("type %T is empty", n)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", n, fields)
+	}
+	if n.Type != "" {
+		field := fields[0]
+		if n.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				n,
+				n.Type,
+				n,
+			)
+		}
+	}
+	return nil
+}
+
 type ObjectProperty struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Docs           *string               `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability   *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
+	Name           *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
+	ValueType      *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
+	PropertyAccess *ObjectPropertyAccess `json:"propertyAccess,omitempty" url:"propertyAccess,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -13379,6 +4073,13 @@ func (o *ObjectProperty) GetValueType() *TypeReference {
 	return o.ValueType
 }
 
+func (o *ObjectProperty) GetPropertyAccess() *ObjectPropertyAccess {
+	if o == nil {
+		return nil
+	}
+	return o.PropertyAccess
+}
+
 func (o *ObjectProperty) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -13390,21 +4091,41 @@ func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
 func (o *ObjectProperty) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+type ObjectPropertyAccess string
+
+const (
+	ObjectPropertyAccessReadOnly  ObjectPropertyAccess = "READ_ONLY"
+	ObjectPropertyAccessWriteOnly ObjectPropertyAccess = "WRITE_ONLY"
+)
+
+func NewObjectPropertyAccessFromString(s string) (ObjectPropertyAccess, error) {
+	switch s {
+	case "READ_ONLY":
+		return ObjectPropertyAccessReadOnly, nil
+	case "WRITE_ONLY":
+		return ObjectPropertyAccessWriteOnly, nil
+	}
+	var t ObjectPropertyAccess
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o ObjectPropertyAccess) Ptr() *ObjectPropertyAccess {
+	return &o
 }
 
 type ObjectTypeDeclaration struct {
@@ -13454,18 +4175,16 @@ func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectTypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
 func (o *ObjectTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -13503,77 +4222,19 @@ func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PrimitiveType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
 func (p *PrimitiveType) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
-}
-
-type PrimitiveTypeV1 string
-
-const (
-	PrimitiveTypeV1Integer PrimitiveTypeV1 = "INTEGER"
-	// Within the range -2^53 to 2^53
-	PrimitiveTypeV1Long       PrimitiveTypeV1 = "LONG"
-	PrimitiveTypeV1Uint       PrimitiveTypeV1 = "UINT"
-	PrimitiveTypeV1Uint64     PrimitiveTypeV1 = "UINT_64"
-	PrimitiveTypeV1Float      PrimitiveTypeV1 = "FLOAT"
-	PrimitiveTypeV1Double     PrimitiveTypeV1 = "DOUBLE"
-	PrimitiveTypeV1Boolean    PrimitiveTypeV1 = "BOOLEAN"
-	PrimitiveTypeV1String     PrimitiveTypeV1 = "STRING"
-	PrimitiveTypeV1Date       PrimitiveTypeV1 = "DATE"
-	PrimitiveTypeV1DateTime   PrimitiveTypeV1 = "DATE_TIME"
-	PrimitiveTypeV1Uuid       PrimitiveTypeV1 = "UUID"
-	PrimitiveTypeV1Base64     PrimitiveTypeV1 = "BASE_64"
-	PrimitiveTypeV1BigInteger PrimitiveTypeV1 = "BIG_INTEGER"
-)
-
-func NewPrimitiveTypeV1FromString(s string) (PrimitiveTypeV1, error) {
-	switch s {
-	case "INTEGER":
-		return PrimitiveTypeV1Integer, nil
-	case "LONG":
-		return PrimitiveTypeV1Long, nil
-	case "UINT":
-		return PrimitiveTypeV1Uint, nil
-	case "UINT_64":
-		return PrimitiveTypeV1Uint64, nil
-	case "FLOAT":
-		return PrimitiveTypeV1Float, nil
-	case "DOUBLE":
-		return PrimitiveTypeV1Double, nil
-	case "BOOLEAN":
-		return PrimitiveTypeV1Boolean, nil
-	case "STRING":
-		return PrimitiveTypeV1String, nil
-	case "DATE":
-		return PrimitiveTypeV1Date, nil
-	case "DATE_TIME":
-		return PrimitiveTypeV1DateTime, nil
-	case "UUID":
-		return PrimitiveTypeV1Uuid, nil
-	case "BASE_64":
-		return PrimitiveTypeV1Base64, nil
-	case "BIG_INTEGER":
-		return PrimitiveTypeV1BigInteger, nil
-	}
-	var t PrimitiveTypeV1
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (p PrimitiveTypeV1) Ptr() *PrimitiveTypeV1 {
-	return &p
 }
 
 type PrimitiveTypeV2 struct {
@@ -13838,35 +4499,38 @@ func (p *PrimitiveTypeV2) UnmarshalJSON(data []byte) error {
 }
 
 func (p PrimitiveTypeV2) MarshalJSON() ([]byte, error) {
+	if err := p.validate(); err != nil {
+		return nil, err
+	}
 	switch p.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
 	case "integer":
-		return core.MarshalJSONWithExtraProperty(p.Integer, "type", "integer")
+		return internal.MarshalJSONWithExtraProperty(p.Integer, "type", "integer")
 	case "long":
-		return core.MarshalJSONWithExtraProperty(p.Long, "type", "long")
+		return internal.MarshalJSONWithExtraProperty(p.Long, "type", "long")
 	case "uint":
-		return core.MarshalJSONWithExtraProperty(p.Uint, "type", "uint")
+		return internal.MarshalJSONWithExtraProperty(p.Uint, "type", "uint")
 	case "uint64":
-		return core.MarshalJSONWithExtraProperty(p.Uint64, "type", "uint64")
+		return internal.MarshalJSONWithExtraProperty(p.Uint64, "type", "uint64")
 	case "float":
-		return core.MarshalJSONWithExtraProperty(p.Float, "type", "float")
+		return internal.MarshalJSONWithExtraProperty(p.Float, "type", "float")
 	case "double":
-		return core.MarshalJSONWithExtraProperty(p.Double, "type", "double")
+		return internal.MarshalJSONWithExtraProperty(p.Double, "type", "double")
 	case "boolean":
-		return core.MarshalJSONWithExtraProperty(p.Boolean, "type", "boolean")
+		return internal.MarshalJSONWithExtraProperty(p.Boolean, "type", "boolean")
 	case "string":
-		return core.MarshalJSONWithExtraProperty(p.String, "type", "string")
+		return internal.MarshalJSONWithExtraProperty(p.String, "type", "string")
 	case "date":
-		return core.MarshalJSONWithExtraProperty(p.Date, "type", "date")
+		return internal.MarshalJSONWithExtraProperty(p.Date, "type", "date")
 	case "dateTime":
-		return core.MarshalJSONWithExtraProperty(p.DateTime, "type", "dateTime")
+		return internal.MarshalJSONWithExtraProperty(p.DateTime, "type", "dateTime")
 	case "uuid":
-		return core.MarshalJSONWithExtraProperty(p.Uuid, "type", "uuid")
+		return internal.MarshalJSONWithExtraProperty(p.Uuid, "type", "uuid")
 	case "base64":
-		return core.MarshalJSONWithExtraProperty(p.Base64, "type", "base64")
+		return internal.MarshalJSONWithExtraProperty(p.Base64, "type", "base64")
 	case "bigInteger":
-		return core.MarshalJSONWithExtraProperty(p.BigInteger, "type", "bigInteger")
+		return internal.MarshalJSONWithExtraProperty(p.BigInteger, "type", "bigInteger")
 	}
 }
 
@@ -13919,6 +4583,73 @@ func (p *PrimitiveTypeV2) Accept(visitor PrimitiveTypeV2Visitor) error {
 	}
 }
 
+func (p *PrimitiveTypeV2) validate() error {
+	if p == nil {
+		return fmt.Errorf("type %T is nil", p)
+	}
+	var fields []string
+	if p.Integer != nil {
+		fields = append(fields, "integer")
+	}
+	if p.Long != nil {
+		fields = append(fields, "long")
+	}
+	if p.Uint != nil {
+		fields = append(fields, "uint")
+	}
+	if p.Uint64 != nil {
+		fields = append(fields, "uint64")
+	}
+	if p.Float != nil {
+		fields = append(fields, "float")
+	}
+	if p.Double != nil {
+		fields = append(fields, "double")
+	}
+	if p.Boolean != nil {
+		fields = append(fields, "boolean")
+	}
+	if p.String != nil {
+		fields = append(fields, "string")
+	}
+	if p.Date != nil {
+		fields = append(fields, "date")
+	}
+	if p.DateTime != nil {
+		fields = append(fields, "dateTime")
+	}
+	if p.Uuid != nil {
+		fields = append(fields, "uuid")
+	}
+	if p.Base64 != nil {
+		fields = append(fields, "base64")
+	}
+	if p.BigInteger != nil {
+		fields = append(fields, "bigInteger")
+	}
+	if len(fields) == 0 {
+		if p.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", p, p.Type)
+		}
+		return fmt.Errorf("type %T is empty", p)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", p, fields)
+	}
+	if p.Type != "" {
+		field := fields[0]
+		if p.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				p,
+				p.Type,
+				p,
+			)
+		}
+	}
+	return nil
+}
+
 type ProtoEncoding struct {
 	extraProperties map[string]interface{}
 }
@@ -13934,18 +4665,16 @@ func (p *ProtoEncoding) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = ProtoEncoding(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
 func (p *ProtoEncoding) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -13983,18 +4712,16 @@ func (r *ResolvedNamedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = ResolvedNamedType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
 func (r *ResolvedNamedType) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -14104,6 +4831,9 @@ func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 }
 
 func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
+	if err := r.validate(); err != nil {
+		return nil, err
+	}
 	switch r.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", r.Type, r)
@@ -14117,7 +4847,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(r.Named, "_type", "named")
+		return internal.MarshalJSONWithExtraProperty(r.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string         `json:"_type"`
@@ -14159,6 +4889,46 @@ func (r *ResolvedTypeReference) Accept(visitor ResolvedTypeReferenceVisitor) err
 	case "unknown":
 		return visitor.VisitUnknown(r.Unknown)
 	}
+}
+
+func (r *ResolvedTypeReference) validate() error {
+	if r == nil {
+		return fmt.Errorf("type %T is nil", r)
+	}
+	var fields []string
+	if r.Container != nil {
+		fields = append(fields, "container")
+	}
+	if r.Named != nil {
+		fields = append(fields, "named")
+	}
+	if r.Primitive != nil {
+		fields = append(fields, "primitive")
+	}
+	if r.Unknown != nil {
+		fields = append(fields, "unknown")
+	}
+	if len(fields) == 0 {
+		if r.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", r, r.Type)
+		}
+		return fmt.Errorf("type %T is empty", r)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", r, fields)
+	}
+	if r.Type != "" {
+		field := fields[0]
+		if r.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				r,
+				r.Type,
+				r,
+			)
+		}
+	}
+	return nil
 }
 
 type ShapeType string
@@ -14245,18 +5015,16 @@ func (s *SingleUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleUnionType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *SingleUnionType) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -14344,13 +5112,16 @@ func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 }
 
 func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.PropertiesType {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
-		return core.MarshalJSONWithExtraProperty(s.SamePropertiesAsObject, "_type", "samePropertiesAsObject")
+		return internal.MarshalJSONWithExtraProperty(s.SamePropertiesAsObject, "_type", "samePropertiesAsObject")
 	case "singleProperty":
-		return core.MarshalJSONWithExtraProperty(s.SingleProperty, "_type", "singleProperty")
+		return internal.MarshalJSONWithExtraProperty(s.SingleProperty, "_type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			PropertiesType string      `json:"_type"`
@@ -14380,6 +5151,43 @@ func (s *SingleUnionTypeProperties) Accept(visitor SingleUnionTypePropertiesVisi
 	case "noProperties":
 		return visitor.VisitNoProperties(s.NoProperties)
 	}
+}
+
+func (s *SingleUnionTypeProperties) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.SamePropertiesAsObject != nil {
+		fields = append(fields, "samePropertiesAsObject")
+	}
+	if s.SingleProperty != nil {
+		fields = append(fields, "singleProperty")
+	}
+	if s.NoProperties != nil {
+		fields = append(fields, "noProperties")
+	}
+	if len(fields) == 0 {
+		if s.PropertiesType != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.PropertiesType)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.PropertiesType != "" {
+		field := fields[0]
+		if s.PropertiesType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.PropertiesType,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type SingleUnionTypeProperty struct {
@@ -14414,18 +5222,16 @@ func (s *SingleUnionTypeProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleUnionTypeProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *SingleUnionTypeProperty) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -14480,6 +5286,9 @@ func (s *Source) UnmarshalJSON(data []byte) error {
 }
 
 func (s Source) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -14506,6 +5315,37 @@ func (s *Source) Accept(visitor SourceVisitor) error {
 	case "proto":
 		return visitor.VisitProto(s.Proto)
 	}
+}
+
+func (s *Source) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Proto != nil {
+		fields = append(fields, "proto")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type StringType struct {
@@ -14540,18 +5380,16 @@ func (s *StringType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StringType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *StringType) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -14605,18 +5443,16 @@ func (s *StringValidationRules) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StringValidationRules(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *StringValidationRules) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -14740,19 +5576,22 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 }
 
 func (t Type) MarshalJSON() ([]byte, error) {
+	if err := t.validate(); err != nil {
+		return nil, err
+	}
 	switch t.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
-		return core.MarshalJSONWithExtraProperty(t.Alias, "_type", "alias")
+		return internal.MarshalJSONWithExtraProperty(t.Alias, "_type", "alias")
 	case "enum":
-		return core.MarshalJSONWithExtraProperty(t.Enum, "_type", "enum")
+		return internal.MarshalJSONWithExtraProperty(t.Enum, "_type", "enum")
 	case "object":
-		return core.MarshalJSONWithExtraProperty(t.Object, "_type", "object")
+		return internal.MarshalJSONWithExtraProperty(t.Object, "_type", "object")
 	case "union":
-		return core.MarshalJSONWithExtraProperty(t.Union, "_type", "union")
+		return internal.MarshalJSONWithExtraProperty(t.Union, "_type", "union")
 	case "undiscriminatedUnion":
-		return core.MarshalJSONWithExtraProperty(t.UndiscriminatedUnion, "_type", "undiscriminatedUnion")
+		return internal.MarshalJSONWithExtraProperty(t.UndiscriminatedUnion, "_type", "undiscriminatedUnion")
 	}
 }
 
@@ -14779,6 +5618,49 @@ func (t *Type) Accept(visitor TypeVisitor) error {
 	case "undiscriminatedUnion":
 		return visitor.VisitUndiscriminatedUnion(t.UndiscriminatedUnion)
 	}
+}
+
+func (t *Type) validate() error {
+	if t == nil {
+		return fmt.Errorf("type %T is nil", t)
+	}
+	var fields []string
+	if t.Alias != nil {
+		fields = append(fields, "alias")
+	}
+	if t.Enum != nil {
+		fields = append(fields, "enum")
+	}
+	if t.Object != nil {
+		fields = append(fields, "object")
+	}
+	if t.Union != nil {
+		fields = append(fields, "union")
+	}
+	if t.UndiscriminatedUnion != nil {
+		fields = append(fields, "undiscriminatedUnion")
+	}
+	if len(fields) == 0 {
+		if t.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", t, t.Type)
+		}
+		return fmt.Errorf("type %T is empty", t)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", t, fields)
+	}
+	if t.Type != "" {
+		field := fields[0]
+		if t.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				t,
+				t.Type,
+				t,
+			)
+		}
+	}
+	return nil
 }
 
 // A type, which is a name and a shape
@@ -14880,18 +5762,16 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *TypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
@@ -15001,6 +5881,9 @@ func (t *TypeReference) UnmarshalJSON(data []byte) error {
 }
 
 func (t TypeReference) MarshalJSON() ([]byte, error) {
+	if err := t.validate(); err != nil {
+		return nil, err
+	}
 	switch t.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
@@ -15014,7 +5897,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(t.Named, "_type", "named")
+		return internal.MarshalJSONWithExtraProperty(t.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string         `json:"_type"`
@@ -15058,6 +5941,46 @@ func (t *TypeReference) Accept(visitor TypeReferenceVisitor) error {
 	}
 }
 
+func (t *TypeReference) validate() error {
+	if t == nil {
+		return fmt.Errorf("type %T is nil", t)
+	}
+	var fields []string
+	if t.Container != nil {
+		fields = append(fields, "container")
+	}
+	if t.Named != nil {
+		fields = append(fields, "named")
+	}
+	if t.Primitive != nil {
+		fields = append(fields, "primitive")
+	}
+	if t.Unknown != nil {
+		fields = append(fields, "unknown")
+	}
+	if len(fields) == 0 {
+		if t.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", t, t.Type)
+		}
+		return fmt.Errorf("type %T is empty", t)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", t, fields)
+	}
+	if t.Type != "" {
+		field := fields[0]
+		if t.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				t,
+				t.Type,
+				t,
+			)
+		}
+	}
+	return nil
+}
+
 type Uint64Type struct {
 	extraProperties map[string]interface{}
 }
@@ -15073,18 +5996,16 @@ func (u *Uint64Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = Uint64Type(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *Uint64Type) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -15105,18 +6026,16 @@ func (u *UintType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UintType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UintType) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -15154,18 +6073,16 @@ func (u *UndiscriminatedUnionMember) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UndiscriminatedUnionMember(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UndiscriminatedUnionMember) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -15195,18 +6112,16 @@ func (u *UndiscriminatedUnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UndiscriminatedUnionTypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UndiscriminatedUnionTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -15261,18 +6176,16 @@ func (u *UnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnionTypeDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UnionTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -15293,1256 +6206,17 @@ func (u *UuidType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UuidType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UuidType) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
 }
-
-type VariableDeclaration struct {
-	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	Id   VariableId     `json:"id" url:"id"`
-	Name *Name          `json:"name,omitempty" url:"name,omitempty"`
-	Type *TypeReference `json:"type,omitempty" url:"type,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (v *VariableDeclaration) GetDocs() *string {
-	if v == nil {
-		return nil
-	}
-	return v.Docs
-}
-
-func (v *VariableDeclaration) GetId() VariableId {
-	if v == nil {
-		return ""
-	}
-	return v.Id
-}
-
-func (v *VariableDeclaration) GetName() *Name {
-	if v == nil {
-		return nil
-	}
-	return v.Name
-}
-
-func (v *VariableDeclaration) GetType() *TypeReference {
-	if v == nil {
-		return nil
-	}
-	return v.Type
-}
-
-func (v *VariableDeclaration) GetExtraProperties() map[string]interface{} {
-	return v.extraProperties
-}
-
-func (v *VariableDeclaration) UnmarshalJSON(data []byte) error {
-	type unmarshaler VariableDeclaration
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*v = VariableDeclaration(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *v)
-	if err != nil {
-		return err
-	}
-	v.extraProperties = extraProperties
-
-	return nil
-}
-
-func (v *VariableDeclaration) String() string {
-	if value, err := core.StringifyJSON(v); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", v)
-}
-
-type VariableId = string
-
-// An example webhook call. For now, this only includes the payload,
-// but it can be easily extended to support other endpoint properties
-// (e.g. headers).
-type ExampleWebhookCall struct {
-	Docs    *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name    *Name                 `json:"name,omitempty" url:"name,omitempty"`
-	Payload *ExampleTypeReference `json:"payload,omitempty" url:"payload,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleWebhookCall) GetDocs() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Docs
-}
-
-func (e *ExampleWebhookCall) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleWebhookCall) GetPayload() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Payload
-}
-
-func (e *ExampleWebhookCall) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleWebhookCall) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleWebhookCall
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleWebhookCall(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleWebhookCall) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type InlinedWebhookPayload struct {
-	Name       *Name                            `json:"name,omitempty" url:"name,omitempty"`
-	Extends    []*DeclaredTypeName              `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*InlinedWebhookPayloadProperty `json:"properties,omitempty" url:"properties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedWebhookPayload) GetName() *Name {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedWebhookPayload) GetExtends() []*DeclaredTypeName {
-	if i == nil {
-		return nil
-	}
-	return i.Extends
-}
-
-func (i *InlinedWebhookPayload) GetProperties() []*InlinedWebhookPayloadProperty {
-	if i == nil {
-		return nil
-	}
-	return i.Properties
-}
-
-func (i *InlinedWebhookPayload) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlinedWebhookPayload) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedWebhookPayload
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedWebhookPayload(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedWebhookPayload) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type InlinedWebhookPayloadProperty struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedWebhookPayloadProperty) GetDocs() *string {
-	if i == nil {
-		return nil
-	}
-	return i.Docs
-}
-
-func (i *InlinedWebhookPayloadProperty) GetAvailability() *Availability {
-	if i == nil {
-		return nil
-	}
-	return i.Availability
-}
-
-func (i *InlinedWebhookPayloadProperty) GetName() *NameAndWireValue {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedWebhookPayloadProperty) GetValueType() *TypeReference {
-	if i == nil {
-		return nil
-	}
-	return i.ValueType
-}
-
-func (i *InlinedWebhookPayloadProperty) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlinedWebhookPayloadProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedWebhookPayloadProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedWebhookPayloadProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedWebhookPayloadProperty) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type Webhook struct {
-	Docs         *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
-	Id           WebhookId             `json:"id" url:"id"`
-	Name         WebhookName           `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName  *string               `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Method       WebhookHttpMethod     `json:"method" url:"method"`
-	Headers      []*HttpHeader         `json:"headers,omitempty" url:"headers,omitempty"`
-	Payload      *WebhookPayload       `json:"payload,omitempty" url:"payload,omitempty"`
-	Examples     []*ExampleWebhookCall `json:"examples,omitempty" url:"examples,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *Webhook) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *Webhook) GetAvailability() *Availability {
-	if w == nil {
-		return nil
-	}
-	return w.Availability
-}
-
-func (w *Webhook) GetId() WebhookId {
-	if w == nil {
-		return ""
-	}
-	return w.Id
-}
-
-func (w *Webhook) GetName() WebhookName {
-	if w == nil {
-		return nil
-	}
-	return w.Name
-}
-
-func (w *Webhook) GetDisplayName() *string {
-	if w == nil {
-		return nil
-	}
-	return w.DisplayName
-}
-
-func (w *Webhook) GetMethod() WebhookHttpMethod {
-	if w == nil {
-		return ""
-	}
-	return w.Method
-}
-
-func (w *Webhook) GetHeaders() []*HttpHeader {
-	if w == nil {
-		return nil
-	}
-	return w.Headers
-}
-
-func (w *Webhook) GetPayload() *WebhookPayload {
-	if w == nil {
-		return nil
-	}
-	return w.Payload
-}
-
-func (w *Webhook) GetExamples() []*ExampleWebhookCall {
-	if w == nil {
-		return nil
-	}
-	return w.Examples
-}
-
-func (w *Webhook) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *Webhook) UnmarshalJSON(data []byte) error {
-	type unmarshaler Webhook
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = Webhook(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *Webhook) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WebhookGroup = []*Webhook
-
-type WebhookHttpMethod string
-
-const (
-	WebhookHttpMethodGet  WebhookHttpMethod = "GET"
-	WebhookHttpMethodPost WebhookHttpMethod = "POST"
-)
-
-func NewWebhookHttpMethodFromString(s string) (WebhookHttpMethod, error) {
-	switch s {
-	case "GET":
-		return WebhookHttpMethodGet, nil
-	case "POST":
-		return WebhookHttpMethodPost, nil
-	}
-	var t WebhookHttpMethod
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (w WebhookHttpMethod) Ptr() *WebhookHttpMethod {
-	return &w
-}
-
-type WebhookName = *Name
-
-type WebhookPayload struct {
-	Type           string
-	InlinedPayload *InlinedWebhookPayload
-	Reference      *WebhookPayloadReference
-}
-
-func NewWebhookPayloadFromInlinedPayload(value *InlinedWebhookPayload) *WebhookPayload {
-	return &WebhookPayload{Type: "inlinedPayload", InlinedPayload: value}
-}
-
-func NewWebhookPayloadFromReference(value *WebhookPayloadReference) *WebhookPayload {
-	return &WebhookPayload{Type: "reference", Reference: value}
-}
-
-func (w *WebhookPayload) GetType() string {
-	if w == nil {
-		return ""
-	}
-	return w.Type
-}
-
-func (w *WebhookPayload) GetInlinedPayload() *InlinedWebhookPayload {
-	if w == nil {
-		return nil
-	}
-	return w.InlinedPayload
-}
-
-func (w *WebhookPayload) GetReference() *WebhookPayloadReference {
-	if w == nil {
-		return nil
-	}
-	return w.Reference
-}
-
-func (w *WebhookPayload) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	w.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", w)
-	}
-	switch unmarshaler.Type {
-	case "inlinedPayload":
-		value := new(InlinedWebhookPayload)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.InlinedPayload = value
-	case "reference":
-		value := new(WebhookPayloadReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Reference = value
-	}
-	return nil
-}
-
-func (w WebhookPayload) MarshalJSON() ([]byte, error) {
-	switch w.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "inlinedPayload":
-		return core.MarshalJSONWithExtraProperty(w.InlinedPayload, "type", "inlinedPayload")
-	case "reference":
-		return core.MarshalJSONWithExtraProperty(w.Reference, "type", "reference")
-	}
-}
-
-type WebhookPayloadVisitor interface {
-	VisitInlinedPayload(*InlinedWebhookPayload) error
-	VisitReference(*WebhookPayloadReference) error
-}
-
-func (w *WebhookPayload) Accept(visitor WebhookPayloadVisitor) error {
-	switch w.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "inlinedPayload":
-		return visitor.VisitInlinedPayload(w.InlinedPayload)
-	case "reference":
-		return visitor.VisitReference(w.Reference)
-	}
-}
-
-type WebhookPayloadReference struct {
-	Docs        *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	PayloadType *TypeReference `json:"payloadType,omitempty" url:"payloadType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WebhookPayloadReference) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WebhookPayloadReference) GetPayloadType() *TypeReference {
-	if w == nil {
-		return nil
-	}
-	return w.PayloadType
-}
-
-func (w *WebhookPayloadReference) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WebhookPayloadReference) UnmarshalJSON(data []byte) error {
-	type unmarshaler WebhookPayloadReference
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WebhookPayloadReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WebhookPayloadReference) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type ExampleWebSocketMessage struct {
-	Type WebSocketMessageId           `json:"type" url:"type"`
-	Body *ExampleWebSocketMessageBody `json:"body,omitempty" url:"body,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleWebSocketMessage) GetType() WebSocketMessageId {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleWebSocketMessage) GetBody() *ExampleWebSocketMessageBody {
-	if e == nil {
-		return nil
-	}
-	return e.Body
-}
-
-func (e *ExampleWebSocketMessage) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleWebSocketMessage) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleWebSocketMessage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleWebSocketMessage(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleWebSocketMessage) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type ExampleWebSocketMessageBody struct {
-	Type        string
-	InlinedBody *ExampleInlinedRequestBody
-	Reference   *ExampleTypeReference
-}
-
-func NewExampleWebSocketMessageBodyFromInlinedBody(value *ExampleInlinedRequestBody) *ExampleWebSocketMessageBody {
-	return &ExampleWebSocketMessageBody{Type: "inlinedBody", InlinedBody: value}
-}
-
-func NewExampleWebSocketMessageBodyFromReference(value *ExampleTypeReference) *ExampleWebSocketMessageBody {
-	return &ExampleWebSocketMessageBody{Type: "reference", Reference: value}
-}
-
-func (e *ExampleWebSocketMessageBody) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *ExampleWebSocketMessageBody) GetInlinedBody() *ExampleInlinedRequestBody {
-	if e == nil {
-		return nil
-	}
-	return e.InlinedBody
-}
-
-func (e *ExampleWebSocketMessageBody) GetReference() *ExampleTypeReference {
-	if e == nil {
-		return nil
-	}
-	return e.Reference
-}
-
-func (e *ExampleWebSocketMessageBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "inlinedBody":
-		value := new(ExampleInlinedRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.InlinedBody = value
-	case "reference":
-		value := new(ExampleTypeReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Reference = value
-	}
-	return nil
-}
-
-func (e ExampleWebSocketMessageBody) MarshalJSON() ([]byte, error) {
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "inlinedBody":
-		return core.MarshalJSONWithExtraProperty(e.InlinedBody, "type", "inlinedBody")
-	case "reference":
-		return core.MarshalJSONWithExtraProperty(e.Reference, "type", "reference")
-	}
-}
-
-type ExampleWebSocketMessageBodyVisitor interface {
-	VisitInlinedBody(*ExampleInlinedRequestBody) error
-	VisitReference(*ExampleTypeReference) error
-}
-
-func (e *ExampleWebSocketMessageBody) Accept(visitor ExampleWebSocketMessageBodyVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "inlinedBody":
-		return visitor.VisitInlinedBody(e.InlinedBody)
-	case "reference":
-		return visitor.VisitReference(e.Reference)
-	}
-}
-
-type ExampleWebSocketSession struct {
-	Docs            *string                    `json:"docs,omitempty" url:"docs,omitempty"`
-	Name            *Name                      `json:"name,omitempty" url:"name,omitempty"`
-	Url             string                     `json:"url" url:"url"`
-	PathParameters  []*ExamplePathParameter    `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	Headers         []*ExampleHeader           `json:"headers,omitempty" url:"headers,omitempty"`
-	QueryParameters []*ExampleQueryParameter   `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
-	Messages        []*ExampleWebSocketMessage `json:"messages,omitempty" url:"messages,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (e *ExampleWebSocketSession) GetDocs() *string {
-	if e == nil {
-		return nil
-	}
-	return e.Docs
-}
-
-func (e *ExampleWebSocketSession) GetName() *Name {
-	if e == nil {
-		return nil
-	}
-	return e.Name
-}
-
-func (e *ExampleWebSocketSession) GetUrl() string {
-	if e == nil {
-		return ""
-	}
-	return e.Url
-}
-
-func (e *ExampleWebSocketSession) GetPathParameters() []*ExamplePathParameter {
-	if e == nil {
-		return nil
-	}
-	return e.PathParameters
-}
-
-func (e *ExampleWebSocketSession) GetHeaders() []*ExampleHeader {
-	if e == nil {
-		return nil
-	}
-	return e.Headers
-}
-
-func (e *ExampleWebSocketSession) GetQueryParameters() []*ExampleQueryParameter {
-	if e == nil {
-		return nil
-	}
-	return e.QueryParameters
-}
-
-func (e *ExampleWebSocketSession) GetMessages() []*ExampleWebSocketMessage {
-	if e == nil {
-		return nil
-	}
-	return e.Messages
-}
-
-func (e *ExampleWebSocketSession) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExampleWebSocketSession) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExampleWebSocketSession
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExampleWebSocketSession(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-
-	return nil
-}
-
-func (e *ExampleWebSocketSession) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type InlinedWebSocketMessageBody struct {
-	Name       *Name                                  `json:"name,omitempty" url:"name,omitempty"`
-	Extends    []*DeclaredTypeName                    `json:"extends,omitempty" url:"extends,omitempty"`
-	Properties []*InlinedWebSocketMessageBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedWebSocketMessageBody) GetName() *Name {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedWebSocketMessageBody) GetExtends() []*DeclaredTypeName {
-	if i == nil {
-		return nil
-	}
-	return i.Extends
-}
-
-func (i *InlinedWebSocketMessageBody) GetProperties() []*InlinedWebSocketMessageBodyProperty {
-	if i == nil {
-		return nil
-	}
-	return i.Properties
-}
-
-func (i *InlinedWebSocketMessageBody) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlinedWebSocketMessageBody) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedWebSocketMessageBody
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedWebSocketMessageBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedWebSocketMessageBody) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type InlinedWebSocketMessageBodyProperty struct {
-	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) GetDocs() *string {
-	if i == nil {
-		return nil
-	}
-	return i.Docs
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) GetAvailability() *Availability {
-	if i == nil {
-		return nil
-	}
-	return i.Availability
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) GetName() *NameAndWireValue {
-	if i == nil {
-		return nil
-	}
-	return i.Name
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) GetValueType() *TypeReference {
-	if i == nil {
-		return nil
-	}
-	return i.ValueType
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) UnmarshalJSON(data []byte) error {
-	type unmarshaler InlinedWebSocketMessageBodyProperty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = InlinedWebSocketMessageBodyProperty(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-
-	return nil
-}
-
-func (i *InlinedWebSocketMessageBodyProperty) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type WebSocketChannel struct {
-	Docs            *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability    *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
-	Name            WebSocketName     `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName     *string           `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Path            *HttpPath         `json:"path,omitempty" url:"path,omitempty"`
-	Auth            bool              `json:"auth" url:"auth"`
-	Headers         []*HttpHeader     `json:"headers,omitempty" url:"headers,omitempty"`
-	QueryParameters []*QueryParameter `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
-	PathParameters  []*PathParameter  `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	// The messages that can be sent and received on this channel
-	Messages []*WebSocketMessage        `json:"messages,omitempty" url:"messages,omitempty"`
-	Examples []*ExampleWebSocketSession `json:"examples,omitempty" url:"examples,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WebSocketChannel) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WebSocketChannel) GetAvailability() *Availability {
-	if w == nil {
-		return nil
-	}
-	return w.Availability
-}
-
-func (w *WebSocketChannel) GetName() WebSocketName {
-	if w == nil {
-		return nil
-	}
-	return w.Name
-}
-
-func (w *WebSocketChannel) GetDisplayName() *string {
-	if w == nil {
-		return nil
-	}
-	return w.DisplayName
-}
-
-func (w *WebSocketChannel) GetPath() *HttpPath {
-	if w == nil {
-		return nil
-	}
-	return w.Path
-}
-
-func (w *WebSocketChannel) GetAuth() bool {
-	if w == nil {
-		return false
-	}
-	return w.Auth
-}
-
-func (w *WebSocketChannel) GetHeaders() []*HttpHeader {
-	if w == nil {
-		return nil
-	}
-	return w.Headers
-}
-
-func (w *WebSocketChannel) GetQueryParameters() []*QueryParameter {
-	if w == nil {
-		return nil
-	}
-	return w.QueryParameters
-}
-
-func (w *WebSocketChannel) GetPathParameters() []*PathParameter {
-	if w == nil {
-		return nil
-	}
-	return w.PathParameters
-}
-
-func (w *WebSocketChannel) GetMessages() []*WebSocketMessage {
-	if w == nil {
-		return nil
-	}
-	return w.Messages
-}
-
-func (w *WebSocketChannel) GetExamples() []*ExampleWebSocketSession {
-	if w == nil {
-		return nil
-	}
-	return w.Examples
-}
-
-func (w *WebSocketChannel) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WebSocketChannel) UnmarshalJSON(data []byte) error {
-	type unmarshaler WebSocketChannel
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WebSocketChannel(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WebSocketChannel) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WebSocketMessage struct {
-	Docs         *string                `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability          `json:"availability,omitempty" url:"availability,omitempty"`
-	Type         WebSocketMessageId     `json:"type" url:"type"`
-	DisplayName  *string                `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Origin       WebSocketMessageOrigin `json:"origin" url:"origin"`
-	Body         *WebSocketMessageBody  `json:"body,omitempty" url:"body,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WebSocketMessage) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WebSocketMessage) GetAvailability() *Availability {
-	if w == nil {
-		return nil
-	}
-	return w.Availability
-}
-
-func (w *WebSocketMessage) GetType() WebSocketMessageId {
-	if w == nil {
-		return ""
-	}
-	return w.Type
-}
-
-func (w *WebSocketMessage) GetDisplayName() *string {
-	if w == nil {
-		return nil
-	}
-	return w.DisplayName
-}
-
-func (w *WebSocketMessage) GetOrigin() WebSocketMessageOrigin {
-	if w == nil {
-		return ""
-	}
-	return w.Origin
-}
-
-func (w *WebSocketMessage) GetBody() *WebSocketMessageBody {
-	if w == nil {
-		return nil
-	}
-	return w.Body
-}
-
-func (w *WebSocketMessage) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WebSocketMessage) UnmarshalJSON(data []byte) error {
-	type unmarshaler WebSocketMessage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WebSocketMessage(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WebSocketMessage) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WebSocketMessageBody struct {
-	Type        string
-	InlinedBody *InlinedWebSocketMessageBody
-	Reference   *WebSocketMessageBodyReference
-}
-
-func NewWebSocketMessageBodyFromInlinedBody(value *InlinedWebSocketMessageBody) *WebSocketMessageBody {
-	return &WebSocketMessageBody{Type: "inlinedBody", InlinedBody: value}
-}
-
-func NewWebSocketMessageBodyFromReference(value *WebSocketMessageBodyReference) *WebSocketMessageBody {
-	return &WebSocketMessageBody{Type: "reference", Reference: value}
-}
-
-func (w *WebSocketMessageBody) GetType() string {
-	if w == nil {
-		return ""
-	}
-	return w.Type
-}
-
-func (w *WebSocketMessageBody) GetInlinedBody() *InlinedWebSocketMessageBody {
-	if w == nil {
-		return nil
-	}
-	return w.InlinedBody
-}
-
-func (w *WebSocketMessageBody) GetReference() *WebSocketMessageBodyReference {
-	if w == nil {
-		return nil
-	}
-	return w.Reference
-}
-
-func (w *WebSocketMessageBody) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	w.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", w)
-	}
-	switch unmarshaler.Type {
-	case "inlinedBody":
-		value := new(InlinedWebSocketMessageBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.InlinedBody = value
-	case "reference":
-		value := new(WebSocketMessageBodyReference)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		w.Reference = value
-	}
-	return nil
-}
-
-func (w WebSocketMessageBody) MarshalJSON() ([]byte, error) {
-	switch w.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "inlinedBody":
-		return core.MarshalJSONWithExtraProperty(w.InlinedBody, "type", "inlinedBody")
-	case "reference":
-		return core.MarshalJSONWithExtraProperty(w.Reference, "type", "reference")
-	}
-}
-
-type WebSocketMessageBodyVisitor interface {
-	VisitInlinedBody(*InlinedWebSocketMessageBody) error
-	VisitReference(*WebSocketMessageBodyReference) error
-}
-
-func (w *WebSocketMessageBody) Accept(visitor WebSocketMessageBodyVisitor) error {
-	switch w.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", w.Type, w)
-	case "inlinedBody":
-		return visitor.VisitInlinedBody(w.InlinedBody)
-	case "reference":
-		return visitor.VisitReference(w.Reference)
-	}
-}
-
-type WebSocketMessageBodyReference struct {
-	Docs     *string        `json:"docs,omitempty" url:"docs,omitempty"`
-	BodyType *TypeReference `json:"bodyType,omitempty" url:"bodyType,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (w *WebSocketMessageBodyReference) GetDocs() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Docs
-}
-
-func (w *WebSocketMessageBodyReference) GetBodyType() *TypeReference {
-	if w == nil {
-		return nil
-	}
-	return w.BodyType
-}
-
-func (w *WebSocketMessageBodyReference) GetExtraProperties() map[string]interface{} {
-	return w.extraProperties
-}
-
-func (w *WebSocketMessageBodyReference) UnmarshalJSON(data []byte) error {
-	type unmarshaler WebSocketMessageBodyReference
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WebSocketMessageBodyReference(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-
-	return nil
-}
-
-func (w *WebSocketMessageBodyReference) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
-}
-
-type WebSocketMessageId = string
-
-type WebSocketMessageOrigin string
-
-const (
-	WebSocketMessageOriginClient WebSocketMessageOrigin = "client"
-	WebSocketMessageOriginServer WebSocketMessageOrigin = "server"
-)
-
-func NewWebSocketMessageOriginFromString(s string) (WebSocketMessageOrigin, error) {
-	switch s {
-	case "client":
-		return WebSocketMessageOriginClient, nil
-	case "server":
-		return WebSocketMessageOriginServer, nil
-	}
-	var t WebSocketMessageOrigin
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (w WebSocketMessageOrigin) Ptr() *WebSocketMessageOrigin {
-	return &w
-}
-
-type WebSocketName = *Name

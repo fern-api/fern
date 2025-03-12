@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable/fern\"\n\tfernclient \"github.com/nullable/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Nullable.GetUsers(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tUsernames: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"usernames\",\n\t\t\t),\n\t\t},\n\t\tAvatar: fern.String(\n\t\t\t\"avatar\",\n\t\t),\n\t\tActivated: []*bool{\n\t\t\tfern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t},\n\t\tTags: []**string{\n\t\t\tfern.String(\n\t\t\t\t\"tags\",\n\t\t\t),\n\t\t},\n\t\tExtra: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable/fern\"\n\tfernclient \"github.com/nullable/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Nullable.GetUsers(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tUsernames: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"usernames\",\n\t\t\t),\n\t\t},\n\t\tAvatar: fern.String(\n\t\t\t\"avatar\",\n\t\t),\n\t\tActivated: []*bool{\n\t\t\tfern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t},\n\t\tTags: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"tags\",\n\t\t\t),\n\t\t},\n\t\tExtra: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
             }
         },
         {

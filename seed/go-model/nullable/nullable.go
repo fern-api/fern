@@ -283,12 +283,14 @@ func (s *Status) validate() error {
 }
 
 type User struct {
-	Name           string       `json:"name" url:"name"`
-	Id             UserId       `json:"id" url:"id"`
-	Tags           []string     `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email        `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber `json:"favorite-number,omitempty" url:"favorite-number,omitempty"`
+	Name           string                 `json:"name" url:"name"`
+	Id             UserId                 `json:"id" url:"id"`
+	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
+	FavoriteNumber *WeirdNumber           `json:"favorite-number,omitempty" url:"favorite-number,omitempty"`
+	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -335,6 +337,20 @@ func (u *User) GetFavoriteNumber() *WeirdNumber {
 	return u.FavoriteNumber
 }
 
+func (u *User) GetNumbers() []int {
+	if u == nil {
+		return nil
+	}
+	return u.Numbers
+}
+
+func (u *User) GetStrings() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.Strings
+}
+
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -366,6 +382,7 @@ type UserId = string
 type WeirdNumber struct {
 	Integer        int
 	DoubleOptional *float64
+	StringOptional *string
 	Double         float64
 
 	typ string
@@ -377,6 +394,10 @@ func NewWeirdNumberFromInteger(value int) *WeirdNumber {
 
 func NewWeirdNumberFromDoubleOptional(value *float64) *WeirdNumber {
 	return &WeirdNumber{typ: "DoubleOptional", DoubleOptional: value}
+}
+
+func NewWeirdNumberFromStringOptional(value *string) *WeirdNumber {
+	return &WeirdNumber{typ: "StringOptional", StringOptional: value}
 }
 
 func NewWeirdNumberFromDouble(value float64) *WeirdNumber {
@@ -395,6 +416,13 @@ func (w *WeirdNumber) GetDoubleOptional() *float64 {
 		return nil
 	}
 	return w.DoubleOptional
+}
+
+func (w *WeirdNumber) GetStringOptional() *string {
+	if w == nil {
+		return nil
+	}
+	return w.StringOptional
 }
 
 func (w *WeirdNumber) GetDouble() float64 {
@@ -417,6 +445,12 @@ func (w *WeirdNumber) UnmarshalJSON(data []byte) error {
 		w.DoubleOptional = valueDoubleOptional
 		return nil
 	}
+	var valueStringOptional *string
+	if err := json.Unmarshal(data, &valueStringOptional); err == nil {
+		w.typ = "StringOptional"
+		w.StringOptional = valueStringOptional
+		return nil
+	}
 	var valueDouble float64
 	if err := json.Unmarshal(data, &valueDouble); err == nil {
 		w.typ = "Double"
@@ -433,6 +467,9 @@ func (w WeirdNumber) MarshalJSON() ([]byte, error) {
 	if w.typ == "DoubleOptional" || w.DoubleOptional != nil {
 		return json.Marshal(w.DoubleOptional)
 	}
+	if w.typ == "StringOptional" || w.StringOptional != nil {
+		return json.Marshal(w.StringOptional)
+	}
 	if w.typ == "Double" || w.Double != 0 {
 		return json.Marshal(w.Double)
 	}
@@ -442,6 +479,7 @@ func (w WeirdNumber) MarshalJSON() ([]byte, error) {
 type WeirdNumberVisitor interface {
 	VisitInteger(int) error
 	VisitDoubleOptional(*float64) error
+	VisitStringOptional(*string) error
 	VisitDouble(float64) error
 }
 
@@ -451,6 +489,9 @@ func (w *WeirdNumber) Accept(visitor WeirdNumberVisitor) error {
 	}
 	if w.typ == "DoubleOptional" || w.DoubleOptional != nil {
 		return visitor.VisitDoubleOptional(w.DoubleOptional)
+	}
+	if w.typ == "StringOptional" || w.StringOptional != nil {
+		return visitor.VisitStringOptional(w.StringOptional)
 	}
 	if w.typ == "Double" || w.Double != 0 {
 		return visitor.VisitDouble(w.Double)
