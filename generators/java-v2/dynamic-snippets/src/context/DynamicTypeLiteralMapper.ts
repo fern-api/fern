@@ -43,7 +43,7 @@ export class DynamicTypeLiteralMapper {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal":
-                return java.TypeLiteral.nop();
+                return this.convertLiteral({ literal: args.typeReference.value, value: args.value });
             case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {
@@ -94,6 +94,33 @@ export class DynamicTypeLiteralMapper {
                 }
             })
         });
+    }
+
+    private convertLiteral({
+        literal,
+        value
+    }: {
+        literal: FernIr.dynamic.LiteralType;
+        value: unknown;
+    }): java.TypeLiteral {
+        switch (literal.type) {
+            case "boolean": {
+                const bool = this.context.getValueAsBoolean({ value });
+                if (bool == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.boolean(bool);
+            }
+            case "string": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return java.TypeLiteral.nop();
+                }
+                return java.TypeLiteral.string(str);
+            }
+            default:
+                assertNever(literal);
+        }
     }
 
     private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
