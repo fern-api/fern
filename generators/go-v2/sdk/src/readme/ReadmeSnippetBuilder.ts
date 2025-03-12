@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -14,11 +15,14 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
+    private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -39,6 +43,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.getRootPackageName();
+        this.rootPackageClientName = this.getRootPackageClientName();
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -48,8 +53,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // IR v53, which doesn't include the endpoint examples needed to generate
         // dynamic snippets. Therefore, for the time being, the usage section is omitted.
         // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+
+        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.RequestOptions] = this.buildRequestOptionsSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+
+        if (this.isPaginationEnabled) {
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
+
         return snippets;
     }
 
@@ -61,11 +75,61 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
     }
 
+    private buildEnvironmentsSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID);
+        return endpoints.map(() =>
+            this.writeCode(`
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+    option.WithBaseURL(${this.getBaseUrlOptionValue()}),
+)
+`)
+        );
+    }
+
+    private buildRequestOptionsSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.RequestOptions);
+        return endpoints.map((endpoint) =>
+            this.writeCode(`
+// Specify default options applied on every request.
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+    option.WithToken("<YOUR_API_KEY>"),
+    option.WithHTTPClient(
+        &http.Client{
+            Timeout: 5 * time.Second,
+        },
+    ),
+)
+
+// Specify options for an individual request.
+response, err := ${this.getMethodCall(endpoint)}(
+    ...,
+    option.WithToken("<YOUR_API_KEY>"),
+)
+`)
+        );
+    }
+
+    private buildErrorSnippets(): string[] {
+        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
+        return endpoints.map((endpoint) =>
+            this.writeCode(`
+response, err := ${this.getMethodCall(endpoint)}(...)
+if err != nil {
+    var apiError *core.APIError
+    if errors.As(err, apiError) {
+        // Do something with the API error ...
+    }
+    return err
+}
+`)
+        );
+    }
+
     private buildRetrySnippets(): string[] {
         const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
         return retryEndpoints.map((retryEndpoint) =>
             this.writeCode(`
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageName}.NewClient(
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
     option.WithMaxAttempts(1),
 )
 
@@ -85,6 +149,47 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
+`)
+        );
+    }
+
+    private buildPaginationSnippets(): string[] {
+        const paginationEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).filter(
+            (endpoint) => endpoint.endpoint.pagination != null
+        );
+        return paginationEndpoints.map((paginationEndpoint) =>
+            this.writeCode(`
+// Loop over the items using the provided iterator.
+ctx := context.TODO()
+page, err := ${this.getMethodCall(paginationEndpoint)}(
+    ctx,
+    ...
+)
+if err != nil {
+    return nil, err
+}
+iter := page.Iterator()
+for iter.Next(ctx) {
+    item := iter.Current()
+    fmt.Printf("Got item: %v\\n", *item)
+}
+if err := iter.Err(); err != nil {
+    // Handle the error!
+}
+
+// Alternatively, iterate page-by-page.
+for page != nil {
+    for _, item := range page.Results {
+        fmt.Printf("Got item: %v\\n", *item)
+    }
+    page, err = page.GetNextPage(ctx)
+    if errors.Is(err, core.ErrNoPages) {
+        break
+    }
+    if err != nil {
+        // Handle the error!
+    }
+}
 `)
         );
     }
@@ -164,8 +269,44 @@ response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
         return endpoint.name.pascalCase.unsafeName;
     }
 
+    private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
+        if (this.context.ir.environments == null) {
+            return undefined;
+        }
+
+        return (
+            this.context.ir.environments?.defaultEnvironment ??
+            this.context.ir.environments.environments.environments[0]?.id
+        );
+    }
+
+    private getBaseUrlOptionValue(): string {
+        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
+    }
+
+    private getEnvironmentBaseUrlReference(): string | undefined {
+        const defaultEnvironmentId = this.getDefaultEnvironmentId();
+
+        if (defaultEnvironmentId == null || this.context.ir.environments == null) {
+            return undefined;
+        }
+
+        const { environments } = this.context.ir.environments;
+        const defaultEnvironment = environments.environments.find((env) => env.id === defaultEnvironmentId);
+
+        if (!defaultEnvironment) {
+            return undefined;
+        }
+
+        return `${this.getRootPackageName()}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+    }
+
     private getRootPackageName(): string {
-        return `${this.context.config.organization}client`;
+        return this.context.config.organization;
+    }
+
+    private getRootPackageClientName(): string {
+        return `${this.getRootPackageName()}client`;
     }
 
     private writeCode(s: string): string {
