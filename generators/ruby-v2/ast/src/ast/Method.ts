@@ -7,7 +7,6 @@ import { PositionalSplatParameter } from "./PositionalSplatParameter";
 import { Type } from "./Type";
 import { YieldParameter } from "./YieldParameter";
 import { AstNode } from "./core/AstNode";
-import { TypedAstNode } from "./core/TypedAstNode";
 import { Writer } from "./core/Writer";
 
 export type MethodKind = "instance" | "class";
