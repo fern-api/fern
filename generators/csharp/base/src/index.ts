@@ -2,6 +2,7 @@ export * from "./project";
 export { FileGenerator } from "./FileGenerator";
 export { TestFileGenerator } from "./TestFileGenerator";
 export { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+export { convertExampleTypeReferenceToTypeReference } from "./context/convertExampleTypeReferenceToTypeReference";
 export { AbstractCsharpGeneratorCli } from "./cli/AbstractCsharpGeneratorCli";
 export { AsIsFiles } from "./AsIs";
 export { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";

@@ -1,10 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    CSharpFile,
-    FileGenerator,
-    convertExampleTypeReferenceToTypeReference,
-    csharp
-} from "@fern-api/csharp-codegen";
+import { csharp } from "@fern-api/csharp-codegen";
+import { convertExampleTypeReferenceToTypeReference,CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
