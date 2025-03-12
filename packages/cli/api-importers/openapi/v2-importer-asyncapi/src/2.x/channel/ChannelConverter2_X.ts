@@ -146,7 +146,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         let convertedSchema: SchemaConverter.Output | undefined = undefined;
 
         if ("$ref" in operation.message) {
-            const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(
+            const resolved = await context.resolveReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>(
                 operation.message as OpenAPIV3.ReferenceObject
             );
             if (resolved.resolved) {
