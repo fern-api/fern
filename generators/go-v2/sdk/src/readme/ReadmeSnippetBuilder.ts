@@ -1,3 +1,5 @@
+import dedent from "dedent";
+
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
@@ -18,8 +20,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly snippets: Record<EndpointId, string> = {};
+    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
+    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
@@ -36,8 +38,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.context = context;
 
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
-        this.endpoints = this.buildEndpoints();
-        this.snippets = this.buildSnippets(endpointSnippets);
+        this.endpointsById = this.buildEndpointsById();
+        this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -46,155 +48,179 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.rootPackageClientName = this.getRootPackageClientName();
     }
 
-    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
-        // TODO: The usage section will be a full snippet. As of 11-Mar-25, our intention
-        // is to generate this using dynamic snippets. However, the go generator is using
-        // IR v53, which doesn't include the endpoint examples needed to generate
-        // dynamic snippets. Therefore, for the time being, the usage section is omitted.
-        // snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+    public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
+        // These feature sections are populated using the provided, prerendered endpoint snippets.
+        const prerenderedSnippetsConfig: Record<
+            FernGeneratorCli.FeatureId,
+            {
+                predicate?: (endpoint: EndpointWithFilepath) => boolean;
+            }
+        > = {
+            [FernGeneratorCli.StructuredFeatureId.Usage]: {}
+        };
 
-        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.RequestOptions] = this.buildRequestOptionsSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+        // These feature sections are rendered using endpoint data interpolated into templates.
+        const templatedSnippetsConfig: Record<
+            FernGeneratorCli.FeatureId,
+            {
+                renderer: (endpoint: EndpointWithFilepath) => string;
+                predicate?: (endpoint: EndpointWithFilepath) => boolean;
+            }
+        > = {
+            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
+                renderer: this.renderRequestOptionsSnippet.bind(this)
+            },
+            [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
+            [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
+            [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            ...(this.isPaginationEnabled
+                ? {
+                      [FernGeneratorCli.StructuredFeatureId.Pagination]: {
+                          renderer: this.renderPaginationSnippet.bind(this),
+                          predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
+                      }
+                  }
+                : undefined)
+        };
 
-        if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        const snippetsByFeatureId: Record<FernGeneratorCli.FeatureId, string[]> = {};
+
+        for (const [featureId, { predicate }] of Object.entries(prerenderedSnippetsConfig)) {
+            snippetsByFeatureId[featureId] = this.getPrerenderedSnippetsForFeature(featureId, predicate);
         }
 
-        return snippets;
-    }
-
-    private buildUsageSnippets(): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
-        if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
+        for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
+            snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+
+        return snippetsByFeatureId;
     }
 
-    private buildEnvironmentsSnippets(): string[] {
-        const endpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID);
-        return endpoints.map(() =>
-            this.writeCode(`
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-    option.WithBaseURL(${this.getBaseUrlOptionValue()}),
-)
-`)
-        );
+    private getPrerenderedSnippetsForFeature(
+        featureId: FernGeneratorCli.FeatureId,
+        predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
+    ): string[] {
+        return this.getEndpointsForFeature(featureId)
+            .filter(predicate)
+            .map((endpoint) => {
+                const endpointId = endpoint.endpoint.id;
+                const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
+                if (snippet == null) {
+                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+                }
+                return snippet;
+            });
     }
 
-    private buildRequestOptionsSnippets(): string[] {
-        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.RequestOptions);
-        return endpoints.map((endpoint) =>
-            this.writeCode(`
-// Specify default options applied on every request.
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-    option.WithToken("<YOUR_API_KEY>"),
-    option.WithHTTPClient(
-        &http.Client{
-            Timeout: 5 * time.Second,
-        },
-    ),
-)
-
-// Specify options for an individual request.
-response, err := ${this.getMethodCall(endpoint)}(
-    ...,
-    option.WithToken("<YOUR_API_KEY>"),
-)
-`)
-        );
+    private renderSnippetsTemplateForFeature(
+        featureId: FernGeneratorCli.FeatureId,
+        templateRenderer: (endpoint: EndpointWithFilepath) => string,
+        predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
+    ): string[] {
+        return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
 
-    private buildErrorSnippets(): string[] {
-        const endpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
-        return endpoints.map((endpoint) =>
-            this.writeCode(`
-response, err := ${this.getMethodCall(endpoint)}(...)
-if err != nil {
-    var apiError *core.APIError
-    if errors.As(err, apiError) {
-        // Do something with the API error ...
-    }
-    return err
-}
-`)
-        );
+    private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+                option.WithBaseURL(${this.getBaseUrlOptionValue()}),
+            )
+        `);
     }
 
-    private buildRetrySnippets(): string[] {
-        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
-        return retryEndpoints.map((retryEndpoint) =>
-            this.writeCode(`
-${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-    option.WithMaxAttempts(1),
-)
+    private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            // Specify default options applied on every request.
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+                option.WithToken("<YOUR_API_KEY>"),
+                option.WithHTTPClient(
+                    &http.Client{
+                        Timeout: 5 * time.Second,
+                    },
+                ),
+            )
 
-response, err := ${this.getMethodCall(retryEndpoint)}(
-    ...,
-    option.WithMaxAttempts(1),
-)
-`)
-        );
+            // Specify options for an individual request.
+            response, err := ${this.getMethodCall(endpoint)}(
+                ...,
+                option.WithToken("<YOUR_API_KEY>"),
+            )
+        `);
     }
 
-    private buildTimeoutSnippets(): string[] {
-        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
-        return timeoutEndpoints.map((timeoutEndpoint) =>
-            this.writeCode(`
-ctx, cancel := context.WithTimeout(ctx, time.Second)
-defer cancel()
-
-response, err := ${this.getMethodCall(timeoutEndpoint)}(ctx, ...)
-`)
-        );
+    private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            response, err := ${this.getMethodCall(endpoint)}(...)
+            if err != nil {
+                var apiError *core.APIError
+                if errors.As(err, apiError) {
+                    // Do something with the API error ...
+                }
+                return err
+            }
+        `);
     }
 
-    private buildPaginationSnippets(): string[] {
-        const paginationEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).filter(
-            (endpoint) => endpoint.endpoint.pagination != null
-        );
-        return paginationEndpoints.map((paginationEndpoint) =>
-            this.writeCode(`
-// Loop over the items using the provided iterator.
-ctx := context.TODO()
-page, err := ${this.getMethodCall(paginationEndpoint)}(
-    ctx,
-    ...
-)
-if err != nil {
-    return nil, err
-}
-iter := page.Iterator()
-for iter.Next(ctx) {
-    item := iter.Current()
-    fmt.Printf("Got item: %v\\n", *item)
-}
-if err := iter.Err(); err != nil {
-    // Handle the error!
-}
+    private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+                option.WithMaxAttempts(1),
+            )
 
-// Alternatively, iterate page-by-page.
-for page != nil {
-    for _, item := range page.Results {
-        fmt.Printf("Got item: %v\\n", *item)
-    }
-    page, err = page.GetNextPage(ctx)
-    if errors.Is(err, core.ErrNoPages) {
-        break
-    }
-    if err != nil {
-        // Handle the error!
-    }
-}
-`)
-        );
+            response, err := ${this.getMethodCall(endpoint)}(
+                ...,
+                option.WithMaxAttempts(1),
+            )
+        `);
     }
 
-    private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
+    private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            ctx, cancel := context.WithTimeout(ctx, time.Second)
+            defer cancel()
+
+            response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+        `);
+    }
+
+    private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            // Loop over the items using the provided iterator.
+            ctx := context.TODO()
+            page, err := ${this.getMethodCall(endpoint)}(
+                ctx,
+                ...
+            )
+            if err != nil {
+                return nil, err
+            }
+            iter := page.Iterator()
+            for iter.Next(ctx) {
+                item := iter.Current()
+                fmt.Printf("Got item: %v\\n", *item)
+            }
+            if err := iter.Err(); err != nil {
+                // Handle the error!
+            }
+
+            // Alternatively, iterate page-by-page.
+            for page != nil {
+                for _, item := range page.Results {
+                    fmt.Printf("Got item: %v\\n", *item)
+                }
+                page, err = page.GetNextPage(ctx)
+                if errors.Is(err, core.ErrNoPages) {
+                    break
+                }
+                if err != nil {
+                    // Handle the error!
+                }
+            }
+        `);
+    }
+
+    private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
         const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
@@ -207,19 +233,24 @@ for page != nil {
         return endpoints;
     }
 
-    private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<EndpointId, string> {
+    private buildPrerenderedSnippetsByEndpointId(
+        endpointSnippets: FernGeneratorExec.Endpoint[]
+    ): Record<EndpointId, string> {
         const snippets: Record<EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
-            snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
+            if (endpointSnippet.snippet.type !== "go") {
+                throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`);
+            }
+            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;
         }
         return snippets;
     }
 
     private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.snippets[endpointId];
+        const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
@@ -227,29 +258,20 @@ for page != nil {
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getEndpointIdsForFeature(featureId);
-        return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
+        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
+        return endpointIds.map(this.lookupEndpointById.bind(this));
     }
 
-    private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getConfiguredEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
-        return endpointIds.map((endpointId) => {
-            const endpoint = this.endpoints[endpointId];
-            if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
-            }
-            return endpoint;
-        });
-    }
-
-    private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        if (endpoint.snippet.type !== "go") {
-            throw new Error(`Internal error; expected go snippet but got: ${endpoint.snippet.type}`);
+    private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath {
+        const endpoint = this.endpointsById[endpointId];
+        if (endpoint == null) {
+            throw new Error(`Internal error; missing endpoint ${endpointId}`);
         }
-        return endpoint.snippet.client;
+        return endpoint;
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {

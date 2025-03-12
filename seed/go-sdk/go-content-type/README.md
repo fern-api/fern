@@ -4,6 +4,36 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/go-content-type/fern/client"
+    option "github.com/go-content-type/fern/option"
+    context "context"
+    fern "github.com/go-content-type/fern"
+)
+
+func do() () {
+    client := client.NewClient(
+        option.WithToken(
+            "<token>",
+        ),
+    )
+    client.Imdb.CreateMovie(
+        context.TODO(),
+        &fern.CreateMovieRequest{
+            Title: "title",
+            Rating: 1.1,
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base

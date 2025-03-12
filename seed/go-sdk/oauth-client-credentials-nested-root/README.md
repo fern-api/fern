@@ -4,6 +4,35 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/oauth-client-credentials-nested-root/fern/client"
+    context "context"
+    auth "github.com/oauth-client-credentials-nested-root/fern/auth"
+    fern "github.com/oauth-client-credentials-nested-root/fern"
+)
+
+func do() () {
+    client := client.NewClient()
+    client.Auth.GetToken(
+        context.TODO(),
+        &auth.GetTokenRequest{
+            ClientId: "client_id",
+            ClientSecret: "client_secret",
+            Scope: fern.String(
+                "scope",
+            ),
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base

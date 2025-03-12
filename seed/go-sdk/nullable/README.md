@@ -4,6 +4,54 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/nullable/fern/client"
+    context "context"
+    fern "github.com/nullable/fern"
+)
+
+func do() () {
+    client := client.NewClient()
+    client.Nullable.CreateUser(
+        context.TODO(),
+        &fern.CreateUserRequest{
+            Username: "username",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+            Metadata: &fern.Metadata{
+                CreatedAt: fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+                UpdatedAt: fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+                Avatar: fern.String(
+                    "avatar",
+                ),
+                Activated: fern.Bool(
+                    true,
+                ),
+                Status: &fern.Status{
+                    Active: "active",
+                },
+            },
+            Avatar: fern.String(
+                "avatar",
+            ),
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base

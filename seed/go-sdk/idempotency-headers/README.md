@@ -4,6 +4,36 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/idempotency-headers/fern/client"
+    option "github.com/idempotency-headers/fern/option"
+    context "context"
+    fern "github.com/idempotency-headers/fern"
+)
+
+func do() () {
+    client := client.NewClient(
+        option.WithToken(
+            "<token>",
+        ),
+    )
+    client.Payment.Create(
+        context.TODO(),
+        &fern.CreatePaymentRequest{
+            Amount: 1,
+            Currency: fern.CurrencyUsd,
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base

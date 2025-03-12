@@ -4,6 +4,32 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/package-yml/fern/client"
+    context "context"
+    fern "github.com/package-yml/fern"
+)
+
+func do() () {
+    client := client.NewClient()
+    client.Echo(
+        context.TODO(),
+        "id",
+        &fern.EchoRequest{
+            Name: "name",
+            Size: 1,
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
