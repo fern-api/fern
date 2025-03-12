@@ -92,7 +92,6 @@ interface Generic {
 
 export type BaseType = Self | Class_ | Instance | Boolean_ | Nil | Top | Bot | Void;
 export type SingleType = Boolish | String_ | Integer | Union | Intersection | Singleton | Object_ | Generic;
-// TODO: These conceivably could just be Generics, at the cost of some specificity/usability
 export type CollectionType = Array_ | Hash | Tuple;
 
 type InternalType = BaseType | SingleType | CollectionType;

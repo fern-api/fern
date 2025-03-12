@@ -46,7 +46,7 @@ export declare namespace Method {
     }
 }
 
-export class Method extends TypedAstNode {
+export class Method extends AstNode {
     public readonly name: string;
     public readonly docstring: string | undefined;
     public readonly kind: MethodKind;

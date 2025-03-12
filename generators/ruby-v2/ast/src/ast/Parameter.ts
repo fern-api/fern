@@ -1,5 +1,5 @@
 import { Type } from "./Type";
-import { TypedAstNode } from "./core/TypedAstNode";
+import { AstNode } from "./core/AstNode";
 
 export declare namespace Parameter {
     interface Args {
@@ -12,7 +12,7 @@ export declare namespace Parameter {
     }
 }
 
-export abstract class Parameter extends TypedAstNode {
+export abstract class Parameter extends AstNode {
     public readonly name: string;
     public readonly type: Type;
     public readonly optional: boolean;
