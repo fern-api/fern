@@ -1,4 +1,5 @@
 import { Comment } from "./Comment";
+import { Module } from "./Module";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -15,18 +16,14 @@ export declare namespace Class_ {
     }
 }
 
-export class Class_ extends AstNode {
-    public readonly name: string;
+export class Class_ extends Module {
     public readonly superclass: Class_ | undefined;
-    public readonly docstring: string | undefined;
     public readonly statements: AstNode[];
 
     constructor({ name, superclass, docstring, statements }: Class_.Args) {
-        super();
+        super({ name, docstring });
 
-        this.name = name;
         this.superclass = superclass;
-        this.docstring = docstring;
         this.statements = statements ?? [];
     }
 

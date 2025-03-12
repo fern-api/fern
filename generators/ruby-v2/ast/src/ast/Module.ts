@@ -1,27 +1,32 @@
+import { Class_ } from "./Class";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Module {
     export interface Args {
-        /* The class's name. */
+        /* The module's name. */
         name: string;
-        /* The docstring for the class. */
+        /* This module's namespace (i.e., the modules/classes it is wrapped in). */
+        namespace?: (Module | Class_)[];
+        /* The docstring for the module. */
         docstring?: string;
-        /* The body of the class. */
+        /* The body of the module. */
         statements?: AstNode[];
     }
 }
 
 export class Module extends AstNode {
     public readonly name: string;
+    public readonly namespace: (Module | Class_)[];
     public readonly docstring: string | undefined;
     public readonly statements: AstNode[];
 
-    constructor({ name, docstring, statements }: Module.Args) {
+    constructor({ name, namespace, docstring, statements }: Module.Args) {
         super();
 
         this.name = name;
+        this.namespace = namespace ?? [];
         this.docstring = docstring;
         this.statements = statements ?? [];
     }
@@ -66,5 +71,9 @@ export class Module extends AstNode {
         }
 
         writer.write("end");
+    }
+
+    public get fullyQualifiedName(): string {
+        return [...this.namespace, this].map((klass) => klass.name).join("::");
     }
 }

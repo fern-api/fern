@@ -63,4 +63,18 @@ describe("Module", () => {
             expect(module.typeDefinitionToString(writerConfig)).toMatchSnapshot();
         });
     });
+
+    describe("fullyQualifiedName", () => {
+        test("returns only name when not in any namespace", () => {
+            const module = ruby.module({ name: "Foobar" });
+
+            expect(module.fullyQualifiedName).toEqual("Foobar");
+        });
+
+        test("returns full namespace", () => {
+            const module = ruby.module({ name: "Child", namespace: [ruby.module({ name: "Parent" })] });
+
+            expect(module.fullyQualifiedName).toEqual("Parent::Child");
+        });
+    });
 });
