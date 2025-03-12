@@ -51,7 +51,7 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
 
         if (this.channel.parameters) {
             for (const parameter of Object.values(this.channel.parameters ?? {})) {
-                let parameterObject = parameter as OpenAPIV3.ParameterObject;
+                let parameterObject: OpenAPIV3.ParameterObject = parameter;
                 if (context.isReferenceObject(parameter)) {
                     const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
                     if (resolvedReference.resolved) {

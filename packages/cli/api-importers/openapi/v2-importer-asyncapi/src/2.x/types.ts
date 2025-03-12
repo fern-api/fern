@@ -62,5 +62,5 @@ export interface PublishEvent {
 export interface SubscribeEvent {
     description?: string;
     operationId?: string;
-    message: OpenAPIV3.SchemaObject;
+    message: OpenAPIV3.SchemaObject | MessageV2;
 }

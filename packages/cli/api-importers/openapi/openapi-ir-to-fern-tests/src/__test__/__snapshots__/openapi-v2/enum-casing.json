@@ -504,22 +504,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExampleResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "exampleResponse",
+                      "safeName": "exampleResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "example_response",
+                      "safeName": "example_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXAMPLE_RESPONSE",
+                      "safeName": "EXAMPLE_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExampleResponse",
+                      "safeName": "ExampleResponse"
                     }
                   },
                   "typeId": "ExampleResponse",

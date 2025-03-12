@@ -34,10 +34,23 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return schemaMatch[1];
     }
 
+    public getTypeIdFromMessageReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
+        const messageMatch = reference.$ref.match(/\/messages\/(.+)$/);
+        if (!messageMatch || !messageMatch[1]) {
+            return undefined;
+        }
+        return messageMatch[1];
+    }
+
     public async convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
     ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
-        const typeId = this.getTypeIdFromSchemaReference(reference);
+        let typeId: string | undefined;
+        if (reference.$ref.includes("schemas")) {
+            typeId = this.getTypeIdFromSchemaReference(reference);
+        } else if (reference.$ref.includes("messages")) {
+            typeId = this.getTypeIdFromMessageReference(reference);
+        }
         if (typeId == null) {
             return { ok: false };
         }
@@ -53,7 +66,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
                     packagePath: [],
                     file: undefined
                 },
-                name: this.casingsGenerator.generateName(""),
+                name: this.casingsGenerator.generateName(typeId),
                 typeId,
                 default: undefined,
                 inline: false

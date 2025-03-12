@@ -219,22 +219,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Pet",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "pet",
+                      "safeName": "pet"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "pet",
+                      "safeName": "pet"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "PET",
+                      "safeName": "PET"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Pet",
+                      "safeName": "Pet"
                     }
                   },
                   "typeId": "Pet",

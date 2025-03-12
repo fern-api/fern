@@ -96,35 +96,37 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
             const errorCollector = new ErrorCollector({ logger: context.logger });
-            const result = await (async () => {
-                if (document.type === "openapi") {
-                    const converterContext = new OpenAPIConverterContext3_1({
-                        generationLanguage: "typescript",
-                        logger: context.logger,
-                        smartCasing: false,
-                        spec: document.value as OpenAPIV3_1.Document
-                    });
-                    const converter = new OpenAPI3_1Converter({ context: converterContext });
-                    return await converter.convert({
-                        context: converterContext,
-                        errorCollector
-                    });
-                } else if (document.type === "asyncapi") {
-                    const converterContext = new AsyncAPIConverterContext({
-                        generationLanguage: "typescript",
-                        logger: context.logger,
-                        smartCasing: false,
-                        spec: document.value
-                    });
-                    const converter = new AsyncAPIConverter({ context: converterContext });
-                    return await converter.convert({
-                        context: converterContext,
-                        errorCollector
-                    });
-                } else {
-                    throw new Error(`Unsupported document type: ${document}`);
-                }
-            })();
+            let result: IntermediateRepresentation | undefined = undefined;
+            if (document.type === "openapi") {
+                const converterContext = new OpenAPIConverterContext3_1({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value as OpenAPIV3_1.Document
+                });
+                const converter = new OpenAPI3_1Converter({ context: converterContext });
+                result = await converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+            } else if (document.type === "asyncapi") {
+                const converterContext = new AsyncAPIConverterContext({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value
+                });
+                const converter = new AsyncAPIConverter({ context: converterContext });
+                result = await converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+            } else {
+                errorCollector.collect({
+                    message: `Unsupported document type: ${document}`,
+                    path: []
+                });
+            }
             if (errorCollector.hasErrors()) {
                 context.logger.info(
                     `${document.type === "openapi" ? "OpenAPI" : "AsyncAPI"} Importer encountered errors:`

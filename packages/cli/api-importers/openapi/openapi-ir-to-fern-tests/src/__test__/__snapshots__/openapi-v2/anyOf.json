@@ -177,22 +177,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Request",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "request",
+                  "safeName": "request"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "request",
+                  "safeName": "request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "REQUEST",
+                  "safeName": "REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Request",
+                  "safeName": "Request"
                 }
               },
               "typeId": "Request",
@@ -211,22 +211,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Response",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "response",
+                      "safeName": "response"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "response",
+                      "safeName": "response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "RESPONSE",
+                      "safeName": "RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Response",
+                      "safeName": "Response"
                     }
                   },
                   "typeId": "Response",

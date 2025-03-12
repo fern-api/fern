@@ -416,22 +416,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Schema",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema",
+                  "safeName": "schema"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema",
+                  "safeName": "schema"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SCHEMA",
+                  "safeName": "SCHEMA"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Schema",
+                  "safeName": "Schema"
                 }
               },
               "typeId": "Schema",

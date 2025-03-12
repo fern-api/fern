@@ -2531,22 +2531,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "BasicVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basicVal",
+                      "safeName": "basicVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basic_val",
+                      "safeName": "basic_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BASIC_VAL",
+                      "safeName": "BASIC_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BasicVal",
+                      "safeName": "BasicVal"
                     }
                   },
                   "typeId": "BasicVal",
@@ -2587,22 +2587,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -3916,22 +3916,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "BasicVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basicVal",
+                      "safeName": "basicVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basic_val",
+                      "safeName": "basic_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BASIC_VAL",
+                      "safeName": "BASIC_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BasicVal",
+                      "safeName": "BasicVal"
                     }
                   },
                   "typeId": "BasicVal",
@@ -3972,22 +3972,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -4894,22 +4894,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -5454,22 +5454,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -5707,22 +5707,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "BasicVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basicVal",
+                      "safeName": "basicVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "basic_val",
+                      "safeName": "basic_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BASIC_VAL",
+                      "safeName": "BASIC_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "BasicVal",
+                      "safeName": "BasicVal"
                     }
                   },
                   "typeId": "BasicVal",
@@ -5763,22 +5763,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -7420,22 +7420,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PaginationLinks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "paginationLinks",
+                  "safeName": "paginationLinks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pagination_links",
+                  "safeName": "pagination_links"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGINATION_LINKS",
+                  "safeName": "PAGINATION_LINKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PaginationLinks",
+                  "safeName": "PaginationLinks"
                 }
               },
               "typeId": "PaginationLinks",
@@ -8022,7 +8022,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "a28cbad4",
+                "id": "14d01943",
                 "url": "/v1/search/vals",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -10101,22 +10101,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "BasicVal",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basicVal",
+                                          "safeName": "basicVal"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basic_val",
+                                          "safeName": "basic_val"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BASIC_VAL",
+                                          "safeName": "BASIC_VAL"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BasicVal",
+                                          "safeName": "BasicVal"
                                         }
                                       },
                                       "typeId": "BasicVal",
@@ -10627,22 +10627,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "User",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "USER",
+                      "safeName": "USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "User",
+                      "safeName": "User"
                     }
                   },
                   "typeId": "User",
@@ -13114,7 +13114,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "31f9147d",
+                "id": "95e9e1aa",
                 "url": "/v1/me/likes",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -15154,22 +15154,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "BasicVal",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basicVal",
+                                          "safeName": "basicVal"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basic_val",
+                                          "safeName": "basic_val"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BASIC_VAL",
+                                          "safeName": "BASIC_VAL"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BasicVal",
+                                          "safeName": "BasicVal"
                                         }
                                       },
                                       "typeId": "BasicVal",
@@ -21468,22 +21468,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "User",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "USER",
+                      "safeName": "USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "User",
+                      "safeName": "User"
                     }
                   },
                   "typeId": "User",
@@ -22111,7 +22111,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "b12f0620",
+                "id": "ab64d74f",
                 "url": "/v1/users/user_id/vals",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -24185,22 +24185,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "BasicVal",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basicVal",
+                                          "safeName": "basicVal"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "basic_val",
+                                          "safeName": "basic_val"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BASIC_VAL",
+                                          "safeName": "BASIC_VAL"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "BasicVal",
+                                          "safeName": "BasicVal"
                                         }
                                       },
                                       "typeId": "BasicVal",
@@ -24739,22 +24739,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ResultSet",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "resultSet",
+                      "safeName": "resultSet"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "result_set",
+                      "safeName": "result_set"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "RESULT_SET",
+                      "safeName": "RESULT_SET"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ResultSet",
+                      "safeName": "ResultSet"
                     }
                   },
                   "typeId": "ResultSet",
@@ -25458,22 +25458,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "ResultSet",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "resultSet",
+                          "safeName": "resultSet"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "result_set",
+                          "safeName": "result_set"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "RESULT_SET",
+                          "safeName": "RESULT_SET"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "ResultSet",
+                          "safeName": "ResultSet"
                         }
                       },
                       "typeId": "ResultSet",
@@ -25497,7 +25497,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "7c2918f0",
+                "id": "d3511ef9",
                 "url": "/v1/sqlite/batch",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -26708,22 +26708,22 @@
                               "packagePath": []
                             },
                             "name": {
-                              "originalName": "",
+                              "originalName": "ResultSet",
                               "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "resultSet",
+                                "safeName": "resultSet"
                               },
                               "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "result_set",
+                                "safeName": "result_set"
                               },
                               "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "RESULT_SET",
+                                "safeName": "RESULT_SET"
                               },
                               "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "ResultSet",
+                                "safeName": "ResultSet"
                               }
                             },
                             "typeId": "ResultSet",
@@ -28337,22 +28337,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExtendedVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extendedVal",
+                      "safeName": "extendedVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extended_val",
+                      "safeName": "extended_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXTENDED_VAL",
+                      "safeName": "EXTENDED_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExtendedVal",
+                      "safeName": "ExtendedVal"
                     }
                   },
                   "typeId": "ExtendedVal",
@@ -30007,22 +30007,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExtendedVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extendedVal",
+                      "safeName": "extendedVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extended_val",
+                      "safeName": "extended_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXTENDED_VAL",
+                      "safeName": "EXTENDED_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExtendedVal",
+                      "safeName": "ExtendedVal"
                     }
                   },
                   "typeId": "ExtendedVal",
@@ -33619,22 +33619,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExtendedVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extendedVal",
+                      "safeName": "extendedVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extended_val",
+                      "safeName": "extended_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXTENDED_VAL",
+                      "safeName": "EXTENDED_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExtendedVal",
+                      "safeName": "ExtendedVal"
                     }
                   },
                   "typeId": "ExtendedVal",
@@ -35237,22 +35237,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExtendedVal",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extendedVal",
+                      "safeName": "extendedVal"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "extended_val",
+                      "safeName": "extended_val"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXTENDED_VAL",
+                      "safeName": "EXTENDED_VAL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExtendedVal",
+                      "safeName": "ExtendedVal"
                     }
                   },
                   "typeId": "ExtendedVal",

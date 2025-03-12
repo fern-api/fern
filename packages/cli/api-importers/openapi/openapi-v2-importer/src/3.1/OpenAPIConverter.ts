@@ -357,4 +357,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
     }
+
+    // TODO: Add websockets to IR
 }

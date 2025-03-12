@@ -155,22 +155,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "RedactedAudioStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "redactedAudioStatus",
+                  "safeName": "redactedAudioStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "redacted_audio_status",
+                  "safeName": "redacted_audio_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "REDACTED_AUDIO_STATUS",
+                  "safeName": "REDACTED_AUDIO_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "RedactedAudioStatus",
+                  "safeName": "RedactedAudioStatus"
                 }
               },
               "typeId": "RedactedAudioStatus",
@@ -503,22 +503,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "WordSearchMatch",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "wordSearchMatch",
+                      "safeName": "wordSearchMatch"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "word_search_match",
+                      "safeName": "word_search_match"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WORD_SEARCH_MATCH",
+                      "safeName": "WORD_SEARCH_MATCH"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WordSearchMatch",
+                      "safeName": "WordSearchMatch"
                     }
                   },
                   "typeId": "WordSearchMatch",
@@ -672,22 +672,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "WordSearchTimestamp",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "wordSearchTimestamp",
+                      "safeName": "wordSearchTimestamp"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "word_search_timestamp",
+                      "safeName": "word_search_timestamp"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WORD_SEARCH_TIMESTAMP",
+                      "safeName": "WORD_SEARCH_TIMESTAMP"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WordSearchTimestamp",
+                      "safeName": "WordSearchTimestamp"
                     }
                   },
                   "typeId": "WordSearchTimestamp",
@@ -989,22 +989,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptLanguageCode",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptLanguageCode",
+                  "safeName": "transcriptLanguageCode"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_language_code",
+                  "safeName": "transcript_language_code"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
+                  "safeName": "TRANSCRIPT_LANGUAGE_CODE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptLanguageCode",
+                  "safeName": "TranscriptLanguageCode"
                 }
               },
               "typeId": "TranscriptLanguageCode",
@@ -1372,22 +1372,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptBoostParam",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptBoostParam",
+                  "safeName": "transcriptBoostParam"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_boost_param",
+                  "safeName": "transcript_boost_param"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_BOOST_PARAM",
+                  "safeName": "TRANSCRIPT_BOOST_PARAM"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptBoostParam",
+                  "safeName": "TranscriptBoostParam"
                 }
               },
               "typeId": "TranscriptBoostParam",
@@ -1591,22 +1591,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "PiiPolicy",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "piiPolicy",
+                          "safeName": "piiPolicy"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "pii_policy",
+                          "safeName": "pii_policy"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "PII_POLICY",
+                          "safeName": "PII_POLICY"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "PiiPolicy",
+                          "safeName": "PiiPolicy"
                         }
                       },
                       "typeId": "PiiPolicy",
@@ -1652,22 +1652,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SubstitutionPolicy",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "substitutionPolicy",
+                  "safeName": "substitutionPolicy"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "substitution_policy",
+                  "safeName": "substitution_policy"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SUBSTITUTION_POLICY",
+                  "safeName": "SUBSTITUTION_POLICY"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SubstitutionPolicy",
+                  "safeName": "SubstitutionPolicy"
                 }
               },
               "typeId": "SubstitutionPolicy",
@@ -1869,22 +1869,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "TranscriptCustomSpelling",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "transcriptCustomSpelling",
+                          "safeName": "transcriptCustomSpelling"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "transcript_custom_spelling",
+                          "safeName": "transcript_custom_spelling"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "TRANSCRIPT_CUSTOM_SPELLING",
+                          "safeName": "TRANSCRIPT_CUSTOM_SPELLING"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "TranscriptCustomSpelling",
+                          "safeName": "TranscriptCustomSpelling"
                         }
                       },
                       "typeId": "TranscriptCustomSpelling",
@@ -2130,22 +2130,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SummaryModel",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "summaryModel",
+                  "safeName": "summaryModel"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "summary_model",
+                  "safeName": "summary_model"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SUMMARY_MODEL",
+                  "safeName": "SUMMARY_MODEL"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SummaryModel",
+                  "safeName": "SummaryModel"
                 }
               },
               "typeId": "SummaryModel",
@@ -2183,22 +2183,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SummaryType",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "summaryType",
+                  "safeName": "summaryType"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "summary_type",
+                  "safeName": "summary_type"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SUMMARY_TYPE",
+                  "safeName": "SUMMARY_TYPE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SummaryType",
+                  "safeName": "SummaryType"
                 }
               },
               "typeId": "SummaryType",
@@ -3185,22 +3185,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptWord",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptWord",
+                      "safeName": "transcriptWord"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_word",
+                      "safeName": "transcript_word"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_WORD",
+                      "safeName": "TRANSCRIPT_WORD"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptWord",
+                      "safeName": "TranscriptWord"
                     }
                   },
                   "typeId": "TranscriptWord",
@@ -4732,22 +4732,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "AudioIntelligenceModelStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "audioIntelligenceModelStatus",
+                  "safeName": "audioIntelligenceModelStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "audio_intelligence_model_status",
+                  "safeName": "audio_intelligence_model_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AUDIO_INTELLIGENCE_MODEL_STATUS",
+                  "safeName": "AUDIO_INTELLIGENCE_MODEL_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AudioIntelligenceModelStatus",
+                  "safeName": "AudioIntelligenceModelStatus"
                 }
               },
               "typeId": "AudioIntelligenceModelStatus",
@@ -4787,22 +4787,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ContentSafetyLabelResult",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "contentSafetyLabelResult",
+                      "safeName": "contentSafetyLabelResult"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "content_safety_label_result",
+                      "safeName": "content_safety_label_result"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "CONTENT_SAFETY_LABEL_RESULT",
+                      "safeName": "CONTENT_SAFETY_LABEL_RESULT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ContentSafetyLabelResult",
+                      "safeName": "ContentSafetyLabelResult"
                     }
                   },
                   "typeId": "ContentSafetyLabelResult",
@@ -4924,22 +4924,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "AudioIntelligenceModelStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "audioIntelligenceModelStatus",
+                  "safeName": "audioIntelligenceModelStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "audio_intelligence_model_status",
+                  "safeName": "audio_intelligence_model_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AUDIO_INTELLIGENCE_MODEL_STATUS",
+                  "safeName": "AUDIO_INTELLIGENCE_MODEL_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AudioIntelligenceModelStatus",
+                  "safeName": "AudioIntelligenceModelStatus"
                 }
               },
               "typeId": "AudioIntelligenceModelStatus",
@@ -4979,22 +4979,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TopicDetectionResult",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "topicDetectionResult",
+                      "safeName": "topicDetectionResult"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "topic_detection_result",
+                      "safeName": "topic_detection_result"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TOPIC_DETECTION_RESULT",
+                      "safeName": "TOPIC_DETECTION_RESULT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TopicDetectionResult",
+                      "safeName": "TopicDetectionResult"
                     }
                   },
                   "typeId": "TopicDetectionResult",
@@ -5241,22 +5241,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptStatus",
+                  "safeName": "transcriptStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_status",
+                  "safeName": "transcript_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_STATUS",
+                  "safeName": "TRANSCRIPT_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptStatus",
+                  "safeName": "TranscriptStatus"
                 }
               },
               "typeId": "TranscriptStatus",
@@ -5294,22 +5294,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptLanguageCode",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptLanguageCode",
+                  "safeName": "transcriptLanguageCode"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_language_code",
+                  "safeName": "transcript_language_code"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
+                  "safeName": "TRANSCRIPT_LANGUAGE_CODE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptLanguageCode",
+                  "safeName": "TranscriptLanguageCode"
                 }
               },
               "typeId": "TranscriptLanguageCode",
@@ -5450,22 +5450,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "AutoHighlightsResult",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "autoHighlightsResult",
+                  "safeName": "autoHighlightsResult"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "auto_highlights_result",
+                  "safeName": "auto_highlights_result"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AUTO_HIGHLIGHTS_RESULT",
+                  "safeName": "AUTO_HIGHLIGHTS_RESULT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AutoHighlightsResult",
+                  "safeName": "AutoHighlightsResult"
                 }
               },
               "typeId": "AutoHighlightsResult",
@@ -5584,22 +5584,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SubstitutionPolicy",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "substitutionPolicy",
+                  "safeName": "substitutionPolicy"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "substitution_policy",
+                  "safeName": "substitution_policy"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SUBSTITUTION_POLICY",
+                  "safeName": "SUBSTITUTION_POLICY"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SubstitutionPolicy",
+                  "safeName": "SubstitutionPolicy"
                 }
               },
               "typeId": "SubstitutionPolicy",
@@ -6134,22 +6134,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "EntityType",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "entityType",
+                  "safeName": "entityType"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "entity_type",
+                  "safeName": "entity_type"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ENTITY_TYPE",
+                  "safeName": "ENTITY_TYPE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "EntityType",
+                  "safeName": "EntityType"
                 }
               },
               "typeId": "EntityType",
@@ -7201,22 +7201,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Sentiment",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sentiment",
+                  "safeName": "sentiment"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sentiment",
+                  "safeName": "sentiment"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SENTIMENT",
+                  "safeName": "SENTIMENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Sentiment",
+                  "safeName": "Sentiment"
                 }
               },
               "typeId": "Sentiment",
@@ -7654,22 +7654,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Timestamp",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "timestamp",
+                  "safeName": "timestamp"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "timestamp",
+                  "safeName": "timestamp"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TIMESTAMP",
+                  "safeName": "TIMESTAMP"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Timestamp",
+                  "safeName": "Timestamp"
                 }
               },
               "typeId": "Timestamp",
@@ -8015,22 +8015,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ContentSafetyLabel",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "contentSafetyLabel",
+                      "safeName": "contentSafetyLabel"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "content_safety_label",
+                      "safeName": "content_safety_label"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "CONTENT_SAFETY_LABEL",
+                      "safeName": "CONTENT_SAFETY_LABEL"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ContentSafetyLabel",
+                      "safeName": "ContentSafetyLabel"
                     }
                   },
                   "typeId": "ContentSafetyLabel",
@@ -8142,22 +8142,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Timestamp",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "timestamp",
+                  "safeName": "timestamp"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "timestamp",
+                  "safeName": "timestamp"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TIMESTAMP",
+                  "safeName": "TIMESTAMP"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Timestamp",
+                  "safeName": "Timestamp"
                 }
               },
               "typeId": "Timestamp",
@@ -8494,22 +8494,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "AutoHighlightResult",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "autoHighlightResult",
+                      "safeName": "autoHighlightResult"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "auto_highlight_result",
+                      "safeName": "auto_highlight_result"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "AUTO_HIGHLIGHT_RESULT",
+                      "safeName": "AUTO_HIGHLIGHT_RESULT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "AutoHighlightResult",
+                      "safeName": "AutoHighlightResult"
                     }
                   },
                   "typeId": "AutoHighlightResult",
@@ -8702,22 +8702,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Timestamp",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "timestamp",
+                      "safeName": "timestamp"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "timestamp",
+                      "safeName": "timestamp"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TIMESTAMP",
+                      "safeName": "TIMESTAMP"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Timestamp",
+                      "safeName": "Timestamp"
                     }
                   },
                   "typeId": "Timestamp",
@@ -9119,22 +9119,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptWord",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptWord",
+                      "safeName": "transcriptWord"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_word",
+                      "safeName": "transcript_word"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_WORD",
+                      "safeName": "TRANSCRIPT_WORD"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptWord",
+                      "safeName": "TranscriptWord"
                     }
                   },
                   "typeId": "TranscriptWord",
@@ -9322,22 +9322,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptSentence",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptSentence",
+                      "safeName": "transcriptSentence"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_sentence",
+                      "safeName": "transcript_sentence"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_SENTENCE",
+                      "safeName": "TRANSCRIPT_SENTENCE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptSentence",
+                      "safeName": "TranscriptSentence"
                     }
                   },
                   "typeId": "TranscriptSentence",
@@ -9559,22 +9559,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptWord",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptWord",
+                      "safeName": "transcriptWord"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_word",
+                      "safeName": "transcript_word"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_WORD",
+                      "safeName": "TRANSCRIPT_WORD"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptWord",
+                      "safeName": "TranscriptWord"
                     }
                   },
                   "typeId": "TranscriptWord",
@@ -9762,22 +9762,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptParagraph",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptParagraph",
+                      "safeName": "transcriptParagraph"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_paragraph",
+                      "safeName": "transcript_paragraph"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_PARAGRAPH",
+                      "safeName": "TRANSCRIPT_PARAGRAPH"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptParagraph",
+                      "safeName": "TranscriptParagraph"
                     }
                   },
                   "typeId": "TranscriptParagraph",
@@ -10075,22 +10075,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptStatus",
+                  "safeName": "transcriptStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_status",
+                  "safeName": "transcript_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_STATUS",
+                  "safeName": "TRANSCRIPT_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptStatus",
+                  "safeName": "TranscriptStatus"
                 }
               },
               "typeId": "TranscriptStatus",
@@ -10401,22 +10401,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "TranscriptStatus",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcriptStatus",
+                  "safeName": "transcriptStatus"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "transcript_status",
+                  "safeName": "transcript_status"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TRANSCRIPT_STATUS",
+                  "safeName": "TRANSCRIPT_STATUS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TranscriptStatus",
+                  "safeName": "TranscriptStatus"
                 }
               },
               "typeId": "TranscriptStatus",
@@ -10563,22 +10563,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PageDetails",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "pageDetails",
+                  "safeName": "pageDetails"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "page_details",
+                  "safeName": "page_details"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PAGE_DETAILS",
+                  "safeName": "PAGE_DETAILS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PageDetails",
+                  "safeName": "PageDetails"
                 }
               },
               "typeId": "PageDetails",
@@ -10617,22 +10617,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptListItem",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptListItem",
+                      "safeName": "transcriptListItem"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_list_item",
+                      "safeName": "transcript_list_item"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_LIST_ITEM",
+                      "safeName": "TRANSCRIPT_LIST_ITEM"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptListItem",
+                      "safeName": "TranscriptListItem"
                     }
                   },
                   "typeId": "TranscriptListItem",
@@ -11349,22 +11349,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurQuestionAnswer",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurQuestionAnswer",
+                      "safeName": "lemurQuestionAnswer"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_question_answer",
+                      "safeName": "lemur_question_answer"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_QUESTION_ANSWER",
+                      "safeName": "LEMUR_QUESTION_ANSWER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurQuestionAnswer",
+                      "safeName": "LemurQuestionAnswer"
                     }
                   },
                   "typeId": "LemurQuestionAnswer",
@@ -12025,22 +12025,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "LemurModel",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemurModel",
+                  "safeName": "lemurModel"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemur_model",
+                  "safeName": "lemur_model"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LEMUR_MODEL",
+                  "safeName": "LEMUR_MODEL"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LemurModel",
+                  "safeName": "LemurModel"
                 }
               },
               "typeId": "LemurModel",
@@ -12312,22 +12312,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurQuestion",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurQuestion",
+                      "safeName": "lemurQuestion"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_question",
+                      "safeName": "lemur_question"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_QUESTION",
+                      "safeName": "LEMUR_QUESTION"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurQuestion",
+                      "safeName": "LemurQuestion"
                     }
                   },
                   "typeId": "LemurQuestion",
@@ -13164,22 +13164,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "MessageType",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "messageType",
+                  "safeName": "messageType"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "message_type",
+                  "safeName": "message_type"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "MESSAGE_TYPE",
+                  "safeName": "MESSAGE_TYPE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "MessageType",
+                  "safeName": "MessageType"
                 }
               },
               "typeId": "MessageType",
@@ -13235,22 +13235,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SessionBegins",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sessionBegins",
+                  "safeName": "sessionBegins"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "session_begins",
+                  "safeName": "session_begins"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SESSION_BEGINS",
+                  "safeName": "SESSION_BEGINS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SessionBegins",
+                  "safeName": "SessionBegins"
                 }
               },
               "typeId": "SessionBegins",
@@ -13265,22 +13265,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PartialTranscript",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "partialTranscript",
+                  "safeName": "partialTranscript"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "partial_transcript",
+                  "safeName": "partial_transcript"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PARTIAL_TRANSCRIPT",
+                  "safeName": "PARTIAL_TRANSCRIPT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PartialTranscript",
+                  "safeName": "PartialTranscript"
                 }
               },
               "typeId": "PartialTranscript",
@@ -13295,22 +13295,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "FinalTranscript",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "finalTranscript",
+                  "safeName": "finalTranscript"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "final_transcript",
+                  "safeName": "final_transcript"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "FINAL_TRANSCRIPT",
+                  "safeName": "FINAL_TRANSCRIPT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "FinalTranscript",
+                  "safeName": "FinalTranscript"
                 }
               },
               "typeId": "FinalTranscript",
@@ -13325,22 +13325,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SessionTerminated",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sessionTerminated",
+                  "safeName": "sessionTerminated"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "session_terminated",
+                  "safeName": "session_terminated"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SESSION_TERMINATED",
+                  "safeName": "SESSION_TERMINATED"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SessionTerminated",
+                  "safeName": "SessionTerminated"
                 }
               },
               "typeId": "SessionTerminated",
@@ -13355,22 +13355,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "RealtimeError",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "realtimeError",
+                  "safeName": "realtimeError"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "realtime_error",
+                  "safeName": "realtime_error"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "REALTIME_ERROR",
+                  "safeName": "REALTIME_ERROR"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "RealtimeError",
+                  "safeName": "RealtimeError"
                 }
               },
               "typeId": "RealtimeError",
@@ -14215,22 +14215,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Word",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "word",
+                      "safeName": "word"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "word",
+                      "safeName": "word"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WORD",
+                      "safeName": "WORD"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Word",
+                      "safeName": "Word"
                     }
                   },
                   "typeId": "Word",
@@ -14921,6 +14921,290 @@
       "userProvidedExamples": [],
       "referencedTypes": {},
       "inline": false
+    },
+    "receiveMessage": {
+      "name": {
+        "typeId": "receiveMessage",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "receiveMessage",
+          "camelCase": {
+            "unsafeName": "receiveMessage",
+            "safeName": "receiveMessage"
+          },
+          "snakeCase": {
+            "unsafeName": "receive_message",
+            "safeName": "receive_message"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "RECEIVE_MESSAGE",
+            "safeName": "RECEIVE_MESSAGE"
+          },
+          "pascalCase": {
+            "unsafeName": "ReceiveMessage",
+            "safeName": "ReceiveMessage"
+          }
+        }
+      },
+      "shape": {
+        "members": [
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "SessionBegins",
+                "camelCase": {
+                  "unsafeName": "sessionBegins",
+                  "safeName": "sessionBegins"
+                },
+                "snakeCase": {
+                  "unsafeName": "session_begins",
+                  "safeName": "session_begins"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSION_BEGINS",
+                  "safeName": "SESSION_BEGINS"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionBegins",
+                  "safeName": "SessionBegins"
+                }
+              },
+              "typeId": "SessionBegins",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "PartialTranscript",
+                "camelCase": {
+                  "unsafeName": "partialTranscript",
+                  "safeName": "partialTranscript"
+                },
+                "snakeCase": {
+                  "unsafeName": "partial_transcript",
+                  "safeName": "partial_transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PARTIAL_TRANSCRIPT",
+                  "safeName": "PARTIAL_TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "PartialTranscript",
+                  "safeName": "PartialTranscript"
+                }
+              },
+              "typeId": "PartialTranscript",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "FinalTranscript",
+                "camelCase": {
+                  "unsafeName": "finalTranscript",
+                  "safeName": "finalTranscript"
+                },
+                "snakeCase": {
+                  "unsafeName": "final_transcript",
+                  "safeName": "final_transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FINAL_TRANSCRIPT",
+                  "safeName": "FINAL_TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "FinalTranscript",
+                  "safeName": "FinalTranscript"
+                }
+              },
+              "typeId": "FinalTranscript",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "SessionTerminated",
+                "camelCase": {
+                  "unsafeName": "sessionTerminated",
+                  "safeName": "sessionTerminated"
+                },
+                "snakeCase": {
+                  "unsafeName": "session_terminated",
+                  "safeName": "session_terminated"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSION_TERMINATED",
+                  "safeName": "SESSION_TERMINATED"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionTerminated",
+                  "safeName": "SessionTerminated"
+                }
+              },
+              "typeId": "SessionTerminated",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "RealtimeError",
+                "camelCase": {
+                  "unsafeName": "realtimeError",
+                  "safeName": "realtimeError"
+                },
+                "snakeCase": {
+                  "unsafeName": "realtime_error",
+                  "safeName": "realtime_error"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "REALTIME_ERROR",
+                  "safeName": "REALTIME_ERROR"
+                },
+                "pascalCase": {
+                  "unsafeName": "RealtimeError",
+                  "safeName": "RealtimeError"
+                }
+              },
+              "typeId": "RealtimeError",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "sendMessage": {
+      "name": {
+        "typeId": "sendMessage",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "sendMessage",
+          "camelCase": {
+            "unsafeName": "sendMessage",
+            "safeName": "sendMessage"
+          },
+          "snakeCase": {
+            "unsafeName": "send_message",
+            "safeName": "send_message"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SEND_MESSAGE",
+            "safeName": "SEND_MESSAGE"
+          },
+          "pascalCase": {
+            "unsafeName": "SendMessage",
+            "safeName": "SendMessage"
+          }
+        }
+      },
+      "shape": {
+        "members": [
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "SendAudio",
+                "camelCase": {
+                  "unsafeName": "sendAudio",
+                  "safeName": "sendAudio"
+                },
+                "snakeCase": {
+                  "unsafeName": "send_audio",
+                  "safeName": "send_audio"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEND_AUDIO",
+                  "safeName": "SEND_AUDIO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SendAudio",
+                  "safeName": "SendAudio"
+                }
+              },
+              "typeId": "SendAudio",
+              "inline": false,
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "TerminateSession",
+                "camelCase": {
+                  "unsafeName": "terminateSession",
+                  "safeName": "terminateSession"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminate_session",
+                  "safeName": "terminate_session"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINATE_SESSION",
+                  "safeName": "TERMINATE_SESSION"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminateSession",
+                  "safeName": "TerminateSession"
+                }
+              },
+              "typeId": "TerminateSession",
+              "inline": false,
+              "type": "named"
+            }
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
     }
   },
   "constants": {
@@ -15042,22 +15326,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "UploadedFile",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "uploadedFile",
+                      "safeName": "uploadedFile"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "uploaded_file",
+                      "safeName": "uploaded_file"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "UPLOADED_FILE",
+                      "safeName": "UPLOADED_FILE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "UploadedFile",
+                      "safeName": "UploadedFile"
                     }
                   },
                   "typeId": "UploadedFile",
@@ -15316,22 +15600,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/limit",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesLimit",
+                    "safeName": "transcriptListParametersPropertiesLimit"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_limit",
+                    "safeName": "transcript_list_parameters_properties_limit"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_LIMIT",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_LIMIT"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesLimit",
+                    "safeName": "TranscriptListParametersPropertiesLimit"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/limit",
@@ -15370,22 +15654,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/status",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesStatus",
+                    "safeName": "transcriptListParametersPropertiesStatus"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_status",
+                    "safeName": "transcript_list_parameters_properties_status"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_STATUS",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_STATUS"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesStatus",
+                    "safeName": "TranscriptListParametersPropertiesStatus"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/status",
@@ -15424,22 +15708,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/created_on",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesCreatedOn",
+                    "safeName": "transcriptListParametersPropertiesCreatedOn"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_created_on",
+                    "safeName": "transcript_list_parameters_properties_created_on"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_CREATED_ON",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_CREATED_ON"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesCreatedOn",
+                    "safeName": "TranscriptListParametersPropertiesCreatedOn"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/created_on",
@@ -15478,22 +15762,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/before_id",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesBeforeId",
+                    "safeName": "transcriptListParametersPropertiesBeforeId"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_before_id",
+                    "safeName": "transcript_list_parameters_properties_before_id"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_BEFORE_ID",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_BEFORE_ID"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesBeforeId",
+                    "safeName": "TranscriptListParametersPropertiesBeforeId"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/before_id",
@@ -15532,22 +15816,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/after_id",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesAfterId",
+                    "safeName": "transcriptListParametersPropertiesAfterId"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_after_id",
+                    "safeName": "transcript_list_parameters_properties_after_id"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_AFTER_ID",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_AFTER_ID"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesAfterId",
+                    "safeName": "TranscriptListParametersPropertiesAfterId"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/after_id",
@@ -15586,22 +15870,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "TranscriptListParameters/properties/throttled_only",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcriptListParametersPropertiesThrottledOnly",
+                    "safeName": "transcriptListParametersPropertiesThrottledOnly"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "transcript_list_parameters_properties_throttled_only",
+                    "safeName": "transcript_list_parameters_properties_throttled_only"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_THROTTLED_ONLY",
+                    "safeName": "TRANSCRIPT_LIST_PARAMETERS_PROPERTIES_THROTTLED_ONLY"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "TranscriptListParametersPropertiesThrottledOnly",
+                    "safeName": "TranscriptListParametersPropertiesThrottledOnly"
                   }
                 },
                 "typeId": "TranscriptListParameters/properties/throttled_only",
@@ -15622,22 +15906,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "TranscriptList",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcriptList",
+                      "safeName": "transcriptList"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript_list",
+                      "safeName": "transcript_list"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT_LIST",
+                      "safeName": "TRANSCRIPT_LIST"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TranscriptList",
+                      "safeName": "TranscriptList"
                     }
                   },
                   "typeId": "TranscriptList",
@@ -15701,22 +15985,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "CreateTranscriptParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "createTranscriptParameters",
+                  "safeName": "createTranscriptParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "create_transcript_parameters",
+                  "safeName": "create_transcript_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CREATE_TRANSCRIPT_PARAMETERS",
+                  "safeName": "CREATE_TRANSCRIPT_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CreateTranscriptParameters",
+                  "safeName": "CreateTranscriptParameters"
                 }
               },
               "typeId": "CreateTranscriptParameters",
@@ -15735,22 +16019,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Transcript",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT",
+                      "safeName": "TRANSCRIPT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Transcript",
+                      "safeName": "Transcript"
                     }
                   },
                   "typeId": "Transcript",
@@ -15770,7 +16054,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "c80de4ae",
+                "id": "f743dc0",
                 "url": "/v2/transcript",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -16880,22 +17164,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "PiiPolicy",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "piiPolicy",
+                                          "safeName": "piiPolicy"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "pii_policy",
+                                          "safeName": "pii_policy"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "PII_POLICY",
+                                          "safeName": "PII_POLICY"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "PiiPolicy",
+                                          "safeName": "PiiPolicy"
                                         }
                                       },
                                       "typeId": "PiiPolicy",
@@ -17347,22 +17631,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "TranscriptCustomSpelling",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcriptCustomSpelling",
+                                          "safeName": "transcriptCustomSpelling"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcript_custom_spelling",
+                                          "safeName": "transcript_custom_spelling"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TRANSCRIPT_CUSTOM_SPELLING",
+                                          "safeName": "TRANSCRIPT_CUSTOM_SPELLING"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TranscriptCustomSpelling",
+                                          "safeName": "TranscriptCustomSpelling"
                                         }
                                       },
                                       "typeId": "TranscriptCustomSpelling",
@@ -19662,22 +19946,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -20313,22 +20597,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -20380,22 +20664,22 @@
                                                   "packagePath": []
                                                 },
                                                 "name": {
-                                                  "originalName": "",
+                                                  "originalName": "AutoHighlightResult",
                                                   "camelCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "autoHighlightResult",
+                                                    "safeName": "autoHighlightResult"
                                                   },
                                                   "snakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "auto_highlight_result",
+                                                    "safeName": "auto_highlight_result"
                                                   },
                                                   "screamingSnakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AUTO_HIGHLIGHT_RESULT",
+                                                    "safeName": "AUTO_HIGHLIGHT_RESULT"
                                                   },
                                                   "pascalCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AutoHighlightResult",
+                                                    "safeName": "AutoHighlightResult"
                                                   }
                                                 },
                                                 "typeId": "AutoHighlightResult",
@@ -21707,22 +21991,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -22876,22 +23160,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -23445,22 +23729,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "ContentSafetyLabelResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "contentSafetyLabelResult",
+                                                          "safeName": "contentSafetyLabelResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "content_safety_label_result",
+                                                          "safeName": "content_safety_label_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "CONTENT_SAFETY_LABEL_RESULT",
+                                                          "safeName": "CONTENT_SAFETY_LABEL_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "ContentSafetyLabelResult",
+                                                          "safeName": "ContentSafetyLabelResult"
                                                         }
                                                       },
                                                       "typeId": "ContentSafetyLabelResult",
@@ -25476,22 +25760,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "TopicDetectionResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topicDetectionResult",
+                                                          "safeName": "topicDetectionResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topic_detection_result",
+                                                          "safeName": "topic_detection_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TOPIC_DETECTION_RESULT",
+                                                          "safeName": "TOPIC_DETECTION_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TopicDetectionResult",
+                                                          "safeName": "TopicDetectionResult"
                                                         }
                                                       },
                                                       "typeId": "TopicDetectionResult",
@@ -26048,22 +26332,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Transcript",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT",
+                      "safeName": "TRANSCRIPT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Transcript",
+                      "safeName": "Transcript"
                     }
                   },
                   "typeId": "Transcript",
@@ -26083,7 +26367,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "1d2f9727",
+                "id": "9fd2508a",
                 "url": "/v2/transcript/transcript_id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -27623,22 +27907,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -28274,22 +28558,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -28341,22 +28625,22 @@
                                                   "packagePath": []
                                                 },
                                                 "name": {
-                                                  "originalName": "",
+                                                  "originalName": "AutoHighlightResult",
                                                   "camelCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "autoHighlightResult",
+                                                    "safeName": "autoHighlightResult"
                                                   },
                                                   "snakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "auto_highlight_result",
+                                                    "safeName": "auto_highlight_result"
                                                   },
                                                   "screamingSnakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AUTO_HIGHLIGHT_RESULT",
+                                                    "safeName": "AUTO_HIGHLIGHT_RESULT"
                                                   },
                                                   "pascalCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AutoHighlightResult",
+                                                    "safeName": "AutoHighlightResult"
                                                   }
                                                 },
                                                 "typeId": "AutoHighlightResult",
@@ -29668,22 +29952,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -30837,22 +31121,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -31406,22 +31690,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "ContentSafetyLabelResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "contentSafetyLabelResult",
+                                                          "safeName": "contentSafetyLabelResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "content_safety_label_result",
+                                                          "safeName": "content_safety_label_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "CONTENT_SAFETY_LABEL_RESULT",
+                                                          "safeName": "CONTENT_SAFETY_LABEL_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "ContentSafetyLabelResult",
+                                                          "safeName": "ContentSafetyLabelResult"
                                                         }
                                                       },
                                                       "typeId": "ContentSafetyLabelResult",
@@ -33437,22 +33721,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "TopicDetectionResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topicDetectionResult",
+                                                          "safeName": "topicDetectionResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topic_detection_result",
+                                                          "safeName": "topic_detection_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TOPIC_DETECTION_RESULT",
+                                                          "safeName": "TOPIC_DETECTION_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TopicDetectionResult",
+                                                          "safeName": "TopicDetectionResult"
                                                         }
                                                       },
                                                       "typeId": "TopicDetectionResult",
@@ -34048,22 +34332,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "Transcript",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "transcript",
+                      "safeName": "transcript"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "TRANSCRIPT",
+                      "safeName": "TRANSCRIPT"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "Transcript",
+                      "safeName": "Transcript"
                     }
                   },
                   "typeId": "Transcript",
@@ -34083,7 +34367,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "1d2f9727",
+                "id": "9fd2508a",
                 "url": "/v2/transcript/transcript_id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -35623,22 +35907,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -36274,22 +36558,22 @@
                                                                     "packagePath": []
                                                                   },
                                                                   "name": {
-                                                                    "originalName": "",
+                                                                    "originalName": "Timestamp",
                                                                     "camelCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "snakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "timestamp",
+                                                                      "safeName": "timestamp"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "TIMESTAMP",
+                                                                      "safeName": "TIMESTAMP"
                                                                     },
                                                                     "pascalCase": {
-                                                                      "unsafeName": "",
-                                                                      "safeName": ""
+                                                                      "unsafeName": "Timestamp",
+                                                                      "safeName": "Timestamp"
                                                                     }
                                                                   },
                                                                   "typeId": "Timestamp",
@@ -36341,22 +36625,22 @@
                                                   "packagePath": []
                                                 },
                                                 "name": {
-                                                  "originalName": "",
+                                                  "originalName": "AutoHighlightResult",
                                                   "camelCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "autoHighlightResult",
+                                                    "safeName": "autoHighlightResult"
                                                   },
                                                   "snakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "auto_highlight_result",
+                                                    "safeName": "auto_highlight_result"
                                                   },
                                                   "screamingSnakeCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AUTO_HIGHLIGHT_RESULT",
+                                                    "safeName": "AUTO_HIGHLIGHT_RESULT"
                                                   },
                                                   "pascalCase": {
-                                                    "unsafeName": "",
-                                                    "safeName": ""
+                                                    "unsafeName": "AutoHighlightResult",
+                                                    "safeName": "AutoHighlightResult"
                                                   }
                                                 },
                                                 "typeId": "AutoHighlightResult",
@@ -37668,22 +37952,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -38837,22 +39121,22 @@
                                                                           "packagePath": []
                                                                         },
                                                                         "name": {
-                                                                          "originalName": "",
+                                                                          "originalName": "ContentSafetyLabel",
                                                                           "camelCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "contentSafetyLabel",
+                                                                            "safeName": "contentSafetyLabel"
                                                                           },
                                                                           "snakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "content_safety_label",
+                                                                            "safeName": "content_safety_label"
                                                                           },
                                                                           "screamingSnakeCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "CONTENT_SAFETY_LABEL",
+                                                                            "safeName": "CONTENT_SAFETY_LABEL"
                                                                           },
                                                                           "pascalCase": {
-                                                                            "unsafeName": "",
-                                                                            "safeName": ""
+                                                                            "unsafeName": "ContentSafetyLabel",
+                                                                            "safeName": "ContentSafetyLabel"
                                                                           }
                                                                         },
                                                                         "typeId": "ContentSafetyLabel",
@@ -39406,22 +39690,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "ContentSafetyLabelResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "contentSafetyLabelResult",
+                                                          "safeName": "contentSafetyLabelResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "content_safety_label_result",
+                                                          "safeName": "content_safety_label_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "CONTENT_SAFETY_LABEL_RESULT",
+                                                          "safeName": "CONTENT_SAFETY_LABEL_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "ContentSafetyLabelResult",
+                                                          "safeName": "ContentSafetyLabelResult"
                                                         }
                                                       },
                                                       "typeId": "ContentSafetyLabelResult",
@@ -41437,22 +41721,22 @@
                                                         "packagePath": []
                                                       },
                                                       "name": {
-                                                        "originalName": "",
+                                                        "originalName": "TopicDetectionResult",
                                                         "camelCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topicDetectionResult",
+                                                          "safeName": "topicDetectionResult"
                                                         },
                                                         "snakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "topic_detection_result",
+                                                          "safeName": "topic_detection_result"
                                                         },
                                                         "screamingSnakeCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TOPIC_DETECTION_RESULT",
+                                                          "safeName": "TOPIC_DETECTION_RESULT"
                                                         },
                                                         "pascalCase": {
-                                                          "unsafeName": "",
-                                                          "safeName": ""
+                                                          "unsafeName": "TopicDetectionResult",
+                                                          "safeName": "TopicDetectionResult"
                                                         }
                                                       },
                                                       "typeId": "TopicDetectionResult",
@@ -42066,22 +42350,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "SubtitleFormat",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "subtitleFormat",
+                    "safeName": "subtitleFormat"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "subtitle_format",
+                    "safeName": "subtitle_format"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "SUBTITLE_FORMAT",
+                    "safeName": "SUBTITLE_FORMAT"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "SubtitleFormat",
+                    "safeName": "SubtitleFormat"
                   }
                 },
                 "typeId": "SubtitleFormat",
@@ -42347,22 +42631,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "SubtitleFormat",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "subtitleFormat",
+                    "safeName": "subtitleFormat"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "subtitle_format",
+                    "safeName": "subtitle_format"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "SUBTITLE_FORMAT",
+                    "safeName": "SUBTITLE_FORMAT"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "SubtitleFormat",
+                    "safeName": "SubtitleFormat"
                   }
                 },
                 "typeId": "SubtitleFormat",
@@ -42452,22 +42736,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "SentencesResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "sentencesResponse",
+                      "safeName": "sentencesResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "sentences_response",
+                      "safeName": "sentences_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "SENTENCES_RESPONSE",
+                      "safeName": "SENTENCES_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "SentencesResponse",
+                      "safeName": "SentencesResponse"
                     }
                   },
                   "typeId": "SentencesResponse",
@@ -42487,7 +42771,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "bb6242a2",
+                "id": "d0d6ccf3",
                 "url": "/v2/transcript/transcript_id/sentences",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -43767,22 +44051,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "TranscriptWord",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcriptWord",
+                                                            "safeName": "transcriptWord"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcript_word",
+                                                            "safeName": "transcript_word"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TRANSCRIPT_WORD",
+                                                            "safeName": "TRANSCRIPT_WORD"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TranscriptWord",
+                                                            "safeName": "TranscriptWord"
                                                           }
                                                         },
                                                         "typeId": "TranscriptWord",
@@ -44735,22 +45019,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "TranscriptWord",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcriptWord",
+                                                            "safeName": "transcriptWord"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcript_word",
+                                                            "safeName": "transcript_word"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TRANSCRIPT_WORD",
+                                                            "safeName": "TRANSCRIPT_WORD"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TranscriptWord",
+                                                            "safeName": "TranscriptWord"
                                                           }
                                                         },
                                                         "typeId": "TranscriptWord",
@@ -44802,22 +45086,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "TranscriptSentence",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcriptSentence",
+                                          "safeName": "transcriptSentence"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcript_sentence",
+                                          "safeName": "transcript_sentence"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TRANSCRIPT_SENTENCE",
+                                          "safeName": "TRANSCRIPT_SENTENCE"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TranscriptSentence",
+                                          "safeName": "TranscriptSentence"
                                         }
                                       },
                                       "typeId": "TranscriptSentence",
@@ -44994,22 +45278,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ParagraphsResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "paragraphsResponse",
+                      "safeName": "paragraphsResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "paragraphs_response",
+                      "safeName": "paragraphs_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "PARAGRAPHS_RESPONSE",
+                      "safeName": "PARAGRAPHS_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ParagraphsResponse",
+                      "safeName": "ParagraphsResponse"
                     }
                   },
                   "typeId": "ParagraphsResponse",
@@ -45029,7 +45313,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "ceffb8fc",
+                "id": "50a723b0",
                 "url": "/v2/transcript/transcript_id/paragraphs",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -46309,22 +46593,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "TranscriptWord",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcriptWord",
+                                                            "safeName": "transcriptWord"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcript_word",
+                                                            "safeName": "transcript_word"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TRANSCRIPT_WORD",
+                                                            "safeName": "TRANSCRIPT_WORD"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TranscriptWord",
+                                                            "safeName": "TranscriptWord"
                                                           }
                                                         },
                                                         "typeId": "TranscriptWord",
@@ -47277,22 +47561,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "TranscriptWord",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcriptWord",
+                                                            "safeName": "transcriptWord"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "transcript_word",
+                                                            "safeName": "transcript_word"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TRANSCRIPT_WORD",
+                                                            "safeName": "TRANSCRIPT_WORD"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "TranscriptWord",
+                                                            "safeName": "TranscriptWord"
                                                           }
                                                         },
                                                         "typeId": "TranscriptWord",
@@ -47344,22 +47628,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "TranscriptParagraph",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcriptParagraph",
+                                          "safeName": "transcriptParagraph"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "transcript_paragraph",
+                                          "safeName": "transcript_paragraph"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TRANSCRIPT_PARAGRAPH",
+                                          "safeName": "TRANSCRIPT_PARAGRAPH"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "TranscriptParagraph",
+                                          "safeName": "TranscriptParagraph"
                                         }
                                       },
                                       "typeId": "TranscriptParagraph",
@@ -47579,22 +47863,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "WordSearchResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "wordSearchResponse",
+                      "safeName": "wordSearchResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "word_search_response",
+                      "safeName": "word_search_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WORD_SEARCH_RESPONSE",
+                      "safeName": "WORD_SEARCH_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WordSearchResponse",
+                      "safeName": "WordSearchResponse"
                     }
                   },
                   "typeId": "WordSearchResponse",
@@ -47614,7 +47898,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "c61f0e68",
+                "id": "d7c25f",
                 "url": "/v2/transcript/transcript_id/word-search",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -48371,22 +48655,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "WordSearchTimestamp",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "wordSearchTimestamp",
+                                                            "safeName": "wordSearchTimestamp"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "word_search_timestamp",
+                                                            "safeName": "word_search_timestamp"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "WORD_SEARCH_TIMESTAMP",
+                                                            "safeName": "WORD_SEARCH_TIMESTAMP"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "WordSearchTimestamp",
+                                                            "safeName": "WordSearchTimestamp"
                                                           }
                                                         },
                                                         "typeId": "WordSearchTimestamp",
@@ -48903,22 +49187,22 @@
                                                           "packagePath": []
                                                         },
                                                         "name": {
-                                                          "originalName": "",
+                                                          "originalName": "WordSearchTimestamp",
                                                           "camelCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "wordSearchTimestamp",
+                                                            "safeName": "wordSearchTimestamp"
                                                           },
                                                           "snakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "word_search_timestamp",
+                                                            "safeName": "word_search_timestamp"
                                                           },
                                                           "screamingSnakeCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "WORD_SEARCH_TIMESTAMP",
+                                                            "safeName": "WORD_SEARCH_TIMESTAMP"
                                                           },
                                                           "pascalCase": {
-                                                            "unsafeName": "",
-                                                            "safeName": ""
+                                                            "unsafeName": "WordSearchTimestamp",
+                                                            "safeName": "WordSearchTimestamp"
                                                           }
                                                         },
                                                         "typeId": "WordSearchTimestamp",
@@ -49064,22 +49348,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "WordSearchMatch",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "wordSearchMatch",
+                                          "safeName": "wordSearchMatch"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "word_search_match",
+                                          "safeName": "word_search_match"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "WORD_SEARCH_MATCH",
+                                          "safeName": "WORD_SEARCH_MATCH"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "WordSearchMatch",
+                                          "safeName": "WordSearchMatch"
                                         }
                                       },
                                       "typeId": "WordSearchMatch",
@@ -49256,22 +49540,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "RedactedAudioResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "redactedAudioResponse",
+                      "safeName": "redactedAudioResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "redacted_audio_response",
+                      "safeName": "redacted_audio_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "REDACTED_AUDIO_RESPONSE",
+                      "safeName": "REDACTED_AUDIO_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "RedactedAudioResponse",
+                      "safeName": "RedactedAudioResponse"
                     }
                   },
                   "typeId": "RedactedAudioResponse",
@@ -49691,22 +49975,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "CreateRealtimeTemporaryTokenParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "createRealtimeTemporaryTokenParameters",
+                  "safeName": "createRealtimeTemporaryTokenParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "create_realtime_temporary_token_parameters",
+                  "safeName": "create_realtime_temporary_token_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CREATE_REALTIME_TEMPORARY_TOKEN_PARAMETERS",
+                  "safeName": "CREATE_REALTIME_TEMPORARY_TOKEN_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CreateRealtimeTemporaryTokenParameters",
+                  "safeName": "CreateRealtimeTemporaryTokenParameters"
                 }
               },
               "typeId": "CreateRealtimeTemporaryTokenParameters",
@@ -49725,22 +50009,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "RealtimeTemporaryTokenResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "realtimeTemporaryTokenResponse",
+                      "safeName": "realtimeTemporaryTokenResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "realtime_temporary_token_response",
+                      "safeName": "realtime_temporary_token_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "REALTIME_TEMPORARY_TOKEN_RESPONSE",
+                      "safeName": "REALTIME_TEMPORARY_TOKEN_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "RealtimeTemporaryTokenResponse",
+                      "safeName": "RealtimeTemporaryTokenResponse"
                     }
                   },
                   "typeId": "RealtimeTemporaryTokenResponse",
@@ -50079,22 +50363,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "LemurSummaryParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemurSummaryParameters",
+                  "safeName": "lemurSummaryParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemur_summary_parameters",
+                  "safeName": "lemur_summary_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LEMUR_SUMMARY_PARAMETERS",
+                  "safeName": "LEMUR_SUMMARY_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LemurSummaryParameters",
+                  "safeName": "LemurSummaryParameters"
                 }
               },
               "typeId": "LemurSummaryParameters",
@@ -50113,22 +50397,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurSummaryResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurSummaryResponse",
+                      "safeName": "lemurSummaryResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_summary_response",
+                      "safeName": "lemur_summary_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_SUMMARY_RESPONSE",
+                      "safeName": "LEMUR_SUMMARY_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurSummaryResponse",
+                      "safeName": "LemurSummaryResponse"
                     }
                   },
                   "typeId": "LemurSummaryResponse",
@@ -50917,22 +51201,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "LemurQuestionAnswerParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemurQuestionAnswerParameters",
+                  "safeName": "lemurQuestionAnswerParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemur_question_answer_parameters",
+                  "safeName": "lemur_question_answer_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LEMUR_QUESTION_ANSWER_PARAMETERS",
+                  "safeName": "LEMUR_QUESTION_ANSWER_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LemurQuestionAnswerParameters",
+                  "safeName": "LemurQuestionAnswerParameters"
                 }
               },
               "typeId": "LemurQuestionAnswerParameters",
@@ -50951,22 +51235,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurQuestionAnswerResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurQuestionAnswerResponse",
+                      "safeName": "lemurQuestionAnswerResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_question_answer_response",
+                      "safeName": "lemur_question_answer_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_QUESTION_ANSWER_RESPONSE",
+                      "safeName": "LEMUR_QUESTION_ANSWER_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurQuestionAnswerResponse",
+                      "safeName": "LemurQuestionAnswerResponse"
                     }
                   },
                   "typeId": "LemurQuestionAnswerResponse",
@@ -50986,7 +51270,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "225d6942",
+                "id": "f79250fe",
                 "url": "/lemur/v3/generate/question-answer",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -52169,22 +52453,22 @@
                                     "packagePath": []
                                   },
                                   "name": {
-                                    "originalName": "",
+                                    "originalName": "LemurQuestion",
                                     "camelCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "lemurQuestion",
+                                      "safeName": "lemurQuestion"
                                     },
                                     "snakeCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "lemur_question",
+                                      "safeName": "lemur_question"
                                     },
                                     "screamingSnakeCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "LEMUR_QUESTION",
+                                      "safeName": "LEMUR_QUESTION"
                                     },
                                     "pascalCase": {
-                                      "unsafeName": "",
-                                      "safeName": ""
+                                      "unsafeName": "LemurQuestion",
+                                      "safeName": "LemurQuestion"
                                     }
                                   },
                                   "typeId": "LemurQuestion",
@@ -52709,22 +52993,22 @@
                                         "packagePath": []
                                       },
                                       "name": {
-                                        "originalName": "",
+                                        "originalName": "LemurQuestionAnswer",
                                         "camelCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "lemurQuestionAnswer",
+                                          "safeName": "lemurQuestionAnswer"
                                         },
                                         "snakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "lemur_question_answer",
+                                          "safeName": "lemur_question_answer"
                                         },
                                         "screamingSnakeCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "LEMUR_QUESTION_ANSWER",
+                                          "safeName": "LEMUR_QUESTION_ANSWER"
                                         },
                                         "pascalCase": {
-                                          "unsafeName": "",
-                                          "safeName": ""
+                                          "unsafeName": "LemurQuestionAnswer",
+                                          "safeName": "LemurQuestionAnswer"
                                         }
                                       },
                                       "typeId": "LemurQuestionAnswer",
@@ -52822,22 +53106,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "LemurActionItemsParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemurActionItemsParameters",
+                  "safeName": "lemurActionItemsParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemur_action_items_parameters",
+                  "safeName": "lemur_action_items_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LEMUR_ACTION_ITEMS_PARAMETERS",
+                  "safeName": "LEMUR_ACTION_ITEMS_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LemurActionItemsParameters",
+                  "safeName": "LemurActionItemsParameters"
                 }
               },
               "typeId": "LemurActionItemsParameters",
@@ -52856,22 +53140,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurActionItemsResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurActionItemsResponse",
+                      "safeName": "lemurActionItemsResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_action_items_response",
+                      "safeName": "lemur_action_items_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_ACTION_ITEMS_RESPONSE",
+                      "safeName": "LEMUR_ACTION_ITEMS_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurActionItemsResponse",
+                      "safeName": "LemurActionItemsResponse"
                     }
                   },
                   "typeId": "LemurActionItemsResponse",
@@ -53592,22 +53876,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "LemurTaskParameters",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemurTaskParameters",
+                  "safeName": "lemurTaskParameters"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "lemur_task_parameters",
+                  "safeName": "lemur_task_parameters"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LEMUR_TASK_PARAMETERS",
+                  "safeName": "LEMUR_TASK_PARAMETERS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "LemurTaskParameters",
+                  "safeName": "LemurTaskParameters"
                 }
               },
               "typeId": "LemurTaskParameters",
@@ -53626,22 +53910,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "LemurTaskResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemurTaskResponse",
+                      "safeName": "lemurTaskResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "lemur_task_response",
+                      "safeName": "lemur_task_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LEMUR_TASK_RESPONSE",
+                      "safeName": "LEMUR_TASK_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "LemurTaskResponse",
+                      "safeName": "LemurTaskResponse"
                     }
                   },
                   "typeId": "LemurTaskResponse",
@@ -54465,22 +54749,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "PurgeLemurRequestDataResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "purgeLemurRequestDataResponse",
+                      "safeName": "purgeLemurRequestDataResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "purge_lemur_request_data_response",
+                      "safeName": "purge_lemur_request_data_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "PURGE_LEMUR_REQUEST_DATA_RESPONSE",
+                      "safeName": "PURGE_LEMUR_REQUEST_DATA_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "PurgeLemurRequestDataResponse",
+                      "safeName": "PurgeLemurRequestDataResponse"
                     }
                   },
                   "typeId": "PurgeLemurRequestDataResponse",
@@ -55164,6 +55448,7 @@
             },
             "wireValue": "Authentication"
           },
+          "docs": "Authenticate using your AssemblyAI API key.",
           "valueType": {
             "container": {
               "optional": {
@@ -55248,6 +55533,7 @@
             },
             "wireValue": "sample_rate"
           },
+          "docs": "The sample rate of the streamed audio.",
           "valueType": {
             "container": {
               "optional": {
@@ -55289,6 +55575,7 @@
             },
             "wireValue": "word_boost"
           },
+          "docs": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
           "valueType": {
             "container": {
               "optional": {
@@ -55330,6 +55617,7 @@
             },
             "wireValue": "token"
           },
+          "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
           "valueType": {
             "container": {
               "optional": {
@@ -55350,7 +55638,84 @@
         }
       ],
       "pathParameters": [],
-      "messages": [],
+      "messages": [
+        {
+          "type": "receiveMessage",
+          "displayName": "receiveMessage",
+          "origin": "server",
+          "body": {
+            "bodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "receiveMessage",
+                "camelCase": {
+                  "unsafeName": "receiveMessage",
+                  "safeName": "receiveMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "receive_message",
+                  "safeName": "receive_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RECEIVE_MESSAGE",
+                  "safeName": "RECEIVE_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "ReceiveMessage",
+                  "safeName": "ReceiveMessage"
+                }
+              },
+              "typeId": "receiveMessage",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Receive messages from the WebSocket",
+            "type": "reference"
+          },
+          "docs": "Receive messages from the WebSocket"
+        },
+        {
+          "type": "sendMessage",
+          "displayName": "sendMessage",
+          "origin": "server",
+          "body": {
+            "bodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "sendMessage",
+                "camelCase": {
+                  "unsafeName": "sendMessage",
+                  "safeName": "sendMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "send_message",
+                  "safeName": "send_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEND_MESSAGE",
+                  "safeName": "SEND_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SendMessage",
+                  "safeName": "SendMessage"
+                }
+              },
+              "typeId": "sendMessage",
+              "inline": false,
+              "type": "named"
+            },
+            "docs": "Send messages to the WebSocket",
+            "type": "reference"
+          },
+          "docs": "Send messages to the WebSocket"
+        }
+      ],
       "examples": []
     }
   },

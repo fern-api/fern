@@ -546,22 +546,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "ChatRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "chatRequest",
+                  "safeName": "chatRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "chat_request",
+                  "safeName": "chat_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CHAT_REQUEST",
+                  "safeName": "CHAT_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ChatRequest",
+                  "safeName": "ChatRequest"
                 }
               },
               "typeId": "ChatRequest",
@@ -580,22 +580,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ChatFullResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "chatFullResponse",
+                      "safeName": "chatFullResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "chat_full_response",
+                      "safeName": "chat_full_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "CHAT_FULL_RESPONSE",
+                      "safeName": "CHAT_FULL_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ChatFullResponse",
+                      "safeName": "ChatFullResponse"
                     }
                   },
                   "typeId": "ChatFullResponse",

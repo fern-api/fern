@@ -50,7 +50,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                     packagePath: [],
                     file: undefined
                 },
-                name: this.casingsGenerator.generateName(""),
+                name: this.casingsGenerator.generateName(typeId),
                 typeId,
                 default: undefined,
                 inline: false

@@ -161,22 +161,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Schema1",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema1",
+                  "safeName": "schema1"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema_1",
+                  "safeName": "schema_1"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SCHEMA_1",
+                  "safeName": "SCHEMA_1"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Schema1",
+                  "safeName": "Schema1"
                 }
               },
               "typeId": "Schema1",
