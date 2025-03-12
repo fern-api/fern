@@ -20,7 +20,6 @@ public class Example12 {
             CreatePlaylistRequest
                 .builder()
                 .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .optionalDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .body(
                     PlaylistCreateRequest
                         .builder()
@@ -32,6 +31,7 @@ public class Example12 {
                         )
                         .build()
                 )
+                .optionalDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .build()
         );
     }

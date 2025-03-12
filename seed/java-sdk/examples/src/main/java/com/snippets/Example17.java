@@ -18,12 +18,12 @@ public class Example17 {
             GetMetadataRequest
                 .builder()
                 .xApiVersion("X-API-Version")
-                .shallow(true)
                 .tag(
                     new ArrayList<Optional<String>>(
                         Arrays.asList("tag")
                     )
                 )
+                .shallow(true)
                 .build()
         );
     }

@@ -21,7 +21,6 @@ public class Example0 {
                         Arrays.asList("usernames")
                     )
                 )
-                .avatar("avatar")
                 .activated(
                     new ArrayList<Optional<Boolean>>(
                         Arrays.asList(true)
@@ -32,6 +31,7 @@ public class Example0 {
                         Arrays.asList("tags")
                     )
                 )
+                .avatar("avatar")
                 .extra(true)
                 .build()
         );

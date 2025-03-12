@@ -19,6 +19,7 @@ public class Example15 {
                 .title("title")
                 .from("from")
                 .rating(1.1)
+                .type("movie")
                 .tag("tag")
                 .metadata(
                     new HashMap<String, Object>() {{

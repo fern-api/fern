@@ -21,6 +21,7 @@ public class Example14 {
                 .title("The Boy and the Heron")
                 .from("Hayao Miyazaki")
                 .rating(8)
+                .type("movie")
                 .tag("tag-wf9as23d")
                 .metadata(
                     new HashMap<String, Object>() {{

@@ -17,6 +17,9 @@ public class Example8 {
         client.reference().send(
             SendRequest
                 .builder()
+                .prompt("You are a helpful assistant")
+                .stream(false)
+                .context("You're super wise")
                 .query("What is the weather today")
                 .containerObject(
                     ContainerObject
@@ -26,6 +29,8 @@ public class Example8 {
                                 Arrays.asList(
                                     NestedObjectWithLiterals
                                         .builder()
+                                        .literal1("literal1")
+                                        .literal2("literal2")
                                         .strProp("strProp")
                                         .build()
                                 )

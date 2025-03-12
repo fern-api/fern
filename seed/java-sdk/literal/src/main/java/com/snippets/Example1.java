@@ -13,6 +13,8 @@ public class Example1 {
         client.headers().send(
             SendLiteralsInHeadersRequest
                 .builder()
+                .endpointVersion("02-12-2024")
+                .async(true)
                 .query("query")
                 .build()
         );

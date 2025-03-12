@@ -18,7 +18,6 @@ public class Example13 {
             1,
             GetPlaylistsRequest
                 .builder()
-                .limit(1)
                 .otherField("otherField")
                 .multiLineDocs("multiLineDocs")
                 .optionalMultipleField(
@@ -31,6 +30,7 @@ public class Example13 {
                         Arrays.asList("multipleField")
                     )
                 )
+                .limit(1)
                 .build()
         );
     }

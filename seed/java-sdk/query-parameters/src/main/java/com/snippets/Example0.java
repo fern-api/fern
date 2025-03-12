@@ -60,13 +60,11 @@ public class Example0 {
                         )
                     )
                 )
-                .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(
                     new HashMap<String, String>() {{
                         put("keyValue", "keyValue");
                     }}
                 )
-                .optionalString("optionalString")
                 .nestedUser(
                     NestedUser
                         .builder()
@@ -81,17 +79,6 @@ public class Example0 {
                                     )
                                 )
                                 .build()
-                        )
-                        .build()
-                )
-                .optionalUser(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
                         )
                         .build()
                 )
@@ -114,6 +101,19 @@ public class Example0 {
                     new ArrayList<String>(
                         Arrays.asList("filter")
                     )
+                )
+                .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .optionalString("optionalString")
+                .optionalUser(
+                    User
+                        .builder()
+                        .name("name")
+                        .tags(
+                            new ArrayList<String>(
+                                Arrays.asList("tags", "tags")
+                            )
+                        )
+                        .build()
                 )
                 .build()
         );

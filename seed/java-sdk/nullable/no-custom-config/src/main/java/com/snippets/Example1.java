@@ -29,10 +29,10 @@ public class Example1 {
                         .builder()
                         .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                         .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .avatar("avatar")
                         .status(
                             Status.active()
                         )
+                        .avatar("avatar")
                         .activated(true)
                         .build()
                 )

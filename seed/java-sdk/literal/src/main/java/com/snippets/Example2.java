@@ -15,18 +15,24 @@ public class Example2 {
         client.inlined().send(
             SendLiteralsInlinedRequest
                 .builder()
-                .temperature(10.1)
+                .prompt("You are a helpful assistant")
+                .aliasedContext("You're super wise")
                 .objectWithLiteral(
                     ATopLevelLiteral
                         .builder()
                         .nestedLiteral(
                             ANestedLiteral
                                 .builder()
+                                .myLiteral("How super cool")
                                 .build()
                         )
                         .build()
                 )
+                .stream(false)
                 .query("What is the weather today")
+                .temperature(10.1)
+                .context("You're super wise")
+                .maybeContext("You're super wise")
                 .build()
         );
     }

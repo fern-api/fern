@@ -9,6 +9,6 @@ public class Example4 {
             .url("https://api.fern.com")
             .build();
 
-        client.path().send();
+        client.path().send("123");
     }
 }

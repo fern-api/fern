@@ -13,6 +13,8 @@ public class Example0 {
         client.user().createUser(
             CreateUserRequest
                 .builder()
+                .type("CreateUserRequest")
+                .version("v1")
                 .name("name")
                 .build()
         );

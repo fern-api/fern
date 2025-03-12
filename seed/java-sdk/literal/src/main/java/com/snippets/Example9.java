@@ -17,7 +17,11 @@ public class Example9 {
         client.reference().send(
             SendRequest
                 .builder()
+                .prompt("You are a helpful assistant")
                 .query("query")
+                .stream(false)
+                .ending("$ending")
+                .context("You're super wise")
                 .containerObject(
                     ContainerObject
                         .builder()
@@ -26,10 +30,14 @@ public class Example9 {
                                 Arrays.asList(
                                     NestedObjectWithLiterals
                                         .builder()
+                                        .literal1("literal1")
+                                        .literal2("literal2")
                                         .strProp("strProp")
                                         .build(),
                                     NestedObjectWithLiterals
                                         .builder()
+                                        .literal1("literal1")
+                                        .literal2("literal2")
                                         .strProp("strProp")
                                         .build()
                                 )
@@ -37,6 +45,7 @@ public class Example9 {
                         )
                         .build()
                 )
+                .maybeContext("You're super wise")
                 .build()
         );
     }

@@ -13,6 +13,7 @@ public class Example2 {
         client.dummy().generate(
             Generateequest
                 .builder()
+                .stream(false)
                 .numEvents(1)
                 .build()
         );
