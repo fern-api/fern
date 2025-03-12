@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Remove 'object' from Java reserved strings list
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.2
+- changelogEntry:
+    - summary: |
         Add @JsonIgnore to non-serialization getters for nullables
       type: fix
   createdAt: '2025-03-11'
