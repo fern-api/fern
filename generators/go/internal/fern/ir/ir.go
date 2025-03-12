@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -251,20 +251,20 @@ func (a *ApiVersionScheme) validate() error {
 }
 
 type ErrorDiscriminationByPropertyStrategy struct {
-	Discriminant    *common.NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
-	ContentProperty *common.NameAndWireValue `json:"contentProperty,omitempty" url:"contentProperty,omitempty"`
+	Discriminant    *NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
+	ContentProperty *NameAndWireValue `json:"contentProperty,omitempty" url:"contentProperty,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ErrorDiscriminationByPropertyStrategy) GetDiscriminant() *common.NameAndWireValue {
+func (e *ErrorDiscriminationByPropertyStrategy) GetDiscriminant() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
 	return e.Discriminant
 }
 
-func (e *ErrorDiscriminationByPropertyStrategy) GetContentProperty() *common.NameAndWireValue {
+func (e *ErrorDiscriminationByPropertyStrategy) GetContentProperty() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -489,37 +489,36 @@ type IntermediateRepresentation struct {
 	FdrApiDefinitionId *string           `json:"fdrApiDefinitionId,omitempty" url:"fdrApiDefinitionId,omitempty"`
 	ApiVersion         *ApiVersionScheme `json:"apiVersion,omitempty" url:"apiVersion,omitempty"`
 	// This is the human readable unique id for the API.
-	ApiName        *common.Name `json:"apiName,omitempty" url:"apiName,omitempty"`
-	ApiDisplayName *string      `json:"apiDisplayName,omitempty" url:"apiDisplayName,omitempty"`
-	ApiDocs        *string      `json:"apiDocs,omitempty" url:"apiDocs,omitempty"`
-	Auth           *ApiAuth     `json:"auth,omitempty" url:"auth,omitempty"`
+	ApiName        *Name    `json:"apiName,omitempty" url:"apiName,omitempty"`
+	ApiDisplayName *string  `json:"apiDisplayName,omitempty" url:"apiDisplayName,omitempty"`
+	ApiDocs        *string  `json:"apiDocs,omitempty" url:"apiDocs,omitempty"`
+	Auth           *ApiAuth `json:"auth,omitempty" url:"auth,omitempty"`
 	// API Wide headers that are sent on every request
 	Headers []*HttpHeader `json:"headers,omitempty" url:"headers,omitempty"`
 	// Headers that are sent for idempotent endpoints
 	IdempotencyHeaders []*HttpHeader `json:"idempotencyHeaders,omitempty" url:"idempotencyHeaders,omitempty"`
 	// The types described by this API
-	Types map[common.TypeId]*TypeDeclaration `json:"types,omitempty" url:"types,omitempty"`
+	Types map[TypeId]*TypeDeclaration `json:"types,omitempty" url:"types,omitempty"`
 	// The services exposed by this API
 	Services map[ServiceId]*HttpService `json:"services,omitempty" url:"services,omitempty"`
 	// The webhooks sent by this API
 	WebhookGroups map[WebhookGroupId]WebhookGroup `json:"webhookGroups,omitempty" url:"webhookGroups,omitempty"`
 	// The websocket channels served by this API
-	WebsocketChannels           map[WebSocketChannelId]*WebSocketChannel   `json:"websocketChannels,omitempty" url:"websocketChannels,omitempty"`
-	Errors                      map[ErrorId]*ErrorDeclaration              `json:"errors,omitempty" url:"errors,omitempty"`
-	Subpackages                 map[SubpackageId]*Subpackage               `json:"subpackages,omitempty" url:"subpackages,omitempty"`
-	RootPackage                 *Package                                   `json:"rootPackage,omitempty" url:"rootPackage,omitempty"`
-	Constants                   *Constants                                 `json:"constants,omitempty" url:"constants,omitempty"`
-	Environments                *common.EnvironmentsConfig                 `json:"environments,omitempty" url:"environments,omitempty"`
-	BasePath                    *HttpPath                                  `json:"basePath,omitempty" url:"basePath,omitempty"`
-	PathParameters              []*PathParameter                           `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
-	ErrorDiscriminationStrategy *ErrorDiscriminationStrategy               `json:"errorDiscriminationStrategy,omitempty" url:"errorDiscriminationStrategy,omitempty"`
-	SdkConfig                   *SdkConfig                                 `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
-	Variables                   []*VariableDeclaration                     `json:"variables,omitempty" url:"variables,omitempty"`
-	ServiceTypeReferenceInfo    *ServiceTypeReferenceInfo                  `json:"serviceTypeReferenceInfo,omitempty" url:"serviceTypeReferenceInfo,omitempty"`
-	ReadmeConfig                *ReadmeConfig                              `json:"readmeConfig,omitempty" url:"readmeConfig,omitempty"`
-	SourceConfig                *SourceConfig                              `json:"sourceConfig,omitempty" url:"sourceConfig,omitempty"`
-	PublishConfig               *PublishingConfig                          `json:"publishConfig,omitempty" url:"publishConfig,omitempty"`
-	Dynamic                     *dynamic.DynamicIntermediateRepresentation `json:"dynamic,omitempty" url:"dynamic,omitempty"`
+	WebsocketChannels           map[WebSocketChannelId]*WebSocketChannel `json:"websocketChannels,omitempty" url:"websocketChannels,omitempty"`
+	Errors                      map[ErrorId]*ErrorDeclaration            `json:"errors,omitempty" url:"errors,omitempty"`
+	Subpackages                 map[SubpackageId]*Subpackage             `json:"subpackages,omitempty" url:"subpackages,omitempty"`
+	RootPackage                 *Package                                 `json:"rootPackage,omitempty" url:"rootPackage,omitempty"`
+	Constants                   *Constants                               `json:"constants,omitempty" url:"constants,omitempty"`
+	Environments                *EnvironmentsConfig                      `json:"environments,omitempty" url:"environments,omitempty"`
+	BasePath                    *HttpPath                                `json:"basePath,omitempty" url:"basePath,omitempty"`
+	PathParameters              []*PathParameter                         `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
+	ErrorDiscriminationStrategy *ErrorDiscriminationStrategy             `json:"errorDiscriminationStrategy,omitempty" url:"errorDiscriminationStrategy,omitempty"`
+	SdkConfig                   *SdkConfig                               `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
+	Variables                   []*VariableDeclaration                   `json:"variables,omitempty" url:"variables,omitempty"`
+	ServiceTypeReferenceInfo    *ServiceTypeReferenceInfo                `json:"serviceTypeReferenceInfo,omitempty" url:"serviceTypeReferenceInfo,omitempty"`
+	ReadmeConfig                *ReadmeConfig                            `json:"readmeConfig,omitempty" url:"readmeConfig,omitempty"`
+	SourceConfig                *SourceConfig                            `json:"sourceConfig,omitempty" url:"sourceConfig,omitempty"`
+	PublishConfig               *PublishingConfig                        `json:"publishConfig,omitempty" url:"publishConfig,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -538,7 +537,7 @@ func (i *IntermediateRepresentation) GetApiVersion() *ApiVersionScheme {
 	return i.ApiVersion
 }
 
-func (i *IntermediateRepresentation) GetApiName() *common.Name {
+func (i *IntermediateRepresentation) GetApiName() *Name {
 	if i == nil {
 		return nil
 	}
@@ -580,7 +579,7 @@ func (i *IntermediateRepresentation) GetIdempotencyHeaders() []*HttpHeader {
 	return i.IdempotencyHeaders
 }
 
-func (i *IntermediateRepresentation) GetTypes() map[common.TypeId]*TypeDeclaration {
+func (i *IntermediateRepresentation) GetTypes() map[TypeId]*TypeDeclaration {
 	if i == nil {
 		return nil
 	}
@@ -636,7 +635,7 @@ func (i *IntermediateRepresentation) GetConstants() *Constants {
 	return i.Constants
 }
 
-func (i *IntermediateRepresentation) GetEnvironments() *common.EnvironmentsConfig {
+func (i *IntermediateRepresentation) GetEnvironments() *EnvironmentsConfig {
 	if i == nil {
 		return nil
 	}
@@ -706,13 +705,6 @@ func (i *IntermediateRepresentation) GetPublishConfig() *PublishingConfig {
 	return i.PublishConfig
 }
 
-func (i *IntermediateRepresentation) GetDynamic() *dynamic.DynamicIntermediateRepresentation {
-	if i == nil {
-		return nil
-	}
-	return i.Dynamic
-}
-
 func (i *IntermediateRepresentation) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -741,9 +733,9 @@ func (i *IntermediateRepresentation) String() string {
 
 type Package struct {
 	Docs               *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *common.FernFilepath     `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath       *FernFilepath            `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
 	Service            *ServiceId               `json:"service,omitempty" url:"service,omitempty"`
-	Types              []common.TypeId          `json:"types,omitempty" url:"types,omitempty"`
+	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
 	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
 	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
 	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
@@ -761,7 +753,7 @@ func (p *Package) GetDocs() *string {
 	return p.Docs
 }
 
-func (p *Package) GetFernFilepath() *common.FernFilepath {
+func (p *Package) GetFernFilepath() *FernFilepath {
 	if p == nil {
 		return nil
 	}
@@ -775,7 +767,7 @@ func (p *Package) GetService() *ServiceId {
 	return p.Service
 }
 
-func (p *Package) GetTypes() []common.TypeId {
+func (p *Package) GetTypes() []TypeId {
 	if p == nil {
 		return nil
 	}
@@ -1007,18 +999,18 @@ type ReadmeConfig struct {
 	// If specified, this endpoint should be used in every snippet (if possible).
 	// Note that some endpoints aren't suitable for every feature (e.g. a non-list
 	// endpoint for pagination), so the default is a no-op in those cases.
-	DefaultEndpoint  *common.EndpointId `json:"defaultEndpoint,omitempty" url:"defaultEndpoint,omitempty"`
-	BannerLink       *string            `json:"bannerLink,omitempty" url:"bannerLink,omitempty"`
-	Introduction     *string            `json:"introduction,omitempty" url:"introduction,omitempty"`
-	ApiReferenceLink *string            `json:"apiReferenceLink,omitempty" url:"apiReferenceLink,omitempty"`
+	DefaultEndpoint  *EndpointId `json:"defaultEndpoint,omitempty" url:"defaultEndpoint,omitempty"`
+	BannerLink       *string     `json:"bannerLink,omitempty" url:"bannerLink,omitempty"`
+	Introduction     *string     `json:"introduction,omitempty" url:"introduction,omitempty"`
+	ApiReferenceLink *string     `json:"apiReferenceLink,omitempty" url:"apiReferenceLink,omitempty"`
 	// If specified, configures the list of endpoints to associate
 	// with each feature.
-	Features map[FeatureId][]common.EndpointId `json:"features,omitempty" url:"features,omitempty"`
+	Features map[FeatureId][]EndpointId `json:"features,omitempty" url:"features,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (r *ReadmeConfig) GetDefaultEndpoint() *common.EndpointId {
+func (r *ReadmeConfig) GetDefaultEndpoint() *EndpointId {
 	if r == nil {
 		return nil
 	}
@@ -1046,7 +1038,7 @@ func (r *ReadmeConfig) GetApiReferenceLink() *string {
 	return r.ApiReferenceLink
 }
 
-func (r *ReadmeConfig) GetFeatures() map[FeatureId][]common.EndpointId {
+func (r *ReadmeConfig) GetFeatures() map[FeatureId][]EndpointId {
 	if r == nil {
 		return nil
 	}
@@ -1152,21 +1144,21 @@ func (s *SdkConfig) String() string {
 
 type ServiceTypeReferenceInfo struct {
 	// Types referenced by exactly one service.
-	TypesReferencedOnlyByService map[ServiceId][]common.TypeId `json:"typesReferencedOnlyByService,omitempty" url:"typesReferencedOnlyByService,omitempty"`
+	TypesReferencedOnlyByService map[ServiceId][]TypeId `json:"typesReferencedOnlyByService,omitempty" url:"typesReferencedOnlyByService,omitempty"`
 	// Types referenced by either zero or multiple services.
-	SharedTypes []common.TypeId `json:"sharedTypes,omitempty" url:"sharedTypes,omitempty"`
+	SharedTypes []TypeId `json:"sharedTypes,omitempty" url:"sharedTypes,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (s *ServiceTypeReferenceInfo) GetTypesReferencedOnlyByService() map[ServiceId][]common.TypeId {
+func (s *ServiceTypeReferenceInfo) GetTypesReferencedOnlyByService() map[ServiceId][]TypeId {
 	if s == nil {
 		return nil
 	}
 	return s.TypesReferencedOnlyByService
 }
 
-func (s *ServiceTypeReferenceInfo) GetSharedTypes() []common.TypeId {
+func (s *ServiceTypeReferenceInfo) GetSharedTypes() []TypeId {
 	if s == nil {
 		return nil
 	}
@@ -1241,16 +1233,16 @@ func (s *SourceConfig) String() string {
 
 type Subpackage struct {
 	Docs               *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	FernFilepath       *common.FernFilepath     `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath       *FernFilepath            `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
 	Service            *ServiceId               `json:"service,omitempty" url:"service,omitempty"`
-	Types              []common.TypeId          `json:"types,omitempty" url:"types,omitempty"`
+	Types              []TypeId                 `json:"types,omitempty" url:"types,omitempty"`
 	Errors             []ErrorId                `json:"errors,omitempty" url:"errors,omitempty"`
 	Webhooks           *WebhookGroupId          `json:"webhooks,omitempty" url:"webhooks,omitempty"`
 	Websocket          *WebSocketChannelId      `json:"websocket,omitempty" url:"websocket,omitempty"`
 	Subpackages        []SubpackageId           `json:"subpackages,omitempty" url:"subpackages,omitempty"`
 	HasEndpointsInTree bool                     `json:"hasEndpointsInTree" url:"hasEndpointsInTree"`
 	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty" url:"navigationConfig,omitempty"`
-	Name               *common.Name             `json:"name,omitempty" url:"name,omitempty"`
+	Name               *Name                    `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -1262,7 +1254,7 @@ func (s *Subpackage) GetDocs() *string {
 	return s.Docs
 }
 
-func (s *Subpackage) GetFernFilepath() *common.FernFilepath {
+func (s *Subpackage) GetFernFilepath() *FernFilepath {
 	if s == nil {
 		return nil
 	}
@@ -1276,7 +1268,7 @@ func (s *Subpackage) GetService() *ServiceId {
 	return s.Service
 }
 
-func (s *Subpackage) GetTypes() []common.TypeId {
+func (s *Subpackage) GetTypes() []TypeId {
 	if s == nil {
 		return nil
 	}
@@ -1325,7 +1317,7 @@ func (s *Subpackage) GetNavigationConfig() *PackageNavigationConfig {
 	return s.NavigationConfig
 }
 
-func (s *Subpackage) GetName() *common.Name {
+func (s *Subpackage) GetName() *Name {
 	if s == nil {
 		return nil
 	}

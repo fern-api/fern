@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -181,7 +181,7 @@ type ProtobufService struct {
 	// The `.proto` source file that defines this service.
 	File *ProtobufFile `json:"file,omitempty" url:"file,omitempty"`
 	// The name of the service defined in the `.proto` file (e.g. UserService).
-	Name *common.Name `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -193,7 +193,7 @@ func (p *ProtobufService) GetFile() *ProtobufFile {
 	return p.File
 }
 
-func (p *ProtobufService) GetName() *common.Name {
+func (p *ProtobufService) GetName() *Name {
 	if p == nil {
 		return nil
 	}
@@ -395,7 +395,7 @@ type UserDefinedProtobufType struct {
 	// This name is _usually_ equivalent to the associated DeclaredTypeName's name.
 	// However, its repeated here just in case the naming convention differs, which
 	// is most relevant for APIs that specify `smart-casing`.
-	Name *common.Name `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -407,7 +407,7 @@ func (u *UserDefinedProtobufType) GetFile() *ProtobufFile {
 	return u.File
 }
 
-func (u *UserDefinedProtobufType) GetName() *common.Name {
+func (u *UserDefinedProtobufType) GetName() *Name {
 	if u == nil {
 		return nil
 	}
@@ -472,7 +472,7 @@ type WellKnownProtobufType struct {
 	Struct           interface{}
 	Syntax           interface{}
 	Timestamp        interface{}
-	Type             interface{}
+	Type_            interface{}
 	Uint32Value      interface{}
 	Uint64Value      interface{}
 	Value            interface{}
@@ -583,7 +583,7 @@ func NewWellKnownProtobufTypeFromTimestamp(value interface{}) *WellKnownProtobuf
 }
 
 func NewWellKnownProtobufTypeFromType(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "type", Type: value}
+	return &WellKnownProtobufType{Type: "type", Type_: value}
 }
 
 func NewWellKnownProtobufTypeFromUint32Value(value interface{}) *WellKnownProtobufType {
@@ -787,7 +787,7 @@ func (w *WellKnownProtobufType) GetTimestamp() interface{} {
 	return w.Timestamp
 }
 
-func (w *WellKnownProtobufType) GetType() interface{} {
+func (w *WellKnownProtobufType) GetType_() interface{} {
 	if w == nil {
 		return nil
 	}
@@ -988,7 +988,7 @@ func (w *WellKnownProtobufType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		w.Type = value
+		w.Type_ = value
 	case "uint32Value":
 		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -1254,11 +1254,11 @@ func (w WellKnownProtobufType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "type":
 		var marshaler = struct {
-			Type string      `json:"type"`
-			Type interface{} `json:"type,omitempty"`
+			Type  string      `json:"type"`
+			Type_ interface{} `json:"type,omitempty"`
 		}{
-			Type: "type",
-			Type: w.Type,
+			Type:  "type",
+			Type_: w.Type_,
 		}
 		return json.Marshal(marshaler)
 	case "uint32Value":
@@ -1474,7 +1474,7 @@ func (w *WellKnownProtobufType) validate() error {
 	if w.Timestamp != nil {
 		fields = append(fields, "timestamp")
 	}
-	if w.Type != nil {
+	if w.Type_ != nil {
 		fields = append(fields, "type")
 	}
 	if w.Uint32Value != nil {

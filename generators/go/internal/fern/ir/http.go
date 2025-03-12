@@ -6,7 +6,6 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -247,12 +246,12 @@ func (c *CustomPagination) String() string {
 }
 
 type DeclaredServiceName struct {
-	FernFilepath *common.FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (d *DeclaredServiceName) GetFernFilepath() *common.FernFilepath {
+func (d *DeclaredServiceName) GetFernFilepath() *FernFilepath {
 	if d == nil {
 		return nil
 	}
@@ -285,7 +284,7 @@ func (d *DeclaredServiceName) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
-type EndpointName = *common.Name
+type EndpointName = *Name
 
 type ExampleCodeSample struct {
 	Type     string
@@ -418,9 +417,9 @@ func (e *ExampleCodeSample) validate() error {
 type ExampleCodeSampleLanguage struct {
 	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
 	// Override the example name.
-	Name     *common.Name `json:"name,omitempty" url:"name,omitempty"`
-	Language string       `json:"language" url:"language"`
-	Code     string       `json:"code" url:"code"`
+	Name     *Name  `json:"name,omitempty" url:"name,omitempty"`
+	Language string `json:"language" url:"language"`
+	Code     string `json:"code" url:"code"`
 	// The command to install the dependencies for the code sample.
 	// For example, `npm install` or `pip install -r requirements.txt`.
 	Install *string `json:"install,omitempty" url:"install,omitempty"`
@@ -435,7 +434,7 @@ func (e *ExampleCodeSampleLanguage) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleCodeSampleLanguage) GetName() *common.Name {
+func (e *ExampleCodeSampleLanguage) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -493,7 +492,7 @@ func (e *ExampleCodeSampleLanguage) String() string {
 type ExampleCodeSampleSdk struct {
 	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
 	// Override the example name.
-	Name *common.Name         `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name                `json:"name,omitempty" url:"name,omitempty"`
 	Sdk  SupportedSdkLanguage `json:"sdk" url:"sdk"`
 	Code string               `json:"code" url:"code"`
 
@@ -507,7 +506,7 @@ func (e *ExampleCodeSampleSdk) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleCodeSampleSdk) GetName() *common.Name {
+func (e *ExampleCodeSampleSdk) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -557,7 +556,7 @@ func (e *ExampleCodeSampleSdk) String() string {
 type ExampleEndpointCall struct {
 	Docs                   *string                  `json:"docs,omitempty" url:"docs,omitempty"`
 	Id                     *string                  `json:"id,omitempty" url:"id,omitempty"`
-	Name                   *common.Name             `json:"name,omitempty" url:"name,omitempty"`
+	Name                   *Name                    `json:"name,omitempty" url:"name,omitempty"`
 	Url                    string                   `json:"url" url:"url"`
 	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters,omitempty" url:"rootPathParameters,omitempty"`
 	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters,omitempty" url:"servicePathParameters,omitempty"`
@@ -585,7 +584,7 @@ func (e *ExampleEndpointCall) GetId() *string {
 	return e.Id
 }
 
-func (e *ExampleEndpointCall) GetName() *common.Name {
+func (e *ExampleEndpointCall) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -909,13 +908,13 @@ func (e *ExampleEndpointSuccessResponse) validate() error {
 }
 
 type ExampleHeader struct {
-	Name  *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference    `json:"value,omitempty" url:"value,omitempty"`
+	Name  *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleHeader) GetName() *common.NameAndWireValue {
+func (e *ExampleHeader) GetName() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1003,8 +1002,8 @@ func (e *ExampleInlinedRequestBody) String() string {
 }
 
 type ExampleInlinedRequestBodyProperty struct {
-	Name  *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference    `json:"value,omitempty" url:"value,omitempty"`
+	Name  *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 	// This property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty" url:"originalTypeDeclaration,omitempty"`
@@ -1012,7 +1011,7 @@ type ExampleInlinedRequestBodyProperty struct {
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleInlinedRequestBodyProperty) GetName() *common.NameAndWireValue {
+func (e *ExampleInlinedRequestBodyProperty) GetName() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1060,13 +1059,13 @@ func (e *ExampleInlinedRequestBodyProperty) String() string {
 }
 
 type ExamplePathParameter struct {
-	Name  *common.Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name  *Name                 `json:"name,omitempty" url:"name,omitempty"`
 	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExamplePathParameter) GetName() *common.Name {
+func (e *ExamplePathParameter) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -1107,14 +1106,14 @@ func (e *ExamplePathParameter) String() string {
 }
 
 type ExampleQueryParameter struct {
-	Name  *common.NameAndWireValue    `json:"name,omitempty" url:"name,omitempty"`
+	Name  *NameAndWireValue           `json:"name,omitempty" url:"name,omitempty"`
 	Value *ExampleTypeReference       `json:"value,omitempty" url:"value,omitempty"`
 	Shape *ExampleQueryParameterShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleQueryParameter) GetName() *common.NameAndWireValue {
+func (e *ExampleQueryParameter) GetName() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1812,10 +1811,10 @@ func (f *FileProperty) validate() error {
 }
 
 type FilePropertyArray struct {
-	Docs        *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Key         *common.NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
-	IsOptional  bool                     `json:"isOptional" url:"isOptional"`
-	ContentType *string                  `json:"contentType,omitempty" url:"contentType,omitempty"`
+	Docs        *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Key         *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
+	IsOptional  bool              `json:"isOptional" url:"isOptional"`
+	ContentType *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -1827,7 +1826,7 @@ func (f *FilePropertyArray) GetDocs() *string {
 	return f.Docs
 }
 
-func (f *FilePropertyArray) GetKey() *common.NameAndWireValue {
+func (f *FilePropertyArray) GetKey() *NameAndWireValue {
 	if f == nil {
 		return nil
 	}
@@ -1875,10 +1874,10 @@ func (f *FilePropertyArray) String() string {
 }
 
 type FilePropertySingle struct {
-	Docs        *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Key         *common.NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
-	IsOptional  bool                     `json:"isOptional" url:"isOptional"`
-	ContentType *string                  `json:"contentType,omitempty" url:"contentType,omitempty"`
+	Docs        *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Key         *NameAndWireValue `json:"key,omitempty" url:"key,omitempty"`
+	IsOptional  bool              `json:"isOptional" url:"isOptional"`
+	ContentType *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -1890,7 +1889,7 @@ func (f *FilePropertySingle) GetDocs() *string {
 	return f.Docs
 }
 
-func (f *FilePropertySingle) GetKey() *common.NameAndWireValue {
+func (f *FilePropertySingle) GetKey() *NameAndWireValue {
 	if f == nil {
 		return nil
 	}
@@ -1940,7 +1939,7 @@ func (f *FilePropertySingle) String() string {
 type FileUploadBodyProperty struct {
 	Docs         *string                         `json:"docs,omitempty" url:"docs,omitempty"`
 	Availability *Availability                   `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue        `json:"name,omitempty" url:"name,omitempty"`
+	Name         *NameAndWireValue               `json:"name,omitempty" url:"name,omitempty"`
 	ValueType    *TypeReference                  `json:"valueType,omitempty" url:"valueType,omitempty"`
 	ContentType  *string                         `json:"contentType,omitempty" url:"contentType,omitempty"`
 	Style        *FileUploadBodyPropertyEncoding `json:"style,omitempty" url:"style,omitempty"`
@@ -1962,7 +1961,7 @@ func (f *FileUploadBodyProperty) GetAvailability() *Availability {
 	return f.Availability
 }
 
-func (f *FileUploadBodyProperty) GetName() *common.NameAndWireValue {
+func (f *FileUploadBodyProperty) GetName() *NameAndWireValue {
 	if f == nil {
 		return nil
 	}
@@ -2043,7 +2042,7 @@ func (f FileUploadBodyPropertyEncoding) Ptr() *FileUploadBodyPropertyEncoding {
 
 type FileUploadRequest struct {
 	Docs       *string                      `json:"docs,omitempty" url:"docs,omitempty"`
-	Name       *common.Name                 `json:"name,omitempty" url:"name,omitempty"`
+	Name       *Name                        `json:"name,omitempty" url:"name,omitempty"`
 	Properties []*FileUploadRequestProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -2056,7 +2055,7 @@ func (f *FileUploadRequest) GetDocs() *string {
 	return f.Docs
 }
 
-func (f *FileUploadRequest) GetName() *common.Name {
+func (f *FileUploadRequest) GetName() *Name {
 	if f == nil {
 		return nil
 	}
@@ -2272,14 +2271,14 @@ func (g *GrpcTransport) String() string {
 }
 
 type HttpEndpoint struct {
-	Docs         *string                      `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability                `json:"availability,omitempty" url:"availability,omitempty"`
-	Id           common.EndpointId            `json:"id" url:"id"`
-	Name         EndpointName                 `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName  *string                      `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Method       common.HttpMethod            `json:"method" url:"method"`
-	Headers      []*HttpHeader                `json:"headers,omitempty" url:"headers,omitempty"`
-	BaseUrl      *common.EnvironmentBaseUrlId `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
+	Docs         *string               `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
+	Id           EndpointId            `json:"id" url:"id"`
+	Name         EndpointName          `json:"name,omitempty" url:"name,omitempty"`
+	DisplayName  *string               `json:"displayName,omitempty" url:"displayName,omitempty"`
+	Method       HttpMethod            `json:"method" url:"method"`
+	Headers      []*HttpHeader         `json:"headers,omitempty" url:"headers,omitempty"`
+	BaseUrl      *EnvironmentBaseUrlId `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
 	// Overrides the service and endpoint level base paths
 	BasePath              *HttpPath                       `json:"basePath,omitempty" url:"basePath,omitempty"`
 	Path                  *HttpPath                       `json:"path,omitempty" url:"path,omitempty"`
@@ -2315,7 +2314,7 @@ func (h *HttpEndpoint) GetAvailability() *Availability {
 	return h.Availability
 }
 
-func (h *HttpEndpoint) GetId() common.EndpointId {
+func (h *HttpEndpoint) GetId() EndpointId {
 	if h == nil {
 		return ""
 	}
@@ -2336,7 +2335,7 @@ func (h *HttpEndpoint) GetDisplayName() *string {
 	return h.DisplayName
 }
 
-func (h *HttpEndpoint) GetMethod() common.HttpMethod {
+func (h *HttpEndpoint) GetMethod() HttpMethod {
 	if h == nil {
 		return ""
 	}
@@ -2350,7 +2349,7 @@ func (h *HttpEndpoint) GetHeaders() []*HttpHeader {
 	return h.Headers
 }
 
-func (h *HttpEndpoint) GetBaseUrl() *common.EnvironmentBaseUrlId {
+func (h *HttpEndpoint) GetBaseUrl() *EnvironmentBaseUrlId {
 	if h == nil {
 		return nil
 	}
@@ -2496,11 +2495,11 @@ func (h *HttpEndpoint) String() string {
 }
 
 type HttpHeader struct {
-	Docs         *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Env          *string                  `json:"env,omitempty" url:"env,omitempty"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Env          *string           `json:"env,omitempty" url:"env,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -2519,7 +2518,7 @@ func (h *HttpHeader) GetAvailability() *Availability {
 	return h.Availability
 }
 
-func (h *HttpHeader) GetName() *common.NameAndWireValue {
+func (h *HttpHeader) GetName() *NameAndWireValue {
 	if h == nil {
 		return nil
 	}
@@ -3297,7 +3296,7 @@ func (h *HttpService) String() string {
 
 type InlinedRequestBody struct {
 	Docs       *string                       `json:"docs,omitempty" url:"docs,omitempty"`
-	Name       *common.Name                  `json:"name,omitempty" url:"name,omitempty"`
+	Name       *Name                         `json:"name,omitempty" url:"name,omitempty"`
 	Extends    []*DeclaredTypeName           `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties []*InlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 	// A list of properties that all the parents of this request have.
@@ -3316,7 +3315,7 @@ func (i *InlinedRequestBody) GetDocs() *string {
 	return i.Docs
 }
 
-func (i *InlinedRequestBody) GetName() *common.Name {
+func (i *InlinedRequestBody) GetName() *Name {
 	if i == nil {
 		return nil
 	}
@@ -3358,10 +3357,6 @@ func (i *InlinedRequestBody) GetExtraProperties() bool {
 	return i.ExtraProperties
 }
 
-func (i *InlinedRequestBody) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
 func (i *InlinedRequestBody) UnmarshalJSON(data []byte) error {
 	type unmarshaler InlinedRequestBody
 	var value unmarshaler
@@ -3385,10 +3380,10 @@ func (i *InlinedRequestBody) String() string {
 }
 
 type InlinedRequestBodyProperty struct {
-	Docs         *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -3407,7 +3402,7 @@ func (i *InlinedRequestBodyProperty) GetAvailability() *Availability {
 	return i.Availability
 }
 
-func (i *InlinedRequestBodyProperty) GetName() *common.NameAndWireValue {
+func (i *InlinedRequestBodyProperty) GetName() *NameAndWireValue {
 	if i == nil {
 		return nil
 	}
@@ -4149,7 +4144,7 @@ func (p *Pagination) validate() error {
 
 type PathParameter struct {
 	Docs      *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *common.Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name      *Name                 `json:"name,omitempty" url:"name,omitempty"`
 	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
 	Location  PathParameterLocation `json:"location" url:"location"`
 	Variable  *VariableId           `json:"variable,omitempty" url:"variable,omitempty"`
@@ -4164,7 +4159,7 @@ func (p *PathParameter) GetDocs() *string {
 	return p.Docs
 }
 
-func (p *PathParameter) GetName() *common.Name {
+func (p *PathParameter) GetName() *Name {
 	if p == nil {
 		return nil
 	}
@@ -4244,11 +4239,11 @@ func (p PathParameterLocation) Ptr() *PathParameterLocation {
 }
 
 type QueryParameter struct {
-	Docs          *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability  *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name          *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType     *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
-	AllowMultiple bool                     `json:"allowMultiple" url:"allowMultiple"`
+	Docs          *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability  *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name          *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType     *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	AllowMultiple bool              `json:"allowMultiple" url:"allowMultiple"`
 
 	extraProperties map[string]interface{}
 }
@@ -4267,7 +4262,7 @@ func (q *QueryParameter) GetAvailability() *Availability {
 	return q.Availability
 }
 
-func (q *QueryParameter) GetName() *common.NameAndWireValue {
+func (q *QueryParameter) GetName() *NameAndWireValue {
 	if q == nil {
 		return nil
 	}
@@ -4319,13 +4314,13 @@ type RequestProperty struct {
 	// If empty, the property is defined at the top-level.
 	// Otherwise, the property is defined on the nested object identified
 	// by the path.
-	PropertyPath []*common.Name        `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	PropertyPath []*Name               `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
 	Property     *RequestPropertyValue `json:"property,omitempty" url:"property,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (r *RequestProperty) GetPropertyPath() []*common.Name {
+func (r *RequestProperty) GetPropertyPath() []*Name {
 	if r == nil {
 		return nil
 	}
@@ -4546,13 +4541,13 @@ type ResponseProperty struct {
 	// If empty, the property is defined at the top-level.
 	// Otherwise, the property is defined on the nested object identified
 	// by the path.
-	PropertyPath []*common.Name  `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	PropertyPath []*Name         `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
 	Property     *ObjectProperty `json:"property,omitempty" url:"property,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (r *ResponseProperty) GetPropertyPath() []*common.Name {
+func (r *ResponseProperty) GetPropertyPath() []*Name {
 	if r == nil {
 		return nil
 	}
@@ -4595,7 +4590,7 @@ func (r *ResponseProperty) String() string {
 type SdkRequest struct {
 	// The request property that controls whether or not the response is streamed.
 	StreamParameter      *RequestProperty `json:"streamParameter,omitempty" url:"streamParameter,omitempty"`
-	RequestParameterName *common.Name     `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
+	RequestParameterName *Name            `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
 	Shape                *SdkRequestShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -4608,7 +4603,7 @@ func (s *SdkRequest) GetStreamParameter() *RequestProperty {
 	return s.StreamParameter
 }
 
-func (s *SdkRequest) GetRequestParameterName() *common.Name {
+func (s *SdkRequest) GetRequestParameterName() *Name {
 	if s == nil {
 		return nil
 	}
@@ -4912,22 +4907,22 @@ func (s *SdkRequestShape) validate() error {
 }
 
 type SdkRequestWrapper struct {
-	WrapperName           *common.Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
-	BodyKey               *common.Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
-	IncludePathParameters *bool        `json:"includePathParameters,omitempty" url:"includePathParameters,omitempty"`
-	OnlyPathParameters    *bool        `json:"onlyPathParameters,omitempty" url:"onlyPathParameters,omitempty"`
+	WrapperName           *Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
+	BodyKey               *Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
+	IncludePathParameters *bool `json:"includePathParameters,omitempty" url:"includePathParameters,omitempty"`
+	OnlyPathParameters    *bool `json:"onlyPathParameters,omitempty" url:"onlyPathParameters,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (s *SdkRequestWrapper) GetWrapperName() *common.Name {
+func (s *SdkRequestWrapper) GetWrapperName() *Name {
 	if s == nil {
 		return nil
 	}
 	return s.WrapperName
 }
 
-func (s *SdkRequestWrapper) GetBodyKey() *common.Name {
+func (s *SdkRequestWrapper) GetBodyKey() *Name {
 	if s == nil {
 		return nil
 	}

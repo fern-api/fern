@@ -5,16 +5,16 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	uuid "github.com/google/uuid"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 	time "time"
+
+	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
+	uuid "github.com/google/uuid"
 )
 
 type DeclaredErrorName struct {
-	ErrorId      ErrorId              `json:"errorId" url:"errorId"`
-	FernFilepath *common.FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Name         *common.Name         `json:"name,omitempty" url:"name,omitempty"`
+	ErrorId      ErrorId       `json:"errorId" url:"errorId"`
+	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	Name         *Name         `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -26,14 +26,14 @@ func (d *DeclaredErrorName) GetErrorId() ErrorId {
 	return d.ErrorId
 }
 
-func (d *DeclaredErrorName) GetFernFilepath() *common.FernFilepath {
+func (d *DeclaredErrorName) GetFernFilepath() *FernFilepath {
 	if d == nil {
 		return nil
 	}
 	return d.FernFilepath
 }
 
-func (d *DeclaredErrorName) GetName() *common.Name {
+func (d *DeclaredErrorName) GetName() *Name {
 	if d == nil {
 		return nil
 	}
@@ -67,12 +67,12 @@ func (d *DeclaredErrorName) String() string {
 }
 
 type ErrorDeclaration struct {
-	Docs              *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Name              *DeclaredErrorName       `json:"name,omitempty" url:"name,omitempty"`
-	DiscriminantValue *common.NameAndWireValue `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
-	Type              *TypeReference           `json:"type,omitempty" url:"type,omitempty"`
-	StatusCode        int                      `json:"statusCode" url:"statusCode"`
-	Examples          []*ExampleError          `json:"examples,omitempty" url:"examples,omitempty"`
+	Docs              *string            `json:"docs,omitempty" url:"docs,omitempty"`
+	Name              *DeclaredErrorName `json:"name,omitempty" url:"name,omitempty"`
+	DiscriminantValue *NameAndWireValue  `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
+	Type              *TypeReference     `json:"type,omitempty" url:"type,omitempty"`
+	StatusCode        int                `json:"statusCode" url:"statusCode"`
+	Examples          []*ExampleError    `json:"examples,omitempty" url:"examples,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -91,7 +91,7 @@ func (e *ErrorDeclaration) GetName() *DeclaredErrorName {
 	return e.Name
 }
 
-func (e *ErrorDeclaration) GetDiscriminantValue() *common.NameAndWireValue {
+func (e *ErrorDeclaration) GetDiscriminantValue() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -147,11 +147,11 @@ func (e *ErrorDeclaration) String() string {
 
 type ErrorDeclarationDiscriminantValue struct {
 	Type       string
-	Property   *common.NameAndWireValue
+	Property   *NameAndWireValue
 	StatusCode interface{}
 }
 
-func NewErrorDeclarationDiscriminantValueFromProperty(value *common.NameAndWireValue) *ErrorDeclarationDiscriminantValue {
+func NewErrorDeclarationDiscriminantValueFromProperty(value *NameAndWireValue) *ErrorDeclarationDiscriminantValue {
 	return &ErrorDeclarationDiscriminantValue{Type: "property", Property: value}
 }
 
@@ -166,7 +166,7 @@ func (e *ErrorDeclarationDiscriminantValue) GetType() string {
 	return e.Type
 }
 
-func (e *ErrorDeclarationDiscriminantValue) GetProperty() *common.NameAndWireValue {
+func (e *ErrorDeclarationDiscriminantValue) GetProperty() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -193,7 +193,7 @@ func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 	}
 	switch unmarshaler.Type {
 	case "property":
-		value := new(common.NameAndWireValue)
+		value := new(NameAndWireValue)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -230,7 +230,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 }
 
 type ErrorDeclarationDiscriminantValueVisitor interface {
-	VisitProperty(*common.NameAndWireValue) error
+	VisitProperty(*NameAndWireValue) error
 	VisitStatusCode(interface{}) error
 }
 
@@ -282,7 +282,7 @@ func (e *ErrorDeclarationDiscriminantValue) validate() error {
 type ExampleError struct {
 	JsonExample interface{}           `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
 	Docs        *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name        *common.Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name        *Name                 `json:"name,omitempty" url:"name,omitempty"`
 	Shape       *ExampleTypeReference `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -302,7 +302,7 @@ func (e *ExampleError) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleError) GetName() *common.Name {
+func (e *ExampleError) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -834,28 +834,28 @@ func (d *DateType) String() string {
 }
 
 type DeclaredTypeName struct {
-	TypeId       common.TypeId        `json:"typeId" url:"typeId"`
-	FernFilepath *common.FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Name         *common.Name         `json:"name,omitempty" url:"name,omitempty"`
+	TypeId       TypeId        `json:"typeId" url:"typeId"`
+	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	Name         *Name         `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (d *DeclaredTypeName) GetTypeId() common.TypeId {
+func (d *DeclaredTypeName) GetTypeId() TypeId {
 	if d == nil {
 		return ""
 	}
 	return d.TypeId
 }
 
-func (d *DeclaredTypeName) GetFernFilepath() *common.FernFilepath {
+func (d *DeclaredTypeName) GetFernFilepath() *FernFilepath {
 	if d == nil {
 		return nil
 	}
 	return d.FernFilepath
 }
 
-func (d *DeclaredTypeName) GetName() *common.Name {
+func (d *DeclaredTypeName) GetName() *Name {
 	if d == nil {
 		return nil
 	}
@@ -1148,9 +1148,9 @@ func (e *EnumTypeReference) String() string {
 }
 
 type EnumValue struct {
-	Docs         *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -1169,7 +1169,7 @@ func (e *EnumValue) GetAvailability() *Availability {
 	return e.Availability
 }
 
-func (e *EnumValue) GetName() *common.NameAndWireValue {
+func (e *EnumValue) GetName() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1538,12 +1538,12 @@ func (e *ExampleDatetime) String() string {
 }
 
 type ExampleEnumType struct {
-	Value *common.NameAndWireValue `json:"value,omitempty" url:"value,omitempty"`
+	Value *NameAndWireValue `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleEnumType) GetValue() *common.NameAndWireValue {
+func (e *ExampleEnumType) GetValue() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1859,8 +1859,8 @@ func (e *ExampleNullableContainer) String() string {
 }
 
 type ExampleObjectProperty struct {
-	Name  *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	Value *ExampleTypeReference    `json:"value,omitempty" url:"value,omitempty"`
+	Name  *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 	// This property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property.
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty" url:"originalTypeDeclaration,omitempty"`
@@ -1868,7 +1868,7 @@ type ExampleObjectProperty struct {
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleObjectProperty) GetName() *common.NameAndWireValue {
+func (e *ExampleObjectProperty) GetName() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -1955,13 +1955,13 @@ func (e *ExampleObjectType) String() string {
 }
 
 type ExampleObjectTypeWithTypeId struct {
-	TypeId common.TypeId      `json:"typeId" url:"typeId"`
+	TypeId TypeId             `json:"typeId" url:"typeId"`
 	Object *ExampleObjectType `json:"object,omitempty" url:"object,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleObjectTypeWithTypeId) GetTypeId() common.TypeId {
+func (e *ExampleObjectTypeWithTypeId) GetTypeId() TypeId {
 	if e == nil {
 		return ""
 	}
@@ -2617,13 +2617,13 @@ func (e *ExampleSetContainer) String() string {
 }
 
 type ExampleSingleUnionType struct {
-	WireDiscriminantValue *common.NameAndWireValue          `json:"wireDiscriminantValue,omitempty" url:"wireDiscriminantValue,omitempty"`
+	WireDiscriminantValue *NameAndWireValue                 `json:"wireDiscriminantValue,omitempty" url:"wireDiscriminantValue,omitempty"`
 	Shape                 *ExampleSingleUnionTypeProperties `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleSingleUnionType) GetWireDiscriminantValue() *common.NameAndWireValue {
+func (e *ExampleSingleUnionType) GetWireDiscriminantValue() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -2826,7 +2826,7 @@ func (e *ExampleSingleUnionTypeProperties) validate() error {
 type ExampleType struct {
 	JsonExample interface{}       `json:"jsonExample,omitempty" url:"jsonExample,omitempty"`
 	Docs        *string           `json:"docs,omitempty" url:"docs,omitempty"`
-	Name        *common.Name      `json:"name,omitempty" url:"name,omitempty"`
+	Name        *Name             `json:"name,omitempty" url:"name,omitempty"`
 	Shape       *ExampleTypeShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -2846,7 +2846,7 @@ func (e *ExampleType) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleType) GetName() *common.Name {
+func (e *ExampleType) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -3405,13 +3405,13 @@ func (e *ExampleUndiscriminatedUnionType) String() string {
 }
 
 type ExampleUnionType struct {
-	Discriminant    *common.NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
-	SingleUnionType *ExampleSingleUnionType  `json:"singleUnionType,omitempty" url:"singleUnionType,omitempty"`
+	Discriminant    *NameAndWireValue       `json:"discriminant,omitempty" url:"discriminant,omitempty"`
+	SingleUnionType *ExampleSingleUnionType `json:"singleUnionType,omitempty" url:"singleUnionType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (e *ExampleUnionType) GetDiscriminant() *common.NameAndWireValue {
+func (e *ExampleUnionType) GetDiscriminant() *NameAndWireValue {
 	if e == nil {
 		return nil
 	}
@@ -3863,31 +3863,31 @@ func (m *MapType) String() string {
 // A reference to a named type. For backwards compatibility, this type must be fully compatible
 // with the DeclaredTypeName.
 type NamedType struct {
-	TypeId       common.TypeId        `json:"typeId" url:"typeId"`
-	FernFilepath *common.FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
-	Name         *common.Name         `json:"name,omitempty" url:"name,omitempty"`
-	Default      *NamedTypeDefault    `json:"default,omitempty" url:"default,omitempty"`
+	TypeId       TypeId            `json:"typeId" url:"typeId"`
+	FernFilepath *FernFilepath     `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
+	Name         *Name             `json:"name,omitempty" url:"name,omitempty"`
+	Default      *NamedTypeDefault `json:"default,omitempty" url:"default,omitempty"`
 	// Use the inline property on the TypeDeclaration instead.
 	Inline *bool `json:"inline,omitempty" url:"inline,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (n *NamedType) GetTypeId() common.TypeId {
+func (n *NamedType) GetTypeId() TypeId {
 	if n == nil {
 		return ""
 	}
 	return n.TypeId
 }
 
-func (n *NamedType) GetFernFilepath() *common.FernFilepath {
+func (n *NamedType) GetFernFilepath() *FernFilepath {
 	if n == nil {
 		return nil
 	}
 	return n.FernFilepath
 }
 
-func (n *NamedType) GetName() *common.Name {
+func (n *NamedType) GetName() *Name {
 	if n == nil {
 		return nil
 	}
@@ -4036,11 +4036,11 @@ func (n *NamedTypeDefault) validate() error {
 }
 
 type ObjectProperty struct {
-	Docs           *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability   *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name           *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType      *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
-	PropertyAccess *ObjectPropertyAccess    `json:"propertyAccess,omitempty" url:"propertyAccess,omitempty"`
+	Docs           *string               `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability   *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
+	Name           *NameAndWireValue     `json:"name,omitempty" url:"name,omitempty"`
+	ValueType      *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
+	PropertyAccess *ObjectPropertyAccess `json:"propertyAccess,omitempty" url:"propertyAccess,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -4059,7 +4059,7 @@ func (o *ObjectProperty) GetAvailability() *Availability {
 	return o.Availability
 }
 
-func (o *ObjectProperty) GetName() *common.NameAndWireValue {
+func (o *ObjectProperty) GetName() *NameAndWireValue {
 	if o == nil {
 		return nil
 	}
@@ -4168,10 +4168,6 @@ func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
 	return o.ExtraProperties
 }
 
-func (o *ObjectTypeDeclaration) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
 func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ObjectTypeDeclaration
 	var value unmarshaler
@@ -4195,13 +4191,13 @@ func (o *ObjectTypeDeclaration) String() string {
 }
 
 type PrimitiveType struct {
-	V1 common.PrimitiveTypeV1 `json:"v1" url:"v1"`
-	V2 *PrimitiveTypeV2       `json:"v2,omitempty" url:"v2,omitempty"`
+	V1 PrimitiveTypeV1  `json:"v1" url:"v1"`
+	V2 *PrimitiveTypeV2 `json:"v2,omitempty" url:"v2,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (p *PrimitiveType) GetV1() common.PrimitiveTypeV1 {
+func (p *PrimitiveType) GetV1() PrimitiveTypeV1 {
 	if p == nil {
 		return ""
 	}
@@ -4965,7 +4961,7 @@ func (s ShapeType) Ptr() *ShapeType {
 
 type SingleUnionType struct {
 	Docs              *string                    `json:"docs,omitempty" url:"docs,omitempty"`
-	DiscriminantValue *common.NameAndWireValue   `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
+	DiscriminantValue *NameAndWireValue          `json:"discriminantValue,omitempty" url:"discriminantValue,omitempty"`
 	Shape             *SingleUnionTypeProperties `json:"shape,omitempty" url:"shape,omitempty"`
 	DisplayName       *string                    `json:"displayName,omitempty" url:"displayName,omitempty"`
 	Availability      *Availability              `json:"availability,omitempty" url:"availability,omitempty"`
@@ -4980,7 +4976,7 @@ func (s *SingleUnionType) GetDocs() *string {
 	return s.Docs
 }
 
-func (s *SingleUnionType) GetDiscriminantValue() *common.NameAndWireValue {
+func (s *SingleUnionType) GetDiscriminantValue() *NameAndWireValue {
 	if s == nil {
 		return nil
 	}
@@ -5195,13 +5191,13 @@ func (s *SingleUnionTypeProperties) validate() error {
 }
 
 type SingleUnionTypeProperty struct {
-	Name *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	Type *TypeReference           `json:"type,omitempty" url:"type,omitempty"`
+	Name *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	Type *TypeReference    `json:"type,omitempty" url:"type,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (s *SingleUnionTypeProperty) GetName() *common.NameAndWireValue {
+func (s *SingleUnionTypeProperty) GetName() *NameAndWireValue {
 	if s == nil {
 		return nil
 	}
@@ -5676,9 +5672,9 @@ type TypeDeclaration struct {
 	AutogeneratedExamples []*ExampleType    `json:"autogeneratedExamples,omitempty" url:"autogeneratedExamples,omitempty"`
 	UserProvidedExamples  []*ExampleType    `json:"userProvidedExamples,omitempty" url:"userProvidedExamples,omitempty"`
 	// All other named types that this type references (directly or indirectly)
-	ReferencedTypes []common.TypeId `json:"referencedTypes,omitempty" url:"referencedTypes,omitempty"`
-	Encoding        *Encoding       `json:"encoding,omitempty" url:"encoding,omitempty"`
-	Source          *Source         `json:"source,omitempty" url:"source,omitempty"`
+	ReferencedTypes []TypeId  `json:"referencedTypes,omitempty" url:"referencedTypes,omitempty"`
+	Encoding        *Encoding `json:"encoding,omitempty" url:"encoding,omitempty"`
+	Source          *Source   `json:"source,omitempty" url:"source,omitempty"`
 	// Whether to try and inline the type declaration
 	Inline *bool `json:"inline,omitempty" url:"inline,omitempty"`
 
@@ -5727,7 +5723,7 @@ func (t *TypeDeclaration) GetUserProvidedExamples() []*ExampleType {
 	return t.UserProvidedExamples
 }
 
-func (t *TypeDeclaration) GetReferencedTypes() []common.TypeId {
+func (t *TypeDeclaration) GetReferencedTypes() []TypeId {
 	if t == nil {
 		return nil
 	}
@@ -6132,7 +6128,7 @@ func (u *UndiscriminatedUnionTypeDeclaration) String() string {
 }
 
 type UnionTypeDeclaration struct {
-	Discriminant *common.NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
+	Discriminant *NameAndWireValue `json:"discriminant,omitempty" url:"discriminant,omitempty"`
 	// A list of other types to inherit from
 	Extends        []*DeclaredTypeName `json:"extends,omitempty" url:"extends,omitempty"`
 	Types          []*SingleUnionType  `json:"types,omitempty" url:"types,omitempty"`
@@ -6141,7 +6137,7 @@ type UnionTypeDeclaration struct {
 	extraProperties map[string]interface{}
 }
 
-func (u *UnionTypeDeclaration) GetDiscriminant() *common.NameAndWireValue {
+func (u *UnionTypeDeclaration) GetDiscriminant() *NameAndWireValue {
 	if u == nil {
 		return nil
 	}

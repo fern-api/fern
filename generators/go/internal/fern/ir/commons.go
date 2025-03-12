@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -132,8 +132,8 @@ func (d *Declaration) String() string {
 }
 
 type EndpointReference struct {
-	EndpointId common.EndpointId `json:"endpointId" url:"endpointId"`
-	ServiceId  ServiceId         `json:"serviceId" url:"serviceId"`
+	EndpointId EndpointId `json:"endpointId" url:"endpointId"`
+	ServiceId  ServiceId  `json:"serviceId" url:"serviceId"`
 	// The subpackage that defines the endpoint. If empty, the endpoint is
 	// defined in the root package.
 	SubpackageId *SubpackageId `json:"subpackageId,omitempty" url:"subpackageId,omitempty"`
@@ -141,7 +141,7 @@ type EndpointReference struct {
 	extraProperties map[string]interface{}
 }
 
-func (e *EndpointReference) GetEndpointId() common.EndpointId {
+func (e *EndpointReference) GetEndpointId() EndpointId {
 	if e == nil {
 		return ""
 	}

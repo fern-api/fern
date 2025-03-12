@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -14,7 +14,7 @@ import (
 // (e.g. headers).
 type ExampleWebhookCall struct {
 	Docs    *string               `json:"docs,omitempty" url:"docs,omitempty"`
-	Name    *common.Name          `json:"name,omitempty" url:"name,omitempty"`
+	Name    *Name                 `json:"name,omitempty" url:"name,omitempty"`
 	Payload *ExampleTypeReference `json:"payload,omitempty" url:"payload,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -27,7 +27,7 @@ func (e *ExampleWebhookCall) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleWebhookCall) GetName() *common.Name {
+func (e *ExampleWebhookCall) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -68,14 +68,14 @@ func (e *ExampleWebhookCall) String() string {
 }
 
 type InlinedWebhookPayload struct {
-	Name       *common.Name                     `json:"name,omitempty" url:"name,omitempty"`
+	Name       *Name                            `json:"name,omitempty" url:"name,omitempty"`
 	Extends    []*DeclaredTypeName              `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties []*InlinedWebhookPayloadProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (i *InlinedWebhookPayload) GetName() *common.Name {
+func (i *InlinedWebhookPayload) GetName() *Name {
 	if i == nil {
 		return nil
 	}
@@ -123,10 +123,10 @@ func (i *InlinedWebhookPayload) String() string {
 }
 
 type InlinedWebhookPayloadProperty struct {
-	Docs         *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -145,7 +145,7 @@ func (i *InlinedWebhookPayloadProperty) GetAvailability() *Availability {
 	return i.Availability
 }
 
-func (i *InlinedWebhookPayloadProperty) GetName() *common.NameAndWireValue {
+func (i *InlinedWebhookPayloadProperty) GetName() *NameAndWireValue {
 	if i == nil {
 		return nil
 	}
@@ -312,7 +312,7 @@ func (w WebhookHttpMethod) Ptr() *WebhookHttpMethod {
 	return &w
 }
 
-type WebhookName = *common.Name
+type WebhookName = *Name
 
 type WebhookPayload struct {
 	Type           string

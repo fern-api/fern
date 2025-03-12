@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -266,11 +266,11 @@ func (a AuthSchemesRequirement) Ptr() *AuthSchemesRequirement {
 }
 
 type BasicAuthScheme struct {
-	Docs     *string      `json:"docs,omitempty" url:"docs,omitempty"`
-	Username *common.Name `json:"username,omitempty" url:"username,omitempty"`
+	Docs     *string `json:"docs,omitempty" url:"docs,omitempty"`
+	Username *Name   `json:"username,omitempty" url:"username,omitempty"`
 	// The environment variable the SDK should use to read the username.
 	UsernameEnvVar *EnvironmentVariable `json:"usernameEnvVar,omitempty" url:"usernameEnvVar,omitempty"`
-	Password       *common.Name         `json:"password,omitempty" url:"password,omitempty"`
+	Password       *Name                `json:"password,omitempty" url:"password,omitempty"`
 	// The environment variable the SDK should use to read the password.
 	PasswordEnvVar *EnvironmentVariable `json:"passwordEnvVar,omitempty" url:"passwordEnvVar,omitempty"`
 
@@ -284,7 +284,7 @@ func (b *BasicAuthScheme) GetDocs() *string {
 	return b.Docs
 }
 
-func (b *BasicAuthScheme) GetUsername() *common.Name {
+func (b *BasicAuthScheme) GetUsername() *Name {
 	if b == nil {
 		return nil
 	}
@@ -298,7 +298,7 @@ func (b *BasicAuthScheme) GetUsernameEnvVar() *EnvironmentVariable {
 	return b.UsernameEnvVar
 }
 
-func (b *BasicAuthScheme) GetPassword() *common.Name {
+func (b *BasicAuthScheme) GetPassword() *Name {
 	if b == nil {
 		return nil
 	}
@@ -339,8 +339,8 @@ func (b *BasicAuthScheme) String() string {
 }
 
 type BearerAuthScheme struct {
-	Docs  *string      `json:"docs,omitempty" url:"docs,omitempty"`
-	Token *common.Name `json:"token,omitempty" url:"token,omitempty"`
+	Docs  *string `json:"docs,omitempty" url:"docs,omitempty"`
+	Token *Name   `json:"token,omitempty" url:"token,omitempty"`
 	// The environment variable the SDK should use to read the token.
 	TokenEnvVar *EnvironmentVariable `json:"tokenEnvVar,omitempty" url:"tokenEnvVar,omitempty"`
 
@@ -354,7 +354,7 @@ func (b *BearerAuthScheme) GetDocs() *string {
 	return b.Docs
 }
 
-func (b *BearerAuthScheme) GetToken() *common.Name {
+func (b *BearerAuthScheme) GetToken() *Name {
 	if b == nil {
 		return nil
 	}
@@ -397,10 +397,10 @@ func (b *BearerAuthScheme) String() string {
 type EnvironmentVariable = string
 
 type HeaderAuthScheme struct {
-	Docs      *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Name      *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Prefix    *string                  `json:"prefix,omitempty" url:"prefix,omitempty"`
+	Docs      *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Name      *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Prefix    *string           `json:"prefix,omitempty" url:"prefix,omitempty"`
 	// The environment variable the SDK should use to read the header.
 	HeaderEnvVar *EnvironmentVariable `json:"headerEnvVar,omitempty" url:"headerEnvVar,omitempty"`
 
@@ -414,7 +414,7 @@ func (h *HeaderAuthScheme) GetDocs() *string {
 	return h.Docs
 }
 
-func (h *HeaderAuthScheme) GetName() *common.NameAndWireValue {
+func (h *HeaderAuthScheme) GetName() *NameAndWireValue {
 	if h == nil {
 		return nil
 	}

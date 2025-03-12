@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
@@ -185,7 +185,7 @@ func (e *ExampleWebSocketMessageBody) validate() error {
 
 type ExampleWebSocketSession struct {
 	Docs            *string                    `json:"docs,omitempty" url:"docs,omitempty"`
-	Name            *common.Name               `json:"name,omitempty" url:"name,omitempty"`
+	Name            *Name                      `json:"name,omitempty" url:"name,omitempty"`
 	Url             string                     `json:"url" url:"url"`
 	PathParameters  []*ExamplePathParameter    `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
 	Headers         []*ExampleHeader           `json:"headers,omitempty" url:"headers,omitempty"`
@@ -202,7 +202,7 @@ func (e *ExampleWebSocketSession) GetDocs() *string {
 	return e.Docs
 }
 
-func (e *ExampleWebSocketSession) GetName() *common.Name {
+func (e *ExampleWebSocketSession) GetName() *Name {
 	if e == nil {
 		return nil
 	}
@@ -271,14 +271,14 @@ func (e *ExampleWebSocketSession) String() string {
 }
 
 type InlinedWebSocketMessageBody struct {
-	Name       *common.Name                           `json:"name,omitempty" url:"name,omitempty"`
+	Name       *Name                                  `json:"name,omitempty" url:"name,omitempty"`
 	Extends    []*DeclaredTypeName                    `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties []*InlinedWebSocketMessageBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (i *InlinedWebSocketMessageBody) GetName() *common.Name {
+func (i *InlinedWebSocketMessageBody) GetName() *Name {
 	if i == nil {
 		return nil
 	}
@@ -326,10 +326,10 @@ func (i *InlinedWebSocketMessageBody) String() string {
 }
 
 type InlinedWebSocketMessageBodyProperty struct {
-	Docs         *string                  `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability *Availability            `json:"availability,omitempty" url:"availability,omitempty"`
-	Name         *common.NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
-	ValueType    *TypeReference           `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
+	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -348,7 +348,7 @@ func (i *InlinedWebSocketMessageBodyProperty) GetAvailability() *Availability {
 	return i.Availability
 }
 
-func (i *InlinedWebSocketMessageBodyProperty) GetName() *common.NameAndWireValue {
+func (i *InlinedWebSocketMessageBodyProperty) GetName() *NameAndWireValue {
 	if i == nil {
 		return nil
 	}
@@ -389,16 +389,16 @@ func (i *InlinedWebSocketMessageBodyProperty) String() string {
 }
 
 type WebSocketChannel struct {
-	Docs            *string                      `json:"docs,omitempty" url:"docs,omitempty"`
-	Availability    *Availability                `json:"availability,omitempty" url:"availability,omitempty"`
-	Name            WebSocketName                `json:"name,omitempty" url:"name,omitempty"`
-	DisplayName     *string                      `json:"displayName,omitempty" url:"displayName,omitempty"`
-	BaseUrl         *common.EnvironmentBaseUrlId `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
-	Path            *HttpPath                    `json:"path,omitempty" url:"path,omitempty"`
-	Auth            bool                         `json:"auth" url:"auth"`
-	Headers         []*HttpHeader                `json:"headers,omitempty" url:"headers,omitempty"`
-	QueryParameters []*QueryParameter            `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
-	PathParameters  []*PathParameter             `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
+	Docs            *string               `json:"docs,omitempty" url:"docs,omitempty"`
+	Availability    *Availability         `json:"availability,omitempty" url:"availability,omitempty"`
+	Name            WebSocketName         `json:"name,omitempty" url:"name,omitempty"`
+	DisplayName     *string               `json:"displayName,omitempty" url:"displayName,omitempty"`
+	BaseUrl         *EnvironmentBaseUrlId `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
+	Path            *HttpPath             `json:"path,omitempty" url:"path,omitempty"`
+	Auth            bool                  `json:"auth" url:"auth"`
+	Headers         []*HttpHeader         `json:"headers,omitempty" url:"headers,omitempty"`
+	QueryParameters []*QueryParameter     `json:"queryParameters,omitempty" url:"queryParameters,omitempty"`
+	PathParameters  []*PathParameter      `json:"pathParameters,omitempty" url:"pathParameters,omitempty"`
 	// The messages that can be sent and received on this channel
 	Messages []*WebSocketMessage        `json:"messages,omitempty" url:"messages,omitempty"`
 	Examples []*ExampleWebSocketSession `json:"examples,omitempty" url:"examples,omitempty"`
@@ -434,7 +434,7 @@ func (w *WebSocketChannel) GetDisplayName() *string {
 	return w.DisplayName
 }
 
-func (w *WebSocketChannel) GetBaseUrl() *common.EnvironmentBaseUrlId {
+func (w *WebSocketChannel) GetBaseUrl() *EnvironmentBaseUrlId {
 	if w == nil {
 		return nil
 	}
@@ -793,4 +793,4 @@ func (w WebSocketMessageOrigin) Ptr() *WebSocketMessageOrigin {
 	return &w
 }
 
-type WebSocketName = *common.Name
+type WebSocketName = *Name

@@ -5,14 +5,14 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
 type VariableDeclaration struct {
 	Docs *string        `json:"docs,omitempty" url:"docs,omitempty"`
 	Id   VariableId     `json:"id" url:"id"`
-	Name *common.Name   `json:"name,omitempty" url:"name,omitempty"`
+	Name *Name          `json:"name,omitempty" url:"name,omitempty"`
 	Type *TypeReference `json:"type,omitempty" url:"type,omitempty"`
 
 	extraProperties map[string]interface{}
@@ -32,7 +32,7 @@ func (v *VariableDeclaration) GetId() VariableId {
 	return v.Id
 }
 
-func (v *VariableDeclaration) GetName() *common.Name {
+func (v *VariableDeclaration) GetName() *Name {
 	if v == nil {
 		return nil
 	}

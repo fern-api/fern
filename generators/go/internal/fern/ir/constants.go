@@ -5,17 +5,17 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
+
 	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 )
 
 type Constants struct {
-	ErrorInstanceIdKey *common.NameAndWireValue `json:"errorInstanceIdKey,omitempty" url:"errorInstanceIdKey,omitempty"`
+	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty" url:"errorInstanceIdKey,omitempty"`
 
 	extraProperties map[string]interface{}
 }
 
-func (c *Constants) GetErrorInstanceIdKey() *common.NameAndWireValue {
+func (c *Constants) GetErrorInstanceIdKey() *NameAndWireValue {
 	if c == nil {
 		return nil
 	}
