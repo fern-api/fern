@@ -466,7 +466,10 @@ export class EndpointSnippetGenerator {
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
                     return java.TypeLiteral.optional({
-                        value: this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value.value, value }),
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: body.value.value,
+                            value
+                        }),
                         useOf: true
                     });
                 }
@@ -607,12 +610,7 @@ export class EndpointSnippetGenerator {
                 name: this.context.getClassName(request.declaration.name),
                 packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
             }),
-            parameters: [
-                ...pathParameterFields,
-                ...headerFields,
-                ...queryParameterFields,
-                ...requestBodyFields,
-            ]
+            parameters: [...pathParameterFields, ...headerFields, ...queryParameterFields, ...requestBodyFields]
         });
     }
 

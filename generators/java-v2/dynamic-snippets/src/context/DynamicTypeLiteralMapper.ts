@@ -199,7 +199,7 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnion({
         discriminatedUnion,
-        value,
+        value
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
@@ -245,7 +245,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue],
+                                    value: record[unionVariant.discriminantValue.wireValue]
                                 })
                             ]
                         })
@@ -645,7 +645,13 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): boolean | undefined {
         const bool =
-            as === "mapKey" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
+            as === "mapKey"
+                ? typeof value === "string"
+                    ? value === "true"
+                    : value === "false"
+                      ? false
+                      : value
+                : value;
         return this.context.getValueAsBoolean({ value: bool });
     }
 }
