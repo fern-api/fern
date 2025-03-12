@@ -217,7 +217,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         CodeBlock valueOfCodeBlock = valueOfCodeBlockBuilder
                 .add("default:\n")
                 .indent()
-                .addStatement("return new $T(Value.$L, $L)", className, resolveName(UNKNOWN_ENUM_CONSTANT), VALUE_FIELD_NAME)
+                .addStatement(
+                        "return new $T(Value.$L, $L)", className, resolveName(UNKNOWN_ENUM_CONSTANT), VALUE_FIELD_NAME)
                 .unindent()
                 .endControlFlow()
                 .build();

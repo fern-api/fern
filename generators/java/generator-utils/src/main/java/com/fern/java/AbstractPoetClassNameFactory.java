@@ -105,7 +105,8 @@ public abstract class AbstractPoetClassNameFactory {
         List<String> prefix = new ArrayList<>();
         prefix.add("com");
         prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(organization)));
-        prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(ir.getApiName().getCamelCase().getSafeName())));
+        prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(
+                ir.getApiName().getCamelCase().getSafeName())));
         return prefix;
     }
 }
