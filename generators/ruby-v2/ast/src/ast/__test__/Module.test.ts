@@ -62,6 +62,15 @@ describe("Module", () => {
 
             expect(module.typeDefinitionToString(writerConfig)).toMatchSnapshot();
         });
+
+        test("writes module with type parameters", () => {
+            const module = ruby.module({
+                name: "IAmGeneric",
+                typeParameters: [ruby.typeParameter({ name: "K" })]
+            });
+
+            expect(module.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
     });
 
     describe("fullyQualifiedName", () => {

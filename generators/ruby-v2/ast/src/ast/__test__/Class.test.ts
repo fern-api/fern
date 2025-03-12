@@ -62,6 +62,12 @@ describe("Class", () => {
             expect(class_.typeDefinitionToString(writerConfig)).toMatchSnapshot();
         });
 
+        test("write class with type parameters", () => {
+            const class_ = ruby.class_({ name: "Foobar", typeParameters: [ruby.typeParameter({ name: "K" })] });
+
+            expect(class_.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        });
+
         test("writes class with method type definitions", () => {
             const class_ = ruby.class_({
                 name: "Foobar",

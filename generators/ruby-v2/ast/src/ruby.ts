@@ -10,6 +10,7 @@ import {
     PositionalSplatParameter,
     YieldParameter
 } from "./ast";
+import { TypeParameter } from "./ast/TypeParameter";
 
 export { AstNode } from "./ast/core/AstNode";
 export { CodeBlock, Parameter, Method } from "./ast";
@@ -54,4 +55,8 @@ export function method(args: Method.Args): Method {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function typeParameter(args: TypeParameter.Args): TypeParameter {
+    return new TypeParameter(args);
 }

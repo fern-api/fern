@@ -4,15 +4,9 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Class_ {
-    export interface Args {
-        /* The class's name. */
-        name: string;
+    export interface Args extends Module.Args {
         /* The superclass of this class. */
         superclass?: Class_;
-        /* The docstring for the class. */
-        docstring?: string;
-        /* The body of the class. */
-        statements?: AstNode[];
     }
 }
 
@@ -20,8 +14,8 @@ export class Class_ extends Module {
     public readonly superclass: Class_ | undefined;
     public readonly statements: AstNode[];
 
-    constructor({ name, superclass, docstring, statements }: Class_.Args) {
-        super({ name, docstring });
+    constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
+        super({ name, docstring, typeParameters });
 
         this.superclass = superclass;
         this.statements = statements ?? [];
@@ -60,6 +54,18 @@ export class Class_ extends Module {
     public writeTypeDefinition(writer: Writer): void {
         writer.write(`class ${this.name}`);
 
+        if (this.typeParameters.length) {
+            writer.write("[");
+
+            writer.delimit({
+                nodes: this.typeParameters,
+                delimiter: ", ",
+                writeFunction: (argument) => argument.writeTypeDefinition(writer)
+            });
+
+            writer.write("]");
+        }
+
         if (this.superclass) {
             writer.write(` < ${this.superclass.name}`);
         }
@@ -68,7 +74,7 @@ export class Class_ extends Module {
 
         if (this.statements.length) {
             writer.indent();
-            this.statements.forEach((statement, index) => {
+            this.statements.forEach((statement) => {
                 statement.writeTypeDefinition(writer);
                 writer.newLine();
             });
