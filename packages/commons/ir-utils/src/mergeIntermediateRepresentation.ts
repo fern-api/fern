@@ -36,6 +36,10 @@ export function mergeIntermediateRepresentation(
             ...(ir1.subpackages ?? {}),
             ...(ir2.subpackages ?? {})
         },
+        websocketChannels: {
+            ...(ir1.websocketChannels ?? {}),
+            ...(ir2.websocketChannels ?? {})
+        },
         rootPackage: {
             service: ir1.rootPackage.service ?? ir2.rootPackage.service,
             types: [...(ir1.rootPackage.types ?? []), ...(ir2.rootPackage.types ?? [])],
@@ -51,7 +55,6 @@ export function mergeIntermediateRepresentation(
         fdrApiDefinitionId: ir1.fdrApiDefinitionId ?? ir2.fdrApiDefinitionId,
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
         idempotencyHeaders: [...(ir1.idempotencyHeaders ?? []), ...(ir2.idempotencyHeaders ?? [])],
-        websocketChannels: ir1.websocketChannels ?? ir2.websocketChannels,
         pathParameters: [...(ir1.pathParameters ?? []), ...(ir2.pathParameters ?? [])],
         errorDiscriminationStrategy: ir1.errorDiscriminationStrategy ?? ir2.errorDiscriminationStrategy,
         variables: [...(ir1.variables ?? []), ...(ir2.variables ?? [])],
