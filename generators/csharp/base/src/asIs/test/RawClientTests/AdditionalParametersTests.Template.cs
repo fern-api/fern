@@ -85,7 +85,6 @@ public class AdditionalParametersTests
     [Test]
     public async Task SendRequestAsync_AdditionalQueryParameters_Merge()
     {
-        // WireMock server expectation with all three 'foo' parameters
         _server
             .Given(WireMockRequest.Create()
                 .WithPath("/test")
