@@ -533,6 +533,11 @@ internal class RawClient(ClientOptions clientOptions)
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
 
+        if (request.Options is IIdempotentRequestOptions idempotentRequest)
+        {
+            SetHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+        }
+
         return httpRequest;
     }
 

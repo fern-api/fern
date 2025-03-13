@@ -538,6 +538,12 @@ internal class RawClient(ClientOptions clientOptions)
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+<% if (idempotencyHeaders) { %>
+        if (request.Options is IIdempotentRequestOptions idempotentRequest)
+        {
+            SetHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+        }
+<% } %>
 
         return httpRequest;
     }
@@ -561,7 +567,7 @@ internal class RawClient(ClientOptions clientOptions)
                 if (
                     queryItem.Value
                     is global::System.Collections.IEnumerable collection
-                        and not string
+                    and not string
                 )
                 {
                     var items = collection
