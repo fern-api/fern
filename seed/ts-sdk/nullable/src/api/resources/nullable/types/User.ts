@@ -11,4 +11,6 @@ export interface User {
     metadata?: SeedNullable.Metadata | null;
     email: SeedNullable.Email;
     favoriteNumber: SeedNullable.WeirdNumber;
+    numbers?: number[] | null;
+    strings?: Record<string, unknown> | null;
 }

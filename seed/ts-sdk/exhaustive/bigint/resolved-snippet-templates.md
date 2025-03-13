@@ -662,6 +662,18 @@ await client.endpoints.primitive.getAndReturnBase64(
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
+const client = new SeedExhaustiveClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.put.add("id");
+
+```
+
+
+```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.union.getAndReturnUnion(
 	{

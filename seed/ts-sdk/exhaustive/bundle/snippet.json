@@ -420,6 +420,17 @@
         },
         {
             "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.put.add(\"id\");\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/union",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
