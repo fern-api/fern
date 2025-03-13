@@ -52,7 +52,7 @@ func (g *Generator) Run() error {
 	cmd.Stderr = stderr
 	if err := cmd.Run(); err != nil {
 		g.coordinator.Log(
-			generatorexec.LogLevelError,
+			generatorexec.LogLevelWarn,
 			fmt.Sprintf("Failed to run go-v2 generator: %s", stderr.String()),
 		)
 		return errors.New(stderr.String())
