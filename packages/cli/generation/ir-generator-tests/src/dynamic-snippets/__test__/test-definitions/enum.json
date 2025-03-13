@@ -212,6 +212,81 @@
                 }
             ]
         },
+        "type_:EnumWithCustom": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "EnumWithCustom",
+                    "camelCase": {
+                        "unsafeName": "enumWithCustom",
+                        "safeName": "enumWithCustom"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "enum_with_custom",
+                        "safeName": "enum_with_custom"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ENUM_WITH_CUSTOM",
+                        "safeName": "ENUM_WITH_CUSTOM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EnumWithCustom",
+                        "safeName": "EnumWithCustom"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "SAFE",
+                        "camelCase": {
+                            "unsafeName": "safe",
+                            "safeName": "safe"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "safe",
+                            "safeName": "safe"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SAFE",
+                            "safeName": "SAFE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Safe",
+                            "safeName": "Safe"
+                        }
+                    },
+                    "wireValue": "safe"
+                },
+                {
+                    "name": {
+                        "originalName": "CUSTOM",
+                        "camelCase": {
+                            "unsafeName": "custom",
+                            "safeName": "custom"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "custom",
+                            "safeName": "custom"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSTOM",
+                            "safeName": "CUSTOM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Custom",
+                            "safeName": "Custom"
+                        }
+                    },
+                    "wireValue": "Custom"
+                }
+            ]
+        },
         "type_unknown:Status": {
             "type": "enum",
             "declaration": {
