@@ -47,13 +47,15 @@ func (g *Generator) Run() error {
 		"Running go-v2 SDK generator...",
 	)
 
+	stdout := bytes.NewBuffer(nil)
 	stderr := bytes.NewBuffer(nil)
 	cmd := exec.Command("node", v2BinPath, configFilepath)
+	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 	if err := cmd.Run(); err != nil {
 		g.coordinator.Log(
 			generatorexec.LogLevelWarn,
-			fmt.Sprintf("Failed to run go-v2 generator: %s", stderr.String()),
+			fmt.Sprintf("Failed to run go-v2 generator; stdout: %s, stderr: %s", stdout.String(), stderr.String()),
 		)
 		return errors.New(stderr.String())
 	}
