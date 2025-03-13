@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedSingleUrlEnvironmentNoDefault;
-using SeedSingleUrlEnvironmentNoDefault.Core;
 
 namespace Usage;
 

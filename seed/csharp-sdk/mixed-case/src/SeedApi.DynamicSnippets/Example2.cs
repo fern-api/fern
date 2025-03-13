@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedMixedCase;
-using SeedMixedCase.Core;
 
 namespace Usage;
 
