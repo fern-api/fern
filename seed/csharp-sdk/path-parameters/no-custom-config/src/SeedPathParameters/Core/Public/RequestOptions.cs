@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using SeedPathParameters.Core;
 
@@ -30,4 +31,15 @@ public partial class RequestOptions : IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
+
+    /// <summary>
+    /// Additional query parameters sent with the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string>>? AdditionalQueryParameters { get; init; }
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is a no-op for multipart/form-data endpoints.
+    /// </summary>
+    public object? AdditionalBodyProperties { get; init; }
 }

@@ -137,6 +137,8 @@ export class BaseOptionsGenerator {
             }),
             this.getMaxRetriesField(optionArgs),
             this.getTimeoutField(optionArgs),
+            this.getQueryParametersField(optionArgs),
+            this.getBodyPropertiesField(optionArgs),
             ...this.getLiteralHeaderOptions(optionArgs)
         ];
     }
@@ -151,7 +153,9 @@ export class BaseOptionsGenerator {
             this.getHttpClientField(optionArgs),
             this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
             this.getMaxRetriesField(optionArgs),
-            this.getTimeoutField(optionArgs)
+            this.getTimeoutField(optionArgs),
+            this.getQueryParametersField(optionArgs),
+            this.getBodyPropertiesField(optionArgs)
         ];
     }
 
@@ -188,5 +192,30 @@ export class BaseOptionsGenerator {
             default:
                 assertNever(literal);
         }
+    }
+
+    private getQueryParametersField({ includeInitializer }: OptionArgs): csharp.Field {
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: "AdditionalQueryParameters",
+            type: this.context.getAdditionalQueryParametersType(),
+            summary: "Additional query parameters sent with the request.",
+            get: true,
+            init: true,
+            initializer: includeInitializer ? csharp.codeblock("null") : undefined
+        });
+    }
+
+    private getBodyPropertiesField({ includeInitializer }: OptionArgs): csharp.Field {
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: "AdditionalBodyProperties",
+            type: this.context.getAdditionalBodyPropertiesType(),
+            summary:
+                "Additional body properties sent with the request.\nThis is a no-op for multipart/form-data endpoints.",
+            get: true,
+            init: true,
+            initializer: includeInitializer ? csharp.codeblock("null") : undefined
+        });
     }
 }
