@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
 - version: 4.3.16
   irVersion: 53
   changelogEntry:
