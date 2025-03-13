@@ -230,7 +230,10 @@ export class RawClient {
                 csharpType = this.context.csharpTypeMapper.convert({
                     reference: property.valueType
                 });
+                break;
             }
+            default:
+                assertNever(property);
         }
         return {
             propertyName,
