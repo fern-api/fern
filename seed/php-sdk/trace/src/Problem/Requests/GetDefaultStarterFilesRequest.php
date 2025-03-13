@@ -30,7 +30,6 @@ class GetDefaultStarterFilesRequest extends JsonSerializableType
      *   - Equals `=`
      *   - Period `.`
      *
-     *
      * @var string $methodName
      */
     #[JsonProperty('methodName')]
