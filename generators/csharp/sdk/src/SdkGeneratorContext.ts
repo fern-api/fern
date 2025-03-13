@@ -73,10 +73,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAdditionalQueryParametersType(): csharp.Type {
-        return csharp.Type.list(csharp.Type.reference(this.getKeyValuePairsClassReference({
-            key: csharp.Type.string(),
-            value: csharp.Type.string()
-        })));
+        return csharp.Type.list(
+            csharp.Type.reference(
+                this.getKeyValuePairsClassReference({
+                    key: csharp.Type.string(),
+                    value: csharp.Type.string()
+                })
+            )
+        );
     }
 
     public getAdditionalBodyPropertiesType(): csharp.Type {

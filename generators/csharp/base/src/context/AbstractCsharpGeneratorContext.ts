@@ -444,10 +444,12 @@ export abstract class AbstractCsharpGeneratorContext<
             on: this.getEnumerableClassReference(),
             method: "Empty",
             generics: [
-                csharp.Type.reference(this.getKeyValuePairsClassReference({
-                    key: csharp.Type.string(),
-                    value: csharp.Type.string()
-                })),
+                csharp.Type.reference(
+                    this.getKeyValuePairsClassReference({
+                        key: csharp.Type.string(),
+                        value: csharp.Type.string()
+                    })
+                )
             ],
             arguments_: []
         });
