@@ -76,7 +76,7 @@ export declare namespace generateIntermediateRepresentation {
         context: TaskContext;
         sourceResolver: SourceResolver;
         fdrApiDefinitionId?: string;
-        includeDynamicExamples?: boolean;
+        disableDynamicExamples?: boolean;
         dynamicGeneratorConfig?: dynamic.GeneratorConfig;
     }
 }
@@ -93,7 +93,7 @@ export function generateIntermediateRepresentation({
     version,
     fdrApiDefinitionId,
     sourceResolver,
-    includeDynamicExamples,
+    disableDynamicExamples,
     dynamicGeneratorConfig
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
@@ -546,7 +546,7 @@ export function generateIntermediateRepresentation({
         dynamic: convertIrToDynamicSnippetsIr({
             ir: finalIR,
             generatorConfig: dynamicGeneratorConfig,
-            includeExamples: includeDynamicExamples,
+            disableExamples: disableDynamicExamples,
             generationLanguage,
             smartCasing
         })
