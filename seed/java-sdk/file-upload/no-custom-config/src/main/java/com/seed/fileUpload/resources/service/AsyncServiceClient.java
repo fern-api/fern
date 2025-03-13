@@ -14,6 +14,7 @@ import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
+import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import java.io.File;
@@ -539,6 +540,81 @@ public class AsyncServiceClient {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
                         future.complete(null);
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedFileUploadApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedFileUploadException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedFileUploadException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> optionalArgs(String invoiceId, Optional<File> imageFile) {
+        return optionalArgs(invoiceId, imageFile, OptionalArgsRequest.builder().build());
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            String invoiceId, Optional<File> imageFile, OptionalArgsRequest request) {
+        return optionalArgs(invoiceId, imageFile, request, null);
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            String invoiceId, Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("optional-args")
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            if (imageFile.isPresent()) {
+                String imageFileMimeType =
+                        Files.probeContentType(imageFile.get().toPath());
+                MediaType imageFileMimeTypeMediaType =
+                        imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
+                body.addFormDataPart(
+                        "image_file",
+                        imageFile.get().getName(),
+                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+            }
+            if (request.getRequest().isPresent()) {
+                body.addFormDataPart(
+                        "request",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(
+                                request.getRequest().get()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<String> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";

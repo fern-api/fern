@@ -14,6 +14,7 @@ import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
+import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import java.io.File;
@@ -460,6 +461,66 @@ public class ServiceClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedFileUploadApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedFileUploadException("Network error executing HTTP request", e);
+        }
+    }
+
+    public String optionalArgs(String invoiceId, Optional<File> imageFile) {
+        return optionalArgs(invoiceId, imageFile, OptionalArgsRequest.builder().build());
+    }
+
+    public String optionalArgs(String invoiceId, Optional<File> imageFile, OptionalArgsRequest request) {
+        return optionalArgs(invoiceId, imageFile, request, null);
+    }
+
+    public String optionalArgs(
+            String invoiceId, Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("optional-args")
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            if (imageFile.isPresent()) {
+                String imageFileMimeType =
+                        Files.probeContentType(imageFile.get().toPath());
+                MediaType imageFileMimeTypeMediaType =
+                        imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
+                body.addFormDataPart(
+                        "image_file",
+                        imageFile.get().getName(),
+                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+            }
+            if (request.getRequest().isPresent()) {
+                body.addFormDataPart(
+                        "request",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(
+                                request.getRequest().get()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedFileUploadApiException(
