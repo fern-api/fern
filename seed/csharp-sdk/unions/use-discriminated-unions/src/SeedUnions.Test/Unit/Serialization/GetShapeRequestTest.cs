@@ -8,7 +8,7 @@ namespace SeedUnions.Test;
 [TestFixture]
 public class GetShapeRequestTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -21,7 +21,7 @@ public class GetShapeRequestTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """

@@ -30,7 +30,16 @@ public class GetUsersTest : BaseMockServerTest
                   }
                 },
                 "email": "email",
-                "favorite-number": 1
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
+                }
               },
               {
                 "name": "name",
@@ -49,7 +58,16 @@ public class GetUsersTest : BaseMockServerTest
                   }
                 },
                 "email": "email",
-                "favorite-number": 1
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
+                }
               }
             ]
             """;

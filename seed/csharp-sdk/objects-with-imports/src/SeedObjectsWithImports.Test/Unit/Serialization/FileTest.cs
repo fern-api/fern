@@ -8,7 +8,7 @@ namespace SeedObjectsWithImports.Test;
 [TestFixture]
 public class FileTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -28,7 +28,7 @@ public class FileTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -49,7 +49,7 @@ public class FileTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -69,7 +69,7 @@ public class FileTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
         var expectedJson = """

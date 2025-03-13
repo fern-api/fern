@@ -8,7 +8,7 @@ namespace SeedExtends.Test;
 [TestFixture]
 public class NestedTypeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -28,7 +28,7 @@ public class NestedTypeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """

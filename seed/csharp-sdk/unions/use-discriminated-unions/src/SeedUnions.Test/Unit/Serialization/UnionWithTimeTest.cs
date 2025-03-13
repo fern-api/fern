@@ -9,7 +9,7 @@ namespace SeedUnions.Test;
 [TestFixture]
 public class UnionWithTimeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -23,7 +23,7 @@ public class UnionWithTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -38,7 +38,7 @@ public class UnionWithTimeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -52,7 +52,7 @@ public class UnionWithTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
         var expectedJson = """
@@ -67,7 +67,7 @@ public class UnionWithTimeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -85,7 +85,7 @@ public class UnionWithTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
         var expectedJson = """
