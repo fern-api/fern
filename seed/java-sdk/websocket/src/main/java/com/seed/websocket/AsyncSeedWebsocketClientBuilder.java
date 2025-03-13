@@ -18,10 +18,18 @@ public final class AsyncSeedWebsocketClientBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public AsyncSeedWebsocketClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public AsyncSeedWebsocketClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
         return this;
     }
 

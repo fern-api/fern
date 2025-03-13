@@ -48,8 +48,7 @@ export async function getIntermediateRepresentation({
         version,
         packageName,
         context,
-        sourceResolver: new SourceResolverImpl(context, workspace),
-        includeDynamicExamples: true
+        sourceResolver: new SourceResolverImpl(context, workspace)
     });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;

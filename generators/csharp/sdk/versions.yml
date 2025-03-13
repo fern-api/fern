@@ -28,6 +28,13 @@
         );
         ```
 
+- version: 1.13.2
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where MultipartFormTests wouldn't pass because the timezone on the local machine is different than the timezone on the CI machine.
+
 - version: 1.13.1
   createdAt: "2025-03-13"
   irVersion: 57

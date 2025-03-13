@@ -17,26 +17,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OptionalArgsRequest.Builder.class)
 public final class OptionalArgsRequest {
     private final Optional<File> imageFile;
 
-    private final String invoiceId;
-
     private final Optional<Object> request;
 
     private final Map<String, Object> additionalProperties;
 
     private OptionalArgsRequest(
-            Optional<File> imageFile,
-            String invoiceId,
-            Optional<Object> request,
-            Map<String, Object> additionalProperties) {
+            Optional<File> imageFile, Optional<Object> request, Map<String, Object> additionalProperties) {
         this.imageFile = imageFile;
-        this.invoiceId = invoiceId;
         this.request = request;
         this.additionalProperties = additionalProperties;
     }
@@ -44,11 +37,6 @@ public final class OptionalArgsRequest {
     @JsonProperty("image_file")
     public Optional<File> getImageFile() {
         return imageFile;
-    }
-
-    @JsonProperty("invoice_id")
-    public String getInvoiceId() {
-        return invoiceId;
     }
 
     @JsonProperty("request")
@@ -68,12 +56,12 @@ public final class OptionalArgsRequest {
     }
 
     private boolean equalTo(OptionalArgsRequest other) {
-        return imageFile.equals(other.imageFile) && invoiceId.equals(other.invoiceId) && request.equals(other.request);
+        return imageFile.equals(other.imageFile) && request.equals(other.request);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.imageFile, this.invoiceId, this.request);
+        return Objects.hash(this.imageFile, this.request);
     }
 
     @java.lang.Override
@@ -81,85 +69,51 @@ public final class OptionalArgsRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static InvoiceIdStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface InvoiceIdStage {
-        _FinalStage invoiceId(@NotNull String invoiceId);
-
-        Builder from(OptionalArgsRequest other);
-    }
-
-    public interface _FinalStage {
-        OptionalArgsRequest build();
-
-        _FinalStage imageFile(Optional<File> imageFile);
-
-        _FinalStage imageFile(File imageFile);
-
-        _FinalStage request(Optional<Object> request);
-
-        _FinalStage request(Object request);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements InvoiceIdStage, _FinalStage {
-        private String invoiceId;
+    public static final class Builder {
+        private Optional<File> imageFile = Optional.empty();
 
         private Optional<Object> request = Optional.empty();
-
-        private Optional<File> imageFile = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(OptionalArgsRequest other) {
             imageFile(other.getImageFile());
-            invoiceId(other.getInvoiceId());
             request(other.getRequest());
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("invoice_id")
-        public _FinalStage invoiceId(@NotNull String invoiceId) {
-            this.invoiceId = Objects.requireNonNull(invoiceId, "invoiceId must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage request(Object request) {
-            this.request = Optional.ofNullable(request);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "request", nulls = Nulls.SKIP)
-        public _FinalStage request(Optional<Object> request) {
-            this.request = request;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage imageFile(File imageFile) {
-            this.imageFile = Optional.ofNullable(imageFile);
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter(value = "image_file", nulls = Nulls.SKIP)
-        public _FinalStage imageFile(Optional<File> imageFile) {
+        public Builder imageFile(Optional<File> imageFile) {
             this.imageFile = imageFile;
             return this;
         }
 
-        @java.lang.Override
+        public Builder imageFile(File imageFile) {
+            this.imageFile = Optional.ofNullable(imageFile);
+            return this;
+        }
+
+        @JsonSetter(value = "request", nulls = Nulls.SKIP)
+        public Builder request(Optional<Object> request) {
+            this.request = request;
+            return this;
+        }
+
+        public Builder request(Object request) {
+            this.request = Optional.ofNullable(request);
+            return this;
+        }
+
         public OptionalArgsRequest build() {
-            return new OptionalArgsRequest(imageFile, invoiceId, request, additionalProperties);
+            return new OptionalArgsRequest(imageFile, request, additionalProperties);
         }
     }
 }

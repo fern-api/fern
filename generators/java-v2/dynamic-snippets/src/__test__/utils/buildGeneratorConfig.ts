@@ -18,6 +18,7 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {
+        "inline-file-properties": true,
         "package-layout": "flat"
     } as BaseJavaCustomConfigSchema
 };
