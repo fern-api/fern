@@ -496,7 +496,10 @@ export class EndpointSnippetGenerator {
     }): java.TypeLiteral[] {
         const args: java.TypeLiteral[] = [];
 
-        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? false;
+        const { inlinePathParameters, inlineFileProperties } = {
+            inlinePathParameters: this.context.shouldInlinePathParameters(),
+            inlineFileProperties: this.context.shouldInlineFileProperties()
+        };
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: java.BuilderParameter[] = [];
@@ -519,7 +522,9 @@ export class EndpointSnippetGenerator {
         }
 
         // For now, the Java SDK always includes file properties as positional parameters.
-        args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+        if (!inlineFileProperties) {
+            args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+        }
 
         // For now, the Java SDK always requires the inlined request parameter.
         args.push(
@@ -636,6 +641,9 @@ export class EndpointSnippetGenerator {
     }: {
         filePropertyInfo: FilePropertyInfo;
     }): java.BuilderParameter[] {
+        if (this.context.shouldInlineFileProperties()) {
+            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+        }
         return filePropertyInfo.bodyPropertyFields;
     }
 
