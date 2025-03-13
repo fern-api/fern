@@ -1,0 +1,61 @@
+name: ci
+
+on: [push]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        id: setup-jre
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+          architecture: x64
+
+      - name: Compile
+        run: ./gradlew compileJava
+
+  test:
+    needs: [ compile ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        id: setup-jre
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+          architecture: x64
+
+      - name: Test
+        run: ./gradlew test
+  publish:
+    needs: [ compile, test ]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        id: setup-jre
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+          architecture: x64
+
+      - name: Publish to maven
+        run: |
+          ./gradlew publish
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_PUBLISH_REGISTRY_URL: ""
