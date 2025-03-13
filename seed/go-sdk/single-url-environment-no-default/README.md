@@ -35,7 +35,7 @@ You can choose between different environments by using the `option.WithBaseURL` 
 URL, which is particularly useful in test environments.
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithBaseURL(seed.Environments.Production),
 )
 ```
@@ -70,7 +70,7 @@ specified on the client so that they're applied on every request, or for an indi
 
 ```go
 // Specify default options applied on every request.
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
@@ -103,7 +103,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 

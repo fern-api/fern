@@ -320,7 +320,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.getRootPackageName()}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
     }
 
     private getRootPackageName(): string {
@@ -328,7 +328,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getRootPackageClientName(): string {
-        return `${this.getRootPackageName()}client`;
+        return "client";
     }
 
     private writeCode(s: string): string {
