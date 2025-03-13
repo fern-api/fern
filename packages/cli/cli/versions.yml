@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Minor v3 parser bugfixes pertaining to document importing and message parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.18
+
+- changelogEntry:
+  - summary: |
       The v3 parser now supports parsing and merging AsyncAPI specs.
     type: feat
   irVersion: 57
