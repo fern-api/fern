@@ -329,6 +329,8 @@ navigation:
         contents:
           - page: Speakeasy
             path: ./pages/sdks/comparison/speakeasy.mdx
+          - page: OpenAPI Generator
+            path: ./pages/sdks/comparison/openapi.mdx
   - tab: docs
     layout:
       - section: Getting Started
