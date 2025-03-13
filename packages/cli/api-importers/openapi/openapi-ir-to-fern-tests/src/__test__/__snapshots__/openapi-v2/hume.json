@@ -47078,7 +47078,7 @@
         {
           "type": "publishEvent",
           "displayName": "publishEvent",
-          "origin": "server",
+          "origin": "client",
           "body": {
             "bodyType": {
               "fernFilepath": {

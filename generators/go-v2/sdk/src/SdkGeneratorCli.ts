@@ -92,36 +92,18 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
-            if (endpoint.examples?.length) {
-                for (const endpointExample of endpoint.examples ?? []) {
-                    endpointSnippets.push({
-                        exampleIdentifier: endpointExample.id,
-                        id: {
-                            method,
-                            path,
-                            identifierOverride: endpointId
-                        },
-                        snippet: FernGeneratorExec.EndpointSnippet.go({
-                            client: dynamicSnippetsGenerator.generateSync(
-                                convertDynamicEndpointSnippetRequest(endpointExample)
-                            ).snippet
-                        })
-                    });
-                }
-            } else {
-                // TEMPORARY HACK: As of 11-Mar-25, the go generator is using IR v53, which doesn't include
-                // endpoint examples. Therefore, we're using a placeholder snippet here to unblock development
-                // of README generation.
+            for (const endpointExample of endpoint.examples ?? []) {
                 endpointSnippets.push({
+                    exampleIdentifier: endpointExample.id,
                     id: {
                         method,
                         path,
                         identifierOverride: endpointId
                     },
                     snippet: FernGeneratorExec.EndpointSnippet.go({
-                        client: `
-<PLACEHOLDER>
-`
+                        client: dynamicSnippetsGenerator.generateSync(
+                            convertDynamicEndpointSnippetRequest(endpointExample)
+                        ).snippet
                     })
                 });
             }

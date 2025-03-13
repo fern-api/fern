@@ -361,7 +361,9 @@ export class Class extends AstNode {
         if (operator.type === Class.CastOperator.Type.Explicit || operator.type === Class.CastOperator.Type.Implicit) {
             writer.write(`${operator.type} `);
             writer.write("operator ");
-            writer.write(`${this.name}(`);
+            const to = operator.to ?? this.reference;
+            writer.writeNode(to);
+            writer.write("(");
             operator.parameter.write(writer);
         } else {
             const normalOperator = operator as Class.NormalOperator;
@@ -444,6 +446,7 @@ export namespace Class {
     export interface CastOperator {
         parameter: Parameter;
         type: CastOperator.Type;
+        to?: Type;
         body: CodeBlock;
         useExpressionBody?: boolean;
     }

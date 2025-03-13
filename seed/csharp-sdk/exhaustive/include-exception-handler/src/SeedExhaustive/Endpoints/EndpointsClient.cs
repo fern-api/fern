@@ -16,7 +16,6 @@ public partial class EndpointsClient
         Object = new ObjectClient(_client);
         Params = new ParamsClient(_client);
         Primitive = new PrimitiveClient(_client);
-        Put = new PutClient(_client);
         Union = new UnionClient(_client);
     }
 
@@ -33,8 +32,6 @@ public partial class EndpointsClient
     public ParamsClient Params { get; }
 
     public PrimitiveClient Primitive { get; }
-
-    public PutClient Put { get; }
 
     public UnionClient Union { get; }
 }

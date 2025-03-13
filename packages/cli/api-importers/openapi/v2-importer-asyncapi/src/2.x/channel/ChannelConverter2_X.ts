@@ -77,6 +77,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             subscribeMessage = await this.convertMessage({
                 context,
                 errorCollector,
+                origin: "server",
                 operation: this.channel.subscribe,
                 defaultId: "subscribeEvent",
                 breadcrumbName: "subscribeEvent"
@@ -88,6 +89,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             publishMessage = await this.convertMessage({
                 context,
                 errorCollector,
+                origin: "client",
                 operation: this.channel.publish,
                 defaultId: "publishEvent",
                 breadcrumbName: "publishEvent"
@@ -133,12 +135,14 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
     private async convertMessage({
         context,
         errorCollector,
+        origin,
         operation,
         defaultId,
         breadcrumbName
     }: {
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
+        origin: "server" | "client";
         operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
         defaultId: string;
         breadcrumbName: string;
@@ -209,7 +213,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             return {
                 type: convertedTypeDeclaration.name.typeId,
                 displayName: convertedTypeDeclaration.name.name.originalName,
-                origin: "server",
+                origin,
                 body,
                 availability: await context.getAvailability({
                     node: operation,

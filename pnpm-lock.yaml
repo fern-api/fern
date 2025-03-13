@@ -672,9 +672,6 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -892,6 +889,9 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.24.0)
+      dedent:
+        specifier: ^1.5.1
+        version: 1.5.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7

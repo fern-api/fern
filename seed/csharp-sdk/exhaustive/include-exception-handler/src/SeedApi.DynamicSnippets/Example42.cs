@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 
 namespace Usage;
 
@@ -13,7 +14,7 @@ public class Example42
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.NoReqBody.PostWithNoRequestBodyAsync();
     }
 
 }

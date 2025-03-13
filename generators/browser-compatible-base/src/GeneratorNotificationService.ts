@@ -8,10 +8,12 @@ import {
 } from "@fern-fern/generator-exec-sdk/api";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 
+import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService";
+
 export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
 export type { GeneratorConfig, GithubOutputMode };
 
-export class GeneratorNotificationService {
+export class GeneratorNotificationService implements AbstractGeneratorNotificationService {
     private client: FernGeneratorExecClient | undefined;
     private taskId: FernGeneratorExec.TaskId | undefined;
     private buffer: FernGeneratorExec.GeneratorUpdate[] = [];
@@ -52,7 +54,7 @@ export class GeneratorNotificationService {
         await this.flush();
     }
 
-    public async flush(): Promise<void> {
+    private async flush(): Promise<void> {
         if (!this.client || !this.taskId) {
             return;
         }

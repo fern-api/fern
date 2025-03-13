@@ -1,5 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
+using SeedExhaustive.Core;
+using SeedExhaustive.ReqWithHeaders;
 
 namespace Usage;
 
@@ -13,7 +15,13 @@ public class Example43
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+            new ReqWithHeaders{
+                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                Body = "string"
+            }
+        );
     }
 
 }

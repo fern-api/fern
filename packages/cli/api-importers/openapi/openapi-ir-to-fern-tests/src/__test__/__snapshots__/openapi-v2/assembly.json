@@ -55750,7 +55750,7 @@
         {
           "type": "sendMessage",
           "displayName": "sendMessage",
-          "origin": "server",
+          "origin": "client",
           "body": {
             "bodyType": {
               "fernFilepath": {

@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedBasicAuth;
+using SeedBasicAuth.Core;
 
 namespace Usage;
 

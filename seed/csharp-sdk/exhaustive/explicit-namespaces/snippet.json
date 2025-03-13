@@ -460,18 +460,6 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/{id}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/put.add"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints.Put;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Put.AddAsync(\"id\", new PutRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/union",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"

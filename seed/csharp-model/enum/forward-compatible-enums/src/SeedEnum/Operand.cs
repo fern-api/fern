@@ -6,15 +6,15 @@ namespace SeedEnum;
 [JsonConverter(typeof(StringEnumSerializer<Operand>))]
 public readonly record struct Operand : IStringEnum
 {
-    public static readonly Operand GreaterThan = Custom(Values.GreaterThan);
+    public static readonly Operand GreaterThan = new(Values.GreaterThan);
 
-    public static readonly Operand EqualTo = Custom(Values.EqualTo);
+    public static readonly Operand EqualTo = new(Values.EqualTo);
 
     /// <summary>
     /// The name and value should be similar
     /// are similar for less than.
     /// </summary>
-    public static readonly Operand LessThan = Custom(Values.LessThan);
+    public static readonly Operand LessThan = new(Values.LessThan);
 
     public Operand(string value)
     {
@@ -29,7 +29,7 @@ public readonly record struct Operand : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Operand Custom(string value)
+    public static Operand FromCustom(string value)
     {
         return new Operand(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct Operand : IStringEnum
     public static bool operator ==(Operand value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(Operand value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(Operand value) => value.Value;
+
+    public static explicit operator Operand(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

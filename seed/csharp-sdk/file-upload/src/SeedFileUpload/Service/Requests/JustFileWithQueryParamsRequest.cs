@@ -20,6 +20,8 @@ public record JustFileWithQueryParamsRequest
     [JsonIgnore]
     public IEnumerable<string> OptionalListOfStrings { get; set; } = new List<string>();
 
+    public required FileParameter File { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
