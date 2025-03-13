@@ -266,7 +266,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 breadcrumbs: ["paths", path],
                 pathItem,
                 path,
-                servers: context.spec.servers,
+                servers: context.spec.servers
             });
             const convertedPath = await pathConverter.convert({ context, errorCollector });
             if (convertedPath != null) {
@@ -276,7 +276,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                         groupToEndpoints[group] = [];
                     }
                     groupToEndpoints[group].push(endpoint.endpoint);
-                    
+
                     // Collect endpoint-level servers
                     if (endpoint.servers && endpoint.servers[0] != null) {
                         endpointLevelServers.push(endpoint.servers[0]);

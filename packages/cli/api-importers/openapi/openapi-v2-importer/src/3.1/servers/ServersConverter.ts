@@ -1,7 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { isNonNullish } from "@fern-api/core-utils";
-import { Environments, EnvironmentsConfig, MultipleBaseUrlsEnvironment, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
+import {
+    Environments,
+    EnvironmentsConfig,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment
+} from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
@@ -19,7 +24,10 @@ export declare namespace ServersConverter {
     }
 }
 
-export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3_1, ServersConverter.Output | undefined> {
+export class ServersConverter extends AbstractConverter<
+    OpenAPIConverterContext3_1,
+    ServersConverter.Output | undefined
+> {
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly endpointLevelServers?: OpenAPIV3_1.ServerObject[];
 
@@ -41,15 +49,21 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
         }
 
         if (this.endpointLevelServers != null && this.endpointLevelServers.length > 0) {
-
             const multiUrlServers = [this.servers[0], ...this.endpointLevelServers];
 
-            const environments: MultipleBaseUrlsEnvironment[] = [{
-                id: "Default",
-                name: context.casingsGenerator.generateName("Default"),
-                urls: Object.fromEntries(multiUrlServers.map((server) => [ServersConverter.getServerName({ server, errorCollector, context, }), this.getServerUrl(server)])),
-                docs: undefined,
-            }];
+            const environments: MultipleBaseUrlsEnvironment[] = [
+                {
+                    id: "Default",
+                    name: context.casingsGenerator.generateName("Default"),
+                    urls: Object.fromEntries(
+                        multiUrlServers.map((server) => [
+                            ServersConverter.getServerName({ server, errorCollector, context }),
+                            this.getServerUrl(server)
+                        ])
+                    ),
+                    docs: undefined
+                }
+            ];
 
             return {
                 value: {
@@ -59,8 +73,8 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
                         environments
                     })
                 },
-                defaultUrl: ServersConverter.getServerName({ server: this.servers[0], errorCollector, context, })
-            }
+                defaultUrl: ServersConverter.getServerName({ server: this.servers[0], errorCollector, context })
+            };
         }
 
         const environments: SingleBaseUrlEnvironment[] = this.servers
@@ -82,7 +96,7 @@ export class ServersConverter extends AbstractConverter<OpenAPIConverterContext3
                     environments
                 })
             }
-        }
+        };
     }
 
     public static getServerName({

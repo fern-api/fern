@@ -1,0 +1,178 @@
+{
+  "title": "Test API",
+  "servers": [
+    {
+      "url": "http://prod.api.com",
+      "name": "Prod"
+    },
+    {
+      "url": "http://dev.api.com",
+      "name": "Dev"
+    }
+  ],
+  "websocketServers": [
+    {
+      "name": "websocket",
+      "url": "wss://api.async.com"
+    },
+    {
+      "name": "websocket2",
+      "url": "wss://api2.async.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "list",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ListResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [
+        {
+          "url": "http://debug.api.com",
+          "name": "Debug"
+        }
+      ],
+      "authed": false,
+      "method": "GET",
+      "path": "/pets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {
+    "testChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannel"
+      ],
+      "publish": {
+        "generatedName": "TestChannelPublishEvent",
+        "values": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "servers": [
+        {
+          "name": "websocket",
+          "url": "wss://api.async.com"
+        }
+      ],
+      "path": "/test",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": []
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "testChannel2": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannel2"
+      ],
+      "publish": {
+        "generatedName": "TestChannel2PublishEvent",
+        "values": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "servers": [
+        {
+          "name": "websocket2",
+          "url": "wss://api2.async.com"
+        }
+      ],
+      "path": "/test2",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": []
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -78,7 +78,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 displayName: this.operation.summary,
                 method: httpMethod,
                 name: context.casingsGenerator.generateName(method),
-                baseUrl: server != null ? ServersConverter.getServerName({ server, context, errorCollector }) : undefined,
+                baseUrl:
+                    server != null ? ServersConverter.getServerName({ server, context, errorCollector }) : undefined,
                 path: constructHttpPath(this.path),
                 pathParameters,
                 queryParameters,
@@ -101,10 +102,10 @@ export class OperationConverter extends AbstractOperationConverter {
                 fullPath: constructHttpPath(this.path),
                 allPathParameters: pathParameters,
                 pagination: undefined,
-                transport: undefined,
+                transport: undefined
             },
             inlinedTypes: this.inlinedTypes,
-            servers: this.operation.servers,
+            servers: this.operation.servers
         };
     }
 
