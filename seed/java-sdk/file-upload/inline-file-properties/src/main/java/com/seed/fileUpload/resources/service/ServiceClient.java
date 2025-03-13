@@ -472,16 +472,11 @@ public class ServiceClient {
         }
     }
 
-    public String optionalArgs(String invoiceId, Optional<File> imageFile) {
-        return optionalArgs(invoiceId, imageFile, OptionalArgsRequest.builder().build());
+    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
+        return optionalArgs(imageFile, request, null);
     }
 
-    public String optionalArgs(String invoiceId, Optional<File> imageFile, OptionalArgsRequest request) {
-        return optionalArgs(invoiceId, imageFile, request, null);
-    }
-
-    public String optionalArgs(
-            String invoiceId, Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("optional-args")

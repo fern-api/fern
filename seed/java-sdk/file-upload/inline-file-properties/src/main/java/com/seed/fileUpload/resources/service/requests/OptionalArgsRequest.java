@@ -16,17 +16,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OptionalArgsRequest.Builder.class)
 public final class OptionalArgsRequest {
+    private final String invoiceId;
+
     private final Optional<Object> request;
 
     private final Map<String, Object> additionalProperties;
 
-    private OptionalArgsRequest(Optional<Object> request, Map<String, Object> additionalProperties) {
+    private OptionalArgsRequest(String invoiceId, Optional<Object> request, Map<String, Object> additionalProperties) {
+        this.invoiceId = invoiceId;
         this.request = request;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("invoice_id")
+    public String getInvoiceId() {
+        return invoiceId;
     }
 
     @JsonProperty("request")
@@ -46,12 +55,12 @@ public final class OptionalArgsRequest {
     }
 
     private boolean equalTo(OptionalArgsRequest other) {
-        return request.equals(other.request);
+        return invoiceId.equals(other.invoiceId) && request.equals(other.request);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.request);
+        return Objects.hash(this.invoiceId, this.request);
     }
 
     @java.lang.Override
@@ -59,12 +68,28 @@ public final class OptionalArgsRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static InvoiceIdStage builder() {
         return new Builder();
     }
 
+    public interface InvoiceIdStage {
+        _FinalStage invoiceId(@NotNull String invoiceId);
+
+        Builder from(OptionalArgsRequest other);
+    }
+
+    public interface _FinalStage {
+        OptionalArgsRequest build();
+
+        _FinalStage request(Optional<Object> request);
+
+        _FinalStage request(Object request);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
+    public static final class Builder implements InvoiceIdStage, _FinalStage {
+        private String invoiceId;
+
         private Optional<Object> request = Optional.empty();
 
         @JsonAnySetter
@@ -72,24 +97,36 @@ public final class OptionalArgsRequest {
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(OptionalArgsRequest other) {
+            invoiceId(other.getInvoiceId());
             request(other.getRequest());
             return this;
         }
 
-        @JsonSetter(value = "request", nulls = Nulls.SKIP)
-        public Builder request(Optional<Object> request) {
-            this.request = request;
+        @java.lang.Override
+        @JsonSetter("invoice_id")
+        public _FinalStage invoiceId(@NotNull String invoiceId) {
+            this.invoiceId = Objects.requireNonNull(invoiceId, "invoiceId must not be null");
             return this;
         }
 
-        public Builder request(Object request) {
+        @java.lang.Override
+        public _FinalStage request(Object request) {
             this.request = Optional.ofNullable(request);
             return this;
         }
 
+        @java.lang.Override
+        @JsonSetter(value = "request", nulls = Nulls.SKIP)
+        public _FinalStage request(Optional<Object> request) {
+            this.request = request;
+            return this;
+        }
+
+        @java.lang.Override
         public OptionalArgsRequest build() {
-            return new OptionalArgsRequest(request, additionalProperties);
+            return new OptionalArgsRequest(invoiceId, request, additionalProperties);
         }
     }
 }
