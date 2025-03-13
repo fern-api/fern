@@ -160,6 +160,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         const files = [
             AsIsFiles.Constants,
             AsIsFiles.Extensions,
+            AsIsFiles.FormUrlEncoder,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
@@ -169,7 +170,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Json.JsonAccessAttribute,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer,
-            AsIsFiles.RawClient
+            AsIsFiles.QueryStringConverter,
+            AsIsFiles.RawClient,
+            AsIsFiles.ValueConvert
         ];
         if (this.includeExceptionHandler()) {
             files.push(AsIsFiles.ExceptionHandler);
@@ -181,7 +184,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
         }
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.Json.StringEnumSerializer);
@@ -205,9 +208,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
-            AsIsFiles.Test.RawClientTests
+            AsIsFiles.Test.QueryStringConverterTests,
+            AsIsFiles.Test.RawClientTests.MultipartFormTests,
+            AsIsFiles.Test.RawClientTests.RetriesTests
         ];
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.Test.Json.EnumSerializerTests);
@@ -223,7 +228,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             return [AsIsFiles.GrpcRequestOptions];
         }
-        return [];
+        return [AsIsFiles.FileParameter];
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {

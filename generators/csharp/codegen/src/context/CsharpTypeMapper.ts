@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -48,6 +49,21 @@ export class CsharpTypeMapper {
                 return csharp.Type.object();
             default:
                 assertNever(reference);
+        }
+    }
+
+    public convertFromFileProperty({ property }: { property: FernIr.FileProperty }): csharp.Type {
+        switch (property.type) {
+            case "file": {
+                const csharpType = csharp.Type.fileParam(this.context.getFileParamClassReference());
+                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType;
+            }
+            case "fileArray": {
+                const csharpType = csharp.Type.list(csharp.Type.fileParam(this.context.getFileParamClassReference()));
+                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType;
+            }
+            default:
+                assertNever(property);
         }
     }
 

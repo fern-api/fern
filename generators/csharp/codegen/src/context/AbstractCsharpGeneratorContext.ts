@@ -27,7 +27,8 @@ import {
     JSON_ACCESS_ATTRIBUTE_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
-    STRING_ENUM_SERIALIZER_CLASS_NAME
+    STRING_ENUM_SERIALIZER_CLASS_NAME,
+    VALUE_CONVERT_CLASS_NAME
 } from "../AsIs";
 import { Type, TypeParameter } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -149,6 +150,24 @@ export abstract class AbstractCsharpGeneratorContext<
             csharp.Type.string(),
             csharp.Type.reference(this.getJsonElementClassReference())
         );
+    }
+
+    public getValueConvertReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: VALUE_CONVERT_CLASS_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getFileParamClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getPublicCoreNamespace(),
+            name: "FileParameter"
+        });
+    }
+
+    public isForwardCompatibleEnumsEnabled(): boolean {
+        return this.customConfig["experimental-enable-forward-compatible-enums"] ?? false;
     }
 
     public createAdditionalPropertiesField(): csharp.Field {
@@ -305,6 +324,16 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public createJsonPropertyNameAttribute(name: string): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                namespace: "System.Text.Json.Serialization",
+                name: "JsonPropertyName"
+            }),
+            argument: `"${name}"`
+        });
+    }
+
     public getJsonExceptionClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: "System.Text.Json",
@@ -380,6 +409,7 @@ export abstract class AbstractCsharpGeneratorContext<
             })
         });
     }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }

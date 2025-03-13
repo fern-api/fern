@@ -6,6 +6,31 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.13.0
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for multipartform requests with file and non-file parameters.
+        This is useful when you want to send a file along with other form data in a single request.
+
+        For example, you can use the following code to upload a file with a description and some metadata:
+        ```csharp
+        await client.UploadAsync(
+            new UploadRequest
+            {
+                File = new FileParameter { Stream = fileStream, FileName = "file.txt" },
+                Description = "This is a test file",
+                Meta = new Meta {
+                    Key1 = "value1",
+                    Key2 = "value2"
+                }
+            }
+        );
+        ```
+
 - version: 1.12.0-rc18
   createdAt: "2025-03-10"
   irVersion: 57

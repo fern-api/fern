@@ -414,7 +414,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
-            filename.replace("test/", "").replace(".Template", ""),
+            filename.replace("test/", "").replace("Utils/", "").replace(".Template", ""),
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,

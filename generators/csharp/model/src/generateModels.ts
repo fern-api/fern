@@ -18,7 +18,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
             alias: () => undefined,
             enum: (etd: EnumTypeDeclaration) => {
-                return (context.customConfig["experimental-enable-forward-compatible-enums"] ?? false)
+                return context.isForwardCompatibleEnumsEnabled()
                     ? new StringEnumGenerator(context, typeDeclaration, etd).generate()
                     : new EnumGenerator(context, typeDeclaration, etd).generate();
             },
