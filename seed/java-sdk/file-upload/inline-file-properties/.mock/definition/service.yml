@@ -1,0 +1,166 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request:
+        name: MyRequest
+        body:
+          properties:
+            maybe_string: optional<string>
+            integer: integer
+            file: file
+            file_list: list<file>
+            maybe_file: optional<file>
+            maybe_file_list: optional<list<file>>
+            maybe_integer: optional<integer>
+            optional_list_of_strings: optional<list<string>>
+            list_of_objects: list<MyObject>
+            optional_metadata: optional<unknown>
+            optional_object_type: optional<ObjectType>
+            optional_id: optional<Id>
+            alias_object: MyAliasObject
+            list_of_alias_object: list<MyAliasObject>
+            alias_list_of_object: MyCollectionAliasObject
+
+    justFile:
+      path: /just-file
+      method: POST
+      request:
+        name: JustFileRequest
+        body:
+          properties:
+            file: file
+
+    justFileWithQueryParams:
+      path: /just-file-with-query-params
+      method: POST
+      request:
+        name: JustFileWithQueryParamsRequest
+        query-parameters:
+          maybeString: optional<string>
+          integer: integer
+          maybeInteger: optional<integer>
+          listOfStrings:
+            type: string
+            allow-multiple: true
+          optionalListOfStrings:
+            type: optional<string>
+            allow-multiple: true
+        body:
+          properties:
+            file: file
+
+    withContentType:
+      path: "/with-content-type"
+      method: POST
+      request:
+        name: WithContentTypeRequest
+        body:
+          properties:
+            file:
+              type: file
+              content-type: application/octet-stream
+            foo: string
+            bar:
+              type: MyObject
+              content-type: application/json
+            foo_bar:
+              type: optional<MyObject>
+              content-type: application/json
+
+    withFormEncoding:
+      path: "/with-form-encoding"
+      method: POST
+      request:
+        name: WithFormEncodingRequest
+        body:
+          properties:
+            file:
+              type: file
+              content-type: application/octet-stream
+            foo: 
+              type: string
+              style: form
+            bar:
+              type: MyObject
+              style: form            
+    
+    withFormEncodedContainers:
+      path: ""
+      method: POST
+      request:
+        name: MyOtherRequest
+        body:
+          properties:
+            maybe_string: 
+              type: optional<string>
+              style: form
+            integer: 
+              type: integer
+              style: form
+            file: 
+              type: file
+              style: form
+            file_list: 
+              type: list<file>
+              style: form
+            maybe_file: 
+              type: optional<file>
+              style: form
+            maybe_file_list: 
+              type: optional<list<file>>
+              style: form
+            maybe_integer: 
+              type: optional<integer>
+              style: form
+            optional_list_of_strings: 
+              type: optional<list<string>>
+              style: form
+            list_of_objects: 
+              type: list<MyObject>
+              style: form
+            optional_metadata: 
+              type: optional<unknown>
+              style: form
+            optional_object_type: 
+              type: optional<ObjectType>
+              style: form
+            optional_id: 
+              type: optional<Id>
+              style: form
+            list_of_objects_with_optionals:
+              type: list<MyObjectWithOptional>
+              style: form
+            alias_object: 
+              type: MyAliasObject
+              style: form
+            list_of_alias_object: 
+              type: list<MyAliasObject>
+              style: form
+            alias_list_of_object: 
+              type: MyCollectionAliasObject
+              style: form
+
+types:
+  Id: string
+
+  MyObjectWithOptional:
+    properties:
+      prop: string
+      optionalProp: optional<string>
+
+  MyAliasObject: MyObject
+
+  MyCollectionAliasObject: list<MyObject>
+
+  MyObject:
+    properties:
+      foo: string
+
+  ObjectType:
+    enum:
+      - FOO
+      - BAR

@@ -122,6 +122,9 @@ fixtures:
     - customConfig:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
+    - customConfig:
+        inline-file-properties: true
+      outputFolder: inline-file-properties
     - outputFolder: no-custom-config
   nullable:
     - customConfig:
