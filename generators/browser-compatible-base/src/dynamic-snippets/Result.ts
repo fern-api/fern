@@ -36,7 +36,7 @@ export class Result {
     }
 
     private shouldUpdate({ snippet, reporter }: { snippet: string; reporter: ErrorReporter }): boolean {
-        if (this.reporter == null || reporter.size() === 0) {
+        if (this.reporter == null || (this.reporter.size() > 0 && reporter.size() === 0)) {
             return true;
         }
         return snippet.length > (this.snippet?.length ?? 0);
