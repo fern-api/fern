@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Expose max retries for clients
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.26.0
+- changelogEntry:
+    - summary: |
         Add config to inline file properties
       type: feat
   createdAt: '2025-03-13'
