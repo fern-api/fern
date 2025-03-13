@@ -66,7 +66,15 @@ export class DynamicTypeMapper {
                     })
                 );
             case "discriminatedUnion":
-                return csharp.Type.object();
+                if (!this.context.shouldUseDiscriminatedUnions()) {
+                    return csharp.Type.object();
+                }
+                return csharp.Type.reference(
+                    csharp.classReference({
+                        name: this.context.getClassName(named.declaration.name),
+                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                    })
+                );
             case "undiscriminatedUnion":
                 return csharp.Type.oneOf(
                     named.types.map((typeReference) => {

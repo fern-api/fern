@@ -12,6 +12,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "inline-path-parameters": z.boolean().optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
+    "use-discriminated-unions": z.boolean().optional(),
 
     // General options.
     "custom-pager-name": z.string().optional(),
@@ -20,7 +21,6 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
-    "use-discriminated-unions": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
