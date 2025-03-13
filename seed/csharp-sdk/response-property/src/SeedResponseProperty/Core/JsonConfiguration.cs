@@ -130,14 +130,14 @@ internal static class JsonUtils
     {
         foreach (var property in overrideObject)
         {
-            if (!baseObject.ContainsKey(property.Key))
+            if (!baseObject.TryGetPropertyValue(property.Key, out JsonNode? existingValue))
             {
                 baseObject[property.Key] =
                     property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
                 continue;
             }
             if (
-                baseObject[property.Key] is JsonObject nestedBaseObject
+                existingValue is JsonObject nestedBaseObject
                 && property.Value is JsonObject nestedOverrideObject
             )
             {
