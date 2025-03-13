@@ -93,7 +93,18 @@ export class ClassReference extends AstNode {
         }
         // Join the remaining segments of 'classReferenceNamespace' after the matching prefix
         const typeQualification = classReferenceSegments.slice(i).join(".");
-        return `${typeQualification}${typeQualification ? "." : ""}`;
+        const qualification = `${typeQualification}${typeQualification ? "." : ""}`;
+
+        if (qualification) {
+            return qualification;
+        }
+
+        // Handle the scenario where the type in the property is conflicting with the namespace
+        if (namespaceToBeWrittenTo.endsWith(`.${this.name}`)) {
+            return `${classReferenceNamespace}.`;
+        }
+
+        return "";
     }
 
     /**
@@ -119,6 +130,9 @@ export class ClassReference extends AstNode {
      * - Net -- Company.Net
      */
     private qualifiedTypeNameRequired(writer: Writer): boolean {
+        if (writer.getNamespace().endsWith(`.${this.name}`)) {
+            return true;
+        }
         return this.potentialConflictWithNamespaceSegment(writer) || this.potentialConflictWithGeneratedType(writer);
     }
 
@@ -136,6 +150,16 @@ export class ClassReference extends AstNode {
         const matchingNamespacesCopy = new Set(matchingNamespaces);
         matchingNamespacesCopy.delete(this.namespace);
         return matchingNamespacesCopy.size > 0;
+    }
+
+    public toQualified() {
+        return new ClassReference({
+            name: this.name,
+            namespace: this.namespace,
+            namespaceAlias: this.namespaceAlias,
+            generics: this.generics,
+            fullyQualified: true
+        });
     }
 }
 
