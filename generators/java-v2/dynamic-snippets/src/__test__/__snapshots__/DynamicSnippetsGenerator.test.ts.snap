@@ -322,10 +322,14 @@ AcmeAcmeClient client = AcmeAcmeClient
     .build();
 
 client.service().post(
-    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
-    new FileStream(ByteArrayInputStream("First".getBytes(StandardCharsets.UTF_8))),
     MyRequest
         .builder()
+        .file(
+            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+        )
+        .fileList(
+            new FileStream(ByteArrayInputStream("First".getBytes(StandardCharsets.UTF_8)))
+        )
         .build()
 );
 "
@@ -345,9 +349,11 @@ AcmeAcmeClient client = AcmeAcmeClient
     .build();
 
 client.service().justFile(
-    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
     JustFileRequest
         .builder()
+        .file(
+            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+        )
         .build()
 );
 "
@@ -367,10 +373,12 @@ AcmeAcmeClient client = AcmeAcmeClient
     .build();
 
 client.service().justFileWithQueryParams(
-    new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8))),
     JustFileWithQueryParamsRequest
         .builder()
         .integer(42)
+        .file(
+            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+        )
         .maybeString("exists")
         .build()
 );
