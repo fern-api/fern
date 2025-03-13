@@ -211,6 +211,119 @@
                     "value": "type_:Operand"
                 }
             ]
+        },
+        "type_unknown:Status": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "Status",
+                    "camelCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "status",
+                        "safeName": "status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STATUS",
+                        "safeName": "STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Status",
+                        "safeName": "Status"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "Known",
+                        "camelCase": {
+                            "unsafeName": "known",
+                            "safeName": "known"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "known",
+                            "safeName": "known"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "KNOWN",
+                            "safeName": "KNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Known",
+                            "safeName": "Known"
+                        }
+                    },
+                    "wireValue": "Known"
+                },
+                {
+                    "name": {
+                        "originalName": "Unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    },
+                    "wireValue": "Unknown"
+                }
+            ]
         }
     },
     "headers": [],

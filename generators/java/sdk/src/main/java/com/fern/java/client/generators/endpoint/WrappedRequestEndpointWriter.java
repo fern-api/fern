@@ -140,7 +140,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
             }
         } else {
-            if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
             } else {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));

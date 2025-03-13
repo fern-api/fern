@@ -1,5 +1,26 @@
 - changelogEntry:
   - summary: |
+      Revert only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.16
+
+- changelogEntry:
+  - summary: |
+      Only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.15
+
+- changelogEntry:
+  - summary: |
+      Correctly assign a versioned slug to the landing page when applicable.
+    type: fix
+  irVersion: 57
+  version: 0.56.14
+
+- changelogEntry:
+  - summary: |
       Correctly parse channel descriptions in AsyncAPI v2 and v3 specs.
     type: fix
   irVersion: 57

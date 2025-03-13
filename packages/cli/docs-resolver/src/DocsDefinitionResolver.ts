@@ -592,7 +592,7 @@ export class DocsDefinitionResolver {
             // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
-            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
+            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
             hidden: undefined,
             authed: undefined,
             viewers: version.viewers,

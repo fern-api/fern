@@ -1,4 +1,6 @@
-import { HttpEndpoint } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { ErrorCollector } from "../../../ErrorCollector";
@@ -45,16 +47,14 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const requestBody = await this.convertRequestBody({
+        const convertedRequestBody = await this.convertRequestBody({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method
         });
-        if (requestBody === null) {
-            return undefined;
-        }
+        const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
         const response = await this.convertResponseBody({
             context,
@@ -78,7 +78,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 headers,
                 requestBody,
                 sdkRequest: undefined,
-                response,
+                response: response?.value,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
                 availability: await context.getAvailability({
@@ -98,5 +98,17 @@ export class OperationConverter extends AbstractOperationConverter {
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private convertExamples({
+        requestExamples,
+        responseExamples,
+        context
+    }: {
+        requestExamples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        responseExamples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        context: OpenAPIConverterContext3_1;
+    }): ExampleEndpointCall[] {
+        return [];
     }
 }

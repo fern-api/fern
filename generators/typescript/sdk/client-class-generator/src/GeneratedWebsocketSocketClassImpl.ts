@@ -5,6 +5,7 @@ import {
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
+    PropertyDeclarationStructure,
     Scope,
     StructureKind,
     TypeAliasDeclarationStructure,
@@ -126,12 +127,10 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             closeMethod,
             tillSocketOpen,
             assertSocketIsOpen,
-            sendJson,
-            handleOpen,
-            handleMessage,
-            handleClose,
-            handleError
+            sendJson
         );
+
+        serviceClass.properties?.push(handleOpen, handleMessage, handleClose, handleError);
 
         context.sourceFile.addModule(serviceModule);
         context.sourceFile.addClass(serviceClass);
@@ -158,7 +157,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isExported: true,
             type: getTextOfTsNode(
                 ts.factory.createIntersectionTypeNode([
-                    this.getPublishMessageNode(context),
+                    this.getSubscribeMessageNode(context),
                     ts.factory.createTypeLiteralNode([
                         ts.factory.createPropertySignature(
                             undefined,
@@ -419,77 +418,76 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateHandleMessage(context: SdkContext): MethodDeclarationStructure {
+    private generateHandleMessage(context: SdkContext): PropertyDeclarationStructure {
         const subscribeMessage = this.getSubscribeMessage();
+
+        const bodyLines: string[] = ["const data = JSON.parse(event.data);", ""];
+
+        if (this.includeSerdeLayer) {
+            const parsedResponseStatement = `const parsedResponse = ${getTextOfTsNode(
+                this.getParsedExpression(subscribeMessage.body, context)
+            )};`;
+            bodyLines.push(
+                parsedResponseStatement,
+                "if (parsedResponse.ok) {",
+                `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.({`,
+                "        ...parsedResponse.value,",
+                "        receivedAt: new Date()",
+                "    });",
+                "} else {",
+                "    this.eventHandlers.error?.(new Error(`Received unknown message type`));",
+                "}"
+            );
+        } else {
+            bodyLines.push("this.eventHandlers.message?.({", "    ...data,", "    receivedAt: new Date()", "});");
+        }
+
         return {
-            kind: StructureKind.Method,
+            kind: StructureKind.Property,
             name: "handleMessage",
             scope: Scope.Private,
-            parameters: [
-                {
-                    name: "event",
-                    type: "{ data: string }"
-                }
-            ],
-            statements: [
-                "const data = JSON.parse(event.data);",
-                "",
-                ...(this.includeSerdeLayer
-                    ? [
-                          `const parsedResponse = ${getTextOfTsNode(this.getParsedExpression(subscribeMessage.body, context))};`,
-                          "if (parsedResponse.ok) {",
-                          `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.({`,
-                          "        ...parsedResponse.value,",
-                          "        receivedAt: new Date()",
-                          "    });",
-                          "} else {",
-                          "    this.eventHandlers.error?.(new Error(`Received unknown message type`));",
-                          "}"
-                      ]
-                    : ["this.eventHandlers.message?.({", "    ...data,", "    receivedAt: new Date()", "});"])
-            ]
+            type: "(event: { data: string }) => void",
+            initializer: `event => {
+    ${bodyLines.map((line) => "    " + line).join("\n")}
+    }`
         };
     }
 
-    private generateHandleOpen(): MethodDeclarationStructure {
+    private generateHandleOpen(): PropertyDeclarationStructure {
         return {
-            kind: StructureKind.Method,
+            kind: StructureKind.Property,
             name: "handleOpen",
             scope: Scope.Private,
-            statements: [`this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.open?.();`]
+            type: "() => void",
+            initializer: `() => {
+        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.open?.();
+    }`
         };
     }
 
-    private generateHandleClose(context: SdkContext): MethodDeclarationStructure {
+    private generateHandleClose(context: SdkContext): PropertyDeclarationStructure {
         return {
-            kind: StructureKind.Method,
+            kind: StructureKind.Property,
             name: "handleClose",
             scope: Scope.Private,
-            parameters: [
-                {
-                    name: "event",
-                    type: getTextOfTsNode(context.coreUtilities.websocket.CloseEvent._getReferenceToType())
-                }
-            ],
-            statements: [`this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.close?.(event);`]
+            // Adjust the parameter type to match your CloseEvent shape
+            type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.CloseEvent._getReferenceToType())}) => void`,
+            initializer: `event => {
+        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.close?.(event);
+    }`
         };
     }
 
-    private generateHandleError(context: SdkContext): MethodDeclarationStructure {
+    private generateHandleError(context: SdkContext): PropertyDeclarationStructure {
         return {
-            kind: StructureKind.Method,
+            kind: StructureKind.Property,
             name: "handleError",
             scope: Scope.Private,
-            parameters: [
-                {
-                    name: "event",
-                    type: getTextOfTsNode(context.coreUtilities.websocket.ErrorEvent._getReferenceToType())
-                }
-            ],
-            statements: [
-                `const ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME} = event.message ?? "core.ReconnectingWebSocket error";`,
-                `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}));`
-            ]
+            type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.ErrorEvent._getReferenceToType())}) => void`,
+            initializer: `event => {
+        const ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME} = event.message ?? "core.ReconnectingWebSocket error";
+        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}));
+    }`
         };
     }
 
@@ -540,11 +538,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private getPublishMessage(): WebSocketMessage {
-        return this.channel.messages.filter((message) => message.origin === "server")[0] as WebSocketMessage;
+        return this.channel.messages.filter((message) => message.origin === "client")[0] as WebSocketMessage;
     }
 
     private getSubscribeMessage(): WebSocketMessage {
-        return this.channel.messages.filter((message) => message.origin === "client")[0] as WebSocketMessage;
+        return this.channel.messages.filter((message) => message.origin === "server")[0] as WebSocketMessage;
     }
 
     private getPublishMessageNode(context: SdkContext): ts.TypeNode {
@@ -552,6 +550,21 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         // We'll need to update this if we want to support a different message array structure.
         return this.channel.messages
             .filter((message) => message.origin === "client")
+            .map((message) => {
+                if (message.body.type === "inlinedBody") {
+                    // TODO (Eden): Handle inlined body messages
+                    throw new Error("Inlined body messages are not supported yet");
+                }
+                const generatedType = context.type.getReferenceToType(message.body.bodyType);
+                return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
+            })[0] as ts.TypeNode;
+    }
+
+    private getSubscribeMessageNode(context: SdkContext): ts.TypeNode {
+        // TODO (Eden): At the moment, we're only extracting two messages in the IR: publish & subscribe.
+        // We'll need to update this if we want to support a different message array structure.
+        return this.channel.messages
+            .filter((message) => message.origin === "server")
             .map((message) => {
                 if (message.body.type === "inlinedBody") {
                     // TODO (Eden): Handle inlined body messages

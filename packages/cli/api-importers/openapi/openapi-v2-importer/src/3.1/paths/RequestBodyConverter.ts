@@ -23,7 +23,12 @@ export declare namespace RequestBodyConverter {
     export interface Output {
         requestBody: HttpRequestBody;
         inlinedTypes: Record<string, TypeDeclaration>;
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }
+}
+
+interface ConvertedRequestSchema extends SchemaOrReferenceConverter.Output {
+    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
 export class RequestBodyConverter extends AbstractConverter<
@@ -88,7 +93,8 @@ export class RequestBodyConverter extends AbstractConverter<
                     inlinedTypes: context.removeSchemaFromInlinedTypes({
                         id: schemaId,
                         inlinedTypes: convertedSchema.inlinedTypes
-                    })
+                    }),
+                    examples: convertedSchema.examples
                 };
             }
         }
@@ -116,7 +122,7 @@ export class RequestBodyConverter extends AbstractConverter<
         contentType: string;
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
+    }): Promise<ConvertedRequestSchema | undefined> {
         const mediaTypeObject = this.requestBody.content[contentType];
         if (mediaTypeObject == null || mediaTypeObject.schema == null) {
             return undefined;
@@ -132,7 +138,21 @@ export class RequestBodyConverter extends AbstractConverter<
             return undefined;
         }
 
-        return convertedSchema;
+        const examples =
+            mediaTypeObject.examples != null
+                ? Object.fromEntries(
+                      await Promise.all(
+                          Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
+                              key,
+                              context.isReferenceObject(example)
+                                  ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                                  : example
+                          ])
+                      )
+                  )
+                : undefined;
+
+        return { ...convertedSchema, examples };
     }
 
     private async handleJsonOrFormContent({
