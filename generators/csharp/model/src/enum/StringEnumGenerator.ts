@@ -9,6 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
+    private readonly customMethodName: string;
 
     constructor(
         context: ModelGeneratorContext,
@@ -17,6 +18,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
     ) {
         super(context);
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.customMethodName = this.getCustomMethodName(enumDeclaration);
+    }
+
+    private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
+        return enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === "Custom")
+            ? "FromCustom"
+            : "Custom";
     }
 
     protected doGenerate(): CSharpFile {
@@ -107,7 +115,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     static_: true,
                     readonly: true,
                     initializer: csharp.codeblock((writer) => {
-                        writer.write("Custom(");
+                        writer.write(`${this.customMethodName}(`);
                         writer.write("Values.");
                         writer.write(fieldName);
                         writer.write(")");
@@ -121,7 +129,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addMethod(
             csharp.method({
                 access: csharp.Access.Public,
-                name: "Custom",
+                name: this.customMethodName,
                 parameters: [
                     csharp.parameter({
                         name: "value",
