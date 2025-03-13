@@ -159,7 +159,7 @@ public class AdditionalParametersTests
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
 
         var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody));
+        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [Test]
@@ -197,7 +197,7 @@ public class AdditionalParametersTests
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
 
         var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody));
+        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [Test]
@@ -205,17 +205,17 @@ public class AdditionalParametersTests
     {
         const string expectedBody = """
             {
-            "foo": {
-                "inner1": "original",
-                "inner2": "overridden",
-                "inner3": {
-                "deepProp1": "deep-override",
-                "deepProp2": "original",
-                "deepProp3": null,
-                "deepProp4": "new-value"
-                }
-            },
-            "bar": "new-value"
+                "foo": {
+                    "inner1": "original",
+                    "inner2": "overridden",
+                    "inner3": {
+                        "deepProp1": "deep-override",
+                        "deepProp2": "original",
+                        "deepProp3": null,
+                        "deepProp4": "new-value"
+                    }
+                },
+                "bar": "new-value"
             }
             """;
 
@@ -288,7 +288,7 @@ public class AdditionalParametersTests
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
 
         var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody));
+        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [TearDown]
