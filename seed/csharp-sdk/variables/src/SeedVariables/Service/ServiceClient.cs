@@ -29,7 +29,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(endpointParam)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
                     Options = options,
                 },
                 cancellationToken

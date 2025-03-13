@@ -40,7 +40,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/file/{JsonUtils.SerializeAsString(filename)}",
+                    Path = string.Format("/file/{0}", ValueConvert.ToPathParameterString(filename)),
                     Headers = _headers,
                     Options = options,
                 },

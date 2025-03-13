@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedServerSentEvents;
+using SeedServerSentEvents.Core;
 
 namespace Usage;
 

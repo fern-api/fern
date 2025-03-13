@@ -4,13 +4,44 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/enum/fern/client"
+    context "context"
+    fern "github.com/enum/fern"
+)
+
+func do() () {
+    client := client.NewClient()
+    client.InlinedRequest.Send(
+        context.TODO(),
+        &fern.SendEnumInlinedRequest{
+            Operand: fern.OperandGreaterThan,
+            MaybeOperand: fern.OperandGreaterThan.Ptr(),
+            OperandOrColor: &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+            MaybeOperandOrColor: &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
 URL, which is particularly useful in test environments.
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithBaseURL("https://example.com"),
 )
 ```
@@ -45,7 +76,7 @@ specified on the client so that they're applied on every request, or for an indi
 
 ```go
 // Specify default options applied on every request.
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
@@ -78,7 +109,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 

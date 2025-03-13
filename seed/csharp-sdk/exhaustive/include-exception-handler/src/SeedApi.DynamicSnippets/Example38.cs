@@ -1,6 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Core;
 
 namespace Usage;
 
@@ -14,9 +14,12 @@ public class Example38
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            "id",
-            new PutRequest()
+        await client.Endpoints.Union.GetAndReturnUnionAsync(
+            new Dictionary<string, object>() {
+                ["animal"] = "dog",
+                ["name"] = "name",
+                ["likesToWoof"] = true,
+            }
         );
     }
 

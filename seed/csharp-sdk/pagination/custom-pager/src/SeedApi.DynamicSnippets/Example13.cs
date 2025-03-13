@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedPagination;
+using SeedPagination.Core;
 
 namespace Usage;
 

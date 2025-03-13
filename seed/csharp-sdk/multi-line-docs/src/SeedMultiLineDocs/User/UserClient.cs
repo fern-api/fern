@@ -34,7 +34,7 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format("users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Options = options,
                 },
                 cancellationToken

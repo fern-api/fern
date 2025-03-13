@@ -29,7 +29,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movie/{JsonUtils.SerializeAsString(movieId)}",
+                    Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
                     Options = options,
                 },
                 cancellationToken

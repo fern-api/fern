@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExtends;
+using SeedExtends.Core;
 
 namespace Usage;
 

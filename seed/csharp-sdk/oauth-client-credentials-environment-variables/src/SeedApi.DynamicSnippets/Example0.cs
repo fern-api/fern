@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedOauthClientCredentialsEnvironmentVariables;
+using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace Usage;
 

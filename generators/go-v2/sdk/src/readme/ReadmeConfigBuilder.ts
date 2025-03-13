@@ -20,13 +20,13 @@ export class ReadmeConfigBuilder {
             context,
             endpointSnippets
         });
-        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
+        const snippetsByFeatureId = readmeSnippetBuilder.buildReadmeSnippetsByFeatureId();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
         for (const feature of featureConfig.features) {
-            const snippetForFeature = snippets[feature.id];
+            const snippetsForFeature = snippetsByFeatureId[feature.id];
 
-            if (snippetForFeature == null) {
+            if (snippetsForFeature == null || !snippetsForFeature.length) {
                 continue;
             }
 
@@ -34,7 +34,7 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
-                snippets: snippetForFeature,
+                snippets: snippetsForFeature,
                 snippetsAreOptional: false
             });
         }
