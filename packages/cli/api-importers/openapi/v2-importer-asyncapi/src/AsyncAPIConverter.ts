@@ -371,5 +371,33 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 }
             }
         }
+        this.addWebsocketsToIr({ websocketChannels: this.ir.websocketChannels, context });
+    }
+
+    private addWebsocketsToIr({
+        websocketChannels,
+        context
+    }: {
+        websocketChannels: Record<string, FernIr.WebSocketChannel> | undefined;
+        context: AsyncAPIConverterContext;
+    }): void {
+        if (websocketChannels == null) {
+            return;
+        }
+
+        for (const [channelPath, _] of Object.entries(websocketChannels)) {
+            if (channelPath !== "") {
+                if (this.ir.subpackages[channelPath] == null) {
+                    this.ir.subpackages[channelPath] = {
+                        name: context.casingsGenerator.generateName(channelPath),
+                        ...context.createPackage({ name: channelPath })
+                    };
+                }
+                this.ir.subpackages[channelPath].websocket = channelPath;
+                this.ir.rootPackage.subpackages.push(channelPath);
+            } else {
+                this.ir.rootPackage.websocket = channelPath;
+            }
+        }
     }
 }
