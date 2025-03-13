@@ -2,6 +2,7 @@
 
 from .color import Color
 from .color_or_operand import ColorOrOperand
+from .enum_with_custom import EnumWithCustom
 from .operand import Operand
 
-__all__ = ["Color", "ColorOrOperand", "Operand"]
+__all__ = ["Color", "ColorOrOperand", "EnumWithCustom", "Operand"]
