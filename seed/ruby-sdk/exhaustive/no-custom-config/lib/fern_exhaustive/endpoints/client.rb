@@ -8,6 +8,7 @@ require_relative "http_methods/client"
 require_relative "object/client"
 require_relative "params/client"
 require_relative "primitive/client"
+require_relative "put/client"
 require_relative "union/client"
 
 module SeedExhaustiveClient
@@ -27,6 +28,8 @@ module SeedExhaustiveClient
       attr_reader :params
       # @return [SeedExhaustiveClient::Endpoints::PrimitiveClient]
       attr_reader :primitive
+      # @return [SeedExhaustiveClient::Endpoints::PutClient]
+      attr_reader :put
       # @return [SeedExhaustiveClient::Endpoints::UnionClient]
       attr_reader :union
 
@@ -40,6 +43,7 @@ module SeedExhaustiveClient
         @object = SeedExhaustiveClient::Endpoints::ObjectClient.new(request_client: request_client)
         @params = SeedExhaustiveClient::Endpoints::ParamsClient.new(request_client: request_client)
         @primitive = SeedExhaustiveClient::Endpoints::PrimitiveClient.new(request_client: request_client)
+        @put = SeedExhaustiveClient::Endpoints::PutClient.new(request_client: request_client)
         @union = SeedExhaustiveClient::Endpoints::UnionClient.new(request_client: request_client)
       end
     end
@@ -59,6 +63,8 @@ module SeedExhaustiveClient
       attr_reader :params
       # @return [SeedExhaustiveClient::Endpoints::AsyncPrimitiveClient]
       attr_reader :primitive
+      # @return [SeedExhaustiveClient::Endpoints::AsyncPutClient]
+      attr_reader :put
       # @return [SeedExhaustiveClient::Endpoints::AsyncUnionClient]
       attr_reader :union
 
@@ -72,6 +78,7 @@ module SeedExhaustiveClient
         @object = SeedExhaustiveClient::Endpoints::AsyncObjectClient.new(request_client: request_client)
         @params = SeedExhaustiveClient::Endpoints::AsyncParamsClient.new(request_client: request_client)
         @primitive = SeedExhaustiveClient::Endpoints::AsyncPrimitiveClient.new(request_client: request_client)
+        @put = SeedExhaustiveClient::Endpoints::AsyncPutClient.new(request_client: request_client)
         @union = SeedExhaustiveClient::Endpoints::AsyncUnionClient.new(request_client: request_client)
       end
     end
