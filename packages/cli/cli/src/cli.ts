@@ -628,9 +628,9 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     boolean: true,
                     description: "Whether to use smart casing"
                 })
-                .option("include-examples", {
+                .option("disable-examples", {
                     boolean: true,
-                    description: "Whether to include examples in the IR"
+                    description: "Whether to suppress examples from being included in the IR"
                 }),
         async (argv) => {
             await generateDynamicIrForWorkspaces({
@@ -646,7 +646,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                includeDynamicExamples: argv.includeExamples ?? false
+                includeDynamicExamples: !argv.disableExamples
             });
         }
     );

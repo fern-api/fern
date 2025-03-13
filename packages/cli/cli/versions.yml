@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Include examples by default for dynamic IR generation (replace dynamic-ir --include-examples option with --disable-examples).
+    type: internal
+  irVersion: 57
+  version: 0.56.20
+
+- changelogEntry:
+  - summary: |
       The CLI now recognizes that the latest Go SDK uses IRv57.
     type: internal
   irVersion: 57
