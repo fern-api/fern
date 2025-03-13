@@ -12,7 +12,7 @@ public class StringEnumSerializerTests
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
     private static readonly DummyEnum KnownEnumValue2 = DummyEnum.KnownValue2;
-    private static readonly DummyEnum UnknownEnumValue = DummyEnum.Custom("unknown_value");
+    private static readonly DummyEnum UnknownEnumValue = DummyEnum.FromCustom("unknown_value");
 
     private static readonly string JsonWithKnownEnum2 = $$"""
         {
@@ -88,9 +88,9 @@ public readonly record struct DummyEnum : IStringEnum
     /// </summary>
     public string Value { get; }
 
-    public static readonly DummyEnum KnownValue1 = Custom(Values.KnownValue1);
+    public static readonly DummyEnum KnownValue1 = FromCustom(Values.KnownValue1);
 
-    public static readonly DummyEnum KnownValue2 = Custom(Values.KnownValue2);
+    public static readonly DummyEnum KnownValue2 = FromCustom(Values.KnownValue2);
 
     /// <summary>
     /// Constant strings for enum values
@@ -105,7 +105,7 @@ public readonly record struct DummyEnum : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DummyEnum Custom(string value)
+    public static DummyEnum FromCustom(string value)
     {
         return new DummyEnum(value);
     }
@@ -127,6 +127,10 @@ public readonly record struct DummyEnum : IStringEnum
     {
         return Value.GetHashCode();
     }
+
+    public static explicit operator string(DummyEnum value) => value.Value;
+
+    public static explicit operator DummyEnum(string value) => new(value);
 
     public static bool operator ==(DummyEnum value1, string value2) => value1.Value.Equals(value2);
 

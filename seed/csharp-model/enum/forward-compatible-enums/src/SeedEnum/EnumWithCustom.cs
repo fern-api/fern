@@ -6,9 +6,9 @@ namespace SeedEnum;
 [JsonConverter(typeof(StringEnumSerializer<EnumWithCustom>))]
 public readonly record struct EnumWithCustom : IStringEnum
 {
-    public static readonly EnumWithCustom Safe = FromCustom(Values.Safe);
+    public static readonly EnumWithCustom Safe = new(Values.Safe);
 
-    public static readonly EnumWithCustom Custom = FromCustom(Values.Custom);
+    public static readonly EnumWithCustom Custom = new(Values.Custom);
 
     public EnumWithCustom(string value)
     {
@@ -46,6 +46,10 @@ public readonly record struct EnumWithCustom : IStringEnum
 
     public static bool operator !=(EnumWithCustom value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(EnumWithCustom value) => value.Value;
+
+    public static explicit operator EnumWithCustom(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

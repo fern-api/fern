@@ -23,7 +23,13 @@ public record User
     public string? Email { get; set; }
 
     [JsonPropertyName("favorite-number")]
-    public required OneOf<int, float?, double> FavoriteNumber { get; set; }
+    public required OneOf<int, float?, string?, double> FavoriteNumber { get; set; }
+
+    [JsonPropertyName("numbers")]
+    public IEnumerable<int>? Numbers { get; set; }
+
+    [JsonPropertyName("strings")]
+    public object? Strings { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

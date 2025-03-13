@@ -6,9 +6,9 @@ namespace SeedEnum;
 [JsonConverter(typeof(StringEnumSerializer<Status>))]
 public readonly record struct Status : IStringEnum
 {
-    public static readonly Status Known = Custom(Values.Known);
+    public static readonly Status Known = new(Values.Known);
 
-    public static readonly Status Unknown = Custom(Values.Unknown);
+    public static readonly Status Unknown = new(Values.Unknown);
 
     public Status(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct Status : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Status Custom(string value)
+    public static Status FromCustom(string value)
     {
         return new Status(value);
     }
@@ -44,6 +44,10 @@ public readonly record struct Status : IStringEnum
     public static bool operator ==(Status value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(Status value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(Status value) => value.Value;
+
+    public static explicit operator Status(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -14,7 +14,16 @@
     - type: fix
       summary: |
         Forward compatible enums has a static method `Custom(string value)` that allows you to create a new instance of the enum with a custom value.
-        "Custom" is a common enum value, and we want to avoid conflicts with the static method, we now fallback to `FromCustom(string value)` if an enum contains a value named "Custom".
+        "Custom" is a commonly used enum value, and we want to avoid conflicts with the static method, so we're renaming the static method to `FromCustom(string value)`.
+        This feature is gated behind the `experimental-enable-forward-compatible-enums` configuration option, so we're accepting this as a breaking change without a major version bump.
+    - type: feat
+      summary: |
+        Forward compatible enums can be explicitly casted from and to strings.
+        ```csharp
+        string myEnumAsString = (string)MyEnum.Enum1;
+        MyEnum myEnum = (MyEnum)"custom-value";
+        ```
+        Note: We're not supporting implicit casts here because it could lead to behavior the user doesn't expect.
 
 - version: 1.13.0
   createdAt: "2025-03-13"
