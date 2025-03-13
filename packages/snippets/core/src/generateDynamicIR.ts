@@ -13,7 +13,8 @@ export function generateDynamicIR({
     generatorsConfiguration,
     audiences,
     keywords,
-    smartCasing
+    smartCasing,
+    disableDynamicExamples
 }: {
     spec: Spec;
     language: generatorsYml.GenerationLanguage;
@@ -21,6 +22,7 @@ export function generateDynamicIR({
     audiences?: Audiences;
     keywords?: string[];
     smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
 }): dynamic.DynamicIntermediateRepresentation {
     const context = createTaskContext();
     const workspace = convertSpecToWorkspace({ context, spec, generatorsConfiguration });
@@ -33,7 +35,7 @@ export function generateDynamicIR({
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
         exampleGeneration: { disabled: true },
-        disableDynamicExamples: true,
+        disableDynamicExamples,
         version: undefined,
         packageName: undefined,
         readme: undefined
