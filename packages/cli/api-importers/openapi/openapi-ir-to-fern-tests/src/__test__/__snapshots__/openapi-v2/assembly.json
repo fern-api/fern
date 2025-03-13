@@ -55416,97 +55416,57 @@
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
+    },
+    "/{userId}": {
+      "name": {
+        "originalName": "/{userId}",
+        "camelCase": {
+          "unsafeName": "userId",
+          "safeName": "userId"
+        },
+        "snakeCase": {
+          "unsafeName": "user_id",
+          "safeName": "user_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "USER_ID",
+          "safeName": "USER_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "UserId",
+          "safeName": "UserId"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [],
+        "packagePath": [],
+        "file": {
+          "originalName": "/{userId}",
+          "camelCase": {
+            "unsafeName": "userId",
+            "safeName": "userId"
+          },
+          "snakeCase": {
+            "unsafeName": "user_id",
+            "safeName": "user_id"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USER_ID",
+            "safeName": "USER_ID"
+          },
+          "pascalCase": {
+            "unsafeName": "UserId",
+            "safeName": "UserId"
+          }
+        }
+      },
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "websocket": "/{userId}",
+      "hasEndpointsInTree": false
     }
   },
-  "rootPackage": {
-    "types": [
-      "RedactedAudioResponse",
-      "RedactedAudioStatus",
-      "SubtitleFormat",
-      "WordSearchResponse",
-      "WordSearchMatch",
-      "WordSearchTimestamp",
-      "Timestamp",
-      "CreateTranscriptOptionalParameters",
-      "CreateTranscriptParameters",
-      "SummaryModel",
-      "SummaryType",
-      "TranscriptBoostParam",
-      "TranscriptCustomSpelling",
-      "TranscriptUtterance",
-      "SubstitutionPolicy",
-      "PiiPolicy",
-      "TranscriptLanguageCode",
-      "TranscriptStatus",
-      "Transcript",
-      "Chapter",
-      "Entity",
-      "EntityType",
-      "SentimentAnalysisResult",
-      "Sentiment",
-      "TopicDetectionResult",
-      "ContentSafetyLabel",
-      "ContentSafetyLabelResult",
-      "SeverityScoreSummary",
-      "AutoHighlightsResult",
-      "AutoHighlightResult",
-      "TranscriptWord",
-      "TranscriptSentence",
-      "SentencesResponse",
-      "TranscriptParagraph",
-      "ParagraphsResponse",
-      "PageDetails",
-      "TranscriptListParameters",
-      "TranscriptListItem",
-      "TranscriptList",
-      "UploadedFile",
-      "CreateRealtimeTemporaryTokenParameters",
-      "RealtimeTemporaryTokenResponse",
-      "AudioIntelligenceModelStatus",
-      "PurgeLemurRequestDataResponse",
-      "LemurBaseResponse",
-      "LemurSummaryResponse",
-      "LemurQuestionAnswerResponse",
-      "LemurQuestionAnswer",
-      "LemurActionItemsResponse",
-      "LemurTaskResponse",
-      "LemurBaseParameters",
-      "LemurSummaryParameters",
-      "LemurQuestionAnswerParameters",
-      "LemurQuestion",
-      "LemurActionItemsParameters",
-      "LemurTaskParameters",
-      "LemurModel",
-      "Error",
-      "RealtimeBaseMessage",
-      "RealtimeMessage",
-      "RealtimeError",
-      "MessageType",
-      "RealtimeTranscriptType",
-      "RealtimeTranscript",
-      "SessionBegins",
-      "SessionTerminated",
-      "RealtimeBaseTranscript",
-      "PartialTranscript",
-      "FinalTranscript",
-      "Word",
-      "AudioData",
-      "TerminateSession"
-    ],
-    "errors": [],
-    "subpackages": [
-      "files",
-      "transcript",
-      "realtime",
-      "lemur"
-    ],
-    "fernFilepath": {
-      "allParts": [],
-      "packagePath": []
-    },
-    "hasEndpointsInTree": false
-  },
-  "idempotencyHeaders": [],
   "websocketChannels": {
     "/{userId}": {
       "name": {
@@ -55829,6 +55789,96 @@
       "examples": []
     }
   },
+  "rootPackage": {
+    "types": [
+      "RedactedAudioResponse",
+      "RedactedAudioStatus",
+      "SubtitleFormat",
+      "WordSearchResponse",
+      "WordSearchMatch",
+      "WordSearchTimestamp",
+      "Timestamp",
+      "CreateTranscriptOptionalParameters",
+      "CreateTranscriptParameters",
+      "SummaryModel",
+      "SummaryType",
+      "TranscriptBoostParam",
+      "TranscriptCustomSpelling",
+      "TranscriptUtterance",
+      "SubstitutionPolicy",
+      "PiiPolicy",
+      "TranscriptLanguageCode",
+      "TranscriptStatus",
+      "Transcript",
+      "Chapter",
+      "Entity",
+      "EntityType",
+      "SentimentAnalysisResult",
+      "Sentiment",
+      "TopicDetectionResult",
+      "ContentSafetyLabel",
+      "ContentSafetyLabelResult",
+      "SeverityScoreSummary",
+      "AutoHighlightsResult",
+      "AutoHighlightResult",
+      "TranscriptWord",
+      "TranscriptSentence",
+      "SentencesResponse",
+      "TranscriptParagraph",
+      "ParagraphsResponse",
+      "PageDetails",
+      "TranscriptListParameters",
+      "TranscriptListItem",
+      "TranscriptList",
+      "UploadedFile",
+      "CreateRealtimeTemporaryTokenParameters",
+      "RealtimeTemporaryTokenResponse",
+      "AudioIntelligenceModelStatus",
+      "PurgeLemurRequestDataResponse",
+      "LemurBaseResponse",
+      "LemurSummaryResponse",
+      "LemurQuestionAnswerResponse",
+      "LemurQuestionAnswer",
+      "LemurActionItemsResponse",
+      "LemurTaskResponse",
+      "LemurBaseParameters",
+      "LemurSummaryParameters",
+      "LemurQuestionAnswerParameters",
+      "LemurQuestion",
+      "LemurActionItemsParameters",
+      "LemurTaskParameters",
+      "LemurModel",
+      "Error",
+      "RealtimeBaseMessage",
+      "RealtimeMessage",
+      "RealtimeError",
+      "MessageType",
+      "RealtimeTranscriptType",
+      "RealtimeTranscript",
+      "SessionBegins",
+      "SessionTerminated",
+      "RealtimeBaseTranscript",
+      "PartialTranscript",
+      "FinalTranscript",
+      "Word",
+      "AudioData",
+      "TerminateSession"
+    ],
+    "errors": [],
+    "subpackages": [
+      "files",
+      "transcript",
+      "realtime",
+      "lemur",
+      "/{userId}"
+    ],
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "hasEndpointsInTree": false
+  },
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
