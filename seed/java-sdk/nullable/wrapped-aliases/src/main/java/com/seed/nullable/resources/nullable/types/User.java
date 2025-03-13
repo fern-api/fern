@@ -37,6 +37,10 @@ public final class User {
 
     private final WeirdNumber favoriteNumber;
 
+    private final Optional<List<Integer>> numbers;
+
+    private final Optional<Map<String, Object>> strings;
+
     private final Map<String, Object> additionalProperties;
 
     private User(
@@ -46,6 +50,8 @@ public final class User {
             Optional<Metadata> metadata,
             Email email,
             WeirdNumber favoriteNumber,
+            Optional<List<Integer>> numbers,
+            Optional<Map<String, Object>> strings,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.id = id;
@@ -53,6 +59,8 @@ public final class User {
         this.metadata = metadata;
         this.email = email;
         this.favoriteNumber = favoriteNumber;
+        this.numbers = numbers;
+        this.strings = strings;
         this.additionalProperties = additionalProperties;
     }
 
@@ -95,6 +103,22 @@ public final class User {
         return favoriteNumber;
     }
 
+    @JsonIgnore
+    public Optional<List<Integer>> getNumbers() {
+        if (numbers == null) {
+            return Optional.empty();
+        }
+        return numbers;
+    }
+
+    @JsonIgnore
+    public Optional<Map<String, Object>> getStrings() {
+        if (strings == null) {
+            return Optional.empty();
+        }
+        return strings;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("tags")
     private Optional<List<String>> _getTags() {
@@ -111,6 +135,18 @@ public final class User {
     @JsonProperty("email")
     private Email _getEmail() {
         return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("numbers")
+    private Optional<List<Integer>> _getNumbers() {
+        return numbers;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("strings")
+    private Optional<Map<String, Object>> _getStrings() {
+        return strings;
     }
 
     @java.lang.Override
@@ -130,12 +166,22 @@ public final class User {
                 && tags.equals(other.tags)
                 && metadata.equals(other.metadata)
                 && email.equals(other.email)
-                && favoriteNumber.equals(other.favoriteNumber);
+                && favoriteNumber.equals(other.favoriteNumber)
+                && numbers.equals(other.numbers)
+                && strings.equals(other.strings);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.id, this.tags, this.metadata, this.email, this.favoriteNumber);
+        return Objects.hash(
+                this.name,
+                this.id,
+                this.tags,
+                this.metadata,
+                this.email,
+                this.favoriteNumber,
+                this.numbers,
+                this.strings);
     }
 
     @java.lang.Override
@@ -181,6 +227,18 @@ public final class User {
         _FinalStage metadata(Metadata metadata);
 
         _FinalStage metadata(Nullable<Metadata> metadata);
+
+        _FinalStage numbers(Optional<List<Integer>> numbers);
+
+        _FinalStage numbers(List<Integer> numbers);
+
+        _FinalStage numbers(Nullable<List<Integer>> numbers);
+
+        _FinalStage strings(Optional<Map<String, Object>> strings);
+
+        _FinalStage strings(Map<String, Object> strings);
+
+        _FinalStage strings(Nullable<Map<String, Object>> strings);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -192,6 +250,10 @@ public final class User {
         private Email email;
 
         private WeirdNumber favoriteNumber;
+
+        private Optional<Map<String, Object>> strings = Optional.empty();
+
+        private Optional<List<Integer>> numbers = Optional.empty();
 
         private Optional<Metadata> metadata = Optional.empty();
 
@@ -210,6 +272,8 @@ public final class User {
             metadata(other.getMetadata());
             email(other.getEmail());
             favoriteNumber(other.getFavoriteNumber());
+            numbers(other.getNumbers());
+            strings(other.getStrings());
             return this;
         }
 
@@ -249,6 +313,56 @@ public final class User {
         @JsonSetter("favorite-number")
         public _FinalStage favoriteNumber(@NotNull WeirdNumber favoriteNumber) {
             this.favoriteNumber = Objects.requireNonNull(favoriteNumber, "favoriteNumber must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage strings(Nullable<Map<String, Object>> strings) {
+            if (strings.isNull()) {
+                this.strings = null;
+            } else if (strings.isEmpty()) {
+                this.strings = Optional.empty();
+            } else {
+                this.strings = Optional.of(strings.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage strings(Map<String, Object> strings) {
+            this.strings = Optional.ofNullable(strings);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "strings", nulls = Nulls.SKIP)
+        public _FinalStage strings(Optional<Map<String, Object>> strings) {
+            this.strings = strings;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage numbers(Nullable<List<Integer>> numbers) {
+            if (numbers.isNull()) {
+                this.numbers = null;
+            } else if (numbers.isEmpty()) {
+                this.numbers = Optional.empty();
+            } else {
+                this.numbers = Optional.of(numbers.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage numbers(List<Integer> numbers) {
+            this.numbers = Optional.ofNullable(numbers);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "numbers", nulls = Nulls.SKIP)
+        public _FinalStage numbers(Optional<List<Integer>> numbers) {
+            this.numbers = numbers;
             return this;
         }
 
@@ -304,7 +418,7 @@ public final class User {
 
         @java.lang.Override
         public User build() {
-            return new User(name, id, tags, metadata, email, favoriteNumber, additionalProperties);
+            return new User(name, id, tags, metadata, email, favoriteNumber, numbers, strings, additionalProperties);
         }
     }
 }
