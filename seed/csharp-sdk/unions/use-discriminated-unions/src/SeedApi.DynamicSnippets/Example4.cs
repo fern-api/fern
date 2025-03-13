@@ -12,8 +12,14 @@ public class Example4
             }
         );
 
-        await client.Bigunion.UpdateAsync(
-
+        await client.Union.UpdateAsync(
+            new Shape(
+                new Circle{
+                    Radius = 1.1
+                }
+            ) {
+                Id = "id",
+            }
         );
     }
 
