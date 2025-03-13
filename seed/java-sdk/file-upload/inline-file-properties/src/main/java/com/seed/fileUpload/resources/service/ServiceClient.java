@@ -17,10 +17,8 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -38,18 +36,11 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void post(
-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
-        post(file, fileList, maybeFile, maybeFileList, request, null);
+    public void post(MyRequest request) {
+        post(request, null);
     }
 
-    public void post(
-            File file,
-            File fileList,
-            Optional<File> maybeFile,
-            Optional<File> maybeFileList,
-            MyRequest request,
-            RequestOptions requestOptions) {
+    public void post(MyRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -62,32 +53,40 @@ public class ServiceClient {
                                 request.getMaybeString().get()));
             }
             body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
+            String fileListMimeType =
+                    Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
-            if (maybeFile.isPresent()) {
+                    "file_list",
+                    request.getFileList().getName(),
+                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
+            if (request.getMaybeFile().isPresent()) {
                 String maybeFileMimeType =
-                        Files.probeContentType(maybeFile.get().toPath());
+                        Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file",
-                        maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        request.getMaybeFile().get().getName(),
+                        RequestBody.create(
+                                maybeFileMimeTypeMediaType,
+                                request.getMaybeFile().get()));
             }
-            if (maybeFileList.isPresent()) {
+            if (request.getMaybeFileList().isPresent()) {
                 String maybeFileListMimeType =
-                        Files.probeContentType(maybeFileList.get().toPath());
+                        Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file_list",
-                        maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        request.getMaybeFileList().get().getName(),
+                        RequestBody.create(
+                                maybeFileListMimeTypeMediaType,
+                                request.getMaybeFileList().get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(
@@ -173,20 +172,21 @@ public class ServiceClient {
         }
     }
 
-    public void justFile(File file, JustFileRequest request) {
-        justFile(file, request, null);
+    public void justFile(JustFileRequest request) {
+        justFile(request, null);
     }
 
-    public void justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
+    public void justFile(JustFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -214,12 +214,11 @@ public class ServiceClient {
         }
     }
 
-    public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
-        justFileWithQueryParams(file, request, null);
+    public void justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
+        justFileWithQueryParams(request, null);
     }
 
-    public void justFileWithQueryParams(
-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+    public void justFileWithQueryParams(JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file-with-query-params");
@@ -242,9 +241,10 @@ public class ServiceClient {
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -272,20 +272,21 @@ public class ServiceClient {
         }
     }
 
-    public void withContentType(File file, WithContentTypeRequest request) {
-        withContentType(file, request, null);
+    public void withContentType(WithContentTypeRequest request) {
+        withContentType(request, null);
     }
 
-    public void withContentType(File file, WithContentTypeRequest request, RequestOptions requestOptions) {
+    public void withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("with-content-type")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
             body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
             body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
@@ -321,20 +322,21 @@ public class ServiceClient {
         }
     }
 
-    public void withFormEncoding(File file, WithFormEncodingRequest request) {
-        withFormEncoding(file, request, null);
+    public void withFormEncoding(WithFormEncodingRequest request) {
+        withFormEncoding(request, null);
     }
 
-    public void withFormEncoding(File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
+    public void withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("with-form-encoding")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
             QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
             QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
         } catch (Exception e) {
@@ -364,18 +366,11 @@ public class ServiceClient {
         }
     }
 
-    public void withFormEncodedContainers(
-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
-        withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
+    public void withFormEncodedContainers(MyOtherRequest request) {
+        withFormEncodedContainers(request, null);
     }
 
-    public void withFormEncodedContainers(
-            File file,
-            File fileList,
-            Optional<File> maybeFile,
-            Optional<File> maybeFileList,
-            MyOtherRequest request,
-            RequestOptions requestOptions) {
+    public void withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -386,32 +381,40 @@ public class ServiceClient {
                         body, "maybe_string", request.getMaybeString().get(), false);
             }
             QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
+            String fileListMimeType =
+                    Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
-            if (maybeFile.isPresent()) {
+                    "file_list",
+                    request.getFileList().getName(),
+                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
+            if (request.getMaybeFile().isPresent()) {
                 String maybeFileMimeType =
-                        Files.probeContentType(maybeFile.get().toPath());
+                        Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file",
-                        maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        request.getMaybeFile().get().getName(),
+                        RequestBody.create(
+                                maybeFileMimeTypeMediaType,
+                                request.getMaybeFile().get()));
             }
-            if (maybeFileList.isPresent()) {
+            if (request.getMaybeFileList().isPresent()) {
                 String maybeFileListMimeType =
-                        Files.probeContentType(maybeFileList.get().toPath());
+                        Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file_list",
-                        maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        request.getMaybeFileList().get().getName(),
+                        RequestBody.create(
+                                maybeFileListMimeTypeMediaType,
+                                request.getMaybeFileList().get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
@@ -472,26 +475,28 @@ public class ServiceClient {
         }
     }
 
-    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
-        return optionalArgs(imageFile, request, null);
+    public String optionalArgs(OptionalArgsRequest request) {
+        return optionalArgs(request, null);
     }
 
-    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+    public String optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("optional-args")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            if (imageFile.isPresent()) {
+            if (request.getImageFile().isPresent()) {
                 String imageFileMimeType =
-                        Files.probeContentType(imageFile.get().toPath());
+                        Files.probeContentType(request.getImageFile().get().toPath());
                 MediaType imageFileMimeTypeMediaType =
                         imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
                 body.addFormDataPart(
                         "image_file",
-                        imageFile.get().getName(),
-                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+                        request.getImageFile().get().getName(),
+                        RequestBody.create(
+                                imageFileMimeTypeMediaType,
+                                request.getImageFile().get()));
             }
             if (request.getRequest().isPresent()) {
                 body.addFormDataPart(

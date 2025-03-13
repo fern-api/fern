@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MyObject;
 import com.seed.fileUpload.resources.service.types.ObjectType;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,14 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MyRequest.Builder.class)
 public final class MyRequest {
+    private final File file;
+
+    private final File fileList;
+
+    private final Optional<File> maybeFile;
+
+    private final Optional<File> maybeFileList;
+
     private final Optional<String> maybeString;
 
     private final int integer;
@@ -50,6 +59,10 @@ public final class MyRequest {
     private final Map<String, Object> additionalProperties;
 
     private MyRequest(
+            File file,
+            File fileList,
+            Optional<File> maybeFile,
+            Optional<File> maybeFileList,
             Optional<String> maybeString,
             int integer,
             Optional<Integer> maybeInteger,
@@ -62,6 +75,10 @@ public final class MyRequest {
             List<MyObject> listOfAliasObject,
             List<MyObject> aliasListOfObject,
             Map<String, Object> additionalProperties) {
+        this.file = file;
+        this.fileList = fileList;
+        this.maybeFile = maybeFile;
+        this.maybeFileList = maybeFileList;
         this.maybeString = maybeString;
         this.integer = integer;
         this.maybeInteger = maybeInteger;
@@ -74,6 +91,26 @@ public final class MyRequest {
         this.listOfAliasObject = listOfAliasObject;
         this.aliasListOfObject = aliasListOfObject;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("file")
+    public File getFile() {
+        return file;
+    }
+
+    @JsonProperty("file_list")
+    public File getFileList() {
+        return fileList;
+    }
+
+    @JsonProperty("maybe_file")
+    public Optional<File> getMaybeFile() {
+        return maybeFile;
+    }
+
+    @JsonProperty("maybe_file_list")
+    public Optional<File> getMaybeFileList() {
+        return maybeFileList;
     }
 
     @JsonProperty("maybe_string")
@@ -143,7 +180,11 @@ public final class MyRequest {
     }
 
     private boolean equalTo(MyRequest other) {
-        return maybeString.equals(other.maybeString)
+        return file.equals(other.file)
+                && fileList.equals(other.fileList)
+                && maybeFile.equals(other.maybeFile)
+                && maybeFileList.equals(other.maybeFileList)
+                && maybeString.equals(other.maybeString)
                 && integer == other.integer
                 && maybeInteger.equals(other.maybeInteger)
                 && optionalListOfStrings.equals(other.optionalListOfStrings)
@@ -159,6 +200,10 @@ public final class MyRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.file,
+                this.fileList,
+                this.maybeFile,
+                this.maybeFileList,
                 this.maybeString,
                 this.integer,
                 this.maybeInteger,
@@ -177,14 +222,22 @@ public final class MyRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static IntegerStage builder() {
+    public static FileStage builder() {
         return new Builder();
+    }
+
+    public interface FileStage {
+        FileListStage file(@NotNull File file);
+
+        Builder from(MyRequest other);
+    }
+
+    public interface FileListStage {
+        IntegerStage fileList(@NotNull File fileList);
     }
 
     public interface IntegerStage {
         AliasObjectStage integer(int integer);
-
-        Builder from(MyRequest other);
     }
 
     public interface AliasObjectStage {
@@ -193,6 +246,14 @@ public final class MyRequest {
 
     public interface _FinalStage {
         MyRequest build();
+
+        _FinalStage maybeFile(Optional<File> maybeFile);
+
+        _FinalStage maybeFile(File maybeFile);
+
+        _FinalStage maybeFileList(Optional<File> maybeFileList);
+
+        _FinalStage maybeFileList(File maybeFileList);
 
         _FinalStage maybeString(Optional<String> maybeString);
 
@@ -238,7 +299,11 @@ public final class MyRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IntegerStage, AliasObjectStage, _FinalStage {
+    public static final class Builder implements FileStage, FileListStage, IntegerStage, AliasObjectStage, _FinalStage {
+        private File file;
+
+        private File fileList;
+
         private int integer;
 
         private MyObject aliasObject;
@@ -261,6 +326,10 @@ public final class MyRequest {
 
         private Optional<String> maybeString = Optional.empty();
 
+        private Optional<File> maybeFileList = Optional.empty();
+
+        private Optional<File> maybeFile = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -268,6 +337,10 @@ public final class MyRequest {
 
         @java.lang.Override
         public Builder from(MyRequest other) {
+            file(other.getFile());
+            fileList(other.getFileList());
+            maybeFile(other.getMaybeFile());
+            maybeFileList(other.getMaybeFileList());
             maybeString(other.getMaybeString());
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
@@ -279,6 +352,20 @@ public final class MyRequest {
             aliasObject(other.getAliasObject());
             listOfAliasObject(other.getListOfAliasObject());
             aliasListOfObject(other.getAliasListOfObject());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("file")
+        public FileListStage file(@NotNull File file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("file_list")
+        public IntegerStage fileList(@NotNull File fileList) {
+            this.fileList = Objects.requireNonNull(fileList, "fileList must not be null");
             return this;
         }
 
@@ -435,8 +522,38 @@ public final class MyRequest {
         }
 
         @java.lang.Override
+        public _FinalStage maybeFileList(File maybeFileList) {
+            this.maybeFileList = Optional.ofNullable(maybeFileList);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "maybe_file_list", nulls = Nulls.SKIP)
+        public _FinalStage maybeFileList(Optional<File> maybeFileList) {
+            this.maybeFileList = maybeFileList;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage maybeFile(File maybeFile) {
+            this.maybeFile = Optional.ofNullable(maybeFile);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "maybe_file", nulls = Nulls.SKIP)
+        public _FinalStage maybeFile(Optional<File> maybeFile) {
+            this.maybeFile = maybeFile;
+            return this;
+        }
+
+        @java.lang.Override
         public MyRequest build() {
             return new MyRequest(
+                    file,
+                    fileList,
+                    maybeFile,
+                    maybeFileList,
                     maybeString,
                     integer,
                     maybeInteger,

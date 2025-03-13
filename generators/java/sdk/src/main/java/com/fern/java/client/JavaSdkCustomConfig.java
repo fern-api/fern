@@ -42,6 +42,7 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     Optional<List<String>> customDependencies();
 
     @JsonProperty("inline-file-properties")
+    @Value.Default
     default boolean inlineFileProperties() {
         return false;
     }

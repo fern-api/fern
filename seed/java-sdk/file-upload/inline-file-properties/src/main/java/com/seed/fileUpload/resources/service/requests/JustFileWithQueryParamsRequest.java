@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileWithQueryParamsRequest.Builder.class)
 public final class JustFileWithQueryParamsRequest {
+    private final File file;
+
     private final Optional<String> maybeString;
 
     private final int integer;
@@ -34,18 +37,25 @@ public final class JustFileWithQueryParamsRequest {
     private final Map<String, Object> additionalProperties;
 
     private JustFileWithQueryParamsRequest(
+            File file,
             Optional<String> maybeString,
             int integer,
             Optional<Integer> maybeInteger,
             String listOfStrings,
             Optional<String> optionalListOfStrings,
             Map<String, Object> additionalProperties) {
+        this.file = file;
         this.maybeString = maybeString;
         this.integer = integer;
         this.maybeInteger = maybeInteger;
         this.listOfStrings = listOfStrings;
         this.optionalListOfStrings = optionalListOfStrings;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("file")
+    public File getFile() {
+        return file;
     }
 
     @JsonProperty("maybeString")
@@ -85,7 +95,8 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     private boolean equalTo(JustFileWithQueryParamsRequest other) {
-        return maybeString.equals(other.maybeString)
+        return file.equals(other.file)
+                && maybeString.equals(other.maybeString)
                 && integer == other.integer
                 && maybeInteger.equals(other.maybeInteger)
                 && listOfStrings.equals(other.listOfStrings)
@@ -95,7 +106,12 @@ public final class JustFileWithQueryParamsRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.maybeString, this.integer, this.maybeInteger, this.listOfStrings, this.optionalListOfStrings);
+                this.file,
+                this.maybeString,
+                this.integer,
+                this.maybeInteger,
+                this.listOfStrings,
+                this.optionalListOfStrings);
     }
 
     @java.lang.Override
@@ -103,14 +119,18 @@ public final class JustFileWithQueryParamsRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static IntegerStage builder() {
+    public static FileStage builder() {
         return new Builder();
+    }
+
+    public interface FileStage {
+        IntegerStage file(@NotNull File file);
+
+        Builder from(JustFileWithQueryParamsRequest other);
     }
 
     public interface IntegerStage {
         ListOfStringsStage integer(int integer);
-
-        Builder from(JustFileWithQueryParamsRequest other);
     }
 
     public interface ListOfStringsStage {
@@ -134,7 +154,9 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IntegerStage, ListOfStringsStage, _FinalStage {
+    public static final class Builder implements FileStage, IntegerStage, ListOfStringsStage, _FinalStage {
+        private File file;
+
         private int integer;
 
         private String listOfStrings;
@@ -152,11 +174,19 @@ public final class JustFileWithQueryParamsRequest {
 
         @java.lang.Override
         public Builder from(JustFileWithQueryParamsRequest other) {
+            file(other.getFile());
             maybeString(other.getMaybeString());
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
             listOfStrings(other.getListOfStrings());
             optionalListOfStrings(other.getOptionalListOfStrings());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("file")
+        public IntegerStage file(@NotNull File file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
             return this;
         }
 
@@ -216,7 +246,13 @@ public final class JustFileWithQueryParamsRequest {
         @java.lang.Override
         public JustFileWithQueryParamsRequest build() {
             return new JustFileWithQueryParamsRequest(
-                    maybeString, integer, maybeInteger, listOfStrings, optionalListOfStrings, additionalProperties);
+                    file,
+                    maybeString,
+                    integer,
+                    maybeInteger,
+                    listOfStrings,
+                    optionalListOfStrings,
+                    additionalProperties);
         }
     }
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MyObject;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,16 +21,24 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WithFormEncodingRequest.Builder.class)
 public final class WithFormEncodingRequest {
+    private final File file;
+
     private final String foo;
 
     private final MyObject bar;
 
     private final Map<String, Object> additionalProperties;
 
-    private WithFormEncodingRequest(String foo, MyObject bar, Map<String, Object> additionalProperties) {
+    private WithFormEncodingRequest(File file, String foo, MyObject bar, Map<String, Object> additionalProperties) {
+        this.file = file;
         this.foo = foo;
         this.bar = bar;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("file")
+    public File getFile() {
+        return file;
     }
 
     @JsonProperty("foo")
@@ -54,12 +63,12 @@ public final class WithFormEncodingRequest {
     }
 
     private boolean equalTo(WithFormEncodingRequest other) {
-        return foo.equals(other.foo) && bar.equals(other.bar);
+        return file.equals(other.file) && foo.equals(other.foo) && bar.equals(other.bar);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.foo, this.bar);
+        return Objects.hash(this.file, this.foo, this.bar);
     }
 
     @java.lang.Override
@@ -67,14 +76,18 @@ public final class WithFormEncodingRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static FooStage builder() {
+    public static FileStage builder() {
         return new Builder();
+    }
+
+    public interface FileStage {
+        FooStage file(@NotNull File file);
+
+        Builder from(WithFormEncodingRequest other);
     }
 
     public interface FooStage {
         BarStage foo(@NotNull String foo);
-
-        Builder from(WithFormEncodingRequest other);
     }
 
     public interface BarStage {
@@ -86,7 +99,9 @@ public final class WithFormEncodingRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements FooStage, BarStage, _FinalStage {
+    public static final class Builder implements FileStage, FooStage, BarStage, _FinalStage {
+        private File file;
+
         private String foo;
 
         private MyObject bar;
@@ -98,8 +113,16 @@ public final class WithFormEncodingRequest {
 
         @java.lang.Override
         public Builder from(WithFormEncodingRequest other) {
+            file(other.getFile());
             foo(other.getFoo());
             bar(other.getBar());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("file")
+        public FooStage file(@NotNull File file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
             return this;
         }
 
@@ -119,7 +142,7 @@ public final class WithFormEncodingRequest {
 
         @java.lang.Override
         public WithFormEncodingRequest build() {
-            return new WithFormEncodingRequest(foo, bar, additionalProperties);
+            return new WithFormEncodingRequest(file, foo, bar, additionalProperties);
         }
     }
 }

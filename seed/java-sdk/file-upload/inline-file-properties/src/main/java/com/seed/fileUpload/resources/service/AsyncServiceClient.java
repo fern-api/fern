@@ -17,10 +17,8 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,18 +40,11 @@ public class AsyncServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<Void> post(
-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
-        return post(file, fileList, maybeFile, maybeFileList, request, null);
+    public CompletableFuture<Void> post(MyRequest request) {
+        return post(request, null);
     }
 
-    public CompletableFuture<Void> post(
-            File file,
-            File fileList,
-            Optional<File> maybeFile,
-            Optional<File> maybeFileList,
-            MyRequest request,
-            RequestOptions requestOptions) {
+    public CompletableFuture<Void> post(MyRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -66,32 +57,40 @@ public class AsyncServiceClient {
                                 request.getMaybeString().get()));
             }
             body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
+            String fileListMimeType =
+                    Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
-            if (maybeFile.isPresent()) {
+                    "file_list",
+                    request.getFileList().getName(),
+                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
+            if (request.getMaybeFile().isPresent()) {
                 String maybeFileMimeType =
-                        Files.probeContentType(maybeFile.get().toPath());
+                        Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file",
-                        maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        request.getMaybeFile().get().getName(),
+                        RequestBody.create(
+                                maybeFileMimeTypeMediaType,
+                                request.getMaybeFile().get()));
             }
-            if (maybeFileList.isPresent()) {
+            if (request.getMaybeFileList().isPresent()) {
                 String maybeFileListMimeType =
-                        Files.probeContentType(maybeFileList.get().toPath());
+                        Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file_list",
-                        maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        request.getMaybeFileList().get().getName(),
+                        RequestBody.create(
+                                maybeFileListMimeTypeMediaType,
+                                request.getMaybeFileList().get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(
@@ -191,20 +190,21 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<Void> justFile(File file, JustFileRequest request) {
-        return justFile(file, request, null);
+    public CompletableFuture<Void> justFile(JustFileRequest request) {
+        return justFile(request, null);
     }
 
-    public CompletableFuture<Void> justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> justFile(JustFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -246,12 +246,12 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
-        return justFileWithQueryParams(file, request, null);
+    public CompletableFuture<Void> justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
+        return justFileWithQueryParams(request, null);
     }
 
     public CompletableFuture<Void> justFileWithQueryParams(
-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+            JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file-with-query-params");
@@ -274,9 +274,10 @@ public class AsyncServiceClient {
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -318,21 +319,21 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<Void> withContentType(File file, WithContentTypeRequest request) {
-        return withContentType(file, request, null);
+    public CompletableFuture<Void> withContentType(WithContentTypeRequest request) {
+        return withContentType(request, null);
     }
 
-    public CompletableFuture<Void> withContentType(
-            File file, WithContentTypeRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("with-content-type")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
             body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
             body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
@@ -382,21 +383,21 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
-        return withFormEncoding(file, request, null);
+    public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request) {
+        return withFormEncoding(request, null);
     }
 
-    public CompletableFuture<Void> withFormEncoding(
-            File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("with-form-encoding")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
             QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
             QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
         } catch (Exception e) {
@@ -440,18 +441,11 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<Void> withFormEncodedContainers(
-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
-        return withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
+    public CompletableFuture<Void> withFormEncodedContainers(MyOtherRequest request) {
+        return withFormEncodedContainers(request, null);
     }
 
-    public CompletableFuture<Void> withFormEncodedContainers(
-            File file,
-            File fileList,
-            Optional<File> maybeFile,
-            Optional<File> maybeFileList,
-            MyOtherRequest request,
-            RequestOptions requestOptions) {
+    public CompletableFuture<Void> withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -462,32 +456,40 @@ public class AsyncServiceClient {
                         body, "maybe_string", request.getMaybeString().get(), false);
             }
             QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
-            String fileMimeType = Files.probeContentType(file.toPath());
+            String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
-            String fileListMimeType = Files.probeContentType(fileList.toPath());
+            body.addFormDataPart(
+                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
+            String fileListMimeType =
+                    Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
-            if (maybeFile.isPresent()) {
+                    "file_list",
+                    request.getFileList().getName(),
+                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
+            if (request.getMaybeFile().isPresent()) {
                 String maybeFileMimeType =
-                        Files.probeContentType(maybeFile.get().toPath());
+                        Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file",
-                        maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        request.getMaybeFile().get().getName(),
+                        RequestBody.create(
+                                maybeFileMimeTypeMediaType,
+                                request.getMaybeFile().get()));
             }
-            if (maybeFileList.isPresent()) {
+            if (request.getMaybeFileList().isPresent()) {
                 String maybeFileListMimeType =
-                        Files.probeContentType(maybeFileList.get().toPath());
+                        Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
                 body.addFormDataPart(
                         "maybe_file_list",
-                        maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        request.getMaybeFileList().get().getName(),
+                        RequestBody.create(
+                                maybeFileListMimeTypeMediaType,
+                                request.getMaybeFileList().get()));
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
@@ -562,27 +564,28 @@ public class AsyncServiceClient {
         return future;
     }
 
-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
-        return optionalArgs(imageFile, request, null);
+    public CompletableFuture<String> optionalArgs(OptionalArgsRequest request) {
+        return optionalArgs(request, null);
     }
 
-    public CompletableFuture<String> optionalArgs(
-            Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<String> optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("optional-args")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            if (imageFile.isPresent()) {
+            if (request.getImageFile().isPresent()) {
                 String imageFileMimeType =
-                        Files.probeContentType(imageFile.get().toPath());
+                        Files.probeContentType(request.getImageFile().get().toPath());
                 MediaType imageFileMimeTypeMediaType =
                         imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
                 body.addFormDataPart(
                         "image_file",
-                        imageFile.get().getName(),
-                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+                        request.getImageFile().get().getName(),
+                        RequestBody.create(
+                                imageFileMimeTypeMediaType,
+                                request.getImageFile().get()));
             }
             if (request.getRequest().isPresent()) {
                 body.addFormDataPart(

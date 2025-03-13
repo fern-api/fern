@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,16 +22,28 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OptionalArgsRequest.Builder.class)
 public final class OptionalArgsRequest {
+    private final Optional<File> imageFile;
+
     private final String invoiceId;
 
     private final Optional<Object> request;
 
     private final Map<String, Object> additionalProperties;
 
-    private OptionalArgsRequest(String invoiceId, Optional<Object> request, Map<String, Object> additionalProperties) {
+    private OptionalArgsRequest(
+            Optional<File> imageFile,
+            String invoiceId,
+            Optional<Object> request,
+            Map<String, Object> additionalProperties) {
+        this.imageFile = imageFile;
         this.invoiceId = invoiceId;
         this.request = request;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("image_file")
+    public Optional<File> getImageFile() {
+        return imageFile;
     }
 
     @JsonProperty("invoice_id")
@@ -55,12 +68,12 @@ public final class OptionalArgsRequest {
     }
 
     private boolean equalTo(OptionalArgsRequest other) {
-        return invoiceId.equals(other.invoiceId) && request.equals(other.request);
+        return imageFile.equals(other.imageFile) && invoiceId.equals(other.invoiceId) && request.equals(other.request);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.invoiceId, this.request);
+        return Objects.hash(this.imageFile, this.invoiceId, this.request);
     }
 
     @java.lang.Override
@@ -81,6 +94,10 @@ public final class OptionalArgsRequest {
     public interface _FinalStage {
         OptionalArgsRequest build();
 
+        _FinalStage imageFile(Optional<File> imageFile);
+
+        _FinalStage imageFile(File imageFile);
+
         _FinalStage request(Optional<Object> request);
 
         _FinalStage request(Object request);
@@ -92,6 +109,8 @@ public final class OptionalArgsRequest {
 
         private Optional<Object> request = Optional.empty();
 
+        private Optional<File> imageFile = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -99,6 +118,7 @@ public final class OptionalArgsRequest {
 
         @java.lang.Override
         public Builder from(OptionalArgsRequest other) {
+            imageFile(other.getImageFile());
             invoiceId(other.getInvoiceId());
             request(other.getRequest());
             return this;
@@ -125,8 +145,21 @@ public final class OptionalArgsRequest {
         }
 
         @java.lang.Override
+        public _FinalStage imageFile(File imageFile) {
+            this.imageFile = Optional.ofNullable(imageFile);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "image_file", nulls = Nulls.SKIP)
+        public _FinalStage imageFile(Optional<File> imageFile) {
+            this.imageFile = imageFile;
+            return this;
+        }
+
+        @java.lang.Override
         public OptionalArgsRequest build() {
-            return new OptionalArgsRequest(invoiceId, request, additionalProperties);
+            return new OptionalArgsRequest(imageFile, invoiceId, request, additionalProperties);
         }
     }
 }

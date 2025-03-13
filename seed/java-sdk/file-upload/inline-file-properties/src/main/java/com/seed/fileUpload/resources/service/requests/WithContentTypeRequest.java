@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MyObject;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WithContentTypeRequest.Builder.class)
 public final class WithContentTypeRequest {
+    private final File file;
+
     private final String foo;
 
     private final MyObject bar;
@@ -31,11 +34,17 @@ public final class WithContentTypeRequest {
     private final Map<String, Object> additionalProperties;
 
     private WithContentTypeRequest(
-            String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
+            File file, String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
+        this.file = file;
         this.foo = foo;
         this.bar = bar;
         this.fooBar = fooBar;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("file")
+    public File getFile() {
+        return file;
     }
 
     @JsonProperty("foo")
@@ -65,12 +74,12 @@ public final class WithContentTypeRequest {
     }
 
     private boolean equalTo(WithContentTypeRequest other) {
-        return foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
+        return file.equals(other.file) && foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.foo, this.bar, this.fooBar);
+        return Objects.hash(this.file, this.foo, this.bar, this.fooBar);
     }
 
     @java.lang.Override
@@ -78,14 +87,18 @@ public final class WithContentTypeRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static FooStage builder() {
+    public static FileStage builder() {
         return new Builder();
+    }
+
+    public interface FileStage {
+        FooStage file(@NotNull File file);
+
+        Builder from(WithContentTypeRequest other);
     }
 
     public interface FooStage {
         BarStage foo(@NotNull String foo);
-
-        Builder from(WithContentTypeRequest other);
     }
 
     public interface BarStage {
@@ -101,7 +114,9 @@ public final class WithContentTypeRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements FooStage, BarStage, _FinalStage {
+    public static final class Builder implements FileStage, FooStage, BarStage, _FinalStage {
+        private File file;
+
         private String foo;
 
         private MyObject bar;
@@ -115,9 +130,17 @@ public final class WithContentTypeRequest {
 
         @java.lang.Override
         public Builder from(WithContentTypeRequest other) {
+            file(other.getFile());
             foo(other.getFoo());
             bar(other.getBar());
             fooBar(other.getFooBar());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("file")
+        public FooStage file(@NotNull File file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
             return this;
         }
 
@@ -150,7 +173,7 @@ public final class WithContentTypeRequest {
 
         @java.lang.Override
         public WithContentTypeRequest build() {
-            return new WithContentTypeRequest(foo, bar, fooBar, additionalProperties);
+            return new WithContentTypeRequest(file, foo, bar, fooBar, additionalProperties);
         }
     }
 }

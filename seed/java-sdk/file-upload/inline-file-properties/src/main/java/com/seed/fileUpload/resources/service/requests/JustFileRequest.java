@@ -7,24 +7,37 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileRequest.Builder.class)
 public final class JustFileRequest {
+    private final File file;
+
     private final Map<String, Object> additionalProperties;
 
-    private JustFileRequest(Map<String, Object> additionalProperties) {
+    private JustFileRequest(File file, Map<String, Object> additionalProperties) {
+        this.file = file;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("file")
+    public File getFile() {
+        return file;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof JustFileRequest;
+        return other instanceof JustFileRequest && equalTo((JustFileRequest) other);
     }
 
     @JsonAnyGetter
@@ -32,28 +45,59 @@ public final class JustFileRequest {
         return this.additionalProperties;
     }
 
+    private boolean equalTo(JustFileRequest other) {
+        return file.equals(other.file);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return Objects.hash(this.file);
+    }
+
     @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static FileStage builder() {
         return new Builder();
     }
 
+    public interface FileStage {
+        _FinalStage file(@NotNull File file);
+
+        Builder from(JustFileRequest other);
+    }
+
+    public interface _FinalStage {
+        JustFileRequest build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
+    public static final class Builder implements FileStage, _FinalStage {
+        private File file;
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(JustFileRequest other) {
+            file(other.getFile());
             return this;
         }
 
+        @java.lang.Override
+        @JsonSetter("file")
+        public _FinalStage file(@NotNull File file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
+            return this;
+        }
+
+        @java.lang.Override
         public JustFileRequest build() {
-            return new JustFileRequest(additionalProperties);
+            return new JustFileRequest(file, additionalProperties);
         }
     }
 }
