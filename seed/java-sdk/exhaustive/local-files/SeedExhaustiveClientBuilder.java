@@ -38,6 +38,14 @@ public final class SeedExhaustiveClientBuilder {
   }
 
   /**
+   * Sets the maximum number of retries for the client
+   */
+  public SeedExhaustiveClientBuilder maxRetries(int maxRetries) {
+    this.clientOptionsBuilder.maxRetries(maxRetries);
+    return this;
+  }
+
+  /**
    * Sets the underlying OkHttp client
    */
   public SeedExhaustiveClientBuilder httpClient(OkHttpClient httpClient) {

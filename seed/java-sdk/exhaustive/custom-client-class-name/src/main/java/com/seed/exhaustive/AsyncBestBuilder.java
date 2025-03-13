@@ -36,6 +36,14 @@ public final class AsyncBestBuilder {
     }
 
     /**
+     * Sets the maximum number of retries for the client
+     */
+    public AsyncBestBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
      * Sets the underlying OkHttp client
      */
     public AsyncBestBuilder httpClient(OkHttpClient httpClient) {

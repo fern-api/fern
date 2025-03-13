@@ -207,6 +207,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("return this")
                 .build());
 
+        clientBuilder.addMethod(MethodSpec.methodBuilder("maxRetries")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the maximum number of retries for the client")
+                .addParameter(int.class, "maxRetries")
+                .returns(builderName)
+                .addStatement("this.$L.maxRetries(maxRetries)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return this")
+                .build());
+
         clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Sets the underlying OkHttp client")

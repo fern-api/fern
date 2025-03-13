@@ -80,6 +80,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "timeout", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final FieldSpec MAX_RETRIES_FIELD = FieldSpec.builder(
+                    TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -402,17 +406,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD.toBuilder()
                         .initializer("new $T<>()", HashMap.class)
                         .build())
+                .addField(FieldSpec.builder(TypeName.INT, MAX_RETRIES_FIELD.name, Modifier.PRIVATE)
+                        .initializer("3")
+                        .build())
                 .addField(FieldSpec.builder(TypeName.INT, TIMEOUT_FIELD.name, Modifier.PRIVATE)
                         .initializer("60")
                         .build())
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer(CodeBlock.builder()
                                 .add("new $T.Builder()", OkHttpClient.class)
-                                .add(
-                                        "\n    .addInterceptor(new $T(3))",
-                                        clientGeneratorContext
-                                                .getPoetClassNameFactory()
-                                                .getRetryInterceptorClassName())
                                 .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
                                 .add("\n    .build()")
                                 .build())
@@ -421,12 +423,32 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
                 .addMethod(getHeaderSupplierBuilder())
-                .addMethod(MethodSpec.methodBuilder("timeout")
+                .addMethod(MethodSpec.methodBuilder(TIMEOUT_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc("Override the timeout in seconds. Defaults to 60 seconds.")
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, TIMEOUT_FIELD.name)
                         .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
+                        .addStatement(
+                                "this.$L = this.$L.newBuilder().callTimeout(this.$L, $T.SECONDS)"
+                                        + ".connectTimeout(0, $T.SECONDS)"
+                                        + ".writeTimeout(0, $T.SECONDS)"
+                                        + ".readTimeout(0, $T.SECONDS).build()",
+                                OKHTTP_CLIENT_FIELD.name,
+                                OKHTTP_CLIENT_FIELD.name,
+                                TIMEOUT_FIELD.name,
+                                TimeUnit.class,
+                                TimeUnit.class,
+                                TimeUnit.class,
+                                TimeUnit.class)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(MAX_RETRIES_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the maximum number of retries. Defaults to 3 retries.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
+                        .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
@@ -614,6 +636,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+
+        builder.addCode(
+                        "$T $L = this.$L.newBuilder()",
+                        OKHTTP_CLIENT_FIELD.type,
+                        OKHTTP_CLIENT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.name)
+                .addCode(
+                        "\n    .addInterceptor(new $T(this.$L))",
+                        clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
+                        MAX_RETRIES_FIELD.name)
+                .addStatement(".build()");
 
         if (variableFields.isEmpty()) {
             return builder.addStatement(returnString + ")", args).build();

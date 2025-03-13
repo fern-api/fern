@@ -90,10 +90,11 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+        private int maxRetries = 3;
+
         private int timeout = 60;
 
         private OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addInterceptor(new RetryInterceptor(3))
                 .callTimeout(this.timeout, TimeUnit.SECONDS)
                 .build();
 
@@ -117,6 +118,21 @@ public final class ClientOptions {
          */
         public Builder timeout(int timeout) {
             this.timeout = timeout;
+            this.httpClient = this.httpClient
+                    .newBuilder()
+                    .callTimeout(this.timeout, TimeUnit.SECONDS)
+                    .connectTimeout(0, TimeUnit.SECONDS)
+                    .writeTimeout(0, TimeUnit.SECONDS)
+                    .readTimeout(0, TimeUnit.SECONDS)
+                    .build();
+            return this;
+        }
+
+        /**
+         * Override the maximum number of retries. Defaults to 3 retries.
+         */
+        public Builder maxRetries(int maxRetries) {
+            this.maxRetries = maxRetries;
             return this;
         }
 
@@ -126,6 +142,10 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
+            OkHttpClient httpClient = this.httpClient
+                    .newBuilder()
+                    .addInterceptor(new RetryInterceptor(this.maxRetries))
+                    .build();
             return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout);
         }
     }
