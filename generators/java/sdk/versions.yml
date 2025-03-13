@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add config to inline file properties
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.25.0
+- changelogEntry:
+    - summary: |
         Prevent put requests from generating without a request body
       type: fix
   createdAt: '2025-03-12'

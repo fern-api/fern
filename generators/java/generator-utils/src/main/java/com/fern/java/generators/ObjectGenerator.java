@@ -35,8 +35,10 @@ import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -62,7 +64,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClassName className,
             Set<String> reservedTypeNames,
-            boolean isTopLevelClass) {
+            boolean isTopLevelClass,
+            List<ObjectProperty> fileProperties) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
 
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
@@ -73,7 +76,11 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 getUniqueAncestorsInLevelOrder(allExtendedInterfaces, allGeneratedInterfaces);
 
         List<EnrichedObjectProperty> enriched = enrichedObjectProperties(
-                generatorContext, selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
+                generatorContext,
+                selfInterface,
+                objectTypeDeclaration,
+                generatorContext.getPoetTypeNameMapper(),
+                fileProperties);
         List<ImplementsInterface> implemented = implementsInterfaces(generatorContext, ancestors);
 
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
@@ -278,9 +285,34 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             AbstractGeneratorContext<?, ?> generatorContext,
             Optional<GeneratedJavaInterface> selfInterface,
             ObjectTypeDeclaration objectTypeDeclaration,
-            PoetTypeNameMapper poetTypeNameMapper) {
+            PoetTypeNameMapper poetTypeNameMapper,
+            List<ObjectProperty> fileProperties) {
+        List<EnrichedObjectProperty> result = new ArrayList<>();
+        // NOTE: We don't support file as a type in the IR, and we require type declarations to
+        //  use the poet type name mapper in the object generator. This implementation lets us
+        //  tell the object generator whether this is a File, File array, or Optional File (array),
+        //  and if we add files as types in the IR, we can just remove this and handle it as a regular
+        //  property type.
+        result.addAll(fileProperties.stream()
+                .map(prop -> {
+                    boolean isOptional = prop.getValueType().isContainer()
+                            && prop.getValueType().getContainer().get().isOptional();
+                    return EnrichedObjectProperty.of(
+                            prop,
+                            generatorContext.getType(),
+                            Optional.empty(),
+                            generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
+                            false,
+                            false,
+                            generatorContext.getCustomConfig().wrappedAliases(),
+                            isOptional
+                                    ? ParameterizedTypeName.get(
+                                            ClassName.get(Optional.class), ClassName.get(File.class))
+                                    : ClassName.get(File.class));
+                })
+                .collect(Collectors.toList()));
         if (selfInterface.isEmpty()) {
-            return objectTypeDeclaration.getProperties().stream()
+            result.addAll(objectTypeDeclaration.getProperties().stream()
                     .map(objectProperty -> {
                         boolean inline =
                                 objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
@@ -298,9 +330,9 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 generatorContext.getCustomConfig().wrappedAliases(),
                                 poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
                     })
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList()));
         }
-        return List.of();
+        return result;
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(

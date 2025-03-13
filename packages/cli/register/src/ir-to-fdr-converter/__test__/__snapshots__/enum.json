@@ -1,7 +1,7 @@
 {
   "types": {
     "type_:Operand": {
-      "description": "Tests enum name and value can be \ndifferent.",
+      "description": "Tests enum name and value can be\ndifferent.",
       "name": "Operand",
       "shape": {
         "type": "enum",
@@ -13,7 +13,7 @@
             "value": "="
           },
           {
-            "description": "The name and value should be similar\nare similar for less than. ",
+            "description": "The name and value should be similar\nare similar for less than.",
             "value": "less_than"
           }
         ]
@@ -51,6 +51,20 @@
               "type": "id",
               "value": "type_:Operand"
             }
+          }
+        ]
+      }
+    },
+    "type_:EnumWithCustom": {
+      "name": "EnumWithCustom",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "safe"
+          },
+          {
+            "value": "Custom"
           }
         ]
       }
@@ -416,7 +430,8 @@
     "types": [
       "type_:Operand",
       "type_:Color",
-      "type_:ColorOrOperand"
+      "type_:ColorOrOperand",
+      "type_:EnumWithCustom"
     ],
     "subpackages": [
       "subpackage_inlined-request",

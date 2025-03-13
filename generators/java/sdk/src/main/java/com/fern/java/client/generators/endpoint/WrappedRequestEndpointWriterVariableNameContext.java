@@ -57,15 +57,17 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             GeneratedWrappedRequest.FileUploadRequestBodyGetters fileUploadRequest =
                     (GeneratedWrappedRequest.FileUploadRequestBodyGetters)
                             (generatedWrappedRequest.requestBodyGetter().get());
-            fileUploadRequest.fileProperties().forEach(fileProperty -> {
-                ParameterSpec fileParameter = ParameterSpec.builder(
-                                fileProperty.visit(new FilePropertyIsOptional())
-                                        ? ParameterizedTypeName.get(Optional.class, File.class)
-                                        : ClassName.get(File.class),
-                                getFilePropertyParameterName(fileProperty))
-                        .build();
-                parameterSpecs.add(fileParameter);
-            });
+            if (!clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
+                fileUploadRequest.fileProperties().forEach(fileProperty -> {
+                    ParameterSpec fileParameter = ParameterSpec.builder(
+                                    fileProperty.visit(new FilePropertyIsOptional())
+                                            ? ParameterizedTypeName.get(Optional.class, File.class)
+                                            : ClassName.get(File.class),
+                                    getFilePropertyParameterName(clientGeneratorContext, fileProperty))
+                            .build();
+                    parameterSpecs.add(fileParameter);
+                });
+            }
         }
         parameterSpecs.add(requestParameterSpec().get());
         return parameterSpecs;
@@ -77,11 +79,21 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
                 .build());
     }
 
-    public static String getFilePropertyParameterName(FileProperty fileProperty) {
-        return fileProperty
-                .visit(new GetFilePropertyKey())
-                .getName()
-                .getCamelCase()
-                .getSafeName();
+    public static String getFilePropertyParameterName(
+            ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
+        if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
+            return "request.get"
+                    + fileProperty
+                            .visit(new GetFilePropertyKey())
+                            .getName()
+                            .getPascalCase()
+                            .getSafeName() + "()";
+        } else {
+            return fileProperty
+                    .visit(new GetFilePropertyKey())
+                    .getName()
+                    .getCamelCase()
+                    .getSafeName();
+        }
     }
 }
