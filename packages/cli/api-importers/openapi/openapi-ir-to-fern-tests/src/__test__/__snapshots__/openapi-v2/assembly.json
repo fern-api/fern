@@ -65,28 +65,28 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.assemblyai.com",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.assemblyai.com",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.assemblyai.com",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiAssemblyaiCom",
+              "safeName": "httpsApiAssemblyaiCom"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_assemblyai_com",
+              "safeName": "https_api_assemblyai_com"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_ASSEMBLYAI_COM",
+              "safeName": "HTTPS_API_ASSEMBLYAI_COM"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiAssemblyaiCom",
+              "safeName": "HttpsApiAssemblyaiCom"
             }
           },
           "url": "https://api.assemblyai.com",

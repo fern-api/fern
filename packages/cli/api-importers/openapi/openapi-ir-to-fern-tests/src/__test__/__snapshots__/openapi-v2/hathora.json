@@ -65754,31 +65754,54 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.hathora.dev",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.hathora.dev",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.hathora.dev",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiHathoraDev",
+              "safeName": "httpsApiHathoraDev"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_hathora_dev",
+              "safeName": "https_api_hathora_dev"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_HATHORA_DEV",
+              "safeName": "HTTPS_API_HATHORA_DEV"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiHathoraDev",
+              "safeName": "HttpsApiHathoraDev"
             }
           },
           "url": "https://api.hathora.dev"
+        },
+        {
+          "id": "/",
+          "name": {
+            "originalName": "/",
+            "camelCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "snakeCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "pascalCase": {
+              "unsafeName": "",
+              "safeName": ""
+            }
+          },
+          "url": "/"
         }
       ],
       "type": "singleBaseUrl"

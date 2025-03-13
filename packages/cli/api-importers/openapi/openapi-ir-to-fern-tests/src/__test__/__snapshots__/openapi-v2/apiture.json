@@ -67363,28 +67363,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.apiture.com/banking",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.apiture.com/banking",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.apiture.com/banking",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiApitureComBanking",
+              "safeName": "httpsApiApitureComBanking"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_apiture_com_banking",
+              "safeName": "https_api_apiture_com_banking"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_APITURE_COM_BANKING",
+              "safeName": "HTTPS_API_APITURE_COM_BANKING"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiApitureComBanking",
+              "safeName": "HttpsApiApitureComBanking"
             }
           },
           "url": "https://api.apiture.com/banking"

@@ -315,28 +315,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://ai.com",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://ai.com",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://ai.com",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsAiCom",
+              "safeName": "httpsAiCom"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_ai_com",
+              "safeName": "https_ai_com"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_AI_COM",
+              "safeName": "HTTPS_AI_COM"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsAiCom",
+              "safeName": "HttpsAiCom"
             }
           },
           "url": "https://ai.com"

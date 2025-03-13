@@ -1436,28 +1436,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.example.com/v1",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.example.com/v1",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.example.com/v1",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiExampleComV1",
+              "safeName": "httpsApiExampleComV1"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_example_com_v_1",
+              "safeName": "https_api_example_com_v_1"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiExampleComV1",
+              "safeName": "HttpsApiExampleComV1"
             }
           },
           "url": "https://api.example.com/v1"

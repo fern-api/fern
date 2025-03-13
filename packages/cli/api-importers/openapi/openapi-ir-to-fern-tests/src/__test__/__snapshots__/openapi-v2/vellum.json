@@ -64718,28 +64718,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.vellum.ai",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.vellum.ai",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.vellum.ai",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiVellumAi",
+              "safeName": "httpsApiVellumAi"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_vellum_ai",
+              "safeName": "https_api_vellum_ai"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_VELLUM_AI",
+              "safeName": "HTTPS_API_VELLUM_AI"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiVellumAi",
+              "safeName": "HttpsApiVellumAi"
             }
           },
           "url": "https://api.vellum.ai",

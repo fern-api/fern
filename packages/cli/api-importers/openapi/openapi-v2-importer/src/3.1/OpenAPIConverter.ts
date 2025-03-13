@@ -216,7 +216,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         });
         const convertedServers = serversConverter.convert({ context, errorCollector });
         if (convertedServers != null) {
-            this.ir.environments = convertedServers;
+            this.ir.environments = convertedServers.value;
         }
     }
 
@@ -261,7 +261,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const pathConverter = new PathConverter({
                 breadcrumbs: ["paths", path],
                 pathItem,
-                path
+                path,
+                servers: context.spec.servers,
             });
             const convertedPath = await pathConverter.convert({ context, errorCollector });
             if (convertedPath != null) {
@@ -357,6 +358,4 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
     }
-
-    // TODO: Add websockets to IR
 }

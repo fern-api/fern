@@ -2533,28 +2533,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://{handle}.ada.support/api",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://{handle}.ada.support/api",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://{handle}.ada.support/api",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsHandleAdaSupportApi",
+              "safeName": "httpsHandleAdaSupportApi"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_handle_ada_support_api",
+              "safeName": "https_handle_ada_support_api"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_HANDLE_ADA_SUPPORT_API",
+              "safeName": "HTTPS_HANDLE_ADA_SUPPORT_API"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsHandleAdaSupportApi",
+              "safeName": "HttpsHandleAdaSupportApi"
             }
           },
           "url": "https://example.ada.support/api",
