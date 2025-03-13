@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedCrossPackageTypeNames;
+using SeedCrossPackageTypeNames.Core;
 
 namespace Usage;
 

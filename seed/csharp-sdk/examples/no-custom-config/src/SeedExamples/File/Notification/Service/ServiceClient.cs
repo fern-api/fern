@@ -30,7 +30,10 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/file/notification/{JsonUtils.SerializeAsString(notificationId)}",
+                    Path = string.Format(
+                        "/file/notification/{0}",
+                        ValueConvert.ToPathParameterString(notificationId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

@@ -29,7 +29,6 @@ public partial class SeedEnumClient
         InlinedRequest = new InlinedRequestClient(_client);
         PathParam = new PathParamClient(_client);
         QueryParam = new QueryParamClient(_client);
-        Unknown = new UnknownClient(_client);
     }
 
     public InlinedRequestClient InlinedRequest { get; init; }
@@ -37,6 +36,4 @@ public partial class SeedEnumClient
     public PathParamClient PathParam { get; init; }
 
     public QueryParamClient QueryParam { get; init; }
-
-    public UnknownClient Unknown { get; init; }
 }

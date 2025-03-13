@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Params;
 
 namespace Usage;

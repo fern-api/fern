@@ -46,7 +46,7 @@ public partial class SeedAliasClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{JsonUtils.SerializeAsString(typeId)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
                     Options = options,
                 },
                 cancellationToken

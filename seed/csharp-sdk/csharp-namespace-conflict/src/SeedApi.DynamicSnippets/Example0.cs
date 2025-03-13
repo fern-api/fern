@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedCsharpNamespaceConflict;
+using SeedCsharpNamespaceConflict.Core;
 
 namespace Usage;
 
