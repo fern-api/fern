@@ -7,15 +7,15 @@ export function convertIrToDynamicSnippetsIr({
     ir,
     generationLanguage,
     smartCasing,
-    includeExamples,
+    disableExamples,
     generatorConfig
 }: {
     ir: IntermediateRepresentation;
     generationLanguage?: generatorsYml.GenerationLanguage;
     smartCasing?: boolean;
-    includeExamples?: boolean;
+    disableExamples?: boolean;
     generatorConfig?: dynamic.GeneratorConfig;
 }): dynamic.DynamicIntermediateRepresentation {
     const converter = new DynamicSnippetsConverter({ ir, generationLanguage, smartCasing, generatorConfig });
-    return converter.convert({ includeExamples });
+    return converter.convert({ disableExamples });
 }
