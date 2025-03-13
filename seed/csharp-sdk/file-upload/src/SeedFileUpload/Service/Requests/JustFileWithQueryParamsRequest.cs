@@ -5,8 +5,6 @@ namespace SeedFileUpload;
 
 public record JustFileWithQueryParamsRequest
 {
-    public required FileParameter File { get; set; }
-
     [JsonIgnore]
     public string? MaybeString { get; set; }
 
@@ -21,6 +19,8 @@ public record JustFileWithQueryParamsRequest
 
     [JsonIgnore]
     public IEnumerable<string> OptionalListOfStrings { get; set; } = new List<string>();
+
+    public required FileParameter File { get; set; }
 
     public override string ToString()
     {

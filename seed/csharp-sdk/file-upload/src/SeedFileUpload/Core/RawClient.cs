@@ -65,13 +65,15 @@ internal class RawClient(ClientOptions clientOptions)
         switch (request.Content)
         {
             case MultipartContent oldMultipartFormContent:
-                var originalBoundary = oldMultipartFormContent.Headers.ContentType.Parameters
-                    .First(p => p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase))
+                var originalBoundary = oldMultipartFormContent
+                    .Headers.ContentType.Parameters.First(p =>
+                        p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                    )
                     .Value.Trim('"');
                 var newMultipartContent = oldMultipartFormContent switch
                 {
                     MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
-                    MultipartContent => new MultipartContent()
+                    MultipartContent => new MultipartContent(),
                 };
                 foreach (var content in oldMultipartFormContent)
                 {
@@ -344,7 +346,7 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var content = FormUrlEncoder.Encode(value);
+                var content = FormUrlEncoder.EncodeAsForm(value);
                 if (!string.IsNullOrEmpty(contentType))
                 {
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
@@ -371,6 +373,48 @@ internal class RawClient(ClientOptions clientOptions)
             foreach (var item in value)
             {
                 AddFormEncodedPart(name, item, contentType);
+            }
+        }
+
+        internal void AddExplodedFormEncodedPart(string name, object? value) =>
+            AddExplodedFormEncodedPart(name, value, null);
+
+        internal void AddExplodedFormEncodedPart(string name, object? value, string? contentType)
+        {
+            if (value is null)
+            {
+                return;
+            }
+
+            _partAdders.Add(form =>
+            {
+                var content = FormUrlEncoder.EncodeAsExplodedForm(value);
+                if (!string.IsNullOrEmpty(contentType))
+                {
+                    content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
+                }
+
+                form.Add(content, name);
+            });
+        }
+
+        internal void AddExplodedFormEncodedParts(string name, IEnumerable<object?>? value) =>
+            AddExplodedFormEncodedParts(name, value, null);
+
+        internal void AddExplodedFormEncodedParts(
+            string name,
+            IEnumerable<object?>? value,
+            string? contentType
+        )
+        {
+            if (value is null)
+            {
+                return;
+            }
+
+            foreach (var item in value)
+            {
+                AddExplodedFormEncodedPart(name, item, contentType);
             }
         }
 
@@ -405,11 +449,7 @@ internal class RawClient(ClientOptions clientOptions)
                 Encoding.UTF8,
                 "application/json"
             );
-            return new StringContent(
-                JsonUtils.Serialize(Body),
-                encoding,
-                mediaType
-            );
+            return new StringContent(JsonUtils.Serialize(Body), encoding, mediaType);
         }
     }
 

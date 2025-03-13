@@ -31,8 +31,11 @@ public partial class PathParamClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"path/{JsonUtils.SerializeAsString(operand)}/{JsonUtils.SerializeAsString(operandOrColor)}",
+                    Path = string.Format(
+                        "path/{0}/{1}",
+                        ValueConvert.ToPathParameterString(operand),
+                        ValueConvert.ToPathParameterString(operandOrColor)
+                    ),
                     Options = options,
                 },
                 cancellationToken

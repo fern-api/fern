@@ -1,6 +1,6 @@
-using System.Net.Http;
-using System.Text;
-using System.Text.Json.Serialization;
+using global::System.Net.Http;
+using global::System.Text;
+using global::System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedFileUpload.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
@@ -11,6 +11,46 @@ namespace SeedFileUpload.Test.Core.RawClientTests;
 [Parallelizable(ParallelScope.All)]
 public class MultipartFormTests
 {
+    private static SimpleObject _simpleObject = new();
+
+    private static string _simpleFormEncoded =
+        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data,2023-10-01T08:00:00.000-04:00,2023-10-01,12:00:00,01:00:00,1a1bb98f-47c6-407b-9481-78476affe52a,true,42,A";
+
+    private static string _simpleExplodedFormEncoded =
+        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data&Values=2023-10-01T08:00:00.000-04:00&Values=2023-10-01&Values=12:00:00&Values=01:00:00&Values=1a1bb98f-47c6-407b-9481-78476affe52a&Values=true&Values=42&Values=A";
+
+    private static ComplexObject _complexObject = new();
+
+    private static string _complexJson = """
+        {
+          "meta": "data",
+          "Nested": {
+            "foo": "value"
+          },
+          "NestedDictionary": {
+            "key": {
+              "foo": "value"
+            }
+          },
+          "ListOfObjects": [
+            {
+              "foo": "value"
+            },
+            {
+              "foo": "value2"
+            }
+          ],
+          "DateTime": "2023-10-01T08:00:00.000-04:00",
+          "Date": "2023-10-01",
+          "Time": "12:00:00",
+          "Duration": "01:00:00",
+          "Id": "1a1bb98f-47c6-407b-9481-78476affe52a",
+          "IsActive": true,
+          "Count": 42,
+          "Initial": "A"
+        }
+        """;
+
     [Test]
     public async SystemTask ShouldAddStringPart()
     {
@@ -350,9 +390,8 @@ public class MultipartFormTests
     [Test]
     public async SystemTask ShouldAddJsonPart_WithComplexObject()
     {
-        var (partInput, _, partExpectedJson) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddJsonPart("object", partInput);
+        multipartFormRequest.AddJsonPart("object", _complexObject);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -364,7 +403,7 @@ public class MultipartFormTests
             Content-Type: application/json; charset=utf-8
             Content-Disposition: form-data; name=object
 
-            {partExpectedJson}
+            {_complexJson}
              --{boundary}--
             """;
 
@@ -375,9 +414,8 @@ public class MultipartFormTests
     [Test]
     public async SystemTask ShouldAddJsonPart_WithComplexObjectList()
     {
-        var (partInput, _, partExpectedJson) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddJsonParts("objects", [partInput, partInput]);
+        multipartFormRequest.AddJsonParts("objects", [_complexObject, _complexObject]);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -389,12 +427,12 @@ public class MultipartFormTests
             Content-Type: application/json; charset=utf-8
             Content-Disposition: form-data; name=objects
 
-            {partExpectedJson}
+            {_complexJson}
             --{boundary}
             Content-Type: application/json; charset=utf-8
             Content-Disposition: form-data; name=objects
 
-            {partExpectedJson}
+            {_complexJson}
              --{boundary}--
             """;
 
@@ -425,9 +463,8 @@ public class MultipartFormTests
     [Test]
     public async SystemTask ShouldAddJsonParts_WithNullsInList()
     {
-        var (partInput, _, partExpectedJson) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddJsonParts("objects", [partInput, null]);
+        multipartFormRequest.AddJsonParts("objects", [_complexObject, null]);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -439,7 +476,7 @@ public class MultipartFormTests
             Content-Type: application/json; charset=utf-8
             Content-Disposition: form-data; name=objects
 
-            {partExpectedJson}
+            {_complexJson}
             --{boundary}--
             """;
 
@@ -472,11 +509,10 @@ public class MultipartFormTests
     }
 
     [Test]
-    public async SystemTask ShouldAddFormEncodedParts_WithComplexObject()
+    public async SystemTask ShouldAddFormEncodedParts_WithSimpleObject()
     {
-        var (partInput, partExpectedFromEncoded, _) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddFormEncodedPart("object", partInput);
+        multipartFormRequest.AddFormEncodedPart("object", _simpleObject);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -488,7 +524,7 @@ public class MultipartFormTests
             Content-Type: application/x-www-form-urlencoded
             Content-Disposition: form-data; name=object
 
-            {partExpectedFromEncoded}
+            {EscapeFormEncodedString(_simpleFormEncoded)}
              --{boundary}--
             """;
 
@@ -497,11 +533,10 @@ public class MultipartFormTests
     }
 
     [Test]
-    public async SystemTask ShouldAddFormEncodedParts_WithComplexObjectList()
+    public async SystemTask ShouldAddFormEncodedParts_WithSimpleObjectList()
     {
-        var (partInput, partExpectedFromEncoded, _) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddFormEncodedParts("objects", [partInput, partInput]);
+        multipartFormRequest.AddFormEncodedParts("objects", [_simpleObject, _simpleObject]);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -513,12 +548,12 @@ public class MultipartFormTests
             Content-Type: application/x-www-form-urlencoded
             Content-Disposition: form-data; name=objects
 
-            {partExpectedFromEncoded}
+            {EscapeFormEncodedString(_simpleFormEncoded)}
             --{boundary}
             Content-Type: application/x-www-form-urlencoded
             Content-Disposition: form-data; name=objects
 
-            {partExpectedFromEncoded}
+            {EscapeFormEncodedString(_simpleFormEncoded)}
              --{boundary}--
             """;
 
@@ -549,9 +584,8 @@ public class MultipartFormTests
     [Test]
     public async SystemTask ShouldNotAddFormEncodedParts_WithNullsInList()
     {
-        var (partInput, partExpectedFromEncoded, _) = GetObjectWithAttributesTestData();
         var multipartFormRequest = CreateMultipartFormRequest();
-        multipartFormRequest.AddFormEncodedParts("objects", [partInput, null]);
+        multipartFormRequest.AddFormEncodedParts("objects", [_simpleObject, null]);
 
         var httpContent = multipartFormRequest.CreateContent();
         Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
@@ -563,7 +597,7 @@ public class MultipartFormTests
             Content-Type: application/x-www-form-urlencoded
             Content-Disposition: form-data; name=objects
 
-            {partExpectedFromEncoded}
+            {EscapeFormEncodedString(_simpleFormEncoded)}
             --{boundary}--
             """;
 
@@ -627,6 +661,159 @@ public class MultipartFormTests
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
 
+    [Test]
+    public async SystemTask ShouldAddExplodedFormEncodedParts_WithSimpleObject()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedPart("object", _simpleObject);
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=object
+
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+             --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
+    [Test]
+    public async SystemTask ShouldAddExplodedFormEncodedParts_WithSimpleObjectList()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedParts("objects", [_simpleObject, _simpleObject]);
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
+
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
+
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+             --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
+    [Test]
+    public async SystemTask ShouldNotAddExplodedFormEncodedParts_WithNull()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedPart("object", null);
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+             --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
+    [Test]
+    public async SystemTask ShouldNotAddExplodedFormEncodedParts_WithNullsInList()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedParts("objects", [_simpleObject, null]);
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
+
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+            --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
+    [Test]
+    public async SystemTask ShouldAddExplodedFormEncodedPart_WithContentType()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedPart(
+            "objects",
+            new { foo = "bar" },
+            "application/x-www-form-urlencoded; charset=utf-8"
+        );
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
+
+            foo=bar
+            --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
+    [Test]
+    public async SystemTask ShouldAddExplodedFormEncodedParts_WithContentType()
+    {
+        var multipartFormRequest = CreateMultipartFormRequest();
+        multipartFormRequest.AddExplodedFormEncodedParts(
+            "objects",
+            [new { foo = "bar" }],
+            "application/x-www-form-urlencoded; charset=utf-8"
+        );
+
+        var httpContent = multipartFormRequest.CreateContent();
+        Assert.That(httpContent, Is.InstanceOf<MultipartFormDataContent>());
+        var multipartContent = (MultipartFormDataContent)httpContent;
+
+        var boundary = GetBoundary(multipartContent);
+        var expected = $"""
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
+
+            foo=bar
+            --{boundary}--
+            """;
+
+        var actual = await multipartContent.ReadAsStringAsync();
+        Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
+    }
+
     private static string EscapeFormEncodedString(string input)
     {
         return string.Join(
@@ -641,7 +828,9 @@ public class MultipartFormTests
     private static string GetBoundary(MultipartFormDataContent content)
     {
         return content
-                .Headers.ContentType?.Parameters.Single(p => p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase))
+                .Headers.ContentType?.Parameters.Single(p =>
+                    p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                )
                 .Value?.Trim('"') ?? throw new Exception("Boundary not found");
     }
 
@@ -662,54 +851,30 @@ public class MultipartFormTests
         return (partInput, partExpectedString);
     }
 
-    private static (
-        ComplexObject partInput,
-        string partExpectedFromEncoded,
-        string partExpectedJson
-    ) GetObjectWithAttributesTestData()
+    private class SimpleObject
     {
-        var input = new ComplexObject();
-        var partExpectedFromEncoded =
-            "meta=data&Nested[foo]=value&NestedDictionary[key][foo]=value&ListOfObjects[][foo]=value&ListOfObjects[][foo]=value2&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Price=19.99&Rating=4.5&Score=99.9&BigNumber=1234567890&SmallNumber=123&UnsignedShort=123&UnsignedInt=1234567890&UnsignedLong=12345678901234567890&Initial=A";
-        partExpectedFromEncoded = EscapeFormEncodedString(partExpectedFromEncoded);
-        const string partExpectedJson = """
-            {
-              "meta": "data",
-              "Nested": {
-                "foo": "value"
-              },
-              "NestedDictionary": {
-                "key": {
-                  "foo": "value"
-                }
-              },
-              "ListOfObjects": [
-                {
-                  "foo": "value"
-                },
-                {
-                  "foo": "value2"
-                }
-              ],
-              "DateTime": "2023-10-01T08:00:00.000-04:00",
-              "Date": "2023-10-01",
-              "Time": "12:00:00",
-              "Duration": "01:00:00",
-              "Id": "1a1bb98f-47c6-407b-9481-78476affe52a",
-              "IsActive": true,
-              "Count": 42,
-              "Price": 19.99,
-              "Rating": 4.5,
-              "Score": 99.9,
-              "BigNumber": 1234567890,
-              "SmallNumber": 123,
-              "UnsignedShort": 123,
-              "UnsignedInt": 1234567890,
-              "UnsignedLong": 12345678901234567890,
-              "Initial": "A"
-            } 
-            """;
-        return (input, partExpectedFromEncoded, partExpectedJson);
+        [JsonPropertyName("meta")]
+        public string Meta { get; set; } = "data";
+        public DateTime DateTime { get; set; } = DateTime.Parse("2023-10-01T12:00:00Z");
+        public DateOnly Date { get; set; } = DateOnly.Parse("2023-10-01");
+        public TimeOnly Time { get; set; } = TimeOnly.Parse("12:00:00");
+        public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);
+        public Guid Id { get; set; } = Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a");
+        public bool IsActive { get; set; } = true;
+        public int Count { get; set; } = 42;
+        public char Initial { get; set; } = 'A';
+        public IEnumerable<object> Values { get; set; } =
+            [
+                "data",
+                DateTime.Parse("2023-10-01T12:00:00Z"),
+                DateOnly.Parse("2023-10-01"),
+                TimeOnly.Parse("12:00:00"),
+                TimeSpan.FromHours(1),
+                Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a"),
+                true,
+                42,
+                'A',
+            ];
     }
 
     private class ComplexObject
@@ -717,7 +882,6 @@ public class MultipartFormTests
         [JsonPropertyName("meta")]
         public string Meta { get; set; } = "data";
 
-        // ReSharper disable once UnusedMember.Local
         public object Nested { get; set; } = new { foo = "value" };
 
         public Dictionary<string, object> NestedDictionary { get; set; } =
@@ -733,14 +897,6 @@ public class MultipartFormTests
         public Guid Id { get; set; } = Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a");
         public bool IsActive { get; set; } = true;
         public int Count { get; set; } = 42;
-        public decimal Price { get; set; } = 19.99m;
-        public float Rating { get; set; } = 4.5f;
-        public double Score { get; set; } = 99.9;
-        public long BigNumber { get; set; } = 1234567890;
-        public short SmallNumber { get; set; } = 123;
-        public ushort UnsignedShort { get; set; } = 123;
-        public uint UnsignedInt { get; set; } = 1234567890;
-        public ulong UnsignedLong { get; set; } = 12345678901234567890;
         public char Initial { get; set; } = 'A';
     }
 }

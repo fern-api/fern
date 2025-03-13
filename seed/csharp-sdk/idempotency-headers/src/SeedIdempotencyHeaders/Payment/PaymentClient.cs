@@ -75,7 +75,10 @@ public partial class PaymentClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/payment/{JsonUtils.SerializeAsString(paymentId)}",
+                    Path = string.Format(
+                        "/payment/{0}",
+                        ValueConvert.ToPathParameterString(paymentId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

@@ -1,8 +1,8 @@
-using System.Net.Http;
+using global::System.Net.Http;
 using NUnit.Framework;
 using SeedFileUpload.Core;
 using WireMock.Server;
-using SystemTask = System.Threading.Tasks.Task;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 
@@ -93,7 +93,7 @@ public class RetriesTests
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
             Path = "/test",
-            Body = new {}
+            Body = new { },
         };
 
         var response = await _rawClient.SendRequestAsync(request);
@@ -117,7 +117,8 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new RawClient.StreamApiRequest{
+        var request = new RawClient.StreamApiRequest
+        {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -144,7 +145,8 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new RawClient.MultipartFormRequest{
+        var request = new RawClient.MultipartFormRequest
+        {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -184,12 +186,13 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.MultipartFormRequest{
+        var request = new RawClient.MultipartFormRequest
+        {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
         };
-        request.AddJsonPart("object", new {});
+        request.AddJsonPart("object", new { });
 
         var response = await _rawClient.SendRequestAsync(request);
         Assert.That(response.StatusCode, Is.EqualTo(200));

@@ -5,8 +5,11 @@ namespace SeedFileUpload;
 public record WithContentTypeRequest
 {
     public required FileParameter File { get; set; }
+
     public required string Foo { get; set; }
+
     public required MyObject Bar { get; set; }
+
     public MyObject? FooBar { get; set; }
 
     public override string ToString()

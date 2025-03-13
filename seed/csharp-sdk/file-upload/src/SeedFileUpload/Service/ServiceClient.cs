@@ -20,43 +20,38 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "",
             Options = options,
         };
-        multipartFormRequest.AddStringPart("maybe_string", request.MaybeString);
-        multipartFormRequest.AddStringPart("integer", request.Integer);
-        multipartFormRequest.AddFileParameterPart("file", request.File);
-        multipartFormRequest.AddFileParameterParts("file_list", request.FileList);
-        multipartFormRequest.AddFileParameterPart("maybe_file", request.File);
-        multipartFormRequest.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
-        multipartFormRequest.AddStringPart("maybe_integer", request.MaybeInteger);
-        multipartFormRequest.AddStringParts(
+        multipartFormRequest_.AddStringPart("maybe_string", request.MaybeString);
+        multipartFormRequest_.AddStringPart("integer", request.Integer);
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddFileParameterParts("file_list", request.FileList);
+        multipartFormRequest_.AddFileParameterPart("maybe_file", request.MaybeFile);
+        multipartFormRequest_.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
+        multipartFormRequest_.AddStringPart("maybe_integer", request.MaybeInteger);
+        multipartFormRequest_.AddStringParts(
             "optional_list_of_strings",
             request.OptionalListOfStrings
         );
-        multipartFormRequest.AddJsonParts("list_of_objects", request.ListOfObjects);
-        multipartFormRequest.AddJsonPart("optional_metadata", request.OptionalMetadata);
-        multipartFormRequest.AddJsonPart("optional_object_type", request.OptionalMetadata);
-        multipartFormRequest.AddStringPart("optional_id", request.OptionalId);
-        multipartFormRequest.AddJsonParts(
-            "list_of_objects_with_optionals",
-            request.ListOfObjectsWithOptionals
-        );
-        multipartFormRequest.AddJsonPart("alias_object", request.AliasObject);
-        multipartFormRequest.AddJsonParts("list_of_alias_object", request.ListOfAliasObject);
-        multipartFormRequest.AddJsonParts("alias_list_of_object", request.AliasListOfObject);
+        multipartFormRequest_.AddJsonParts("list_of_objects", request.ListOfObjects);
+        multipartFormRequest_.AddJsonPart("optional_metadata", request.OptionalMetadata);
+        multipartFormRequest_.AddJsonPart("optional_object_type", request.OptionalObjectType);
+        multipartFormRequest_.AddStringPart("optional_id", request.OptionalId);
+        multipartFormRequest_.AddJsonPart("alias_object", request.AliasObject);
+        multipartFormRequest_.AddJsonParts("list_of_alias_object", request.ListOfAliasObject);
+        multipartFormRequest_.AddJsonParts("alias_list_of_object", request.AliasListOfObject);
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
@@ -73,22 +68,21 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest = new RawClient.MultipartFormRequest()
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file",
             Options = options,
         };
-        multipartFormRequest.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
@@ -113,29 +107,26 @@ public partial class ServiceClient
         {
             _query["maybeString"] = request.MaybeString;
         }
-
         if (request.MaybeInteger != null)
         {
             _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
         }
-
-        var multipartFormRequest = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-query-params",
-            Options = options,
             Query = _query,
+            Options = options,
         };
-        multipartFormRequest.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
@@ -152,25 +143,28 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-content-type",
             Options = options,
         };
-        multipartFormRequest.AddFileParameterPart("file", request.File, "application/octet-stream");
-        multipartFormRequest.AddStringPart("foo", request.Foo);
-        multipartFormRequest.AddJsonPart("bar", request.Bar, "application/json");
-        multipartFormRequest.AddJsonPart("foo_bar", request.FooBar, "application/json");
+        multipartFormRequest_.AddFileParameterPart(
+            "file",
+            request.File,
+            "application/octet-stream"
+        );
+        multipartFormRequest_.AddStringPart("foo", request.Foo);
+        multipartFormRequest_.AddJsonPart("bar", request.Bar, "application/json");
+        multipartFormRequest_.AddJsonPart("foo_bar", request.FooBar, "application/json");
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
@@ -187,24 +181,27 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-form-encoding",
             Options = options,
         };
-        multipartFormRequest.AddFileParameterPart("file", request.File);
-        multipartFormRequest.AddStringPart("foo", request.Foo);
-        multipartFormRequest.AddFormEncodedPart("bar", request.Bar, "application/json");
+        multipartFormRequest_.AddFileParameterPart(
+            "file",
+            request.File,
+            "application/octet-stream"
+        );
+        multipartFormRequest_.AddFormEncodedPart("foo", request.Foo);
+        multipartFormRequest_.AddFormEncodedPart("bar", request.Bar);
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
@@ -221,43 +218,51 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest = new RawClient.MultipartFormRequest()
+        var multipartFormRequest_ = new RawClient.MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "",
             Options = options,
         };
-        multipartFormRequest.AddStringPart("maybe_string", request.MaybeString);
-        multipartFormRequest.AddStringPart("integer", request.Integer);
-        multipartFormRequest.AddFileParameterPart("file", request.File);
-        multipartFormRequest.AddFileParameterParts("file_list", request.FileList);
-        multipartFormRequest.AddFileParameterPart("maybe_file", request.File);
-        multipartFormRequest.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
-        multipartFormRequest.AddStringPart("maybe_integer", request.MaybeInteger);
-        multipartFormRequest.AddFormEncodedPart(
+        multipartFormRequest_.AddFormEncodedPart("maybe_string", request.MaybeString);
+        multipartFormRequest_.AddFormEncodedPart("integer", request.Integer);
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddFileParameterParts("file_list", request.FileList);
+        multipartFormRequest_.AddFileParameterPart("maybe_file", request.MaybeFile);
+        multipartFormRequest_.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
+        multipartFormRequest_.AddFormEncodedPart("maybe_integer", request.MaybeInteger);
+        multipartFormRequest_.AddFormEncodedParts(
             "optional_list_of_strings",
             request.OptionalListOfStrings
         );
-        multipartFormRequest.AddFormEncodedPart("list_of_objects", request.ListOfObjects);
-        multipartFormRequest.AddFormEncodedPart("optional_metadata", request.OptionalMetadata);
-        multipartFormRequest.AddFormEncodedPart("optional_object_type", request.OptionalMetadata);
-        multipartFormRequest.AddStringPart("optional_id", request.OptionalId);
-        multipartFormRequest.AddFormEncodedPart(
+        multipartFormRequest_.AddFormEncodedParts("list_of_objects", request.ListOfObjects);
+        multipartFormRequest_.AddFormEncodedPart("optional_metadata", request.OptionalMetadata);
+        multipartFormRequest_.AddFormEncodedPart(
+            "optional_object_type",
+            request.OptionalObjectType
+        );
+        multipartFormRequest_.AddFormEncodedPart("optional_id", request.OptionalId);
+        multipartFormRequest_.AddFormEncodedParts(
             "list_of_objects_with_optionals",
             request.ListOfObjectsWithOptionals
         );
-        multipartFormRequest.AddFormEncodedPart("alias_object", request.AliasObject);
-        multipartFormRequest.AddFormEncodedPart("list_of_alias_object", request.ListOfAliasObject);
-        multipartFormRequest.AddFormEncodedPart("alias_list_of_object", request.AliasListOfObject);
+        multipartFormRequest_.AddFormEncodedPart("alias_object", request.AliasObject);
+        multipartFormRequest_.AddFormEncodedParts(
+            "list_of_alias_object",
+            request.ListOfAliasObject
+        );
+        multipartFormRequest_.AddFormEncodedParts(
+            "alias_list_of_object",
+            request.AliasListOfObject
+        );
         var response = await _client
-            .SendRequestAsync(multipartFormRequest, cancellationToken)
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileUploadApiException(
