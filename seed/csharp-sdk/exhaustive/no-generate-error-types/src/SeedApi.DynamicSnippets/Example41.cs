@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.Core;
 
 namespace Usage;
 
@@ -14,7 +13,11 @@ public class Example41
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>() {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

@@ -10,6 +10,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
+import { FilePropertyMapper } from "./FilePropertyMapper";
 
 const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
@@ -19,6 +20,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public customConfig: BaseCsharpCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
+    public filePropertyMapper: FilePropertyMapper;
     public rootNamespace: string;
 
     constructor({
@@ -36,6 +38,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             config.customConfig != null ? (config.customConfig as BaseCsharpCustomConfigSchema) : undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
+        this.filePropertyMapper = new FilePropertyMapper({ context: this });
         this.rootNamespace = getRootNamespace({
             organization: config.organization,
             workspaceName: config.workspaceName,
@@ -50,19 +53,34 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             options: this.options
         });
     }
-
-    public getMemoryStreamForString(str: string): csharp.TypeLiteral {
+    
+    public getFileParameterForString(str: string): csharp.TypeLiteral {
         return csharp.TypeLiteral.reference(
             csharp.instantiateClass({
-                classReference: this.getMemoryStreamClassReference(),
-                arguments_: [
-                    csharp.instantiateClass({
-                        classReference: this.getEncodingUtf8ClassReference(),
-                        arguments_: [csharp.TypeLiteral.string(str)]
-                    })
-                ]
+                classReference: this.getFileParameterClassReference(),
+                arguments_: [],
+                properties: [
+                    {
+                        name: "Stream",
+                        value: this.getMemoryStreamForString(str)
+                    }
+                ],
+                multiline: true
             })
         );
+    }
+
+    public getMemoryStreamForString(str: string): csharp.ClassInstantiation {
+        return csharp.instantiateClass({
+            classReference: this.getMemoryStreamClassReference(),
+            arguments_: [
+                csharp.invokeMethod({
+                    on: this.getEncodingUtf8ClassReference(),
+                    method: "GetBytes",
+                    arguments_: [csharp.TypeLiteral.string(str)]
+                })
+            ]
+        });
     }
 
     public getClassName(name: FernIr.Name): string {
@@ -83,6 +101,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getEnvironmentClassName(): string {
         return this.customConfig?.["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
+    }
+
+    public shouldUseDiscriminatedUnions(): boolean {
+        return this.customConfig?.["use-discriminated-unions"] ?? false;
     }
 
     public getRootClientClassName(): string {
@@ -135,6 +157,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getFileParameterClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "FileParameter",
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
     public getMemoryStreamClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "MemoryStream",
@@ -164,9 +193,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getNamespaceForPublicCoreClasses(): string {
-        return this.customConfig?.["root-namespace-for-core-classes"]
-            ? this.getRootNamespace()
-            : this.getCoreNamespace();
+        const rootNamespaceForCoreClasses = this.customConfig?.["root-namespace-for-core-classes"];
+        if (rootNamespaceForCoreClasses == null) {
+            return this.getRootNamespace();
+        }
+        return rootNamespaceForCoreClasses ? this.getRootNamespace() : this.getCoreNamespace();
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): csharp.ClassReference | undefined {

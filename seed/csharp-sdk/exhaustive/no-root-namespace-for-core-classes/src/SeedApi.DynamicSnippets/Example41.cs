@@ -14,7 +14,11 @@ public class Example41
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>() {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

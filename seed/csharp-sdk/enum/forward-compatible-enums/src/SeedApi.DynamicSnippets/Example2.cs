@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedEnum;
-using SeedEnum.Core;
 
 namespace Usage;
 

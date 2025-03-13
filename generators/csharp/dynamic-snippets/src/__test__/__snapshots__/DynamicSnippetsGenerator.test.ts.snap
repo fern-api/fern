@@ -238,11 +238,25 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "using Acme;
 using Acme.Service;
+using System.IO;
+using System.Text;
 
 var client = new AcmeClient();
 
 await client.Service.PostAsync(
-    new MyRequest()
+    new MyRequest{
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        },
+        FileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("First"))
+            },
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("Second"))
+            },
+        }
+    }
 );
 "
 `;
@@ -250,11 +264,17 @@ await client.Service.PostAsync(
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "using Acme;
 using Acme.Service;
+using System.IO;
+using System.Text;
 
 var client = new AcmeClient();
 
 await client.Service.JustFileAsync(
-    new JustFileRequest()
+    new JustFileRequest{
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        }
+    }
 );
 "
 `;
@@ -262,13 +282,18 @@ await client.Service.JustFileAsync(
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "using Acme;
 using Acme.Service;
+using System.IO;
+using System.Text;
 
 var client = new AcmeClient();
 
 await client.Service.JustFileWithQueryParamsAsync(
     new JustFileWithQueryParamsRequest{
         Integer = 42,
-        MaybeString = "exists"
+        MaybeString = "exists",
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        }
     }
 );
 "
@@ -306,7 +331,6 @@ await client.Imdb.CreateMovieAsync(
 
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
 "using Acme;
-using Acme.Core;
 using Acme.S3;
 
 var client = new AcmeClient(
@@ -339,7 +363,6 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
 "using Acme;
-using Acme.Core;
 using Acme.S3;
 
 var client = new AcmeClient(
@@ -359,7 +382,6 @@ await client.S3.GetPresignedURLAsync(
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
 "using Acme;
-using Acme.Core;
 using Acme.S3;
 
 var client = new AcmeClient(
@@ -389,7 +411,6 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 "using Acme;
-using Acme.Core;
 using Acme.Nullable;
 using System.Globalization;
 
@@ -431,7 +452,6 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "using Acme;
-using Acme.Core;
 using Acme.Nullable;
 
 var client = new AcmeClient(
@@ -457,7 +477,6 @@ await client.Nullable.GetUsersAsync(
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "using Acme;
-using Acme.Core;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
@@ -472,7 +491,6 @@ await client.Dummy.GetDummyAsync();
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
 "using Acme;
-using Acme.Core;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
@@ -487,7 +505,6 @@ await client.Dummy.GetDummyAsync();
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
 "using Acme;
-using Acme.Core;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
