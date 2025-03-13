@@ -10,9 +10,8 @@ import {
     QueryParameter,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../../AbstractConverter";
-import { ErrorCollector } from "../../../ErrorCollector";
 import { SdkGroupNameExtension } from "../../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-name";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
@@ -107,9 +106,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return { pathParameters, queryParameters, headers };
         }
 
-        for (const parameter of this.operation.parameters) {
+        for (let parameter of this.operation.parameters) {
             if (context.isReferenceObject(parameter)) {
-                continue;
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+                if (resolvedReference.resolved) {
+                    parameter = resolvedReference.value;
+                } else {
+                    continue;
+                }
             }
 
             const parameterConverter = new ParameterConverter({

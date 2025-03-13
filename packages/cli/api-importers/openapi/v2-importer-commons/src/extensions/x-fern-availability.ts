@@ -1,24 +1,21 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
-export declare namespace AvailabilityExtension {
+export declare namespace FernAvailabilityExtension {
     export interface Args extends AbstractConverter.Args {
         node: unknown;
     }
 }
 
-export class AvailabilityExtension extends AbstractExtension<
-    OpenAPIConverterContext3_1,
+export class FernAvailabilityExtension extends AbstractExtension<
+    AbstractConverterContext<object>,
     AvailabilityStatus | undefined
 > {
     private readonly node: unknown;
     public readonly key = "x-fern-availability";
 
-    constructor({ breadcrumbs, node }: AvailabilityExtension.Args) {
+    constructor({ breadcrumbs, node }: FernAvailabilityExtension.Args) {
         super({ breadcrumbs });
         this.node = node;
     }
@@ -27,7 +24,7 @@ export class AvailabilityExtension extends AbstractExtension<
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<AvailabilityStatus | undefined> {
         const extensionValue = this.getExtensionValue(this.node);

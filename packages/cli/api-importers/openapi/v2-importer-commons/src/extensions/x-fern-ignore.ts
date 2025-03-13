@@ -1,7 +1,4 @@
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractConverter.Args {
@@ -9,7 +6,7 @@ export declare namespace FernIgnoreExtension {
     }
 }
 
-export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterContext3_1, boolean> {
+export class FernIgnoreExtension extends AbstractExtension<AbstractConverterContext<object>, boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-ignore";
 
@@ -22,7 +19,7 @@ export class FernIgnoreExtension extends AbstractExtension<OpenAPIConverterConte
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.operation);

@@ -1,10 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
-import { FernEnumExtension } from "../../extensions/x-fern-enum";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
@@ -45,7 +43,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
-            const fernEnumConverter = new FernEnumExtension({
+            const fernEnumConverter = new Extensions.FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });

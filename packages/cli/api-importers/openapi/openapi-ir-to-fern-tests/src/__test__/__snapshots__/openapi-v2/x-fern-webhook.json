@@ -237,22 +237,22 @@
               "packagePath": []
             },
             "name": {
-              "originalName": "",
+              "originalName": "Update",
               "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
+                "unsafeName": "update",
+                "safeName": "update"
               },
               "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
+                "unsafeName": "update",
+                "safeName": "update"
               },
               "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
+                "unsafeName": "UPDATE",
+                "safeName": "UPDATE"
               },
               "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
+                "unsafeName": "Update",
+                "safeName": "Update"
               }
             },
             "typeId": "Update",

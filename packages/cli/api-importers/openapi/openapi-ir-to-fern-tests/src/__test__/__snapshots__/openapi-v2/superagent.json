@@ -984,22 +984,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "ValidationError",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "validationError",
+                          "safeName": "validationError"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "validation_error",
+                          "safeName": "validation_error"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "VALIDATION_ERROR",
+                          "safeName": "VALIDATION_ERROR"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "ValidationError",
+                          "safeName": "ValidationError"
                         }
                       },
                       "typeId": "ValidationError",
@@ -2191,22 +2191,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Agent",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "agent",
+                  "safeName": "agent"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "agent",
+                  "safeName": "agent"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "AGENT",
+                  "safeName": "AGENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Agent",
+                  "safeName": "Agent"
                 }
               },
               "typeId": "Agent",
@@ -3390,22 +3390,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PredictAgent",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "predictAgent",
+                  "safeName": "predictAgent"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "predict_agent",
+                  "safeName": "predict_agent"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PREDICT_AGENT",
+                  "safeName": "PREDICT_AGENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PredictAgent",
+                  "safeName": "PredictAgent"
                 }
               },
               "typeId": "PredictAgent",
@@ -3804,22 +3804,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SignIn",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "signIn",
+                  "safeName": "signIn"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sign_in",
+                  "safeName": "sign_in"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SIGN_IN",
+                  "safeName": "SIGN_IN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SignIn",
+                  "safeName": "SignIn"
                 }
               },
               "typeId": "SignIn",
@@ -4061,22 +4061,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SignUp",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "signUp",
+                  "safeName": "signUp"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "sign_up",
+                  "safeName": "sign_up"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SIGN_UP",
+                  "safeName": "SIGN_UP"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SignUp",
+                  "safeName": "SignUp"
                 }
               },
               "typeId": "SignUp",
@@ -4873,22 +4873,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "ApiToken",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "apiToken",
+                  "safeName": "apiToken"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "api_token",
+                  "safeName": "api_token"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "API_TOKEN",
+                  "safeName": "API_TOKEN"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ApiToken",
+                  "safeName": "ApiToken"
                 }
               },
               "typeId": "ApiToken",
@@ -5526,22 +5526,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Document",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "document",
+                  "safeName": "document"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "document",
+                  "safeName": "document"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "DOCUMENT",
+                  "safeName": "DOCUMENT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Document",
+                  "safeName": "Document"
                 }
               },
               "typeId": "Document",
@@ -6613,22 +6613,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Prompt",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "prompt",
+                  "safeName": "prompt"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "prompt",
+                  "safeName": "prompt"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PROMPT",
+                  "safeName": "PROMPT"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Prompt",
+                  "safeName": "Prompt"
                 }
               },
               "typeId": "Prompt",
@@ -7633,22 +7633,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Tool",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "tool",
+                  "safeName": "tool"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "tool",
+                  "safeName": "tool"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "TOOL",
+                  "safeName": "TOOL"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Tool",
+                  "safeName": "Tool"
                 }
               },
               "typeId": "Tool",

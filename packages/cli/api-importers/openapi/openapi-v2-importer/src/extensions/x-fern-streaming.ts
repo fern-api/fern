@@ -1,10 +1,9 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
+import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
 
 const REQUEST_PREFIX = "$request.";
 

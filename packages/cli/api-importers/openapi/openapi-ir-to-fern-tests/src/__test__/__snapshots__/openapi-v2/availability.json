@@ -535,22 +535,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "DeprecatedParam",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecatedParam",
+                    "safeName": "deprecatedParam"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecated_param",
+                    "safeName": "deprecated_param"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DEPRECATED_PARAM",
+                    "safeName": "DEPRECATED_PARAM"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DeprecatedParam",
+                    "safeName": "DeprecatedParam"
                   }
                 },
                 "typeId": "DeprecatedParam",
@@ -710,22 +710,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "DeprecatedParam",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecatedParam",
+                    "safeName": "deprecatedParam"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecated_param",
+                    "safeName": "deprecated_param"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DEPRECATED_PARAM",
+                    "safeName": "DEPRECATED_PARAM"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DeprecatedParam",
+                    "safeName": "DeprecatedParam"
                   }
                 },
                 "typeId": "DeprecatedParam",
@@ -892,22 +892,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "DeprecatedParam",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecatedParam",
+                    "safeName": "deprecatedParam"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecated_param",
+                    "safeName": "deprecated_param"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DEPRECATED_PARAM",
+                    "safeName": "DEPRECATED_PARAM"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DeprecatedParam",
+                    "safeName": "DeprecatedParam"
                   }
                 },
                 "typeId": "DeprecatedParam",
@@ -967,22 +967,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "WholeDeprecatedSettings",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "wholeDeprecatedSettings",
+                      "safeName": "wholeDeprecatedSettings"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "whole_deprecated_settings",
+                      "safeName": "whole_deprecated_settings"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WHOLE_DEPRECATED_SETTINGS",
+                      "safeName": "WHOLE_DEPRECATED_SETTINGS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "WholeDeprecatedSettings",
+                      "safeName": "WholeDeprecatedSettings"
                     }
                   },
                   "typeId": "WholeDeprecatedSettings",
@@ -1565,22 +1565,22 @@
                   "packagePath": []
                 },
                 "name": {
-                  "originalName": "",
+                  "originalName": "DeprecatedParam",
                   "camelCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecatedParam",
+                    "safeName": "deprecatedParam"
                   },
                   "snakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "deprecated_param",
+                    "safeName": "deprecated_param"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DEPRECATED_PARAM",
+                    "safeName": "DEPRECATED_PARAM"
                   },
                   "pascalCase": {
-                    "unsafeName": "",
-                    "safeName": ""
+                    "unsafeName": "DeprecatedParam",
+                    "safeName": "DeprecatedParam"
                   }
                 },
                 "typeId": "DeprecatedParam",
@@ -1661,22 +1661,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Settings",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "settings",
+                  "safeName": "settings"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "settings",
+                  "safeName": "settings"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SETTINGS",
+                  "safeName": "SETTINGS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Settings",
+                  "safeName": "Settings"
                 }
               },
               "typeId": "Settings",
@@ -1695,22 +1695,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "NotDeprecatedSettings",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "notDeprecatedSettings",
+                      "safeName": "notDeprecatedSettings"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "not_deprecated_settings",
+                      "safeName": "not_deprecated_settings"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NOT_DEPRECATED_SETTINGS",
+                      "safeName": "NOT_DEPRECATED_SETTINGS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NotDeprecatedSettings",
+                      "safeName": "NotDeprecatedSettings"
                     }
                   },
                   "typeId": "NotDeprecatedSettings",
@@ -2190,22 +2190,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "NotDeprecatedSettings",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "notDeprecatedSettings",
+                      "safeName": "notDeprecatedSettings"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "not_deprecated_settings",
+                      "safeName": "not_deprecated_settings"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NOT_DEPRECATED_SETTINGS",
+                      "safeName": "NOT_DEPRECATED_SETTINGS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NotDeprecatedSettings",
+                      "safeName": "NotDeprecatedSettings"
                     }
                   },
                   "typeId": "NotDeprecatedSettings",
@@ -2559,22 +2559,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "NotDeprecatedSettings",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "notDeprecatedSettings",
+                      "safeName": "notDeprecatedSettings"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "not_deprecated_settings",
+                      "safeName": "not_deprecated_settings"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NOT_DEPRECATED_SETTINGS",
+                      "safeName": "NOT_DEPRECATED_SETTINGS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NotDeprecatedSettings",
+                      "safeName": "NotDeprecatedSettings"
                     }
                   },
                   "typeId": "NotDeprecatedSettings",
@@ -2890,22 +2890,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "NotDeprecatedSettings",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "notDeprecatedSettings",
+                      "safeName": "notDeprecatedSettings"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "not_deprecated_settings",
+                      "safeName": "not_deprecated_settings"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NOT_DEPRECATED_SETTINGS",
+                      "safeName": "NOT_DEPRECATED_SETTINGS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "NotDeprecatedSettings",
+                      "safeName": "NotDeprecatedSettings"
                     }
                   },
                   "typeId": "NotDeprecatedSettings",

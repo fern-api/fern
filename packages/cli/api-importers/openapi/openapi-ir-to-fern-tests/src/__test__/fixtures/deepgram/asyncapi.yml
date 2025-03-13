@@ -34,18 +34,21 @@ servers:
   public:
     host: api.deepgram.com
     protocol: wss
+  agent:
+    host: agent.deepgram.com
+    protocol: wss
 channels:
   speak:
     address: /v1/speak
     description: Deepgram Text to Speech WebSocket
+    servers:
+      - $ref: '#/servers/public'
     parameters:
-      SecWebSocketProtocol:
-        description: >-
-          Used to establish a WebSocket connection with authentication. Format
-          should be 'token, <DEEPGRAM_API_KEY>'
-        location: $message.header#/Sec-Websocket-Protocol
+      ApiKey:
+        description: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
+        location: $message.header#/Authorization
         examples:
-          - token, YOUR_DEEPGRAM_API_KEY
+          - token YOUR_DEEPGRAM_API_KEY
       encoding:
         description: >-
           Encoding allows you to specify the expected encoding of your audio
@@ -94,6 +97,17 @@ channels:
           - '24000'
           - '44100'
           - '48000'
+        x-fern-enum:
+          '8000':
+            name: EightThousand
+          '16000':
+            name: SixteenThousand
+          '24000':
+            name: TwentyFourThousand
+          '44100':
+            name: FortyFourThousandOneHundred
+          '48000':
+            name: FortyEightThousand
         examples:
           - '24000'
     messages:
@@ -124,15 +138,12 @@ channels:
         description: Control messages for managing the Text to Speech WebSocket connection
         payload:
           type: object
-          oneOf:
-            - type: string
+          properties:
+            type:
+              type: string
               enum:
                 - Flush
-            - type: string
-              enum:
                 - Clear
-            - type: string
-              enum:
                 - Close
           required:
             - type
@@ -168,10 +179,11 @@ channels:
               description: The sequence ID of the response
       metadataResponse:
         contentType: application/json
-        summary: Text to Speech Metadata information sent after WebSocket connection
-        description: Sent immediately after completing the WebSocket handshake
         payload:
           type: object
+          description: >-
+            Text to Speech Metadata information sent immediately after
+            completing the WebSocket handshake
           properties:
             type:
               type: string
@@ -210,6 +222,19 @@ channels:
                 - 429
                 - 503
               description: HTTP status code equivalent
+              x-fern-enum:
+                '400':
+                  name: BadRequest
+                '401':
+                  name: Unauthorized
+                '402':
+                  name: PaymentRequired
+                '403':
+                  name: Forbidden
+                '429':
+                  name: TooManyRequests
+                '503':
+                  name: ServiceUnavailable
             error_message:
               type: string
               description: Error message
@@ -232,6 +257,9 @@ channels:
               enum:
                 - 200
               description: HTTP status code equivalent
+              x-fern-enum:
+                '200':
+                  name: OK
             success_message:
               type: string
               description: Success message
@@ -240,13 +268,12 @@ channels:
               format: uuid
               description: Unique identifier for the request
       closeFrame:
-        summary: WebSocket Close Frame
-        description: >
-          When Deepgram encounters an error during streaming text to speech, a
-          WebSocket Close frame is sent. The frame contains a status code and
-          UTF-8-encoded payload describing the error reason
         payload:
           type: object
+          description: >
+            When Deepgram encounters an error during streaming text to speech, a
+            WebSocket Close frame is sent. The frame contains a status code and
+            UTF-8-encoded payload describing the error reason
           required:
             - code
             - payload
@@ -260,6 +287,17 @@ channels:
                 - 1009
                 - 1011
               description: WebSocket close status code
+              x-fern-enum:
+                '1000':
+                  name: NormalClosure
+                '1003':
+                  name: ProtocolError
+                '1008':
+                  name: PolicyViolation
+                '1009':
+                  name: MessageTooBig
+                '1011':
+                  name: InternalServerError
             payload:
               type: string
               enum:
@@ -303,15 +341,15 @@ channels:
               description: Time limit exceeded
   listen:
     address: /v1/listen
+    servers:
+      - $ref: '#/servers/public'
     description: Deepgram Speech to Text WebSocket
     parameters:
-      SecWebSocketProtocol:
-        description: >-
-          Used to establish a WebSocket connection with authentication. Format
-          should be 'token, <DEEPGRAM_API_KEY>'
-        location: $message.header#/Sec-Websocket-Protocol
+      ApiKey:
+        description: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
+        location: $message.header#/Authorization
         examples:
-          - token, YOUR_DEEPGRAM_API_KEY
+          - token YOUR_DEEPGRAM_API_KEY
       callback:
         description: URL to which we'll make the callback request
         location: $message.payload#/callback
@@ -337,15 +375,6 @@ channels:
         default: '1'
         examples:
           - '1'
-      dictation:
-        description: Identify and extract key entities from content in submitted audio
-        location: $message.payload#/dictation
-        default: 'false'
-        enum:
-          - 'true'
-          - 'false'
-        examples:
-          - 'true'
       diarize:
         description: >-
           Recognize speaker changes. Each word in the transcript will be
@@ -366,6 +395,15 @@ channels:
         examples:
           - v1
           - v2
+      dictation:
+        description: Identify and extract key entities from content in submitted audio
+        location: $message.payload#/dictation
+        default: 'false'
+        enum:
+          - 'true'
+          - 'false'
+        examples:
+          - 'true'
       encoding:
         description: Specify the expected encoding of your submitted audio
         location: $message.payload#/encoding
@@ -424,11 +462,6 @@ channels:
           - 'false'
         examples:
           - 'true'
-      keywords:
-        description: Keywords can boost or suppress specialized terminology and brands
-        location: $message.payload#/keywords
-        examples:
-          - Twilio:2
       keyterm:
         description: >-
           Key term prompting can boost or suppress specialized terminology and
@@ -436,6 +469,11 @@ channels:
         location: $message.payload#/keyterm
         examples:
           - Snuffleupagus
+      keywords:
+        description: Keywords can boost or suppress specialized terminology and brands
+        location: $message.payload#/keywords
+        examples:
+          - Twilio:2
       language:
         description: >-
           The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that
@@ -508,6 +546,7 @@ channels:
         enum:
           - nova-3
           - nova-3-general
+          - nova-3-medical
           - nova-2
           - nova-2-general
           - nova-2-meeting
@@ -584,6 +623,10 @@ channels:
         enum:
           - 'true'
           - 'false'
+          - pci
+          - numbers
+          - aggressive_numbers
+          - ssn
         examples:
           - 'true'
       replace:
@@ -906,10 +949,9 @@ channels:
               channels: 0
       metadataResponse:
         contentType: application/json
-        summary: Metadata information for Speech to Text session
-        description: Sent immediately after completing the WebSocket handshake
         payload:
           type: object
+          description: Sent immediately after completing the WebSocket handshake
           properties:
             type:
               type: string
@@ -948,6 +990,19 @@ channels:
                 - 429
                 - 503
               description: HTTP status code equivalent
+              x-fern-enum:
+                '400':
+                  name: BadRequest
+                '401':
+                  name: Unauthorized
+                '402':
+                  name: PaymentRequired
+                '403':
+                  name: Forbidden
+                '429':
+                  name: TooManyRequests
+                '503':
+                  name: ServiceUnavailable
             error_message:
               type: string
               description: Error message
@@ -970,6 +1025,9 @@ channels:
               enum:
                 - 200
               description: HTTP status code equivalent
+              x-fern-enum:
+                '200':
+                  name: OK
             success_message:
               type: string
               description: Success message
@@ -978,13 +1036,12 @@ channels:
               format: uuid
               description: Unique identifier for the request
       closeFrame:
-        summary: WebSocket Close Frame
-        description: >
-          When Deepgram encounters an error during streaming speech to text, a
-          WebSocket Close frame is sent. The frame contains a status code and
-          UTF-8-encoded payload describing the error reason
         payload:
           type: object
+          description: >
+            When Deepgram encounters an error during streaming speech to text, a
+            WebSocket Close frame is sent. The frame contains a status code and
+            UTF-8-encoded payload describing the error reason
           required:
             - code
             - payload
@@ -996,6 +1053,13 @@ channels:
                 - 1008
                 - 1011
               description: WebSocket close status code
+              x-fern-enum:
+                '1000':
+                  name: NormalClosure
+                '1008':
+                  name: PolicyViolation
+                '1011':
+                  name: InternalServerError
             payload:
               type: string
               enum:
@@ -1019,25 +1083,29 @@ channels:
               description: Failed to receive message
   agent:
     address: /agent
+    servers:
+      - $ref: '#/servers/agent'
     description: Deepgram Voice Agent WebSocket
     parameters:
-      SecWebSocketProtocol:
-        description: >-
-          Used to establish a WebSocket connection with authentication. Format
-          should be 'token, <DEEPGRAM_API_KEY>'
-        location: $message.header#/Sec-Websocket-Protocol
+      ApiKey:
+        description: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
+        location: $message.header#/Authorization
         examples:
-          - token, YOUR_DEEPGRAM_API_KEY
+          - token YOUR_DEEPGRAM_API_KEY
     messages:
       settingsConfiguration:
         contentType: application/json
-        summary: Configure the voice agent and sets the input and output audio formats
         payload:
           type: object
+          description: >-
+            Configure the voice agent and sets the input and output audio
+            formats
           required:
             - type
+            - audio
             - agent
             - think
+            - speak
           properties:
             type:
               type: string
@@ -1083,8 +1151,13 @@ channels:
                   properties:
                     model:
                       type: string
-                      default: nova-2
+                      default: nova-3
                       description: Model to use for speech recognition
+                    keyterms:
+                      type: array
+                      items:
+                        type: string
+                      description: List of keyterms to listen for, only available on nova-3
                 think:
                   type: object
                   properties:
@@ -1191,7 +1264,7 @@ channels:
                   container: none
               agent:
                 listen:
-                  model: nova-2
+                  model: nova-3
                 think:
                   provider:
                     type: openai
@@ -1222,11 +1295,11 @@ channels:
                 replay: false
       updateInstructions:
         contentType: application/json
-        summary: >-
-          Send a message to give additional instructions to the Think model in
-          the middle of a conversation
         payload:
           type: object
+          description: >-
+            Send a message to give additional instructions to the Think model in
+            the middle of a conversation
           required:
             - type
             - instructions
@@ -1249,11 +1322,11 @@ channels:
                 information.
       updateSpeak:
         contentType: application/json
-        summary: >-
-          Send a message to change the Speak model in the middle of a
-          conversation
         payload:
           type: object
+          description: >-
+            Send a message to change the Speak model in the middle of a
+            conversation
           required:
             - type
             - model
@@ -1271,11 +1344,11 @@ channels:
               model: aura-asteria-en
       injectAgentMessage:
         contentType: application/json
-        summary: >-
-          Send a message to change the Speak model in the middle of a
-          conversation
         payload:
           type: object
+          description: >-
+            Send a message to change the Speak model in the middle of a
+            conversation
           required:
             - type
             - message
@@ -1295,9 +1368,9 @@ channels:
                 provide you with the accurate information.
       injectionRefused:
         contentType: application/json
-        summary: Receive injection refused message
         payload:
           type: object
+          description: Receive injection refused message
           required:
             - type
             - message
@@ -1311,9 +1384,9 @@ channels:
               type: InjectionRefused
       functionCallResponse:
         contentType: application/json
-        summary: Configure the voice agent and configure the function call response
         payload:
           type: object
+          description: Configure the voice agent and configure the function call response
           required:
             - type
             - function_call_id
@@ -1340,9 +1413,9 @@ channels:
                 2024-03-15
       agentKeepAlive:
         contentType: application/json
-        summary: Send messages ensuring uninterrupted communication for your agent
         payload:
           type: object
+          description: Send messages ensuring uninterrupted communication for your agent
           required:
             - type
           properties:
@@ -1355,11 +1428,11 @@ channels:
               type: KeepAlive
       welcomeMessage:
         contentType: application/json
-        summary: >-
-          Receive a welcome message from the server to confirm the websocket has
-          opened
         payload:
           type: object
+          description: >-
+            Receive a welcome message from the server to confirm the websocket
+            has opened
           required:
             - type
             - session_id
@@ -1378,11 +1451,11 @@ channels:
               session_id: fc553ec9-5874-49ca-a47c-b670d525a4b1
       settingsApplied:
         contentType: application/json
-        summary: >-
-          Confirm the server has successfully received and applied the Settings
-          Configuration message
         payload:
           type: object
+          description: >-
+            Confirm the server has successfully received and applied the
+            Settings Configuration message
           required:
             - type
           properties:
@@ -1395,11 +1468,11 @@ channels:
               type: SettingsApplied
       ConversationText:
         contentType: application/json
-        summary: >-
-          Conversation Text facilitates real-time communication by relaying
-          spoken statements from both the user and the assistant
         payload:
           type: object
+          description: >-
+            Conversation Text facilitates real-time communication by relaying
+            spoken statements from both the user and the assistant
           required:
             - type
             - role
@@ -1431,11 +1504,11 @@ channels:
                 (22°C). The forecast shows clear skies throughout the day.
       userStartedSpeaking:
         contentType: application/json
-        summary: >-
-          User Started Speaking notifies the client that the user has begun
-          speaking
         payload:
           type: object
+          description: >-
+            User Started Speaking notifies the client that the user has begun
+            speaking
           required:
             - type
           properties:
@@ -1450,11 +1523,11 @@ channels:
               type: UserStartedSpeaking
       agentThinking:
         contentType: application/json
-        summary: >-
-          Agent Thinking informs the client when the agent is processing
-          information
         payload:
           type: object
+          description: >-
+            Agent Thinking informs the client when the agent is processing
+            information
           required:
             - type
             - content
@@ -1474,9 +1547,11 @@ channels:
                 response about weather patterns.
       functionCallRequest:
         contentType: application/json
-        summary: Request to call a function by sending a Function Call Request message
         payload:
           type: object
+          description: >-
+            Request to call a function by sending a Function Call Request
+            message
           required:
             - type
             - function_name
@@ -1505,9 +1580,11 @@ channels:
                 order_id: ORD-123456
       functionCalling:
         contentType: application/json
-        summary: Provides insights into function call workflows to assist in debugging
         payload:
           type: object
+          description: >-
+            Provides insights into function call workflows to assist in
+            debugging
           required:
             - type
           properties:
@@ -1520,11 +1597,11 @@ channels:
               type: FunctionCalling
       agentStartedSpeaking:
         contentType: application/json
-        summary: >-
-          Get notified when the server begins streaming an agent's audio
-          response for playback
         payload:
           type: object
+          description: >-
+            Get notified when the server begins streaming an agent's audio
+            response for playback
           required:
             - type
             - total_latency
@@ -1559,11 +1636,11 @@ channels:
               ttt_latency: 1.7
       agentAudioDone:
         contentType: application/json
-        summary: >-
-          Get signals that the server has finished sending the final audio
-          segment to the client
         payload:
           type: object
+          description: >-
+            Get signals that the server has finished sending the final audio
+            segment to the client
           required:
             - type
           properties:
@@ -1578,9 +1655,9 @@ channels:
               type: AgentAudioDone
       agentErrorResponse:
         contentType: application/json
-        summary: Receive an error message from the server when an error occurs
         payload:
           type: object
+          description: Receive an error message from the server when an error occurs
           required:
             - type
             - message
@@ -1625,6 +1702,13 @@ operations:
       $ref: '#/channels/speak'
     messages:
       - $ref: '#/channels/speak/messages/controlMessagesResponse'
+  receiveSpeakCloseFrame:
+    description: Receive close frame from Deepgram's Text to Speech API
+    action: receive
+    channel:
+      $ref: '#/channels/speak'
+    messages:
+      - $ref: '#/channels/speak/messages/closeFrame'
   sendAudio:
     description: Send audio to Deepgram's Speech to Text API
     action: send
@@ -1653,6 +1737,13 @@ operations:
       $ref: '#/channels/listen'
     messages:
       - $ref: '#/channels/listen/messages/controlMessageResponse'
+  receiveListenCloseFrame:
+    description: Receive close frame from Deepgram's Speech to Text API
+    action: receive
+    channel:
+      $ref: '#/channels/listen'
+    messages:
+      - $ref: '#/channels/listen/messages/closeFrame'
   sendSettingsConfiguration:
     description: Send settings configuration to Deepgram's Voice Agent API
     action: send
@@ -1774,10 +1865,8 @@ operations:
       - $ref: '#/channels/agent/messages/agentErrorResponse'
 components:
   parameters:
-    SecWebSocketProtocol:
-      description: >-
-        Used to establish a WebSocket connection with authentication. Format
-        should be 'token, <DEEPGRAM_API_KEY>'
-      location: $message.header#/Sec-Websocket-Protocol
+    ApiKey:
+      description: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
+      location: $message.header#/Authorization
       examples:
-        - token, YOUR_DEEPGRAM_API_KEY
+        - token YOUR_DEEPGRAM_API_KEY

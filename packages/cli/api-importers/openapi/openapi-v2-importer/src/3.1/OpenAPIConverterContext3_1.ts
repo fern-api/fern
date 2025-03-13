@@ -1,10 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, AvailabilityStatus, ObjectPropertyAccess, TypeReference } from "@fern-api/ir-sdk";
-
-import { AbstractConverterContext } from "../AbstractConverterContext";
-import { ErrorCollector } from "../ErrorCollector";
-import { AvailabilityExtension } from "../extensions/x-fern-availability";
+import { AbstractConverterContext, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -53,7 +50,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                     packagePath: [],
                     file: undefined
                 },
-                name: this.casingsGenerator.generateName(""),
+                name: this.casingsGenerator.generateName(typeId),
                 typeId,
                 default: undefined,
                 inline: false
@@ -66,7 +63,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
     ): Promise<ObjectPropertyAccess | undefined> {
         let schema = schemaOrReference;
 
-        // Keep resolving references until we get to a schema object
         while (this.isReferenceObject(schema)) {
             const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
             if (!resolved.resolved) {
@@ -75,9 +71,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             schema = resolved.value;
         }
 
-        // Now we have the actual schema object
         if (schema.readOnly && schema.writeOnly) {
-            // Can't be both readonly and writeonly
             return undefined;
         }
 
@@ -113,7 +107,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             node = resolved.value;
         }
 
-        const availabilityExtension = new AvailabilityExtension({
+        const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
             breadcrumbs
         });

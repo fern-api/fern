@@ -1,25 +1,5 @@
-import { z } from "zod";
-
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
-import { FernEnumConfig } from "../types/FernEnumConfig";
-
-const CasingConfigSchema = z.object({
-    snake: z.string().optional(),
-    camel: z.string().optional(),
-    screamingSnake: z.string().optional(),
-    pascal: z.string().optional()
-});
-
-const EnumValueConfigSchema = z.object({
-    description: z.string().optional(),
-    name: z.string().optional(),
-    casing: CasingConfigSchema.optional()
-});
-
-const FernEnumConfigSchema = z.record(EnumValueConfigSchema);
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector, FernEnumConfig } from "../";
+import { FernEnumConfigSchema } from "../schemas/EnumSchema";
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractConverter.Args {
@@ -29,7 +9,7 @@ export declare namespace FernEnumExtension {
     export type Output = FernEnumConfig;
 }
 
-export class FernEnumExtension extends AbstractExtension<OpenAPIConverterContext3_1, FernEnumExtension.Output> {
+export class FernEnumExtension extends AbstractExtension<AbstractConverterContext<object>, FernEnumExtension.Output> {
     private readonly schema: object;
     public readonly key = "x-fern-enum";
 
@@ -42,7 +22,7 @@ export class FernEnumExtension extends AbstractExtension<OpenAPIConverterContext
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): FernEnumExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.schema);
