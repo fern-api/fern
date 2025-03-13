@@ -594,19 +594,18 @@ internal class RawClient(ClientOptions clientOptions)
     private static List<KeyValuePair<string, string>> GetQueryParameters(BaseApiRequest request)
     {
         var result = TransformToKeyValuePairs(request.Query);
-        if (request.Options?.AdditionalQueryParameters != null && request.Options.AdditionalQueryParameters.Any())
+        if (request.Options?.AdditionalQueryParameters is null || !request.Options.AdditionalQueryParameters.Any())
         {
-            var additionalKeys = request.Options.AdditionalQueryParameters
-                .Select(p => p.Key)
-                .Distinct();
-
-            foreach (var key in additionalKeys)
-            {
-                result.RemoveAll(kv => kv.Key == key);
-            }
-
-            result.AddRange(request.Options.AdditionalQueryParameters);
+            return result;
         }
+        var additionalKeys = request.Options.AdditionalQueryParameters
+            .Select(p => p.Key)
+            .Distinct();
+        foreach (var key in additionalKeys)
+        {
+            result.RemoveAll(kv => kv.Key == key);
+        }
+        result.AddRange(request.Options.AdditionalQueryParameters);
         return result;
     }
 

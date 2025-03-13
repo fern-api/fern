@@ -202,7 +202,10 @@ export class BaseOptionsGenerator {
             summary: "Additional query parameters sent with the request.",
             get: true,
             init: true,
-            initializer: includeInitializer ? csharp.codeblock("null") : undefined
+            skipDefaultInitializer: true,
+            initializer: includeInitializer ? csharp.codeblock((writer) => {
+                writer.writeNode(this.context.getEnumerableEmptyKeyValuePairsInitializer());
+            }) : undefined,
         });
     }
 
@@ -212,7 +215,7 @@ export class BaseOptionsGenerator {
             name: "AdditionalBodyProperties",
             type: this.context.getAdditionalBodyPropertiesType(),
             summary:
-                "Additional body properties sent with the request.\nThis is a no-op for multipart/form-data endpoints.",
+                "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
             get: true,
             init: true,
             initializer: includeInitializer ? csharp.codeblock("null") : undefined

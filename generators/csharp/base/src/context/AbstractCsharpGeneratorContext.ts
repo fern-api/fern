@@ -432,6 +432,41 @@ export abstract class AbstractCsharpGeneratorContext<
         return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
     }
 
+    public getEnumerableClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Enumerable",
+            namespace: "System.Linq"
+        });
+    }
+
+    public getEnumerableEmptyKeyValuePairsInitializer(): csharp.MethodInvocation {
+        return csharp.invokeMethod({
+            on: this.getEnumerableClassReference(),
+            method: "Empty",
+            generics: [
+                csharp.Type.reference(this.getKeyValuePairsClassReference({
+                    key: csharp.Type.string(),
+                    value: csharp.Type.string()
+                })),
+            ],
+            arguments_: []
+        });
+    }
+
+    public getKeyValuePairsClassReference({
+        key,
+        value
+    }: {
+        key: csharp.Type;
+        value: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            name: "KeyValuePair",
+            namespace: "System.Collections.Generic",
+            generics: [key, value]
+        });
+    }
+
     public getAsUndiscriminatedUnionTypeDeclaration(
         reference: TypeReference
     ): { declaration: UndiscriminatedUnionTypeDeclaration; isList: boolean } | undefined {

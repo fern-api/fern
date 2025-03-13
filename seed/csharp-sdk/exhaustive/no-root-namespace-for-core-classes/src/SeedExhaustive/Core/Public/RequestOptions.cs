@@ -34,11 +34,11 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
-    public IEnumerable<KeyValuePair<string, string>>? AdditionalQueryParameters { get; init; }
+    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get; init; }
 
     /// <summary>
     /// Additional body properties sent with the request.
-    /// This is a no-op for multipart/form-data endpoints.
+    /// This is only applied to JSON requests.
     /// </summary>
     public object? AdditionalBodyProperties { get; init; }
 }

@@ -1,12 +1,9 @@
 using global::System.Net.Http;
-using System.Collections.Generic;
 using SystemTask = global::System.Threading.Tasks.Task;
-using WireMock.Matchers;
 using WireMock.Server;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 using NUnit.Framework;
-using <%= namespace%>;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.RawClientTests;

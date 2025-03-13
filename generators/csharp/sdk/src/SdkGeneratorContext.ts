@@ -73,7 +73,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAdditionalQueryParametersType(): csharp.Type {
-        return csharp.Type.optional(csharp.Type.list(this.getStringKeyValuePairsType()));
+        return csharp.Type.list(csharp.Type.reference(this.getKeyValuePairsClassReference({
+            key: csharp.Type.string(),
+            value: csharp.Type.string()
+        })));
     }
 
     public getAdditionalBodyPropertiesType(): csharp.Type {
@@ -646,16 +649,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
-    }
-
-    private getStringKeyValuePairsType(): csharp.Type {
-        return csharp.Type.reference(
-            csharp.classReference({
-                name: "KeyValuePair",
-                namespace: "System.Collections.Generic",
-                generics: [csharp.Types.string(), csharp.Types.string()]
-            })
-        );
     }
 
     private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {

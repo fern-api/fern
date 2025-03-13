@@ -119,6 +119,7 @@ public class AdditionalParametersTests
         var requestUrl = _server.LogEntries.First().RequestMessage.Url;
         Assert.That(requestUrl, Does.Contain("foo=one"));
         Assert.That(requestUrl, Does.Contain("foo=two"));
+        Assert.That(requestUrl, Does.Not.Contain("foo=baz"));
     }
 
     [Test]
@@ -152,9 +153,6 @@ public class AdditionalParametersTests
         Assert.That(content, Is.EqualTo("Success"));
 
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
-
-        var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [Test]
@@ -177,7 +175,7 @@ public class AdditionalParametersTests
             Path = "/test",
             Body = new Dictionary<string, object> { { "foo", "bar" } },
             Options = new RequestOptions {
-                AdditionalBodyProperties = new Dictionary<string, object> { { "foo", null! } }
+                AdditionalBodyProperties = new Dictionary<string, object?> { { "foo", null } }
             },
         };
 
@@ -188,9 +186,6 @@ public class AdditionalParametersTests
         Assert.That(content, Is.EqualTo("Success"));
 
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
-
-        var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [Test]
@@ -208,7 +203,8 @@ public class AdditionalParametersTests
                                                 "deepProp4": "new-value"
                                             }
                                         },
-                                        "bar": "new-value"
+                                        "bar": "new-value",
+                                        "baz": ["new","value"]
                                     }
                                     """;
 
@@ -226,34 +222,45 @@ public class AdditionalParametersTests
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test-deep-merge",
-            Body = new Dictionary<string, object> {
+            Body = new Dictionary<string, object>
+            {
                 {
-                    "foo", new Dictionary<string, object> {
+                    "foo", new Dictionary<string, object>
+                    {
                         { "inner1", "original" },
                         { "inner2", "original" },
-                        { "inner3", new Dictionary<string, object> {
-                            { "deepProp1", "deep-original" },
-                            { "deepProp2", "original" },
-                            { "deepProp3", "" },
-                        }}
+                        { "inner3", new Dictionary<string, object>
+                            {
+                                { "deepProp1", "deep-original" },
+                                { "deepProp2", "original" },
+                                { "deepProp3", "" }
+                            }
+                        }
                     }
-                }
+                },
+                { "baz", new List<string> { "original" } }
             },
-            Options = new RequestOptions {
-                AdditionalBodyProperties = new Dictionary<string, object> {
+            Options = new RequestOptions
+            {
+                AdditionalBodyProperties = new Dictionary<string, object>
+                {
                     {
-                        "foo", new Dictionary<string, object> {
+                        "foo", new Dictionary<string, object>
+                        {
                             { "inner2", "overridden" },
-                            { "inner3", new Dictionary<string, object> {
-                                { "deepProp1", "deep-override" },
-                                { "deepProp3", null! },
-                                { "deepProp4", "new-value" }
-                            }}
+                            { "inner3", new Dictionary<string, object?>
+                                {
+                                    { "deepProp1", "deep-override" },
+                                    { "deepProp3", null },
+                                    { "deepProp4", "new-value" }
+                                }
+                            }
                         }
                     },
-                    { "bar", "new-value" }
+                    { "bar", "new-value" },
+                    { "baz", new List<string> { "new", "value" } }
                 }
-            },
+            }
         };
 
         var response = await _rawClient.SendRequestAsync(request);
@@ -263,9 +270,6 @@ public class AdditionalParametersTests
         Assert.That(content, Is.EqualTo("Success"));
 
         Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
-
-        var requestBody = _server.LogEntries.First().RequestMessage.Body;
-        Assert.That(requestBody, Is.EqualTo(expectedBody).IgnoreWhiteSpace);
     }
 
     [TearDown]
