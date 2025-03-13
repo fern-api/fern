@@ -32,7 +32,6 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/go-ast": "workspace:*",
-    "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/ir-sdk": "^57.0.0",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "esbuild": "^0.24.0",

@@ -672,9 +672,6 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
