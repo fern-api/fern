@@ -53,7 +53,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             options: this.options
         });
     }
-    
+
     public getFileParameterForString(str: string): csharp.TypeLiteral {
         return csharp.TypeLiteral.reference(
             csharp.instantiateClass({
