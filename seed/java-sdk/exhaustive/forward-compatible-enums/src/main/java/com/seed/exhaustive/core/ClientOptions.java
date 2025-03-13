@@ -5,6 +5,7 @@ package com.seed.exhaustive.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
@@ -92,11 +93,9 @@ public final class ClientOptions {
 
         private int maxRetries = 2;
 
-        private int timeout = 60;
+        private Optional<Integer> timeout = Optional.empty();
 
-        private OkHttpClient httpClient = new OkHttpClient.Builder()
-                .callTimeout(this.timeout, TimeUnit.SECONDS)
-                .build();
+        private OkHttpClient httpClient = null;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -117,14 +116,15 @@ public final class ClientOptions {
          * Override the timeout in seconds. Defaults to 60 seconds.
          */
         public Builder timeout(int timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        /**
+         * Override the timeout in seconds. Defaults to 60 seconds.
+         */
+        public Builder timeout(Optional<Integer> timeout) {
             this.timeout = timeout;
-            this.httpClient = this.httpClient
-                    .newBuilder()
-                    .callTimeout(this.timeout, TimeUnit.SECONDS)
-                    .connectTimeout(0, TimeUnit.SECONDS)
-                    .writeTimeout(0, TimeUnit.SECONDS)
-                    .readTimeout(0, TimeUnit.SECONDS)
-                    .build();
             return this;
         }
 
@@ -142,11 +142,28 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
-            OkHttpClient httpClient = this.httpClient
-                    .newBuilder()
-                    .addInterceptor(new RetryInterceptor(this.maxRetries))
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout);
+            OkHttpClient.Builder httpClientBuilder =
+                    this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
+
+            if (this.httpClient != null) {
+                timeout.ifPresent(timeout -> httpClientBuilder
+                        .callTimeout(timeout, TimeUnit.SECONDS)
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS));
+            } else {
+                httpClientBuilder
+                        .callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS)
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
+                        .addInterceptor(new RetryInterceptor(this.maxRetries));
+            }
+
+            this.httpClient = httpClientBuilder.build();
+            this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
+
+            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get());
         }
     }
 }

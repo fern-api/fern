@@ -409,15 +409,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(TypeName.INT, MAX_RETRIES_FIELD.name, Modifier.PRIVATE)
                         .initializer("2")
                         .build())
-                .addField(FieldSpec.builder(TypeName.INT, TIMEOUT_FIELD.name, Modifier.PRIVATE)
-                        .initializer("60")
+                .addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                TIMEOUT_FIELD.name,
+                                Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
                         .build())
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
-                        .initializer(CodeBlock.builder()
-                                .add("new $T.Builder()", OkHttpClient.class)
-                                .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
-                                .add("\n    .build()")
-                                .build())
+                        .initializer(CodeBlock.builder().add("null").build())
                         .build())
                 .addFields(variableFields.values())
                 .addMethod(getEnvironmentBuilder())
@@ -428,19 +427,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .addJavadoc("Override the timeout in seconds. Defaults to 60 seconds.")
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, TIMEOUT_FIELD.name)
+                        .addStatement("this.$L = $T.of($L)", TIMEOUT_FIELD.name, Optional.class, TIMEOUT_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(TIMEOUT_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the timeout in seconds. Defaults to 60 seconds.")
+                        .returns(builderClassName)
+                        .addParameter(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                TIMEOUT_FIELD.name)
                         .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
-                        .addStatement(
-                                "this.$L = this.$L.newBuilder().callTimeout(this.$L, $T.SECONDS)"
-                                        + ".connectTimeout(0, $T.SECONDS)"
-                                        + ".writeTimeout(0, $T.SECONDS)"
-                                        + ".readTimeout(0, $T.SECONDS).build()",
-                                OKHTTP_CLIENT_FIELD.name,
-                                OKHTTP_CLIENT_FIELD.name,
-                                TIMEOUT_FIELD.name,
-                                TimeUnit.class,
-                                TimeUnit.class,
-                                TimeUnit.class,
-                                TimeUnit.class)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(MAX_RETRIES_FIELD.name)
@@ -625,11 +622,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 HEADER_SUPPLIERS_FIELD.name,
                 OKHTTP_CLIENT_FIELD.name);
 
-        String returnString = "return new $T($L, $L, $L, $L, this.timeout";
+        String returnString = "return new $T($L, $L, $L, $L, this.timeout.get()";
 
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(apiVersionField.name);
-            returnString = "return new $T($L, $L, $L, $L, this.timeout, $L";
+            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), $L";
         }
 
         Object[] args = argsBuilder.build().toArray();
@@ -637,16 +634,54 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
 
-        builder.addCode(
-                        "$T $L = this.$L.newBuilder()",
+        builder.addStatement(
+                        "$T.Builder $L = this.$L != null ? this.$L.newBuilder() : new $T.Builder()",
                         OKHTTP_CLIENT_FIELD.type,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
                         OKHTTP_CLIENT_FIELD.name,
-                        OKHTTP_CLIENT_FIELD.name)
+                        OKHTTP_CLIENT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.type)
+                .addCode("\n")
+                .beginControlFlow("if (this.$L != null)", OKHTTP_CLIENT_FIELD.name)
+                .addStatement(
+                        "$L.ifPresent($L -> $L.callTimeout($L, $T.SECONDS)"
+                                + ".connectTimeout(0, $T.SECONDS)"
+                                + ".writeTimeout(0, $T.SECONDS)"
+                                + ".readTimeout(0, $T.SECONDS))",
+                        TIMEOUT_FIELD.name,
+                        TIMEOUT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        TIMEOUT_FIELD.name,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class)
+                .endControlFlow()
+                .beginControlFlow("else")
                 .addCode(
-                        "\n    .addInterceptor(new $T(this.$L))",
+                        "$L.callTimeout(this.$L.orElse(60), $T.SECONDS)"
+                                + ".connectTimeout(0, $T.SECONDS)"
+                                + ".writeTimeout(0, $T.SECONDS)"
+                                + ".readTimeout(0, $T.SECONDS)",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        TIMEOUT_FIELD.name,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class,
+                        TimeUnit.class)
+                .addCode(
+                        ".addInterceptor(new $T(this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
                         MAX_RETRIES_FIELD.name)
-                .addStatement(".build()");
+                .endControlFlow()
+                .addCode("\n")
+                .addStatement("this.$L = $L.build()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name + "Builder")
+                .addStatement(
+                        "this.$L = $T.of($L.callTimeoutMillis() / 1000)",
+                        TIMEOUT_FIELD.name,
+                        Optional.class,
+                        OKHTTP_CLIENT_FIELD.name)
+                .addCode("\n");
 
         if (variableFields.isEmpty()) {
             return builder.addStatement(returnString + ")", args).build();
