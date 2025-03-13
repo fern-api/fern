@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      The v3 parser now supports parsing and merging AsyncAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.17
+
+- changelogEntry:
+  - summary: |
       Revert only construct an enum when all parameter subtypes are literal string values.
     type: fix
   irVersion: 57
