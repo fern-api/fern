@@ -77,7 +77,7 @@ public final class ClientOptions {
 
     private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
-    private int maxRetries = 3;
+    private int maxRetries = 2;
 
     private int timeout = 60;
 
@@ -110,7 +110,7 @@ public final class ClientOptions {
     }
 
     /**
-     * Override the maximum number of retries. Defaults to 3 retries.
+     * Override the maximum number of retries. Defaults to 2 retries.
      */
     public Builder maxRetries(int maxRetries) {
       this.maxRetries = maxRetries;

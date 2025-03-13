@@ -200,7 +200,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("timeout")
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Sets the timeout (in seconds) for the client")
+                .addJavadoc("Sets the timeout (in seconds) for the client. Defaults to 60 seconds.")
                 .addParameter(int.class, "timeout")
                 .returns(builderName)
                 .addStatement("this.$L.timeout(timeout)", CLIENT_OPTIONS_BUILDER_NAME)
@@ -209,7 +209,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("maxRetries")
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Sets the maximum number of retries for the client")
+                .addJavadoc("Sets the maximum number of retries for the client. Defaults to 2 retries.")
                 .addParameter(int.class, "maxRetries")
                 .returns(builderName)
                 .addStatement("this.$L.maxRetries(maxRetries)", CLIENT_OPTIONS_BUILDER_NAME)

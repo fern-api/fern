@@ -28,7 +28,7 @@ public final class AsyncBestBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public AsyncBestBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
@@ -36,7 +36,7 @@ public final class AsyncBestBuilder {
     }
 
     /**
-     * Sets the maximum number of retries for the client
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
     public AsyncBestBuilder maxRetries(int maxRetries) {
         this.clientOptionsBuilder.maxRetries(maxRetries);
