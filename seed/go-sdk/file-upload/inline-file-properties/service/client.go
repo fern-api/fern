@@ -450,3 +450,55 @@ func (c *Client) WithFormEncodedContainers(
 	}
 	return nil
 }
+
+func (c *Client) OptionalArgs(
+	ctx context.Context,
+	request *fileuploadgo.OptionalArgsRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/optional-args"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if request.ImageFile != nil {
+		if err := writer.WriteFile("image_file", request.ImageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+			return "", err
+		}
+	}
+	if request.Request != nil {
+		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
+			return "", err
+		}
+	}
+	if err := writer.Close(); err != nil {
+		return "", err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response, nil
+}
