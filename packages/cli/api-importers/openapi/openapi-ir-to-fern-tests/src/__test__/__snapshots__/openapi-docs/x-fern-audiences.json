@@ -139,7 +139,6 @@ types:
 error-discrimination:
   strategy: status-code
 display-name: Test extension `x-fern-audiences`
-default-environment: production
 environments:
   production:
     url: https://api.com
@@ -149,6 +148,7 @@ environments:
     url: https://private.api.com
     audiences:
       - private
+default-environment: production
 ",
   },
 }

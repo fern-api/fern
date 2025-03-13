@@ -7,7 +7,12 @@ import {
     getTextOfTsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import {
+    GeneratedEndpointImplementation,
+    GeneratedSdkClientClass,
+    GeneratedWebsocketImplementation,
+    SdkContext
+} from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
     ClassDeclarationStructure,
@@ -37,6 +42,7 @@ import {
     OAuthScheme,
     Package,
     PathParameter,
+    SubpackageId,
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
@@ -55,6 +61,7 @@ import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePa
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
+import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -68,6 +75,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        shouldGenerateWebsocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
@@ -88,25 +96,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
     private static ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
-    private static OPTIONS_INTERFACE_NAME = "Options";
-    private static OPTIONS_PRIVATE_MEMBER = "_options";
-    private static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
-    private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
-    private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
-    private static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
+    public static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
+    public static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
+    public static OPTIONS_INTERFACE_NAME = "Options";
+    public static OPTIONS_PRIVATE_MEMBER = "_options";
+    public static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
+    public static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
 
     private isRoot: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
-    private oauthAuthScheme: OAuthScheme | undefined;
-    private bearerAuthScheme: BearerAuthScheme | undefined;
-    private basicAuthScheme: BasicAuthScheme | undefined;
-    private authHeaders: HeaderAuthScheme[];
     private serviceClassName: string;
     private package_: Package;
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
+    private generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
     private generatedWrappedServices: GeneratedWrappedService[];
     private allowCustomFetcher: boolean;
+    private shouldGenerateWebsocketClients: boolean;
     private packageResolver: PackageResolver;
     private requireDefaultEnvironment: boolean;
     private npmPackage: NpmPackage | undefined;
@@ -119,6 +125,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private allowExtraFields: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+    oauthAuthScheme: OAuthScheme | undefined;
+    bearerAuthScheme: BearerAuthScheme | undefined;
+    basicAuthScheme: BasicAuthScheme | undefined;
+    authHeaders: HeaderAuthScheme[];
 
     constructor({
         isRoot,
@@ -130,6 +140,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        shouldGenerateWebsocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
@@ -148,6 +159,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.serviceClassName = serviceClassName;
         this.packageId = packageId;
         this.allowCustomFetcher = allowCustomFetcher;
+        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
@@ -164,11 +176,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
+        const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
+        const websocketChannelId = this.package_.websocket ?? undefined;
 
         if (service == null) {
             this.generatedEndpointImplementations = [];
         } else {
-            this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
+            this.generatedEndpointImplementations = service.endpoints.map((endpoint: HttpEndpoint) => {
                 const requestBody = endpoint.requestBody ?? undefined;
 
                 const getGeneratedEndpointRequest = () => {
@@ -334,10 +348,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        if (websocketChannel != null && websocketChannelId != null && this.shouldGenerateWebsocketClients) {
+            this.generatedWebsocketImplementation = new GeneratedDefaultWebsocketImplementation({
+                channel: websocketChannel,
+                channelId: websocketChannelId,
+                packageId,
+                serviceClassName: this.serviceClassName,
+                requireDefaultEnvironment: this.requireDefaultEnvironment,
+                intermediateRepresentation: this.intermediateRepresentation,
+                generatedSdkClientClass: this
+            });
+        } else {
+            this.generatedWebsocketImplementation = undefined;
+        }
+
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
-            (acc, wrappedSubpackageId) => {
+            (acc: GeneratedWrappedService[], wrappedSubpackageId: SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
-                if (subpackage.hasEndpointsInTree) {
+                if (
+                    subpackage.hasEndpointsInTree ||
+                    (this.shouldGenerateWebsocketClients && subpackage.websocket != null)
+                ) {
                     acc.push(
                         new GeneratedWrappedService({
                             wrappedSubpackageId,
@@ -459,7 +490,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         };
 
         const optionsInterface = this.generateOptionsInterface(context);
-        serviceModule.statements = [optionsInterface, this.generateRequestOptionsInterface(context)];
+        serviceModule.statements = [
+            optionsInterface,
+            ...(this.generatedEndpointImplementations.length > 0 || this.isRoot
+                ? [this.generateRequestOptionsInterface(context)]
+                : []),
+            ...(this.generatedWebsocketImplementation != null
+                ? [this.generatedWebsocketImplementation.getModuleStatement(context)]
+                : [])
+        ];
         context.sourceFile.addModule(serviceModule);
 
         const serviceClass: SetRequired<
@@ -687,6 +726,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
+        if (this.generatedWebsocketImplementation != null) {
+            const signature = this.generatedWebsocketImplementation.getSignature(context);
+            const classStatements = this.generatedWebsocketImplementation.getClassStatements(context);
+
+            const method: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
+                name: "connect",
+                isAsync: true,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                ),
+                scope: Scope.Public,
+                statements: classStatements.map(getTextOfTsNode)
+            };
+
+            serviceClass.methods.push(method);
+        }
+
         if (isIdempotent) {
             serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
@@ -734,15 +792,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context.sourceFile.addClass(serviceClass);
     }
 
-    private shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
-        if (this.generatedEndpointImplementations.length === 0) {
+    public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
+        if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
             return false;
         }
         return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
     }
 
-    private shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
-        if (this.generatedEndpointImplementations.length === 0) {
+    public shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
+        if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
             return false;
         }
         return this.getCustomAuthorizationHeaders().length > 0;

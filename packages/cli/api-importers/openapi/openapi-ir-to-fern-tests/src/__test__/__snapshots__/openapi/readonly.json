@@ -116,9 +116,15 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "createdAt": "optional<datetime>",
+              "createdAt": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "email": "optional<string>",
-              "id": "optional<string>",
+              "id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "name": "optional<string>",
               "settings": "optional<UserSettings>",
               "stats": "optional<UserStats>",
@@ -131,7 +137,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "lastModified": "optional<datetime>",
+              "lastModified": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "notifications": "optional<boolean>",
               "theme": "optional<string>",
             },
@@ -155,8 +164,14 @@
             "inline": undefined,
             "properties": {
               "accountStatus": "optional<UserStatsAccountStatus>",
-              "lastLoginTime": "optional<datetime>",
-              "totalLogins": "optional<integer>",
+              "lastLoginTime": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "totalLogins": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -238,10 +253,14 @@
 types:
   UserRead:
     properties:
-      id: optional<string>
+      id:
+        type: optional<string>
+        access: read-only
       name: optional<string>
       email: optional<string>
-      createdAt: optional<datetime>
+      createdAt:
+        type: optional<datetime>
+        access: read-only
       settings: optional<UserSettings>
       stats: optional<UserStats>
     source:
@@ -250,7 +269,9 @@ types:
     properties:
       theme: optional<string>
       notifications: optional<boolean>
-      lastModified: optional<datetime>
+      lastModified:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: ../openapi.yml
   UserStatsAccountStatus:
@@ -263,8 +284,12 @@ types:
       openapi: ../openapi.yml
   UserStatsRead:
     properties:
-      totalLogins: optional<integer>
-      lastLoginTime: optional<datetime>
+      totalLogins:
+        type: optional<integer>
+        access: read-only
+      lastLoginTime:
+        type: optional<datetime>
+        access: read-only
       accountStatus: optional<UserStatsAccountStatus>
     source:
       openapi: ../openapi.yml

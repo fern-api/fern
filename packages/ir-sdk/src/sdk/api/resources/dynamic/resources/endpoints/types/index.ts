@@ -10,3 +10,4 @@ export * from "./ReferencedRequestBody";
 export * from "./ReferencedRequestBodyType";
 export * from "./FileUploadRequestBody";
 export * from "./FileUploadRequestBodyProperty";
+export * from "./EndpointExample";

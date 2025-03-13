@@ -1,0 +1,530 @@
+{
+  "info": {
+    "name": "Enum",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Inlined Request",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/inlined",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inlined"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \"red\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \"red\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"operand\": \">\",\n    \"maybeOperand\": \">\",\n    \"operandOrColor\": \"red\",\n    \"maybeOperandOrColor\": \"red\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Path Param",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/path/:operand/:operandOrColor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "path",
+                ":operand",
+                ":operandOrColor"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "operand",
+                  "description": null,
+                  "value": ">"
+                },
+                {
+                  "key": "operandOrColor",
+                  "description": null,
+                  "value": "red"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path/:operand/:operandOrColor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path",
+                    ":operand",
+                    ":operandOrColor"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path/:operand/:operandOrColor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path",
+                    ":operand",
+                    ":operandOrColor"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Query Param",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/query?operand=%3E&operandOrColor=red",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "query"
+              ],
+              "query": [
+                {
+                  "key": "operand",
+                  "description": null,
+                  "value": ">"
+                },
+                {
+                  "key": "operandOrColor",
+                  "description": null,
+                  "value": "red"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?operand=%3E&operandOrColor=red",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Send List",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "query-list"
+              ],
+              "query": [
+                {
+                  "key": "operand",
+                  "description": null,
+                  "value": ">"
+                },
+                {
+                  "key": "maybeOperand",
+                  "description": null,
+                  "value": ">"
+                },
+                {
+                  "key": "operandOrColor",
+                  "description": null,
+                  "value": "red"
+                },
+                {
+                  "key": "maybeOperandOrColor",
+                  "description": null,
+                  "value": "red"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query-list"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -103,7 +103,9 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         baseUrlId: EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
         if (baseUrlId != null) {
-            throw new Error(`Cannot get reference to environment URL because baseUrlId is defined ("${baseUrlId}")`);
+            throw new Error(
+                `Cannot get reference to single environment URL because baseUrlId is defined ("${baseUrlId}")`
+            );
         }
         return referenceToEnvironmentValue;
     }

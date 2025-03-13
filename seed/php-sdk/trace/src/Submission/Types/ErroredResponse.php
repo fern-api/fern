@@ -14,15 +14,15 @@ class ErroredResponse extends JsonSerializableType
     public string $submissionId;
 
     /**
-     * @var mixed $errorInfo
+     * @var ErrorInfo $errorInfo
      */
     #[JsonProperty('errorInfo')]
-    public mixed $errorInfo;
+    public ErrorInfo $errorInfo;
 
     /**
      * @param array{
      *   submissionId: string,
-     *   errorInfo: mixed,
+     *   errorInfo: ErrorInfo,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class ErroredResponse extends JsonSerializableType
     ) {
         $this->submissionId = $values['submissionId'];
         $this->errorInfo = $values['errorInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -23,4 +23,12 @@ class ObjectWithRequiredField extends JsonSerializableType
     ) {
         $this->string = $values['string'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

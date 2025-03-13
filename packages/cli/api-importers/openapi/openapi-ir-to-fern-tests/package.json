@@ -20,6 +20,8 @@
     "compile": "tsc --build",
     "test": "vitest --run",
     "test:update": "vitest --run -u",
+    "test:update:openapi-v2": "vitest --passWithNoTests --run -u src/__test__/openapi-v2.test.ts",
+    "test:update:openapi-v2-baseline": "vitest --passWithNoTests --run -u src/__test__/openapi-v2-baseline.test.ts",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -38,12 +40,14 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/cli-source-resolver": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

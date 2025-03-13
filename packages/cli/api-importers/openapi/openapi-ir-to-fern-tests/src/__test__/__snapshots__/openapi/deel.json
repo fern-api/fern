@@ -14119,7 +14119,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -14362,7 +14365,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -15282,7 +15288,9 @@ service:
         name: AddContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
@@ -15324,7 +15332,9 @@ service:
         name: EditContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
@@ -16070,7 +16080,8 @@ docs: Employee of Record (EOR).
                     },
                     "contract": {
                       "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
-                      "employment_type": "FULL_TIME",
+                      "employment_type": "PART_TIME",
+                      "part_time_percentage": 1.1,
                       "start_date": "1999-12-31",
                     },
                     "employee_details": {
@@ -16100,8 +16111,9 @@ docs: Employee of Record (EOR).
                         "contract": {
                           "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
                           "employee_number": 1.1,
-                          "employment_type": "FULL_TIME",
+                          "employment_type": "PART_TIME",
                           "end_date": "1999-12-31",
+                          "part_time_percentage": 1.1,
                           "start_date": "1999-12-31",
                         },
                         "employee_details": {
@@ -16199,9 +16211,10 @@ service:
               gross_annual_salary: 1.1
               currency: USD
             contract:
-              employment_type: FULL_TIME
               contract_oid: pdcMQe0cXCCXWTkqkdytw
               start_date: '1999-12-31'
+              part_time_percentage: 1.1
+              employment_type: PART_TIME
           response:
             body:
               data:
@@ -16223,11 +16236,12 @@ service:
                   gross_annual_salary: 1.1
                   currency: USD
                 contract:
-                  employment_type: FULL_TIME
                   contract_oid: pdcMQe0cXCCXWTkqkdytw
                   start_date: '1999-12-31'
                   employee_number: 1.1
                   end_date: '1999-12-31'
+                  part_time_percentage: 1.1
+                  employment_type: PART_TIME
                 vacation_info:
                   vacation_accrual_start_date: vacation_accrual_start_date
                   vacation_yearly_policy: 1.1

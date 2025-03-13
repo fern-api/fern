@@ -1,5 +1,6 @@
 imports:
   availability: availability.yml
+  validation: validation.yml
 
 types:
   WithDocsSchema:
@@ -17,6 +18,10 @@ types:
   WithDisplayName:
     properties:
       display-name: optional<string>
+
+  WithValidation:
+    properties:
+      validation: optional<validation.ValidationSchema>
 
   WithAudiences:
     properties:

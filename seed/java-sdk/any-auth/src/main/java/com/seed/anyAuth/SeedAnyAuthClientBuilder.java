@@ -7,6 +7,7 @@ import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import okhttp3.OkHttpClient;
 
 public final class SeedAnyAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -67,6 +68,14 @@ public final class SeedAnyAuthClientBuilder {
      */
     public SeedAnyAuthClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedAnyAuthClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

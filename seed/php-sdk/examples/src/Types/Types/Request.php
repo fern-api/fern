@@ -23,4 +23,12 @@ class Request extends JsonSerializableType
     ) {
         $this->request = $values['request'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

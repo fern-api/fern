@@ -55,6 +55,7 @@ export interface ConjureAPIDefinition
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
+    shouldUseIdiomaticRequestNames: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
     coerceEnumsToLiterals: boolean | undefined;
@@ -64,6 +65,7 @@ export interface APIDefinitionSettings {
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
+    defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 

@@ -11,6 +11,8 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
     }
 
     export interface RequestOptions {
@@ -20,6 +22,8 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }

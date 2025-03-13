@@ -5,6 +5,7 @@ namespace Seed\V2\V3\Problem;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
+use Seed\Commons\VariableType;
 
 class NonVoidFunctionSignature extends JsonSerializableType
 {
@@ -15,15 +16,15 @@ class NonVoidFunctionSignature extends JsonSerializableType
     public array $parameters;
 
     /**
-     * @var mixed $returnType
+     * @var VariableType $returnType
      */
     #[JsonProperty('returnType')]
-    public mixed $returnType;
+    public VariableType $returnType;
 
     /**
      * @param array{
      *   parameters: array<Parameter>,
-     *   returnType: mixed,
+     *   returnType: VariableType,
      * } $values
      */
     public function __construct(
@@ -31,5 +32,13 @@ class NonVoidFunctionSignature extends JsonSerializableType
     ) {
         $this->parameters = $values['parameters'];
         $this->returnType = $values['returnType'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

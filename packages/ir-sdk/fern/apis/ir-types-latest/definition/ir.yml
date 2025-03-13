@@ -7,13 +7,14 @@ imports:
   dynamic: dynamic/ir.yml
   environment: environment.yml
   errors: errors.yml
+  generator: generator-exec/config.yml
   http: http.yml
   proto: proto.yml
+  publish: publish.yml
   types: types.yml
   variables: variables.yml
   webhooks: webhooks.yml
   websocket: websocket.yml
-  publish: publish.yml
 
 types:
   IntermediateRepresentation:

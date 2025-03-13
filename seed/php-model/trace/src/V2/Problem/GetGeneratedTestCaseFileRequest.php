@@ -21,8 +21,8 @@ class GetGeneratedTestCaseFileRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   template?: ?TestCaseTemplate,
      *   testCase: TestCaseV2,
+     *   template?: ?TestCaseTemplate,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class GetGeneratedTestCaseFileRequest extends JsonSerializableType
     ) {
         $this->template = $values['template'] ?? null;
         $this->testCase = $values['testCase'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

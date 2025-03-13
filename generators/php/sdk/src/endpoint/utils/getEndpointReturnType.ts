@@ -15,6 +15,7 @@ export function getEndpointReturnType({
         return undefined;
     }
     return endpoint.response.body._visit({
+        bytes: () => undefined,
         streamParameter: () => undefined,
         fileDownload: () => undefined,
         json: (reference) => {

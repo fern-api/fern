@@ -43,10 +43,20 @@ describe("Method", () => {
             expect(method.getReferences().length).toBe(0);
         });
 
-        it("should generate a method with one argument", async () => {
+        it("should generate a method with one argument including types", async () => {
             const method = python.method({
                 name: "one_arg",
                 parameters: [python.parameter({ name: "arg1", type: python.Type.str() })]
+            });
+            method.write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
+        });
+
+        it("should generate a method with one argument without a type", async () => {
+            const method = python.method({
+                name: "one_arg",
+                parameters: [python.parameter({ name: "arg1", type: undefined })]
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();

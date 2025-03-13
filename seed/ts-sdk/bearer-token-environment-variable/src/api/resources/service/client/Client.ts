@@ -13,6 +13,8 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
     }
 
     export interface RequestOptions {
@@ -22,6 +24,8 @@ export declare namespace Service {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }
@@ -48,6 +52,7 @@ export class Service {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "1.0.0",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/bearer-token-environment-variable",
                 "X-Fern-SDK-Version": "0.0.1",

@@ -32,4 +32,12 @@ class VoidFunctionDefinition extends JsonSerializableType
         $this->parameters = $values['parameters'];
         $this->code = $values['code'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

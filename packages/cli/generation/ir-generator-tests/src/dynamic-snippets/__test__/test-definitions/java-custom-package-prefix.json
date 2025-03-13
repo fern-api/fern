@@ -223,7 +223,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_imdb:CreateMovieRequest": {
             "type": "object",
@@ -348,7 +349,8 @@
                         "value": "DOUBLE"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -457,7 +459,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_imdb.getMovie": {
             "auth": {
@@ -586,8 +589,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -22,18 +22,6 @@ describe("no-complex-query-params", () => {
                 severity: "fatal"
             },
             {
-                message: "ObjectWithLiteral is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "l"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "fatal"
-            },
-            {
-                message: "NestedObjectWithLiteral is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "n"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "fatal"
-            },
-            {
                 message: "Union is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "o"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
@@ -54,12 +42,6 @@ describe("no-complex-query-params", () => {
             {
                 message: "NestedObjectWithUnion is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "r"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "fatal"
-            },
-            {
-                message: "map<string, ObjectWithLiteral> is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "u"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }

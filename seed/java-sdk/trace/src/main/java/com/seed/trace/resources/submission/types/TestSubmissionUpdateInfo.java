@@ -149,6 +149,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("running")
+    @JsonIgnoreProperties("type")
     private static final class RunningValue implements Value {
         @JsonProperty("value")
         private RunningSubmissionState value;
@@ -185,6 +186,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("stopped")
+    @JsonIgnoreProperties("type")
     private static final class StoppedValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private StoppedValue() {}
@@ -207,6 +209,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("errored")
+    @JsonIgnoreProperties("type")
     private static final class ErroredValue implements Value {
         @JsonProperty("value")
         private ErrorInfo value;
@@ -243,6 +246,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("gradedTestCase")
+    @JsonIgnoreProperties("type")
     private static final class GradedTestCaseValue implements Value {
         @JsonUnwrapped
         private GradedTestCaseUpdate value;
@@ -281,6 +285,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("recordedTestCase")
+    @JsonIgnoreProperties("type")
     private static final class RecordedTestCaseValue implements Value {
         @JsonUnwrapped
         private RecordedTestCaseUpdate value;
@@ -319,6 +324,7 @@ public final class TestSubmissionUpdateInfo {
     }
 
     @JsonTypeName("finished")
+    @JsonIgnoreProperties("type")
     private static final class FinishedValue implements Value {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private FinishedValue() {}
@@ -340,6 +346,7 @@ public final class TestSubmissionUpdateInfo {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

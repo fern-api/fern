@@ -1,5 +1,81 @@
 {
   "types": {
+    "type_nullable:Email": {
+      "name": "Email",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "type_nullable:UserId": {
+      "name": "UserId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "type_nullable:WeirdNumber": {
+      "name": "WeirdNumber",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_nullable:User": {
       "name": "User",
       "shape": {
@@ -13,6 +89,13 @@
               "value": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_nullable:UserId"
             }
           },
           {
@@ -41,6 +124,115 @@
                   "value": "type_nullable:Metadata"
                 }
               }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "id",
+              "value": "type_nullable:Email"
+            }
+          },
+          {
+            "key": "favorite-number",
+            "valueType": {
+              "type": "id",
+              "value": "type_nullable:WeirdNumber"
+            }
+          },
+          {
+            "key": "numbers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "strings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_nullable:Status": {
+      "name": "Status",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "active",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "archived",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "datetime"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "soft-deleted",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "datetime"
+                      }
+                    }
+                  }
+                }
+              ]
             }
           }
         ]
@@ -95,6 +287,13 @@
                   }
                 }
               }
+            }
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "type_nullable:Status"
             }
           }
         ]
@@ -217,6 +416,7 @@
               "responseBody": [
                 {
                   "name": "name",
+                  "id": "id",
                   "tags": [
                     "tags",
                     "tags"
@@ -225,11 +425,26 @@
                     "createdAt": "2024-01-15T09:30:00Z",
                     "updatedAt": "2024-01-15T09:30:00Z",
                     "avatar": "avatar",
-                    "activated": true
+                    "activated": true,
+                    "status": {
+                      "type": "active"
+                    }
+                  },
+                  "email": "email",
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
                   }
                 },
                 {
                   "name": "name",
+                  "id": "id",
                   "tags": [
                     "tags",
                     "tags"
@@ -238,7 +453,21 @@
                     "createdAt": "2024-01-15T09:30:00Z",
                     "updatedAt": "2024-01-15T09:30:00Z",
                     "avatar": "avatar",
-                    "activated": true
+                    "activated": true,
+                    "status": {
+                      "type": "active"
+                    }
+                  },
+                  "email": "email",
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
                   }
                 }
               ],
@@ -247,6 +476,7 @@
                 "value": [
                   {
                     "name": "name",
+                    "id": "id",
                     "tags": [
                       "tags",
                       "tags"
@@ -255,11 +485,26 @@
                       "createdAt": "2024-01-15T09:30:00Z",
                       "updatedAt": "2024-01-15T09:30:00Z",
                       "avatar": "avatar",
-                      "activated": true
+                      "activated": true,
+                      "status": {
+                        "type": "active"
+                      }
+                    },
+                    "email": "email",
+                    "favorite-number": 1,
+                    "numbers": [
+                      1,
+                      1
+                    ],
+                    "strings": {
+                      "strings": {
+                        "key": "value"
+                      }
                     }
                   },
                   {
                     "name": "name",
+                    "id": "id",
                     "tags": [
                       "tags",
                       "tags"
@@ -268,7 +513,21 @@
                       "createdAt": "2024-01-15T09:30:00Z",
                       "updatedAt": "2024-01-15T09:30:00Z",
                       "avatar": "avatar",
-                      "activated": true
+                      "activated": true,
+                      "status": {
+                        "type": "active"
+                      }
+                    },
+                    "email": "email",
+                    "favorite-number": 1,
+                    "numbers": [
+                      1,
+                      1
+                    ],
+                    "strings": {
+                      "strings": {
+                        "key": "value"
+                      }
                     }
                   }
                 ]
@@ -387,6 +646,7 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -395,13 +655,28 @@
                   "createdAt": "2024-01-15T09:30:00Z",
                   "updatedAt": "2024-01-15T09:30:00Z",
                   "avatar": "avatar",
-                  "activated": true
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "name": "name",
+                  "id": "id",
                   "tags": [
                     "tags",
                     "tags"
@@ -410,7 +685,21 @@
                     "createdAt": "2024-01-15T09:30:00Z",
                     "updatedAt": "2024-01-15T09:30:00Z",
                     "avatar": "avatar",
-                    "activated": true
+                    "activated": true,
+                    "status": {
+                      "type": "active"
+                    }
+                  },
+                  "email": "email",
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
                   }
                 }
               },
@@ -506,7 +795,11 @@
       "webhooks": [],
       "websockets": [],
       "types": [
+        "type_nullable:Email",
+        "type_nullable:UserId",
+        "type_nullable:WeirdNumber",
         "type_nullable:User",
+        "type_nullable:Status",
         "type_nullable:Metadata"
       ],
       "subpackages": []

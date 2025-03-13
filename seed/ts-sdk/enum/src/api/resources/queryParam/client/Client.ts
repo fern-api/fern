@@ -125,7 +125,7 @@ export class QueryParam {
      *         operand: ">",
      *         maybeOperand: ">",
      *         operandOrColor: "red",
-     *         maybeOperandOrColor: undefined
+     *         maybeOperandOrColor: "red"
      *     })
      */
     public async sendList(

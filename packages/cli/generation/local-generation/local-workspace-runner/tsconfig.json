@@ -10,7 +10,19 @@
   ],
   "references": [
     {
+      "path": "../../../../../generators/browser-compatible-base"
+    },
+    {
+      "path": "../../../../../generators/csharp/dynamic-snippets"
+    },
+    {
       "path": "../../../../../generators/go-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/java-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/php/dynamic-snippets"
     },
     {
       "path": "../../../../../generators/typescript-v2/dynamic-snippets"

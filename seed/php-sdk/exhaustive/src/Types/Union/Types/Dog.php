@@ -31,4 +31,12 @@ class Dog extends JsonSerializableType
         $this->name = $values['name'];
         $this->likesToWoof = $values['likesToWoof'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

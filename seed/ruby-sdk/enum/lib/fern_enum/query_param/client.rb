@@ -58,7 +58,8 @@ module SeedEnumClient
     #  enum.query_param.send_list(
     #    operand: GREATER_THAN,
     #    maybe_operand: GREATER_THAN,
-    #    operand_or_color: RED
+    #    operand_or_color: RED,
+    #    maybe_operand_or_color: RED
     #  )
     def send_list(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       @request_client.conn.post do |req|
@@ -137,7 +138,8 @@ module SeedEnumClient
     #  enum.query_param.send_list(
     #    operand: GREATER_THAN,
     #    maybe_operand: GREATER_THAN,
-    #    operand_or_color: RED
+    #    operand_or_color: RED,
+    #    maybe_operand_or_color: RED
     #  )
     def send_list(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do

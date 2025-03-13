@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
@@ -18,18 +17,16 @@ public partial class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.BasicAuth.GetWithBasicAuthAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> GetWithBasicAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -40,9 +37,9 @@ public partial class BasicAuthClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<bool>(responseBody)!;
@@ -53,37 +50,38 @@ public partial class BasicAuthClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 401:
-                    throw new UnauthorizedRequest(
-                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedRequest(
+                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new SeedBasicAuthApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedBasicAuthApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.BasicAuth.PostWithBasicAuthAsync(
     ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> PostWithBasicAuthAsync(
         object request,
         RequestOptions? options = null,
@@ -91,7 +89,7 @@ public partial class BasicAuthClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -103,9 +101,9 @@ public partial class BasicAuthClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<bool>(responseBody)!;
@@ -116,26 +114,29 @@ public partial class BasicAuthClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 401:
-                    throw new UnauthorizedRequest(
-                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
-                    );
-                case 400:
-                    throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedRequest(
+                            JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
+                        );
+                    case 400:
+                        throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new SeedBasicAuthApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedBasicAuthApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

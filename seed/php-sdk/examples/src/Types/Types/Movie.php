@@ -39,7 +39,7 @@ class Movie extends JsonSerializableType
     public float $rating;
 
     /**
-     * @var string $type
+     * @var 'movie' $type
      */
     #[JsonProperty('type')]
     public string $type;
@@ -71,15 +71,15 @@ class Movie extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   prequel?: ?string,
      *   title: string,
      *   from: string,
      *   rating: float,
-     *   type: string,
+     *   type: 'movie',
      *   tag: string,
-     *   book?: ?string,
      *   metadata: array<string, mixed>,
      *   revenue: int,
+     *   prequel?: ?string,
+     *   book?: ?string,
      * } $values
      */
     public function __construct(
@@ -95,5 +95,13 @@ class Movie extends JsonSerializableType
         $this->book = $values['book'] ?? null;
         $this->metadata = $values['metadata'];
         $this->revenue = $values['revenue'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

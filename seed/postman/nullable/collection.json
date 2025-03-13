@@ -1,0 +1,294 @@
+{
+  "info": {
+    "name": "Nullable",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nullable",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Users",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?usernames=usernames&avatar=avatar&activated=true&tags=tags&extra=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "usernames",
+                  "description": null,
+                  "value": "usernames"
+                },
+                {
+                  "key": "avatar",
+                  "description": null,
+                  "value": "avatar"
+                },
+                {
+                  "key": "activated",
+                  "description": null,
+                  "value": "true"
+                },
+                {
+                  "key": "tags",
+                  "description": null,
+                  "value": "tags"
+                },
+                {
+                  "key": "extra",
+                  "description": null,
+                  "value": "true"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?usernames=usernames&avatar=avatar&activated=true&tags=tags&extra=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "usernames",
+                      "description": null,
+                      "value": "usernames"
+                    },
+                    {
+                      "key": "avatar",
+                      "description": null,
+                      "value": "avatar"
+                    },
+                    {
+                      "key": "activated",
+                      "description": null,
+                      "value": "true"
+                    },
+                    {
+                      "key": "tags",
+                      "description": null,
+                      "value": "tags"
+                    },
+                    {
+                      "key": "extra",
+                      "description": null,
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ],\n        \"metadata\": {\n            \"createdAt\": \"2024-01-15T09:30:00Z\",\n            \"updatedAt\": \"2024-01-15T09:30:00Z\",\n            \"avatar\": \"avatar\",\n            \"activated\": true\n        }\n    },\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ],\n        \"metadata\": {\n            \"createdAt\": \"2024-01-15T09:30:00Z\",\n            \"updatedAt\": \"2024-01-15T09:30:00Z\",\n            \"avatar\": \"avatar\",\n            \"activated\": true\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Create User",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"metadata\": {\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"avatar\": \"avatar\",\n        \"activated\": true\n    },\n    \"avatar\": \"avatar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"metadata\": {\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"avatar\": \"avatar\",\n        \"activated\": true\n    },\n    \"avatar\": \"avatar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"metadata\": {\n        \"createdAt\": \"2024-01-15T09:30:00Z\",\n        \"updatedAt\": \"2024-01-15T09:30:00Z\",\n        \"avatar\": \"avatar\",\n        \"activated\": true\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Delete User",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"xy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"xy\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "true",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -8,13 +8,13 @@ use Seed\Core\Json\JsonProperty;
 class NestedObjectWithLiterals extends JsonSerializableType
 {
     /**
-     * @var string $literal1
+     * @var 'literal1' $literal1
      */
     #[JsonProperty('literal1')]
     public string $literal1;
 
     /**
-     * @var string $literal2
+     * @var 'literal2' $literal2
      */
     #[JsonProperty('literal2')]
     public string $literal2;
@@ -27,8 +27,8 @@ class NestedObjectWithLiterals extends JsonSerializableType
 
     /**
      * @param array{
-     *   literal1: string,
-     *   literal2: string,
+     *   literal1: 'literal1',
+     *   literal2: 'literal2',
      *   strProp: string,
      * } $values
      */
@@ -38,5 +38,13 @@ class NestedObjectWithLiterals extends JsonSerializableType
         $this->literal1 = $values['literal1'];
         $this->literal2 = $values['literal2'];
         $this->strProp = $values['strProp'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

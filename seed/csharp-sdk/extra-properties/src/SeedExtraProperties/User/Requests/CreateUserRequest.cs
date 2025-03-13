@@ -6,10 +6,10 @@ namespace SeedExtraProperties;
 public record CreateUserRequest
 {
     [JsonPropertyName("_type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "CreateUserRequest";
 
     [JsonPropertyName("_version")]
-    public required string Version { get; set; }
+    public string Version { get; set; } = "v1";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }

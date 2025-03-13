@@ -21,6 +21,14 @@ COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
 
+COPY generators/go-v2/sdk/features.yml /assets/features.yml
+
+# Copy over node contents to be able to run the compiled CLI
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
 # Copy Node CLI from first stage and rename it /bin/go-v2
 COPY --from=node /dist/cli.cjs /bin/go-v2
 RUN chmod +x /bin/go-v2

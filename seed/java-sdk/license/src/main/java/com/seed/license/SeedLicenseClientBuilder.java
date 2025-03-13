@@ -5,6 +5,7 @@ package com.seed.license;
 
 import com.seed.license.core.ClientOptions;
 import com.seed.license.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedLicenseClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedLicenseClientBuilder {
      */
     public SeedLicenseClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedLicenseClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

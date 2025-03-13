@@ -4,6 +4,25 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "integer",
+ *         value: 5
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         value: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "foo",
+ *         name: "name"
+ *     }
+ */
 export type UnionWithBaseProperties =
     | SeedUnions.UnionWithBaseProperties.Integer
     | SeedUnions.UnionWithBaseProperties.String

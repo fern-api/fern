@@ -30,3 +30,4 @@ export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
 export { getFilename } from "./getFilename";
 export { isURL } from "./isUrl";
 export { isCI } from "./isCI";
+export { splitPath } from "./splitPath";

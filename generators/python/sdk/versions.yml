@@ -1,4 +1,38 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.16
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where GeneratorExit was unintentionally being swallowed by code blocks within the HttpClient.stream() contextmanager.
+
+- version: 4.3.15
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where extraneous NameError-causing update_forward_refs invocations were being emitted.
+
+- version: 4.3.14
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Set the default number of retries to 2 (was 0) to align with the generated README.
+
+- version: 4.3.13
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now supports conditioning dependencies on the Python version.
+
+- version: 4.3.12
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now autogenerates a requirements.txt file.
 
 - version: 4.3.11
   irVersion: 53

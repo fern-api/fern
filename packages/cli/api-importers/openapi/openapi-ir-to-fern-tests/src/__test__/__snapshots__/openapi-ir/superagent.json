@@ -2,6 +2,7 @@
   "title": "Superagent",
   "description": "Bring your agents to production",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -33,7 +34,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all agents",
       "authed": true,
       "method": "GET",
@@ -144,7 +145,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new agent",
       "authed": true,
       "method": "POST",
@@ -273,7 +274,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific agent",
       "authed": true,
       "method": "GET",
@@ -394,7 +395,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific agent",
       "authed": true,
       "method": "DELETE",
@@ -544,7 +545,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Patch a specific agent",
       "authed": true,
       "method": "PATCH",
@@ -705,7 +706,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Invoke a specific agent",
       "authed": true,
       "method": "POST",
@@ -853,7 +854,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/api/v1/auth/sign-in",
@@ -982,7 +983,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/api/v1/auth/sign-up",
@@ -1066,7 +1067,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/v1/users/me",
@@ -1175,7 +1176,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/api/v1/users/{userId}",
@@ -1251,7 +1252,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all API tokens",
       "authed": true,
       "method": "GET",
@@ -1362,7 +1363,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new API token",
       "authed": true,
       "method": "POST",
@@ -1484,7 +1485,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific API token",
       "authed": true,
       "method": "GET",
@@ -1605,7 +1606,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific API token",
       "authed": true,
       "method": "DELETE",
@@ -1682,7 +1683,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all documents",
       "authed": true,
       "method": "GET",
@@ -1793,7 +1794,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new document",
       "authed": true,
       "method": "POST",
@@ -1929,7 +1930,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific document",
       "authed": true,
       "method": "GET",
@@ -2050,7 +2051,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific document",
       "authed": true,
       "method": "DELETE",
@@ -2127,7 +2128,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all prompts",
       "authed": true,
       "method": "GET",
@@ -2238,7 +2239,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new prompt",
       "authed": true,
       "method": "POST",
@@ -2371,7 +2372,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific prompt",
       "authed": true,
       "method": "GET",
@@ -2492,7 +2493,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific prompt",
       "authed": true,
       "method": "DELETE",
@@ -2642,7 +2643,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Patch a specific prompt",
       "authed": true,
       "method": "PATCH",
@@ -2740,7 +2741,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all tools",
       "authed": true,
       "method": "GET",
@@ -2851,7 +2852,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new tool",
       "authed": true,
       "method": "POST",
@@ -2980,7 +2981,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific tool",
       "authed": true,
       "method": "GET",
@@ -3101,7 +3102,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific tool",
       "authed": true,
       "method": "DELETE",
@@ -3178,7 +3179,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List all agent traces",
       "authed": true,
       "method": "GET",
@@ -3220,7 +3221,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Agent": {

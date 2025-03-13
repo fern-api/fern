@@ -3,7 +3,8 @@ import capitalize from "lodash-es/capitalize";
 import urlJoin from "url-join";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { constructHttpPath, getEndpointPathParameters } from "@fern-api/ir-generator";
+import { getEndpointPathParameters } from "@fern-api/ir-generator";
+import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 

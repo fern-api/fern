@@ -1,9 +1,12 @@
+import { AccessAttribute } from "./AccessAttribute";
 import { Class } from "./Class";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
 import { Field } from "./Field";
+import { Lambda } from "./Lambda";
+import { LambdaParameter } from "./LambdaParameter";
 import { Method } from "./Method";
 import { MethodArgument } from "./MethodArgument";
 import { MethodInvocation } from "./MethodInvocation";
@@ -13,6 +16,7 @@ import { PythonFile } from "./PythonFile";
 import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
 
+export { AccessAttribute } from "./AccessAttribute";
 export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
@@ -20,6 +24,8 @@ export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
 export { Decorator } from "./Decorator";
 export { Field } from "./Field";
+export { Lambda } from "./Lambda";
+export { LambdaParameter } from "./LambdaParameter";
 export { Method } from "./Method";
 export { MethodArgument } from "./MethodArgument";
 export { MethodInvocation } from "./MethodInvocation";
@@ -30,6 +36,10 @@ export { Reference } from "./Reference";
 export { StarImport } from "./StarImport";
 export { Type } from "./Type";
 export { TypeInstantiation } from "./TypeInstantiation";
+
+export function accessAttribute(args: AccessAttribute.Args): AccessAttribute {
+    return new AccessAttribute(args);
+}
 
 export function file(args: PythonFile.Args): PythonFile {
     return new PythonFile(args);
@@ -65,6 +75,14 @@ export function codeBlock(args: CodeBlock.Arg): CodeBlock {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function lambda(args: Lambda.Args): Lambda {
+    return new Lambda(args);
+}
+
+export function lambdaParameter(args: LambdaParameter.Args): LambdaParameter {
+    return new LambdaParameter(args);
 }
 
 export function method(args: Method.Args): Method {

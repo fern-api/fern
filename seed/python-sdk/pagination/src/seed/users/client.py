@@ -192,7 +192,6 @@ class UsersClient:
             The object that contains the cursor used for pagination
             in order to fetch the next page of results.
 
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -439,7 +438,6 @@ class UsersClient:
         pagination : typing.Optional[WithPage]
             The object that contains the offset used for pagination
             in order to fetch the next page of results.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -868,6 +866,57 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def list_usernames_custom(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> UsernameCursor:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameCursor
+
+        Examples
+        --------
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.list_usernames_custom(
+            starting_after="starting_after",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    UsernameCursor,
+                    parse_obj_as(
+                        type_=UsernameCursor,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[str]:
@@ -1112,7 +1161,6 @@ class AsyncUsersClient:
         pagination : typing.Optional[WithCursor]
             The object that contains the cursor used for pagination
             in order to fetch the next page of results.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1384,7 +1432,6 @@ class AsyncUsersClient:
         pagination : typing.Optional[WithPage]
             The object that contains the offset used for pagination
             in order to fetch the next page of results.
-
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1854,6 +1901,65 @@ class AsyncUsersClient:
                 if _parsed_response.cursor is not None:
                     _items = _parsed_response.cursor.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_usernames_custom(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> UsernameCursor:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameCursor
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.list_usernames_custom(
+                starting_after="starting_after",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    UsernameCursor,
+                    parse_obj_as(
+                        type_=UsernameCursor,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

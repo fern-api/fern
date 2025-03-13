@@ -144,6 +144,11 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 }
 
                 @Override
+                public Void visitBytes(BytesResponse bytesResponse) {
+                    throw new RuntimeException("Bytes responses are not supported in spring server generator");
+                }
+
+                @Override
                 public Void visitStreaming(StreamingResponse streaming) {
                     throw new RuntimeException("Streaming responses are not supported in spring server generator");
                 }

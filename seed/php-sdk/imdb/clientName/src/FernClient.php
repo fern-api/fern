@@ -14,13 +14,15 @@ class FernClient
     public ImdbClient $imdb;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -32,6 +34,8 @@ class FernClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -59,6 +63,6 @@ class FernClient
             options: $this->options,
         );
 
-        $this->imdb = new ImdbClient($this->client);
+        $this->imdb = new ImdbClient($this->client, $this->options);
     }
 }

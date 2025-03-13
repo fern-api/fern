@@ -39,4 +39,12 @@ class ExceptionInfo extends JsonSerializableType
         $this->exceptionMessage = $values['exceptionMessage'];
         $this->exceptionStacktrace = $values['exceptionStacktrace'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

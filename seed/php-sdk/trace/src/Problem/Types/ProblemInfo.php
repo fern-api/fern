@@ -6,6 +6,7 @@ use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
 use Seed\Core\Types\ArrayType;
+use Seed\Commons\Types\VariableType;
 use Seed\Commons\Types\TestCaseWithExpectedResult;
 
 class ProblemInfo extends JsonSerializableType
@@ -47,10 +48,10 @@ class ProblemInfo extends JsonSerializableType
     public array $inputParams;
 
     /**
-     * @var mixed $outputType
+     * @var VariableType $outputType
      */
     #[JsonProperty('outputType')]
-    public mixed $outputType;
+    public VariableType $outputType;
 
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
@@ -78,7 +79,7 @@ class ProblemInfo extends JsonSerializableType
      *   problemVersion: int,
      *   files: array<value-of<Language>, ProblemFiles>,
      *   inputParams: array<VariableTypeAndName>,
-     *   outputType: mixed,
+     *   outputType: VariableType,
      *   testcases: array<TestCaseWithExpectedResult>,
      *   methodName: string,
      *   supportsCustomTestCases: bool,
@@ -97,5 +98,13 @@ class ProblemInfo extends JsonSerializableType
         $this->testcases = $values['testcases'];
         $this->methodName = $values['methodName'];
         $this->supportsCustomTestCases = $values['supportsCustomTestCases'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

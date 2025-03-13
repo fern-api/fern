@@ -115,12 +115,21 @@ types:
     discriminated: false
     union:
       - string
-      - TypeReferenceDeclarationWithContentTypeSchema
+      - HttpInlineFileRequestBodyPropertySchema
 
-  TypeReferenceDeclarationWithContentTypeSchema:
+  HttpInlineFileRequestBodyPropertySchema:
     extends: types.TypeReferenceDeclarationWithName
     properties:
+      style: 
+        type: optional<FormDataBodyEncodingStyle>
+        docs: Defaults to json encoding
       content-type: optional<string>
+  
+  FormDataBodyEncodingStyle: 
+    enum: 
+      - json
+      - exploded
+      - form
 
   HttpQueryParameterSchema:
     discriminated: false

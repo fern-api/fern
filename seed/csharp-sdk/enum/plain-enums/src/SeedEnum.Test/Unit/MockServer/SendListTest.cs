@@ -17,6 +17,7 @@ public class SendListTest : BaseMockServerTest
                     .WithParam("operand", ">")
                     .WithParam("maybeOperand", ">")
                     .WithParam("operandOrColor", "red")
+                    .WithParam("maybeOperandOrColor", "red")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -29,7 +30,7 @@ public class SendListTest : BaseMockServerTest
                         Operand = [Operand.GreaterThan],
                         MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [null],
+                        MaybeOperandOrColor = [Color.Red],
                     },
                     RequestOptions
                 )

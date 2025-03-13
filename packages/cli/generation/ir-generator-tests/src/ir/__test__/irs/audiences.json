@@ -238,6 +238,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     },
@@ -275,6 +276,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -398,6 +400,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1545,7 +1548,8 @@
                             "value": "DOUBLE"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             },
             "type_webhooks:User": {
                 "type": "object",
@@ -1642,7 +1646,8 @@
                             "value": "STRING"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             }
         },
         "headers": [],
@@ -1730,9 +1735,11 @@
                 },
                 "response": {
                     "type": "json"
-                }
+                },
+                "examples": null
             }
         },
+        "pathParameters": [],
         "environments": {
             "defaultEnvironment": null,
             "environments": {
@@ -1764,7 +1771,8 @@
                     }
                 ]
             }
-        }
+        },
+        "generatorConfig": null
     },
     "subpackages": {
         "subpackage_imdb": {

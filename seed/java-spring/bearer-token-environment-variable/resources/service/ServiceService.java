@@ -19,5 +19,6 @@ public interface ServiceService {
       value = "/apiKey",
       produces = "application/json"
   )
-  String getWithBearerToken(@RequestHeader("Authorization") BearerAuth auth, Principal principal);
+  String getWithBearerToken(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @RequestHeader("X-API-Version") String version);
 }

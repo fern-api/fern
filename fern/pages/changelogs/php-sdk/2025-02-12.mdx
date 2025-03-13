@@ -1,0 +1,13 @@
+## 0.11.0
+**`(feat):`** The SDK now supports a `bodyProperties` and `queryParameters` request option, which can be used to add arbitrary properties to the request. This is useful for interacting with alpha or undocumented functionality.
+```php $response = $client->users->list(
+  new ListUsersRequest([
+    ...
+  ]),
+  [
+    'queryParameters' => [
+      'limit' => 100,
+    ],
+  ]
+); ```
+

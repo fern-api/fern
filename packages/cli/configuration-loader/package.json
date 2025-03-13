@@ -32,7 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.129.3-c425af4ef",
+    "@fern-fern/fdr-cjs-sdk": "0.132.0-26ae3d805",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "find-up": "^6.3.0",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
@@ -56,6 +57,6 @@
     "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.5.8",
     "@types/tinycolor2": "^1.4.6",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

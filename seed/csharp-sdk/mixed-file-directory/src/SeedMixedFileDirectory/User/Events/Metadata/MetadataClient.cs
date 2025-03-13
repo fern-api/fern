@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
@@ -19,11 +18,9 @@ public partial class MetadataClient
     /// <summary>
     /// Get event metadata.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Metadata> GetMetadataAsync(
         GetEventMetadataRequest request,
         RequestOptions? options = null,
@@ -33,7 +30,7 @@ public partial class MetadataClient
         var _query = new Dictionary<string, object>();
         _query["id"] = request.Id;
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -45,9 +42,9 @@ public partial class MetadataClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Metadata>(responseBody)!;
@@ -58,10 +55,13 @@ public partial class MetadataClient
             }
         }
 
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedFileDirectoryApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

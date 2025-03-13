@@ -24,7 +24,7 @@ class ImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
-        Add a movie to the database
+        Add a movie to the database using the movies/* /... path.
 
         Parameters
         ----------
@@ -139,7 +139,7 @@ class AsyncImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
-        Add a movie to the database
+        Add a movie to the database using the movies/* /... path.
 
         Parameters
         ----------

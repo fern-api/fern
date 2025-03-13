@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
@@ -11,12 +9,13 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class GetUsersTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -25,11 +24,17 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
-                }
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1
               },
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -38,8 +43,13 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
-                }
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1
               }
             ]
             """;
@@ -51,6 +61,7 @@ public class GetUsersTest : BaseMockServerTest
                     .WithPath("/users")
                     .WithParam("usernames", "usernames")
                     .WithParam("avatar", "avatar")
+                    .WithParam("tags", "tags")
                     .UsingGet()
             )
             .RespondWith(
@@ -66,14 +77,15 @@ public class GetUsersTest : BaseMockServerTest
                 Usernames = ["usernames"],
                 Avatar = "avatar",
                 Activated = [true],
-                Tags = [null],
-                Extra = null,
+                Tags = ["tags"],
+                Extra = true,
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse))
+                .UsingPropertiesComparer()
+        );
     }
 }

@@ -918,7 +918,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -992,7 +992,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -1000,6 +1000,80 @@
         {
           "_type": "endpoint",
           "name": "List Usernames",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?starting_after=starting_after",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "starting_after",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                  "value": "starting_after"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?starting_after=starting_after",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "starting_after",
+                      "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                      "value": "starting_after"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"cursor\": {\n        \"after\": \"after\",\n        \"data\": [\n            \"data\",\n            \"data\"\n        ]\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Usernames Custom",
           "request": {
             "description": null,
             "url": {

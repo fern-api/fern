@@ -104,11 +104,13 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
+              "parent": "parent",
               "child": "child"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
+                "parent": "parent",
                 "child": "child"
               }
             },

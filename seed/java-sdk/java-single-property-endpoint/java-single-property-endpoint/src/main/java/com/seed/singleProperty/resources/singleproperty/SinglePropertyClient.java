@@ -5,6 +5,7 @@ package com.seed.singleProperty.resources.singleproperty;
 
 import com.seed.singleProperty.core.ClientOptions;
 import com.seed.singleProperty.core.ObjectMappers;
+import com.seed.singleProperty.core.QueryStringMapper;
 import com.seed.singleProperty.core.RequestOptions;
 import com.seed.singleProperty.core.SeedSinglePropertyApiException;
 import com.seed.singleProperty.core.SeedSinglePropertyException;
@@ -37,8 +38,11 @@ public class SinglePropertyClient {
                 .newBuilder()
                 .addPathSegment(id);
         if (request.getIncludeRemoteData().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "include-remote-data", request.getIncludeRemoteData().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "include-remote-data",
+                    request.getIncludeRemoteData().get().toString(),
+                    false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

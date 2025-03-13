@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../base" },
+    { "path": "../base" },
     { "path": "../codegen" }
   ]
 }

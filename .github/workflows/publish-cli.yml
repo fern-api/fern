@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "fern/**"
+      - "guides/**"
+      - ".vscode/**"
+      - "docker/seed/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+      - "seed/**"
   workflow_dispatch:
     inputs:
       version:
@@ -101,7 +109,7 @@ jobs:
           previous_commit="$(git rev-parse --short HEAD~1)"
           echo "Preview of the previous file ${previous_commit}"
           head tmp_cli_previous_versions.yml
-          
+
           current_commit="$(git rev-parse --short HEAD)"
           echo "Preview of the current file ${current_commit}"
           head packages/cli/cli/versions.yml

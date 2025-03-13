@@ -23,4 +23,12 @@ class UsernameCursor extends JsonSerializableType
     ) {
         $this->cursor = $values['cursor'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

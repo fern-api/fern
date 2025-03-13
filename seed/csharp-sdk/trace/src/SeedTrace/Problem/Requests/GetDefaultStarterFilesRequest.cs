@@ -15,8 +15,8 @@ public record GetDefaultStarterFilesRequest
     /// <summary>
     /// The name of the `method` that the student has to complete.
     /// The method name cannot include the following characters:
-    ///   - Greater Than `&gt;`
-    ///   - Less Than `&lt;``
+    ///   - Greater Than `>`
+    ///   - Less Than `<``
     ///   - Equals `=`
     ///   - Period `.`
     /// </summary>

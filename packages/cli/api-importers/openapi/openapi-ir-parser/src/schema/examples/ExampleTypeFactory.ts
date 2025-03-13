@@ -1,4 +1,4 @@
-import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject, noop } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -213,15 +213,22 @@ export class ExampleTypeFactory {
                                 );
                                 break;
                             } else {
-                                const objectSchema = this.getObjectSchema(unionVariant[1]);
-                                if (objectSchema == null) {
-                                    continue;
+                                const example = this.buildExampleHelper({
+                                    exampleId,
+                                    schema: unionVariant[1],
+                                    example: undefined,
+                                    visitedSchemaIds,
+                                    depth,
+                                    options,
+                                    skipReadonly
+                                });
+                                if (example != null) {
+                                    this.mergeExampleWith(example, result);
+                                    result[schema.value.discriminantProperty] = FullExample.primitive(
+                                        PrimitiveExample.string(unionVariant[0])
+                                    );
+                                    break;
                                 }
-                                allProperties = this.getAllProperties(objectSchema);
-                                requiredProperties = this.getAllRequiredProperties(objectSchema);
-                                result[schema.value.discriminantProperty] = FullExample.primitive(
-                                    PrimitiveExample.string(unionVariant[0])
-                                );
                             }
                         }
 
@@ -510,6 +517,40 @@ export class ExampleTypeFactory {
             default:
                 assertNever(schema);
         }
+    }
+
+    private mergeExampleWith(example: FullExample, result: Record<string, FullExample>): void {
+        example._visit({
+            array: noop,
+            enum: noop,
+            literal: noop,
+            map: (example) => {
+                for (const kvPair of example) {
+                    const key = kvPair.key;
+                    if (key.type !== "string") {
+                        continue;
+                    }
+                    result[key.value] = kvPair.value;
+                }
+            },
+            object: (example) => {
+                for (const [property, value] of Object.entries(example.properties)) {
+                    result[property] = value;
+                }
+            },
+            oneOf: (example) => {
+                if (example.type === "discriminated") {
+                    for (const [property, value] of Object.entries(example.value)) {
+                        result[property] = value;
+                    }
+                } else {
+                    this.mergeExampleWith(example.value, result);
+                }
+            },
+            primitive: noop,
+            unknown: noop,
+            _other: noop
+        });
     }
 
     private getObjectSchema(

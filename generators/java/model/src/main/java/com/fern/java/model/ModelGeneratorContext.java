@@ -16,8 +16,13 @@ public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetCla
                 ir,
                 generatorConfig,
                 customConfig,
-                new ModelPoetClassNameFactory(ir, generatorConfig.getOrganization()),
+                new ModelPoetClassNameFactory(ir, generatorConfig.getOrganization(), customConfig.packageLayout()),
                 NO_AUTH_SCHEMES);
+    }
+
+    @Override
+    public GeneratorType getType() {
+        return GeneratorType.MODEL;
     }
 
     @Override

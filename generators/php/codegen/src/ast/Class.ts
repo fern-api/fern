@@ -5,7 +5,6 @@ import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { Trait } from "./Trait";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { orderByAccess } from "./utils/orderByAccess";
@@ -68,6 +67,10 @@ export class Class extends AstNode {
 
     public addMethod(method: Method): void {
         this.methods.push(method);
+    }
+
+    public addMethods(methods: Method[]): void {
+        this.methods.push(...methods);
     }
 
     public addTrait(traitClassReference: ClassReference): void {

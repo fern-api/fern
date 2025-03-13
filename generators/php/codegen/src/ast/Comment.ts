@@ -3,10 +3,11 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
-export type TagType = "param" | "return" | "throws" | "var";
+export type TagType = "param" | "property" | "return" | "throws" | "var";
 
 export const TagType = {
     Param: "param",
+    Property: "property",
     Returns: "return",
     Throws: "throws",
     Var: "var"
@@ -64,14 +65,24 @@ export class Comment extends AstNode {
     }
 
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
+        const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined;
+        if (docsSplit != null && docsSplit.length > 1) {
+            docsSplit.forEach((line) => {
+                writer.writeLine(` * ${line}`);
+            });
+            writer.writeLine(" *");
+        }
+
         writer.write(` * @${tag.tagType} `);
         tag.type.write(writer, { comment: true });
         if (tag.name != null) {
             writer.write(` ${tag.name}`);
         }
-        if (tag.docs != null) {
-            writer.write(` ${tag.docs}`);
+
+        if (docsSplit != null && docsSplit.length === 1) {
+            writer.write(` ${docsSplit[0]}`);
         }
+
         writer.newLine();
     }
 }

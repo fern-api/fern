@@ -12,13 +12,21 @@ public partial class SeedLiteralClient
             new Dictionary<string, string>()
             {
                 { "X-API-Version", "02-02-2024" },
-                { "X-API-Enable-Audit-Logging", true.ToString() },
+                { "X-API-Enable-Audit-Logging", "true" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLiteral" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernliteral/0.0.1" },
             }
         );
+        if (clientOptions.Version != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.Version;
+        }
+        if (clientOptions.AuditLogging != null)
+        {
+            defaultHeaders["X-API-Enable-Audit-Logging"] = clientOptions.AuditLogging.ToString();
+        }
         clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {

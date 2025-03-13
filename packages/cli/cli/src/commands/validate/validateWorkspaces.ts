@@ -5,22 +5,24 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
-import { validateOSSWorkspaceAndLogIssues } from "./validateOSSWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
     cliContext,
     logWarnings,
+    brokenLinks,
     errorOnBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    brokenLinks: boolean;
     errorOnBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
             await validateDocsWorkspaceAndLogIssues({
                 workspace: docsWorkspace,
                 context,
@@ -31,21 +33,22 @@ export async function validateWorkspaces({
                     })
                 ),
                 ossWorkspaces: await filterOssWorkspaces(project),
-                errorOnBrokenLinks
+                errorOnBrokenLinks,
+                excludeRules
             });
         });
     }
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
-            if (workspace instanceof OSSWorkspace) {
-                await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                    await validateOSSWorkspaceAndLogIssues({ workspace, context, logWarnings });
-                });
-            }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
-                await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
+                await validateAPIWorkspaceAndLogIssues({
+                    workspace: fernWorkspace,
+                    context,
+                    logWarnings,
+                    ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                });
             });
         })
     );

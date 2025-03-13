@@ -34,10 +34,10 @@ class ListUsersPaginationResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   hasNextPage?: ?bool,
-     *   page?: ?Page,
      *   totalCount: int,
      *   data: array<User>,
+     *   hasNextPage?: ?bool,
+     *   page?: ?Page,
      * } $values
      */
     public function __construct(
@@ -47,5 +47,13 @@ class ListUsersPaginationResponse extends JsonSerializableType
         $this->page = $values['page'] ?? null;
         $this->totalCount = $values['totalCount'];
         $this->data = $values['data'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

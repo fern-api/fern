@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedVariables;\n\nvar client = new SeedVariablesClient();\nawait client.Service.PostAsync(\"endpointParam\");\n"
             }
         }

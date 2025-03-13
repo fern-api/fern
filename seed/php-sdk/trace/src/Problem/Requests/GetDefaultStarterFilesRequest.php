@@ -6,6 +6,7 @@ use Seed\Core\Json\JsonSerializableType;
 use Seed\Problem\Types\VariableTypeAndName;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
+use Seed\Commons\Types\VariableType;
 
 class GetDefaultStarterFilesRequest extends JsonSerializableType
 {
@@ -16,19 +17,21 @@ class GetDefaultStarterFilesRequest extends JsonSerializableType
     public array $inputParams;
 
     /**
-     * @var mixed $outputType
+     * @var VariableType $outputType
      */
     #[JsonProperty('outputType')]
-    public mixed $outputType;
+    public VariableType $outputType;
 
     /**
-     * @var string $methodName The name of the `method` that the student has to complete.
-    The method name cannot include the following characters:
-      - Greater Than `>`
-      - Less Than `<``
-      - Equals `=`
-      - Period `.`
-
+     * The name of the `method` that the student has to complete.
+     * The method name cannot include the following characters:
+     *   - Greater Than `>`
+     *   - Less Than `<``
+     *   - Equals `=`
+     *   - Period `.`
+     *
+     *
+     * @var string $methodName
      */
     #[JsonProperty('methodName')]
     public string $methodName;
@@ -36,7 +39,7 @@ class GetDefaultStarterFilesRequest extends JsonSerializableType
     /**
      * @param array{
      *   inputParams: array<VariableTypeAndName>,
-     *   outputType: mixed,
+     *   outputType: VariableType,
      *   methodName: string,
      * } $values
      */

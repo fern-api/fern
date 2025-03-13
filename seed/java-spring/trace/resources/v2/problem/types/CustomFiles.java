@@ -105,6 +105,7 @@ public final class CustomFiles {
   }
 
   @JsonTypeName("basic")
+  @JsonIgnoreProperties("type")
   private static final class BasicValue implements Value {
     @JsonUnwrapped
     private BasicCustomFiles value;
@@ -146,6 +147,7 @@ public final class CustomFiles {
   }
 
   @JsonTypeName("custom")
+  @JsonIgnoreProperties("type")
   private static final class CustomValue implements Value {
     @JsonProperty("value")
     private Map<Language, Files> value;
@@ -183,6 +185,7 @@ public final class CustomFiles {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

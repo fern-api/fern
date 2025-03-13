@@ -27,7 +27,7 @@ class AbstractImdbService(AbstractFernService):
     @abc.abstractmethod
     async def create_movie(self, *, body: CreateMovieRequest) -> MovieId:
         """
-        Add a movie to the database
+        Add a movie to the database using the movies/* /... path.
         """
         ...
 

@@ -33,10 +33,11 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.129.3-c425af4ef",
+    "@fern-fern/fdr-cjs-sdk": "0.132.0-26ae3d805",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "lodash-es": "^4.17.21"
@@ -50,6 +51,6 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/lodash-es": "^4.17.12",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

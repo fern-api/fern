@@ -66,3 +66,4 @@ packages/**/generated
 # This file is too large to be included in the repository without LFS
 seed/python-sdk/trace/snippet-templates.json
 seed/python-sdk/**/output.prof
+.php-cs-fixer.cache

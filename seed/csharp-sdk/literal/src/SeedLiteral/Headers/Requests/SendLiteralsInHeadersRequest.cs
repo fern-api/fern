@@ -1,13 +1,17 @@
+using System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
 public record SendLiteralsInHeadersRequest
 {
-    public required string EndpointVersion { get; set; }
+    [JsonIgnore]
+    public string EndpointVersion { get; set; } = "02-12-2024";
 
-    public required bool Async { get; set; }
+    [JsonIgnore]
+    public bool Async { get; set; } = true;
 
+    [JsonPropertyName("query")]
     public required string Query { get; set; }
 
     public override string ToString()

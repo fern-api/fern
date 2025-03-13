@@ -1,7 +1,9 @@
 package com.fern.java.generators.union;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
@@ -26,14 +28,19 @@ public abstract class UnionSubType {
 
     private final ClassName unionClassName;
     private final ParameterizedTypeName visitorInterfaceClassName;
+    protected final UnionTypeDeclaration unionTypeDeclaration;
 
     protected final PoetTypeNameMapper poetTypeNameMapper;
 
-    public UnionSubType(ClassName unionClassName, PoetTypeNameMapper poetTypeNameMapper) {
+    public UnionSubType(
+            ClassName unionClassName,
+            PoetTypeNameMapper poetTypeNameMapper,
+            UnionTypeDeclaration unionTypeDeclaration) {
         this.unionClassName = unionClassName;
         this.visitorInterfaceClassName =
                 ParameterizedTypeName.get(unionClassName.nestedClass(VISITOR_CLASS_NAME), VISITOR_RETURN_TYPE);
         this.poetTypeNameMapper = poetTypeNameMapper;
+        this.unionTypeDeclaration = unionTypeDeclaration;
     }
 
     public final ClassName getUnionClassName() {
@@ -117,6 +124,10 @@ public abstract class UnionSubType {
                     .addMember("value", "$S", getDiscriminant().get().getWireValue())
                     .build());
         }
+        // TODO(ajgateno): We'll want to ignore base properties as well when we support them in the Java generator
+        unionSubTypeBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
+                .addMember("value", "$S", unionTypeDeclaration.getDiscriminant().getWireValue())
+                .build());
         EqualsMethod equalsMethod = getEqualsMethod();
         unionSubTypeBuilder
                 .addFields(getFieldSpecs())

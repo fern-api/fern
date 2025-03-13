@@ -33,4 +33,12 @@ class Response extends JsonSerializableType
         $this->response = $values['response'];
         $this->identifiers = $values['identifiers'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

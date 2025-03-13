@@ -34,6 +34,7 @@ export declare namespace RawFileUploadRequest {
         availability?: AvailabilityUnionSchema | undefined;
         key: string;
         contentType?: string;
+        style?: "exploded" | "json" | "form";
     }
 }
 
@@ -85,6 +86,7 @@ function createRawFileUploadRequest(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined;
+            const style = typeof propertyType !== "string" ? propertyType.style : undefined;
             const maybeParsedFileType = parseRawFileType(
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );
@@ -95,10 +97,11 @@ function createRawFileUploadRequest(
                     docs,
                     isOptional: maybeParsedFileType.isOptional,
                     isArray: maybeParsedFileType.isArray,
-                    contentType
+                    contentType,
+                    style
                 });
             } else {
-                acc.push({ isFile: false, key, propertyType, docs, contentType });
+                acc.push({ isFile: false, key, propertyType, docs, contentType, style });
             }
             return acc;
         },

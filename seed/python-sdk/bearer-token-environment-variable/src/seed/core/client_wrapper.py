@@ -25,6 +25,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
         }
         headers["Authorization"] = f"Bearer {self._get_api_key()}"
+        headers["X-API-Version"] = "1.0.0"
         return headers
 
     def _get_api_key(self) -> str:

@@ -1,4 +1,4 @@
-import { Arguments } from "@fern-api/base-generator";
+import { Arguments } from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";

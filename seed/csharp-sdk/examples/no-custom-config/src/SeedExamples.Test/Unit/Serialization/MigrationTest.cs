@@ -1,38 +1,39 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class MigrationTest
 {
-    [Test]
+    [NUnit.Framework.Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "name": "001_init",
+              "status": "RUNNING"
+            }
+            """;
+        var expectedObject = new Migration { Name = "001_init", Status = MigrationStatus.Running };
+        var deserializedObject = JsonUtils.Deserialize<Migration>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""001_init"",
-          ""status"": ""RUNNING""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Migration>(
-            inputJson,
-            serializerOptions
-        );
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var expectedJson = """
+            {
+              "name": "001_init",
+              "status": "RUNNING"
+            }
+            """;
+        var actualObj = new Migration { Name = "001_init", Status = MigrationStatus.Running };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -1,5 +1,19 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.7.0
+- changelogEntry:
+    - summary: |
+        Flat package layout by setting `page-layout: flat`
+      type: feat
+  createdAt: '2025-02-18'
+  irVersion: 53
+  version: 1.6.0
+- changelogEntry:
+    - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
   createdAt: '2025-2-3'

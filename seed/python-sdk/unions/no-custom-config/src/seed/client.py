@@ -3,8 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .bigunion.client import BigunionClient
 from .union.client import UnionClient
 from .core.client_wrapper import AsyncClientWrapper
+from .bigunion.client import AsyncBigunionClient
 from .union.client import AsyncUnionClient
 
 
@@ -53,6 +55,7 @@ class SeedUnions:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.bigunion = BigunionClient(client_wrapper=self._client_wrapper)
         self.union = UnionClient(client_wrapper=self._client_wrapper)
 
 
@@ -101,4 +104,5 @@ class AsyncSeedUnions:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.bigunion = AsyncBigunionClient(client_wrapper=self._client_wrapper)
         self.union = AsyncUnionClient(client_wrapper=self._client_wrapper)

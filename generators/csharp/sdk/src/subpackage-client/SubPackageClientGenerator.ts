@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
@@ -109,14 +110,15 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     }
 
     private getConstructorMethod(): csharp.Class.Constructor {
+        const parameters: csharp.Parameter[] = [
+            csharp.parameter({
+                name: "client",
+                type: csharp.Type.reference(this.context.getRawClientClassReference())
+            })
+        ];
         return {
             access: csharp.Access.Internal,
-            parameters: [
-                csharp.parameter({
-                    name: "client",
-                    type: csharp.Type.reference(this.context.getRawClientClassReference())
-                })
-            ],
+            parameters,
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
 
@@ -132,12 +134,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     );
                 }
 
+                const arguments_ = [csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [csharp.codeblock("_client")]
+                            arguments_
                         })
                     );
                 }

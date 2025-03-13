@@ -5,6 +5,7 @@ package com.seed.serverSentEvents;
 
 import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedServerSentEventsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedServerSentEventsClientBuilder {
      */
     public SeedServerSentEventsClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedServerSentEventsClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

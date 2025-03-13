@@ -121,6 +121,7 @@ public final class ErrorInfo {
   }
 
   @JsonTypeName("compileError")
+  @JsonIgnoreProperties("type")
   private static final class CompileErrorValue implements Value {
     @JsonUnwrapped
     private CompileError value;
@@ -162,6 +163,7 @@ public final class ErrorInfo {
   }
 
   @JsonTypeName("runtimeError")
+  @JsonIgnoreProperties("type")
   private static final class RuntimeErrorValue implements Value {
     @JsonUnwrapped
     private RuntimeError value;
@@ -203,6 +205,7 @@ public final class ErrorInfo {
   }
 
   @JsonTypeName("internalError")
+  @JsonIgnoreProperties("type")
   private static final class InternalErrorValue implements Value {
     @JsonUnwrapped
     private InternalError value;
@@ -243,6 +246,7 @@ public final class ErrorInfo {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

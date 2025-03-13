@@ -4,6 +4,7 @@ namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Types\VariableValue;
 use Seed\Core\Types\ArrayType;
 
 class TestCaseV2 extends JsonSerializableType
@@ -15,15 +16,15 @@ class TestCaseV2 extends JsonSerializableType
     public TestCaseMetadata $metadata;
 
     /**
-     * @var mixed $implementation
+     * @var TestCaseImplementationReference $implementation
      */
     #[JsonProperty('implementation')]
-    public mixed $implementation;
+    public TestCaseImplementationReference $implementation;
 
     /**
-     * @var array<string, mixed> $arguments
+     * @var array<string, VariableValue> $arguments
      */
-    #[JsonProperty('arguments'), ArrayType(['string' => 'mixed'])]
+    #[JsonProperty('arguments'), ArrayType(['string' => VariableValue::class])]
     public array $arguments;
 
     /**
@@ -35,8 +36,8 @@ class TestCaseV2 extends JsonSerializableType
     /**
      * @param array{
      *   metadata: TestCaseMetadata,
-     *   implementation: mixed,
-     *   arguments: array<string, mixed>,
+     *   implementation: TestCaseImplementationReference,
+     *   arguments: array<string, VariableValue>,
      *   expects?: ?TestCaseExpects,
      * } $values
      */
@@ -47,5 +48,13 @@ class TestCaseV2 extends JsonSerializableType
         $this->implementation = $values['implementation'];
         $this->arguments = $values['arguments'];
         $this->expects = $values['expects'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -47,4 +47,12 @@ class BasicTestCaseTemplate extends JsonSerializableType
         $this->description = $values['description'];
         $this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

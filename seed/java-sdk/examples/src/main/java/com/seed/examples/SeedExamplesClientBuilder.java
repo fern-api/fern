@@ -5,6 +5,7 @@ package com.seed.examples;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedExamplesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -36,6 +37,14 @@ public final class SeedExamplesClientBuilder {
      */
     public SeedExamplesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedExamplesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

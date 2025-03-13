@@ -844,7 +844,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:MapType": {
             "type": "object",
@@ -969,7 +970,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:VariableValue": {
             "type": "discriminatedUnion",
@@ -1966,7 +1968,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:MapValue": {
             "type": "object",
@@ -2066,7 +2069,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:KeyValuePair": {
             "type": "object",
@@ -2191,7 +2195,8 @@
                         "value": "type_commons:VariableValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:BinaryTreeValue": {
             "type": "object",
@@ -2326,7 +2331,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:BinaryTreeNodeValue": {
             "type": "object",
@@ -2513,7 +2519,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:BinaryTreeNodeAndTreeValue": {
             "type": "object",
@@ -2638,7 +2645,8 @@
                         "value": "type_commons:BinaryTreeValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:SinglyLinkedListValue": {
             "type": "object",
@@ -2773,7 +2781,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:SinglyLinkedListNodeValue": {
             "type": "object",
@@ -2929,7 +2938,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:SinglyLinkedListNodeAndListValue": {
             "type": "object",
@@ -3054,7 +3064,8 @@
                         "value": "type_commons:SinglyLinkedListValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:DoublyLinkedListValue": {
             "type": "object",
@@ -3189,7 +3200,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:DoublyLinkedListNodeValue": {
             "type": "object",
@@ -3376,7 +3388,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:DoublyLinkedListNodeAndListValue": {
             "type": "object",
@@ -3501,7 +3514,8 @@
                         "value": "type_commons:DoublyLinkedListValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:DebugMapValue": {
             "type": "object",
@@ -3601,7 +3615,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:DebugKeyValuePairs": {
             "type": "object",
@@ -3726,7 +3741,8 @@
                         "value": "type_commons:DebugVariableValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:TestCase": {
             "type": "object",
@@ -3854,7 +3870,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:TestCaseWithExpectedResult": {
             "type": "object",
@@ -3979,7 +3996,8 @@
                         "value": "type_commons:VariableValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:FileInfo": {
             "type": "object",
@@ -4104,7 +4122,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons:Language": {
             "type": "enum",
@@ -4335,7 +4354,8 @@
                         "type": "unknown"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_lang-server:LangServerResponse": {
             "type": "object",
@@ -4431,7 +4451,8 @@
                         "type": "unknown"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_migration:MigrationStatus": {
             "type": "enum",
@@ -4691,7 +4712,8 @@
                         "value": "type_migration:MigrationStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_playlist:PlaylistId": {
             "type": "alias",
@@ -4946,7 +4968,8 @@
                         "value": "type_commons:UserId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_playlist:PlaylistCreateRequest": {
             "type": "object",
@@ -5074,7 +5097,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_playlist:UpdatePlaylistRequest": {
             "type": "object",
@@ -5202,7 +5226,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_playlist:PlaylistIdNotFoundErrorBody": {
             "type": "discriminatedUnion",
@@ -5798,7 +5823,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:ProblemDescription": {
             "type": "object",
@@ -5898,7 +5924,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:ProblemDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -6207,7 +6234,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:VariableTypeAndName": {
             "type": "object",
@@ -6332,7 +6360,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:CreateProblemRequest": {
             "type": "object",
@@ -6610,7 +6639,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:CreateProblemResponse": {
             "type": "discriminatedUnion",
@@ -6858,7 +6888,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:CreateProblemError": {
             "type": "discriminatedUnion",
@@ -7129,7 +7160,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_problem:GetDefaultStarterFilesResponse": {
             "type": "object",
@@ -7233,7 +7265,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionId": {
             "type": "alias",
@@ -7728,7 +7761,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmitRequestV2": {
             "type": "object",
@@ -7974,7 +8008,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceSubmitRequest": {
             "type": "object",
@@ -8161,7 +8196,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionFileInfo": {
             "type": "object",
@@ -8314,7 +8350,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionTypeEnum": {
             "type": "enum",
@@ -8502,7 +8539,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionResponse": {
             "type": "discriminatedUnion",
@@ -9272,7 +9310,8 @@
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RunningResponse": {
             "type": "object",
@@ -9397,7 +9436,8 @@
                         "value": "type_submission:RunningSubmissionState"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RunningSubmissionState": {
             "type": "enum",
@@ -9701,7 +9741,8 @@
                         "value": "type_submission:ErrorInfo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ErrorInfo": {
             "type": "discriminatedUnion",
@@ -9970,7 +10011,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RuntimeError": {
             "type": "object",
@@ -10067,7 +10109,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:InternalError": {
             "type": "object",
@@ -10164,7 +10207,8 @@
                         "value": "type_submission:ExceptionInfo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:StoppedResponse": {
             "type": "object",
@@ -10261,7 +10305,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceRanResponse": {
             "type": "object",
@@ -10386,7 +10431,8 @@
                         "value": "type_submission:WorkspaceRunDetails"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceRunDetails": {
             "type": "object",
@@ -10545,7 +10591,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:GradedResponse": {
             "type": "object",
@@ -10677,7 +10724,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:GradedResponseV2": {
             "type": "object",
@@ -10809,7 +10857,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestCaseGrade": {
             "type": "discriminatedUnion",
@@ -11051,7 +11100,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestCaseNonHiddenGrade": {
             "type": "object",
@@ -11238,7 +11288,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RecordedResponseNotification": {
             "type": "object",
@@ -11394,7 +11445,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RecordingResponseNotification": {
             "type": "object",
@@ -11609,7 +11661,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:LightweightStackframeInformation": {
             "type": "object",
@@ -11734,7 +11787,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestCaseResultWithStdout": {
             "type": "object",
@@ -11859,7 +11913,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestCaseResult": {
             "type": "object",
@@ -12012,7 +12067,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ActualResult": {
             "type": "discriminatedUnion",
@@ -12487,7 +12543,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:InvalidRequestResponse": {
             "type": "object",
@@ -12612,7 +12669,8 @@
                         "value": "type_submission:InvalidRequestCause"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:InvalidRequestCause": {
             "type": "discriminatedUnion",
@@ -12881,7 +12939,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionIdNotFound": {
             "type": "object",
@@ -12978,7 +13037,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:CustomTestCasesUnsupported": {
             "type": "object",
@@ -13103,7 +13163,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:UnexpectedLanguageError": {
             "type": "object",
@@ -13228,7 +13289,8 @@
                         "value": "type_commons:Language"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TerminatedResponse": {
             "type": "object",
@@ -13296,7 +13358,8 @@
                     }
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_submission:FinishedResponse": {
             "type": "object",
@@ -13393,7 +13456,8 @@
                         "value": "type_submission:SubmissionId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:StdoutResponse": {
             "type": "object",
@@ -13518,7 +13582,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:StderrResponse": {
             "type": "object",
@@ -13643,7 +13708,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TraceResponse": {
             "type": "object",
@@ -13889,7 +13955,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TraceResponseV2": {
             "type": "object",
@@ -14163,7 +14230,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TracedFile": {
             "type": "object",
@@ -14288,7 +14356,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ExpressionLocation": {
             "type": "object",
@@ -14413,7 +14482,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:StackInformation": {
             "type": "object",
@@ -14541,7 +14611,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:StackFrame": {
             "type": "object",
@@ -14697,7 +14768,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:Scope": {
             "type": "object",
@@ -14801,7 +14873,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ExecutionSessionResponse": {
             "type": "object",
@@ -14985,7 +15058,8 @@
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ExecutionSessionStatus": {
             "type": "enum",
@@ -15515,7 +15589,8 @@
                         "value": "type_v2/problem:ProblemInfoV2"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionStatusV2": {
             "type": "object",
@@ -15615,7 +15690,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestSubmissionUpdate": {
             "type": "object",
@@ -15740,7 +15816,8 @@
                         "value": "type_submission:TestSubmissionUpdateInfo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestSubmissionUpdateInfo": {
             "type": "discriminatedUnion",
@@ -16122,7 +16199,8 @@
                         "value": "type_submission:WorkspaceSubmissionUpdateInfo"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionUpdateInfo": {
             "type": "discriminatedUnion",
@@ -16530,7 +16608,8 @@
                         "value": "type_submission:TestCaseGrade"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:RecordedTestCaseUpdate": {
             "type": "object",
@@ -16655,7 +16734,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceTracedUpdate": {
             "type": "object",
@@ -16752,7 +16832,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:SubmissionTypeState": {
             "type": "discriminatedUnion",
@@ -16994,7 +17075,8 @@
                         "value": "type_submission:WorkspaceSubmissionStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionStatus": {
             "type": "discriminatedUnion",
@@ -17412,7 +17494,8 @@
                         "value": "type_submission:TestSubmissionStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TestSubmissionStatus": {
             "type": "discriminatedUnion",
@@ -17926,7 +18009,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TraceResponsesPage": {
             "type": "object",
@@ -18057,7 +18141,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:TraceResponsesPageV2": {
             "type": "object",
@@ -18188,7 +18273,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:GetTraceResponsesPageRequest": {
             "type": "object",
@@ -18288,7 +18374,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceStarterFilesResponse": {
             "type": "object",
@@ -18392,7 +18479,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceStarterFilesResponseV2": {
             "type": "object",
@@ -18496,7 +18584,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:WorkspaceFiles": {
             "type": "object",
@@ -18624,7 +18713,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:ExecutionSessionState": {
             "type": "object",
@@ -18867,7 +18957,8 @@
                         "value": "type_submission:ExecutionSessionStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:GetExecutionSessionStateResponse": {
             "type": "object",
@@ -19033,7 +19124,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_submission:GetSubmissionStateResponse": {
             "type": "object",
@@ -19217,7 +19309,8 @@
                         "value": "type_submission:SubmissionTypeState"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseTemplateId": {
             "type": "alias",
@@ -19944,7 +20037,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:LightweightProblemInfoV2": {
             "type": "object",
@@ -20167,7 +20261,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:CreateProblemRequestV2": {
             "type": "object",
@@ -20480,7 +20575,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseV2": {
             "type": "object",
@@ -20710,7 +20806,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseExpects": {
             "type": "object",
@@ -20849,7 +20946,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationReference": {
             "type": "discriminatedUnion",
@@ -21256,7 +21354,8 @@
                         "value": "type_v2/problem:ParameterId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseTemplate": {
             "type": "object",
@@ -21448,7 +21547,8 @@
                         "value": "type_v2/problem:TestCaseImplementation"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementation": {
             "type": "object",
@@ -21612,7 +21712,8 @@
                         "value": "type_v2/problem:TestCaseFunction"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseFunction": {
             "type": "discriminatedUnion",
@@ -21960,7 +22061,8 @@
                         "value": "type_v2/problem:AssertCorrectnessCheck"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionDefinition": {
             "type": "object",
@@ -22127,7 +22229,8 @@
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:Parameter": {
             "type": "object",
@@ -22319,7 +22422,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:NonVoidFunctionDefinition": {
             "type": "object",
@@ -22483,7 +22587,8 @@
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionSignature": {
             "type": "object",
@@ -22622,7 +22727,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:NonVoidFunctionSignature": {
             "type": "object",
@@ -22789,7 +22895,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionSignatureThatTakesActualResult": {
             "type": "object",
@@ -22956,7 +23063,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:AssertCorrectnessCheck": {
             "type": "discriminatedUnion",
@@ -23276,7 +23384,8 @@
                         "value": "type_v2/problem:ParameterId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult": {
             "type": "object",
@@ -23443,7 +23552,8 @@
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationDescription": {
             "type": "object",
@@ -23582,7 +23692,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -23964,7 +24075,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:FunctionImplementationForMultipleLanguages": {
             "type": "object",
@@ -24107,7 +24219,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:FunctionImplementation": {
             "type": "object",
@@ -24274,7 +24387,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GeneratedFiles": {
             "type": "object",
@@ -24487,7 +24601,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:CustomFiles": {
             "type": "discriminatedUnion",
@@ -24908,7 +25023,8 @@
                         "value": "type_v2/problem:BasicTestCaseTemplate"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:Files": {
             "type": "object",
@@ -25047,7 +25163,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:FileInfoV2": {
             "type": "object",
@@ -25267,7 +25384,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:DefaultProvidedFile": {
             "type": "object",
@@ -25434,7 +25552,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:FunctionSignature": {
             "type": "discriminatedUnion",
@@ -25781,7 +25900,8 @@
                         "value": "type_v2/problem:FunctionSignature"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GetFunctionSignatureResponse": {
             "type": "object",
@@ -25924,7 +26044,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GetBasicSolutionFileRequest": {
             "type": "object",
@@ -26088,7 +26209,8 @@
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GetBasicSolutionFileResponse": {
             "type": "object",
@@ -26231,7 +26353,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GetGeneratedTestCaseFileRequest": {
             "type": "object",
@@ -26398,7 +26521,8 @@
                         "value": "type_v2/problem:TestCaseV2"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest": {
             "type": "object",
@@ -26534,7 +26658,8 @@
                         "value": "type_v2/problem:TestCaseTemplate"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseTemplateId": {
             "type": "alias",
@@ -27413,7 +27538,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:LightweightProblemInfoV2": {
             "type": "object",
@@ -27674,7 +27800,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:CreateProblemRequestV2": {
             "type": "object",
@@ -28025,7 +28152,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseV2": {
             "type": "object",
@@ -28293,7 +28421,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseExpects": {
             "type": "object",
@@ -28470,7 +28599,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationReference": {
             "type": "discriminatedUnion",
@@ -28953,7 +29083,8 @@
                         "value": "type_v2/v3/problem:ParameterId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseTemplate": {
             "type": "object",
@@ -29183,7 +29314,8 @@
                         "value": "type_v2/v3/problem:TestCaseImplementation"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementation": {
             "type": "object",
@@ -29385,7 +29517,8 @@
                         "value": "type_v2/v3/problem:TestCaseFunction"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseFunction": {
             "type": "discriminatedUnion",
@@ -29809,7 +29942,8 @@
                         "value": "type_v2/v3/problem:AssertCorrectnessCheck"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionDefinition": {
             "type": "object",
@@ -30014,7 +30148,8 @@
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:Parameter": {
             "type": "object",
@@ -30244,7 +30379,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:NonVoidFunctionDefinition": {
             "type": "object",
@@ -30446,7 +30582,8 @@
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionSignature": {
             "type": "object",
@@ -30623,7 +30760,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:NonVoidFunctionSignature": {
             "type": "object",
@@ -30828,7 +30966,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionSignatureThatTakesActualResult": {
             "type": "object",
@@ -31033,7 +31172,8 @@
                         "value": "type_commons:VariableType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:AssertCorrectnessCheck": {
             "type": "discriminatedUnion",
@@ -31429,7 +31569,8 @@
                         "value": "type_v2/v3/problem:ParameterId"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult": {
             "type": "object",
@@ -31634,7 +31775,8 @@
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationDescription": {
             "type": "object",
@@ -31811,7 +31953,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -32269,7 +32412,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionImplementationForMultipleLanguages": {
             "type": "object",
@@ -32450,7 +32594,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionImplementation": {
             "type": "object",
@@ -32655,7 +32800,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GeneratedFiles": {
             "type": "object",
@@ -32906,7 +33052,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:CustomFiles": {
             "type": "discriminatedUnion",
@@ -33403,7 +33550,8 @@
                         "value": "type_v2/v3/problem:BasicTestCaseTemplate"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:Files": {
             "type": "object",
@@ -33580,7 +33728,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:FileInfoV2": {
             "type": "object",
@@ -33838,7 +33987,8 @@
                         "value": "BOOLEAN"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:DefaultProvidedFile": {
             "type": "object",
@@ -34043,7 +34193,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionSignature": {
             "type": "discriminatedUnion",
@@ -34466,7 +34617,8 @@
                         "value": "type_v2/v3/problem:FunctionSignature"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GetFunctionSignatureResponse": {
             "type": "object",
@@ -34647,7 +34799,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GetBasicSolutionFileRequest": {
             "type": "object",
@@ -34849,7 +35002,8 @@
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GetBasicSolutionFileResponse": {
             "type": "object",
@@ -35030,7 +35184,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GetGeneratedTestCaseFileRequest": {
             "type": "object",
@@ -35235,7 +35390,8 @@
                         "value": "type_v2/v3/problem:TestCaseV2"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest": {
             "type": "object",
@@ -35409,7 +35565,8 @@
                         "value": "type_v2/v3/problem:TestCaseTemplate"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [
@@ -35546,7 +35703,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.updateTestSubmissionStatus": {
             "auth": {
@@ -35681,7 +35839,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.sendTestSubmissionUpdate": {
             "auth": {
@@ -35816,7 +35975,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.updateWorkspaceSubmissionStatus": {
             "auth": {
@@ -35951,7 +36111,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.sendWorkspaceSubmissionUpdate": {
             "auth": {
@@ -36086,7 +36247,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedTestCase": {
             "auth": {
@@ -36376,7 +36538,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedTestCaseV2": {
             "auth": {
@@ -36542,7 +36705,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedWorkspace": {
             "auth": {
@@ -36804,7 +36968,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_admin.storeTracedWorkspaceV2": {
             "auth": {
@@ -36942,7 +37107,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_homepage.getHomepageProblems": {
             "auth": {
@@ -37042,7 +37208,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_homepage.setHomepageProblems": {
             "auth": {
@@ -37151,7 +37318,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_migration.getAttemptedMigrations": {
             "auth": {
@@ -37350,7 +37518,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.createPlaylist": {
             "auth": {
@@ -37637,7 +37806,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.getPlaylists": {
             "auth": {
@@ -37989,7 +38159,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.getPlaylist": {
             "auth": {
@@ -38146,7 +38317,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.updatePlaylist": {
             "auth": {
@@ -38312,7 +38484,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_playlist.deletePlaylist": {
             "auth": {
@@ -38469,7 +38642,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.createProblem": {
             "auth": {
@@ -38575,7 +38749,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.updateProblem": {
             "auth": {
@@ -38710,7 +38885,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.deleteProblem": {
             "auth": {
@@ -38839,7 +39015,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_problem.getDefaultStarterFiles": {
             "auth": {
@@ -39100,7 +39277,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.createExecutionSession": {
             "auth": {
@@ -39229,7 +39407,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.getExecutionSession": {
             "auth": {
@@ -39358,7 +39537,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.stopExecutionSession": {
             "auth": {
@@ -39487,7 +39667,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_submission.getExecutionSessionsState": {
             "auth": {
@@ -39587,7 +39768,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_sysprop.setNumWarmInstances": {
             "auth": {
@@ -39744,7 +39926,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_sysprop.getNumWarmInstances": {
             "auth": {
@@ -39844,7 +40027,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getLightweightProblems": {
             "auth": {
@@ -39983,7 +40167,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getProblems": {
             "auth": {
@@ -40122,7 +40307,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getLatestProblem": {
             "auth": {
@@ -40290,7 +40476,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/problem.getProblemVersion": {
             "auth": {
@@ -40486,7 +40673,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getLightweightProblems": {
             "auth": {
@@ -40663,7 +40851,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getProblems": {
             "auth": {
@@ -40840,7 +41029,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getLatestProblem": {
             "auth": {
@@ -41046,7 +41236,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_v2/v3/problem.getProblemVersion": {
             "auth": {
@@ -41280,9 +41471,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": "Prod",
         "environments": {
@@ -41314,5 +41507,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

@@ -25,4 +25,12 @@ class GetDefaultStarterFilesResponse extends JsonSerializableType
     ) {
         $this->files = $values['files'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

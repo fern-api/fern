@@ -17,6 +17,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<
         key: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.Schema),
         readonly: core.serialization.boolean().optional(),
+        writeonly: core.serialization.boolean().optional(),
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         generatedName: core.serialization.string(),
         nameOverride: core.serialization.string().optional(),
@@ -29,6 +30,7 @@ export declare namespace ObjectProperty {
         key: string;
         schema: serializers.Schema.Raw;
         readonly?: boolean | null;
+        writeonly?: boolean | null;
         conflict: Record<SchemaId.Raw, ObjectPropertyConflictInfo.Raw>;
         generatedName: string;
         nameOverride?: string | null;

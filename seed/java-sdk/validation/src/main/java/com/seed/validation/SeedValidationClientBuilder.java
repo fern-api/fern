@@ -5,6 +5,7 @@ package com.seed.validation;
 
 import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedValidationClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedValidationClientBuilder {
      */
     public SeedValidationClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedValidationClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

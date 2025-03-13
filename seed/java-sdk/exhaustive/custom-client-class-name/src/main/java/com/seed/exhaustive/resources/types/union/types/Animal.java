@@ -88,6 +88,7 @@ public final class Animal {
     }
 
     @JsonTypeName("dog")
+    @JsonIgnoreProperties("animal")
     private static final class DogValue implements Value {
         @JsonUnwrapped
         private Dog value;
@@ -126,6 +127,7 @@ public final class Animal {
     }
 
     @JsonTypeName("cat")
+    @JsonIgnoreProperties("animal")
     private static final class CatValue implements Value {
         @JsonUnwrapped
         private Cat value;
@@ -163,6 +165,7 @@ public final class Animal {
         }
     }
 
+    @JsonIgnoreProperties("animal")
     private static final class _UnknownValue implements Value {
         private String type;
 

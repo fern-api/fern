@@ -67,6 +67,11 @@ class AbstractServiceService(AbstractFernService):
         foo_bar: typing.Optional[MyObject] = None,
     ) -> None: ...
 
+    @abc.abstractmethod
+    def with_form_encoding(
+        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject
+    ) -> None: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -78,6 +83,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_just_file(router=router)
         cls.__init_just_file_with_query_params(router=router)
         cls.__init_with_content_type(router=router)
+        cls.__init_with_form_encoding(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
@@ -315,4 +321,51 @@ class AbstractServiceService(AbstractFernService):
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.with_content_type.__doc__,
             **get_route_args(cls.with_content_type, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_form_encoding(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_form_encoding)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "file":
+                new_parameters.append(parameter.replace(default=fastapi.UploadFile))
+            elif parameter_name == "foo":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "bar":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.with_form_encoding,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.with_form_encoding)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.with_form_encoding(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_form_encoding' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.with_form_encoding.__globals__)
+
+        router.post(
+            path="/with-form-encoding",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.with_form_encoding.__doc__,
+            **get_route_args(cls.with_form_encoding, default_tag="service"),
         )(wrapper)

@@ -176,6 +176,19 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         addApiVersionField(clientOptionsBuilder);
 
+        MethodSpec timeoutGetter = MethodSpec.methodBuilder(TIMEOUT_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(
+                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .returns(TIMEOUT_FIELD.type)
+                .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("return this.$L", TIMEOUT_FIELD.name)
+                .endControlFlow()
+                .addStatement(
+                        "return $N.getTimeout().orElse(this.$N)", REQUEST_OPTIONS_PARAMETER_NAME, TIMEOUT_FIELD.name)
+                .build();
+
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
 
@@ -226,6 +239,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
 
         TypeSpec clientOptions = clientOptionsBuilder
+                .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
                 .addMethods(variableGetters.values())
@@ -391,6 +405,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(TypeName.INT, TIMEOUT_FIELD.name, Modifier.PRIVATE)
                         .initializer("60")
                         .build())
+                .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
+                        .initializer(CodeBlock.builder()
+                                .add("new $T.Builder()", OkHttpClient.class)
+                                .add(
+                                        "\n    .addInterceptor(new $T(3))",
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getRetryInterceptorClassName())
+                                .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
+                                .add("\n    .build()")
+                                .build())
+                        .build())
                 .addFields(variableFields.values())
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
@@ -401,6 +427,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, TIMEOUT_FIELD.name)
                         .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(builderClassName)
+                        .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
+                        .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethods(getVariableBuilders(variableFields));
@@ -564,7 +597,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
-                className, environmentField.name, HEADERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name, "okhttpClient");
+                className,
+                environmentField.name,
+                HEADERS_FIELD.name,
+                HEADER_SUPPLIERS_FIELD.name,
+                OKHTTP_CLIENT_FIELD.name);
 
         String returnString = "return new $T($L, $L, $L, $L, this.timeout";
 
@@ -575,40 +612,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         Object[] args = argsBuilder.build().toArray();
 
+        MethodSpec.Builder builder =
+                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+
         if (variableFields.isEmpty()) {
-            return MethodSpec.methodBuilder("build")
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(className)
-                    .addStatement(CodeBlock.builder()
-                            .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
-                            .add(
-                                    "\n    .addInterceptor(new $T(3))",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getRetryInterceptorClassName())
-                            .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .build()")
-                            .build())
-                    .addStatement(returnString + ")", args)
-                    .build();
+            return builder.addStatement(returnString + ")", args).build();
         } else {
             String variableArgs = variableFields.values().stream()
                     .map(variableField -> "this." + variableField.name)
                     .collect(Collectors.joining(", "));
-            return MethodSpec.methodBuilder("build")
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(className)
-                    .addStatement(CodeBlock.builder()
-                            .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
-                            .add(
-                                    "\n    .addInterceptor(new $T(3))",
-                                    clientGeneratorContext
-                                            .getPoetClassNameFactory()
-                                            .getRetryInterceptorClassName())
-                            .add("\n    .callTimeout(this.timeout, $T.SECONDS)", TimeUnit.class)
-                            .add("\n    .build()")
-                            .build())
-                    .addStatement(returnString + ", " + variableArgs + ")", args)
+            return builder.addStatement(returnString + ", " + variableArgs + ")", args)
                     .build();
         }
     }
@@ -636,6 +649,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             entries.put(
                     platformHeaders.getSdkVersion(),
                     generatorConfig.getPublish().get().getVersion());
+        }
+        if (platformHeaders.getUserAgent().isPresent()) {
+            entries.put(
+                    platformHeaders.getUserAgent().get().getHeader(),
+                    platformHeaders.getUserAgent().get().getValue());
         }
         entries.put(platformHeaders.getLanguage(), "JAVA");
         return entries;

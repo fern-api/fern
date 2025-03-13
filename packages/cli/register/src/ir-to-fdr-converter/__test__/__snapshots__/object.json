@@ -251,6 +251,30 @@
                 "type": "bigInteger"
               }
             }
+          },
+          {
+            "key": "twentyfour",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "twentyfive",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "date"
+                }
+              }
+            }
           }
         ]
       }

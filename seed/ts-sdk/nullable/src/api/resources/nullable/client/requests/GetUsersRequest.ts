@@ -8,8 +8,8 @@
  *         usernames: "usernames",
  *         avatar: "avatar",
  *         activated: true,
- *         tags: null,
- *         extra: null
+ *         tags: "tags",
+ *         extra: true
  *     }
  */
 export interface GetUsersRequest {

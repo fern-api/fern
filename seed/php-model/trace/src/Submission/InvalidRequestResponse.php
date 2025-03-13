@@ -8,21 +8,21 @@ use Seed\Core\Json\JsonProperty;
 class InvalidRequestResponse extends JsonSerializableType
 {
     /**
-     * @var mixed $request
+     * @var SubmissionRequest $request
      */
     #[JsonProperty('request')]
-    public mixed $request;
+    public SubmissionRequest $request;
 
     /**
-     * @var mixed $cause
+     * @var InvalidRequestCause $cause
      */
     #[JsonProperty('cause')]
-    public mixed $cause;
+    public InvalidRequestCause $cause;
 
     /**
      * @param array{
-     *   request: mixed,
-     *   cause: mixed,
+     *   request: SubmissionRequest,
+     *   cause: InvalidRequestCause,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class InvalidRequestResponse extends JsonSerializableType
     ) {
         $this->request = $values['request'];
         $this->cause = $values['cause'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

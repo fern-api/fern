@@ -5,10 +5,12 @@ import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { FernGeneratorExec } from "../GeneratorNotificationService";
 import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance";
 import { ErrorReporter, Severity } from "./ErrorReporter";
+import { Options } from "./Options";
 import { TypeInstance } from "./TypeInstance";
 
 export abstract class AbstractDynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.GeneratorConfig;
+    public options: Options;
     public errors: ErrorReporter;
 
     private _ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -16,16 +18,21 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
 
     constructor({
         ir,
-        config
+        config,
+        options = {}
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
+        options?: Options;
     }) {
         this._ir = ir;
         this.config = config;
+        this.options = options;
         this.errors = new ErrorReporter();
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
+
+    public abstract clone(): AbstractDynamicSnippetsGeneratorContext;
 
     public associateQueryParametersByWireValue({
         parameters,

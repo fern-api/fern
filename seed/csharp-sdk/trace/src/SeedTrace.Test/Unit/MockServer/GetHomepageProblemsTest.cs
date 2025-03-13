@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
 
@@ -9,8 +7,8 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetHomepageProblemsTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
@@ -31,9 +29,10 @@ public class GetHomepageProblemsTest : BaseMockServerTest
             );
 
         var response = await Client.Homepage.GetHomepageProblemsAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse))
+                .UsingPropertiesComparer()
+        );
     }
 }

@@ -356,9 +356,19 @@
         }
       ]
     },
-    "types.TypeReferenceDeclarationWithName": {
+    "types.ObjectPropertyAccess": {
+      "type": "string",
+      "enum": [
+        "read-only",
+        "write-only"
+      ]
+    },
+    "types.ObjectPropertyWithAccessSchema": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string"
+        },
         "default": {
           "oneOf": [
             {
@@ -439,8 +449,15 @@
             }
           ]
         },
-        "type": {
-          "type": "string"
+        "access": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.ObjectPropertyAccess"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -448,18 +465,15 @@
       ],
       "additionalProperties": false
     },
-    "types.TypeReferenceDeclarationWithNameSchema": {
+    "types.ObjectPropertySchema": {
       "anyOf": [
         {
           "type": "string"
         },
         {
-          "$ref": "#/definitions/types.TypeReferenceDeclarationWithName"
+          "$ref": "#/definitions/types.ObjectPropertyWithAccessSchema"
         }
       ]
-    },
-    "types.ObjectPropertySchema": {
-      "$ref": "#/definitions/types.TypeReferenceDeclarationWithNameSchema"
     },
     "types.ObjectSchema": {
       "type": "object",
@@ -1164,6 +1178,16 @@
             }
           ]
         },
+        "validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/validation.ValidationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "type": {
           "type": "string"
         }
@@ -1727,7 +1751,15 @@
       ],
       "additionalProperties": false
     },
-    "service.TypeReferenceDeclarationWithContentTypeSchema": {
+    "service.FormDataBodyEncodingStyle": {
+      "type": "string",
+      "enum": [
+        "json",
+        "exploded",
+        "form"
+      ]
+    },
+    "service.HttpInlineFileRequestBodyPropertySchema": {
       "type": "object",
       "properties": {
         "type": {
@@ -1813,6 +1845,16 @@
             }
           ]
         },
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.FormDataBodyEncodingStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "content-type": {
           "oneOf": [
             {
@@ -1835,7 +1877,7 @@
           "type": "string"
         },
         {
-          "$ref": "#/definitions/service.TypeReferenceDeclarationWithContentTypeSchema"
+          "$ref": "#/definitions/service.HttpInlineFileRequestBodyPropertySchema"
         }
       ]
     },
@@ -2519,6 +2561,22 @@
       ],
       "additionalProperties": false
     },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -2526,6 +2584,9 @@
         },
         {
           "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
         }
       ]
     },
@@ -3402,6 +3463,16 @@
         },
         "auth": {
           "type": "boolean"
+        },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "path": {
           "type": "string"

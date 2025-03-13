@@ -1,4 +1,3 @@
-import { Logger } from "@fern-api/logger";
 import {
     HeaderExample,
     QueryParameterExample,
@@ -14,14 +13,18 @@ import { convertSchema } from "../schema/convertSchemas";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { isSchemaRequired } from "../schema/utils/isSchemaRequired";
-import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { WebsocketSessionExampleExtension } from "./getFernExamples";
+import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
+import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext";
 
 export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, context: AsyncAPIV2ParserContext) {
+    constructor(
+        schemas: Record<string, SchemaWithExample>,
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext
+    ) {
         this.exampleTypeFactory = new ExampleTypeFactory(schemas, new Set(), context);
         this.schemas = schemas;
     }
@@ -35,7 +38,7 @@ export class ExampleWebsocketSessionFactory {
         source,
         namespace
     }: {
-        context: AsyncAPIV2ParserContext;
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
         handshake: WebsocketHandshakeWithExample;
         publish: SchemaWithExample | undefined;
@@ -101,9 +104,8 @@ export class ExampleWebsocketSessionFactory {
 
             const messages: WebsocketMessageExample[] = [];
             for (const messageExample of extensionExample.messages) {
-                const messageSchema = context.resolveMessageReference({
-                    $ref: `#/components/messages/${messageExample.messageId}`
-                });
+                const messageRef = context.getExampleMessageReference(messageExample);
+                const messageSchema = context.resolveMessageReference({ $ref: messageRef });
                 const resolvedSchema = isReferenceObject(messageSchema.payload)
                     ? context.resolveSchemaReference(messageSchema.payload)
                     : messageSchema.payload;
@@ -254,11 +256,11 @@ export class ExampleWebsocketSessionFactory {
         return example;
     }
 
-    private isSchemaRequired(schema: SchemaWithExample) {
+    private isSchemaRequired(schema: SchemaWithExample): boolean {
         return isSchemaRequired(this.getResolvedSchema(schema));
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {

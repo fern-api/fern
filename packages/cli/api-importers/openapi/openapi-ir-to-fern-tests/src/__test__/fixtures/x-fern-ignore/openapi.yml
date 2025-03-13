@@ -34,9 +34,24 @@ paths:
           schema:
             type: string
           x-fern-ignore: true
+  /ignored-operation:
+    get:
+      operationId: ignored-operation
+      x-fern-ignore: true
+      summary: Ignored operation
+      description: ""
+      responses:
+        "200":
+          description: Success
 components:
   schemas:
     Meta: 
+      properties: 
+        hasMore: 
+          type: boolean
+    IgnoredSchema: 
+      x-fern-ignore: true
+      type: object
       properties: 
         hasMore: 
           type: boolean

@@ -15,7 +15,8 @@ export async function generateDynamicIrForWorkspaces({
     audiences,
     version,
     keywords,
-    smartCasing
+    smartCasing,
+    includeDynamicExamples
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -25,6 +26,7 @@ export async function generateDynamicIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    includeDynamicExamples: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -40,7 +42,8 @@ export async function generateDynamicIrForWorkspaces({
                     smartCasing,
                     disableExamples: false,
                     audiences,
-                    readme: undefined
+                    readme: undefined,
+                    includeDynamicExamples
                 });
 
                 if (intermediateRepresentation.dynamic == null) {

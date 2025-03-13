@@ -24311,11 +24311,29 @@ You can optionally request the result page size and the cursor to start after to
                     "body": {
                       "data": [
                         {
-                          "created_at": 1674917488,
-                          "id": "12312",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1674917488,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -24389,9 +24407,7 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "request": {
                     "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
+                    "message_type": "close",
                     "type": "admin",
                   },
                   "response": {
@@ -24506,11 +24522,9 @@ You can optionally request the result page size and the cursor to start after to
                     "id": "123",
                   },
                   "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
-                    "message_type": "assignment",
-                    "type": "admin",
+                    "admin_id": "5017691",
+                    "message_type": "snoozed",
+                    "snoozed_until": 1673609604,
                   },
                   "response": {
                     "body": {
@@ -24624,11 +24638,8 @@ You can optionally request the result page size and the cursor to start after to
                     "id": "123",
                   },
                   "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
-                    "message_type": "assignment",
-                    "type": "admin",
+                    "admin_id": "5017690",
+                    "message_type": "open",
                   },
                   "response": {
                     "body": {
@@ -24744,7 +24755,6 @@ You can optionally request the result page size and the cursor to start after to
                   "request": {
                     "admin_id": "12345",
                     "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
                     "message_type": "assignment",
                     "type": "admin",
                   },
@@ -24865,9 +24875,7 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "request": {
                     "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
+                    "message_type": "close",
                     "type": "admin",
                   },
                   "response": {
@@ -26842,11 +26850,28 @@ service:
                 total_pages: 1
               total_count: 1
               data:
-                - type: newsfeed
-                  id: '12312'
-                  name: My Newsfeed
-                  created_at: 1674917488
-                  updated_at: 1674917488
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     createConversation:
       path: /conversations
       method: POST
@@ -28143,11 +28168,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
+            message_type: close
           response:
             body:
               type: conversation
@@ -28229,11 +28252,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            admin_id: '5017691'
+            snoozed_until: 1673609604
+            message_type: snoozed
           response:
             body:
               type: conversation
@@ -28315,11 +28336,8 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            admin_id: '5017690'
+            message_type: open
           response:
             body:
               type: conversation
@@ -28401,11 +28419,10 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
             assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            message_type: assignment
           response:
             body:
               type: conversation
@@ -28490,11 +28507,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
+            message_type: close
           response:
             body:
               type: conversation
@@ -36535,11 +36550,29 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1674917488,
-                          "id": "12312",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1674917488,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -36590,18 +36623,54 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1719492976,
-                          "id": "29",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1719492976,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                         {
-                          "created_at": 1719492976,
-                          "id": "30",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1719492976,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -36646,18 +36715,18 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1719492987,
-                          "id": "68",
-                          "name": "Visitor Feed",
+                          "created_at": 1674917488,
+                          "id": "12312",
+                          "name": "My Newsfeed",
                           "type": "newsfeed",
-                          "updated_at": 1719492987,
+                          "updated_at": 1674917488,
                         },
                         {
-                          "created_at": 1719492987,
-                          "id": "69",
-                          "name": "Visitor Feed",
+                          "created_at": 1674917488,
+                          "id": "12312",
+                          "name": "My Newsfeed",
                           "type": "newsfeed",
-                          "updated_at": 1719492987,
+                          "updated_at": 1674917488,
                         },
                       ],
                       "pages": {
@@ -37073,16 +37142,50 @@ service:
                 total_pages: 1
               total_count: 2
               data:
-                - type: newsfeed
-                  id: '29'
-                  name: My Newsfeed
-                  created_at: 1719492976
-                  updated_at: 1719492976
-                - type: newsfeed
-                  id: '30'
-                  name: My Newsfeed
-                  created_at: 1719492976
-                  updated_at: 1719492976
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     createNewsItem:
       path: /news/news_items
       method: POST
@@ -37330,11 +37433,28 @@ service:
                 total_pages: 0
               total_count: 0
               data:
-                - type: newsfeed
-                  id: '12312'
-                  name: My Newsfeed
-                  created_at: 1674917488
-                  updated_at: 1674917488
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     listNewsfeeds:
       path: /news/newsfeeds
       method: GET
@@ -37364,16 +37484,16 @@ service:
                 total_pages: 1
               total_count: 2
               data:
-                - type: newsfeed
-                  id: '68'
-                  name: Visitor Feed
-                  created_at: 1719492987
-                  updated_at: 1719492987
-                - type: newsfeed
-                  id: '69'
-                  name: Visitor Feed
-                  created_at: 1719492987
-                  updated_at: 1719492987
+                - id: '12312'
+                  name: My Newsfeed
+                  created_at: 1674917488
+                  updated_at: 1674917488
+                  type: newsfeed
+                - id: '12312'
+                  name: My Newsfeed
+                  created_at: 1674917488
+                  updated_at: 1674917488
+                  type: newsfeed
     retrieveNewsfeed:
       path: /news/newsfeeds/{id}
       method: GET

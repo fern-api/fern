@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedMixedCase.Core;
 
@@ -14,6 +15,13 @@ public record User
     [JsonPropertyName("EXTRA_PROPERTIES")]
     public Dictionary<string, string> ExtraProperties { get; set; } =
         new Dictionary<string, string>();
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

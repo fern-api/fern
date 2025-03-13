@@ -8,11 +8,13 @@ import { TaskContext } from "@fern-api/task-context";
 export async function mergeWithOverrides<T extends object>({
     absoluteFilePathToOverrides,
     data,
-    context
+    context,
+    allowNullKeys
 }: {
     absoluteFilePathToOverrides: AbsoluteFilePath;
     data: T;
     context: TaskContext;
+    allowNullKeys?: string[];
 }): Promise<T> {
     let parsedOverrides = null;
     try {
@@ -25,5 +27,5 @@ export async function mergeWithOverrides<T extends object>({
     } catch (err) {
         return context.failAndThrow(`Failed to read overrides from file ${absoluteFilePathToOverrides}`);
     }
-    return coreMergeWithOverrides({ data, overrides: parsedOverrides });
+    return coreMergeWithOverrides({ data, overrides: parsedOverrides, allowNullKeys });
 }

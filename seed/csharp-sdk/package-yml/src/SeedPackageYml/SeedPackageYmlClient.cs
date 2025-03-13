@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
@@ -35,11 +34,9 @@ public partial class SeedPackageYmlClient
 
     public ServiceClient Service { get; init; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> EchoAsync(
         string id,
         EchoRequest request,
@@ -48,21 +45,21 @@ public partial class SeedPackageYmlClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{id}/",
+                    Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
                     Body = request,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -73,10 +70,13 @@ public partial class SeedPackageYmlClient
             }
         }
 
-        throw new SeedPackageYmlApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPackageYmlApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -105,7 +105,9 @@ class SdkGenerator(AbstractGenerator):
                 project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
             elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
-                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                    dependency=AST.Dependency(
+                        name=dep, version=value.version, optional=value.optional, python=value.python
+                    )
                 )
 
         project.add_extra(custom_config.extras)

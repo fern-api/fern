@@ -19,12 +19,17 @@ public partial class SeedBearerTokenEnvironmentVariableClient
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {apiKey}" },
+                { "X-API-Version", "1.0.0" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBearerTokenEnvironmentVariable" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernbearer-token-environment-variable/0.0.1" },
             }
         );
+        if (clientOptions.Version != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.Version;
+        }
         clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {

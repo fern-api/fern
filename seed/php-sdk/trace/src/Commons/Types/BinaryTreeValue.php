@@ -22,8 +22,8 @@ class BinaryTreeValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   root?: ?string,
      *   nodes: array<string, BinaryTreeNodeValue>,
+     *   root?: ?string,
      * } $values
      */
     public function __construct(
@@ -31,5 +31,13 @@ class BinaryTreeValue extends JsonSerializableType
     ) {
         $this->root = $values['root'] ?? null;
         $this->nodes = $values['nodes'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

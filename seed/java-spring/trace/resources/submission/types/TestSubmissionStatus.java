@@ -133,6 +133,7 @@ public final class TestSubmissionStatus {
   }
 
   @JsonTypeName("stopped")
+  @JsonIgnoreProperties("type")
   private static final class StoppedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -158,6 +159,7 @@ public final class TestSubmissionStatus {
   }
 
   @JsonTypeName("errored")
+  @JsonIgnoreProperties("type")
   private static final class ErroredValue implements Value {
     @JsonProperty("value")
     private ErrorInfo value;
@@ -196,6 +198,7 @@ public final class TestSubmissionStatus {
   }
 
   @JsonTypeName("running")
+  @JsonIgnoreProperties("type")
   private static final class RunningValue implements Value {
     @JsonProperty("value")
     private RunningSubmissionState value;
@@ -234,6 +237,7 @@ public final class TestSubmissionStatus {
   }
 
   @JsonTypeName("testCaseIdToState")
+  @JsonIgnoreProperties("type")
   private static final class TestCaseIdToStateValue implements Value {
     @JsonProperty("value")
     private Map<String, SubmissionStatusForTestCase> value;
@@ -272,6 +276,7 @@ public final class TestSubmissionStatus {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

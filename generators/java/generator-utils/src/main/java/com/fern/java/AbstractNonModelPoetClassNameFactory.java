@@ -20,6 +20,7 @@ import com.fern.ir.model.commons.FernFilepath;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,9 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^\\d");
 
-    public AbstractNonModelPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public AbstractNonModelPoetClassNameFactory(
+            List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     @Override
@@ -59,15 +61,30 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        if (fernFilepath.isPresent() && !fernFilepath.get().getAllParts().isEmpty()) {
-            tokens.add("resources");
+        switch (packageLayout) {
+            case FLAT:
+                fernFilepath.ifPresent(filePath -> tokens.addAll(filePath.getPackagePath().stream()
+                        .map(Name::getCamelCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        .map(String::toLowerCase)
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
+                        .collect(Collectors.toList())));
+                break;
+            case NESTED:
+            default:
+                if (fernFilepath.isPresent()
+                        && !fernFilepath.get().getAllParts().isEmpty()) {
+                    tokens.add("resources");
+                }
+                fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
+                        .map(Name::getCamelCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        // names should be lower case
+                        .map(String::toLowerCase)
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
+                        .collect(Collectors.toList())));
         }
-        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
-                .map(Name::getCamelCase)
-                .map(SafeAndUnsafeString::getSafeName)
-                // names should be lower case
-                .map(String::toLowerCase)
-                .collect(Collectors.toList())));
+
         suffix.ifPresent(tokens::add);
         List<String> sanitizedTokens = new ArrayList<>();
         for (String token : tokens) {

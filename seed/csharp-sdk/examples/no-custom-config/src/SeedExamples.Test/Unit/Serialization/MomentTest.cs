@@ -1,36 +1,60 @@
+using System.Globalization;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class MomentTest
 {
-    [Test]
+    [NUnit.Framework.Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "id": "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
+              "date": "1994-01-01",
+              "datetime": "1994-01-01T01:01:01Z"
+            }
+            """;
+        var expectedObject = new Moment
+        {
+            Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
+            Date = new DateOnly(1994, 1, 1),
+            Datetime = DateTime.Parse(
+                "1994-01-01T01:01:01.000Z",
+                null,
+                DateTimeStyles.AdjustToUniversal
+            ),
+        };
+        var deserializedObject = JsonUtils.Deserialize<Moment>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var expectedJson = """
+            {
+              "id": "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
+              "date": "1994-01-01",
+              "datetime": "1994-01-01T01:01:01Z"
+            }
+            """;
+        var actualObj = new Moment
         {
-          ""id"": ""656f12d6-f592-444c-a1d3-a3cfd46d5b39"",
-          ""date"": ""1994-01-01"",
-          ""datetime"": ""1994-01-01T01:01:01Z""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
+            Date = new DateOnly(1994, 1, 1),
+            Datetime = DateTime.Parse(
+                "1994-01-01T01:01:01.000Z",
+                null,
+                DateTimeStyles.AdjustToUniversal
+            ),
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Moment>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

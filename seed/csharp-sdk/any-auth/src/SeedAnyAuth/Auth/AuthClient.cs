@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
@@ -15,8 +14,7 @@ public partial class AuthClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.GetTokenAsync(
     ///     new GetTokenRequest
     ///     {
@@ -27,8 +25,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> GetTokenAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
@@ -36,7 +33,7 @@ public partial class AuthClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -48,9 +45,9 @@ public partial class AuthClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
@@ -61,10 +58,13 @@ public partial class AuthClient
             }
         }
 
-        throw new SeedAnyAuthApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAnyAuthApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

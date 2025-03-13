@@ -757,8 +757,7 @@ function parsePageConfig(
         slug: item.slug,
         icon: item.icon,
         hidden: item.hidden,
-        // TODO: implement noindex
-        noindex: undefined,
+        noindex: item.noindex,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned,
         featureFlags: convertFeatureFlag(item.featureFlag)
@@ -867,7 +866,8 @@ function convertSnippetsConfiguration({
         typescript: rawConfig.typescript,
         go: rawConfig.go,
         java: rawConfig.java,
-        ruby: rawConfig.ruby
+        ruby: rawConfig.ruby,
+        csharp: rawConfig.csharp
     };
 }
 

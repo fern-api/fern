@@ -5,6 +5,7 @@ package com.seed.literal;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -14,6 +15,22 @@ public final class SeedLiteralClientBuilder {
     private String auditLogging = "true";
 
     private Environment environment;
+
+    /**
+     * Sets version
+     */
+    public SeedLiteralClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
+    /**
+     * Sets auditLogging
+     */
+    public SeedLiteralClientBuilder auditLogging(String auditLogging) {
+        this.auditLogging = auditLogging;
+        return this;
+    }
 
     public SeedLiteralClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -25,6 +42,14 @@ public final class SeedLiteralClientBuilder {
      */
     public SeedLiteralClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedLiteralClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

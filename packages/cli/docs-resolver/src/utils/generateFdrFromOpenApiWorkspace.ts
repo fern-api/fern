@@ -5,6 +5,7 @@ import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     BaseOpenApiV3_1ConverterNodeContext,
     ErrorCollector,
+    FernRegistry,
     OpenApiDocumentConverterNode
 } from "@fern-api/docs-parsers";
 import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
@@ -26,8 +27,7 @@ export async function generateFdrFromOpenApiWorkspace(
 
     const openApiDocuments = await openApiLoader.loadDocuments({ context, specs: openApiSpecs });
 
-    // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let fdrApiDefinition: ReturnType<OpenApiDocumentConverterNode["convert"]>;
+    let fdrApiDefinition: FernRegistry.api.latest.ApiDefinition | undefined;
     for (const openApi of openApiDocuments) {
         if (openApi.type !== "openapi") {
             continue;
@@ -36,7 +36,8 @@ export async function generateFdrFromOpenApiWorkspace(
         const oasContext: BaseOpenApiV3_1ConverterNodeContext = {
             document: openApi.value as OpenAPIV3_1.Document,
             logger: context.logger,
-            errors: new ErrorCollector()
+            errors: new ErrorCollector(),
+            generatedTypes: {}
         };
 
         const openApiFdrJson = new OpenApiDocumentConverterNode({

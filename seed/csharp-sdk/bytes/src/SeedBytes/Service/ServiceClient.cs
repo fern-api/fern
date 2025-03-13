@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedBytes.Core;
 
 namespace SeedBytes;
@@ -14,14 +14,14 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task UploadAsync(
+    public async global::System.Threading.Tasks.Task UploadAsync(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.StreamApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -38,11 +38,13 @@ public partial class ServiceClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedBytesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedBytesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderA.Service.GetDirectThreadAsync();\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_folder-d/service.getDirectThread"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderD.Service.GetDirectThreadAsync();\n"
             }
         },
@@ -33,7 +33,7 @@
                 "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"optionalString\",\n        PublicProperty = \"publicProperty\",\n        PrivateProperty = 1,\n    }\n);\n"
             }
         }

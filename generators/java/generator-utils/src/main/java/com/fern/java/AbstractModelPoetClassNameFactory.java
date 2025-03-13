@@ -20,6 +20,7 @@ import com.fern.ir.model.commons.FernFilepath;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,9 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClassNameFactory {
 
-    public AbstractModelPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public AbstractModelPoetClassNameFactory(
+            List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     @Override
@@ -47,12 +49,27 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        tokens.add("model");
-        tokens.addAll(fernFilepath.getAllParts().stream()
-                .map(Name::getSnakeCase)
-                .map(SafeAndUnsafeString::getSafeName)
-                .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
-                .collect(Collectors.toList()));
+        switch (packageLayout) {
+            case FLAT:
+                // NOTE: We're making it camel-case here on purpose: snake-case is used in the NESTED case for
+                //  historical reasons, but we should unify on this method going forward.
+                tokens.addAll(fernFilepath.getPackagePath().stream()
+                        .map(Name::getCamelCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        .map(String::toLowerCase)
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
+                        .collect(Collectors.toList()));
+                break;
+            case NESTED:
+            default:
+                tokens.add("model");
+                tokens.addAll(fernFilepath.getAllParts().stream()
+                        .map(Name::getSnakeCase)
+                        .map(SafeAndUnsafeString::getSafeName)
+                        .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
+                        .collect(Collectors.toList()));
+        }
         return String.join(".", tokens);
     }
 }

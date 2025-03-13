@@ -87,7 +87,7 @@ public class DeepCursorPathClient {
                         request.getB().map(b_ -> B.builder().from(b_).c(c_).build()));
                 A nextRequest = A.builder().from(request).b(b).build();
                 List<String> result = parsedResponse.getResults();
-                return new SyncPagingIterable<>(
+                return new SyncPagingIterable<String>(
                         startingAfter.isPresent(), result, () -> doThing(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -143,7 +143,7 @@ public class DeepCursorPathClient {
                         .indirection(indirection)
                         .build();
                 List<String> result = parsedResponse.getResults();
-                return new SyncPagingIterable<>(
+                return new SyncPagingIterable<String>(
                         startingAfter.isPresent(), result, () -> doThingRequired(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -208,7 +208,7 @@ public class DeepCursorPathClient {
                         .map(b_ -> InlineD.builder().from(b_).c(c_).build()));
                 InlineA nextRequest = InlineA.builder().from(request).b(b).build();
                 List<String> result = parsedResponse.getResults();
-                return new SyncPagingIterable<>(
+                return new SyncPagingIterable<String>(
                         startingAfter.isPresent(), result, () -> doThingInline(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

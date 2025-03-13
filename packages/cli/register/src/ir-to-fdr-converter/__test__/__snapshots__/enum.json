@@ -54,6 +54,20 @@
           }
         ]
       }
+    },
+    "type_unknown:Status": {
+      "name": "Status",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "Known"
+          },
+          {
+            "value": "Unknown"
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -382,6 +396,17 @@
       "websockets": [],
       "types": [],
       "subpackages": []
+    },
+    "subpackage_unknown": {
+      "subpackageId": "subpackage_unknown",
+      "name": "unknown",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_unknown:Status"
+      ],
+      "subpackages": []
     }
   },
   "rootPackage": {
@@ -396,7 +421,8 @@
     "subpackages": [
       "subpackage_inlined-request",
       "subpackage_path-param",
-      "subpackage_query-param"
+      "subpackage_query-param",
+      "subpackage_unknown"
     ]
   },
   "snippetsConfiguration": {},

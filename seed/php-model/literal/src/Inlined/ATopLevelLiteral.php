@@ -23,4 +23,12 @@ class ATopLevelLiteral extends JsonSerializableType
     ) {
         $this->nestedLiteral = $values['nestedLiteral'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

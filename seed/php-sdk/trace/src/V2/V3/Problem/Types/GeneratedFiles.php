@@ -41,4 +41,12 @@ class GeneratedFiles extends JsonSerializableType
         $this->generatedTemplateFiles = $values['generatedTemplateFiles'];
         $this->other = $values['other'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

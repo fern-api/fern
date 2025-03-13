@@ -1,26 +1,30 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
+import { TypeLiteral } from "./TypeLiteral";
 import { AstNode } from "./core/AstNode";
 import { GLOBAL_NAMESPACE } from "./core/Constant";
 import { Writer } from "./core/Writer";
 
 type InternalType =
-    | Int
-    | String_
+    | Array_
     | Bool
-    | Float
     | Date
     | DateTime
-    | Mixed
-    | Object_
-    | Array_
+    | EnumString
+    | Float
+    | Int
     | Map
-    | TypeDict
-    | Union
+    | Mixed
+    | Null
+    | Object_
     | Optional
     | Reference
-    | EnumString;
+    | String_
+    | TypeDict
+    | Union
+    | Literal;
 
 interface Int {
     type: "int";
@@ -44,6 +48,10 @@ interface Date {
 
 interface DateTime {
     type: "dateTime";
+}
+
+interface Null {
+    type: "null";
 }
 
 interface Mixed {
@@ -95,6 +103,27 @@ interface Reference {
 interface EnumString {
     type: "enumString";
     value: ClassReference;
+}
+
+type LiteralString = TypeLiteral & {
+    internalType: {
+        type: "string";
+        value: string;
+    };
+};
+
+type LiteralBoolean = TypeLiteral & {
+    internalType: {
+        type: "boolean";
+        value: boolean;
+    };
+};
+
+type LiteralValue = LiteralString | LiteralBoolean;
+
+interface Literal {
+    type: "literal";
+    value: LiteralValue;
 }
 
 /* A PHP parameter to a method */
@@ -152,6 +181,10 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             }
+            case "null": {
+                writer.write("null");
+                break;
+            }
             case "typeDict": {
                 if (!comment) {
                     writer.write("array");
@@ -159,7 +192,14 @@ export class Type extends AstNode {
                 }
                 if (this.internalType.multiline) {
                     writer.writeLine("array{");
-                    for (const entry of this.internalType.entries) {
+
+                    // NOTE: Put all required types before all optional parameters
+                    // since this is required by PHPStan
+                    const requiredTypes = this.internalType.entries.filter((entry) => !entry.valueType.isOptional());
+                    const optionalTypes = this.internalType.entries.filter((entry) => entry.valueType.isOptional());
+                    const orderedEntries = [...requiredTypes, ...optionalTypes];
+
+                    for (const entry of orderedEntries) {
                         writer.write(" *   ");
                         this.writeTypeDictEntry({ writer, entry, comment });
                         writer.writeLine(",");
@@ -179,13 +219,41 @@ export class Type extends AstNode {
             }
             case "union": {
                 const types = this.getUniqueTypes({ types: this.internalType.types, comment, writer });
-                types.forEach((type, index) => {
-                    if (index > 0) {
-                        writer.write("|");
-                    }
-                    type.write(writer, { comment });
-                    index++;
-                });
+
+                const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0;
+                if (hasMixed && !comment) {
+                    writer.write("mixed");
+                    break;
+                }
+
+                if (types.length > 0 && comment) {
+                    writer.writeLine("(");
+                    types.forEach((type, index) => {
+                        if (index > 0) {
+                            writer.write(" *   |");
+                        } else {
+                            writer.write(" *    ");
+                        }
+                        if (hasMixed) {
+                            type = type.underlyingType();
+                        }
+                        type.write(writer, { comment });
+                        writer.writeLine();
+                        index++;
+                    });
+                    writer.write(" * )");
+                } else {
+                    types.forEach((type, index) => {
+                        if (index > 0) {
+                            writer.write("|");
+                        }
+                        if (hasMixed) {
+                            type = type.underlyingType();
+                        }
+                        type.write(writer, { comment });
+                        index++;
+                    });
+                }
                 break;
             }
             case "optional": {
@@ -196,12 +264,29 @@ export class Type extends AstNode {
                 }
                 this.internalType.value.write(writer, { comment });
                 if (isUnion) {
-                    writer.write("|null");
+                    writer.write("|");
+                    writer.writeNode(Type.null());
                 }
                 break;
             }
             case "reference":
-                writer.writeNode(this.internalType.value);
+                if (comment) {
+                    writer.writeNode(this.internalType.value);
+                    const generics = this.internalType.value.generics;
+
+                    if (generics && generics.length > 0) {
+                        writer.write("<");
+                        generics.forEach((generic, index) => {
+                            if (index > 0) {
+                                writer.write(", ");
+                            }
+                            generic.write(writer, { comment });
+                        });
+                        writer.write(">");
+                    }
+                } else {
+                    writer.writeNode(this.internalType.value);
+                }
                 break;
             case "enumString":
                 if (comment) {
@@ -210,6 +295,22 @@ export class Type extends AstNode {
                     writer.write(">");
                 } else {
                     writer.write("string");
+                }
+                break;
+            case "literal":
+                if (comment) {
+                    writer.writeNode(this.internalType.value);
+                } else {
+                    switch (this.internalType.value.internalType.type) {
+                        case "string":
+                            writer.write("string");
+                            break;
+                        case "boolean":
+                            writer.write("bool");
+                            break;
+                        default:
+                            assertNever(this.internalType.value.internalType);
+                    }
                 }
                 break;
             default:
@@ -237,6 +338,38 @@ export class Type extends AstNode {
 
     public isOptional(): boolean {
         return this.internalType.type === "optional";
+    }
+
+    public getClassReference(): ClassReference {
+        switch (this.internalType.type) {
+            case "date":
+            case "dateTime":
+                return new ClassReference({
+                    name: "DateTime",
+                    namespace: GLOBAL_NAMESPACE
+                });
+
+            case "enumString":
+            case "reference":
+                return this.internalType.value;
+
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "optional":
+            case "typeDict":
+            case "union":
+            case "literal":
+                throw new Error("Cannot get class reference for " + this.internalType.type);
+            default:
+                assertNever(this.internalType);
+        }
     }
 
     /* Static factory methods for creating a Type */
@@ -329,6 +462,12 @@ export class Type extends AstNode {
         });
     }
 
+    public static null(): Type {
+        return new this({
+            type: "null"
+        });
+    }
+
     public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
@@ -340,6 +479,20 @@ export class Type extends AstNode {
         return new this({
             type: "enumString",
             value
+        });
+    }
+
+    public static literalString(value: string): Type {
+        return new this({
+            type: "literal",
+            value: TypeLiteral.string(value) as LiteralString
+        });
+    }
+
+    public static literalBoolean(value: boolean): Type {
+        return new this({
+            type: "literal",
+            value: TypeLiteral.boolean(value) as LiteralBoolean
         });
     }
 
@@ -375,13 +528,11 @@ export class Type extends AstNode {
     }): Type[] {
         const typeStrings = new Set();
         return types.filter((type) => {
-            if (comment) {
-                return true;
-            }
             const typeString = type.toString({
                 namespace: writer.namespace,
                 rootNamespace: writer.rootNamespace,
-                customConfig: writer.customConfig
+                customConfig: writer.customConfig,
+                comment
             });
             // handle potential duplicates, such as strings (due to enums) and arrays
             if (typeStrings.has(typeString)) {
@@ -390,6 +541,29 @@ export class Type extends AstNode {
             typeStrings.add(typeString);
             return true;
         });
+    }
+
+    /**
+     * Writes the type to a string.
+     */
+    public toString({
+        namespace,
+        rootNamespace,
+        customConfig,
+        comment
+    }: {
+        namespace: string;
+        rootNamespace: string;
+        customConfig: BasePhpCustomConfigSchema;
+        comment?: boolean;
+    }): string {
+        const writer = new Writer({
+            namespace,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer, { comment: comment ?? false });
+        return writer.toString();
     }
 }
 

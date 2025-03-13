@@ -5,6 +5,7 @@ package com.seed.authEnvironmentVariables;
 
 import com.seed.authEnvironmentVariables.core.ClientOptions;
 import com.seed.authEnvironmentVariables.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedAuthEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -34,6 +35,14 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets xApiVersion
+     */
+    public SeedAuthEnvironmentVariablesClientBuilder xApiVersion(String xApiVersion) {
+        this.xApiVersion = xApiVersion;
+        return this;
+    }
+
     public SeedAuthEnvironmentVariablesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -44,6 +53,14 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
      */
     public SeedAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedAuthEnvironmentVariablesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

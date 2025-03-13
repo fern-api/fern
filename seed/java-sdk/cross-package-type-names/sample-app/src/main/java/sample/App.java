@@ -8,6 +8,6 @@ import java.lang.String;
 
 public final class App {
   public static void main(String[] args) {
-    // import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient
+    // import com.seed.crossPackageTypeNames.AsyncSeedCrossPackageTypeNamesClient
   }
 }

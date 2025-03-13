@@ -31,4 +31,12 @@ class StderrResponse extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->stderr = $values['stderr'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

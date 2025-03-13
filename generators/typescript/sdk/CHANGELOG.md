@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.49.1] - 2025-03-10
+
+- Fix: This PR includes several fixes to the generated `Socket.py` file when websocket client code generation is enabled.
+
+## [0.49.0] - 2025-03-06
+
+- Feat: This PR enables the Typescript generator to produce Websocket SDK endpoints. This can be enabled by adding the option `shouldGenerateWebsocketClients: true` to the Typescript generator config.
+
+## [0.48.7] - 2025-01-28
+
+- Fix: Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair, 
+  rather than trying to encode the entire object as a single value. This ensures proper handling of complex data structures in multipart form requests.
+
+## [0.48.6] - 2025-01-28
+
+- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and 
+  object values with the `repeat` array format.
+
 ## [0.48.5] - 2025-01-28
 
 - Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.

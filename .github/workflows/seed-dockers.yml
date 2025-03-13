@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-      - dsinghvi/fix-ir-jsons
+    paths:
+      - 'docker/seed/*'
+      - '.github/workflows/seed-dockers.yml'
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
@@ -22,7 +24,7 @@ jobs:
       packages: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
@@ -35,6 +37,18 @@ jobs:
             python:
               - 'docker/seed/Dockerfile.python'
               - '.github/workflows/seed-dockers.yml'
+            csharp:
+              - 'docker/seed/Dockerfile.csharp'
+              - '.github/workflows/seed-dockers.yml'
+  generate-sha:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: sha
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:
@@ -42,8 +56,16 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-    runs-on: ubuntu-latest
-    needs: changes
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        arch: [amd64, arm64]
+        exclude:
+          # Avoid building arm64 on amd64 runner and vice versa
+          - runner: ubuntu-latest
+            arch: arm64
+          - runner: ubuntu-24.04-arm
+            arch: amd64
+    runs-on: ${{ matrix.runner }}
+    needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -53,8 +75,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: fernapi/${{ matrix.package }}-seed
+          tags: |
+            type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
+            type=raw,value=latest-${{ matrix.arch }}
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -62,23 +90,45 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: fernapi/${{ matrix.package }}-seed
-          tags: |
-            type=sha
-            latest
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./docker/seed/Dockerfile.${{ matrix.package }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/${{ matrix.arch }}
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+    outputs:
+      image_sha: ${{ steps.meta.outputs.version }}  # This gets the SHA tag
+
+  merge-manifests:
+    if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
+    needs: [changes, build-container, generate-sha]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Create and push manifest
+        run: |
+          packages='${{ needs.changes.outputs.packages }}'
+          sha='${{ needs.generate-sha.outputs.sha }}'
+          for package in $(echo "$packages" | jq -r '.[]'); do
+            docker buildx imagetools create -t fernapi/${package}-seed:latest \
+              fernapi/${package}-seed:latest-amd64 \
+              fernapi/${package}-seed:latest-arm64
+
+            docker buildx imagetools create -t fernapi/${package}-seed:${sha} \
+              fernapi/${package}-seed:${sha}-amd64 \
+              fernapi/${package}-seed:${sha}-arm64
+          done

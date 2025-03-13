@@ -1,9 +1,9 @@
+import { cloneDeep } from "lodash-es";
+
 import { assertNever } from "@fern-api/core-utils";
 
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { Namespace } from "../project/CSharpFile";
 import {
     ClassReference,
     OneOfBaseClassReference,
@@ -11,6 +11,7 @@ import {
     StringEnumClassReference
 } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
+import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -23,7 +24,7 @@ type InternalType =
     | Boolean_
     | Float
     | Double
-    | Date
+    | DateOnly
     | DateTime
     | Uuid
     | Object_
@@ -31,6 +32,7 @@ type InternalType =
     | ListType
     | List
     | Set
+    | IDictionary
     | Map
     | KeyValuePair
     | Optional
@@ -38,7 +40,11 @@ type InternalType =
     | OneOf
     | OneOfBase
     | StringEnum
-    | CoreReference;
+    | CoreReference
+    | Action
+    | Func
+    | FileParameter
+    | CsharpType;
 
 interface Integer {
     type: "int";
@@ -72,8 +78,8 @@ interface Double {
     type: "double";
 }
 
-interface Date {
-    type: "date";
+interface DateOnly {
+    type: "dateOnly";
 }
 
 interface DateTime {
@@ -114,6 +120,12 @@ interface Map {
     valueType: Type;
 }
 
+interface IDictionary {
+    type: "idictionary";
+    keyType: Type;
+    valueType: Type;
+}
+
 interface KeyValuePair {
     type: "keyValuePair";
     keyType: Type;
@@ -150,6 +162,26 @@ interface StringEnum {
     value: ClassReference;
 }
 
+interface Action {
+    type: "action";
+    typeParameters: (Type | TypeParameter)[];
+}
+
+interface Func {
+    type: "func";
+    typeParameters: (Type | TypeParameter)[];
+    returnType: Type | TypeParameter;
+}
+
+interface FileParameter {
+    type: "fileParam";
+    value: ClassReference;
+}
+
+interface CsharpType {
+    type: "csharpType";
+}
+
 /* A C# parameter to a method */
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType) {
@@ -182,7 +214,7 @@ export class Type extends AstNode {
             case "double":
                 writer.write("double");
                 break;
-            case "date":
+            case "dateOnly":
                 writer.write("DateOnly");
                 break;
             case "dateTime":
@@ -225,6 +257,7 @@ export class Type extends AstNode {
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
+            case "idictionary":
             case "map": {
                 const keyType = this.internalType.keyType;
                 const valueType = this.internalType.valueType;
@@ -237,7 +270,8 @@ export class Type extends AstNode {
                     writer.write("object");
                     break;
                 }
-                writer.write("Dictionary<");
+                const typeName = this.internalType.type === "idictionary" ? "IDictionary" : "Dictionary";
+                writer.write(`${typeName}<`);
                 keyType.write(writer);
                 writer.write(", ");
                 valueType.write(writer);
@@ -295,6 +329,36 @@ export class Type extends AstNode {
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
+            case "action":
+                writer.write("Action");
+                if (this.internalType.typeParameters.length > 0) {
+                    writer.write("<");
+                    this.internalType.typeParameters.forEach((type, index) => {
+                        if (index !== 0) {
+                            writer.write(", ");
+                        }
+                        type.write(writer);
+                    });
+                    writer.write(">");
+                }
+                break;
+            case "func":
+                writer.write("Func");
+                writer.write("<");
+                [...this.internalType.typeParameters, this.internalType.returnType].forEach((type, index) => {
+                    if (index !== 0) {
+                        writer.write(", ");
+                    }
+                    type.write(writer);
+                });
+                writer.write(">");
+                break;
+            case "csharpType":
+                writer.write("global::System.Type");
+                break;
+            case "fileParam":
+                writer.writeNode(this.internalType.value);
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -326,7 +390,58 @@ export class Type extends AstNode {
     }
 
     public isCollection(): boolean {
-        return ["list", "set", "map"].includes(this.internalType.type);
+        return ["list", "listType", "set", "map", "array"].includes(this.internalType.type);
+    }
+
+    public getCollectionItemType(): Type | undefined {
+        switch (this.internalType.type) {
+            case "list":
+            case "listType":
+            case "set":
+            case "array":
+                return this.internalType.value;
+            case "map":
+                return Type.keyValuePair(this.internalType.keyType, this.internalType.valueType);
+            default:
+                return undefined;
+        }
+    }
+
+    public isReferenceType(): boolean | undefined {
+        switch (this.internalType.type) {
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "bool":
+            case "float":
+            case "double":
+            case "dateOnly":
+            case "dateTime":
+            case "keyValuePair":
+            case "stringEnum":
+            case "oneOf":
+                return false;
+            case "string":
+            case "uuid": // C# GUID is a value type, but we use string for UUID
+            case "object":
+            case "array":
+            case "listType":
+            case "list":
+            case "set":
+            case "map":
+            case "optional":
+            case "action":
+            case "func":
+            case "oneOfBase":
+            case "csharpType":
+            case "idictionary":
+            case "fileParam":
+                return true;
+            case "reference":
+            case "coreReference":
+                return undefined;
+        }
     }
 
     public toOptionalIfNotAlready(): Type {
@@ -343,8 +458,27 @@ export class Type extends AstNode {
         return undefined;
     }
 
+    public unwrapIfOptional(): Type {
+        if (this.internalType.type === "optional") {
+            return (this.internalType as Optional).value;
+        }
+        return this;
+    }
+
     public isOptional(): boolean {
         return this.internalType.type === "optional";
+    }
+
+    public cloneOptionalWithUnderlyingType(underlyingType: Type): Type {
+        switch (this.internalType.type) {
+            case "optional":
+                return new Type({
+                    type: "optional",
+                    value: this.internalType.value.cloneOptionalWithUnderlyingType(underlyingType)
+                });
+            default:
+                return new Type(cloneDeep(underlyingType.internalType));
+        }
     }
 
     /* Static factory methods for creating a Type */
@@ -396,9 +530,9 @@ export class Type extends AstNode {
         });
     }
 
-    public static date(): Type {
+    public static dateOnly(): Type {
         return new this({
-            type: "date"
+            type: "dateOnly"
         });
     }
 
@@ -456,6 +590,13 @@ export class Type extends AstNode {
         });
     }
 
+    public static idictionary(keyType: Type, valueType: Type): Type {
+        return new this({
+            type: "idictionary",
+            keyType,
+            valueType
+        });
+    }
     public static keyValuePair(keyType: Type, valueType: Type): Type {
         return new this({
             type: "keyValuePair",
@@ -465,6 +606,10 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
+        if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
+            return value;
+        }
         return new this({
             type: "optional",
             value
@@ -506,10 +651,48 @@ export class Type extends AstNode {
         });
     }
 
+    public static action({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }): Type {
+        return new this({
+            type: "action",
+            typeParameters
+        });
+    }
+
+    public static func({
+        typeParameters,
+        returnType
+    }: {
+        typeParameters: (Type | TypeParameter)[];
+        returnType: Type | TypeParameter;
+    }): Type {
+        return new this({
+            type: "func",
+            typeParameters,
+            returnType
+        });
+    }
+
+    public static csharpType(): Type {
+        return new this({
+            type: "csharpType"
+        });
+    }
+
+    public static fileParam(classReference: ClassReference): Type {
+        return new this({
+            type: "fileParam",
+            value: classReference
+        });
+    }
+
     private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
         writer.write("ReadOnlyMemory<");
         value.write(writer);
         writer.write(">");
+    }
+
+    private static isAlreadyOptional(value: Type) {
+        return value.internalType.type === "optional";
     }
 }
 

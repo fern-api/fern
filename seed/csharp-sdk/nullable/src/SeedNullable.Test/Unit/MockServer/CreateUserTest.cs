@@ -1,7 +1,5 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
@@ -12,7 +10,7 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -25,7 +23,10 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
+                "activated": true,
+                "status": {
+                  "type": "active"
+                }
               },
               "avatar": "avatar"
             }
@@ -34,6 +35,7 @@ public class CreateUserTest : BaseMockServerTest
         const string mockResponse = """
             {
               "name": "name",
+              "id": "id",
               "tags": [
                 "tags",
                 "tags"
@@ -42,8 +44,13 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
-              }
+                "activated": true,
+                "status": {
+                  "type": "active"
+                }
+              },
+              "email": "email",
+              "favorite-number": 1
             }
             """;
 
@@ -81,14 +88,15 @@ public class CreateUserTest : BaseMockServerTest
                     ),
                     Avatar = "avatar",
                     Activated = true,
+                    Status = "no-properties-union",
                 },
                 Avatar = "avatar",
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+        );
     }
 }

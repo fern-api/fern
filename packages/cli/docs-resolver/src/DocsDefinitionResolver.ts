@@ -66,7 +66,11 @@ type RegisterApiFn = (opts: {
     apiName?: string;
 }) => AsyncOrSync<string>;
 
-type RegisterApiV2Fn = (opts: { api: FdrAPI.api.latest.ApiDefinition; apiName?: string }) => AsyncOrSync<string>;
+type RegisterApiV2Fn = (opts: {
+    api: FdrAPI.api.latest.ApiDefinition;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+}) => AsyncOrSync<string>;
 
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
@@ -108,6 +112,7 @@ export class DocsDefinitionResolver {
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -140,6 +145,9 @@ export class DocsDefinitionResolver {
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
         this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their noindex values
+        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -298,6 +306,25 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToSlug;
+    }
+
+    /**
+     * Creates a list of markdown files that have noindex:true specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their noindex value
+     */
+    private async getMarkdownFilesToNoIndex(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, boolean>> {
+        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const noindex = frontmatter.data.noindex;
+            if (typeof noindex === "boolean") {
+                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+            }
+        }
+        return mdxFilePathToNoIndex;
     }
 
     /**
@@ -502,7 +529,7 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
             featureFlags: landingPageConfig.featureFlags
         };
     }
@@ -565,7 +592,7 @@ export class DocsDefinitionResolver {
             // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
-            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
+            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
             hidden: undefined,
             authed: undefined,
             viewers: version.viewers,
@@ -623,20 +650,22 @@ export class DocsDefinitionResolver {
     private async toNavigationChild(
         prefix: string,
         item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.NavigationChild> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
-            page: async (value) => this.toPageNode(value, parentSlug),
-            apiSection: async (value) => this.toApiSectionNode(value, parentSlug),
-            section: async (value) => this.toSectionNode(prefix, value, parentSlug),
+            page: async (value) => this.toPageNode(value, parentSlug, hideChildren),
+            apiSection: async (value) => this.toApiSectionNode(value, parentSlug, hideChildren),
+            section: async (value) => this.toSectionNode(prefix, value, parentSlug, hideChildren),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
         });
     }
 
     private async toApiSectionNode(
         item: docsYml.DocsNavigationItem.ApiSection,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
         if (item.openrpc != null) {
             const absoluteFilepathToOpenrpc = resolve(
@@ -652,7 +681,8 @@ export class DocsDefinitionResolver {
             }
             await this.registerApiV2({
                 api,
-                apiName: item.apiName
+                apiName: item.apiName,
+                snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
@@ -662,19 +692,23 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
-                this.#idgen
+                this.markdownFilesToNoIndex,
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
 
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
             if (api == null) {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
                 api,
+                snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
@@ -685,25 +719,37 @@ export class DocsDefinitionResolver {
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
-                this.#idgen
+                this.markdownFilesToNoIndex,
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
-        const workspace = this.getFernWorkspaceForApiSection(item);
+
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = generateIntermediateRepresentation({
-            workspace,
-            audiences: item.audiences,
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false,
-            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
-            readme: undefined,
-            version: undefined,
-            packageName: undefined,
-            context: this.taskContext,
-            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-        });
+
+        let ir: IntermediateRepresentation;
+        let workspace: FernWorkspace | undefined = undefined;
+        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+        } else {
+            workspace = this.getFernWorkspaceForApiSection(item);
+            ir = generateIntermediateRepresentation({
+                workspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+            });
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -711,25 +757,30 @@ export class DocsDefinitionResolver {
             apiName: item.apiName
         });
         const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+
         const node = new ApiReferenceNodeConverter(
             item,
             api,
             parentSlug,
-            workspace,
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
-            this.#idgen
+            this.markdownFilesToNoIndex,
+            this.#idgen,
+            workspace,
+            hideChildren
         );
         return node.get();
     }
 
     private async toChangelogNode(
         item: docsYml.DocsNavigationItem.Changelog,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -740,7 +791,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             viewers: item.viewers,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             slug: item.slug
         });
     }
@@ -757,7 +808,8 @@ export class DocsDefinitionResolver {
 
     private async toPageNode(
         item: docsYml.DocsNavigationItem.Page,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
@@ -771,12 +823,12 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             title: item.title,
             icon: item.icon,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined,
+            noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags
         };
     }
@@ -784,7 +836,8 @@ export class DocsDefinitionResolver {
     private async toSectionNode(
         prefix: string,
         item: docsYml.DocsNavigationItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
@@ -796,6 +849,9 @@ export class DocsDefinitionResolver {
                 : undefined,
             skipUrlSlug: item.skipUrlSlug
         });
+        const noindex =
+            item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const hiddenSection = hideChildren || item.hidden;
         return {
             id,
             type: "section",
@@ -804,13 +860,15 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             collapsed: item.collapsed,
-            hidden: item.hidden,
+            hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
+            children: await Promise.all(
+                item.contents.map((child) => this.toNavigationChild(id, child, slug, hiddenSection))
+            ),
             authed: undefined,
             pointsTo: undefined,
-            noindex: undefined,
+            noindex,
             featureFlags: item.featureFlags
         };
     }
@@ -847,6 +905,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
             changelog,
             this.docsWorkspace,
             this.#idgen

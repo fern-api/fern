@@ -20,13 +20,15 @@ class SeedClient
     public UserClient $user;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -37,6 +39,8 @@ class SeedClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -60,7 +64,7 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->organization = new OrganizationClient($this->client);
-        $this->user = new UserClient($this->client);
+        $this->organization = new OrganizationClient($this->client, $this->options);
+        $this->user = new UserClient($this->client, $this->options);
     }
 }

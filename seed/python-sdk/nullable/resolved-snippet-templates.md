@@ -5,7 +5,9 @@ client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
 client.nullable.get_users(
 	usernames="usernames",
 	avatar="avatar",
-	activated=true
+	activated=true,
+	tags="tags",
+	extra=true
 )
 
 ```

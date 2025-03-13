@@ -23,13 +23,19 @@ class SendEnumInlinedRequest extends JsonSerializableType
     public ?string $maybeOperand;
 
     /**
-     * @var value-of<Color>|value-of<Operand> $operandOrColor
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ) $operandOrColor
      */
     #[JsonProperty('operandOrColor')]
     public string $operandOrColor;
 
     /**
-     * @var value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null $maybeOperandOrColor
      */
     #[JsonProperty('maybeOperandOrColor'), Union('string', 'null')]
     public string|null $maybeOperandOrColor;
@@ -37,9 +43,15 @@ class SendEnumInlinedRequest extends JsonSerializableType
     /**
      * @param array{
      *   operand: value-of<Operand>,
+     *   operandOrColor: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ),
      *   maybeOperand?: ?value-of<Operand>,
-     *   operandOrColor: value-of<Color>|value-of<Operand>,
-     *   maybeOperandOrColor?: value-of<Color>|value-of<Operand>|null,
+     *   maybeOperandOrColor?: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null,
      * } $values
      */
     public function __construct(

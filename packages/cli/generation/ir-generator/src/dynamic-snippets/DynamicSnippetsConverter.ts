@@ -1,5 +1,8 @@
 import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
 
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
@@ -33,12 +36,14 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
+    UnionTypeDeclaration,
+    dynamic
 } from "@fern-api/ir-sdk";
 
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
+    servicePathParameters: PathParameter[];
     serviceHeaders: HttpHeader[];
     fernFilepath: FernFilepath;
 }
@@ -46,23 +51,44 @@ interface EndpointWithFilepath extends HttpEndpoint {
 export declare namespace DynamicSnippetsConverter {
     interface Args {
         ir: IntermediateRepresentation;
+        generationLanguage?: generatorsYml.GenerationLanguage;
+        smartCasing?: boolean;
+        generatorConfig?: dynamic.GeneratorConfig;
     }
 }
 
 export class DynamicSnippetsConverter {
+    private readonly ir: IntermediateRepresentation;
+    private readonly casingsGenerator: CasingsGenerator;
     private readonly auth: DynamicSnippets.Auth | undefined;
+    private readonly authValues: DynamicSnippets.AuthValues | undefined;
+    private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
 
-    constructor(private readonly ir: IntermediateRepresentation) {
-        this.auth = this.convertAuth(ir.auth);
+    constructor(args: DynamicSnippetsConverter.Args) {
+        this.ir = args.ir;
+        this.generatorConfig = args.generatorConfig;
+        this.casingsGenerator = constructCasingsGenerator({
+            generationLanguage: args.generationLanguage,
+            smartCasing: args.smartCasing ?? false,
+            keywords: undefined
+        });
+        this.auth = this.convertAuth(this.ir.auth);
+        this.authValues = this.getAuthValues(this.ir.auth);
     }
 
-    public convert(): DynamicSnippets.DynamicIntermediateRepresentation {
+    public convert({
+        includeExamples
+    }: {
+        includeExamples?: boolean;
+    }): DynamicSnippets.DynamicIntermediateRepresentation {
         return {
             version: Version,
             types: this.convertNamedTypes(),
             headers: this.convertHeaders(),
-            endpoints: this.convertEndpoints(),
-            environments: this.ir.environments
+            endpoints: this.convertEndpoints({ includeExamples }),
+            pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
+            environments: this.ir.environments,
+            generatorConfig: this.generatorConfig
         };
     }
 
@@ -79,23 +105,39 @@ export class DynamicSnippetsConverter {
         return this.convertWireValueParameters({ wireValueParameters: this.ir.headers });
     }
 
-    private convertEndpoints(): Record<EndpointId, DynamicSnippets.Endpoint> {
+    private convertEndpoints({
+        includeExamples
+    }: {
+        includeExamples?: boolean;
+    }): Record<EndpointId, DynamicSnippets.Endpoint> {
         const endpoints = this.getAllHttpEndpoints();
-        return Object.fromEntries(endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint(endpoint)]));
+        return Object.fromEntries(
+            endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint({ endpoint, includeExamples })])
+        );
     }
 
-    private convertEndpoint(endpoint: EndpointWithFilepath): DynamicSnippets.Endpoint {
+    private convertEndpoint({
+        endpoint,
+        includeExamples
+    }: {
+        endpoint: EndpointWithFilepath;
+        includeExamples?: boolean;
+    }): DynamicSnippets.Endpoint {
+        const location = this.convertEndpointLocation({ endpoint });
         return {
             auth: this.auth,
             declaration: this.convertDeclaration({ name: endpoint.name, fernFilepath: endpoint.fernFilepath }),
-            location: this.convertEndpointLocation({ endpoint }),
+            location,
             request: this.convertRequest({ endpoint }),
-            response: DynamicSnippets.Response.json()
+            response: DynamicSnippets.Response.json(),
+            examples: includeExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }
 
     private convertRequest({ endpoint }: { endpoint: EndpointWithFilepath }): DynamicSnippets.Request {
-        const pathParameters = this.convertPathParameters({ pathParameters: endpoint.allPathParameters });
+        const pathParameters = this.convertPathParameters({
+            pathParameters: [...endpoint.servicePathParameters, ...endpoint.pathParameters]
+        });
         if (endpoint.sdkRequest == null && endpoint.requestBody == null) {
             return DynamicSnippets.Request.body({ pathParameters, body: undefined });
         }
@@ -400,20 +442,24 @@ export class DynamicSnippetsConverter {
         const properties = [...(object.extendedProperties ?? []), ...object.properties];
         return this.convertObjectProperties({
             declaration,
-            properties
+            properties,
+            additionalProperties: object.extraProperties
         });
     }
 
     private convertObjectProperties({
         declaration,
-        properties
+        properties,
+        additionalProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
+        additionalProperties: boolean;
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties })
+            properties: this.convertWireValueParameters({ wireValueParameters: properties }),
+            additionalProperties
         });
     }
 
@@ -574,8 +620,39 @@ export class DynamicSnippetsConverter {
                     }
                 });
             case "oauth":
-                // TODO: Support OAuth.
-                return undefined;
+                return DynamicSnippets.Auth.oauth({
+                    clientId: this.casingsGenerator.generateName("clientId"),
+                    clientSecret: this.casingsGenerator.generateName("clientSecret")
+                });
+            default:
+                assertNever(scheme);
+        }
+    }
+
+    private getAuthValues(auth: ApiAuth): DynamicSnippets.AuthValues | undefined {
+        const scheme = auth.schemes[0];
+        if (scheme == null) {
+            return undefined;
+        }
+        switch (scheme.type) {
+            case "bearer":
+                return DynamicSnippets.AuthValues.bearer({
+                    token: "<token>"
+                });
+            case "basic":
+                return DynamicSnippets.AuthValues.basic({
+                    username: "<username>",
+                    password: "<password>"
+                });
+            case "header":
+                return DynamicSnippets.AuthValues.header({
+                    value: "<value>"
+                });
+            case "oauth":
+                return DynamicSnippets.AuthValues.oauth({
+                    clientId: "<clientId>",
+                    clientSecret: "<clientSecret>"
+                });
             default:
                 assertNever(scheme);
         }
@@ -605,6 +682,7 @@ export class DynamicSnippetsConverter {
         return Object.values(this.ir.services).flatMap((service) =>
             service.endpoints.map((endpoint) => ({
                 ...endpoint,
+                servicePathParameters: service.pathParameters,
                 serviceHeaders: service.headers,
                 fernFilepath: service.name.fernFilepath
             }))
@@ -644,5 +722,48 @@ export class DynamicSnippetsConverter {
             }
         }
         return url.startsWith("/") ? url : `/${url}`;
+    }
+
+    private getEndpointSnippetRequests({
+        endpoint,
+        location
+    }: {
+        endpoint: HttpEndpoint;
+        location: DynamicSnippets.EndpointLocation;
+    }): DynamicSnippets.EndpointExample[] {
+        const requests: DynamicSnippets.EndpointExample[] = [];
+        for (const example of [...endpoint.userSpecifiedExamples, ...endpoint.autogeneratedExamples]) {
+            requests.push({
+                id: example?.example?.id ?? uuidv4(),
+                name: example?.example?.name?.originalName,
+                endpoint: location,
+                baseUrl: undefined,
+                environment: undefined,
+                auth: this.authValues,
+                headers: Object.fromEntries(
+                    [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
+                        (header) => {
+                            return [header.name.wireValue, header.value.jsonExample];
+                        }
+                    )
+                ),
+                pathParameters: Object.fromEntries(
+                    [
+                        ...(example.example?.rootPathParameters ?? []),
+                        ...(example.example?.servicePathParameters ?? []),
+                        ...(example.example?.endpointPathParameters ?? [])
+                    ].map((parameter) => {
+                        return [parameter.name.originalName, parameter.value.jsonExample];
+                    })
+                ),
+                queryParameters: Object.fromEntries(
+                    [...(example.example?.queryParameters ?? [])].map((parameter) => {
+                        return [parameter.name.wireValue, parameter.value.jsonExample];
+                    })
+                ),
+                requestBody: example.example?.request?.jsonExample
+            });
+        }
+        return requests;
     }
 }

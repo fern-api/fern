@@ -31,4 +31,12 @@ class LightweightStackframeInformation extends JsonSerializableType
         $this->numStackFrames = $values['numStackFrames'];
         $this->topStackFrameMethodName = $values['topStackFrameMethodName'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

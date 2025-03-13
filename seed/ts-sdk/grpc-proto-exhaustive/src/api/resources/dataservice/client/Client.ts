@@ -242,7 +242,7 @@ export class Dataservice {
         requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.FetchResponse> {
         const { ids, namespace } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (ids != null) {
             if (Array.isArray(ids)) {
                 _queryParams["ids"] = ids.map((item) => item);
@@ -321,7 +321,7 @@ export class Dataservice {
         requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.ListResponse> {
         const { prefix, limit, paginationToken, namespace } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (prefix != null) {
             _queryParams["prefix"] = prefix;
         }

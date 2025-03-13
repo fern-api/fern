@@ -40,4 +40,12 @@ class Node extends JsonSerializableType
         $this->label = $values['label'] ?? null;
         $this->metadata = $values['metadata'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

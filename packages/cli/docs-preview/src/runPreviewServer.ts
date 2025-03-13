@@ -230,6 +230,7 @@ export async function runPreviewServer({
             };
             res.send(response);
         } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
         }

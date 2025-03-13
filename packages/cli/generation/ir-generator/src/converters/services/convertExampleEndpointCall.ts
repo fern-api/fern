@@ -20,6 +20,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
+import { hashJSON } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -27,7 +28,6 @@ import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { hashJSON } from "../../utils/hashJSON";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,

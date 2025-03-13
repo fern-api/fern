@@ -15805,8 +15805,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -15982,8 +15981,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16107,8 +16105,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16235,8 +16232,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16245,8 +16241,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -16447,8 +16442,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16581,8 +16575,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16705,8 +16698,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16838,8 +16830,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -16977,8 +16968,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17110,8 +17100,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17351,8 +17340,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17500,8 +17488,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17632,8 +17619,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -17819,8 +17805,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -17924,8 +17909,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18016,8 +18000,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18108,8 +18091,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -18124,8 +18106,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18230,8 +18211,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18328,8 +18308,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18464,8 +18443,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18590,8 +18568,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18687,8 +18664,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18969,8 +18945,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19061,8 +19036,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19153,8 +19127,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19245,8 +19218,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -21009,13 +20981,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21028,9 +20999,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21084,13 +21054,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21103,9 +21072,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21358,13 +21326,12 @@ service:
                             },
                           },
                           "action": {
-                            "actionType": "Webhook",
-                            "headers": "action",
-                            "method": "POST",
-                            "payload": "action",
-                            "payloadType": "action",
-                            "sharedSecret": "action",
-                            "url": "action",
+                            "actionType": "Algolia",
+                            "apiKey": "apiKey",
+                            "appId": "appId",
+                            "delete": "delete",
+                            "document": "document",
+                            "indexName": "indexName",
                           },
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
@@ -21377,8 +21344,7 @@ service:
                           "numFailed": 1000000,
                           "numSucceeded": 1000000,
                           "trigger": {
-                            "limit": 1,
-                            "triggerType": "Usage",
+                            "triggerType": "AssetChanged",
                           },
                           "version": 1000000,
                         },
@@ -21422,17 +21388,15 @@ service:
                   },
                   "request": {
                     "action": {
-                      "actionType": "Webhook",
-                      "headers": "action",
-                      "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "actionType": "Algolia",
+                      "apiKey": "apiKey",
+                      "appId": "appId",
+                      "delete": "delete",
+                      "document": "document",
+                      "indexName": "indexName",
                     },
                     "trigger": {
-                      "limit": 1,
-                      "triggerType": "Usage",
+                      "triggerType": "AssetChanged",
                     },
                   },
                   "response": {
@@ -21445,13 +21409,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21464,9 +21427,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21555,13 +21517,12 @@ service:
                         },
                       },
                       "action": {
-                        "actionType": "Webhook",
-                        "headers": "action",
-                        "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "actionType": "Algolia",
+                        "apiKey": "apiKey",
+                        "appId": "appId",
+                        "delete": "delete",
+                        "document": "document",
+                        "indexName": "indexName",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21574,9 +21535,8 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
-                        "limit": 1,
-                        "numDays": 1,
-                        "triggerType": "Usage",
+                        "condition": "condition",
+                        "triggerType": "AssetChanged",
                       },
                       "version": 1000000,
                     },
@@ -21760,17 +21720,15 @@ service:
                   },
                   "request": {
                     "action": {
-                      "actionType": "Webhook",
-                      "headers": "action",
-                      "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "actionType": "Algolia",
+                      "apiKey": "apiKey",
+                      "appId": "appId",
+                      "delete": "delete",
+                      "document": "document",
+                      "indexName": "indexName",
                     },
                     "trigger": {
-                      "limit": 1,
-                      "triggerType": "Usage",
+                      "triggerType": "AssetChanged",
                     },
                   },
                   "response": {
@@ -21945,16 +21903,14 @@ service:
                   isEnabled: true
                   name: name
                   trigger:
-                    triggerType: Usage
-                    limit: 1
+                    triggerType: AssetChanged
                   action:
-                    actionType: Webhook
-                    url: action
-                    method: POST
-                    payload: action
-                    payloadType: action
-                    headers: action
-                    sharedSecret: action
+                    appId: appId
+                    apiKey: apiKey
+                    indexName: indexName
+                    document: document
+                    delete: delete
+                    actionType: Algolia
                   numSucceeded: 1000000
                   numFailed: 1000000
                   lastExecuted: '2024-01-15T09:30:00Z'
@@ -21986,16 +21942,14 @@ service:
             app: app
           request:
             trigger:
-              triggerType: Usage
-              limit: 1
+              triggerType: AssetChanged
             action:
-              actionType: Webhook
-              url: action
-              method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              actionType: Algolia
           response:
             body:
               _links:
@@ -22012,17 +21966,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22103,17 +22055,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22181,17 +22131,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22237,17 +22185,15 @@ service:
               isEnabled: true
               name: name
               trigger:
-                triggerType: Usage
-                limit: 1
-                numDays: 1
+                condition: condition
+                triggerType: AssetChanged
               action:
-                actionType: Webhook
-                url: action
-                method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22349,16 +22295,14 @@ service:
             app: app
           request:
             trigger:
-              triggerType: Usage
-              limit: 1
+              triggerType: AssetChanged
             action:
-              actionType: Webhook
-              url: action
-              method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              actionType: Algolia
           response:
             body:
               _links:
@@ -22661,8 +22605,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22671,8 +22614,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -22808,8 +22750,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -22818,8 +22759,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -22992,8 +22932,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23002,8 +22941,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23139,8 +23077,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23149,8 +23086,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23289,8 +23225,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23299,8 +23234,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23436,8 +23370,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23446,8 +23379,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23584,8 +23516,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23594,8 +23525,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23718,8 +23648,7 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23833,8 +23762,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23843,8 +23771,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -23980,8 +23907,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -23990,8 +23916,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24130,8 +24055,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24140,8 +24064,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24277,8 +24200,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24287,8 +24209,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24384,8 +24305,7 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -24437,8 +24357,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24447,8 +24366,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24541,8 +24459,7 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -24594,8 +24511,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24604,8 +24520,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24748,8 +24663,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24758,8 +24672,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -24918,8 +24831,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -24928,8 +24840,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25060,8 +24971,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25070,8 +24980,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25173,8 +25082,7 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -25226,8 +25134,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25236,8 +25143,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25333,8 +25239,7 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editor": "Separator",
-                      "fieldType": "UI",
+                      "fieldType": "Array",
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
@@ -25386,8 +25291,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25396,8 +25300,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25545,8 +25448,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25555,8 +25457,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25697,8 +25598,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25707,8 +25607,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -25843,8 +25742,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -25853,8 +25751,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26002,8 +25899,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26012,8 +25908,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26199,8 +26094,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26209,8 +26103,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26349,8 +26242,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26359,8 +26251,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26513,8 +26404,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26523,8 +26413,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26674,8 +26563,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26684,8 +26572,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26820,8 +26707,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26830,8 +26716,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -26967,8 +26852,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -26977,8 +26861,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -27116,8 +26999,7 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editor": "Separator",
-                                "fieldType": "UI",
+                                "fieldType": "Array",
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
@@ -27126,8 +27008,7 @@ service:
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editor": "Separator",
-                            "fieldType": "UI",
+                            "fieldType": "Array",
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
@@ -27241,8 +27122,7 @@ service:
           request:
             name: name
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27302,8 +27182,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27318,8 +27197,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27360,8 +27238,7 @@ service:
           request:
             name: name
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27421,8 +27298,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27437,8 +27313,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27536,8 +27411,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27552,8 +27426,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27645,8 +27518,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27661,8 +27533,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27758,8 +27629,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27774,8 +27644,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27814,8 +27683,7 @@ service:
             id: 1000000
           request:
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27875,8 +27743,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27891,8 +27758,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27982,8 +27848,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27998,8 +27863,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28042,8 +27906,7 @@ service:
             id: 1000000
           request:
             properties:
-              fieldType: UI
-              editor: Separator
+              fieldType: Array
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -28103,8 +27966,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28119,8 +27981,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28214,8 +28075,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28230,8 +28090,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28322,8 +28181,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28338,8 +28196,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28434,8 +28291,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28450,8 +28306,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28544,8 +28399,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28560,8 +28414,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28658,8 +28511,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28674,8 +28526,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28768,8 +28619,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28784,8 +28634,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28882,8 +28731,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28898,8 +28746,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28992,8 +28839,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29008,8 +28854,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29106,8 +28951,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29122,8 +28966,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29216,8 +29059,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29232,8 +29074,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29330,8 +29171,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29346,8 +29186,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29419,8 +29258,7 @@ service:
                       isDisabled: true
                       partitioning: partitioning
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29527,8 +29365,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29543,8 +29380,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29629,8 +29465,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29645,8 +29480,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29766,8 +29600,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29782,8 +29615,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29908,8 +29740,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29924,8 +29755,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30020,8 +29850,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30036,8 +29865,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30128,8 +29956,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30144,8 +29971,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30235,8 +30061,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30251,8 +30076,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30347,8 +30171,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30363,8 +30186,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30450,8 +30272,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30466,8 +30287,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30553,8 +30373,7 @@ service:
                   isDisabled: true
                   partitioning: partitioning
                   properties:
-                    fieldType: UI
-                    editor: Separator
+                    fieldType: Array
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30569,8 +30388,7 @@ service:
                       isLocked: true
                       isDisabled: true
                       properties:
-                        fieldType: UI
-                        editor: Separator
+                        fieldType: Array
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true

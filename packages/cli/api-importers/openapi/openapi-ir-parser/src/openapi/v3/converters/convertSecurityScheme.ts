@@ -71,7 +71,7 @@ function convertSecuritySchemeHelper(
             scopesEnum: getScopes(securityScheme, source)
         });
     }
-    throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
+    return undefined;
 }
 
 function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {

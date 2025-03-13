@@ -1,4 +1,4 @@
-irVersion: v46
+irVersion: v55
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring
@@ -49,3 +49,4 @@ allowedFailures:
   - server-sent-event-examples
   - alias-extends
   - any-auth
+  - streaming-parameter

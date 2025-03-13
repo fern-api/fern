@@ -31,4 +31,12 @@ class NestedUser extends JsonSerializableType
         $this->name = $values['name'];
         $this->user = $values['user'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

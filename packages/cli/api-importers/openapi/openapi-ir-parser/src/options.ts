@@ -30,6 +30,10 @@ export interface ParseOpenAPIOptions {
     objectQueryParameters: boolean;
     /* Whether or not to use undiscriminated unions with literals. */
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    /* Whether or not to use idiomatic request names for endpoints. */
+    shouldUseIdiomaticRequestNames: boolean;
+    /* What the default encoding should be for form data parameters. */
+    defaultFormParameterEncoding: "form" | "json" | undefined;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -55,9 +59,11 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     preserveSchemaIds: false,
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
+    shouldUseIdiomaticRequestNames: false,
     filter: undefined,
     asyncApiNaming: "v1",
-    exampleGeneration: undefined
+    exampleGeneration: undefined,
+    defaultFormParameterEncoding: "json"
 };
 
 export function getParseOptions({
@@ -105,6 +111,10 @@ export function getParseOptions({
             overrides?.shouldUseUndiscriminatedUnionsWithLiterals ??
             options?.shouldUseUndiscriminatedUnionsWithLiterals ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseUndiscriminatedUnionsWithLiterals,
+        shouldUseIdiomaticRequestNames:
+            overrides?.shouldUseIdiomaticRequestNames ??
+            options?.shouldUseIdiomaticRequestNames ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseIdiomaticRequestNames,
         objectQueryParameters:
             overrides?.objectQueryParameters ??
             options?.objectQueryParameters ??
@@ -112,6 +122,8 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
+        defaultFormParameterEncoding:
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
     };
 }

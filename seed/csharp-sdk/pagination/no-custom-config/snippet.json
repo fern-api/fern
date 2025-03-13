@@ -1,0 +1,173 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifier_override": "endpoint_complex.search"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Complex.SearchAsync(\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals,\n            Value = \"value\",\n        },\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithCursorPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithCursorPaginationAsync(\n    new ListUsersCursorPaginationRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Order = Order.Asc,\n        StartingAfter = \"starting_after\",\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithMixedTypeCursorPaginationAsync(\n    new ListUsersMixedTypeCursorPaginationRequest { Cursor = \"cursor\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithBodyCursorPaginationAsync(\n    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = \"cursor\" } }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithOffsetPaginationAsync(\n    new ListUsersOffsetPaginationRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Order = Order.Asc,\n        StartingAfter = \"starting_after\",\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithDoubleOffsetPaginationAsync(\n    new ListUsersDoubleOffsetPaginationRequest\n    {\n        Page = 1.1,\n        PerPage = 1.1,\n        Order = Order.Asc,\n        StartingAfter = \"starting_after\",\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithBodyOffsetPaginationAsync(\n    new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithOffsetStepPaginationAsync(\n    new ListUsersOffsetStepPaginationRequest\n    {\n        Page = 1,\n        Limit = 1,\n        Order = Order.Asc,\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new ListWithOffsetPaginationHasNextPageRequest\n    {\n        Page = 1,\n        Limit = 1,\n        Order = Order.Asc,\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithExtendedResultsAsync(\n    new ListUsersExtendedRequest { Cursor = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithExtendedResultsAndOptionalDataAsync(\n    new ListUsersExtendedRequestForOptionalData { Cursor = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listUsernames"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListUsernamesAsync(\n    new ListUsernamesRequest { StartingAfter = \"starting_after\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListUsernamesCustomAsync(\n    new ListUsernamesRequestCustom { StartingAfter = \"starting_after\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+            }
+        }
+    ]
+}

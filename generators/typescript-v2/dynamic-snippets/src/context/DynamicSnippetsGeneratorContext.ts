@@ -90,7 +90,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private getEnvironmentsTypeReference(name: FernIr.Name): ts.Reference {
         return ts.reference({
-            name: `${this.namespaceExport}Environments`,
+            name: `${this.namespaceExport}Environment`,
             importFrom: this.getModuleImport(),
             memberName: this.getTypeName(name)
         });

@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { Name } from "@fern-fern/ir-sdk/api";
@@ -9,6 +10,7 @@ import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs
 
 export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
+export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -40,8 +42,30 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         );
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
+        class_.addFields(this.baseOptionsGenerator.getLiteralHeaderOptions(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
             class_.addField(this.getGrpcOptionsField());
+        }
+
+        if (this.context.includeExceptionHandler()) {
+            class_.addField(
+                csharp.field({
+                    summary: "A handler that will handle exceptions thrown by the client.",
+                    access: csharp.Access.Internal,
+                    name: EXCEPTION_HANDLER_MEMBER_NAME,
+                    type: csharp.Type.reference(this.context.getExceptionHandlerClassReference()),
+                    get: true,
+                    set: true,
+                    initializer: csharp.codeblock((writer) => {
+                        writer.writeNode(
+                            csharp.instantiateClass({
+                                classReference: this.context.getExceptionHandlerClassReference(),
+                                arguments_: [csharp.codeblock("null")]
+                            })
+                        );
+                    })
+                })
+            );
         }
 
         class_.addMethod(this.getCloneMethod(class_));
@@ -184,7 +208,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     HttpClient = HttpClient,
     MaxRetries = MaxRetries,
     Timeout = Timeout,
-    Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
+    Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+    ${this.context.includeExceptionHandler() ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                 );
             }),

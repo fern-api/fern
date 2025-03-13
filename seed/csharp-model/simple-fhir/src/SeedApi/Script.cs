@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 using SeedApi.Core;
@@ -7,7 +8,7 @@ namespace SeedApi;
 public record Script
 {
     [JsonPropertyName("resource_type")]
-    public required string ResourceType { get; set; }
+    public string ResourceType { get; set; } = "Script";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -22,6 +23,13 @@ public record Script
 
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

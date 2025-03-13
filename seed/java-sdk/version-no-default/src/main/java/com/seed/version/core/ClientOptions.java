@@ -37,6 +37,7 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
+                put("User-Agent", "com.fern:version-no-default/0.0.1");
                 put("X-Fern-Language", "JAVA");
             }
         });
@@ -69,6 +70,13 @@ public final class ClientOptions {
         return this.version;
     }
 
+    public int timeout(RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return this.timeout;
+        }
+        return requestOptions.getTimeout().orElse(this.timeout);
+    }
+
     public OkHttpClient httpClient() {
         return this.httpClient;
     }
@@ -99,6 +107,11 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
+        private OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(new RetryInterceptor(3))
+                .callTimeout(this.timeout, TimeUnit.SECONDS)
+                .build();
+
         private ApiVersion version;
 
         public Builder environment(Environment environment) {
@@ -124,6 +137,11 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
         /**
          * version.toString() is sent as the "X-API-Version" header.
          */
@@ -133,11 +151,7 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    .callTimeout(this.timeout, TimeUnit.SECONDS)
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.timeout, version);
+            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout, version);
         }
     }
 }

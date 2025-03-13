@@ -128,6 +128,13 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			continue
 		}
 
+		if sv.Kind() == reflect.Map {
+			if err := reflectMap(values, sv, name); err != nil {
+				return err
+			}
+			continue
+		}
+
 		if sv.Kind() == reflect.Struct {
 			if err := reflectValue(values, sv, name); err != nil {
 				return err
@@ -136,6 +143,68 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 		}
 
 		values.Add(name, valueString(sv, opts, sf))
+	}
+
+	return nil
+}
+
+// reflectMap handles map types specifically, generating query parameters in the format key[mapkey]=value
+func reflectMap(values url.Values, val reflect.Value, scope string) error {
+	if val.IsNil() {
+		return nil
+	}
+
+	iter := val.MapRange()
+	for iter.Next() {
+		k := iter.Key()
+		v := iter.Value()
+
+		key := fmt.Sprint(k.Interface())
+		paramName := scope + "[" + key + "]"
+
+		for v.Kind() == reflect.Ptr {
+			if v.IsNil() {
+				break
+			}
+			v = v.Elem()
+		}
+
+		for v.Kind() == reflect.Interface {
+			v = v.Elem()
+		}
+
+		if v.Kind() == reflect.Map {
+			if err := reflectMap(values, v, paramName); err != nil {
+				return err
+			}
+			continue
+		}
+
+		if v.Kind() == reflect.Struct {
+			if err := reflectValue(values, v, paramName); err != nil {
+				return err
+			}
+			continue
+		}
+
+		if v.Kind() == reflect.Slice || v.Kind() == reflect.Array {
+			if v.Len() == 0 {
+				continue
+			}
+			for i := 0; i < v.Len(); i++ {
+				value := v.Index(i)
+				if isStructPointer(value) && !value.IsNil() {
+					if err := reflectValue(values, value.Elem(), paramName); err != nil {
+						return err
+					}
+				} else {
+					values.Add(paramName, valueString(value, tagOptions{}, reflect.StructField{}))
+				}
+			}
+			continue
+		}
+
+		values.Add(paramName, valueString(v, tagOptions{}, reflect.StructField{}))
 	}
 
 	return nil

@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_nullable.getUsers"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [null],\n        Extra = null,\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [\"tags\"],\n        Extra = true,\n    }\n);\n"
             }
         },
         {
@@ -21,8 +21,8 @@
                 "identifier_override": "endpoint_nullable.createUser"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Username = \"username\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Metadata = new Metadata\n        {\n            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Avatar = \"avatar\",\n            Activated = true,\n        },\n        Avatar = \"avatar\",\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Username = \"username\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Metadata = new Metadata\n        {\n            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Avatar = \"avatar\",\n            Activated = true,\n            Status = \"no-properties-union\",\n        },\n        Avatar = \"avatar\",\n    }\n);\n"
             }
         },
         {
@@ -33,7 +33,7 @@
                 "identifier_override": "endpoint_nullable.deleteUser"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.DeleteUserAsync(new DeleteUserRequest { Username = \"xy\" });\n"
             }
         }

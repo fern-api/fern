@@ -6,6 +6,7 @@ package com.seed.basicAuthEnvironmentVariables;
 import com.seed.basicAuthEnvironmentVariables.core.ClientOptions;
 import com.seed.basicAuthEnvironmentVariables.core.Environment;
 import java.util.Base64;
+import okhttp3.OkHttpClient;
 
 public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -32,6 +33,14 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
      */
     public SeedBasicAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedBasicAuthEnvironmentVariablesClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

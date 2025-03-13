@@ -9,4 +9,5 @@ export { type ListWithOffsetPaginationHasNextPageRequest } from "./ListWithOffse
 export { type ListUsersExtendedRequest } from "./ListUsersExtendedRequest";
 export { type ListUsersExtendedRequestForOptionalData } from "./ListUsersExtendedRequestForOptionalData";
 export { type ListUsernamesRequest } from "./ListUsernamesRequest";
+export { type ListUsernamesRequestCustom } from "./ListUsernamesRequestCustom";
 export { type ListWithGlobalConfigRequest } from "./ListWithGlobalConfigRequest";

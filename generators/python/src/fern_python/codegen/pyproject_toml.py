@@ -201,16 +201,19 @@ packages = [
             for dep in sorted(dependencies, key=lambda dep: dep.name):
                 compatibility = dep.compatibility
                 is_optional = dep.optional
+                has_python_version = dep.python is not None
                 version = dep.version
                 extras = dep.extras
                 name = dep.name.replace(".", "-")
                 if compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
 
-                if is_optional or dep.extras is not None:
+                if is_optional or has_python_version or dep.extras is not None:
                     deps += f'{name} = {{ version = "{version}"'
                     if is_optional:
                         deps += ", optional = true"
+                    if has_python_version:
+                        deps += f', python = "{dep.python}"'
                     if extras is not None:
                         deps += f", extras = {json.dumps(list(extras))}"
                     deps += "}\n"

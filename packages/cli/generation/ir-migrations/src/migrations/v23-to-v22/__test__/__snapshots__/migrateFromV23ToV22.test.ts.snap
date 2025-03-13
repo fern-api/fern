@@ -12944,6 +12944,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "message",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "STRING",
@@ -13442,6 +13443,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "string",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -13481,6 +13483,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "NestedObject",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -13853,6 +13856,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "string",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "STRING",
@@ -13886,6 +13890,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "NestedObject",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "named",
               "_visit": [Function],
@@ -14147,6 +14152,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "string",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14186,6 +14192,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "integer",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14225,6 +14232,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "long",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14264,6 +14272,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "double",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14303,6 +14312,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "bool",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14342,6 +14352,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "datetime",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14381,6 +14392,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "date",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14420,6 +14432,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "uuid",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14459,6 +14472,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "base64",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14498,6 +14512,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "list",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14543,6 +14558,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "set",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14588,6 +14604,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "map",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "container",
               "container": {
@@ -14760,6 +14777,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "string",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "STRING",
@@ -15543,6 +15561,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "name",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "STRING",
@@ -15576,6 +15595,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "likesToMeow",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "BOOLEAN",
@@ -15732,6 +15752,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "name",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "STRING",
@@ -15765,6 +15786,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "likesToWoof",
             },
+            "propertyAccess": undefined,
             "valueType": {
               "_type": "primitive",
               "primitive": "BOOLEAN",

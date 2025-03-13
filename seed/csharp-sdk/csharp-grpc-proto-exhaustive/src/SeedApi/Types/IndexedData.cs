@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -21,9 +21,9 @@ public record IndexedData
     /// <summary>
     /// Maps the IndexedData type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.IndexedData ToProto()
+    internal ProtoDataV1Grpc.IndexedData ToProto()
     {
-        var result = new Proto.IndexedData();
+        var result = new ProtoDataV1Grpc.IndexedData();
         if (Indices.Any())
         {
             result.Indices.AddRange(Indices);
@@ -38,7 +38,7 @@ public record IndexedData
     /// <summary>
     /// Returns a new IndexedData type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static IndexedData FromProto(Proto.IndexedData value)
+    internal static IndexedData FromProto(ProtoDataV1Grpc.IndexedData value)
     {
         return new IndexedData
         {

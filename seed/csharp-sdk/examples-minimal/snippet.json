@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.GetMovieAsync(\n    new ExtendedMovie\n    {\n        Foo = \"foo\",\n        Bar = 1,\n        Cast = new List<string>() { \"cast\", \"cast\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/big-entity",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createBigEntity"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.Service.CreateBigEntityAsync(true);\n"
+            }
+        }
+    ]
+}

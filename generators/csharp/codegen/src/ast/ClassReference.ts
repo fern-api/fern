@@ -11,7 +11,9 @@ export declare namespace ClassReference {
         /* The namespace alias for C# class */
         namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: csharp.Type[];
+        generics?: (csharp.Type | csharp.TypeParameter)[];
+        /* Whether or not the class reference should be fully-qualified */
+        fullyQualified?: boolean;
     }
 }
 
@@ -19,20 +21,25 @@ export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
-    public readonly generics: csharp.Type[];
+    public readonly generics: (csharp.Type | csharp.TypeParameter)[];
+    public readonly fullyQualified: boolean;
 
-    constructor({ name, namespace, namespaceAlias, generics }: ClassReference.Args) {
+    constructor({ name, namespace, namespaceAlias, generics, fullyQualified }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.namespaceAlias = namespaceAlias;
         this.generics = generics ?? [];
+        this.fullyQualified = fullyQualified ?? false;
     }
 
     public write(writer: Writer): void {
         if (this.namespaceAlias != null) {
-            writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
-            writer.write(`${this.namespaceAlias}.${this.name}`);
+            const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
+            writer.write(`${alias}.${this.name}`);
+        } else if (this.fullyQualified) {
+            writer.addReference(this);
+            writer.write(`${this.namespace}.${this.name}`);
         } else if (this.qualifiedTypeNameRequired(writer)) {
             const typeQualification = this.getTypeQualification({
                 classReferenceNamespace: this.namespace,

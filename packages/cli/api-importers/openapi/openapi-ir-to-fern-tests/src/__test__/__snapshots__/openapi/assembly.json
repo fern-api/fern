@@ -88,6 +88,19 @@
           },
         },
         "types": {
+          "AudioData": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "audio_data": {
+                "docs": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "AudioIntelligenceModelStatus": {
             "docs": "Will be either success, or unavailable in the rare case that the model failed.",
             "enum": [
@@ -557,6 +570,30 @@ Valid values are in the range [0, 1] inclusive.
               "openapi": "../openapi.yml",
             },
           },
+          "FinalTranscript": {
+            "docs": undefined,
+            "extends": [
+              "RealtimeBaseTranscript",
+            ],
+            "inline": undefined,
+            "properties": {
+              "message_type": {
+                "docs": "Describes the type of message.",
+                "type": "literal<"FinalTranscript">",
+              },
+              "punctuated": {
+                "docs": "Whether the text has been punctuated and cased.",
+                "type": "boolean",
+              },
+              "text_formatted": {
+                "docs": "Whether the text has been formatted (e.g. Dollar -> $)",
+                "type": "boolean",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "LemurActionItemsParameters": "LemurBaseParameters",
           "LemurActionItemsResponse": {
             "docs": undefined,
@@ -746,6 +783,18 @@ Can be any value between 0.0 and 1.0 inclusive.
               "openapi": "../openapi.yml",
             },
           },
+          "MessageType": {
+            "enum": [
+              "SessionBegins",
+              "PartialTranscript",
+              "FinalTranscript",
+              "SessionTerminated",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "PageDetails": {
             "docs": undefined,
             "inline": undefined,
@@ -780,6 +829,22 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
             "source": {
               "openapi": "../openapi.yml",
+            },
+          },
+          "PartialTranscript": {
+            "docs": undefined,
+            "extends": [
+              "RealtimeBaseTranscript",
+            ],
+            "inline": undefined,
+            "properties": {
+              "message_type": {
+                "docs": "Describes the type of message.",
+                "type": "literal<"PartialTranscript">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
             },
           },
           "PiiPolicy": {
@@ -838,6 +903,85 @@ Can be any value between 0.0 and 1.0 inclusive.
               "openapi": "../openapi.yml",
             },
           },
+          "RealtimeBaseMessage": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message_type": {
+                "docs": "Describes the type of the message.",
+                "type": "MessageType",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "RealtimeBaseTranscript": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "audio_end": {
+                "docs": "End time of audio sample relative to session start, in milliseconds.",
+                "type": "integer",
+              },
+              "audio_start": {
+                "docs": "Start time of audio sample relative to session start, in milliseconds.",
+                "type": "integer",
+              },
+              "confidence": {
+                "docs": "The confidence score of the entire transcription, between 0 and 1.",
+                "type": "double",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 1,
+                  "min": 0,
+                  "multipleOf": undefined,
+                },
+              },
+              "created": {
+                "docs": "The timestamp for the partial transcript.",
+                "type": "datetime",
+              },
+              "text": {
+                "docs": "The partial transcript for your audio.",
+                "type": "string",
+              },
+              "words": {
+                "docs": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
+                "type": "list<Word>",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "RealtimeError": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "error": "string",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "RealtimeMessage": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "SessionBegins",
+              "PartialTranscript",
+              "FinalTranscript",
+              "SessionTerminated",
+              "RealtimeError",
+            ],
+          },
           "RealtimeTemporaryTokenResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -849,6 +993,29 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
             "source": {
               "openapi": "../openapi.yml",
+            },
+          },
+          "RealtimeTranscript": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "PartialTranscript",
+              "FinalTranscript",
+            ],
+          },
+          "RealtimeTranscriptType": {
+            "enum": [
+              "PartialTranscript",
+              "FinalTranscript",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
             },
           },
           "RedactedAudioResponse": {
@@ -945,6 +1112,40 @@ Can be any value between 0.0 and 1.0 inclusive.
               "openapi": "../openapi.yml",
             },
           },
+          "SessionBegins": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "expires_at": {
+                "docs": "Timestamp when this session will expire.",
+                "type": "datetime",
+              },
+              "message_type": {
+                "docs": "Describes the type of the message.",
+                "type": "literal<"SessionBegins">",
+              },
+              "session_id": {
+                "docs": "Unique identifier for the established session.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SessionTerminated": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message_type": {
+                "docs": "Describes the type of the message.",
+                "type": "literal<"SessionTerminated">",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "SeverityScoreSummary": {
             "docs": undefined,
             "inline": undefined,
@@ -1032,6 +1233,22 @@ Can be any value between 0.0 and 1.0 inclusive.
             "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
+            },
+          },
+          "TerminateSession": {
+            "docs": undefined,
+            "extends": [
+              "RealtimeBaseMessage",
+            ],
+            "inline": undefined,
+            "properties": {
+              "terminate_session": {
+                "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
+                "type": "boolean",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
             },
           },
           "Timestamp": {
@@ -1651,6 +1868,38 @@ The default value is 'en_us'.
             },
             "source": {
               "openapi": "../openapi.yml",
+            },
+          },
+          "Word": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "confidence": {
+                "docs": "Confidence score of the word",
+                "type": "double",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 1,
+                  "min": 0,
+                  "multipleOf": undefined,
+                },
+              },
+              "end": {
+                "docs": "End time of the word in milliseconds",
+                "type": "integer",
+              },
+              "start": {
+                "docs": "Start time of the word in milliseconds",
+                "type": "integer",
+              },
+              "text": {
+                "docs": "The word itself",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
             },
           },
           "WordSearchMatch": {
@@ -3101,6 +3350,161 @@ types:
       status: optional<literal<"error">>
     source:
       openapi: ../openapi.yml
+  RealtimeBaseMessage:
+    properties:
+      message_type:
+        type: MessageType
+        docs: Describes the type of the message.
+    source:
+      openapi: ../asyncapi.yml
+  RealtimeMessage:
+    discriminated: false
+    union:
+      - SessionBegins
+      - PartialTranscript
+      - FinalTranscript
+      - SessionTerminated
+      - RealtimeError
+    source:
+      openapi: ../asyncapi.yml
+  RealtimeError:
+    properties:
+      error: string
+    source:
+      openapi: ../asyncapi.yml
+  MessageType:
+    enum:
+      - SessionBegins
+      - PartialTranscript
+      - FinalTranscript
+      - SessionTerminated
+    source:
+      openapi: ../asyncapi.yml
+  RealtimeTranscriptType:
+    enum:
+      - PartialTranscript
+      - FinalTranscript
+    source:
+      openapi: ../asyncapi.yml
+  RealtimeTranscript:
+    discriminated: false
+    union:
+      - PartialTranscript
+      - FinalTranscript
+    source:
+      openapi: ../asyncapi.yml
+  SessionBegins:
+    properties:
+      message_type:
+        type: literal<"SessionBegins">
+        docs: Describes the type of the message.
+      session_id:
+        type: string
+        docs: Unique identifier for the established session.
+      expires_at:
+        type: datetime
+        docs: Timestamp when this session will expire.
+    source:
+      openapi: ../asyncapi.yml
+  SessionTerminated:
+    properties:
+      message_type:
+        type: literal<"SessionTerminated">
+        docs: Describes the type of the message.
+    source:
+      openapi: ../asyncapi.yml
+  RealtimeBaseTranscript:
+    properties:
+      audio_start:
+        type: integer
+        docs: Start time of audio sample relative to session start, in milliseconds.
+      audio_end:
+        type: integer
+        docs: End time of audio sample relative to session start, in milliseconds.
+      confidence:
+        type: double
+        docs: The confidence score of the entire transcription, between 0 and 1.
+        validation:
+          min: 0
+          max: 1
+      text:
+        type: string
+        docs: The partial transcript for your audio.
+      words:
+        docs: >-
+          An array of objects, with the information for each word in the
+          transcription text. Includes the start/end time (in milliseconds) of
+          the word, the confidence score of the word, and the text (i.e. the
+          word itself).
+        type: list<Word>
+      created:
+        type: datetime
+        docs: The timestamp for the partial transcript.
+    source:
+      openapi: ../asyncapi.yml
+  PartialTranscript:
+    properties:
+      message_type:
+        type: literal<"PartialTranscript">
+        docs: Describes the type of message.
+    extends:
+      - RealtimeBaseTranscript
+    source:
+      openapi: ../asyncapi.yml
+  FinalTranscript:
+    properties:
+      message_type:
+        type: literal<"FinalTranscript">
+        docs: Describes the type of message.
+      punctuated:
+        type: boolean
+        docs: Whether the text has been punctuated and cased.
+      text_formatted:
+        type: boolean
+        docs: Whether the text has been formatted (e.g. Dollar -> $)
+    extends:
+      - RealtimeBaseTranscript
+    source:
+      openapi: ../asyncapi.yml
+  Word:
+    properties:
+      start:
+        type: integer
+        docs: Start time of the word in milliseconds
+      end:
+        type: integer
+        docs: End time of the word in milliseconds
+      confidence:
+        type: double
+        docs: Confidence score of the word
+        validation:
+          min: 0
+          max: 1
+      text:
+        type: string
+        docs: The word itself
+    source:
+      openapi: ../asyncapi.yml
+  AudioData:
+    properties:
+      audio_data:
+        type: string
+        docs: >-
+          Raw audio data, base64 encoded. This can be the raw data recorded
+          directly from a microphone or read from an audio file.
+    source:
+      openapi: ../asyncapi.yml
+  TerminateSession:
+    properties:
+      terminate_session:
+        type: boolean
+        docs: >-
+          A boolean value to communicate that you wish to end your real-time
+          session forever.
+    extends:
+      - RealtimeBaseMessage
+    source:
+      openapi: ../asyncapi.yml
 ",
     },
     "files.yml": {
@@ -5595,6 +5999,184 @@ service:
 docs: Transcript related operations
 ",
     },
+    "userId.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "audio_data": "audio_data",
+                  },
+                  "type": "publish",
+                },
+                {
+                  "body": {
+                    "message_type": "SessionBegins",
+                    "terminate_session": true,
+                  },
+                  "type": "publish",
+                },
+              ],
+            },
+          ],
+          "headers": {
+            "Authentication": {
+              "docs": "Authenticate using your AssemblyAI API key.",
+              "name": "authentication",
+              "type": "optional<string>",
+            },
+          },
+          "messages": {
+            "publish": {
+              "body": {
+                "docs": "Send messages to the WebSocket",
+                "type": "sendMessage",
+              },
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": {
+                "docs": "Receive messages from the WebSocket",
+                "type": "receiveMessage",
+              },
+              "origin": "server",
+            },
+          },
+          "path": "/{userId}",
+          "path-parameters": {
+            "userId": {
+              "docs": "The ID of the user.",
+              "type": "string",
+            },
+          },
+          "query-parameters": {
+            "sample_rate": {
+              "docs": "The sample rate of the streamed audio.",
+              "type": "optional<integer>",
+            },
+            "token": {
+              "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+              "type": "optional<string>",
+            },
+            "word_boost": {
+              "docs": "Add up to 2500 characters of custom vocabulary.
+The parameter should map to a JSON encoded list of strings.
+",
+              "type": "optional<string>",
+            },
+          },
+          "url": "API",
+        },
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "types": {
+          "receiveMessage": {
+            "discriminated": false,
+            "docs": "Receive messages from the WebSocket",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "root.SessionBegins",
+              "root.PartialTranscript",
+              "root.FinalTranscript",
+              "root.SessionTerminated",
+              "root.RealtimeError",
+            ],
+          },
+          "sendMessage": {
+            "discriminated": false,
+            "docs": "Send messages to the WebSocket",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "root.AudioData",
+              "root.TerminateSession",
+            ],
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /{userId}
+  url: API
+  auth: false
+  path-parameters:
+    userId:
+      type: string
+      docs: The ID of the user.
+  query-parameters:
+    sample_rate:
+      type: optional<integer>
+      docs: The sample rate of the streamed audio.
+    word_boost:
+      type: optional<string>
+      docs: |
+        Add up to 2500 characters of custom vocabulary.
+        The parameter should map to a JSON encoded list of strings.
+    token:
+      type: optional<string>
+      docs: >-
+        Authenticate using a [generated temporary
+        token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)
+  headers:
+    Authentication:
+      type: optional<string>
+      name: authentication
+      docs: Authenticate using your AssemblyAI API key.
+  messages:
+    subscribe:
+      origin: server
+      body:
+        type: receiveMessage
+        docs: Receive messages from the WebSocket
+    publish:
+      origin: client
+      body:
+        type: sendMessage
+        docs: Send messages to the WebSocket
+  examples:
+    - messages:
+        - type: publish
+          body:
+            audio_data: audio_data
+        - type: publish
+          body:
+            message_type: SessionBegins
+            terminate_session: true
+imports:
+  root: __package__.yml
+types:
+  receiveMessage:
+    discriminated: false
+    docs: Receive messages from the WebSocket
+    union:
+      - root.SessionBegins
+      - root.PartialTranscript
+      - root.FinalTranscript
+      - root.SessionTerminated
+      - root.RealtimeError
+    source:
+      openapi: ../asyncapi.yml
+  sendMessage:
+    discriminated: false
+    docs: Send messages to the WebSocket
+    union:
+      - root.AudioData
+      - root.TerminateSession
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
   },
   "packageMarkers": {},
   "rootApiFile": {
@@ -5608,23 +6190,33 @@ docs: Transcript related operations
         },
       },
       "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "AssemblyAI API",
       "environments": {
-        "Default": "https://api.assemblyai.com",
+        "Default": {
+          "urls": {
+            "API": "wss://api.assemblyai.com/v2/realtime/ws",
+            "Base": "https://api.assemblyai.com",
+          },
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: AssemblyAI API
 environments:
-  Default: https://api.assemblyai.com
+  Default:
+    urls:
+      Base: https://api.assemblyai.com
+      API: wss://api.assemblyai.com/v2/realtime/ws
 default-environment: Default
+default-url: Base
 auth-schemes:
   ApiKey:
     header: Authorization

@@ -1,5 +1,4 @@
-import { readdir } from "fs/promises";
-import fs from "fs/promises";
+import fs, { readdir } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 
@@ -51,8 +50,9 @@ describe("openapi-ir", async () => {
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir-in-memory", async () => {
     const loader = new InMemoryOpenAPILoader();
+    const excludedFixtures = new Set(["multiple-specs"]);
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (!fixture.isDirectory() || excludedFixtures.has(fixture.name)) {
             continue;
         }
         it(

@@ -34,9 +34,9 @@ class Page extends JsonSerializableType
     /**
      * @param array{
      *   page: int,
-     *   next?: ?NextPage,
      *   perPage: int,
      *   totalPage: int,
+     *   next?: ?NextPage,
      * } $values
      */
     public function __construct(
@@ -46,5 +46,13 @@ class Page extends JsonSerializableType
         $this->next = $values['next'] ?? null;
         $this->perPage = $values['perPage'];
         $this->totalPage = $values['totalPage'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

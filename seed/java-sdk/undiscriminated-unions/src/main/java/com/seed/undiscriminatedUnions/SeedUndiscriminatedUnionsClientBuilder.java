@@ -5,6 +5,7 @@ package com.seed.undiscriminatedUnions;
 
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedUndiscriminatedUnionsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedUndiscriminatedUnionsClientBuilder {
      */
     public SeedUndiscriminatedUnionsClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedUndiscriminatedUnionsClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -26,9 +26,9 @@ public record ListResponse
     /// <summary>
     /// Maps the ListResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.ListResponse ToProto()
+    internal ProtoDataV1Grpc.ListResponse ToProto()
     {
-        var result = new Proto.ListResponse();
+        var result = new ProtoDataV1Grpc.ListResponse();
         if (Columns != null && Columns.Any())
         {
             result.Columns.AddRange(Columns.Select(elem => elem.ToProto()));
@@ -51,7 +51,7 @@ public record ListResponse
     /// <summary>
     /// Returns a new ListResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static ListResponse FromProto(Proto.ListResponse value)
+    internal static ListResponse FromProto(ProtoDataV1Grpc.ListResponse value)
     {
         return new ListResponse
         {

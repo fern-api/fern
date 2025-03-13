@@ -8,7 +8,7 @@ use Seed\Core\Json\JsonProperty;
 class SendRequest extends JsonSerializableType
 {
     /**
-     * @var string $prompt
+     * @var 'You are a helpful assistant' $prompt
      */
     #[JsonProperty('prompt')]
     public string $prompt;
@@ -20,25 +20,25 @@ class SendRequest extends JsonSerializableType
     public string $query;
 
     /**
-     * @var bool $stream
+     * @var false $stream
      */
     #[JsonProperty('stream')]
     public bool $stream;
 
     /**
-     * @var string $ending
+     * @var '$ending' $ending
      */
     #[JsonProperty('ending')]
     public string $ending;
 
     /**
-     * @var string $context
+     * @var "You're super wise" $context
      */
     #[JsonProperty('context')]
     public string $context;
 
     /**
-     * @var ?string $maybeContext
+     * @var ?"You're super wise" $maybeContext
      */
     #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
@@ -51,13 +51,13 @@ class SendRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   prompt: string,
+     *   prompt: 'You are a helpful assistant',
      *   query: string,
-     *   stream: bool,
-     *   ending: string,
-     *   context: string,
-     *   maybeContext?: ?string,
+     *   stream: false,
+     *   ending: '$ending',
+     *   context: "You're super wise",
      *   containerObject: ContainerObject,
+     *   maybeContext?: ?"You're super wise",
      * } $values
      */
     public function __construct(
@@ -70,5 +70,13 @@ class SendRequest extends JsonSerializableType
         $this->context = $values['context'];
         $this->maybeContext = $values['maybeContext'] ?? null;
         $this->containerObject = $values['containerObject'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

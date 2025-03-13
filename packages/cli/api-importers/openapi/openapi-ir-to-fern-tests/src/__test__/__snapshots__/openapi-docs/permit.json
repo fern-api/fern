@@ -20314,7 +20314,10 @@ define a string `owner` attribute that we can now use in our policies.
                 "content-type": "application/json",
                 "name": "CreateUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20389,7 +20392,10 @@ attribute to evaluate as `undefined`.",
                       "multipleOf": undefined,
                     },
                   },
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -20448,7 +20454,10 @@ attribute to evaluate as `undefined`.",
               "request": {
                 "name": "GetUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20533,7 +20542,10 @@ attribute to evaluate as `undefined`.",
                       "multipleOf": undefined,
                     },
                   },
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20605,7 +20617,10 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "name": "UpdateUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20651,7 +20666,9 @@ service:
       request:
         name: ListUserAttributesRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
           page:
             type: optional<integer>
             default: 1
@@ -20712,7 +20729,9 @@ service:
         body:
           type: root.ResourceAttributeCreate
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
         name: CreateUserAttributeRequest
         content-type: application/json
       response:
@@ -20772,7 +20791,9 @@ service:
       request:
         name: GetUserAttributeRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
@@ -20829,7 +20850,9 @@ service:
       request:
         name: DeleteUserAttributeRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
           page:
             type: optional<integer>
             default: 1
@@ -20880,7 +20903,9 @@ service:
         body:
           type: root.ResourceAttributeUpdate
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
         name: UpdateUserAttributeRequest
         content-type: application/json
       response:

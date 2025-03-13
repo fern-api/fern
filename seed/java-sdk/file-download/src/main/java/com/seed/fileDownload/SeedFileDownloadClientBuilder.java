@@ -5,6 +5,7 @@ package com.seed.fileDownload;
 
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedFileDownloadClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -21,6 +22,14 @@ public final class SeedFileDownloadClientBuilder {
      */
     public SeedFileDownloadClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedFileDownloadClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

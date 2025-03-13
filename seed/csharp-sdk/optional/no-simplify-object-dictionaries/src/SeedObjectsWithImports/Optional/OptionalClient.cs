@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
@@ -15,8 +14,7 @@ public partial class OptionalClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Optional.SendOptionalBodyAsync(
     ///     new Dictionary&lt;string, object&gt;()
     ///     {
@@ -26,8 +24,7 @@ public partial class OptionalClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> SendOptionalBodyAsync(
         Dictionary<string, object?>? request,
         RequestOptions? options = null,
@@ -35,7 +32,7 @@ public partial class OptionalClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
@@ -47,9 +44,9 @@ public partial class OptionalClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -60,10 +57,13 @@ public partial class OptionalClient
             }
         }
 
-        throw new SeedObjectsWithImportsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedObjectsWithImportsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,6 +1,7 @@
 import path from "path";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { csharp } from "@fern-api/csharp-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -102,11 +103,12 @@ function getEndpointReference({
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
+            const required = parameter.type instanceof csharp.Type ? !parameter.type.isOptional() : true;
             return {
                 name: parameter.name,
                 type: context.printType(parameter.type),
                 description: parameter.docs,
-                required: !parameter.type.isOptional()
+                required
             };
         })
     };
@@ -147,7 +149,7 @@ function getServiceFilepath({
     const subpackage = context.getSubpackageForServiceId(serviceId);
     const clientClassReference = subpackage
         ? context.getSubpackageClassReference(subpackage)
-        : context.getRootClientClassReference();
+        : context.getRootClientClassReferenceForSnippets();
 
     return (
         "/" +

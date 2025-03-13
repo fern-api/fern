@@ -15,15 +15,21 @@ class SearchRequest extends JsonSerializableType
     public ?StartingAfterPaging $pagination;
 
     /**
-     * @var SingleFilterSearchRequest|MultipleFilterSearchRequest $query
+     * @var (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * ) $query
      */
     #[JsonProperty('query'), Union(SingleFilterSearchRequest::class, MultipleFilterSearchRequest::class)]
     public SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
 
     /**
      * @param array{
+     *   query: (
+     *    SingleFilterSearchRequest
+     *   |MultipleFilterSearchRequest
+     * ),
      *   pagination?: ?StartingAfterPaging,
-     *   query: SingleFilterSearchRequest|MultipleFilterSearchRequest,
      * } $values
      */
     public function __construct(
@@ -31,5 +37,13 @@ class SearchRequest extends JsonSerializableType
     ) {
         $this->pagination = $values['pagination'] ?? null;
         $this->query = $values['query'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

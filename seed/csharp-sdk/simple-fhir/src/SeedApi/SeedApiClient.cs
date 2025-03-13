@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -32,11 +31,9 @@ public partial class SeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAccountAsync("account_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Account> GetAccountAsync(
         string accountId,
         RequestOptions? options = null,
@@ -44,20 +41,23 @@ public partial class SeedApiClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
+            .SendRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"account/{accountId}",
+                    Path = string.Format(
+                        "account/{0}",
+                        ValueConvert.ToPathParameterString(accountId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Account>(responseBody)!;
@@ -68,10 +68,13 @@ public partial class SeedApiClient
             }
         }
 
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,5 +1,132 @@
 {
   "types": {
+    "type_endpoints/put:Error": {
+      "name": "Error",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "category",
+            "valueType": {
+              "type": "id",
+              "value": "type_endpoints/put:ErrorCategory"
+            }
+          },
+          {
+            "key": "code",
+            "valueType": {
+              "type": "id",
+              "value": "type_endpoints/put:ErrorCode"
+            }
+          },
+          {
+            "key": "detail",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "field",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_endpoints/put:ErrorCategory": {
+      "name": "ErrorCategory",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "API_ERROR"
+          },
+          {
+            "value": "AUTHENTICATION_ERROR"
+          },
+          {
+            "value": "INVALID_REQUEST_ERROR"
+          }
+        ]
+      }
+    },
+    "type_endpoints/put:ErrorCode": {
+      "name": "ErrorCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "INTERNAL_SERVER_ERROR"
+          },
+          {
+            "value": "UNAUTHORIZED"
+          },
+          {
+            "value": "FORBIDDEN"
+          },
+          {
+            "value": "BAD_REQUEST"
+          },
+          {
+            "value": "CONFLICT"
+          },
+          {
+            "value": "GONE"
+          },
+          {
+            "value": "UNPROCESSABLE_ENTITY"
+          },
+          {
+            "value": "NOT_IMPLEMENTED"
+          },
+          {
+            "value": "BAD_GATEWAY"
+          },
+          {
+            "value": "SERVICE_UNAVAILABLE"
+          },
+          {
+            "value": "Unknown"
+          }
+        ]
+      }
+    },
+    "type_endpoints/put:PutResponse": {
+      "name": "PutResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_endpoints/put:Error"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_general-errors:BadObjectRequestInfo": {
       "name": "BadObjectRequestInfo",
       "shape": {
@@ -461,6 +588,7 @@
         "subpackage_endpoints/object",
         "subpackage_endpoints/params",
         "subpackage_endpoints/primitive",
+        "subpackage_endpoints/put",
         "subpackage_endpoints/union"
       ]
     },
@@ -3669,6 +3797,119 @@
       "webhooks": [],
       "websockets": [],
       "types": [],
+      "subpackages": []
+    },
+    "subpackage_endpoints/put": {
+      "subpackageId": "subpackage_endpoints/put",
+      "name": "put",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "PUT",
+          "id": "add",
+          "originalEndpointId": "endpoint_endpoints/put.add",
+          "name": "Put",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_endpoints/put:PutResponse"
+              }
+            },
+            "statusCode": 200
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "errors": [
+                  {
+                    "category": "API_ERROR",
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "detail": "detail",
+                    "field": "field"
+                  },
+                  {
+                    "category": "API_ERROR",
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "detail": "detail",
+                    "field": "field"
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "errors": [
+                    {
+                      "category": "API_ERROR",
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "detail": "detail",
+                      "field": "field"
+                    },
+                    {
+                      "category": "API_ERROR",
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "detail": "detail",
+                      "field": "field"
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_endpoints/put:Error",
+        "type_endpoints/put:ErrorCategory",
+        "type_endpoints/put:ErrorCode",
+        "type_endpoints/put:PutResponse"
+      ],
       "subpackages": []
     },
     "subpackage_endpoints/union": {
