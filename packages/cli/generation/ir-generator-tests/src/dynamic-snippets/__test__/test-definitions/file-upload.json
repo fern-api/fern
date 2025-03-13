@@ -2922,36 +2922,7 @@
                         }
                     }
                 },
-                "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "invoice_id",
-                                "camelCase": {
-                                    "unsafeName": "invoiceID",
-                                    "safeName": "invoiceID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "invoice_id",
-                                    "safeName": "invoice_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "INVOICE_ID",
-                                    "safeName": "INVOICE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "InvoiceID",
-                                    "safeName": "InvoiceID"
-                                }
-                            },
-                            "wireValue": "invoice_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    }
-                ],
+                "pathParameters": [],
                 "queryParameters": [],
                 "headers": [],
                 "body": {
@@ -3014,7 +2985,7 @@
                     ]
                 },
                 "metadata": {
-                    "includePathParameters": true,
+                    "includePathParameters": false,
                     "onlyPathParameters": false
                 }
             },

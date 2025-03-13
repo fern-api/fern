@@ -799,17 +799,7 @@
           "originalEndpointId": "endpoint_service.optionalArgs",
           "name": "Optional Args",
           "path": {
-            "pathParameters": [
-              {
-                "key": "invoice_id",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            ],
+            "pathParameters": [],
             "parts": [
               {
                 "type": "literal",
