@@ -94,7 +94,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 fullPath: constructHttpPath(this.path),
                 allPathParameters: pathParameters,
                 pagination: undefined,
-                transport: undefined
+                transport: undefined,
+                v2Examples: undefined,
             },
             inlinedTypes: this.inlinedTypes
         };
