@@ -28,11 +28,11 @@ public partial class SeedAuthEnvironmentVariablesClient
                 { "User-Agent", "Fernauth-environment-variables/0.0.1" },
             }
         );
+        clientOptions ??= new ClientOptions();
         if (clientOptions.XApiVersion != null)
         {
             defaultHeaders["X-API-Version"] = clientOptions.XApiVersion;
         }
-        clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
