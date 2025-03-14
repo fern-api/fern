@@ -122,7 +122,7 @@ class NullableClient:
         import datetime
 
         from seed import SeedNullable
-        from seed.nullable import Metadata
+        from seed.nullable import Metadata, Status
 
         client = SeedNullable(
             base_url="https://yourhost.com/path/to/api",
@@ -139,6 +139,7 @@ class NullableClient:
                 ),
                 avatar="avatar",
                 activated=True,
+                status=Status(),
             ),
             avatar="avatar",
         )
@@ -338,7 +339,7 @@ class AsyncNullableClient:
         import datetime
 
         from seed import AsyncSeedNullable
-        from seed.nullable import Metadata
+        from seed.nullable import Metadata, Status
 
         client = AsyncSeedNullable(
             base_url="https://yourhost.com/path/to/api",
@@ -358,6 +359,7 @@ class AsyncNullableClient:
                     ),
                     avatar="avatar",
                     activated=True,
+                    status=Status(),
                 ),
                 avatar="avatar",
             )

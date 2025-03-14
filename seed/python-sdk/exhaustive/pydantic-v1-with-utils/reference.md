@@ -2988,6 +2988,64 @@ client.endpoints.primitive.get_and_return_base_64(
 </dl>
 </details>
 
+## Endpoints Put
+<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.put.add(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Union
 <details><summary><code>client.endpoints.union.<a href="src/seed/endpoints/union/client.py">get_and_return_union</a>(...)</code></summary>
 <dl>

@@ -5,6 +5,7 @@ import typing_extensions
 import datetime as dt
 from ...core.serialization import FieldMetadata
 import typing
+from .status import Status
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -14,6 +15,7 @@ class Metadata(UniversalBaseModel):
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     avatar: typing.Optional[str] = None
     activated: typing.Optional[bool] = None
+    status: Status
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

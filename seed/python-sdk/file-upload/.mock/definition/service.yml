@@ -144,6 +144,24 @@ service:
               type: MyCollectionAliasObject
               style: form
 
+    optionalArgs:
+      path: /optional-args
+      method: POST
+      request:
+        body:
+          properties:
+            image_file:
+              content-type: image/jpeg
+              type: optional<file>
+            request:
+              content-type: application/json; charset=utf-8
+              type: optional<unknown>
+        content-type: multipart/form-data
+        name: OptionalArgsRequest
+      response:
+        status-code: 200
+        type: string
+
 types:
   Id: string
 
