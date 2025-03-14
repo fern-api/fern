@@ -164,7 +164,7 @@ export class ClassReference extends AstNode {
         return matchingNamespacesCopy.size > 0;
     }
 
-    public toQualified() {
+    public toQualified(): ClassReference {
         return new ClassReference({
             name: this.name,
             namespace: this.namespace,
