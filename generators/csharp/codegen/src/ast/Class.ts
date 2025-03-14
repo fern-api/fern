@@ -146,14 +146,10 @@ export class Class extends AstNode {
         }
 
         writer.writeNode(this.doc);
-        if (this.annotations.length > 0) {
-            writer.write("[");
-            this.annotations.forEach((annotation) => {
-                annotation.write(writer);
-            });
-            writer.write("]");
-            writer.writeNewLineIfLastLineNot();
-        }
+        this.annotations.forEach((annotation) => {
+            annotation.write(writer);
+        });
+        writer.writeNewLineIfLastLineNot();
         writer.write(`${this.access}`);
         if (this.static_) {
             writer.write(" static");

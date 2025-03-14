@@ -8,7 +8,7 @@ namespace SeedMixedCase.Test;
 [TestFixture]
 public class NestedUserTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -45,7 +45,7 @@ public class NestedUserTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """

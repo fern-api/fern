@@ -9,7 +9,7 @@ namespace SeedUnions.Test;
 [TestFixture]
 public class UnionWithOptionalTimeTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -25,7 +25,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -42,7 +42,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -60,7 +60,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_2()
     {
         var expectedJson = """
@@ -79,7 +79,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -93,7 +93,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_3()
     {
         var expectedJson = """
@@ -108,7 +108,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_4()
     {
         var json = """
@@ -122,7 +122,7 @@ public class UnionWithOptionalTimeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_4()
     {
         var expectedJson = """

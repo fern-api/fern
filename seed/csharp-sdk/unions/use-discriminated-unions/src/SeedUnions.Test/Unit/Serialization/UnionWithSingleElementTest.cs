@@ -8,7 +8,7 @@ namespace SeedUnions.Test;
 [TestFixture]
 public class UnionWithSingleElementTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -24,7 +24,7 @@ public class UnionWithSingleElementTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """

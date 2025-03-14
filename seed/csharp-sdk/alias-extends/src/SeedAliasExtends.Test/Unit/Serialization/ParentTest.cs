@@ -8,7 +8,7 @@ namespace SeedAliasExtends.Test;
 [TestFixture]
 public class ParentTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -21,7 +21,7 @@ public class ParentTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """

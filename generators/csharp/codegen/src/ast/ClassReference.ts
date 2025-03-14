@@ -34,16 +34,25 @@ export class ClassReference extends AstNode {
     }
 
     public write(writer: Writer): void {
+        this.writeInternal(writer, false);
+    }
+
+    public writeAsAttribute(writer: Writer): void {
+        this.writeInternal(writer, true);
+    }
+
+    private writeInternal(writer: Writer, isAttribute: boolean): void {
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
             writer.write(`${alias}.${this.name}`);
         } else if (this.fullyQualified) {
             writer.addReference(this);
             writer.write(`${this.namespace}.${this.name}`);
-        } else if (this.qualifiedTypeNameRequired(writer)) {
+        } else if (this.qualifiedTypeNameRequired(writer, isAttribute)) {
             const typeQualification = this.getTypeQualification({
                 classReferenceNamespace: this.namespace,
-                namespaceToBeWrittenTo: writer.getNamespace()
+                namespaceToBeWrittenTo: writer.getNamespace(),
+                isAttribute
             });
             writer.write(`${typeQualification}${this.name}`);
         } else {
@@ -74,10 +83,12 @@ export class ClassReference extends AstNode {
      */
     private getTypeQualification({
         classReferenceNamespace,
-        namespaceToBeWrittenTo
+        namespaceToBeWrittenTo,
+        isAttribute
     }: {
         classReferenceNamespace: string;
         namespaceToBeWrittenTo: string;
+        isAttribute?: boolean;
     }): string {
         const classReferenceSegments = classReferenceNamespace.split(".");
         const namespaceToBeWrittenSegments = namespaceToBeWrittenTo.split(".");
@@ -99,12 +110,12 @@ export class ClassReference extends AstNode {
             return qualification;
         }
 
-        // Handle the scenario where the type in the property is conflicting with the namespace
-        if (namespaceToBeWrittenTo.endsWith(`.${this.name}`)) {
+        const nameToDeconflict = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
+        if (namespaceToBeWrittenTo.endsWith(`.${nameToDeconflict}`)) {
             return `${classReferenceNamespace}.`;
         }
 
-        return "";
+        return qualification;
     }
 
     /**
@@ -129,8 +140,9 @@ export class ClassReference extends AstNode {
      * - V1 -- Company.Net.Guarantor.V1.Types
      * - Net -- Company.Net
      */
-    private qualifiedTypeNameRequired(writer: Writer): boolean {
-        if (writer.getNamespace().endsWith(`.${this.name}`)) {
+    private qualifiedTypeNameRequired(writer: Writer, isAttribute: boolean): boolean {
+        const nameToDeconflict = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
+        if (writer.getNamespace().endsWith(`.${nameToDeconflict}`)) {
             return true;
         }
         return this.potentialConflictWithNamespaceSegment(writer) || this.potentialConflictWithGeneratedType(writer);

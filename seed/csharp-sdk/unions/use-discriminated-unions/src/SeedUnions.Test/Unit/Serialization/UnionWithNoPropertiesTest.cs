@@ -8,7 +8,7 @@ namespace SeedUnions.Test;
 [TestFixture]
 public class UnionWithNoPropertiesTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -24,7 +24,7 @@ public class UnionWithNoPropertiesTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -41,7 +41,7 @@ public class UnionWithNoPropertiesTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -54,7 +54,7 @@ public class UnionWithNoPropertiesTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_2()
     {
         var expectedJson = """

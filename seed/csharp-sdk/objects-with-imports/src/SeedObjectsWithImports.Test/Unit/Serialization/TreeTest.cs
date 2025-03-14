@@ -9,7 +9,7 @@ namespace SeedObjectsWithImports.Test;
 [TestFixture]
 public class TreeTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -78,7 +78,7 @@ public class TreeTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
