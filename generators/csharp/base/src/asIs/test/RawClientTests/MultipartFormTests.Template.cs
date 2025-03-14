@@ -14,42 +14,41 @@ public class MultipartFormTests
     private static SimpleObject _simpleObject = new();
 
     private static string _simpleFormEncoded =
-        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data,2023-10-01T08:00:00.000-04:00,2023-10-01,12:00:00,01:00:00,1a1bb98f-47c6-407b-9481-78476affe52a,true,42,A";
+        "meta=data&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data,2023-10-01,12:00:00,01:00:00,1a1bb98f-47c6-407b-9481-78476affe52a,true,42,A";
 
     private static string _simpleExplodedFormEncoded =
-        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data&Values=2023-10-01T08:00:00.000-04:00&Values=2023-10-01&Values=12:00:00&Values=01:00:00&Values=1a1bb98f-47c6-407b-9481-78476affe52a&Values=true&Values=42&Values=A";
+        "meta=data&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data&Values=2023-10-01&Values=12:00:00&Values=01:00:00&Values=1a1bb98f-47c6-407b-9481-78476affe52a&Values=true&Values=42&Values=A";
 
     private static ComplexObject _complexObject = new();
 
     private static string _complexJson = """
-                                         {
-                                           "meta": "data",
-                                           "Nested": {
-                                             "foo": "value"
-                                           },
-                                           "NestedDictionary": {
-                                             "key": {
-                                               "foo": "value"
-                                             }
-                                           },
-                                           "ListOfObjects": [
-                                             {
-                                               "foo": "value"
-                                             },
-                                             {
-                                               "foo": "value2"
-                                             }
-                                           ],
-                                           "DateTime": "2023-10-01T08:00:00.000-04:00",
-                                           "Date": "2023-10-01",
-                                           "Time": "12:00:00",
-                                           "Duration": "01:00:00",
-                                           "Id": "1a1bb98f-47c6-407b-9481-78476affe52a",
-                                           "IsActive": true,
-                                           "Count": 42,
-                                           "Initial": "A"
-                                         }
-                                         """;
+        {
+          "meta": "data",
+          "Nested": {
+            "foo": "value"
+          },
+          "NestedDictionary": {
+            "key": {
+              "foo": "value"
+            }
+          },
+          "ListOfObjects": [
+            {
+              "foo": "value"
+            },
+            {
+              "foo": "value2"
+            }
+          ],
+          "Date": "2023-10-01",
+          "Time": "12:00:00",
+          "Duration": "01:00:00",
+          "Id": "1a1bb98f-47c6-407b-9481-78476affe52a",
+          "IsActive": true,
+          "Count": 42,
+          "Initial": "A"
+        }
+        """;
 
     [Test]
     public async SystemTask ShouldAddStringPart()
@@ -62,13 +61,13 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/plain; charset=utf-8
-                        Content-Disposition: form-data; name=string
+            --{boundary}
+            Content-Type: text/plain; charset=utf-8
+            Content-Disposition: form-data; name=string
 
-                        {partInput}
-                         --{boundary}--
-                        """;
+            {partInput}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -84,18 +83,18 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/plain; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            --{boundary}
+            Content-Type: text/plain; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                        --{boundary}
-                        Content-Type: text/plain; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            {partInput}
+            --{boundary}
+            Content-Type: text/plain; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                         --{boundary}--
-                        """;
+            {partInput}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -110,9 +109,9 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                         --{boundary}--
-                        """;
+            --{boundary}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -128,18 +127,18 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/plain; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            --{boundary}
+            Content-Type: text/plain; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                        --{boundary}
-                        Content-Type: text/plain; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            {partInput}
+            --{boundary}
+            Content-Type: text/plain; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                         --{boundary}--
-                        """;
+            {partInput}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -155,13 +154,13 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/xml; charset=utf-8
-                        Content-Disposition: form-data; name=string
+            --{boundary}
+            Content-Type: text/xml; charset=utf-8
+            Content-Disposition: form-data; name=string
 
-                        {partInput}
-                         --{boundary}--
-                        """;
+            {partInput}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -177,18 +176,18 @@ public class MultipartFormTests
         var multipartContent = (MultipartFormDataContent)httpContent;
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/xml; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            --{boundary}
+            Content-Type: text/xml; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                        --{boundary}
-                        Content-Type: text/xml; charset=utf-8
-                        Content-Disposition: form-data; name=strings
+            {partInput}
+            --{boundary}
+            Content-Type: text/xml; charset=utf-8
+            Content-Disposition: form-data; name=strings
 
-                        {partInput}
-                         --{boundary}--
-                        """;
+            {partInput}
+             --{boundary}--
+            """;
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
     }
@@ -207,13 +206,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
 
-                        {partExpectedString}
-                         --{boundary}--
-                        """;
+            {partExpectedString}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -232,13 +231,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file
 
-                        {partExpectedString}
-                         --{boundary}--
-                        """;
+            {partExpectedString}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -263,13 +262,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/plain
-                        Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
+            --{boundary}
+            Content-Type: text/plain
+            Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
 
-                        {partExpectedString}
-                         --{boundary}--
-                        """;
+            {partExpectedString}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -289,13 +288,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: text/plain
-                        Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
+            --{boundary}
+            Content-Type: text/plain
+            Content-Disposition: form-data; name=file; filename=test.txt; filename*=utf-8''test.txt
 
-                        {partExpectedString}
-                         --{boundary}--
-                        """;
+            {partExpectedString}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -317,18 +316,18 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file; filename=test1.txt; filename*=utf-8''test1.txt
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file; filename=test1.txt; filename*=utf-8''test1.txt
 
-                        {partExpectedString1}
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file; filename=test2.txt; filename*=utf-8''test2.txt
+            {partExpectedString1}
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file; filename=test2.txt; filename*=utf-8''test2.txt
 
-                        {partExpectedString2}
-                         --{boundary}--
-                        """;
+            {partExpectedString2}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -350,18 +349,18 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file; filename=test1.txt; filename*=utf-8''test1.txt
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file; filename=test1.txt; filename*=utf-8''test1.txt
 
-                        {partExpectedString1}
-                        --{boundary}
-                        Content-Type: application/octet-stream
-                        Content-Disposition: form-data; name=file; filename=test2.txt; filename*=utf-8''test2.txt
+            {partExpectedString1}
+            --{boundary}
+            Content-Type: application/octet-stream
+            Content-Disposition: form-data; name=file; filename=test2.txt; filename*=utf-8''test2.txt
 
-                        {partExpectedString2}
-                         --{boundary}--
-                        """;
+            {partExpectedString2}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -379,9 +378,9 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                         --{boundary}--
-                        """;
+            --{boundary}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -399,13 +398,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/json; charset=utf-8
-                        Content-Disposition: form-data; name=object
+            --{boundary}
+            Content-Type: application/json; charset=utf-8
+            Content-Disposition: form-data; name=object
 
-                        {_complexJson}
-                         --{boundary}--
-                        """;
+            {_complexJson}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -423,18 +422,18 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/json; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/json; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        {_complexJson}
-                        --{boundary}
-                        Content-Type: application/json; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            {_complexJson}
+            --{boundary}
+            Content-Type: application/json; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        {_complexJson}
-                         --{boundary}--
-                        """;
+            {_complexJson}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -452,9 +451,9 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                         --{boundary}--
-                        """;
+            --{boundary}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -472,13 +471,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/json; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/json; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        {_complexJson}
-                        --{boundary}--
-                        """;
+            {_complexJson}
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -496,13 +495,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $$"""
-                         --{{boundary}}
-                         Content-Type: application/json-patch+json; charset=utf-8
-                         Content-Disposition: form-data; name=objects
+            --{{boundary}}
+            Content-Type: application/json-patch+json; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                         {}
-                         --{{boundary}}--
-                         """;
+            {}
+            --{{boundary}}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -520,13 +519,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=object
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=object
 
-                        {EscapeFormEncodedString(_simpleFormEncoded)}
-                         --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleFormEncoded)}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -544,18 +543,18 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleFormEncoded)}
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            {EscapeFormEncodedString(_simpleFormEncoded)}
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleFormEncoded)}
-                         --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleFormEncoded)}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -573,9 +572,9 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                         --{boundary}--
-                        """;
+            --{boundary}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -593,13 +592,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleFormEncoded)}
-                        --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleFormEncoded)}
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -621,13 +620,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        foo=bar
-                        --{boundary}--
-                        """;
+            foo=bar
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -649,13 +648,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        foo=bar
-                        --{boundary}--
-                        """;
+            foo=bar
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -673,13 +672,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=object
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=object
 
-                        {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
-                         --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -697,18 +696,18 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
-                         --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -726,9 +725,9 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                         --{boundary}--
-                        """;
+            --{boundary}
+             --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -746,13 +745,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded
+            Content-Disposition: form-data; name=objects
 
-                        {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
-                        --{boundary}--
-                        """;
+            {EscapeFormEncodedString(_simpleExplodedFormEncoded)}
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -774,13 +773,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        foo=bar
-                        --{boundary}--
-                        """;
+            foo=bar
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -802,13 +801,13 @@ public class MultipartFormTests
 
         var boundary = GetBoundary(multipartContent);
         var expected = $"""
-                        --{boundary}
-                        Content-Type: application/x-www-form-urlencoded; charset=utf-8
-                        Content-Disposition: form-data; name=objects
+            --{boundary}
+            Content-Type: application/x-www-form-urlencoded; charset=utf-8
+            Content-Disposition: form-data; name=objects
 
-                        foo=bar
-                        --{boundary}--
-                        """;
+            foo=bar
+            --{boundary}--
+            """;
 
         var actual = await multipartContent.ReadAsStringAsync();
         Assert.That(actual, Is.EqualTo(expected).IgnoreWhiteSpace);
@@ -828,10 +827,10 @@ public class MultipartFormTests
     private static string GetBoundary(MultipartFormDataContent content)
     {
         return content
-            .Headers.ContentType?.Parameters.Single(p =>
-                p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
-            )
-            .Value?.Trim('"') ?? throw new Exception("Boundary not found");
+                .Headers.ContentType?.Parameters.Single(p =>
+                    p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                )
+                .Value?.Trim('"') ?? throw new Exception("Boundary not found");
     }
 
     private static RawClient.MultipartFormRequest CreateMultipartFormRequest()
@@ -853,8 +852,8 @@ public class MultipartFormTests
 
     private class SimpleObject
     {
-        [JsonPropertyName("meta")] public string Meta { get; set; } = "data";
-        public DateTime DateTime { get; set; } = DateTime.Parse("2023-10-01T12:00:00Z");
+        [JsonPropertyName("meta")]
+        public string Meta { get; set; } = "data";
         public DateOnly Date { get; set; } = DateOnly.Parse("2023-10-01");
         public TimeOnly Time { get; set; } = TimeOnly.Parse("12:00:00");
         public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);
@@ -863,22 +862,22 @@ public class MultipartFormTests
         public int Count { get; set; } = 42;
         public char Initial { get; set; } = 'A';
         public IEnumerable<object> Values { get; set; } =
-        [
-            "data",
-            DateTime.Parse("2023-10-01T12:00:00Z"),
-            DateOnly.Parse("2023-10-01"),
-            TimeOnly.Parse("12:00:00"),
-            TimeSpan.FromHours(1),
-            Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a"),
-            true,
-            42,
-            'A'
-        ];
+            [
+                "data",
+                DateOnly.Parse("2023-10-01"),
+                TimeOnly.Parse("12:00:00"),
+                TimeSpan.FromHours(1),
+                Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a"),
+                true,
+                42,
+                'A',
+            ];
     }
 
     private class ComplexObject
     {
-        [JsonPropertyName("meta")] public string Meta { get; set; } = "data";
+        [JsonPropertyName("meta")]
+        public string Meta { get; set; } = "data";
 
         public object Nested { get; set; } = new { foo = "value" };
 
@@ -888,7 +887,6 @@ public class MultipartFormTests
         public IEnumerable<object> ListOfObjects { get; set; } =
             new List<object> { new { foo = "value" }, new { foo = "value2" } };
 
-        public DateTime DateTime { get; set; } = DateTime.Parse("2023-10-01T12:00:00Z");
         public DateOnly Date { get; set; } = DateOnly.Parse("2023-10-01");
         public TimeOnly Time { get; set; } = TimeOnly.Parse("12:00:00");
         public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);

@@ -26,7 +26,7 @@ public partial class ReqWithHeadersClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
-        ReqWithHeaders request,
+        SeedExhaustive.ReqWithHeaders.ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

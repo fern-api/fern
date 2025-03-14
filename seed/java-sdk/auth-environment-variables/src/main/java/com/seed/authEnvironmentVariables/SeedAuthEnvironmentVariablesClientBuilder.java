@@ -49,10 +49,18 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedAuthEnvironmentVariablesClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
         return this;
     }
 

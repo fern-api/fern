@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedExamples;
-using SeedExamples.Core;
 using SeedExamples.Commons;
 using System.Globalization;
 

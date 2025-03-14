@@ -426,9 +426,18 @@ class EndpointFunctionGenerator:
         else:
             request_options_docs = "Request-specific configuration."
 
+        # Check if any existing parameters have the same name as REQUEST_OPTIONS_VARIABLE
+        has_request_options_parameter = False
+        for param in parameters:
+            if param.name == EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE:
+                has_request_options_parameter = True
+                break
+
         parameters.append(
             AST.NamedFunctionParameter(
-                name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                name="_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                if has_request_options_parameter
+                else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
                 docs=request_options_docs,
                 type_hint=AST.TypeHint.optional(
                     AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
@@ -519,6 +528,12 @@ class EndpointFunctionGenerator:
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
             ) -> AST.Expression:
+                # Get the request_options variable name from the last parameter if it exists
+                request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                if named_parameters and len(named_parameters) > 0:
+                    last_param = named_parameters[-1]
+                    request_options_variable_name = last_param.name
+
                 return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
@@ -532,7 +547,7 @@ class EndpointFunctionGenerator:
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=files,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
-                    request_options_variable_name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                    request_options_variable_name=request_options_variable_name,
                     headers=self._get_headers_for_endpoint(
                         service=service,
                         endpoint=endpoint,

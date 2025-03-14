@@ -260,6 +260,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 );
 
+                writer.write("clientOptions ??= ");
+                writer.writeNodeStatement(
+                    csharp.instantiateClass({
+                        classReference: this.context.getClientOptionsClassReference(),
+                        arguments_: []
+                    })
+                );
+
                 for (const param of literalParameters) {
                     if (param.header != null) {
                         writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`));
@@ -273,14 +281,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         writer.endControlFlow();
                     }
                 }
-
-                writer.write("clientOptions ??= ");
-                writer.writeNodeStatement(
-                    csharp.instantiateClass({
-                        classReference: this.context.getClientOptionsClassReference(),
-                        arguments_: []
-                    })
-                );
 
                 writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"));
                 writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));

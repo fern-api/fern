@@ -475,6 +475,10 @@ public class ServiceClient {
         }
     }
 
+    public String optionalArgs() {
+        return optionalArgs(OptionalArgsRequest.builder().build());
+    }
+
     public String optionalArgs(OptionalArgsRequest request) {
         return optionalArgs(request, null);
     }

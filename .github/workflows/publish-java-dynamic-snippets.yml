@@ -45,7 +45,7 @@ jobs:
 
       - name: Publish @fern-api/java-dynamic-snippets
         run: |
-          cd generators/java/dynamic-snippets
+          cd generators/java-v2/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
