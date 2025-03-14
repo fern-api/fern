@@ -4,16 +4,28 @@ from .types import (
     ContainerValue,
     FieldName,
     FieldValue,
+    FirstUnion,
+    FirstUnionFirstElement,
+    FirstUnionSecondElement,
     ObjectFieldValue,
     ObjectValue,
     PrimitiveValue,
+    SecondUnion,
+    SecondUnionFirstElement,
+    SecondUnionSecondElement,
 )
 
 __all__ = [
     "ContainerValue",
     "FieldName",
     "FieldValue",
+    "FirstUnion",
+    "FirstUnionFirstElement",
+    "FirstUnionSecondElement",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
+    "SecondUnion",
+    "SecondUnionFirstElement",
+    "SecondUnionSecondElement",
 ]
