@@ -63,12 +63,20 @@ abstract class JsonSerializableType implements \JsonSerializable
             if ($jsonKey == null) {
                 continue;
             }
+
             // Omit properties that have not been explicitly set.
             if (!array_key_exists($property->getName(), $this->__explicitlySetProperties)) {
                  continue;
             }
 
             $value = $property->getValue($this);
+            $type = $property->getType();
+
+            // Omit properties that were explicitly set to null when the type isn't nullable,
+            // i.e., treat setting such properties to null as unsetting them.
+            if ($type && !$type->allowsNull() && $value === null) {
+                continue;
+            }
 
             // Handle DateTime properties
             $dateTypeAttr = $property->getAttributes(Date::class)[0] ?? null;
@@ -222,5 +230,27 @@ abstract class JsonSerializableType implements \JsonSerializable
     {
         $jsonPropertyAttr = $property->getAttributes(JsonProperty::class)[0] ?? null;
         return $jsonPropertyAttr?->newInstance()?->name;
+    }
+
+    /**
+     * Determine whether a property is nullable.
+     *
+     * @param ReflectionProperty $property The reflection property.
+     * @return bool True if the property is nullable.
+     */
+    private static function isPropertyNullable(ReflectionProperty $property): bool
+    {
+        $propertyName = $property->getName();
+        $propertyType = $property->getType();
+        $allowsNull = $propertyType->allowsNull();
+
+        print "$propertyName";
+        print "\n";
+        print "$propertyType";
+        print "\n";
+        print "$allowsNull";
+        print "\n";
+
+        return false;
     }
 }
