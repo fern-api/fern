@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.14.3
+  createdAt: "2025-03-14"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Escape summary node contents in XML doc comments to prevent XML parsing errors.
+
 - version: 1.14.2
   createdAt: "2025-03-13"
   irVersion: 57
