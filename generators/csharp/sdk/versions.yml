@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.14.1
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where a type is written but conflicts with the namespace it is written in.
+
 - version: 1.14.0
   createdAt: "2025-03-13"
   irVersion: 57

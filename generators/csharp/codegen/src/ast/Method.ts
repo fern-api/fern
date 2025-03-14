@@ -79,14 +79,10 @@ export class Method extends AstNode {
     public write(writer: Writer): void {
         writer.writeNode(this.doc);
 
-        if (this.annotations.length > 0) {
-            writer.write("[");
-            this.annotations.forEach((annotation) => {
-                annotation.write(writer);
-            });
-            writer.write("]");
-            writer.writeNewLineIfLastLineNot();
-        }
+        this.annotations.forEach((annotation) => {
+            annotation.write(writer);
+        });
+        writer.writeNewLineIfLastLineNot();
 
         if (this.access) {
             writer.write(`${this.access} `);
