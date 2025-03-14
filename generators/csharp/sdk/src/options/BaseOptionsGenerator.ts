@@ -137,7 +137,10 @@ export class BaseOptionsGenerator {
             }),
             this.getMaxRetriesField(optionArgs),
             this.getTimeoutField(optionArgs),
-            this.getQueryParametersField(optionArgs),
+            this.getQueryParametersField({
+                optional: false,
+                includeInitializer: true
+            }),
             this.getBodyPropertiesField(optionArgs),
             ...this.getLiteralHeaderOptions(optionArgs)
         ];
@@ -154,7 +157,7 @@ export class BaseOptionsGenerator {
             this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
             this.getMaxRetriesField(optionArgs),
             this.getTimeoutField(optionArgs),
-            this.getQueryParametersField(optionArgs),
+            this.getQueryParametersField({ optional: false, includeInitializer: false }),
             this.getBodyPropertiesField(optionArgs)
         ];
     }

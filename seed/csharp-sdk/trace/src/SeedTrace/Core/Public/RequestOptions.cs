@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using SeedTrace.Core;
 
@@ -37,7 +38,8 @@ public partial class RequestOptions : IRequestOptions
     public IEnumerable<System.Collections.Generic.KeyValuePair<
         string,
         string
-    >> AdditionalQueryParameters { get; init; }
+    >> AdditionalQueryParameters { get; init; } =
+        Enumerable.Empty<System.Collections.Generic.KeyValuePair<string, string>>();
 
     /// <summary>
     /// Additional body properties sent with the request.
