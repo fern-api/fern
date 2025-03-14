@@ -165,13 +165,10 @@ export class Field extends AstNode {
     public write(writer: Writer): void {
         writer.writeNode(this.doc);
 
-        if (this.annotations.length > 0) {
-            for (const annotation of this.annotations) {
-                writer.write("[");
-                annotation.write(writer);
-                writer.writeLine("]");
-            }
+        for (const annotation of this.annotations) {
+            annotation.write(writer);
         }
+        writer.writeNewLineIfLastLineNot();
 
         if (this.access) {
             writer.write(`${this.access} `);

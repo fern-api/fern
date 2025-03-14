@@ -36,6 +36,7 @@ export async function generateJsonschemaForWorkspaces({
                     keywords: undefined,
                     smartCasing: false,
                     exampleGeneration: { disabled: true },
+                    disableDynamicExamples: true,
                     version: undefined,
                     packageName: undefined,
                     readme: undefined,

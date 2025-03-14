@@ -7,6 +7,48 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.14.2
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue a NullReferenceException for generated root clients with typed headers in client options.
+
+- version: 1.14.1
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where a type is written but conflicts with the namespace it is written in.
+
+- version: 1.14.0
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        The SDK now supports the `AdditionalBodyProperties` and `AdditionalQueryParameters` request options, which
+        can be used to add arbitrary properties to the request. This is useful for interacting
+        with alpha or undocumented functionality.
+
+        ```csharp
+        var response = await client.Users.Create(
+          ...,
+          new RequestOptions {
+            AdditionalBodyProperties = new Dictionary<string, object> {
+              { "key", "value" }
+            },
+          }
+        );
+        ```
+
+- version: 1.13.2
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where MultipartFormTests wouldn't pass because the timezone on the local machine is different than the timezone on the CI machine.
+
 - version: 1.13.1
   createdAt: "2025-03-13"
   irVersion: 57

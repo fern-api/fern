@@ -50,7 +50,16 @@ public class CreateUserTest : BaseMockServerTest
                 }
               },
               "email": "email",
-              "favorite-number": 1
+              "favorite-number": 1,
+              "numbers": [
+                1,
+                1
+              ],
+              "strings": {
+                "strings": {
+                  "key": "value"
+                }
+              }
             }
             """;
 

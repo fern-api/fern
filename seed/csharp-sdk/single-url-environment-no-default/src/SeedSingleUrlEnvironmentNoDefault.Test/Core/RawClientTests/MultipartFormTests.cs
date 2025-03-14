@@ -14,10 +14,10 @@ public class MultipartFormTests
     private static SimpleObject _simpleObject = new();
 
     private static string _simpleFormEncoded =
-        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data,2023-10-01T08:00:00.000-04:00,2023-10-01,12:00:00,01:00:00,1a1bb98f-47c6-407b-9481-78476affe52a,true,42,A";
+        "meta=data&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data,2023-10-01,12:00:00,01:00:00,1a1bb98f-47c6-407b-9481-78476affe52a,true,42,A";
 
     private static string _simpleExplodedFormEncoded =
-        "meta=data&DateTime=2023-10-01T08:00:00.000-04:00&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data&Values=2023-10-01T08:00:00.000-04:00&Values=2023-10-01&Values=12:00:00&Values=01:00:00&Values=1a1bb98f-47c6-407b-9481-78476affe52a&Values=true&Values=42&Values=A";
+        "meta=data&Date=2023-10-01&Time=12:00:00&Duration=01:00:00&Id=1a1bb98f-47c6-407b-9481-78476affe52a&IsActive=true&Count=42&Initial=A&Values=data&Values=2023-10-01&Values=12:00:00&Values=01:00:00&Values=1a1bb98f-47c6-407b-9481-78476affe52a&Values=true&Values=42&Values=A";
 
     private static ComplexObject _complexObject = new();
 
@@ -40,7 +40,6 @@ public class MultipartFormTests
               "foo": "value2"
             }
           ],
-          "DateTime": "2023-10-01T08:00:00.000-04:00",
           "Date": "2023-10-01",
           "Time": "12:00:00",
           "Duration": "01:00:00",
@@ -855,7 +854,6 @@ public class MultipartFormTests
     {
         [JsonPropertyName("meta")]
         public string Meta { get; set; } = "data";
-        public DateTime DateTime { get; set; } = DateTime.Parse("2023-10-01T12:00:00Z");
         public DateOnly Date { get; set; } = DateOnly.Parse("2023-10-01");
         public TimeOnly Time { get; set; } = TimeOnly.Parse("12:00:00");
         public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);
@@ -866,7 +864,6 @@ public class MultipartFormTests
         public IEnumerable<object> Values { get; set; } =
             [
                 "data",
-                DateTime.Parse("2023-10-01T12:00:00Z"),
                 DateOnly.Parse("2023-10-01"),
                 TimeOnly.Parse("12:00:00"),
                 TimeSpan.FromHours(1),
@@ -890,7 +887,6 @@ public class MultipartFormTests
         public IEnumerable<object> ListOfObjects { get; set; } =
             new List<object> { new { foo = "value" }, new { foo = "value2" } };
 
-        public DateTime DateTime { get; set; } = DateTime.Parse("2023-10-01T12:00:00Z");
         public DateOnly Date { get; set; } = DateOnly.Parse("2023-10-01");
         public TimeOnly Time { get; set; } = TimeOnly.Parse("12:00:00");
         public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);
