@@ -16,6 +16,7 @@ export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
+        servers?: OpenAPIV3_1.ServerObject[];
     }
 
     export interface Output {
@@ -28,11 +29,13 @@ export declare namespace PathConverter {
 export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1, PathConverter.Output> {
     private readonly pathItem: OpenAPIV3_1.PathItemObject;
     private readonly path: string;
+    private readonly servers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ breadcrumbs, pathItem, path }: PathConverter.Args) {
+    constructor({ breadcrumbs, pathItem, path, servers }: PathConverter.Args) {
         super({ breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
+        this.servers = servers;
     }
 
     public async convert({

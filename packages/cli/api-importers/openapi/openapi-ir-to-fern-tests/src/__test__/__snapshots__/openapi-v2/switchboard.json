@@ -53503,28 +53503,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.airtop.ai/v1",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.airtop.ai/v1",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.airtop.ai/v1",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiAirtopAiV1",
+              "safeName": "httpsApiAirtopAiV1"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_airtop_ai_v_1",
+              "safeName": "https_api_airtop_ai_v_1"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_AIRTOP_AI_V_1",
+              "safeName": "HTTPS_API_AIRTOP_AI_V_1"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiAirtopAiV1",
+              "safeName": "HttpsApiAirtopAiV1"
             }
           },
           "url": "https://api.airtop.ai/v1"

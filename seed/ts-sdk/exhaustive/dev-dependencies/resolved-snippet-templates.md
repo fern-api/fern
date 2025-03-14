@@ -662,6 +662,18 @@ await client.endpoints.primitive.getAndReturnBase64(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.put.add("id");
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
 const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.union.getAndReturnUnion(
 	{

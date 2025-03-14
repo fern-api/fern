@@ -9408,28 +9408,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.sws.speechify.com",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.sws.speechify.com",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.sws.speechify.com",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiSwsSpeechifyCom",
+              "safeName": "httpsApiSwsSpeechifyCom"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_sws_speechify_com",
+              "safeName": "https_api_sws_speechify_com"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_SWS_SPEECHIFY_COM",
+              "safeName": "HTTPS_API_SWS_SPEECHIFY_COM"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiSwsSpeechifyCom",
+              "safeName": "HttpsApiSwsSpeechifyCom"
             }
           },
           "url": "https://api.sws.speechify.com"

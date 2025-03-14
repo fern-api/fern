@@ -1,0 +1,45 @@
+asyncapi: 3.0.0
+info:
+  title: Test AsyncAPI
+  version: 1.0.0
+servers:
+  websocket:
+    host: api.async.com
+    protocol: wss
+  websocket2:
+    host: api2.async.com
+    protocol: wss
+channels:
+  testChannel:
+    address: '/test'
+    servers:
+      - $ref: '#/servers/websocket'
+    messages:
+      sendMessage:
+        $ref: '#/components/messages/sendMessage'
+  testChannel2:
+    address: '/test2'
+    servers:
+      - $ref: '#/servers/websocket2'
+    messages:
+      sendMessage:
+        $ref: '#/components/messages/sendMessage'
+operations:
+  send:
+    action: send
+    channel:
+      $ref: '#/channels/testChannel'
+    messages:
+      - $ref: '#/channels/testChannel/messages/sendMessage'
+  send2:
+    action: send
+    channel:
+      $ref: '#/channels/testChannel2'
+    messages:
+      - $ref: '#/channels/testChannel2/messages/sendMessage'
+components:
+  messages:
+    sendMessage:
+      summary: Message with marked data information.
+      payload:
+        type: string

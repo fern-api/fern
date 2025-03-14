@@ -65,28 +65,28 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.hume.ai",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.hume.ai",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.hume.ai",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiHumeAi",
+              "safeName": "httpsApiHumeAi"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_hume_ai",
+              "safeName": "https_api_hume_ai"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_HUME_AI",
+              "safeName": "HTTPS_API_HUME_AI"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiHumeAi",
+              "safeName": "HttpsApiHumeAi"
             }
           },
           "url": "https://api.hume.ai"
