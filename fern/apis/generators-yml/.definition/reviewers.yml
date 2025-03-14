@@ -1,8 +1,0 @@
-types:
-  ReviewerSchema:
-    properties:
-      name: string
-  ReviewersSchema:
-    properties:
-      teams: optional<list<ReviewerSchema>>
-      users: optional<list<ReviewerSchema>>
