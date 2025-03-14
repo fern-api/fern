@@ -158,8 +158,6 @@ service:
               type: optional<unknown>
         content-type: multipart/form-data
         name: OptionalArgsRequest
-        path-parameters:
-          invoice_id: string
       response:
         status-code: 200
         type: string

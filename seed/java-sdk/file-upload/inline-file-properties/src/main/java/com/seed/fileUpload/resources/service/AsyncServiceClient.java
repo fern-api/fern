@@ -564,6 +564,10 @@ public class AsyncServiceClient {
         return future;
     }
 
+    public CompletableFuture<String> optionalArgs() {
+        return optionalArgs(OptionalArgsRequest.builder().build());
+    }
+
     public CompletableFuture<String> optionalArgs(OptionalArgsRequest request) {
         return optionalArgs(request, null);
     }

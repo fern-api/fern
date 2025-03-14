@@ -72,6 +72,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
+    public getAdditionalQueryParametersType(): csharp.Type {
+        return csharp.Type.list(
+            csharp.Type.reference(
+                this.getKeyValuePairsClassReference({
+                    key: csharp.Type.string(),
+                    value: csharp.Type.string()
+                })
+            )
+        );
+    }
+
+    public getAdditionalBodyPropertiesType(): csharp.Type {
+        return csharp.Type.optional(csharp.Type.object());
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId
@@ -213,6 +228,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
             AsIsFiles.Test.QueryStringConverterTests,
+            AsIsFiles.Test.RawClientTests.AdditionalParametersTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests
         ];

@@ -56,6 +56,7 @@ export async function generateAndSnapshotIR({
         keywords: undefined,
         smartCasing: true,
         exampleGeneration: { disabled: false },
+        disableDynamicExamples: true,
         readme: undefined,
         version: undefined,
         packageName: undefined,
