@@ -1,0 +1,19 @@
+types:
+  AvailabilitySchema:
+    properties:
+      message: optional<string>
+      status: AvailabilityStatusSchema
+  AvailabilityStatusSchema:
+    enum:
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - deprecated
+      - name: GenerallyAvailable
+        value: generally-available
+  AvailabilityUnionSchema:
+    discriminated: false
+    union:
+      - AvailabilityStatusSchema
+      - AvailabilitySchema

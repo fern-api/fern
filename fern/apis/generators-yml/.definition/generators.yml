@@ -1,0 +1,334 @@
+imports:
+  auth: ./fernDefinition/auth.yml
+  environments: ./fernDefinition/environments.yml
+  file: ./fernDefinition/file.yml
+  group: ./group.yml
+  reviewers: ./reviewers.yml
+types:
+  APIConfigurationSchema:
+    discriminated: false
+    union:
+      - APIConfigurationSchemaInternal
+      - NamespacedAPIConfigurationSchema
+      - APIConfigurationV2Schema
+  APIConfigurationSchemaInternal:
+    discriminated: false
+    union:
+      - APIDefinitionPathSchema
+      - APIDefinitionWithOverridesSchema
+      - APIDefinitionList
+      - ProtobufAPIDefinitionSchema
+  APIConfigurationV2Schema:
+    extends:
+      - file.WithHeadersSchema
+      - environments.WithEnvironmentsSchema
+    properties:
+      auth: optional<auth.ApiAuthSchema>
+      specs: APIConfigurationV2SpecsSchema
+  APIConfigurationV2SpecsSchema:
+    discriminated: false
+    union:
+      - list<SpecSchema>
+      - ConjureSchema
+  APIDefinitionList:
+    type: list<APIDefinitionSchema>
+  APIDefinitionPathSchema:
+    docs: Path to the OpenAPI, AsyncAPI or Fern Definition
+    type: string
+  APIDefinitionSchema:
+    discriminated: false
+    union:
+      - APIDefinitionPathSchema
+      - APIDefinitionWithOverridesSchema
+      - ProtobufAPIDefinitionSchema
+  APIDefinitionSettingsSchema:
+    availability: deprecated
+    docs: Deprecated, use the `api.specs` key instead
+    properties:
+      idiomatic-request-names:
+        docs: >-
+          Whether to use idiomatic request names for endpoints (e.g.
+          ListUsersRequest instead of UsersListRequest). Defaults to false.
+        type: optional<boolean>
+      inline-path-parameters:
+        docs: >-
+          Whether to include path parameters within the generated in-lined
+          request. Defaults to false.
+        type: optional<boolean>
+      message-naming:
+        docs: >-
+          What version of message naming to use for AsyncAPI messages, this will
+          grow over time. Defaults to v1.
+        type: optional<MessageNamingSettingsSchema>
+      only-include-referenced-schemas:
+        docs: >-
+          Whether to only include schemas referenced by endpoints in the
+          generated SDK (i.e. a form of tree-shaking). Defaults to false.
+        type: optional<boolean>
+      respect-nullable-schemas:
+        docs: >-
+          Preserves nullable schemas in API definition settings. Defaults to
+          false, where nullable schemas are treated as optional.
+        type: optional<boolean>
+      unions:
+        availability: deprecated
+        docs: >
+          What version of union generation to use, this will grow over time.
+          Defaults to v0.
+
+          Deprecated, use the
+          `api.specs.[].settings.prefer-undiscriminated-unions-with-literals`
+          key instead.
+        type: optional<UnionSettingsSchema>
+      use-title:
+        availability: deprecated
+        docs: >
+          Whether to use the titles of the schemas within an OpenAPI definition
+          as the names of the types within Fern. Defaults to true.
+
+          Deprecated, use the `api.specs.[].settings.title-as-schema-name` key
+          instead.
+        type: optional<boolean>
+  APIDefinitionWithOverridesSchema:
+    properties:
+      audiences:
+        docs: Audiences that you would like to filter to
+        type: optional<list<string>>
+      origin:
+        docs: >-
+          The URL of the API definition origin, from which the file should be
+          polled.
+        type: optional<string>
+      overrides:
+        docs: Path to the OpenAPI or AsyncAPI overrides
+        type: optional<string>
+      path: APIDefinitionPathSchema
+      settings: optional<APIDefinitionSettingsSchema>
+  AsyncAPISettingsSchema:
+    extends:
+      - BaseAPISettingsSchema
+    properties:
+      message-naming:
+        docs: >-
+          What version of message naming to use for AsyncAPI messages, this will
+          grow over time. Defaults to v1.
+        type: optional<MessageNamingSettingsSchema>
+  AsyncAPISpecSchema:
+    properties:
+      asyncapi: string
+      namespace: optional<string>
+      origin: optional<string>
+      overrides: optional<string>
+      settings: optional<AsyncAPISettingsSchema>
+  BaseAPISettingsSchema:
+    properties:
+      coerce-enums-to-literals: optional<boolean>
+      idiomatic-request-names: optional<boolean>
+      optional-additional-properties: optional<boolean>
+      respect-nullable-schemas:
+        docs: >-
+          Preserves nullable schemas in API definition settings. Defaults to
+          false, where nullable schemas are treated as optional.
+        type: optional<boolean>
+      title-as-schema-name:
+        docs: >-
+          Whether to use the titles of the schemas within an OpenAPI definition
+          as the names of the types within Fern. Defaults to true.
+        type: optional<boolean>
+  ConjureSchema:
+    properties:
+      conjure: string
+  ConjureSettingsSchema:
+    properties: {}
+  FormParameterEncoding:
+    enum:
+      - form
+      - json
+  GeneratorsConfigurationSchema:
+    audiences:
+      - generators-yml
+    properties:
+      api:
+        type: optional<APIConfigurationSchema>
+      api-settings:
+        availability: deprecated
+        docs: Deprecated, use the `api` key instead
+        type: optional<APIDefinitionSettingsSchema>
+      async-api:
+        availability: deprecated
+        docs: Deprecated, use the `api` key instead
+        type: optional<string>
+      auth-schemes:
+        type: optional<map<string, auth.AuthSchemeDeclarationSchema>>
+      default-group:
+        type: optional<string>
+      groups:
+        type: optional<map<string, group.GeneratorGroupSchema>>
+      metadata:
+        type: optional<OutputMetadataSchema>
+      openapi:
+        availability: deprecated
+        docs: Deprecated, use the `api` key instead
+        type: optional<GeneratorsOpenAPISchema>
+      openapi-overrides:
+        availability: deprecated
+        docs: Deprecated, use the `api` key instead
+        type: optional<string>
+      readme:
+        type: optional<ReadmeSchema>
+      reviewers:
+        type: optional<reviewers.ReviewersSchema>
+      spec-origin:
+        availability: deprecated
+        docs: Deprecated, use the `api` key instead
+        type: optional<string>
+      whitelabel:
+        type: optional<WhitelabelConfigurationSchema>
+  GeneratorsOpenAPIObjectSchema:
+    properties:
+      disable-examples: optional<boolean>
+      origin: optional<string>
+      overrides: optional<string>
+      path: string
+      settings: OpenAPISettingsSchema
+  GeneratorsOpenAPISchema:
+    discriminated: false
+    union:
+      - GeneratorsOpenAPIObjectSchema
+      - string
+  MessageNamingSettingsSchema:
+    enum:
+      - v1
+      - v2
+  NamespacedAPIConfigurationSchema:
+    properties:
+      namespaces: map<string, APIConfigurationSchemaInternal>
+  OpenAPIExampleGenerationSchema:
+    properties:
+      request: optional<RequestOrResponseExampleGenerationSchema>
+      response: optional<RequestOrResponseExampleGenerationSchema>
+  OpenAPIFilterSchema:
+    properties:
+      endpoints:
+        docs: Endpoints to include in the generated SDK (e.g. "POST /users").
+        type: optional<list<string>>
+  OpenAPISettingsSchema:
+    extends:
+      - BaseAPISettingsSchema
+    properties:
+      default-form-parameter-encoding:
+        docs: The default encoding of form parameters. Defaults to JSON.
+        type: optional<FormParameterEncoding>
+      example-generation:
+        docs: Fine-tune your example generation
+        type: optional<OpenAPIExampleGenerationSchema>
+      filter:
+        docs: Filter to apply to the OpenAPI specification.
+        type: optional<OpenAPIFilterSchema>
+      inline-path-parameters:
+        docs: >-
+          Whether to include path parameters within the generated in-lined
+          request. Defaults to false.
+        type: optional<boolean>
+      object-query-parameters:
+        docs: Enables parsing deep object query parameters
+        type: optional<boolean>
+      only-include-referenced-schemas:
+        docs: >-
+          Whether to only include schemas referenced by endpoints in the
+          generated SDK (i.e. a form of tree-shaking). Defaults to false.
+        type: optional<boolean>
+      prefer-undiscriminated-unions-with-literals:
+        docs: >-
+          Whether to prefer undiscriminated unions with literals. Defaults to
+          false.
+        type: optional<boolean>
+      respect-readonly-schemas:
+        docs: Enables exploring readonly schemas in OpenAPI specifications
+        type: optional<boolean>
+  OpenAPISpecSchema:
+    properties:
+      namespace: optional<string>
+      openapi: string
+      origin: optional<string>
+      overrides: optional<string>
+      settings: optional<OpenAPISettingsSchema>
+  OutputMetadataAuthor:
+    properties:
+      email: string
+      name: string
+  OutputMetadataSchema:
+    properties:
+      authors: optional<list<OutputMetadataAuthor>>
+      description: optional<string>
+  ProtobufAPIDefinitionSchema:
+    properties:
+      proto: ProtobufDefinitionSchema
+  ProtobufDefinitionSchema:
+    properties:
+      local-generation:
+        docs: >-
+          Whether to compile the `.proto` files locally. By default, we generate
+          remotely.
+        type: optional<boolean>
+      overrides:
+        docs: Path to the overrides configuration
+        type: optional<string>
+      root:
+        docs: The path to the `.proto` directory root (e.g. `proto`).
+        type: string
+      target:
+        docs: >-
+          The path to the target `.proto` file that defines the API (e.g.
+          `proto/user/v1/user.proto`).
+        type: string
+  ProtobufSpecSchema:
+    properties:
+      proto: ProtobufDefinitionSchema
+  ReadmeEndpointObjectSchema:
+    properties:
+      method: string
+      path: string
+      stream: optional<boolean>
+  ReadmeEndpointSchema:
+    discriminated: false
+    union:
+      - docs: Endpoint name in 'POST /users' format
+        type: string
+      - ReadmeEndpointObjectSchema
+  ReadmeSchema:
+    properties:
+      apiReferenceLink: optional<string>
+      bannerLink: optional<string>
+      defaultEndpoint:
+        docs: If set, use this endpoint's snippet as the default whenever possible
+        type: optional<ReadmeEndpointSchema>
+      features:
+        docs: Specifies a list of endpoints associated with the feature
+        type: optional<map<string, list<ReadmeEndpointSchema>>>
+      introduction: optional<string>
+  RequestOrResponseExampleGenerationSchema:
+    properties:
+      max-depth:
+        docs: >-
+          Controls the maximum depth for which optional properties will have
+          examples generated. A depth of 0 means no optional properties will
+          have examples.
+        type: optional<integer>
+  SpecSchema:
+    discriminated: false
+    union:
+      - OpenAPISpecSchema
+      - AsyncAPISpecSchema
+      - ProtobufSpecSchema
+  UnionSettingsSchema:
+    enum:
+      - v1
+  WhitelabelConfigurationSchema:
+    properties:
+      github: optional<WhitelabelGithubConfigurationSchema>
+  WhitelabelGithubConfigurationSchema:
+    properties:
+      email: string
+      token: string
+      username: string

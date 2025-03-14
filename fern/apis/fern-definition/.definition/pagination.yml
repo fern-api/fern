@@ -1,0 +1,47 @@
+types:
+  CursorPaginationSchema:
+    properties:
+      cursor:
+        docs: The path to the request property for the cursor.
+        type: string
+      next_cursor:
+        docs: The path to the response property for the next cursor.
+        type: string
+      results:
+        docs: The path to the response property for the page elements.
+        type: string
+  CustomPaginationSchema:
+    docs: >
+      Pagination where the SDK author is responsible for implementing the
+      pagination
+
+      logic in the SDK.
+    properties:
+      results:
+        docs: |
+          The response property is used to determine the results response type
+          generated in the endpoint.
+        type: string
+      type:
+        docs: The type of pagination.
+        type: literal<"custom">
+  OffsetPaginationSchema:
+    properties:
+      has-next-page:
+        docs: The path to the response property indicating next page presence.
+        type: optional<string>
+      offset:
+        docs: The path to the request property for the page offset.
+        type: string
+      results:
+        docs: The path to the response property for the page elements.
+        type: string
+      step:
+        docs: The path to the request property for the page step.
+        type: optional<string>
+  PaginationSchema:
+    discriminated: false
+    union:
+      - CursorPaginationSchema
+      - OffsetPaginationSchema
+      - CustomPaginationSchema

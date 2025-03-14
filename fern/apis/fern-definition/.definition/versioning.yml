@@ -1,0 +1,36 @@
+imports:
+  types: types.yml
+  commons: commons.yml
+types:
+  VersionDeclarationHeaderObjectSchema:
+    properties:
+      env:
+        docs: The environment variable to read the header value from (if any)
+        type: optional<string>
+      name:
+        docs: The name of the parameter used to represent the header
+        type: optional<string>
+      value:
+        docs: The wire representation of the header (e.g. X-API-Version)
+        type: string
+  VersionDeclarationHeaderSchema:
+    discriminated: false
+    union:
+      - string
+      - VersionDeclarationHeaderObjectSchema
+  VersionDeclarationSchema:
+    properties:
+      default: optional<string>
+      header: VersionDeclarationHeaderSchema
+      values: list<VersionValue>
+  VersionValue:
+    discriminated: false
+    union:
+      - string
+      - VersionValueDetailed
+  VersionValueDetailed:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithName
+    properties:
+      value: string

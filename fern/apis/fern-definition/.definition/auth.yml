@@ -1,0 +1,139 @@
+imports:
+  commons: commons.yml
+types:
+  AnyAuthItem:
+    discriminated: false
+    union:
+      - string
+      - AuthSchemeReferenceSchema
+  AnyAuthSchemesSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      any: list<AnyAuthItem>
+  ApiAuthSchema:
+    discriminated: false
+    union:
+      - string
+      - AuthSchemeReferenceSchema
+      - AnyAuthSchemesSchema
+  AuthSchemeDeclarationSchema:
+    discriminated: false
+    union:
+      - OAuthSchemeSchema
+      - HeaderAuthSchemeSchema
+      - BasicAuthSchemeSchema
+      - BearerAuthSchemeSchema
+  AuthSchemeReferenceSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: string
+  AuthVariable:
+    extends:
+      - WithEnvironmentVariable
+      - commons.WithName
+  BasicAuthSchemeSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      password: optional<AuthVariable>
+      scheme: literal<"basic">
+      username: optional<AuthVariable>
+  BearerAuthSchemeSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"bearer">
+      token: optional<AuthVariable>
+  HeaderAuthSchemeSchema:
+    extends:
+      - WithEnvironmentVariable
+      - commons.WithName
+      - commons.WithDocsSchema
+    properties:
+      header: string
+      prefix: optional<string>
+      type:
+        docs: Defaults to string
+        type: optional<string>
+  OAuthAccessTokenRequestPropertiesSchema:
+    properties:
+      client-id:
+        docs: The property name for the client ID.
+        type: optional<string>
+      client-secret:
+        docs: The property name for the client secret.
+        type: optional<string>
+      scopes:
+        docs: The property name for the scopes.
+        type: optional<string>
+  OAuthAccessTokenResponsePropertiesSchema:
+    properties:
+      access-token:
+        docs: The property name for the access token.
+        type: optional<string>
+      expires-in:
+        docs: The property name for the expires in property.
+        type: optional<string>
+      refresh-token:
+        docs: The property name for the refresh token
+        type: optional<string>
+  OAuthGetTokenEndpointSchema:
+    properties:
+      endpoint:
+        docs: The endpoint to get the access token, such as 'auth.get_token
+        type: string
+      request-properties:
+        type: optional<OAuthAccessTokenRequestPropertiesSchema>
+      response-properties:
+        type: optional<OAuthAccessTokenResponsePropertiesSchema>
+  OAuthRefreshTokenEndpointSchema:
+    properties:
+      endpoint:
+        docs: The endpoint to refresh the access token, such as 'auth.refresh_token
+        type: string
+      request-properties:
+        type: optional<OAuthRefreshTokenRequestPropertiesSchema>
+      response-properties:
+        type: optional<OAuthRefreshTokenResponsePropertiesSchema>
+  OAuthRefreshTokenRequestPropertiesSchema:
+    properties:
+      refresh-token:
+        docs: The property name for the refresh token.
+        type: string
+  OAuthRefreshTokenResponsePropertiesSchema:
+    properties:
+      access-token:
+        docs: The property name for the access token.
+        type: optional<string>
+      expires-in:
+        docs: The property name for the expires in property.
+        type: optional<string>
+      refresh-token:
+        docs: The property name for the refresh token.
+        type: optional<string>
+  OAuthSchemeSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      client-id-env: optional<string>
+      client-secret-env: optional<string>
+      get-token: OAuthGetTokenEndpointSchema
+      refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      scheme: literal<"oauth">
+      scopes: optional<list<string>>
+      token-header:
+        docs: Sets the token header key name. Defaults to 'Authorization'
+        type: optional<string>
+      token-prefix:
+        docs: Sets the token header value prefix. Defaults to 'Bearer'
+        type: optional<string>
+      type: literal<"client-credentials">
+  WithAuthSchema:
+    properties:
+      auth: optional<ApiAuthSchema>
+      auth-schemes: optional<map<string, AuthSchemeDeclarationSchema>>
+  WithEnvironmentVariable:
+    properties:
+      env: optional<string>

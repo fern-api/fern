@@ -1,0 +1,14 @@
+types:
+  GithubLicenseCustomSchema:
+    properties:
+      custom: string
+  GithubLicenseSchema:
+    discriminated: false
+    union:
+      - GithubLicenseType
+      - GithubLicenseCustomSchema
+  GithubLicenseType:
+    enum:
+      - MIT
+      - name: Apache
+        value: Apache-2.0

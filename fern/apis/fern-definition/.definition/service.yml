@@ -1,0 +1,176 @@
+imports:
+  types: types.yml
+  commons: commons.yml
+  examples: examples.yml
+  pagination: pagination.yml
+  source: source.yml
+  variables: variables.yml
+types:
+  FormDataBodyEncodingStyle:
+    enum:
+      - json
+      - exploded
+      - form
+  GrpcTransport:
+    properties:
+      service-name:
+        docs: The name of the gRPC service.
+        type: string
+  HttpEndpointSchema:
+    extends:
+      - commons.WithDisplayName
+      - commons.DeclarationSchema
+    properties:
+      auth: optional<boolean>
+      base-path: optional<string>
+      errors: optional<ResponseErrorsSchema>
+      examples: optional<list<examples.ExampleEndpointCallSchema>>
+      idempotent: optional<boolean>
+      method: optional<HttpMethodSchema>
+      pagination: optional<Pagination>
+      path: string
+      path-parameters: optional<map<string, HttpPathParameterSchema>>
+      request: optional<HttpRequest>
+      response: optional<HttpResponseSchema>
+      response-stream: optional<HttpResponseStreamSchema>
+      source: optional<source.SourceSchema>
+      stream-condition: optional<string>
+      transport: optional<ServiceTransport>
+      url: optional<string>
+  HttpHeaderSchema: TypeReferenceDeclarationWithEnvOverride
+  HttpInlineFileRequestBodyPropertySchema:
+    extends: types.TypeReferenceDeclarationWithName
+    properties:
+      content-type: optional<string>
+      style:
+        docs: Defaults to json encoding
+        type: optional<FormDataBodyEncodingStyle>
+  HttpInlineRequestBodyPropertySchema:
+    discriminated: false
+    union:
+      - string
+      - HttpInlineFileRequestBodyPropertySchema
+  HttpInlineRequestBodySchema:
+    properties:
+      extends: optional<types.ObjectExtendsSchema>
+      extra-properties: optional<boolean>
+      properties: optional<map<string, HttpInlineRequestBodyPropertySchema>>
+  HttpMethodSchema:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+  HttpPathParameterSchema:
+    discriminated: false
+    union:
+      - types.TypeReferenceSchema
+      - variables.VariableReferenceSchema
+  HttpQueryParameterSchema:
+    discriminated: false
+    union:
+      - string
+      - QueryParameterTypeReferenceDetailed
+  HttpReferencedRequestBodySchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      type: string
+  HttpRequest:
+    discriminated: false
+    union:
+      - string
+      - HttpRequestSchema
+  HttpRequestBodySchema:
+    discriminated: false
+    union:
+      - string
+      - HttpReferencedRequestBodySchema
+      - HttpInlineRequestBodySchema
+  HttpRequestSchema:
+    extends:
+      - commons.WithName
+      - commons.WithDocsSchema
+    properties:
+      body: optional<HttpRequestBodySchema>
+      content-type: optional<string>
+      headers: optional<map<string, HttpHeaderSchema>>
+      path-parameters: optional<map<string, HttpPathParameterSchema>>
+      query-parameters: optional<map<string, HttpQueryParameterSchema>>
+  HttpResponseSchema:
+    discriminated: false
+    union:
+      - string
+      - HttpResponseSchemaDetailed
+  HttpResponseSchemaDetailed:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      property: optional<string>
+      status-code: optional<integer>
+      type: optional<string>
+  HttpResponseStreamSchema:
+    discriminated: false
+    union:
+      - string
+      - HttpResponseStreamSchemaDetailed
+  HttpResponseStreamSchemaDetailed:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      format: optional<StreamFormat>
+      terminator: optional<string>
+      type: string
+  HttpServiceSchema:
+    extends:
+      - commons.DeclarationWithoutDocsSchema
+      - commons.WithDisplayName
+    properties:
+      auth: boolean
+      base-path: string
+      endpoints: map<string, HttpEndpointSchema>
+      headers: optional<map<string, types.TypeReferenceSchema>>
+      idempotent: optional<boolean>
+      path-parameters: optional<map<string, types.TypeReferenceSchema>>
+      source: optional<source.SourceSchema>
+      transport: optional<ServiceTransport>
+      url: optional<string>
+  Pagination:
+    discriminated: false
+    union:
+      - pagination.PaginationSchema
+      - boolean
+  QueryParameterTypeReferenceDetailed:
+    extends:
+      - types.TypeReferenceDeclarationWithName
+    properties:
+      allow-multiple: optional<boolean>
+  ResponseError:
+    discriminated: false
+    union:
+      - string
+      - ResponseErrorWithDocsSchema
+  ResponseErrorsSchema:
+    type: list<ResponseError>
+  ResponseErrorWithDocsSchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      error: string
+  ServiceTransport:
+    properties:
+      grpc: optional<GrpcTransport>
+  StreamFormat:
+    enum:
+      - sse
+      - json
+  TypeReferenceDeclarationWithEnvOverride:
+    discriminated: false
+    union:
+      - string
+      - TypeReferenceDeclarationWithEnvOverrideSchema
+  TypeReferenceDeclarationWithEnvOverrideSchema:
+    extends: types.TypeReferenceDeclarationWithName
+    properties:
+      env: optional<string>
