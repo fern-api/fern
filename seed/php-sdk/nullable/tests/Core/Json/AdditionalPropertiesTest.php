@@ -45,6 +45,8 @@ class Person extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->name = $values['name'];
         $this->email = $values['email'] ?? null;
     }
