@@ -44,6 +44,8 @@ class CreateUserRequest extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->username = $values['username'];
         $this->tags = $values['tags'] ?? null;
         $this->metadata = $values['metadata'] ?? null;

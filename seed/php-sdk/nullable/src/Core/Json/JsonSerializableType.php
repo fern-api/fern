@@ -19,6 +19,19 @@ abstract class JsonSerializableType implements \JsonSerializable
     /** @var array<string, mixed> Extra properties from JSON that don't map to class properties */
     private array $__additionalProperties = [];
 
+    /** @var array<string, mixed> Properties that have been explicitly set on the object */
+    private array $__explicitlySetProperties = [];
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        foreach ($values as $key => $value) {
+            $this->__explicitlySetProperties[$key] = true;
+        }
+    }
     /**
      * Serializes the object to a JSON string.
      *
@@ -50,6 +63,11 @@ abstract class JsonSerializableType implements \JsonSerializable
             if ($jsonKey == null) {
                 continue;
             }
+            // Omit properties that have not been explicitly set.
+            if (!array_key_exists($property->getName(), $this->__explicitlySetProperties)) {
+                 continue;
+            }
+
             $value = $property->getValue($this);
 
             // Handle DateTime properties
@@ -80,9 +98,7 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeObject($value);
             }
 
-            if ($value !== null) {
-                $result[$jsonKey] = $value;
-            }
+            $result[$jsonKey] = $value;
         }
         return $result;
     }
@@ -121,6 +137,7 @@ abstract class JsonSerializableType implements \JsonSerializable
 
         $args = [];
         $properties = [];
+        $explicitlySetProperties = [];
         $additionalProperties = [];
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property) ?? $property->getName();
@@ -169,9 +186,10 @@ abstract class JsonSerializableType implements \JsonSerializable
             }
 
             $args[$property->getName()] = $value;
+            $explicitlySetProperties[$property->getName()] = true;
         }
 
-        // Fill in any missing properties with defaults
+        // Fill in any missing properties with defaults, if a default exists
         foreach ($properties as $property) {
             if (!isset($args[$property->getName()])) {
                 $args[$property->getName()] = $property->getDefaultValue() ?? null;
@@ -180,6 +198,7 @@ abstract class JsonSerializableType implements \JsonSerializable
 
         // @phpstan-ignore-next-line
         $result = new static($args);
+        $result->__explicitlySetProperties = $explicitlySetProperties;
         $result->__additionalProperties = $additionalProperties;
         return $result;
     }

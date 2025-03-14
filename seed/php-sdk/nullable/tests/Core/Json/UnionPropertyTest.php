@@ -21,6 +21,8 @@ class UnionProperty extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->complexUnion = $values['complexUnion'];
     }
 }

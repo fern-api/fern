@@ -26,6 +26,8 @@ class UnionObject extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->nestedProperty = $values['nestedProperty'];
     }
 }

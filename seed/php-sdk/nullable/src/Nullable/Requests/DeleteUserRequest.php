@@ -21,6 +21,8 @@ class DeleteUserRequest extends JsonSerializableType
     public function __construct(
         array $values = [],
     ) {
+        parent::__construct($values);
+
         $this->username = $values['username'] ?? null;
     }
 }

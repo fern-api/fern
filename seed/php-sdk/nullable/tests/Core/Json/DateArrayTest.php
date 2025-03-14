@@ -25,6 +25,8 @@ class DateArray extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->dates = $values['dates'];
     }
 }

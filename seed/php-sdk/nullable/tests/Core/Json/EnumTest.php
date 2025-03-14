@@ -39,15 +39,18 @@ class ShapeType extends JsonSerializableType
     public array $shapes;
 
     /**
-     * @param Shape $shape
-     * @param Shape[] $shapes
+     * @param array{
+     *   shape: Shape,
+     *   shapes: Shape[],
+     * } $values
      */
     public function __construct(
-        Shape $shape,
-        array $shapes,
+        array $values,
     ) {
-        $this->shape = $shape;
-        $this->shapes = $shapes;
+        parent::__construct($values);
+
+        $this->shape = $values['shape'];
+        $this->shapes = $values['shapes'];
     }
 }
 
@@ -55,10 +58,10 @@ class EnumTest extends TestCase
 {
     public function testEnumSerialization(): void
     {
-        $object = new ShapeType(
-            Shape::Circle,
-            [Shape::Square, Shape::Circle, Shape::Triangle]
-        );
+        $object = new ShapeType([
+            'shape' => Shape::Circle,
+            'shapes' => [Shape::Square, Shape::Circle, Shape::Triangle]
+        ]);
 
         $expectedJson = json_encode([
             'shape' => 'CIRCLE',
