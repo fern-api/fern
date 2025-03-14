@@ -1,0 +1,15 @@
+types:
+  TestChannelPublishEvent:
+    enum: []
+    source:
+      openapi: beta_one.yml
+channel:
+  auth: false
+  examples:
+    - messages: []
+  messages:
+    publish:
+      body: TestChannelPublishEvent
+      origin: client
+  path: /test
+  url: websocket
