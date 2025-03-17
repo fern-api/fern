@@ -64724,36 +64724,192 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "Default Server",
     "environments": {
-      "baseUrls": [],
-      "environments": [
+      "baseUrls": [
         {
-          "id": "Default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
+            }
+          }
+        },
+        {
+          "id": "https://predict.vellum.ai",
+          "name": {
+            "originalName": "https://predict.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsPredictVellumAi",
+              "safeName": "httpsPredictVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_predict_vellum_ai",
+              "safeName": "https_predict_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_PREDICT_VELLUM_AI",
+              "safeName": "HTTPS_PREDICT_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsPredictVellumAi",
+              "safeName": "HttpsPredictVellumAi"
+            }
+          }
+        },
+        {
+          "id": "https://predict.vellum.ai",
+          "name": {
+            "originalName": "https://predict.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsPredictVellumAi",
+              "safeName": "httpsPredictVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_predict_vellum_ai",
+              "safeName": "https_predict_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_PREDICT_VELLUM_AI",
+              "safeName": "HTTPS_PREDICT_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsPredictVellumAi",
+              "safeName": "HttpsPredictVellumAi"
+            }
+          }
+        },
+        {
+          "id": "https://predict.vellum.ai",
+          "name": {
+            "originalName": "https://predict.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsPredictVellumAi",
+              "safeName": "httpsPredictVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_predict_vellum_ai",
+              "safeName": "https_predict_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_PREDICT_VELLUM_AI",
+              "safeName": "HTTPS_PREDICT_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsPredictVellumAi",
+              "safeName": "HttpsPredictVellumAi"
+            }
+          }
+        },
+        {
+          "id": "https://predict.vellum.ai",
+          "name": {
+            "originalName": "https://predict.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsPredictVellumAi",
+              "safeName": "httpsPredictVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_predict_vellum_ai",
+              "safeName": "https_predict_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_PREDICT_VELLUM_AI",
+              "safeName": "HTTPS_PREDICT_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsPredictVellumAi",
+              "safeName": "HttpsPredictVellumAi"
+            }
+          }
+        },
+        {
+          "id": "https://predict.vellum.ai",
+          "name": {
+            "originalName": "https://predict.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsPredictVellumAi",
+              "safeName": "httpsPredictVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_predict_vellum_ai",
+              "safeName": "https_predict_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_PREDICT_VELLUM_AI",
+              "safeName": "HTTPS_PREDICT_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsPredictVellumAi",
+              "safeName": "HttpsPredictVellumAi"
+            }
+          }
+        },
+        {
+          "id": "https://documents.vellum.ai",
+          "name": {
+            "originalName": "https://documents.vellum.ai",
+            "camelCase": {
+              "unsafeName": "httpsDocumentsVellumAi",
+              "safeName": "httpsDocumentsVellumAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_documents_vellum_ai",
+              "safeName": "https_documents_vellum_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_DOCUMENTS_VELLUM_AI",
+              "safeName": "HTTPS_DOCUMENTS_VELLUM_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsDocumentsVellumAi",
+              "safeName": "HttpsDocumentsVellumAi"
+            }
+          }
+        }
+      ],
+      "environments": [
+        {
+          "id": "Default Server",
+          "name": {
+            "originalName": "Default Server",
+            "camelCase": {
+              "unsafeName": "defaultServer",
+              "safeName": "defaultServer"
+            },
+            "snakeCase": {
+              "unsafeName": "default_server",
+              "safeName": "default_server"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT_SERVER",
+              "safeName": "DEFAULT_SERVER"
+            },
+            "pascalCase": {
+              "unsafeName": "DefaultServer",
+              "safeName": "DefaultServer"
             }
           },
           "urls": {
-            "Default Server": "https://api.vellum.ai",
+            "Base": "https://api.vellum.ai",
             "https://predict.vellum.ai": "https://predict.vellum.ai",
             "https://documents.vellum.ai": "https://documents.vellum.ai"
-          }
+          },
+          "docs": "Default Server"
         }
       ],
       "type": "multipleBaseUrls"

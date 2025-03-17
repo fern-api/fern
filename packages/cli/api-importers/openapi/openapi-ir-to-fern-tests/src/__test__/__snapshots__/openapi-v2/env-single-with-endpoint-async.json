@@ -24,34 +24,125 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "Prod",
     "environments": {
-      "baseUrls": [],
-      "environments": [
+      "baseUrls": [
         {
-          "id": "Default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
+            }
+          }
+        },
+        {
+          "id": "Debug",
+          "name": {
+            "originalName": "Debug",
+            "camelCase": {
+              "unsafeName": "debug",
+              "safeName": "debug"
+            },
+            "snakeCase": {
+              "unsafeName": "debug",
+              "safeName": "debug"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEBUG",
+              "safeName": "DEBUG"
+            },
+            "pascalCase": {
+              "unsafeName": "Debug",
+              "safeName": "Debug"
+            }
+          }
+        },
+        {
+          "id": "websocket",
+          "name": {
+            "originalName": "websocket",
+            "camelCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET",
+              "safeName": "WEBSOCKET"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket",
+              "safeName": "Websocket"
+            }
+          }
+        },
+        {
+          "id": "websocket2",
+          "name": {
+            "originalName": "websocket2",
+            "camelCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket_2",
+              "safeName": "websocket_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET_2",
+              "safeName": "WEBSOCKET_2"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket2",
+              "safeName": "Websocket2"
+            }
+          }
+        }
+      ],
+      "environments": [
+        {
+          "id": "Prod",
+          "name": {
+            "originalName": "Prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
             }
           },
           "urls": {
-            "Prod": "http://prod.api.com",
-            "Debug": "http://debug.api.com"
+            "Base": "http://prod.api.com",
+            "Debug": "http://debug.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
           }
         }
       ],

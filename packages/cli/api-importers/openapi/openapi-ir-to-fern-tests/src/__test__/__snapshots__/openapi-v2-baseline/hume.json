@@ -35621,7 +35621,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_getJobPredictions.get_job": {
         "auth": {
@@ -35758,7 +35759,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.List Jobs": {
         "auth": {
@@ -36048,7 +36050,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.Start Job": {
         "auth": {
@@ -36311,7 +36314,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.Get Job Predictions": {
         "auth": {
@@ -36409,7 +36413,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

@@ -12186,7 +12186,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_tokens.ExchangeToken": {
         "auth": {
@@ -12397,7 +12398,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accounts.GetAccount": {
         "auth": {
@@ -12636,7 +12638,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_policies.GetPolicy": {
         "auth": {
@@ -12875,7 +12878,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_carriers.GetCarrier": {
         "auth": {
@@ -13012,7 +13016,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_carriers.GetCarriers": {
         "auth": {
@@ -13120,7 +13125,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

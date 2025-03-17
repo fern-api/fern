@@ -57365,7 +57365,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactions.deleteTransaction": {
         "auth": {
@@ -57502,7 +57503,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactions.listTransactions": {
         "auth": {
@@ -57836,7 +57838,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactions.postTransactions": {
         "auth": {
@@ -58050,7 +58053,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactions.setTransactionAh": {
         "auth": {
@@ -58290,7 +58294,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_batches.getBatches": {
         "auth": {
@@ -58624,7 +58629,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_batches.postBatch": {
         "auth": {
@@ -58838,7 +58844,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_batches.getSingleBatch": {
         "auth": {
@@ -58975,7 +58982,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_batches.getBatchResults": {
         "auth": {
@@ -59112,7 +59120,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.getBankStatements": {
         "auth": {
@@ -59446,7 +59455,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.postBankStatement": {
         "auth": {
@@ -59652,7 +59662,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.getBankStatement": {
         "auth": {
@@ -59789,7 +59800,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.deleteBankStatement": {
         "auth": {
@@ -59926,7 +59938,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.getBankStatementStatementInfo": {
         "auth": {
@@ -60063,7 +60076,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_bankStatements.getBankStatementResult": {
         "auth": {
@@ -60200,7 +60214,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accountHolders.getAccountHolder": {
         "auth": {
@@ -60337,7 +60352,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accountHolders.deleteAccountHolder": {
         "auth": {
@@ -60474,7 +60490,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accountHolders.getAccountHolders": {
         "auth": {
@@ -60777,7 +60794,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accountHolders.createAccountHolder": {
         "auth": {
@@ -61047,7 +61065,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_recurrence.getAccountHolderRecurringPayments": {
         "auth": {
@@ -61184,7 +61203,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_webhooks.getWebhooks": {
         "auth": {
@@ -61292,7 +61312,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_webhooks.postWebhook": {
         "auth": {
@@ -61565,7 +61586,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_webhooks.getWebhook": {
         "auth": {
@@ -61702,7 +61724,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_webhooks.deleteWebhook": {
         "auth": {
@@ -61839,7 +61862,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_webhooks.patchWebhook": {
         "auth": {
@@ -62178,7 +62202,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_personalization.filterGet": {
         "auth": {
@@ -62286,7 +62311,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_personalization.filterPost": {
         "auth": {
@@ -62401,7 +62427,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_personalization.filterAppend": {
         "auth": {
@@ -62516,7 +62543,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_personalization.filterDelete": {
         "auth": {
@@ -62653,7 +62681,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_personalization.filterPatch": {
         "auth": {
@@ -62797,7 +62826,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_reports.getReports": {
         "auth": {
@@ -63131,7 +63161,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_reports.postReport": {
         "auth": {
@@ -63401,7 +63432,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_reports.getReport": {
         "auth": {
@@ -63538,7 +63570,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_reports.deleteReport": {
         "auth": {
@@ -63675,7 +63708,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_categories.getCategorySet": {
         "auth": {
@@ -63812,7 +63846,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_categories.customCategoriesPost": {
         "auth": {
@@ -63956,7 +63991,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_categories.deleteCustomCategorySet": {
         "auth": {
@@ -64093,7 +64129,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_entities.searchEntity": {
         "auth": {
@@ -64365,7 +64402,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_entities.getEntityById": {
         "auth": {
@@ -64502,7 +64540,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

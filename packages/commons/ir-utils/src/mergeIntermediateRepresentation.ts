@@ -78,28 +78,32 @@ function mergeEnvironments(
 ): FernIr.EnvironmentsConfig | undefined {
     if (environmentConfig1 == null && environmentConfig2 == null) {
         return undefined;
-    } else if (environmentConfig2 == null) {
+    }
+    if (environmentConfig2 == null) {
         return environmentConfig1;
-    } else if (environmentConfig1 == null) {
+    }
+    if (environmentConfig1 == null) {
         return environmentConfig2;
+    }
+    if (JSON.stringify(environmentConfig1) === JSON.stringify(environmentConfig2)) {
+        return environmentConfig1;
     }
 
     const defaultEnvironment: FernIr.EnvironmentId | undefined =
         environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment;
-
     const environments1 = environmentConfig1.environments;
     const environments2 = environmentConfig2.environments;
 
     if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
-        // console.log("Merging Environments for both SingleBaseUrl Case...")
-        // console.log("environmentConfig1", JSON.stringify(environmentConfig1, null, 2));
-        // console.log("environmentConfig2", JSON.stringify(environmentConfig2, null, 2));
+        const existingEnvUrls = new Set(environments1.environments.map((env) => env.url));
+        const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.url));
+
         return {
             defaultEnvironment,
             environments: FernIr.Environments.multipleBaseUrls({
                 baseUrls: [
                     ...environments1.environments.map((env) => ({ id: env.id, name: env.name })),
-                    ...environments2.environments.map((env) => ({ id: env.id, name: env.name }))
+                    ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
                 ],
                 environments: [
                     {
@@ -108,7 +112,7 @@ function mergeEnvironments(
                         urls: Object.assign(
                             {},
                             ...environments1.environments.map((env) => ({ [env.id]: env.url })),
-                            ...environments2.environments.map((env) => ({ [env.id]: env.url }))
+                            ...uniqueEnvs2.map((env) => ({ [env.id]: env.url }))
                         ),
                         docs: undefined
                     }
@@ -116,5 +120,44 @@ function mergeEnvironments(
             })
         };
     }
+
+    if (
+        (environments1.type === "multipleBaseUrls" && environments2.type === "singleBaseUrl") ||
+        (environments1.type === "singleBaseUrl" && environments2.type === "multipleBaseUrls")
+    ) {
+        const singleBaseUrlEnvironment =
+            environments1.type === "singleBaseUrl"
+                ? (environments1 as FernIr.Environments.SingleBaseUrl)
+                : (environments2 as FernIr.Environments.SingleBaseUrl);
+        const multipleBaseUrlsEnvironment =
+            environments1.type === "multipleBaseUrls"
+                ? (environments1 as FernIr.Environments.MultipleBaseUrls)
+                : (environments2 as FernIr.Environments.MultipleBaseUrls);
+
+        return {
+            defaultEnvironment,
+            environments: FernIr.Environments.multipleBaseUrls({
+                baseUrls: [
+                    ...multipleBaseUrlsEnvironment.baseUrls,
+                    ...singleBaseUrlEnvironment.environments.map((env) => ({ id: env.id, name: env.name }))
+                ],
+                environments: multipleBaseUrlsEnvironment.environments.map((env) => ({
+                    ...env,
+                    urls: {
+                        ...env.urls,
+                        ...Object.fromEntries(singleBaseUrlEnvironment.environments.map((env) => [env.id, env.url]))
+                    }
+                }))
+            })
+        };
+    }
+
+    if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
+        const existingEnvUrls = new Set(environments1.environments.map((env) => env.urls));
+        const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.urls));
+
+        return undefined;
+    }
+
     return environmentConfig1 ?? environmentConfig2;
 }

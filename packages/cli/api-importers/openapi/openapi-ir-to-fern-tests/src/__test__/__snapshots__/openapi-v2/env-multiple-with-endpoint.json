@@ -167,33 +167,104 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "Default",
+    "defaultEnvironment": "Prod",
     "environments": {
-      "baseUrls": [],
-      "environments": [
+      "baseUrls": [
         {
-          "id": "Default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
+            }
+          }
+        },
+        {
+          "id": "Debug",
+          "name": {
+            "originalName": "Debug",
+            "camelCase": {
+              "unsafeName": "debug",
+              "safeName": "debug"
+            },
+            "snakeCase": {
+              "unsafeName": "debug",
+              "safeName": "debug"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEBUG",
+              "safeName": "DEBUG"
+            },
+            "pascalCase": {
+              "unsafeName": "Debug",
+              "safeName": "Debug"
+            }
+          }
+        }
+      ],
+      "environments": [
+        {
+          "id": "Prod",
+          "name": {
+            "originalName": "Prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
             }
           },
           "urls": {
-            "Prod": "http://prod.api.com",
+            "Base": "http://prod.api.com",
+            "Debug": "http://debug.api.com"
+          }
+        },
+        {
+          "id": "Dev",
+          "name": {
+            "originalName": "Dev",
+            "camelCase": {
+              "unsafeName": "dev",
+              "safeName": "dev"
+            },
+            "snakeCase": {
+              "unsafeName": "dev",
+              "safeName": "dev"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEV",
+              "safeName": "DEV"
+            },
+            "pascalCase": {
+              "unsafeName": "Dev",
+              "safeName": "Dev"
+            }
+          },
+          "urls": {
+            "Base": "http://dev.api.com",
             "Debug": "http://debug.api.com"
           }
         }
