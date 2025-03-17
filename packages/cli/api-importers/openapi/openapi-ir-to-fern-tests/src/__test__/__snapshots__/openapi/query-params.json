@@ -29,9 +29,7 @@
               "request": {
                 "name": "SearchRequest",
                 "query-parameters": {
-                  "filter": {
-                    "type": "optional<SearchRequestFilter>",
-                  },
+                  "filter": "optional<SearchRequestFilter>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -42,9 +40,7 @@
                       "multipleOf": undefined,
                     },
                   },
-                  "sort": {
-                    "type": "optional<SearchRequestSort>",
-                  },
+                  "sort": "optional<SearchRequestSort>",
                   "tags": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -170,10 +166,8 @@ service:
       request:
         name: SearchRequest
         query-parameters:
-          filter:
-            type: optional<SearchRequestFilter>
-          sort:
-            type: optional<SearchRequestSort>
+          filter: optional<SearchRequestFilter>
+          sort: optional<SearchRequestSort>
           limit:
             type: optional<integer>
             validation:

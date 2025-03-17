@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Minor cleanup to simple type schema constructions.
+    type: fix
+  irVersion: 57
+  version: 0.56.24
+
+- changelogEntry:
+  - summary: |
       CLI now passes validation from OpenAPI to Fern Definition.
     type: fix
   irVersion: 57

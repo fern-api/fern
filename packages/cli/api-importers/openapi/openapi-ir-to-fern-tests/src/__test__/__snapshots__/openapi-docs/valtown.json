@@ -4380,9 +4380,7 @@ let you get, create, and run vals.",
               "request": {
                 "name": "EvalGetRequest",
                 "query-parameters": {
-                  "args": {
-                    "type": "optional<string>",
-                  },
+                  "args": "optional<string>",
                 },
               },
               "response": {
@@ -5236,8 +5234,7 @@ service:
       request:
         name: EvalGetRequest
         query-parameters:
-          args:
-            type: optional<string>
+          args: optional<string>
       response:
         docs: Default Response
         type: optional<EvalGetResponse>

@@ -82,9 +82,7 @@
                     "docs": "language code",
                     "type": "optional<string>",
                   },
-                  "deprecated_ref_lang": {
-                    "type": "optional<DeprecatedParam>",
-                  },
+                  "deprecated_ref_lang": "optional<DeprecatedParam>",
                   "x-fern-availability_query_param": {
                     "availability": "pre-release",
                     "docs": "active beta query param",
@@ -324,8 +322,7 @@
           active_lang:
             type: optional<string>
             docs: language code
-          deprecated_ref_lang:
-            type: optional<DeprecatedParam>
+          deprecated_ref_lang: optional<DeprecatedParam>
           x-fern-availability_query_param:
             type: optional<string>
             docs: active beta query param

@@ -8149,9 +8149,7 @@ types:
               "request": {
                 "name": "GetAttemptsRequest",
                 "query-parameters": {
-                  "dir": {
-                    "type": "optional<GetAttemptsRequestDir>",
-                  },
+                  "dir": "optional<GetAttemptsRequestDir>",
                   "event_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8181,9 +8179,7 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetAttemptsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetAttemptsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -8253,10 +8249,8 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          order_by:
-            type: optional<GetAttemptsRequestOrderBy>
-          dir:
-            type: optional<GetAttemptsRequestDir>
+          order_by: optional<GetAttemptsRequestOrderBy>
+          dir: optional<GetAttemptsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -8598,9 +8592,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "request": {
                 "name": "GetBookmarksRequest",
                 "query-parameters": {
-                  "dir": {
-                    "type": "optional<GetBookmarksRequestDir>",
-                  },
+                  "dir": "optional<GetBookmarksRequestDir>",
                   "event_data_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8661,9 +8653,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetBookmarksRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetBookmarksRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -8967,10 +8957,8 @@ service:
             validation:
               maxLength: 255
           last_used_at: optional<datetime>
-          order_by:
-            type: optional<GetBookmarksRequestOrderBy>
-          dir:
-            type: optional<GetBookmarksRequestDir>
+          order_by: optional<GetBookmarksRequestOrderBy>
+          dir: optional<GetBookmarksRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -9470,18 +9458,10 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "request": {
                 "name": "GetEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "completed_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetEventBulkRetriesRequestDir>",
-                  },
+                  "cancelled_at": "optional<datetime>",
+                  "completed_at": "optional<datetime>",
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetEventBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -9512,9 +9492,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetEventBulkRetriesRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetEventBulkRetriesRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -10596,12 +10574,9 @@ service:
       request:
         name: GetEventBulkRetriesRequest
         query-parameters:
-          cancelled_at:
-            type: optional<datetime>
-          completed_at:
-            type: optional<datetime>
-          created_at:
-            type: optional<datetime>
+          cancelled_at: optional<datetime>
+          completed_at: optional<datetime>
+          created_at: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -10609,10 +10584,8 @@ service:
               maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
-          order_by:
-            type: optional<GetEventBulkRetriesRequestOrderBy>
-          dir:
-            type: optional<GetEventBulkRetriesRequestDir>
+          order_by: optional<GetEventBulkRetriesRequestOrderBy>
+          dir: optional<GetEventBulkRetriesRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -11011,18 +10984,10 @@ docs: ''
               "request": {
                 "name": "GetIgnoredEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "completed_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetIgnoredEventBulkRetriesRequestDir>",
-                  },
+                  "cancelled_at": "optional<datetime>",
+                  "completed_at": "optional<datetime>",
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetIgnoredEventBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -11053,9 +11018,7 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -11281,12 +11244,9 @@ service:
       request:
         name: GetIgnoredEventBulkRetriesRequest
         query-parameters:
-          cancelled_at:
-            type: optional<datetime>
-          completed_at:
-            type: optional<datetime>
-          created_at:
-            type: optional<datetime>
+          cancelled_at: optional<datetime>
+          completed_at: optional<datetime>
+          created_at: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -11294,10 +11254,8 @@ service:
               maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
-          order_by:
-            type: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
-          dir:
-            type: optional<GetIgnoredEventBulkRetriesRequestDir>
+          order_by: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
+          dir: optional<GetIgnoredEventBulkRetriesRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -11694,18 +11652,10 @@ docs: ''
               "request": {
                 "name": "GetRequestBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "completed_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetRequestBulkRetriesRequestDir>",
-                  },
+                  "cancelled_at": "optional<datetime>",
+                  "completed_at": "optional<datetime>",
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetRequestBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -11736,9 +11686,7 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetRequestBulkRetriesRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetRequestBulkRetriesRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -12544,12 +12492,9 @@ service:
       request:
         name: GetRequestBulkRetriesRequest
         query-parameters:
-          cancelled_at:
-            type: optional<datetime>
-          completed_at:
-            type: optional<datetime>
-          created_at:
-            type: optional<datetime>
+          cancelled_at: optional<datetime>
+          completed_at: optional<datetime>
+          created_at: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -12557,10 +12502,8 @@ service:
               maxLength: 255
           in_progress: optional<boolean>
           query_partial_match: optional<boolean>
-          order_by:
-            type: optional<GetRequestBulkRetriesRequestOrderBy>
-          dir:
-            type: optional<GetRequestBulkRetriesRequestDir>
+          order_by: optional<GetRequestBulkRetriesRequestOrderBy>
+          dir: optional<GetRequestBulkRetriesRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -13220,9 +13163,7 @@ docs: ''
                 "name": "GetConnectionsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "archived_at": "optional<datetime>",
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -13233,9 +13174,7 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "dir": {
-                    "type": "optional<GetConnectionsRequestDir>",
-                  },
+                  "dir": "optional<GetConnectionsRequestDir>",
                   "full_name": {
                     "type": "optional<string>",
                     "validation": {
@@ -13283,12 +13222,8 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetConnectionsRequestOrderBy>",
-                  },
-                  "paused_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "order_by": "optional<GetConnectionsRequestOrderBy>",
+                  "paused_at": "optional<datetime>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -14347,19 +14282,15 @@ service:
             validation:
               maxLength: 255
           archived: optional<boolean>
-          archived_at:
-            type: optional<datetime>
+          archived_at: optional<datetime>
           full_name:
             type: optional<string>
             validation:
               pattern: ^[a-z0-9-_>\s]+$
               maxLength: 155
-          paused_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetConnectionsRequestOrderBy>
-          dir:
-            type: optional<GetConnectionsRequestDir>
+          paused_at: optional<datetime>
+          order_by: optional<GetConnectionsRequestOrderBy>
+          dir: optional<GetConnectionsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -15374,9 +15305,7 @@ docs: >-
                 "name": "GetDestinationsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "archived_at": "optional<datetime>",
                   "cli_path": {
                     "type": "optional<string>",
                     "validation": {
@@ -15386,9 +15315,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "dir": {
-                    "type": "optional<GetDestinationsRequestDir>",
-                  },
+                  "dir": "optional<GetDestinationsRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15427,9 +15354,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetDestinationsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetDestinationsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -15787,8 +15712,7 @@ service:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
           archived: optional<boolean>
-          archived_at:
-            type: optional<datetime>
+          archived_at: optional<datetime>
           url:
             type: optional<string>
             allow-multiple: true
@@ -15796,10 +15720,8 @@ service:
             type: optional<string>
             validation:
               maxLength: 255
-          order_by:
-            type: optional<GetDestinationsRequestOrderBy>
-          dir:
-            type: optional<GetDestinationsRequestDir>
+          order_by: optional<GetDestinationsRequestOrderBy>
+          dir: optional<GetDestinationsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -16253,9 +16175,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "multipleOf": undefined,
                     },
                   },
-                  "body": {
-                    "type": "optional<string>",
-                  },
+                  "body": "optional<string>",
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16266,16 +16186,12 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "cli_id": {
-                    "type": "optional<string>",
-                  },
+                  "cli_id": "optional<string>",
                   "cli_user_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "created_at": "optional<datetime>",
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16286,9 +16202,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "dir": {
-                    "type": "optional<GetEventsRequestDir>",
-                  },
+                  "dir": "optional<GetEventsRequestDir>",
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16309,9 +16223,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "headers": {
-                    "type": "optional<string>",
-                  },
+                  "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16333,9 +16245,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "last_attempt_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "last_attempt_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -16355,12 +16265,8 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetEventsRequestOrderBy>",
-                  },
-                  "parsed_query": {
-                    "type": "optional<string>",
-                  },
+                  "order_by": "optional<GetEventsRequestOrderBy>",
+                  "parsed_query": "optional<string>",
                   "path": "optional<string>",
                   "prev": {
                     "type": "optional<string>",
@@ -16391,12 +16297,8 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "status": {
-                    "type": "optional<root.EventStatus>",
-                  },
-                  "successful_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "status": "optional<root.EventStatus>",
+                  "successful_at": "optional<datetime>",
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16647,8 +16549,7 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status:
-            type: optional<root.EventStatus>
+          status: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
@@ -16678,33 +16579,26 @@ service:
             validation:
               min: 200
               max: 600
-          successful_at:
-            type: optional<datetime>
-          created_at:
-            type: optional<datetime>
+          successful_at: optional<datetime>
+          created_at: optional<datetime>
           error_code:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          cli_id:
-            type: optional<string>
+          cli_id: optional<string>
           cli_user_id:
             type: optional<string>
             allow-multiple: true
-          last_attempt_at:
-            type: optional<datetime>
+          last_attempt_at: optional<datetime>
           event_data_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          headers:
-            type: optional<string>
-          body:
-            type: optional<string>
-          parsed_query:
-            type: optional<string>
+          headers: optional<string>
+          body: optional<string>
+          parsed_query: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
@@ -16712,10 +16606,8 @@ service:
               maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
-          order_by:
-            type: optional<GetEventsRequestOrderBy>
-          dir:
-            type: optional<GetEventsRequestDir>
+          order_by: optional<GetEventsRequestOrderBy>
+          dir: optional<GetEventsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -17260,9 +17152,7 @@ docs: An event is any request that Hookdeck receives from a source.
                 "name": "GetIntegrationsRequest",
                 "query-parameters": {
                   "label": "optional<string>",
-                  "provider": {
-                    "type": "optional<root.IntegrationProvider>",
-                  },
+                  "provider": "optional<root.IntegrationProvider>",
                 },
               },
               "response": {
@@ -17410,8 +17300,7 @@ service:
         name: GetIntegrationsRequest
         query-parameters:
           label: optional<string>
-          provider:
-            type: optional<root.IntegrationProvider>
+          provider: optional<root.IntegrationProvider>
       response:
         docs: List of integrations
         type: root.IntegrationPaginatedResult
@@ -18022,12 +17911,8 @@ types:
               "request": {
                 "name": "GetIssueTriggersRequest",
                 "query-parameters": {
-                  "dir": {
-                    "type": "optional<GetIssueTriggersRequestDir>",
-                  },
-                  "disabled_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "dir": "optional<GetIssueTriggersRequestDir>",
+                  "disabled_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -18056,9 +17941,7 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetIssueTriggersRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetIssueTriggersRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -18068,9 +17951,7 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "type": {
-                    "type": "optional<root.IssueType>",
-                  },
+                  "type": "optional<root.IssueType>",
                 },
               },
               "response": {
@@ -18362,14 +18243,10 @@ service:
             type: optional<string>
             validation:
               maxLength: 255
-          type:
-            type: optional<root.IssueType>
-          disabled_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetIssueTriggersRequestOrderBy>
-          dir:
-            type: optional<GetIssueTriggersRequestDir>
+          type: optional<root.IssueType>
+          disabled_at: optional<datetime>
+          order_by: optional<GetIssueTriggersRequestOrderBy>
+          dir: optional<GetIssueTriggersRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -18908,18 +18785,10 @@ docs: >-
               "request": {
                 "name": "GetIssueCountRequest",
                 "query-parameters": {
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetIssueCountRequestDir>",
-                  },
-                  "dismissed_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "first_seen_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetIssueCountRequestDir>",
+                  "dismissed_at": "optional<datetime>",
+                  "first_seen_at": "optional<datetime>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -18940,9 +18809,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "last_seen_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -18966,9 +18833,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetIssueCountRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetIssueCountRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -18978,12 +18843,8 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "status": {
-                    "type": "optional<GetIssueCountRequestStatus>",
-                  },
-                  "type": {
-                    "type": "optional<GetIssueCountRequestType>",
-                  },
+                  "status": "optional<GetIssueCountRequestStatus>",
+                  "type": "optional<GetIssueCountRequestType>",
                 },
               },
               "response": {
@@ -19062,18 +18923,10 @@ docs: >-
               "request": {
                 "name": "GetIssuesRequest",
                 "query-parameters": {
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetIssuesRequestDir>",
-                  },
-                  "dismissed_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "first_seen_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetIssuesRequestDir>",
+                  "dismissed_at": "optional<datetime>",
+                  "first_seen_at": "optional<datetime>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19094,9 +18947,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "last_seen_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -19120,9 +18971,7 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetIssuesRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetIssuesRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -19132,12 +18981,8 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "status": {
-                    "type": "optional<GetIssuesRequestStatus>",
-                  },
-                  "type": {
-                    "type": "optional<GetIssuesRequestType>",
-                  },
+                  "status": "optional<GetIssuesRequestStatus>",
+                  "type": "optional<GetIssuesRequestType>",
                 },
               },
               "response": {
@@ -19392,25 +19237,17 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          type:
-            type: optional<GetIssuesRequestType>
-          status:
-            type: optional<GetIssuesRequestStatus>
+          type: optional<GetIssuesRequestType>
+          status: optional<GetIssuesRequestStatus>
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at:
-            type: optional<datetime>
-          first_seen_at:
-            type: optional<datetime>
-          last_seen_at:
-            type: optional<datetime>
-          dismissed_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetIssuesRequestOrderBy>
-          dir:
-            type: optional<GetIssuesRequestDir>
+          created_at: optional<datetime>
+          first_seen_at: optional<datetime>
+          last_seen_at: optional<datetime>
+          dismissed_at: optional<datetime>
+          order_by: optional<GetIssuesRequestOrderBy>
+          dir: optional<GetIssuesRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -19490,25 +19327,17 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          type:
-            type: optional<GetIssueCountRequestType>
-          status:
-            type: optional<GetIssueCountRequestStatus>
+          type: optional<GetIssueCountRequestType>
+          status: optional<GetIssueCountRequestStatus>
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at:
-            type: optional<datetime>
-          first_seen_at:
-            type: optional<datetime>
-          last_seen_at:
-            type: optional<datetime>
-          dismissed_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetIssueCountRequestOrderBy>
-          dir:
-            type: optional<GetIssueCountRequestDir>
+          created_at: optional<datetime>
+          first_seen_at: optional<datetime>
+          last_seen_at: optional<datetime>
+          dismissed_at: optional<datetime>
+          order_by: optional<GetIssueCountRequestOrderBy>
+          dir: optional<GetIssueCountRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -19988,9 +19817,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "multipleOf": undefined,
                     },
                   },
-                  "body": {
-                    "type": "optional<string>",
-                  },
+                  "body": "optional<string>",
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20001,16 +19828,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "cli_id": {
-                    "type": "optional<string>",
-                  },
+                  "cli_id": "optional<string>",
                   "cli_user_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "created_at": "optional<datetime>",
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20021,9 +19844,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "dir": {
-                    "type": "optional<GetRequestEventsRequestDir>",
-                  },
+                  "dir": "optional<GetRequestEventsRequestDir>",
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20044,9 +19865,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "headers": {
-                    "type": "optional<string>",
-                  },
+                  "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20068,9 +19887,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "last_attempt_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "last_attempt_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -20090,12 +19907,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetRequestEventsRequestOrderBy>",
-                  },
-                  "parsed_query": {
-                    "type": "optional<string>",
-                  },
+                  "order_by": "optional<GetRequestEventsRequestOrderBy>",
+                  "parsed_query": "optional<string>",
                   "path": "optional<string>",
                   "prev": {
                     "type": "optional<string>",
@@ -20126,12 +19939,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "status": {
-                    "type": "optional<root.EventStatus>",
-                  },
-                  "successful_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "status": "optional<root.EventStatus>",
+                  "successful_at": "optional<datetime>",
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20202,9 +20011,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestIgnoredEventsRequest",
                 "query-parameters": {
-                  "dir": {
-                    "type": "optional<GetRequestIgnoredEventsRequestDir>",
-                  },
+                  "dir": "optional<GetRequestIgnoredEventsRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20234,9 +20041,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetRequestIgnoredEventsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetRequestIgnoredEventsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -20344,9 +20149,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestsRequest",
                 "query-parameters": {
-                  "body": {
-                    "type": "optional<string>",
-                  },
+                  "body": "optional<string>",
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20357,12 +20160,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetRequestsRequestDir>",
-                  },
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetRequestsRequestDir>",
                   "events_count": {
                     "type": "optional<integer>",
                     "validation": {
@@ -20373,9 +20172,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "multipleOf": undefined,
                     },
                   },
-                  "headers": {
-                    "type": "optional<string>",
-                  },
+                  "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20396,12 +20193,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "multipleOf": undefined,
                     },
                   },
-                  "include": {
-                    "type": "optional<literal<"data">>",
-                  },
-                  "ingested_at": {
-                    "type": "optional<datetime>",
-                  },
+                  "include": "optional<literal<"data">>",
+                  "ingested_at": "optional<datetime>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -20421,12 +20214,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetRequestsRequestOrderBy>",
-                  },
-                  "parsed_query": {
-                    "type": "optional<string>",
-                  },
+                  "order_by": "optional<GetRequestsRequestOrderBy>",
+                  "parsed_query": "optional<string>",
                   "path": "optional<string>",
                   "prev": {
                     "type": "optional<string>",
@@ -20437,9 +20226,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "rejection_cause": {
-                    "type": "optional<root.RequestRejectionCause>",
-                  },
+                  "rejection_cause": "optional<root.RequestRejectionCause>",
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20450,9 +20237,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "status": {
-                    "type": "optional<GetRequestsRequestStatus>",
-                  },
+                  "status": "optional<GetRequestsRequestStatus>",
                   "verified": "optional<boolean>",
                 },
               },
@@ -20678,10 +20463,8 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status:
-            type: optional<GetRequestsRequestStatus>
-          rejection_cause:
-            type: optional<root.RequestRejectionCause>
+          status: optional<GetRequestsRequestStatus>
+          rejection_cause: optional<root.RequestRejectionCause>
           ignored_count:
             type: optional<integer>
             validation:
@@ -20696,28 +20479,20 @@ service:
             validation:
               maxLength: 255
           verified: optional<boolean>
-          headers:
-            type: optional<string>
-          body:
-            type: optional<string>
-          parsed_query:
-            type: optional<string>
+          headers: optional<string>
+          body: optional<string>
+          parsed_query: optional<string>
           path: optional<string>
-          created_at:
-            type: optional<datetime>
-          ingested_at:
-            type: optional<datetime>
+          created_at: optional<datetime>
+          ingested_at: optional<datetime>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          include:
-            type: optional<literal<"data">>
-          order_by:
-            type: optional<GetRequestsRequestOrderBy>
-          dir:
-            type: optional<GetRequestsRequestDir>
+          include: optional<literal<"data">>
+          order_by: optional<GetRequestsRequestOrderBy>
+          dir: optional<GetRequestsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -20932,8 +20707,7 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status:
-            type: optional<root.EventStatus>
+          status: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
@@ -20963,33 +20737,26 @@ service:
             validation:
               min: 200
               max: 600
-          successful_at:
-            type: optional<datetime>
-          created_at:
-            type: optional<datetime>
+          successful_at: optional<datetime>
+          created_at: optional<datetime>
           error_code:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          cli_id:
-            type: optional<string>
+          cli_id: optional<string>
           cli_user_id:
             type: optional<string>
             allow-multiple: true
-          last_attempt_at:
-            type: optional<datetime>
+          last_attempt_at: optional<datetime>
           event_data_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          headers:
-            type: optional<string>
-          body:
-            type: optional<string>
-          parsed_query:
-            type: optional<string>
+          headers: optional<string>
+          body: optional<string>
+          parsed_query: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
@@ -20997,10 +20764,8 @@ service:
               maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
-          order_by:
-            type: optional<GetRequestEventsRequestOrderBy>
-          dir:
-            type: optional<GetRequestEventsRequestDir>
+          order_by: optional<GetRequestEventsRequestOrderBy>
+          dir: optional<GetRequestEventsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -21073,10 +20838,8 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          order_by:
-            type: optional<GetRequestIgnoredEventsRequestOrderBy>
-          dir:
-            type: optional<GetRequestIgnoredEventsRequestDir>
+          order_by: optional<GetRequestIgnoredEventsRequestOrderBy>
+          dir: optional<GetRequestIgnoredEventsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -21353,12 +21116,8 @@ docs: A request represent a webhook received by Hookdeck.
                 "name": "GetRulesetsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetRulesetsRequestDir>",
-                  },
+                  "archived_at": "optional<datetime>",
+                  "dir": "optional<GetRulesetsRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -21397,9 +21156,7 @@ docs: A request represent a webhook received by Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetRulesetsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetRulesetsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -21676,12 +21433,9 @@ service:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
           archived: optional<boolean>
-          archived_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetRulesetsRequestOrderBy>
-          dir:
-            type: optional<GetRulesetsRequestDir>
+          archived_at: optional<datetime>
+          order_by: optional<GetRulesetsRequestOrderBy>
+          dir: optional<GetRulesetsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -22205,12 +21959,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "name": "GetSourcesRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetSourcesRequestDir>",
-                  },
+                  "archived_at": "optional<datetime>",
+                  "dir": "optional<GetSourcesRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -22221,9 +21971,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                       "pattern": undefined,
                     },
                   },
-                  "integration_id": {
-                    "type": "optional<string>",
-                  },
+                  "integration_id": "optional<string>",
                   "limit": {
                     "type": "optional<integer>",
                     "validation": {
@@ -22252,9 +22000,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetSourcesRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetSourcesRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -22524,14 +22270,10 @@ service:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
           archived: optional<boolean>
-          archived_at:
-            type: optional<datetime>
-          integration_id:
-            type: optional<string>
-          order_by:
-            type: optional<GetSourcesRequestOrderBy>
-          dir:
-            type: optional<GetSourcesRequestDir>
+          archived_at: optional<datetime>
+          integration_id: optional<string>
+          order_by: optional<GetSourcesRequestOrderBy>
+          dir: optional<GetSourcesRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -23087,12 +22829,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "request": {
                 "name": "GetTransformationExecutionsRequest",
                 "query-parameters": {
-                  "created_at": {
-                    "type": "optional<datetime>",
-                  },
-                  "dir": {
-                    "type": "optional<GetTransformationExecutionsRequestDir>",
-                  },
+                  "created_at": "optional<datetime>",
+                  "dir": "optional<GetTransformationExecutionsRequestDir>",
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -23113,9 +22851,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "multipleOf": undefined,
                     },
                   },
-                  "log_level": {
-                    "type": "optional<GetTransformationExecutionsRequestLogLevel>",
-                  },
+                  "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
                   "next": {
                     "type": "optional<string>",
                     "validation": {
@@ -23125,9 +22861,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetTransformationExecutionsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetTransformationExecutionsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -23200,9 +22934,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "request": {
                 "name": "GetTransformationsRequest",
                 "query-parameters": {
-                  "dir": {
-                    "type": "optional<GetTransformationsRequestDir>",
-                  },
+                  "dir": "optional<GetTransformationsRequestDir>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -23241,9 +22973,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "order_by": {
-                    "type": "optional<GetTransformationsRequestOrderBy>",
-                  },
+                  "order_by": "optional<GetTransformationsRequestOrderBy>",
                   "prev": {
                     "type": "optional<string>",
                     "validation": {
@@ -23753,10 +23483,8 @@ service:
             validation:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
-          order_by:
-            type: optional<GetTransformationsRequestOrderBy>
-          dir:
-            type: optional<GetTransformationsRequestDir>
+          order_by: optional<GetTransformationsRequestOrderBy>
+          dir: optional<GetTransformationsRequestDir>
           limit:
             type: optional<integer>
             validation:
@@ -24047,8 +23775,7 @@ service:
       request:
         name: GetTransformationExecutionsRequest
         query-parameters:
-          log_level:
-            type: optional<GetTransformationExecutionsRequestLogLevel>
+          log_level: optional<GetTransformationExecutionsRequestLogLevel>
           webhook_id:
             type: optional<string>
             allow-multiple: true
@@ -24059,12 +23786,9 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          created_at:
-            type: optional<datetime>
-          order_by:
-            type: optional<GetTransformationExecutionsRequestOrderBy>
-          dir:
-            type: optional<GetTransformationExecutionsRequestDir>
+          created_at: optional<datetime>
+          order_by: optional<GetTransformationExecutionsRequestOrderBy>
+          dir: optional<GetTransformationExecutionsRequestDir>
           limit:
             type: optional<integer>
             validation:
