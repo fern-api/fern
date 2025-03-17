@@ -1,5 +1,4 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic } from "@fern-api/ir-sdk";
 import { NopSourceResolver } from "@fern-api/source-resolver";
@@ -59,7 +58,7 @@ function generateDynamicIRFromOpenAPI({
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
         exampleGeneration: { disabled: true },
-        disableDynamicExamples: disableDynamicExamples ?? false,
+        disableDynamicExamples,
         version: undefined,
         packageName: undefined,
         readme: undefined
