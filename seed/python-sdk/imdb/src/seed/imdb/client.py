@@ -16,7 +16,7 @@ from ..core.api_response import APIResponse, wrap_func_to_exclude_raw_response, 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
-class ImdbRawClient:
+class RawImdbClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
     
@@ -92,11 +92,11 @@ class ImdbRawClient:
 
 class ImdbClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = ImdbRawClient(client_wrapper=client_wrapper)
+        self._raw_client = RawImdbClient(client_wrapper=client_wrapper)
         self._create_movie = wrap_func_to_exclude_raw_response(self._raw_client.create_movie)
         self._get_movie = wrap_func_to_exclude_raw_response(self._raw_client.get_movie)
     
-    def with_raw_response(self) -> ImdbRawClient:
+    def with_raw_response(self) -> RawImdbClient:
         """
         Access the raw client whenever HTTP response metadata is needed.
         """
@@ -171,7 +171,7 @@ class ImdbClient:
         )
 
 
-class AsyncImdbRawClient:
+class AsyncRawImdbClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -247,11 +247,11 @@ class AsyncImdbRawClient:
 
 class AsyncImdbClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncImdbRawClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawImdbClient(client_wrapper=client_wrapper)
         self._create_movie = wrap_async_func_to_exclude_raw_response(self._raw_client.create_movie)
         self._get_movie = wrap_async_func_to_exclude_raw_response(self._raw_client.get_movie)
 
-    def with_raw_response(self) -> AsyncImdbRawClient:
+    def with_raw_response(self) -> AsyncRawImdbClient:
         """
         Access the raw client whenever HTTP response metadata is needed.
         """
