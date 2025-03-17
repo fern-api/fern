@@ -24,7 +24,7 @@ public partial class ServiceClient
     ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
     /// );
     /// </code></example>
-    public async Task<File> GetFileAsync(
+    public async Task<SeedExamples.File> GetFileAsync(
         string filename,
         GetFileRequest request,
         RequestOptions? options = null,
@@ -52,7 +52,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<File>(responseBody)!;
+                return JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
             }
             catch (JsonException e)
             {

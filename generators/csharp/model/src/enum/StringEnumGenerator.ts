@@ -9,6 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
+    private readonly customMethodName: string;
 
     constructor(
         context: ModelGeneratorContext,
@@ -17,6 +18,12 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
     ) {
         super(context);
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.customMethodName = this.getCustomMethodName(enumDeclaration);
+    }
+
+    private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
+        const d = "FromCustom";
+        return enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === d) ? "FromCustom_" : d;
     }
 
     protected doGenerate(): CSharpFile {
@@ -106,12 +113,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     useRequired: false,
                     static_: true,
                     readonly: true,
-                    initializer: csharp.codeblock((writer) => {
-                        writer.write("Custom(");
-                        writer.write("Values.");
-                        writer.write(fieldName);
-                        writer.write(")");
-                    })
+                    initializer: csharp.codeblock(`new(Values.${fieldName})`)
                 })
             );
         });
@@ -121,7 +123,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addMethod(
             csharp.method({
                 access: csharp.Access.Public,
-                name: "Custom",
+                name: this.customMethodName,
                 parameters: [
                     csharp.parameter({
                         name: "value",
@@ -200,6 +202,26 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             body: csharp.codeblock((writer) => {
                 writer.write("!value1.Value.Equals(value2)");
             }),
+            useExpressionBody: true
+        });
+
+        stringEnum.addOperator({
+            type: "explicit",
+            to: csharp.Type.string(),
+            parameter: csharp.parameter({
+                name: "value",
+                type: csharp.Type.reference(this.classReference)
+            }),
+            body: csharp.codeblock("value.Value"),
+            useExpressionBody: true
+        });
+        stringEnum.addOperator({
+            type: "explicit",
+            parameter: csharp.parameter({
+                name: "value",
+                type: csharp.Type.string()
+            }),
+            body: csharp.codeblock("new(value)"),
             useExpressionBody: true
         });
 

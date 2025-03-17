@@ -77,15 +77,15 @@ export class DynamicSnippetsConverter {
     }
 
     public convert({
-        includeExamples
+        disableExamples
     }: {
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): DynamicSnippets.DynamicIntermediateRepresentation {
         return {
             version: Version,
             types: this.convertNamedTypes(),
             headers: this.convertHeaders(),
-            endpoints: this.convertEndpoints({ includeExamples }),
+            endpoints: this.convertEndpoints({ disableExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments,
             generatorConfig: this.generatorConfig
@@ -106,22 +106,22 @@ export class DynamicSnippetsConverter {
     }
 
     private convertEndpoints({
-        includeExamples
+        disableExamples
     }: {
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): Record<EndpointId, DynamicSnippets.Endpoint> {
         const endpoints = this.getAllHttpEndpoints();
         return Object.fromEntries(
-            endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint({ endpoint, includeExamples })])
+            endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint({ endpoint, disableExamples })])
         );
     }
 
     private convertEndpoint({
         endpoint,
-        includeExamples
+        disableExamples
     }: {
         endpoint: EndpointWithFilepath;
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): DynamicSnippets.Endpoint {
         const location = this.convertEndpointLocation({ endpoint });
         return {
@@ -130,7 +130,7 @@ export class DynamicSnippetsConverter {
             location,
             request: this.convertRequest({ endpoint }),
             response: DynamicSnippets.Response.json(),
-            examples: includeExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
+            examples: !disableExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }
 

@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedResponseProperty;
-using SeedResponseProperty.Core;
 
 namespace Usage;
 

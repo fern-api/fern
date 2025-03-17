@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedApiWideBasePath;
-using SeedApiWideBasePath.Core;
 
 namespace Usage;
 

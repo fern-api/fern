@@ -275,6 +275,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.["package-layout"] ?? "nested";
     }
 
+    public shouldInlinePathParameters(): boolean {
+        return this.customConfig?.["inline-path-parameters"] ?? false;
+    }
+
+    public shouldInlineFileProperties(): boolean {
+        return this.customConfig?.["inline-file-properties"] ?? false;
+    }
+
     private getPackageNameSegments(fernFilepath: FernIr.FernFilepath): string[] {
         return fernFilepath.packagePath.map((segment) => this.getPackageNameSegment(segment));
     }

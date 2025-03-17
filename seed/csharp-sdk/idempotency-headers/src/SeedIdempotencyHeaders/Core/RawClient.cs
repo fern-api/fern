@@ -439,7 +439,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         internal override HttpContent? CreateContent()
         {
-            if (Body is null)
+            if (Body is null && Options?.AdditionalBodyProperties is null)
             {
                 return null;
             }
@@ -449,7 +449,14 @@ internal class RawClient(ClientOptions clientOptions)
                 Encoding.UTF8,
                 "application/json"
             );
-            return new StringContent(JsonUtils.Serialize(Body), encoding, mediaType);
+            return new StringContent(
+                JsonUtils.SerializeWithAdditionalProperties(
+                    Body,
+                    Options?.AdditionalBodyProperties
+                ),
+                encoding,
+                mediaType
+            );
         }
     }
 
@@ -540,10 +547,13 @@ internal class RawClient(ClientOptions clientOptions)
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (request.Query.Count <= 0)
+
+        var queryParameters = GetQueryParameters(request);
+        if (!queryParameters.Any())
             return url;
+
         url += "?";
-        url = request.Query.Aggregate(
+        url = queryParameters.Aggregate(
             url,
             (current, queryItem) =>
             {
@@ -572,6 +582,52 @@ internal class RawClient(ClientOptions clientOptions)
         );
         url = url[..^1];
         return url;
+    }
+
+    private static List<KeyValuePair<string, string>> GetQueryParameters(BaseApiRequest request)
+    {
+        var result = TransformToKeyValuePairs(request.Query);
+        if (
+            request.Options?.AdditionalQueryParameters is null
+            || !request.Options.AdditionalQueryParameters.Any()
+        )
+        {
+            return result;
+        }
+        var additionalKeys = request
+            .Options.AdditionalQueryParameters.Select(p => p.Key)
+            .Distinct();
+        foreach (var key in additionalKeys)
+        {
+            result.RemoveAll(kv => kv.Key == key);
+        }
+        result.AddRange(request.Options.AdditionalQueryParameters);
+        return result;
+    }
+
+    private static List<KeyValuePair<string, string>> TransformToKeyValuePairs(
+        Dictionary<string, object> inputDict
+    )
+    {
+        var result = new List<KeyValuePair<string, string>>();
+        foreach (var kvp in inputDict)
+        {
+            switch (kvp.Value)
+            {
+                case string str:
+                    result.Add(new KeyValuePair<string, string>(kvp.Key, str));
+                    break;
+                case IEnumerable<string> strList:
+                {
+                    foreach (var value in strList)
+                    {
+                        result.Add(new KeyValuePair<string, string>(kvp.Key, value));
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)

@@ -46,7 +46,7 @@ export class XmlDocBlock extends AstNode {
             docWriter.writePrefix();
             docWriter.writeOpenXmlNode("summary");
             docWriter.writeLine();
-            this.writeXmlDocNode(docWriter, this.arg.summary);
+            this.writeXmlDocNodeWithEscaping(docWriter, this.arg.summary);
             docWriter.writeNewLineIfLastLineNot();
             docWriter.writePrefix();
             docWriter.writeCloseXmlNode("summary");
