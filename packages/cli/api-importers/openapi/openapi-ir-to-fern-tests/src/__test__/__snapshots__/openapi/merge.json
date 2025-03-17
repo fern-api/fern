@@ -18142,7 +18142,15 @@ service:
                     "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
                     "type": "optional<string>",
                   },
-                  "id": "optional<string>",
+                  "id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "ids": {
                     "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
                     "type": "optional<string>",
@@ -18272,7 +18280,10 @@ service:
             docs: >-
               Comma-separated list of EndUser origin IDs, making it possible to
               specify multiple EndUsers at once.
-          id: optional<string>
+          id:
+            type: optional<string>
+            validation:
+              format: uuid
           ids:
             type: optional<string>
             docs: >-

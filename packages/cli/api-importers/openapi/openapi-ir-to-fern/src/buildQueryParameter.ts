@@ -39,16 +39,6 @@ export function buildQueryParameter({
         queryParameterType = "optional<string>";
     }
 
-    if (
-        queryParameter.description == null &&
-        !typeReference.allowMultiple &&
-        queryParameterDefault == null &&
-        queryParameter.parameterNameOverride == null &&
-        queryParameter.availability == null
-    ) {
-        return queryParameterType;
-    }
-
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
@@ -77,6 +67,17 @@ export function buildQueryParameter({
         if (typeReference.value.validation !== undefined) {
             queryParameterSchema.validation = typeReference.value.validation;
         }
+    }
+
+    if (
+        queryParameterSchema.default == null &&
+        queryParameterSchema["allow-multiple"] == null &&
+        queryParameterSchema.docs == null &&
+        queryParameterSchema.name == null &&
+        queryParameterSchema.availability == null &&
+        queryParameterSchema.validation == null
+    ) {
+        return queryParameterType;
     }
 
     return queryParameterSchema;
