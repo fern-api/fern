@@ -529,10 +529,14 @@ internal class RawClient(ClientOptions clientOptions)
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         httpRequest.Content = request.CreateContent();
-        SetHeaders(httpRequest, Options.Headers);
-        SetHeaders(httpRequest, request.Headers);
-        SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+        var mergedHeaders = new Dictionary<string, List<string>>();
+        MergeHeaders(mergedHeaders, Options.Headers);
+        MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
+        MergeHeaders(mergedHeaders, request.Headers);
+        MergeHeaders(mergedHeaders, request.Options?.Headers ?? new Headers());
 
+        MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
+        SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;
     }
 
@@ -625,14 +629,61 @@ internal class RawClient(ClientOptions clientOptions)
         return result;
     }
 
-    private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    private static void MergeHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        Headers headers
+    )
     {
         foreach (var header in headers)
         {
             var value = header.Value?.Match(str => str, func => func.Invoke());
             if (value != null)
             {
-                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+                mergedHeaders[header.Key] = [value];
+            }
+        }
+    }
+
+    private static void MergeAdditionalHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        IEnumerable<KeyValuePair<string, string>> headers
+    )
+    {
+        var usedKeys = new HashSet<string>();
+        foreach (var header in headers)
+        {
+            if (header.Value is null)
+            {
+                mergedHeaders.Remove(header.Key);
+                usedKeys.Remove(header.Key);
+                continue;
+            }
+            if (usedKeys.Contains(header.Key))
+            {
+                mergedHeaders[header.Key].Add(header.Value);
+            }
+            else
+            {
+                mergedHeaders[header.Key] = [header.Value];
+                usedKeys.Add(header.Key);
+            }
+        }
+    }
+
+    private void SetHeaders(
+        HttpRequestMessage httpRequest,
+        Dictionary<string, List<string>> mergedHeaders
+    )
+    {
+        foreach (var kv in mergedHeaders)
+        {
+            foreach (var header in kv.Value)
+            {
+                if (header is null)
+                {
+                    continue;
+                }
+                httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
             }
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using SeedTrace.Core;
@@ -10,7 +11,7 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    Headers IRequestOptions.Headers { get; init; } = Headers.Empty;
 
     /// <summary>
     /// The Base URL for the API.
@@ -21,6 +22,15 @@ public partial class RequestOptions : IRequestOptions
     /// The http client used to make requests.
     /// </summary>
     public HttpClient? HttpClient { get; init; }
+
+    /// <summary>
+    /// Additional headers to be sent with the request.
+    /// Headers previously set with matching keys will be overwritten.
+    /// </summary>
+    public IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string?
+    >> AdditionalHeaders { get; init; } = [];
 
     /// <summary>
     /// The http client used to make requests.

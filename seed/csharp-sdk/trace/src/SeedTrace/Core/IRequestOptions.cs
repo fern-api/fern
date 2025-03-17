@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace SeedTrace.Core;
@@ -19,6 +20,15 @@ internal interface IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     internal Headers Headers { get; init; }
+
+    /// <summary>
+    /// Additional headers to be sent with the request.
+    /// Headers previously set with matching keys will be overwritten.
+    /// </summary>
+    public IEnumerable<System.Collections.Generic.KeyValuePair<
+        string,
+        string?
+    >> AdditionalHeaders { get; init; }
 
     /// <summary>
     /// The http client used to make requests.

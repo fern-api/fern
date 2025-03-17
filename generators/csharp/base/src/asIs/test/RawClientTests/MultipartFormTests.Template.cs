@@ -8,7 +8,7 @@ using <%= namespace%>.Core;
 namespace <%= namespace%>.Test.Core.RawClientTests;
 
 [TestFixture]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Self)]
 public class MultipartFormTests
 {
     private static SimpleObject _simpleObject = new();
