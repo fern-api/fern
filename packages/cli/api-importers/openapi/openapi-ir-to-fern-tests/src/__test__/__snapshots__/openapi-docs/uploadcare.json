@@ -3724,7 +3724,9 @@ Log.d("TAG", group.toString())
 ",
                     "type": "string",
                   },
-                  "pub_key": "root.ProjectPublicKeyType",
+                  "pub_key": {
+                    "type": "root.ProjectPublicKeyType",
+                  },
                 },
               },
               "response": {
@@ -3966,7 +3968,8 @@ service:
       request:
         name: FilesGroupInfoRequest
         query-parameters:
-          pub_key: root.ProjectPublicKeyType
+          pub_key:
+            type: root.ProjectPublicKeyType
           group_id:
             type: string
             docs: >
@@ -4517,7 +4520,9 @@ Log.d("TAG", file.toString())
                       "pattern": undefined,
                     },
                   },
-                  "pub_key": "root.ProjectPublicKeyType",
+                  "pub_key": {
+                    "type": "root.ProjectPublicKeyType",
+                  },
                 },
               },
               "response": {
@@ -8079,7 +8084,8 @@ service:
       request:
         name: FileUploadInfoRequest
         query-parameters:
-          pub_key: root.ProjectPublicKeyType
+          pub_key:
+            type: root.ProjectPublicKeyType
           file_id:
             type: string
             docs: File's unique ID.

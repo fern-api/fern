@@ -16659,7 +16659,15 @@ types:
               "request": {
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
-                  "project_id": "optional<string>",
+                  "project_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -16716,7 +16724,9 @@ types:
               "request": {
                 "name": "ChatIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<ChatIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<ChatIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -16901,7 +16911,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "QueryChatChatChatIdQueryGetRequest",
                 "query-parameters": {
-                  "query": "string",
+                  "query": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -17201,7 +17213,10 @@ service:
       request:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
-          project_id: optional<string>
+          project_id:
+            type: optional<string>
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: list<root.Chat>
@@ -17445,7 +17460,8 @@ service:
       request:
         name: QueryChatChatChatIdQueryGetRequest
         query-parameters:
-          query: string
+          query:
+            type: string
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
@@ -17477,7 +17493,8 @@ service:
       request:
         name: ChatIamListMembersRequest
         query-parameters:
-          type: optional<ChatIamListMembersRequestType>
+          type:
+            type: optional<ChatIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -18189,7 +18206,9 @@ types:
               "request": {
                 "name": "CollectionIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<CollectionIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<CollectionIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -18396,12 +18415,22 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
                   },
-                  "show": "optional<root.CollectionChatShow>",
+                  "show": {
+                    "type": "optional<root.CollectionChatShow>",
+                  },
                 },
               },
               "response": {
@@ -18466,12 +18495,22 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
                   },
-                  "title": "optional<string>",
+                  "title": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -18663,8 +18702,12 @@ service:
       request:
         name: ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest
         query-parameters:
-          title: optional<string>
-          cursor: optional<string>
+          title:
+            type: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -18887,8 +18930,12 @@ service:
       request:
         name: ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest
         query-parameters:
-          show: optional<root.CollectionChatShow>
-          cursor: optional<string>
+          show:
+            type: optional<root.CollectionChatShow>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -19112,7 +19159,8 @@ service:
       request:
         name: CollectionIamListMembersRequest
         query-parameters:
-          type: optional<CollectionIamListMembersRequestType>
+          type:
+            type: optional<CollectionIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -19924,7 +19972,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -19953,8 +20003,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceBoxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20021,7 +20075,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -20294,7 +20350,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -20480,7 +20538,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequestBadRequestError
@@ -20537,7 +20596,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -20588,7 +20648,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -20704,8 +20765,10 @@ service:
       request:
         name: CallbackDatasourceBoxCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -20758,7 +20821,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -20787,8 +20852,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceConfluenceCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -20855,7 +20924,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -21128,7 +21199,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -21315,7 +21388,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequestBadRequestError
@@ -21373,7 +21447,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -21425,7 +21500,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -21543,8 +21619,10 @@ service:
       request:
         name: CallbackDatasourceConfluenceCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -21598,7 +21676,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -21627,8 +21707,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceDropboxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -21695,7 +21779,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -21968,7 +22054,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -22155,7 +22243,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequestBadRequestError
@@ -22213,7 +22302,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -22265,7 +22355,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -22383,8 +22474,10 @@ service:
       request:
         name: CallbackDatasourceDropboxCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -22438,7 +22531,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -22467,8 +22562,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceGdriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -22535,7 +22634,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -22808,7 +22909,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -22995,7 +23098,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequestBadRequestError
@@ -23053,7 +23157,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -23104,7 +23209,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -23222,8 +23328,10 @@ service:
       request:
         name: CallbackDatasourceGdriveCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -23277,7 +23385,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -23306,8 +23416,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceNotionCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -23374,7 +23488,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -23647,7 +23763,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -23834,7 +23952,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequestBadRequestError
@@ -23892,7 +24011,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -23943,7 +24063,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -24061,8 +24182,10 @@ service:
       request:
         name: CallbackDatasourceNotionCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -24116,7 +24239,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -24145,8 +24270,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceOnedriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -24213,7 +24342,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -24486,7 +24617,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -24673,7 +24806,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequestBadRequestError
@@ -24731,7 +24865,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -24783,7 +24918,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -24901,8 +25037,10 @@ service:
       request:
         name: CallbackDatasourceOnedriveCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -24956,7 +25094,9 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequest",
                 "query-parameters": {
-                  "redirect_to": "optional<string>",
+                  "redirect_to": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -24985,8 +25125,12 @@ service:
               "request": {
                 "name": "CallbackDatasourceSharepointCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<string>",
-                  "state": "optional<string>",
+                  "code": {
+                    "type": "optional<string>",
+                  },
+                  "state": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -25053,7 +25197,9 @@ service:
               "request": {
                 "name": "CheckStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetRequest",
                 "query-parameters": {
-                  "sync_run_id": "string",
+                  "sync_run_id": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -25326,7 +25472,9 @@ service:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -25513,7 +25661,8 @@ service:
         name: >-
           AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequest
         query-parameters:
-          redirect_to: optional<string>
+          redirect_to:
+            type: optional<string>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequestBadRequestError
@@ -25571,7 +25720,8 @@ service:
         name: >-
           ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -25623,7 +25773,8 @@ service:
         name: >-
           CheckStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetRequest
         query-parameters:
-          sync_run_id: string
+          sync_run_id:
+            type: string
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -25741,8 +25892,10 @@ service:
       request:
         name: CallbackDatasourceSharepointCallbackGetRequest
         query-parameters:
-          code: optional<string>
-          state: optional<string>
+          code:
+            type: optional<string>
+          state:
+            type: optional<string>
       response:
         docs: Successful Response
         type: unknown
@@ -25957,7 +26110,15 @@ service:
               "request": {
                 "name": "DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -26093,16 +26254,46 @@ service:
               "request": {
                 "name": "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest",
                 "query-parameters": {
-                  "collection_id": "optional<string>",
-                  "connection_id": "optional<string>",
-                  "cursor": "optional<string>",
+                  "collection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "connection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
                   },
-                  "source": "optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
-                  "strategy": "optional<string>",
-                  "title": "optional<string>",
+                  "source": {
+                    "type": "optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
+                  },
+                  "strategy": {
+                    "type": "optional<string>",
+                  },
+                  "title": {
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -26155,7 +26346,9 @@ service:
               "request": {
                 "name": "DocumentQueryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetRequest",
                 "query-parameters": {
-                  "query": "string",
+                  "query": {
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -26418,7 +26611,9 @@ service:
               "request": {
                 "name": "DocumentIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<DocumentIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<DocumentIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -26771,16 +26966,28 @@ service:
       request:
         name: DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest
         query-parameters:
-          connection_id: optional<string>
-          title: optional<string>
-          cursor: optional<string>
-          collection_id: optional<string>
+          connection_id:
+            type: optional<string>
+            validation:
+              format: uuid
+          title:
+            type: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          collection_id:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 25
-          source: >-
-            optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
-          strategy: optional<string>
+          source:
+            type: >-
+              optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
+          strategy:
+            type: optional<string>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocument
@@ -26964,7 +27171,8 @@ service:
       request:
         name: DocumentQueryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetRequest
         query-parameters:
-          query: string
+          query:
+            type: string
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
@@ -27135,7 +27343,10 @@ service:
         name: >-
           DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 25
@@ -27212,7 +27423,8 @@ service:
       request:
         name: DocumentIamListMembersRequest
         query-parameters:
-          type: optional<DocumentIamListMembersRequestType>
+          type:
+            type: optional<DocumentIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -28496,12 +28708,22 @@ service:
               "request": {
                 "name": "OrgInvitesListOrgOrgIdInviteGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
                   },
-                  "show": "optional<root.OrgInviteShow>",
+                  "show": {
+                    "type": "optional<root.OrgInviteShow>",
+                  },
                 },
               },
               "response": {
@@ -28577,8 +28799,18 @@ service:
               "request": {
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "membership": "optional<root.OrgMembership>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "membership": {
+                    "type": "optional<root.OrgMembership>",
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -28795,7 +29027,9 @@ service:
               "request": {
                 "name": "OrganizationIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<OrganizationIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<OrganizationIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -29062,7 +29296,8 @@ service:
       request:
         name: OrganizationIamListMembersRequest
         query-parameters:
-          type: optional<OrganizationIamListMembersRequestType>
+          type:
+            type: optional<OrganizationIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -29230,8 +29465,12 @@ service:
       request:
         name: OrgListOrgGetRequest
         query-parameters:
-          membership: optional<root.OrgMembership>
-          cursor: optional<string>
+          membership:
+            type: optional<root.OrgMembership>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -29380,8 +29619,12 @@ service:
       request:
         name: OrgInvitesListOrgOrgIdInviteGetRequest
         query-parameters:
-          show: optional<root.OrgInviteShow>
-          cursor: optional<string>
+          show:
+            type: optional<root.OrgInviteShow>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -29868,7 +30111,9 @@ service:
               "request": {
                 "name": "ProjectIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<ProjectIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<ProjectIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -30063,7 +30308,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListProjectOrgOrgIdProjectGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -30449,7 +30696,8 @@ service:
       request:
         name: ListProjectOrgOrgIdProjectGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 100
@@ -30747,7 +30995,8 @@ service:
       request:
         name: ProjectIamListMembersRequest
         query-parameters:
-          type: optional<ProjectIamListMembersRequestType>
+          type:
+            type: optional<ProjectIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -31246,7 +31495,9 @@ types:
               "request": {
                 "name": "ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -31406,7 +31657,8 @@ service:
       request:
         name: ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
           page_limit:
             type: optional<integer>
             default: 25
@@ -32972,7 +33224,9 @@ service:
               "request": {
                 "name": "TaskIamListMembersRequest",
                 "query-parameters": {
-                  "type": "optional<TaskIamListMembersRequestType>",
+                  "type": {
+                    "type": "optional<TaskIamListMembersRequestType>",
+                  },
                 },
               },
               "response": {
@@ -33982,7 +34236,8 @@ service:
       request:
         name: TaskIamListMembersRequest
         query-parameters:
-          type: optional<TaskIamListMembersRequestType>
+          type:
+            type: optional<TaskIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember

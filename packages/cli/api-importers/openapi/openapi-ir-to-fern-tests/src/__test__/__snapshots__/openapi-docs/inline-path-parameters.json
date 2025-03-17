@@ -40,7 +40,9 @@
                   "user_id": "string",
                 },
                 "query-parameters": {
-                  "limit": "integer",
+                  "limit": {
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -124,7 +126,8 @@
           organization_id: string
           user_id: string
         query-parameters:
-          limit: integer
+          limit:
+            type: integer
       response:
         docs: Successful response
         type: GetOrganizationUserResponse
