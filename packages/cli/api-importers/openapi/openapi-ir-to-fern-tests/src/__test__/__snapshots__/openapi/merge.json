@@ -17574,7 +17574,9 @@ service:
               "request": {
                 "name": "IssuesListRequest",
                 "query-parameters": {
-                  "account_token": "optional<string>",
+                  "account_token": {
+                    "type": "optional<string>",
+                  },
                   "cursor": {
                     "docs": "The pagination cursor value.",
                     "type": "optional<string>",
@@ -17583,7 +17585,9 @@ service:
                     "docs": "If included, will only include issues whose most recent action occurred before this time",
                     "type": "optional<string>",
                   },
-                  "end_user_organization_name": "optional<string>",
+                  "end_user_organization_name": {
+                    "type": "optional<string>",
+                  },
                   "first_incident_time_after": {
                     "docs": "If provided, will only return issues whose first incident time was after this datetime.",
                     "type": "optional<datetime>",
@@ -17596,7 +17600,9 @@ service:
                     "docs": "If True, will include muted issues",
                     "type": "optional<string>",
                   },
-                  "integration_name": "optional<string>",
+                  "integration_name": {
+                    "type": "optional<string>",
+                  },
                   "last_incident_time_after": {
                     "docs": "If provided, will only return issues whose last incident time was after this datetime.",
                     "type": "optional<datetime>",
@@ -17714,7 +17720,8 @@ service:
       request:
         name: IssuesListRequest
         query-parameters:
-          account_token: optional<string>
+          account_token:
+            type: optional<string>
           cursor:
             type: optional<string>
             docs: The pagination cursor value.
@@ -17723,7 +17730,8 @@ service:
             docs: >-
               If included, will only include issues whose most recent action
               occurred before this time
-          end_user_organization_name: optional<string>
+          end_user_organization_name:
+            type: optional<string>
           first_incident_time_after:
             type: optional<datetime>
             docs: >-
@@ -17737,7 +17745,8 @@ service:
           include_muted:
             type: optional<string>
             docs: If True, will include muted issues
-          integration_name: optional<string>
+          integration_name:
+            type: optional<string>
           last_incident_time_after:
             type: optional<datetime>
             docs: >-
@@ -18142,7 +18151,15 @@ service:
                     "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
                     "type": "optional<string>",
                   },
-                  "id": "optional<string>",
+                  "id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "ids": {
                     "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
                     "type": "optional<string>",
@@ -18272,7 +18289,10 @@ service:
             docs: >-
               Comma-separated list of EndUser origin IDs, making it possible to
               specify multiple EndUsers at once.
-          id: optional<string>
+          id:
+            type: optional<string>
+            validation:
+              format: uuid
           ids:
             type: optional<string>
             docs: >-
@@ -19933,7 +19953,9 @@ service:
               "request": {
                 "name": "SelectiveSyncMetaListRequest",
                 "query-parameters": {
-                  "common_model": "optional<string>",
+                  "common_model": {
+                    "type": "optional<string>",
+                  },
                   "cursor": {
                     "docs": "The pagination cursor value.",
                     "type": "optional<string>",
@@ -20032,7 +20054,8 @@ service:
       request:
         name: SelectiveSyncMetaListRequest
         query-parameters:
-          common_model: optional<string>
+          common_model:
+            type: optional<string>
           cursor:
             type: optional<string>
             docs: The pagination cursor value.

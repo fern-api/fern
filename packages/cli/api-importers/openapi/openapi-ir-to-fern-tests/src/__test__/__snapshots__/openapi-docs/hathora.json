@@ -3778,7 +3778,9 @@ service:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -3833,7 +3835,9 @@ service:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -3901,7 +3905,9 @@ service:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -3936,7 +3942,8 @@ service:
       request:
         name: CreatePrivateLobbyDeprecatedRequest
         query-parameters:
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
           local:
             type: optional<boolean>
             default: false
@@ -3973,7 +3980,8 @@ service:
       request:
         name: CreatePublicLobbyDeprecatedRequest
         query-parameters:
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
           local:
             type: optional<boolean>
             default: false
@@ -4013,7 +4021,8 @@ service:
           local:
             type: optional<boolean>
             default: false
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
         headers:
           Authorization:
             type: string
@@ -4126,7 +4135,9 @@ service:
                 "name": "CreateLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": {
+                    "type": "optional<root.RoomId>",
+                  },
                 },
               },
               "response": {
@@ -4205,7 +4216,9 @@ service:
                 "name": "CreateLocalLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": {
+                    "type": "optional<root.RoomId>",
+                  },
                 },
               },
               "response": {
@@ -4284,7 +4297,9 @@ service:
                 "name": "CreatePrivateLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": {
+                    "type": "optional<root.RoomId>",
+                  },
                 },
               },
               "response": {
@@ -4363,7 +4378,9 @@ service:
                 "name": "CreatePublicLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": {
+                    "type": "optional<root.RoomId>",
+                  },
                 },
               },
               "response": {
@@ -4460,7 +4477,9 @@ service:
               "request": {
                 "name": "ListActivePublicLobbiesRequest",
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -4573,7 +4592,8 @@ service:
       request:
         name: CreatePrivateLobbyRequest
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId:
+            type: optional<root.RoomId>
         headers:
           Authorization:
             type: string
@@ -4627,7 +4647,8 @@ service:
       request:
         name: CreatePublicLobbyRequest
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId:
+            type: optional<root.RoomId>
         headers:
           Authorization:
             type: string
@@ -4681,7 +4702,8 @@ service:
       request:
         name: CreateLocalLobbyRequest
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId:
+            type: optional<root.RoomId>
         headers:
           Authorization:
             type: string
@@ -4735,7 +4757,8 @@ service:
       request:
         name: CreateLobbyRequest
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId:
+            type: optional<root.RoomId>
         headers:
           Authorization:
             type: string
@@ -4790,7 +4813,8 @@ service:
       request:
         name: ListActivePublicLobbiesRequest
         query-parameters:
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -4927,8 +4951,12 @@ types:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "region": "optional<root.Region>",
-                  "tailLines": "optional<root.TailLines>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
+                  "tailLines": {
+                    "type": "optional<root.TailLines>",
+                  },
                 },
               },
               "response": {
@@ -4960,7 +4988,9 @@ types:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "tailLines": "optional<root.TailLines>",
+                  "tailLines": {
+                    "type": "optional<root.TailLines>",
+                  },
                 },
               },
               "response": {
@@ -4992,7 +5022,9 @@ types:
                     "default": false,
                     "type": "optional<boolean>",
                   },
-                  "tailLines": "optional<root.TailLines>",
+                  "tailLines": {
+                    "type": "optional<root.TailLines>",
+                  },
                 },
               },
               "response": {
@@ -5030,8 +5062,10 @@ service:
           follow:
             type: optional<boolean>
             default: false
-          tailLines: optional<root.TailLines>
-          region: optional<root.Region>
+          tailLines:
+            type: optional<root.TailLines>
+          region:
+            type: optional<root.Region>
       response:
         docs: Ok
         type: file
@@ -5053,7 +5087,8 @@ service:
           follow:
             type: optional<boolean>
             default: false
-          tailLines: optional<root.TailLines>
+          tailLines:
+            type: optional<root.TailLines>
       response:
         docs: Ok
         type: file
@@ -5075,7 +5110,8 @@ service:
           follow:
             type: optional<boolean>
             default: false
-          tailLines: optional<root.TailLines>
+          tailLines:
+            type: optional<root.TailLines>
       response:
         docs: Ok
         type: text
@@ -5149,12 +5185,16 @@ service:
               "request": {
                 "name": "GetMetricsRequest",
                 "query-parameters": {
-                  "end": "optional<integer>",
+                  "end": {
+                    "type": "optional<integer>",
+                  },
                   "metrics": {
                     "allow-multiple": true,
                     "type": "optional<root.MetricName>",
                   },
-                  "start": "optional<integer>",
+                  "start": {
+                    "type": "optional<integer>",
+                  },
                   "step": {
                     "default": 60,
                     "type": "optional<integer>",
@@ -5197,8 +5237,10 @@ service:
           metrics:
             type: optional<root.MetricName>
             allow-multiple: true
-          end: optional<integer>
-          start: optional<integer>
+          end:
+            type: optional<integer>
+          start:
+            type: optional<integer>
           step:
             type: optional<integer>
             default: 60
@@ -5343,7 +5385,9 @@ service:
               "request": {
                 "name": "GetRunningProcessesRequest",
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -5399,7 +5443,9 @@ service:
               "request": {
                 "name": "GetStoppedProcessesRequest",
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": {
+                    "type": "optional<root.Region>",
+                  },
                 },
               },
               "response": {
@@ -5434,7 +5480,8 @@ service:
       request:
         name: GetRunningProcessesRequest
         query-parameters:
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
       response:
         docs: Ok
         type: list<root.ProcessWithRooms>
@@ -5478,7 +5525,8 @@ service:
       request:
         name: GetStoppedProcessesRequest
         query-parameters:
-          region: optional<root.Region>
+          region:
+            type: optional<root.Region>
       response:
         docs: Ok
         type: list<root.Process>

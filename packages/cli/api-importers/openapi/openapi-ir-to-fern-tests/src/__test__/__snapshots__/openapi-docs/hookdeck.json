@@ -8149,7 +8149,9 @@ types:
               "request": {
                 "name": "GetAttemptsRequest",
                 "query-parameters": {
-                  "dir": "optional<GetAttemptsRequestDir>",
+                  "dir": {
+                    "type": "optional<GetAttemptsRequestDir>",
+                  },
                   "event_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8160,10 +8162,37 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetAttemptsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetAttemptsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -8224,11 +8253,23 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          order_by: optional<GetAttemptsRequestOrderBy>
-          dir: optional<GetAttemptsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetAttemptsRequestOrderBy>
+          dir:
+            type: optional<GetAttemptsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of attempts
         type: root.EventAttemptPaginatedResult
@@ -8557,7 +8598,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "request": {
                 "name": "GetBookmarksRequest",
                 "query-parameters": {
-                  "dir": "optional<GetBookmarksRequestDir>",
+                  "dir": {
+                    "type": "optional<GetBookmarksRequestDir>",
+                  },
                   "event_data_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8589,7 +8632,16 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                     },
                   },
                   "last_used_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "name": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8600,9 +8652,27 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                       "pattern": "^[A-z0-9-_]+$",
                     },
                   },
-                  "next": "optional<string>",
-                  "order_by": "optional<GetBookmarksRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetBookmarksRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8897,11 +8967,23 @@ service:
             validation:
               maxLength: 255
           last_used_at: optional<datetime>
-          order_by: optional<GetBookmarksRequestOrderBy>
-          dir: optional<GetBookmarksRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetBookmarksRequestOrderBy>
+          dir:
+            type: optional<GetBookmarksRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of bookmarks
         type: root.BookmarkPaginatedResult
@@ -9388,10 +9470,18 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "request": {
                 "name": "GetEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetEventBulkRetriesRequestDir>",
+                  "cancelled_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "completed_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetEventBulkRetriesRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -9403,10 +9493,37 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetEventBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetEventBulkRetriesRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
@@ -10479,9 +10596,12 @@ service:
       request:
         name: GetEventBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at:
+            type: optional<datetime>
+          completed_at:
+            type: optional<datetime>
+          created_at:
+            type: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -10489,11 +10609,23 @@ service:
               maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
-          order_by: optional<GetEventBulkRetriesRequestOrderBy>
-          dir: optional<GetEventBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetEventBulkRetriesRequestOrderBy>
+          dir:
+            type: optional<GetEventBulkRetriesRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events bulk retries
         type: root.BatchOperationPaginatedResult
@@ -10879,10 +11011,18 @@ docs: ''
               "request": {
                 "name": "GetIgnoredEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetIgnoredEventBulkRetriesRequestDir>",
+                  "cancelled_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "completed_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetIgnoredEventBulkRetriesRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -10894,10 +11034,37 @@ docs: ''
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
@@ -11114,9 +11281,12 @@ service:
       request:
         name: GetIgnoredEventBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at:
+            type: optional<datetime>
+          completed_at:
+            type: optional<datetime>
+          created_at:
+            type: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -11124,11 +11294,23 @@ service:
               maxLength: 255
           query_partial_match: optional<boolean>
           in_progress: optional<boolean>
-          order_by: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
-          dir: optional<GetIgnoredEventBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
+          dir:
+            type: optional<GetIgnoredEventBulkRetriesRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of ignored events bulk retries
         type: root.BatchOperationPaginatedResult
@@ -11512,10 +11694,18 @@ docs: ''
               "request": {
                 "name": "GetRequestBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetRequestBulkRetriesRequestDir>",
+                  "cancelled_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "completed_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetRequestBulkRetriesRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -11527,10 +11717,37 @@ docs: ''
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetRequestBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetRequestBulkRetriesRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
@@ -12327,9 +12544,12 @@ service:
       request:
         name: GetRequestBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at:
+            type: optional<datetime>
+          completed_at:
+            type: optional<datetime>
+          created_at:
+            type: optional<datetime>
           id:
             type: optional<string>
             allow-multiple: true
@@ -12337,11 +12557,23 @@ service:
               maxLength: 255
           in_progress: optional<boolean>
           query_partial_match: optional<boolean>
-          order_by: optional<GetRequestBulkRetriesRequestOrderBy>
-          dir: optional<GetRequestBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetRequestBulkRetriesRequestOrderBy>
+          dir:
+            type: optional<GetRequestBulkRetriesRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of request bulk retries
         type: root.BatchOperationPaginatedResult
@@ -12988,7 +13220,9 @@ docs: ''
                 "name": "GetConnectionsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
+                  "archived_at": {
+                    "type": "optional<datetime>",
+                  },
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -12999,8 +13233,18 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "dir": "optional<GetConnectionsRequestDir>",
-                  "full_name": "optional<string>",
+                  "dir": {
+                    "type": "optional<GetConnectionsRequestDir>",
+                  },
+                  "full_name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[a-z0-9-_>\s]+$",
+                    },
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -13011,12 +13255,49 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetConnectionsRequestOrderBy>",
-                  "paused_at": "optional<datetime>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetConnectionsRequestOrderBy>",
+                  },
+                  "paused_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -14050,7 +14331,11 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           destination_id:
             type: optional<string>
             allow-multiple: true
@@ -14062,14 +14347,32 @@ service:
             validation:
               maxLength: 255
           archived: optional<boolean>
-          archived_at: optional<datetime>
-          full_name: optional<string>
-          paused_at: optional<datetime>
-          order_by: optional<GetConnectionsRequestOrderBy>
-          dir: optional<GetConnectionsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          archived_at:
+            type: optional<datetime>
+          full_name:
+            type: optional<string>
+            validation:
+              pattern: ^[a-z0-9-_>\s]+$
+              maxLength: 155
+          paused_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetConnectionsRequestOrderBy>
+          dir:
+            type: optional<GetConnectionsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of connections
         type: root.ConnectionPaginatedResult
@@ -15071,9 +15374,21 @@ docs: >-
                 "name": "GetDestinationsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
-                  "cli_path": "optional<string>",
-                  "dir": "optional<GetDestinationsRequestDir>",
+                  "archived_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "cli_path": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "dir": {
+                    "type": "optional<GetDestinationsRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15084,11 +15399,46 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetDestinationsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetDestinationsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "url": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15431,18 +15781,38 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
-          archived_at: optional<datetime>
+          archived_at:
+            type: optional<datetime>
           url:
             type: optional<string>
             allow-multiple: true
-          cli_path: optional<string>
-          order_by: optional<GetDestinationsRequestOrderBy>
-          dir: optional<GetDestinationsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          cli_path:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          order_by:
+            type: optional<GetDestinationsRequestOrderBy>
+          dir:
+            type: optional<GetDestinationsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of destinations
         type: root.DestinationPaginatedResult
@@ -15873,8 +16243,19 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "request": {
                 "name": "GetEventsRequest",
                 "query-parameters": {
-                  "attempts": "optional<integer>",
-                  "body": "optional<string>",
+                  "attempts": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "body": {
+                    "type": "optional<string>",
+                  },
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15885,12 +16266,16 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "cli_id": "optional<string>",
+                  "cli_id": {
+                    "type": "optional<string>",
+                  },
                   "cli_user_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "created_at": "optional<datetime>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15901,7 +16286,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "dir": "optional<GetEventsRequestDir>",
+                  "dir": {
+                    "type": "optional<GetEventsRequestDir>",
+                  },
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15922,7 +16309,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "headers": "optional<string>",
+                  "headers": {
+                    "type": "optional<string>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15944,14 +16333,54 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "last_attempt_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetEventsRequestOrderBy>",
-                  "parsed_query": "optional<string>",
+                  "last_attempt_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetEventsRequestOrderBy>",
+                  },
+                  "parsed_query": {
+                    "type": "optional<string>",
+                  },
                   "path": "optional<string>",
-                  "prev": "optional<string>",
-                  "response_status": "optional<integer>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "response_status": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 600,
+                      "min": 200,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15962,8 +16391,12 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "status": "optional<root.EventStatus>",
-                  "successful_at": "optional<datetime>",
+                  "status": {
+                    "type": "optional<root.EventStatus>",
+                  },
+                  "successful_at": {
+                    "type": "optional<datetime>",
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16214,7 +16647,8 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status: optional<root.EventStatus>
+          status:
+            type: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
@@ -16235,28 +16669,42 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          attempts: optional<integer>
-          response_status: optional<integer>
-          successful_at: optional<datetime>
-          created_at: optional<datetime>
+          attempts:
+            type: optional<integer>
+            validation:
+              min: 0
+          response_status:
+            type: optional<integer>
+            validation:
+              min: 200
+              max: 600
+          successful_at:
+            type: optional<datetime>
+          created_at:
+            type: optional<datetime>
           error_code:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          cli_id: optional<string>
+          cli_id:
+            type: optional<string>
           cli_user_id:
             type: optional<string>
             allow-multiple: true
-          last_attempt_at: optional<datetime>
+          last_attempt_at:
+            type: optional<datetime>
           event_data_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          headers: optional<string>
-          body: optional<string>
-          parsed_query: optional<string>
+          headers:
+            type: optional<string>
+          body:
+            type: optional<string>
+          parsed_query:
+            type: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
@@ -16264,11 +16712,23 @@ service:
               maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
-          order_by: optional<GetEventsRequestOrderBy>
-          dir: optional<GetEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetEventsRequestOrderBy>
+          dir:
+            type: optional<GetEventsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events
         type: root.EventPaginatedResult
@@ -16800,7 +17260,9 @@ docs: An event is any request that Hookdeck receives from a source.
                 "name": "GetIntegrationsRequest",
                 "query-parameters": {
                   "label": "optional<string>",
-                  "provider": "optional<root.IntegrationProvider>",
+                  "provider": {
+                    "type": "optional<root.IntegrationProvider>",
+                  },
                 },
               },
               "response": {
@@ -16948,7 +17410,8 @@ service:
         name: GetIntegrationsRequest
         query-parameters:
           label: optional<string>
-          provider: optional<root.IntegrationProvider>
+          provider:
+            type: optional<root.IntegrationProvider>
       response:
         docs: List of integrations
         type: root.IntegrationPaginatedResult
@@ -17559,14 +18022,55 @@ types:
               "request": {
                 "name": "GetIssueTriggersRequest",
                 "query-parameters": {
-                  "dir": "optional<GetIssueTriggersRequestDir>",
-                  "disabled_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetIssueTriggersRequestOrderBy>",
-                  "prev": "optional<string>",
-                  "type": "optional<root.IssueType>",
+                  "dir": {
+                    "type": "optional<GetIssueTriggersRequestDir>",
+                  },
+                  "disabled_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetIssueTriggersRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "type": {
+                    "type": "optional<root.IssueType>",
+                  },
                 },
               },
               "response": {
@@ -17854,14 +18358,31 @@ service:
       request:
         name: GetIssueTriggersRequest
         query-parameters:
-          name: optional<string>
-          type: optional<root.IssueType>
-          disabled_at: optional<datetime>
-          order_by: optional<GetIssueTriggersRequestOrderBy>
-          dir: optional<GetIssueTriggersRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          type:
+            type: optional<root.IssueType>
+          disabled_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetIssueTriggersRequestOrderBy>
+          dir:
+            type: optional<GetIssueTriggersRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of issue triggers
         type: root.IssueTriggerPaginatedResult
@@ -18387,10 +18908,18 @@ docs: >-
               "request": {
                 "name": "GetIssueCountRequest",
                 "query-parameters": {
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetIssueCountRequestDir>",
-                  "dismissed_at": "optional<datetime>",
-                  "first_seen_at": "optional<datetime>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetIssueCountRequestDir>",
+                  },
+                  "dismissed_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "first_seen_at": {
+                    "type": "optional<datetime>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -18411,17 +18940,50 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "last_seen_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "merged_with": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "next": "optional<string>",
-                  "order_by": "optional<GetIssueCountRequestOrderBy>",
-                  "prev": "optional<string>",
-                  "status": "optional<GetIssueCountRequestStatus>",
-                  "type": "optional<GetIssueCountRequestType>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetIssueCountRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "status": {
+                    "type": "optional<GetIssueCountRequestStatus>",
+                  },
+                  "type": {
+                    "type": "optional<GetIssueCountRequestType>",
+                  },
                 },
               },
               "response": {
@@ -18500,10 +19062,18 @@ docs: >-
               "request": {
                 "name": "GetIssuesRequest",
                 "query-parameters": {
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetIssuesRequestDir>",
-                  "dismissed_at": "optional<datetime>",
-                  "first_seen_at": "optional<datetime>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetIssuesRequestDir>",
+                  },
+                  "dismissed_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "first_seen_at": {
+                    "type": "optional<datetime>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -18524,17 +19094,50 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "last_seen_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "merged_with": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "next": "optional<string>",
-                  "order_by": "optional<GetIssuesRequestOrderBy>",
-                  "prev": "optional<string>",
-                  "status": "optional<GetIssuesRequestStatus>",
-                  "type": "optional<GetIssuesRequestType>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetIssuesRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "status": {
+                    "type": "optional<GetIssuesRequestStatus>",
+                  },
+                  "type": {
+                    "type": "optional<GetIssuesRequestType>",
+                  },
                 },
               },
               "response": {
@@ -18789,20 +19392,38 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          type: optional<GetIssuesRequestType>
-          status: optional<GetIssuesRequestStatus>
+          type:
+            type: optional<GetIssuesRequestType>
+          status:
+            type: optional<GetIssuesRequestStatus>
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at: optional<datetime>
-          first_seen_at: optional<datetime>
-          last_seen_at: optional<datetime>
-          dismissed_at: optional<datetime>
-          order_by: optional<GetIssuesRequestOrderBy>
-          dir: optional<GetIssuesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          created_at:
+            type: optional<datetime>
+          first_seen_at:
+            type: optional<datetime>
+          last_seen_at:
+            type: optional<datetime>
+          dismissed_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetIssuesRequestOrderBy>
+          dir:
+            type: optional<GetIssuesRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of issues
         type: root.IssueWithDataPaginatedResult
@@ -18869,20 +19490,38 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          type: optional<GetIssueCountRequestType>
-          status: optional<GetIssueCountRequestStatus>
+          type:
+            type: optional<GetIssueCountRequestType>
+          status:
+            type: optional<GetIssueCountRequestStatus>
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at: optional<datetime>
-          first_seen_at: optional<datetime>
-          last_seen_at: optional<datetime>
-          dismissed_at: optional<datetime>
-          order_by: optional<GetIssueCountRequestOrderBy>
-          dir: optional<GetIssueCountRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          created_at:
+            type: optional<datetime>
+          first_seen_at:
+            type: optional<datetime>
+          last_seen_at:
+            type: optional<datetime>
+          dismissed_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetIssueCountRequestOrderBy>
+          dir:
+            type: optional<GetIssueCountRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: Issue count
         type: root.IssueCount
@@ -19339,8 +19978,19 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestEventsRequest",
                 "query-parameters": {
-                  "attempts": "optional<integer>",
-                  "body": "optional<string>",
+                  "attempts": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "body": {
+                    "type": "optional<string>",
+                  },
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19351,12 +20001,16 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "cli_id": "optional<string>",
+                  "cli_id": {
+                    "type": "optional<string>",
+                  },
                   "cli_user_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "created_at": "optional<datetime>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19367,7 +20021,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "dir": "optional<GetRequestEventsRequestDir>",
+                  "dir": {
+                    "type": "optional<GetRequestEventsRequestDir>",
+                  },
                   "error_code": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19388,7 +20044,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "headers": "optional<string>",
+                  "headers": {
+                    "type": "optional<string>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19410,14 +20068,54 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "last_attempt_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetRequestEventsRequestOrderBy>",
-                  "parsed_query": "optional<string>",
+                  "last_attempt_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetRequestEventsRequestOrderBy>",
+                  },
+                  "parsed_query": {
+                    "type": "optional<string>",
+                  },
                   "path": "optional<string>",
-                  "prev": "optional<string>",
-                  "response_status": "optional<integer>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "response_status": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 600,
+                      "min": 200,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19428,8 +20126,12 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "status": "optional<root.EventStatus>",
-                  "successful_at": "optional<datetime>",
+                  "status": {
+                    "type": "optional<root.EventStatus>",
+                  },
+                  "successful_at": {
+                    "type": "optional<datetime>",
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19500,7 +20202,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestIgnoredEventsRequest",
                 "query-parameters": {
-                  "dir": "optional<GetRequestIgnoredEventsRequestDir>",
+                  "dir": {
+                    "type": "optional<GetRequestIgnoredEventsRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19511,10 +20215,37 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetRequestIgnoredEventsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetRequestIgnoredEventsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -19613,7 +20344,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestsRequest",
                 "query-parameters": {
-                  "body": "optional<string>",
+                  "body": {
+                    "type": "optional<string>",
+                  },
                   "bulk_retry_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19624,10 +20357,25 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetRequestsRequestDir>",
-                  "events_count": "optional<integer>",
-                  "headers": "optional<string>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetRequestsRequestDir>",
+                  },
+                  "events_count": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "headers": {
+                    "type": "optional<string>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19638,16 +20386,60 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "ignored_count": "optional<integer>",
-                  "include": "optional<literal<"data">>",
-                  "ingested_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetRequestsRequestOrderBy>",
-                  "parsed_query": "optional<string>",
+                  "ignored_count": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "include": {
+                    "type": "optional<literal<"data">>",
+                  },
+                  "ingested_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetRequestsRequestOrderBy>",
+                  },
+                  "parsed_query": {
+                    "type": "optional<string>",
+                  },
                   "path": "optional<string>",
-                  "prev": "optional<string>",
-                  "rejection_cause": "optional<root.RequestRejectionCause>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "rejection_cause": {
+                    "type": "optional<root.RequestRejectionCause>",
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19658,7 +20450,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "status": "optional<GetRequestsRequestStatus>",
+                  "status": {
+                    "type": "optional<GetRequestsRequestStatus>",
+                  },
                   "verified": "optional<boolean>",
                 },
               },
@@ -19884,33 +20678,59 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status: optional<GetRequestsRequestStatus>
-          rejection_cause: optional<root.RequestRejectionCause>
-          ignored_count: optional<integer>
-          events_count: optional<integer>
+          status:
+            type: optional<GetRequestsRequestStatus>
+          rejection_cause:
+            type: optional<root.RequestRejectionCause>
+          ignored_count:
+            type: optional<integer>
+            validation:
+              min: 0
+          events_count:
+            type: optional<integer>
+            validation:
+              min: 0
           source_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
           verified: optional<boolean>
-          headers: optional<string>
-          body: optional<string>
-          parsed_query: optional<string>
+          headers:
+            type: optional<string>
+          body:
+            type: optional<string>
+          parsed_query:
+            type: optional<string>
           path: optional<string>
-          created_at: optional<datetime>
-          ingested_at: optional<datetime>
+          created_at:
+            type: optional<datetime>
+          ingested_at:
+            type: optional<datetime>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          include: optional<literal<"data">>
-          order_by: optional<GetRequestsRequestOrderBy>
-          dir: optional<GetRequestsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          include:
+            type: optional<literal<"data">>
+          order_by:
+            type: optional<GetRequestsRequestOrderBy>
+          dir:
+            type: optional<GetRequestsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of requests
         type: root.RequestPaginatedResult
@@ -20112,7 +20932,8 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status: optional<root.EventStatus>
+          status:
+            type: optional<root.EventStatus>
           issue_id:
             type: optional<string>
             allow-multiple: true
@@ -20133,28 +20954,42 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          attempts: optional<integer>
-          response_status: optional<integer>
-          successful_at: optional<datetime>
-          created_at: optional<datetime>
+          attempts:
+            type: optional<integer>
+            validation:
+              min: 0
+          response_status:
+            type: optional<integer>
+            validation:
+              min: 200
+              max: 600
+          successful_at:
+            type: optional<datetime>
+          created_at:
+            type: optional<datetime>
           error_code:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          cli_id: optional<string>
+          cli_id:
+            type: optional<string>
           cli_user_id:
             type: optional<string>
             allow-multiple: true
-          last_attempt_at: optional<datetime>
+          last_attempt_at:
+            type: optional<datetime>
           event_data_id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          headers: optional<string>
-          body: optional<string>
-          parsed_query: optional<string>
+          headers:
+            type: optional<string>
+          body:
+            type: optional<string>
+          parsed_query:
+            type: optional<string>
           bulk_retry_id:
             type: optional<string>
             allow-multiple: true
@@ -20162,11 +20997,23 @@ service:
               maxLength: 255
           path: optional<string>
           include: optional<literal<"data">>
-          order_by: optional<GetRequestEventsRequestOrderBy>
-          dir: optional<GetRequestEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetRequestEventsRequestOrderBy>
+          dir:
+            type: optional<GetRequestEventsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events
         type: root.EventPaginatedResult
@@ -20226,11 +21073,23 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          order_by: optional<GetRequestIgnoredEventsRequestOrderBy>
-          dir: optional<GetRequestIgnoredEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          order_by:
+            type: optional<GetRequestIgnoredEventsRequestOrderBy>
+          dir:
+            type: optional<GetRequestIgnoredEventsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of ignored events
         type: root.IgnoredEventPaginatedResult
@@ -20494,8 +21353,12 @@ docs: A request represent a webhook received by Hookdeck.
                 "name": "GetRulesetsRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
-                  "dir": "optional<GetRulesetsRequestDir>",
+                  "archived_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetRulesetsRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -20506,11 +21369,46 @@ docs: A request represent a webhook received by Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetRulesetsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetRulesetsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -20772,14 +21670,31 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
-          archived_at: optional<datetime>
-          order_by: optional<GetRulesetsRequestOrderBy>
-          dir: optional<GetRulesetsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          archived_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetRulesetsRequestOrderBy>
+          dir:
+            type: optional<GetRulesetsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of rulesets
         type: root.RulesetPaginatedResult
@@ -21290,8 +22205,12 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "name": "GetSourcesRequest",
                 "query-parameters": {
                   "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
-                  "dir": "optional<GetSourcesRequestDir>",
+                  "archived_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetSourcesRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -21302,12 +22221,49 @@ docs: A ruleset defines a group of rules that can be used across many connection
                       "pattern": undefined,
                     },
                   },
-                  "integration_id": "optional<string>",
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetSourcesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "integration_id": {
+                    "type": "optional<string>",
+                  },
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetSourcesRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -21562,15 +22518,33 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
-          archived_at: optional<datetime>
-          integration_id: optional<string>
-          order_by: optional<GetSourcesRequestOrderBy>
-          dir: optional<GetSourcesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          archived_at:
+            type: optional<datetime>
+          integration_id:
+            type: optional<string>
+          order_by:
+            type: optional<GetSourcesRequestOrderBy>
+          dir:
+            type: optional<GetSourcesRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of sources
         type: root.SourcePaginatedResult
@@ -22113,8 +23087,12 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "request": {
                 "name": "GetTransformationExecutionsRequest",
                 "query-parameters": {
-                  "created_at": "optional<datetime>",
-                  "dir": "optional<GetTransformationExecutionsRequestDir>",
+                  "created_at": {
+                    "type": "optional<datetime>",
+                  },
+                  "dir": {
+                    "type": "optional<GetTransformationExecutionsRequestDir>",
+                  },
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -22125,11 +23103,40 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetTransformationExecutionsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "log_level": {
+                    "type": "optional<GetTransformationExecutionsRequestLogLevel>",
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetTransformationExecutionsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -22193,7 +23200,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "request": {
                 "name": "GetTransformationsRequest",
                 "query-parameters": {
-                  "dir": "optional<GetTransformationsRequestDir>",
+                  "dir": {
+                    "type": "optional<GetTransformationsRequestDir>",
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -22204,11 +23213,46 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
-                  "order_by": "optional<GetTransformationsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "order_by": {
+                    "type": "optional<GetTransformationsRequestOrderBy>",
+                  },
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -22704,12 +23748,28 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
-          order_by: optional<GetTransformationsRequestOrderBy>
-          dir: optional<GetTransformationsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
+          order_by:
+            type: optional<GetTransformationsRequestOrderBy>
+          dir:
+            type: optional<GetTransformationsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of transformations
         type: root.TransformationPaginatedResult
@@ -22987,7 +24047,8 @@ service:
       request:
         name: GetTransformationExecutionsRequest
         query-parameters:
-          log_level: optional<GetTransformationExecutionsRequestLogLevel>
+          log_level:
+            type: optional<GetTransformationExecutionsRequestLogLevel>
           webhook_id:
             type: optional<string>
             allow-multiple: true
@@ -22998,12 +24059,25 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          created_at: optional<datetime>
-          order_by: optional<GetTransformationExecutionsRequestOrderBy>
-          dir: optional<GetTransformationExecutionsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          created_at:
+            type: optional<datetime>
+          order_by:
+            type: optional<GetTransformationExecutionsRequestOrderBy>
+          dir:
+            type: optional<GetTransformationExecutionsRequestDir>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of transformation executions
         type: root.TransformationExecutionPaginatedResult

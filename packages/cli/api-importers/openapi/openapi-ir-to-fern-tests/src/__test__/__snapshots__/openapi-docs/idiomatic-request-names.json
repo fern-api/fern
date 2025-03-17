@@ -283,8 +283,12 @@ types:
               "request": {
                 "name": "GetOrganizationsOrganizationIdUsersRequest",
                 "query-parameters": {
-                  "page": "optional<integer>",
-                  "pageSize": "optional<integer>",
+                  "page": {
+                    "type": "optional<integer>",
+                  },
+                  "pageSize": {
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -320,8 +324,10 @@ service:
       request:
         name: GetOrganizationsOrganizationIdUsersRequest
         query-parameters:
-          page: optional<integer>
-          pageSize: optional<integer>
+          page:
+            type: optional<integer>
+          pageSize:
+            type: optional<integer>
       response:
         docs: User created successfully
         type: root.UserList
@@ -376,8 +382,12 @@ service:
               "request": {
                 "name": "GetUsersRequest",
                 "query-parameters": {
-                  "page": "optional<integer>",
-                  "pageSize": "optional<integer>",
+                  "page": {
+                    "type": "optional<integer>",
+                  },
+                  "pageSize": {
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -411,8 +421,10 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          page: optional<integer>
-          pageSize: optional<integer>
+          page:
+            type: optional<integer>
+          pageSize:
+            type: optional<integer>
       response:
         docs: User created successfully
         type: root.UserList

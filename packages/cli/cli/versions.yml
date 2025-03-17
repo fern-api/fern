@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      CLI now passes validation from OpenAPI to Fern Definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.23
+
+- changelogEntry:
+  - summary: |
       The `fern init --openapi` command now references the OpenAPI file in 
       place using the new `specs` syntax in generators.yml instead of copying the file into the 
       Fern directory. This makes it easier to maintain the source OpenAPI file separately from the Fern configuration.

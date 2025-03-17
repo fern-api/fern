@@ -44,7 +44,9 @@ export function buildQueryParameter({
         !typeReference.allowMultiple &&
         queryParameterDefault == null &&
         queryParameter.parameterNameOverride == null &&
-        queryParameter.availability == null
+        queryParameter.availability == null &&
+        isRawTypeReferenceDetailedSchema(typeReference.value) &&
+        typeReference.value.validation == null
     ) {
         return queryParameterType;
     }

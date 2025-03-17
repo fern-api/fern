@@ -130,7 +130,9 @@ async function writeGeneratorsConfiguration({
                     if (a === "api") {
                         return -1;
                     }
-                    if (b === "api") return 1;
+                    if (b === "api") {
+                        return 1;
+                    }
                     return a.localeCompare(b);
                 }
             })
