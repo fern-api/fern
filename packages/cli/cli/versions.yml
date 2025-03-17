@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      CLI now passes validation from OpenAPI to Fern Definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.22
+
+- changelogEntry:
+  - summary: |
       Correctly evaluate SDK groupName for AsyncAPI channels.
     type: fix
   irVersion: 57
