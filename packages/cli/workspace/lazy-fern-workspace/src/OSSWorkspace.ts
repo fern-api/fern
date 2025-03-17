@@ -14,8 +14,10 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
-import { ErrorCollector, OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
+import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/v2-importer-asyncapi";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
@@ -89,13 +91,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }: {
         context: TaskContext;
     }): Promise<IntermediateRepresentation> {
-        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
-        const documents = await this.loader.loadDocuments({
-            context,
-            specs: openApiSpecs
-        });
+        const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        const documents = await this.loader.loadDocuments({ context, specs });
         let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
+            const errorCollector = new ErrorCollector({ logger: context.logger });
+            let result: IntermediateRepresentation | undefined = undefined;
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
                     generationLanguage: "typescript",
@@ -104,24 +105,40 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     spec: document.value as OpenAPIV3_1.Document
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
-                const errorCollector = new ErrorCollector({ logger: context.logger });
-                const result = await converter.convert({
+                result = await converter.convert({
                     context: converterContext,
                     errorCollector
                 });
-                if (errorCollector.hasErrors()) {
-                    context.logger.info("OpenAPI 3.1 Converter encountered errors:");
-                    errorCollector.logErrors();
-                }
-                if (mergedIr === undefined) {
-                    mergedIr = result;
-                } else {
-                    mergedIr = mergeIntermediateRepresentation(mergedIr, result);
-                }
+            } else if (document.type === "asyncapi") {
+                const converterContext = new AsyncAPIConverterContext({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value
+                });
+                const converter = new AsyncAPIConverter({ context: converterContext });
+                result = await converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+            } else {
+                errorCollector.collect({
+                    message: `Unsupported document type: ${document}`,
+                    path: []
+                });
+            }
+            if (errorCollector.hasErrors()) {
+                context.logger.info(
+                    `${document.type === "openapi" ? "OpenAPI" : "AsyncAPI"} Importer encountered errors:`
+                );
+                errorCollector.logErrors();
+            }
+            if (result != null) {
+                mergedIr = mergedIr === undefined ? result : mergeIntermediateRepresentation(mergedIr, result);
             }
         }
         if (mergedIr === undefined) {
-            throw new Error("No OpenAPI document found");
+            throw new Error("Failed to generate intermediate representation");
         }
         return mergedIr;
     }

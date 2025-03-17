@@ -13,6 +13,7 @@ import com.fern.sdk.resources.endpoints.httpmethods.HttpMethodsClient;
 import com.fern.sdk.resources.endpoints.object.ObjectClient;
 import com.fern.sdk.resources.endpoints.params.ParamsClient;
 import com.fern.sdk.resources.endpoints.primitive.PrimitiveClient;
+import com.fern.sdk.resources.endpoints.put.PutClient;
 import com.fern.sdk.resources.endpoints.union.UnionClient;
 import java.util.function.Supplier;
 
@@ -33,6 +34,8 @@ public class EndpointsClient {
 
   protected final Supplier<PrimitiveClient> primitiveClient;
 
+  protected final Supplier<PutClient> putClient;
+
   protected final Supplier<UnionClient> unionClient;
 
   public EndpointsClient(ClientOptions clientOptions) {
@@ -44,6 +47,7 @@ public class EndpointsClient {
     this.objectClient = Suppliers.memoize(() -> new ObjectClient(clientOptions));
     this.paramsClient = Suppliers.memoize(() -> new ParamsClient(clientOptions));
     this.primitiveClient = Suppliers.memoize(() -> new PrimitiveClient(clientOptions));
+    this.putClient = Suppliers.memoize(() -> new PutClient(clientOptions));
     this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
   }
 
@@ -73,6 +77,10 @@ public class EndpointsClient {
 
   public PrimitiveClient primitive() {
     return this.primitiveClient.get();
+  }
+
+  public PutClient put() {
+    return this.putClient.get();
   }
 
   public UnionClient union() {

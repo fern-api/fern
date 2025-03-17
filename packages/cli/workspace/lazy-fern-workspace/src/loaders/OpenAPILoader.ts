@@ -45,6 +45,7 @@ export class OpenAPILoader {
                         namespace: spec.namespace,
                         settings: spec.settings
                     });
+                    continue;
                 } else if (isOpenAPIV2(openAPI)) {
                     const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
                     documents.push({
@@ -54,8 +55,10 @@ export class OpenAPILoader {
                         namespace: spec.namespace,
                         settings: spec.settings
                     });
+                    continue;
                 }
-            } else if (contents.includes("asyncapi")) {
+            }
+            if (contents.includes("asyncapi")) {
                 const asyncAPI = await loadAsyncAPI({
                     context,
                     absoluteFilePath: spec.absoluteFilepath,
@@ -68,9 +71,9 @@ export class OpenAPILoader {
                     namespace: spec.namespace,
                     settings: spec.settings
                 });
-            } else {
-                context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
+                continue;
             }
+            context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
         }
         return documents;
     }

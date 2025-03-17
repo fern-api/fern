@@ -1,6 +1,6 @@
-import { HttpRequestBody, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { ErrorCollector } from "../../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -68,28 +68,21 @@ export class WebhookConverter extends AbstractOperationConverter {
             group,
             method
         });
-        if (requestBody == null || !("contentType" in requestBody) || !requestBody.contentType?.includes("json")) {
-            errorCollector.collect({
-                message: "Skipping webhook because non-json request body",
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
 
         let payload: WebhookPayload;
-        if ("inlinedRequestBody" in requestBody) {
-            const inlinedRequestBody = requestBody.inlinedRequestBody as HttpRequestBody.InlinedRequestBody;
+        if (requestBody?.value.type === "inlinedRequestBody") {
             payload = WebhookPayload.inlinedPayload({
-                name: inlinedRequestBody.name,
-                extends: inlinedRequestBody.extends,
-                properties: inlinedRequestBody.properties
+                name: requestBody.value.name,
+                extends: requestBody.value.extends,
+                properties: requestBody.value.properties
+            });
+        } else if (requestBody?.value.type === "reference") {
+            payload = WebhookPayload.reference({
+                payloadType: requestBody.value.requestBodyType,
+                docs: requestBody.value.docs
             });
         } else {
-            const reference = requestBody as HttpRequestBody.Reference;
-            payload = WebhookPayload.reference({
-                payloadType: reference.requestBodyType,
-                docs: reference.docs
-            });
+            return undefined;
         }
 
         return {

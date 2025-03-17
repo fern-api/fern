@@ -19101,22 +19101,22 @@
         "default": {
           "name": {
             "name": {
-              "originalName": "24000",
+              "originalName": "TwentyFourThousand",
               "camelCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "twentyFourThousand",
+                "safeName": "twentyFourThousand"
               },
               "snakeCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "twenty_four_thousand",
+                "safeName": "twenty_four_thousand"
               },
               "screamingSnakeCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "TWENTY_FOUR_THOUSAND",
+                "safeName": "TWENTY_FOUR_THOUSAND"
               },
               "pascalCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "TwentyFourThousand",
+                "safeName": "TwentyFourThousand"
               }
             },
             "wireValue": "24000"
@@ -19150,22 +19150,22 @@
           {
             "name": {
               "name": {
-                "originalName": "16000",
+                "originalName": "SixteenThousand",
                 "camelCase": {
-                  "unsafeName": "16000",
-                  "safeName": "16000"
+                  "unsafeName": "sixteenThousand",
+                  "safeName": "sixteenThousand"
                 },
                 "snakeCase": {
-                  "unsafeName": "16000",
-                  "safeName": "16000"
+                  "unsafeName": "sixteen_thousand",
+                  "safeName": "sixteen_thousand"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "16000",
-                  "safeName": "16000"
+                  "unsafeName": "SIXTEEN_THOUSAND",
+                  "safeName": "SIXTEEN_THOUSAND"
                 },
                 "pascalCase": {
-                  "unsafeName": "16000",
-                  "safeName": "16000"
+                  "unsafeName": "SixteenThousand",
+                  "safeName": "SixteenThousand"
                 }
               },
               "wireValue": "16000"
@@ -19174,22 +19174,22 @@
           {
             "name": {
               "name": {
-                "originalName": "24000",
+                "originalName": "TwentyFourThousand",
                 "camelCase": {
-                  "unsafeName": "24000",
-                  "safeName": "24000"
+                  "unsafeName": "twentyFourThousand",
+                  "safeName": "twentyFourThousand"
                 },
                 "snakeCase": {
-                  "unsafeName": "24000",
-                  "safeName": "24000"
+                  "unsafeName": "twenty_four_thousand",
+                  "safeName": "twenty_four_thousand"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "24000",
-                  "safeName": "24000"
+                  "unsafeName": "TWENTY_FOUR_THOUSAND",
+                  "safeName": "TWENTY_FOUR_THOUSAND"
                 },
                 "pascalCase": {
-                  "unsafeName": "24000",
-                  "safeName": "24000"
+                  "unsafeName": "TwentyFourThousand",
+                  "safeName": "TwentyFourThousand"
                 }
               },
               "wireValue": "24000"
@@ -19198,22 +19198,22 @@
           {
             "name": {
               "name": {
-                "originalName": "44100",
+                "originalName": "FortyFourThousandOneHundred",
                 "camelCase": {
-                  "unsafeName": "44100",
-                  "safeName": "44100"
+                  "unsafeName": "fortyFourThousandOneHundred",
+                  "safeName": "fortyFourThousandOneHundred"
                 },
                 "snakeCase": {
-                  "unsafeName": "44100",
-                  "safeName": "44100"
+                  "unsafeName": "forty_four_thousand_one_hundred",
+                  "safeName": "forty_four_thousand_one_hundred"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "44100",
-                  "safeName": "44100"
+                  "unsafeName": "FORTY_FOUR_THOUSAND_ONE_HUNDRED",
+                  "safeName": "FORTY_FOUR_THOUSAND_ONE_HUNDRED"
                 },
                 "pascalCase": {
-                  "unsafeName": "44100",
-                  "safeName": "44100"
+                  "unsafeName": "FortyFourThousandOneHundred",
+                  "safeName": "FortyFourThousandOneHundred"
                 }
               },
               "wireValue": "44100"
@@ -19222,22 +19222,22 @@
           {
             "name": {
               "name": {
-                "originalName": "48000",
+                "originalName": "FortyEightThousand",
                 "camelCase": {
-                  "unsafeName": "48000",
-                  "safeName": "48000"
+                  "unsafeName": "fortyEightThousand",
+                  "safeName": "fortyEightThousand"
                 },
                 "snakeCase": {
-                  "unsafeName": "48000",
-                  "safeName": "48000"
+                  "unsafeName": "forty_eight_thousand",
+                  "safeName": "forty_eight_thousand"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "48000",
-                  "safeName": "48000"
+                  "unsafeName": "FORTY_EIGHT_THOUSAND",
+                  "safeName": "FORTY_EIGHT_THOUSAND"
                 },
                 "pascalCase": {
-                  "unsafeName": "48000",
-                  "safeName": "48000"
+                  "unsafeName": "FortyEightThousand",
+                  "safeName": "FortyEightThousand"
                 }
               },
               "wireValue": "48000"
@@ -19618,6 +19618,510 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
+    "type_speak:SpeakCloseFramePayload": {
+      "docs": "Error reason code",
+      "inline": true,
+      "name": {
+        "name": {
+          "originalName": "SpeakCloseFramePayload",
+          "camelCase": {
+            "unsafeName": "speakCloseFramePayload",
+            "safeName": "speakCloseFramePayload"
+          },
+          "snakeCase": {
+            "unsafeName": "speak_close_frame_payload",
+            "safeName": "speak_close_frame_payload"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SPEAK_CLOSE_FRAME_PAYLOAD",
+            "safeName": "SPEAK_CLOSE_FRAME_PAYLOAD"
+          },
+          "pascalCase": {
+            "unsafeName": "SpeakCloseFramePayload",
+            "safeName": "SpeakCloseFramePayload"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "speak",
+            "camelCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "snakeCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK",
+              "safeName": "SPEAK"
+            },
+            "pascalCase": {
+              "unsafeName": "Speak",
+              "safeName": "Speak"
+            }
+          }
+        },
+        "typeId": "type_speak:SpeakCloseFramePayload"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "None",
+                "camelCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "snakeCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NONE",
+                  "safeName": "NONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "None",
+                  "safeName": "None"
+                }
+              },
+              "wireValue": "None"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Message0000",
+                "camelCase": {
+                  "unsafeName": "message0000",
+                  "safeName": "message0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "message0000",
+                  "safeName": "message0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE0000",
+                  "safeName": "MESSAGE0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Message0000",
+                  "safeName": "Message0000"
+                }
+              },
+              "wireValue": "MESSAGE-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Data0000",
+                "camelCase": {
+                  "unsafeName": "data0000",
+                  "safeName": "data0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "data0000",
+                  "safeName": "data0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DATA0000",
+                  "safeName": "DATA0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Data0000",
+                  "safeName": "Data0000"
+                }
+              },
+              "wireValue": "DATA-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Big0000",
+                "camelCase": {
+                  "unsafeName": "big0000",
+                  "safeName": "big0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "big0000",
+                  "safeName": "big0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BIG0000",
+                  "safeName": "BIG0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Big0000",
+                  "safeName": "Big0000"
+                }
+              },
+              "wireValue": "BIG-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Big0001",
+                "camelCase": {
+                  "unsafeName": "big0001",
+                  "safeName": "big0001"
+                },
+                "snakeCase": {
+                  "unsafeName": "big0001",
+                  "safeName": "big0001"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BIG0001",
+                  "safeName": "BIG0001"
+                },
+                "pascalCase": {
+                  "unsafeName": "Big0001",
+                  "safeName": "Big0001"
+                }
+              },
+              "wireValue": "BIG-0001"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0000",
+                "camelCase": {
+                  "unsafeName": "net0000",
+                  "safeName": "net0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0000",
+                  "safeName": "net0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0000",
+                  "safeName": "NET0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0000",
+                  "safeName": "Net0000"
+                }
+              },
+              "wireValue": "NET-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0001",
+                "camelCase": {
+                  "unsafeName": "net0001",
+                  "safeName": "net0001"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0001",
+                  "safeName": "net0001"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0001",
+                  "safeName": "NET0001"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0001",
+                  "safeName": "Net0001"
+                }
+              },
+              "wireValue": "NET-0001"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0002",
+                "camelCase": {
+                  "unsafeName": "net0002",
+                  "safeName": "net0002"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0002",
+                  "safeName": "net0002"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0002",
+                  "safeName": "NET0002"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0002",
+                  "safeName": "Net0002"
+                }
+              },
+              "wireValue": "NET-0002"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0003",
+                "camelCase": {
+                  "unsafeName": "net0003",
+                  "safeName": "net0003"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0003",
+                  "safeName": "net0003"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0003",
+                  "safeName": "NET0003"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0003",
+                  "safeName": "Net0003"
+                }
+              },
+              "wireValue": "NET-0003"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
+    "type_speak:SpeakCloseFrame": {
+      "docs": "When Deepgram encounters an error during streaming text to speech, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason",
+      "inline": true,
+      "name": {
+        "name": {
+          "originalName": "SpeakCloseFrame",
+          "camelCase": {
+            "unsafeName": "speakCloseFrame",
+            "safeName": "speakCloseFrame"
+          },
+          "snakeCase": {
+            "unsafeName": "speak_close_frame",
+            "safeName": "speak_close_frame"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SPEAK_CLOSE_FRAME",
+            "safeName": "SPEAK_CLOSE_FRAME"
+          },
+          "pascalCase": {
+            "unsafeName": "SpeakCloseFrame",
+            "safeName": "SpeakCloseFrame"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "speak",
+            "camelCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "snakeCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK",
+              "safeName": "SPEAK"
+            },
+            "pascalCase": {
+              "unsafeName": "Speak",
+              "safeName": "Speak"
+            }
+          }
+        },
+        "typeId": "type_speak:SpeakCloseFrame"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "docs": "WebSocket close status code",
+            "name": {
+              "name": {
+                "originalName": "code",
+                "camelCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "snakeCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CODE",
+                  "safeName": "CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Code",
+                  "safeName": "Code"
+                }
+              },
+              "wireValue": "code"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "INTEGER",
+                "v2": {
+                  "type": "integer"
+                }
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "docs": "Error reason code",
+            "name": {
+              "name": {
+                "originalName": "payload",
+                "camelCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "snakeCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAYLOAD",
+                  "safeName": "PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Payload",
+                  "safeName": "Payload"
+                }
+              },
+              "wireValue": "payload"
+            },
+            "valueType": {
+              "name": {
+                "originalName": "SpeakCloseFramePayload",
+                "camelCase": {
+                  "unsafeName": "speakCloseFramePayload",
+                  "safeName": "speakCloseFramePayload"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak_close_frame_payload",
+                  "safeName": "speak_close_frame_payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK_CLOSE_FRAME_PAYLOAD",
+                  "safeName": "SPEAK_CLOSE_FRAME_PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "SpeakCloseFramePayload",
+                  "safeName": "SpeakCloseFramePayload"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "speak",
+                    "camelCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SPEAK",
+                      "safeName": "SPEAK"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Speak",
+                      "safeName": "Speak"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "speak",
+                  "camelCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SPEAK",
+                    "safeName": "SPEAK"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Speak",
+                    "safeName": "Speak"
+                  }
+                }
+              },
+              "typeId": "type_speak:SpeakCloseFramePayload",
+              "type": "named"
+            }
+          }
+        ],
+        "extraProperties": false,
+        "extendedProperties": [],
+        "type": "object"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
     "type_speak:SpeakSubscribeEvent": {
       "name": {
         "name": {
@@ -19765,6 +20269,75 @@
               "typeId": "type_speak:ControlMessagesResponse",
               "type": "named"
             }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "SpeakCloseFrame",
+                "camelCase": {
+                  "unsafeName": "speakCloseFrame",
+                  "safeName": "speakCloseFrame"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak_close_frame",
+                  "safeName": "speak_close_frame"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK_CLOSE_FRAME",
+                  "safeName": "SPEAK_CLOSE_FRAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "SpeakCloseFrame",
+                  "safeName": "SpeakCloseFrame"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "speak",
+                    "camelCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SPEAK",
+                      "safeName": "SPEAK"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Speak",
+                      "safeName": "Speak"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "speak",
+                  "camelCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SPEAK",
+                    "safeName": "SPEAK"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Speak",
+                    "safeName": "Speak"
+                  }
+                }
+              },
+              "typeId": "type_speak:SpeakCloseFrame",
+              "type": "named"
+            },
+            "docs": "When Deepgram encounters an error during streaming text to speech, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason"
           }
         ],
         "type": "undiscriminatedUnion"
@@ -19927,26 +20500,26 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_speak:SpeakControlMessagesRequest": {
+    "type_speak:SpeakControlMessagesRequestType": {
       "inline": true,
       "name": {
         "name": {
-          "originalName": "SpeakControlMessagesRequest",
+          "originalName": "SpeakControlMessagesRequestType",
           "camelCase": {
-            "unsafeName": "speakControlMessagesRequest",
-            "safeName": "speakControlMessagesRequest"
+            "unsafeName": "speakControlMessagesRequestType",
+            "safeName": "speakControlMessagesRequestType"
           },
           "snakeCase": {
-            "unsafeName": "speak_control_messages_request",
-            "safeName": "speak_control_messages_request"
+            "unsafeName": "speak_control_messages_request_type",
+            "safeName": "speak_control_messages_request_type"
           },
           "screamingSnakeCase": {
-            "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST",
-            "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST"
+            "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE",
+            "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE"
           },
           "pascalCase": {
-            "unsafeName": "SpeakControlMessagesRequest",
-            "safeName": "SpeakControlMessagesRequest"
+            "unsafeName": "SpeakControlMessagesRequestType",
+            "safeName": "SpeakControlMessagesRequestType"
           }
         },
         "fernFilepath": {
@@ -19992,7 +20565,7 @@
             }
           }
         },
-        "typeId": "type_speak:SpeakControlMessagesRequest"
+        "typeId": "type_speak:SpeakControlMessagesRequestType"
       },
       "shape": {
         "values": [
@@ -20070,6 +20643,178 @@
           }
         ],
         "type": "enum"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
+    "type_speak:SpeakControlMessagesRequest": {
+      "inline": true,
+      "name": {
+        "name": {
+          "originalName": "SpeakControlMessagesRequest",
+          "camelCase": {
+            "unsafeName": "speakControlMessagesRequest",
+            "safeName": "speakControlMessagesRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "speak_control_messages_request",
+            "safeName": "speak_control_messages_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST",
+            "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "SpeakControlMessagesRequest",
+            "safeName": "SpeakControlMessagesRequest"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "speak",
+            "camelCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "snakeCase": {
+              "unsafeName": "speak",
+              "safeName": "speak"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK",
+              "safeName": "SPEAK"
+            },
+            "pascalCase": {
+              "unsafeName": "Speak",
+              "safeName": "Speak"
+            }
+          }
+        },
+        "typeId": "type_speak:SpeakControlMessagesRequest"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              },
+              "wireValue": "type"
+            },
+            "valueType": {
+              "name": {
+                "originalName": "SpeakControlMessagesRequestType",
+                "camelCase": {
+                  "unsafeName": "speakControlMessagesRequestType",
+                  "safeName": "speakControlMessagesRequestType"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak_control_messages_request_type",
+                  "safeName": "speak_control_messages_request_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE",
+                  "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SpeakControlMessagesRequestType",
+                  "safeName": "SpeakControlMessagesRequestType"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "speak",
+                    "camelCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "speak",
+                      "safeName": "speak"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SPEAK",
+                      "safeName": "SPEAK"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Speak",
+                      "safeName": "Speak"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "speak",
+                  "camelCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "speak",
+                    "safeName": "speak"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SPEAK",
+                    "safeName": "SPEAK"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Speak",
+                    "safeName": "Speak"
+                  }
+                }
+              },
+              "typeId": "type_speak:SpeakControlMessagesRequestType",
+              "type": "named"
+            }
+          }
+        ],
+        "extraProperties": false,
+        "extendedProperties": [],
+        "type": "object"
       },
       "referencedTypes": {},
       "encoding": {
@@ -20491,26 +21236,26 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_listen:ListenDictation": {
-      "docs": "Identify and extract key entities from content in submitted audio",
+    "type_listen:ListenDiarize": {
+      "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
       "name": {
         "name": {
-          "originalName": "ListenDictation",
+          "originalName": "ListenDiarize",
           "camelCase": {
-            "unsafeName": "listenDictation",
-            "safeName": "listenDictation"
+            "unsafeName": "listenDiarize",
+            "safeName": "listenDiarize"
           },
           "snakeCase": {
-            "unsafeName": "listen_dictation",
-            "safeName": "listen_dictation"
+            "unsafeName": "listen_diarize",
+            "safeName": "listen_diarize"
           },
           "screamingSnakeCase": {
-            "unsafeName": "LISTEN_DICTATION",
-            "safeName": "LISTEN_DICTATION"
+            "unsafeName": "LISTEN_DIARIZE",
+            "safeName": "LISTEN_DIARIZE"
           },
           "pascalCase": {
-            "unsafeName": "ListenDictation",
-            "safeName": "ListenDictation"
+            "unsafeName": "ListenDiarize",
+            "safeName": "ListenDiarize"
           }
         },
         "fernFilepath": {
@@ -20556,7 +21301,7 @@
             }
           }
         },
-        "typeId": "type_listen:ListenDictation"
+        "typeId": "type_listen:ListenDiarize"
       },
       "shape": {
         "default": {
@@ -20642,26 +21387,26 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_listen:ListenDiarize": {
-      "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+    "type_listen:ListenDictation": {
+      "docs": "Identify and extract key entities from content in submitted audio",
       "name": {
         "name": {
-          "originalName": "ListenDiarize",
+          "originalName": "ListenDictation",
           "camelCase": {
-            "unsafeName": "listenDiarize",
-            "safeName": "listenDiarize"
+            "unsafeName": "listenDictation",
+            "safeName": "listenDictation"
           },
           "snakeCase": {
-            "unsafeName": "listen_diarize",
-            "safeName": "listen_diarize"
+            "unsafeName": "listen_dictation",
+            "safeName": "listen_dictation"
           },
           "screamingSnakeCase": {
-            "unsafeName": "LISTEN_DIARIZE",
-            "safeName": "LISTEN_DIARIZE"
+            "unsafeName": "LISTEN_DICTATION",
+            "safeName": "LISTEN_DICTATION"
           },
           "pascalCase": {
-            "unsafeName": "ListenDiarize",
-            "safeName": "ListenDiarize"
+            "unsafeName": "ListenDictation",
+            "safeName": "ListenDictation"
           }
         },
         "fernFilepath": {
@@ -20707,7 +21452,7 @@
             }
           }
         },
-        "typeId": "type_listen:ListenDiarize"
+        "typeId": "type_listen:ListenDictation"
       },
       "shape": {
         "default": {
@@ -22933,6 +23678,30 @@
           {
             "name": {
               "name": {
+                "originalName": "Nova3Medical",
+                "camelCase": {
+                  "unsafeName": "nova3Medical",
+                  "safeName": "nova3Medical"
+                },
+                "snakeCase": {
+                  "unsafeName": "nova3medical",
+                  "safeName": "nova3medical"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NOVA3MEDICAL",
+                  "safeName": "NOVA3MEDICAL"
+                },
+                "pascalCase": {
+                  "unsafeName": "Nova3Medical",
+                  "safeName": "Nova3Medical"
+                }
+              },
+              "wireValue": "nova-3-medical"
+            }
+          },
+          {
+            "name": {
+              "name": {
                 "originalName": "Nova2",
                 "camelCase": {
                   "unsafeName": "nova2",
@@ -24331,6 +25100,102 @@
                 }
               },
               "wireValue": "false"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "pci",
+                "camelCase": {
+                  "unsafeName": "pci",
+                  "safeName": "pci"
+                },
+                "snakeCase": {
+                  "unsafeName": "pci",
+                  "safeName": "pci"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PCI",
+                  "safeName": "PCI"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pci",
+                  "safeName": "Pci"
+                }
+              },
+              "wireValue": "pci"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "numbers",
+                "camelCase": {
+                  "unsafeName": "numbers",
+                  "safeName": "numbers"
+                },
+                "snakeCase": {
+                  "unsafeName": "numbers",
+                  "safeName": "numbers"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NUMBERS",
+                  "safeName": "NUMBERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Numbers",
+                  "safeName": "Numbers"
+                }
+              },
+              "wireValue": "numbers"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "aggressive_numbers",
+                "camelCase": {
+                  "unsafeName": "aggressiveNumbers",
+                  "safeName": "aggressiveNumbers"
+                },
+                "snakeCase": {
+                  "unsafeName": "aggressive_numbers",
+                  "safeName": "aggressive_numbers"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AGGRESSIVE_NUMBERS",
+                  "safeName": "AGGRESSIVE_NUMBERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AggressiveNumbers",
+                  "safeName": "AggressiveNumbers"
+                }
+              },
+              "wireValue": "aggressive_numbers"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ssn",
+                "camelCase": {
+                  "unsafeName": "ssn",
+                  "safeName": "ssn"
+                },
+                "snakeCase": {
+                  "unsafeName": "ssn",
+                  "safeName": "ssn"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SSN",
+                  "safeName": "SSN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Ssn",
+                  "safeName": "Ssn"
+                }
+              },
+              "wireValue": "ssn"
             }
           }
         ],
@@ -27544,6 +28409,390 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
+    "type_listen:ListenCloseFramePayload": {
+      "docs": "Error reason code",
+      "inline": true,
+      "name": {
+        "name": {
+          "originalName": "ListenCloseFramePayload",
+          "camelCase": {
+            "unsafeName": "listenCloseFramePayload",
+            "safeName": "listenCloseFramePayload"
+          },
+          "snakeCase": {
+            "unsafeName": "listen_close_frame_payload",
+            "safeName": "listen_close_frame_payload"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LISTEN_CLOSE_FRAME_PAYLOAD",
+            "safeName": "LISTEN_CLOSE_FRAME_PAYLOAD"
+          },
+          "pascalCase": {
+            "unsafeName": "ListenCloseFramePayload",
+            "safeName": "ListenCloseFramePayload"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "listen",
+              "camelCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "snakeCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LISTEN",
+                "safeName": "LISTEN"
+              },
+              "pascalCase": {
+                "unsafeName": "Listen",
+                "safeName": "Listen"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "listen",
+            "camelCase": {
+              "unsafeName": "listen",
+              "safeName": "listen"
+            },
+            "snakeCase": {
+              "unsafeName": "listen",
+              "safeName": "listen"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LISTEN",
+              "safeName": "LISTEN"
+            },
+            "pascalCase": {
+              "unsafeName": "Listen",
+              "safeName": "Listen"
+            }
+          }
+        },
+        "typeId": "type_listen:ListenCloseFramePayload"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "None",
+                "camelCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "snakeCase": {
+                  "unsafeName": "none",
+                  "safeName": "none"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NONE",
+                  "safeName": "NONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "None",
+                  "safeName": "None"
+                }
+              },
+              "wireValue": "None"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Data0000",
+                "camelCase": {
+                  "unsafeName": "data0000",
+                  "safeName": "data0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "data0000",
+                  "safeName": "data0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DATA0000",
+                  "safeName": "DATA0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Data0000",
+                  "safeName": "Data0000"
+                }
+              },
+              "wireValue": "DATA-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0000",
+                "camelCase": {
+                  "unsafeName": "net0000",
+                  "safeName": "net0000"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0000",
+                  "safeName": "net0000"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0000",
+                  "safeName": "NET0000"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0000",
+                  "safeName": "Net0000"
+                }
+              },
+              "wireValue": "NET-0000"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "Net0001",
+                "camelCase": {
+                  "unsafeName": "net0001",
+                  "safeName": "net0001"
+                },
+                "snakeCase": {
+                  "unsafeName": "net0001",
+                  "safeName": "net0001"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NET0001",
+                  "safeName": "NET0001"
+                },
+                "pascalCase": {
+                  "unsafeName": "Net0001",
+                  "safeName": "Net0001"
+                }
+              },
+              "wireValue": "NET-0001"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
+    "type_listen:ListenCloseFrame": {
+      "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason",
+      "inline": true,
+      "name": {
+        "name": {
+          "originalName": "ListenCloseFrame",
+          "camelCase": {
+            "unsafeName": "listenCloseFrame",
+            "safeName": "listenCloseFrame"
+          },
+          "snakeCase": {
+            "unsafeName": "listen_close_frame",
+            "safeName": "listen_close_frame"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LISTEN_CLOSE_FRAME",
+            "safeName": "LISTEN_CLOSE_FRAME"
+          },
+          "pascalCase": {
+            "unsafeName": "ListenCloseFrame",
+            "safeName": "ListenCloseFrame"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "listen",
+              "camelCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "snakeCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LISTEN",
+                "safeName": "LISTEN"
+              },
+              "pascalCase": {
+                "unsafeName": "Listen",
+                "safeName": "Listen"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "listen",
+            "camelCase": {
+              "unsafeName": "listen",
+              "safeName": "listen"
+            },
+            "snakeCase": {
+              "unsafeName": "listen",
+              "safeName": "listen"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LISTEN",
+              "safeName": "LISTEN"
+            },
+            "pascalCase": {
+              "unsafeName": "Listen",
+              "safeName": "Listen"
+            }
+          }
+        },
+        "typeId": "type_listen:ListenCloseFrame"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "docs": "WebSocket close status code",
+            "name": {
+              "name": {
+                "originalName": "code",
+                "camelCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "snakeCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CODE",
+                  "safeName": "CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Code",
+                  "safeName": "Code"
+                }
+              },
+              "wireValue": "code"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "INTEGER",
+                "v2": {
+                  "type": "integer"
+                }
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "docs": "Error reason code",
+            "name": {
+              "name": {
+                "originalName": "payload",
+                "camelCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "snakeCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAYLOAD",
+                  "safeName": "PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Payload",
+                  "safeName": "Payload"
+                }
+              },
+              "wireValue": "payload"
+            },
+            "valueType": {
+              "name": {
+                "originalName": "ListenCloseFramePayload",
+                "camelCase": {
+                  "unsafeName": "listenCloseFramePayload",
+                  "safeName": "listenCloseFramePayload"
+                },
+                "snakeCase": {
+                  "unsafeName": "listen_close_frame_payload",
+                  "safeName": "listen_close_frame_payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LISTEN_CLOSE_FRAME_PAYLOAD",
+                  "safeName": "LISTEN_CLOSE_FRAME_PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "ListenCloseFramePayload",
+                  "safeName": "ListenCloseFramePayload"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "listen",
+                    "camelCase": {
+                      "unsafeName": "listen",
+                      "safeName": "listen"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "listen",
+                      "safeName": "listen"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LISTEN",
+                      "safeName": "LISTEN"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Listen",
+                      "safeName": "Listen"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "listen",
+                  "camelCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LISTEN",
+                    "safeName": "LISTEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Listen",
+                    "safeName": "Listen"
+                  }
+                }
+              },
+              "typeId": "type_listen:ListenCloseFramePayload",
+              "type": "named"
+            }
+          }
+        ],
+        "extraProperties": false,
+        "extendedProperties": [],
+        "type": "object"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
     "type_listen:ListenSubscribeEvent": {
       "name": {
         "name": {
@@ -27747,6 +28996,75 @@
               "typeId": "type_listen:ControlMessageResponse",
               "type": "named"
             }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "ListenCloseFrame",
+                "camelCase": {
+                  "unsafeName": "listenCloseFrame",
+                  "safeName": "listenCloseFrame"
+                },
+                "snakeCase": {
+                  "unsafeName": "listen_close_frame",
+                  "safeName": "listen_close_frame"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LISTEN_CLOSE_FRAME",
+                  "safeName": "LISTEN_CLOSE_FRAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "ListenCloseFrame",
+                  "safeName": "ListenCloseFrame"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "listen",
+                    "camelCase": {
+                      "unsafeName": "listen",
+                      "safeName": "listen"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "listen",
+                      "safeName": "listen"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LISTEN",
+                      "safeName": "LISTEN"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Listen",
+                      "safeName": "Listen"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "listen",
+                  "camelCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LISTEN",
+                    "safeName": "LISTEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Listen",
+                    "safeName": "Listen"
+                  }
+                }
+              },
+              "typeId": "type_listen:ListenCloseFrame",
+              "type": "named"
+            },
+            "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason"
           }
         ],
         "type": "undiscriminatedUnion"
@@ -28535,6 +29853,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:InjectionRefused": {
+      "docs": "Receive injection refused message",
       "inline": true,
       "name": {
         "name": {
@@ -28652,6 +29971,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:WelcomeMessage": {
+      "docs": "Receive a welcome message from the server to confirm the websocket has opened",
       "inline": true,
       "name": {
         "name": {
@@ -28806,6 +30126,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:SettingsApplied": {
+      "docs": "Confirm the server has successfully received and applied the Settings Configuration message",
       "inline": true,
       "name": {
         "name": {
@@ -29051,6 +30372,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:ConversationText": {
+      "docs": "Conversation Text facilitates real-time communication by relaying spoken statements from both the user and the assistant",
       "inline": true,
       "name": {
         "name": {
@@ -29293,6 +30615,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:UserStartedSpeaking": {
+      "docs": "User Started Speaking notifies the client that the user has begun speaking",
       "inline": true,
       "name": {
         "name": {
@@ -29410,6 +30733,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:AgentThinking": {
+      "docs": "Agent Thinking informs the client when the agent is processing information",
       "inline": true,
       "name": {
         "name": {
@@ -29561,6 +30885,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:FunctionCallRequest": {
+      "docs": "Request to call a function by sending a Function Call Request message",
       "inline": true,
       "name": {
         "name": {
@@ -29789,6 +31114,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:FunctionCalling": {
+      "docs": "Provides insights into function call workflows to assist in debugging",
       "inline": true,
       "name": {
         "name": {
@@ -29906,6 +31232,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:AgentStartedSpeaking": {
+      "docs": "Get notified when the server begins streaming an agent's audio response for playback",
       "inline": true,
       "name": {
         "name": {
@@ -30116,6 +31443,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:AgentAudioDone": {
+      "docs": "Get signals that the server has finished sending the final audio segment to the client",
       "inline": true,
       "name": {
         "name": {
@@ -30233,6 +31561,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:AgentErrorResponse": {
+      "docs": "Receive an error message from the server when an error occurs",
       "inline": true,
       "name": {
         "name": {
@@ -30517,7 +31846,8 @@
               },
               "typeId": "type_agent:InjectionRefused",
               "type": "named"
-            }
+            },
+            "docs": "Receive injection refused message"
           },
           {
             "type": {
@@ -30585,7 +31915,8 @@
               },
               "typeId": "type_agent:WelcomeMessage",
               "type": "named"
-            }
+            },
+            "docs": "Receive a welcome message from the server to confirm the websocket has opened"
           },
           {
             "type": {
@@ -30653,7 +31984,8 @@
               },
               "typeId": "type_agent:SettingsApplied",
               "type": "named"
-            }
+            },
+            "docs": "Confirm the server has successfully received and applied the Settings Configuration message"
           },
           {
             "type": {
@@ -30721,7 +32053,8 @@
               },
               "typeId": "type_agent:ConversationText",
               "type": "named"
-            }
+            },
+            "docs": "Conversation Text facilitates real-time communication by relaying spoken statements from both the user and the assistant"
           },
           {
             "type": {
@@ -30789,7 +32122,8 @@
               },
               "typeId": "type_agent:UserStartedSpeaking",
               "type": "named"
-            }
+            },
+            "docs": "User Started Speaking notifies the client that the user has begun speaking"
           },
           {
             "type": {
@@ -30857,7 +32191,8 @@
               },
               "typeId": "type_agent:AgentThinking",
               "type": "named"
-            }
+            },
+            "docs": "Agent Thinking informs the client when the agent is processing information"
           },
           {
             "type": {
@@ -30925,7 +32260,8 @@
               },
               "typeId": "type_agent:FunctionCallRequest",
               "type": "named"
-            }
+            },
+            "docs": "Request to call a function by sending a Function Call Request message"
           },
           {
             "type": {
@@ -30993,7 +32329,8 @@
               },
               "typeId": "type_agent:FunctionCalling",
               "type": "named"
-            }
+            },
+            "docs": "Provides insights into function call workflows to assist in debugging"
           },
           {
             "type": {
@@ -31061,7 +32398,8 @@
               },
               "typeId": "type_agent:AgentStartedSpeaking",
               "type": "named"
-            }
+            },
+            "docs": "Get notified when the server begins streaming an agent's audio response for playback"
           },
           {
             "type": {
@@ -31129,7 +32467,8 @@
               },
               "typeId": "type_agent:AgentAudioDone",
               "type": "named"
-            }
+            },
+            "docs": "Get signals that the server has finished sending the final audio segment to the client"
           },
           {
             "type": {
@@ -31197,7 +32536,8 @@
               },
               "typeId": "type_agent:AgentErrorResponse",
               "type": "named"
-            }
+            },
+            "docs": "Receive an error message from the server when an error occurs"
           }
         ],
         "type": "undiscriminatedUnion"
@@ -31992,11 +33332,57 @@
                   "primitive": {
                     "v1": "STRING",
                     "v2": {
-                      "default": "nova-2",
+                      "default": "nova-3",
                       "type": "string"
                     }
                   },
                   "type": "primitive"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            }
+          },
+          {
+            "docs": "List of keyterms to listen for, only available on nova-3",
+            "name": {
+              "name": {
+                "originalName": "keyterms",
+                "camelCase": {
+                  "unsafeName": "keyterms",
+                  "safeName": "keyterms"
+                },
+                "snakeCase": {
+                  "unsafeName": "keyterms",
+                  "safeName": "keyterms"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KEYTERMS",
+                  "safeName": "KEYTERMS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Keyterms",
+                  "safeName": "Keyterms"
+                }
+              },
+              "wireValue": "keyterms"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
+                  },
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -34472,6 +35858,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:SettingsConfiguration": {
+      "docs": "Configure the voice agent and sets the input and output audio formats",
       "inline": true,
       "name": {
         "name": {
@@ -34871,6 +36258,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:UpdateInstructions": {
+      "docs": "Send a message to give additional instructions to the Think model in the middle of a conversation",
       "inline": true,
       "name": {
         "name": {
@@ -35022,6 +36410,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:UpdateSpeak": {
+      "docs": "Send a message to change the Speak model in the middle of a conversation",
       "inline": true,
       "name": {
         "name": {
@@ -35173,6 +36562,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:InjectAgentMessage": {
+      "docs": "Send a message to change the Speak model in the middle of a conversation",
       "inline": true,
       "name": {
         "name": {
@@ -35324,6 +36714,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:FunctionCallResponse": {
+      "docs": "Configure the voice agent and configure the function call response",
       "inline": true,
       "name": {
         "name": {
@@ -35509,6 +36900,7 @@
       "autogeneratedExamples": []
     },
     "type_agent:AgentKeepAlive": {
+      "docs": "Send messages ensuring uninterrupted communication for your agent",
       "inline": true,
       "name": {
         "name": {
@@ -35759,7 +37151,8 @@
               },
               "typeId": "type_agent:SettingsConfiguration",
               "type": "named"
-            }
+            },
+            "docs": "Configure the voice agent and sets the input and output audio formats"
           },
           {
             "type": {
@@ -35827,7 +37220,8 @@
               },
               "typeId": "type_agent:UpdateInstructions",
               "type": "named"
-            }
+            },
+            "docs": "Send a message to give additional instructions to the Think model in the middle of a conversation"
           },
           {
             "type": {
@@ -35895,7 +37289,8 @@
               },
               "typeId": "type_agent:UpdateSpeak",
               "type": "named"
-            }
+            },
+            "docs": "Send a message to change the Speak model in the middle of a conversation"
           },
           {
             "type": {
@@ -35963,7 +37358,8 @@
               },
               "typeId": "type_agent:InjectAgentMessage",
               "type": "named"
-            }
+            },
+            "docs": "Send a message to change the Speak model in the middle of a conversation"
           },
           {
             "type": {
@@ -36031,7 +37427,8 @@
               },
               "typeId": "type_agent:FunctionCallResponse",
               "type": "named"
-            }
+            },
+            "docs": "Configure the voice agent and configure the function call response"
           },
           {
             "type": {
@@ -36099,7 +37496,8 @@
               },
               "typeId": "type_agent:AgentKeepAlive",
               "type": "named"
-            }
+            },
+            "docs": "Send messages ensuring uninterrupted communication for your agent"
           }
         ],
         "type": "undiscriminatedUnion"
@@ -64933,6 +66331,28 @@
               "safeName": "Public"
             }
           }
+        },
+        {
+          "id": "agent",
+          "name": {
+            "originalName": "agent",
+            "camelCase": {
+              "unsafeName": "agent",
+              "safeName": "agent"
+            },
+            "snakeCase": {
+              "unsafeName": "agent",
+              "safeName": "agent"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AGENT",
+              "safeName": "AGENT"
+            },
+            "pascalCase": {
+              "unsafeName": "Agent",
+              "safeName": "Agent"
+            }
+          }
         }
       ],
       "environments": [
@@ -64959,7 +66379,8 @@
           },
           "urls": {
             "Base": "https://api.deepgram.com",
-            "public": "wss://api.deepgram.com"
+            "public": "wss://api.deepgram.com",
+            "agent": "wss://agent.deepgram.com"
           }
         }
       ],
@@ -65107,13 +66528,16 @@
       "type_speak:SpeakSampleRate",
       "type_speak:ControlMessagesResponseType",
       "type_speak:ControlMessagesResponse",
+      "type_speak:SpeakCloseFramePayload",
+      "type_speak:SpeakCloseFrame",
       "type_speak:SpeakSubscribeEvent",
       "type_speak:TextToSpeechRequest",
+      "type_speak:SpeakControlMessagesRequestType",
       "type_speak:SpeakControlMessagesRequest",
       "type_speak:SpeakPublishEvent",
       "type_listen:ListenCallbackMethod",
-      "type_listen:ListenDictation",
       "type_listen:ListenDiarize",
+      "type_listen:ListenDictation",
       "type_listen:ListenEncoding",
       "type_listen:ListenFillerWords",
       "type_listen:ListenInterimResults",
@@ -65136,6 +66560,8 @@
       "type_listen:ControlMessageResponseOne",
       "type_listen:ControlMessageResponseTwo",
       "type_listen:ControlMessageResponse",
+      "type_listen:ListenCloseFramePayload",
+      "type_listen:ListenCloseFrame",
       "type_listen:ListenSubscribeEvent",
       "type_listen:ListenControlMessagesRequestFinalize",
       "type_listen:ListenControlMessagesRequestCloseStream",
@@ -65228,28 +66654,28 @@
       },
       "headers": [
         {
-          "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+          "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
           "name": {
             "name": {
-              "originalName": "secWebsocketProtocol",
+              "originalName": "authorization",
               "camelCase": {
-                "unsafeName": "secWebsocketProtocol",
-                "safeName": "secWebsocketProtocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "snakeCase": {
-                "unsafeName": "sec_websocket_protocol",
-                "safeName": "sec_websocket_protocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "screamingSnakeCase": {
-                "unsafeName": "SEC_WEBSOCKET_PROTOCOL",
-                "safeName": "SEC_WEBSOCKET_PROTOCOL"
+                "unsafeName": "AUTHORIZATION",
+                "safeName": "AUTHORIZATION"
               },
               "pascalCase": {
-                "unsafeName": "SecWebsocketProtocol",
-                "safeName": "SecWebsocketProtocol"
+                "unsafeName": "Authorization",
+                "safeName": "Authorization"
               }
             },
-            "wireValue": "Sec-Websocket-Protocol"
+            "wireValue": "Authorization"
           },
           "valueType": {
             "primitive": {
@@ -66186,28 +67612,28 @@
       },
       "headers": [
         {
-          "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+          "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
           "name": {
             "name": {
-              "originalName": "secWebsocketProtocol",
+              "originalName": "authorization",
               "camelCase": {
-                "unsafeName": "secWebsocketProtocol",
-                "safeName": "secWebsocketProtocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "snakeCase": {
-                "unsafeName": "sec_websocket_protocol",
-                "safeName": "sec_websocket_protocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "screamingSnakeCase": {
-                "unsafeName": "SEC_WEBSOCKET_PROTOCOL",
-                "safeName": "SEC_WEBSOCKET_PROTOCOL"
+                "unsafeName": "AUTHORIZATION",
+                "safeName": "AUTHORIZATION"
               },
               "pascalCase": {
-                "unsafeName": "SecWebsocketProtocol",
-                "safeName": "SecWebsocketProtocol"
+                "unsafeName": "Authorization",
+                "safeName": "Authorization"
               }
             },
-            "wireValue": "Sec-Websocket-Protocol"
+            "wireValue": "Authorization"
           },
           "valueType": {
             "primitive": {
@@ -66387,98 +67813,6 @@
           "allowMultiple": false
         },
         {
-          "docs": "Identify and extract key entities from content in submitted audio",
-          "name": {
-            "name": {
-              "originalName": "dictation",
-              "camelCase": {
-                "unsafeName": "dictation",
-                "safeName": "dictation"
-              },
-              "snakeCase": {
-                "unsafeName": "dictation",
-                "safeName": "dictation"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DICTATION",
-                "safeName": "DICTATION"
-              },
-              "pascalCase": {
-                "unsafeName": "Dictation",
-                "safeName": "Dictation"
-              }
-            },
-            "wireValue": "dictation"
-          },
-          "valueType": {
-            "name": {
-              "originalName": "ListenDictation",
-              "camelCase": {
-                "unsafeName": "listenDictation",
-                "safeName": "listenDictation"
-              },
-              "snakeCase": {
-                "unsafeName": "listen_dictation",
-                "safeName": "listen_dictation"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LISTEN_DICTATION",
-                "safeName": "LISTEN_DICTATION"
-              },
-              "pascalCase": {
-                "unsafeName": "ListenDictation",
-                "safeName": "ListenDictation"
-              }
-            },
-            "fernFilepath": {
-              "allParts": [
-                {
-                  "originalName": "listen",
-                  "camelCase": {
-                    "unsafeName": "listen",
-                    "safeName": "listen"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "listen",
-                    "safeName": "listen"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LISTEN",
-                    "safeName": "LISTEN"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Listen",
-                    "safeName": "Listen"
-                  }
-                }
-              ],
-              "packagePath": [],
-              "file": {
-                "originalName": "listen",
-                "camelCase": {
-                  "unsafeName": "listen",
-                  "safeName": "listen"
-                },
-                "snakeCase": {
-                  "unsafeName": "listen",
-                  "safeName": "listen"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LISTEN",
-                  "safeName": "LISTEN"
-                },
-                "pascalCase": {
-                  "unsafeName": "Listen",
-                  "safeName": "Listen"
-                }
-              }
-            },
-            "typeId": "type_listen:ListenDictation",
-            "type": "named"
-          },
-          "allowMultiple": false
-        },
-        {
           "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
           "name": {
             "name": {
@@ -66603,6 +67937,98 @@
               }
             },
             "type": "primitive"
+          },
+          "allowMultiple": false
+        },
+        {
+          "docs": "Identify and extract key entities from content in submitted audio",
+          "name": {
+            "name": {
+              "originalName": "dictation",
+              "camelCase": {
+                "unsafeName": "dictation",
+                "safeName": "dictation"
+              },
+              "snakeCase": {
+                "unsafeName": "dictation",
+                "safeName": "dictation"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DICTATION",
+                "safeName": "DICTATION"
+              },
+              "pascalCase": {
+                "unsafeName": "Dictation",
+                "safeName": "Dictation"
+              }
+            },
+            "wireValue": "dictation"
+          },
+          "valueType": {
+            "name": {
+              "originalName": "ListenDictation",
+              "camelCase": {
+                "unsafeName": "listenDictation",
+                "safeName": "listenDictation"
+              },
+              "snakeCase": {
+                "unsafeName": "listen_dictation",
+                "safeName": "listen_dictation"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LISTEN_DICTATION",
+                "safeName": "LISTEN_DICTATION"
+              },
+              "pascalCase": {
+                "unsafeName": "ListenDictation",
+                "safeName": "ListenDictation"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "listen",
+                  "camelCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "listen",
+                    "safeName": "listen"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LISTEN",
+                    "safeName": "LISTEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Listen",
+                    "safeName": "Listen"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "listen",
+                "camelCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "snakeCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LISTEN",
+                  "safeName": "LISTEN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Listen",
+                  "safeName": "Listen"
+                }
+              }
+            },
+            "typeId": "type_listen:ListenDictation",
+            "type": "named"
           },
           "allowMultiple": false
         },
@@ -66954,41 +68380,6 @@
           "allowMultiple": false
         },
         {
-          "docs": "Keywords can boost or suppress specialized terminology and brands",
-          "name": {
-            "name": {
-              "originalName": "keywords",
-              "camelCase": {
-                "unsafeName": "keywords",
-                "safeName": "keywords"
-              },
-              "snakeCase": {
-                "unsafeName": "keywords",
-                "safeName": "keywords"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "KEYWORDS",
-                "safeName": "KEYWORDS"
-              },
-              "pascalCase": {
-                "unsafeName": "Keywords",
-                "safeName": "Keywords"
-              }
-            },
-            "wireValue": "keywords"
-          },
-          "valueType": {
-            "primitive": {
-              "v1": "STRING",
-              "v2": {
-                "type": "string"
-              }
-            },
-            "type": "primitive"
-          },
-          "allowMultiple": false
-        },
-        {
           "docs": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
           "name": {
             "name": {
@@ -67011,6 +68402,41 @@
               }
             },
             "wireValue": "keyterm"
+          },
+          "valueType": {
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "type": "string"
+              }
+            },
+            "type": "primitive"
+          },
+          "allowMultiple": false
+        },
+        {
+          "docs": "Keywords can boost or suppress specialized terminology and brands",
+          "name": {
+            "name": {
+              "originalName": "keywords",
+              "camelCase": {
+                "unsafeName": "keywords",
+                "safeName": "keywords"
+              },
+              "snakeCase": {
+                "unsafeName": "keywords",
+                "safeName": "keywords"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "KEYWORDS",
+                "safeName": "KEYWORDS"
+              },
+              "pascalCase": {
+                "unsafeName": "Keywords",
+                "safeName": "Keywords"
+              }
+            },
+            "wireValue": "keywords"
           },
           "valueType": {
             "primitive": {
@@ -68472,7 +69898,7 @@
         "head": "/agent",
         "parts": []
       },
-      "baseUrl": "public",
+      "baseUrl": "agent",
       "auth": false,
       "name": {
         "originalName": "agent",
@@ -68495,28 +69921,28 @@
       },
       "headers": [
         {
-          "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+          "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
           "name": {
             "name": {
-              "originalName": "secWebsocketProtocol",
+              "originalName": "authorization",
               "camelCase": {
-                "unsafeName": "secWebsocketProtocol",
-                "safeName": "secWebsocketProtocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "snakeCase": {
-                "unsafeName": "sec_websocket_protocol",
-                "safeName": "sec_websocket_protocol"
+                "unsafeName": "authorization",
+                "safeName": "authorization"
               },
               "screamingSnakeCase": {
-                "unsafeName": "SEC_WEBSOCKET_PROTOCOL",
-                "safeName": "SEC_WEBSOCKET_PROTOCOL"
+                "unsafeName": "AUTHORIZATION",
+                "safeName": "AUTHORIZATION"
               },
               "pascalCase": {
-                "unsafeName": "SecWebsocketProtocol",
-                "safeName": "SecWebsocketProtocol"
+                "unsafeName": "Authorization",
+                "safeName": "Authorization"
               }
             },
-            "wireValue": "Sec-Websocket-Protocol"
+            "wireValue": "Authorization"
           },
           "valueType": {
             "primitive": {
@@ -84173,88 +85599,88 @@
           },
           {
             "name": {
-              "originalName": "16000",
+              "originalName": "SixteenThousand",
               "camelCase": {
-                "unsafeName": "16000",
-                "safeName": "16000"
+                "unsafeName": "sixteenThousand",
+                "safeName": "sixteenThousand"
               },
               "snakeCase": {
-                "unsafeName": "16000",
-                "safeName": "16000"
+                "unsafeName": "sixteen_thousand",
+                "safeName": "sixteen_thousand"
               },
               "screamingSnakeCase": {
-                "unsafeName": "16000",
-                "safeName": "16000"
+                "unsafeName": "SIXTEEN_THOUSAND",
+                "safeName": "SIXTEEN_THOUSAND"
               },
               "pascalCase": {
-                "unsafeName": "16000",
-                "safeName": "16000"
+                "unsafeName": "SixteenThousand",
+                "safeName": "SixteenThousand"
               }
             },
             "wireValue": "16000"
           },
           {
             "name": {
-              "originalName": "24000",
+              "originalName": "TwentyFourThousand",
               "camelCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "twentyFourThousand",
+                "safeName": "twentyFourThousand"
               },
               "snakeCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "twenty_four_thousand",
+                "safeName": "twenty_four_thousand"
               },
               "screamingSnakeCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "TWENTY_FOUR_THOUSAND",
+                "safeName": "TWENTY_FOUR_THOUSAND"
               },
               "pascalCase": {
-                "unsafeName": "24000",
-                "safeName": "24000"
+                "unsafeName": "TwentyFourThousand",
+                "safeName": "TwentyFourThousand"
               }
             },
             "wireValue": "24000"
           },
           {
             "name": {
-              "originalName": "44100",
+              "originalName": "FortyFourThousandOneHundred",
               "camelCase": {
-                "unsafeName": "44100",
-                "safeName": "44100"
+                "unsafeName": "fortyFourThousandOneHundred",
+                "safeName": "fortyFourThousandOneHundred"
               },
               "snakeCase": {
-                "unsafeName": "44100",
-                "safeName": "44100"
+                "unsafeName": "forty_four_thousand_one_hundred",
+                "safeName": "forty_four_thousand_one_hundred"
               },
               "screamingSnakeCase": {
-                "unsafeName": "44100",
-                "safeName": "44100"
+                "unsafeName": "FORTY_FOUR_THOUSAND_ONE_HUNDRED",
+                "safeName": "FORTY_FOUR_THOUSAND_ONE_HUNDRED"
               },
               "pascalCase": {
-                "unsafeName": "44100",
-                "safeName": "44100"
+                "unsafeName": "FortyFourThousandOneHundred",
+                "safeName": "FortyFourThousandOneHundred"
               }
             },
             "wireValue": "44100"
           },
           {
             "name": {
-              "originalName": "48000",
+              "originalName": "FortyEightThousand",
               "camelCase": {
-                "unsafeName": "48000",
-                "safeName": "48000"
+                "unsafeName": "fortyEightThousand",
+                "safeName": "fortyEightThousand"
               },
               "snakeCase": {
-                "unsafeName": "48000",
-                "safeName": "48000"
+                "unsafeName": "forty_eight_thousand",
+                "safeName": "forty_eight_thousand"
               },
               "screamingSnakeCase": {
-                "unsafeName": "48000",
-                "safeName": "48000"
+                "unsafeName": "FORTY_EIGHT_THOUSAND",
+                "safeName": "FORTY_EIGHT_THOUSAND"
               },
               "pascalCase": {
-                "unsafeName": "48000",
-                "safeName": "48000"
+                "unsafeName": "FortyEightThousand",
+                "safeName": "FortyEightThousand"
               }
             },
             "wireValue": "48000"
@@ -84526,6 +85952,399 @@
         "additionalProperties": false,
         "type": "object"
       },
+      "type_speak:SpeakCloseFramePayload": {
+        "declaration": {
+          "name": {
+            "originalName": "SpeakCloseFramePayload",
+            "camelCase": {
+              "unsafeName": "speakCloseFramePayload",
+              "safeName": "speakCloseFramePayload"
+            },
+            "snakeCase": {
+              "unsafeName": "speak_close_frame_payload",
+              "safeName": "speak_close_frame_payload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK_CLOSE_FRAME_PAYLOAD",
+              "safeName": "SPEAK_CLOSE_FRAME_PAYLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "SpeakCloseFramePayload",
+              "safeName": "SpeakCloseFramePayload"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "speak",
+                "camelCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK",
+                  "safeName": "SPEAK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Speak",
+                  "safeName": "Speak"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "originalName": "None",
+              "camelCase": {
+                "unsafeName": "none",
+                "safeName": "none"
+              },
+              "snakeCase": {
+                "unsafeName": "none",
+                "safeName": "none"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NONE",
+                "safeName": "NONE"
+              },
+              "pascalCase": {
+                "unsafeName": "None",
+                "safeName": "None"
+              }
+            },
+            "wireValue": "None"
+          },
+          {
+            "name": {
+              "originalName": "Message0000",
+              "camelCase": {
+                "unsafeName": "message0000",
+                "safeName": "message0000"
+              },
+              "snakeCase": {
+                "unsafeName": "message0000",
+                "safeName": "message0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "MESSAGE0000",
+                "safeName": "MESSAGE0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Message0000",
+                "safeName": "Message0000"
+              }
+            },
+            "wireValue": "MESSAGE-0000"
+          },
+          {
+            "name": {
+              "originalName": "Data0000",
+              "camelCase": {
+                "unsafeName": "data0000",
+                "safeName": "data0000"
+              },
+              "snakeCase": {
+                "unsafeName": "data0000",
+                "safeName": "data0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DATA0000",
+                "safeName": "DATA0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Data0000",
+                "safeName": "Data0000"
+              }
+            },
+            "wireValue": "DATA-0000"
+          },
+          {
+            "name": {
+              "originalName": "Big0000",
+              "camelCase": {
+                "unsafeName": "big0000",
+                "safeName": "big0000"
+              },
+              "snakeCase": {
+                "unsafeName": "big0000",
+                "safeName": "big0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "BIG0000",
+                "safeName": "BIG0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Big0000",
+                "safeName": "Big0000"
+              }
+            },
+            "wireValue": "BIG-0000"
+          },
+          {
+            "name": {
+              "originalName": "Big0001",
+              "camelCase": {
+                "unsafeName": "big0001",
+                "safeName": "big0001"
+              },
+              "snakeCase": {
+                "unsafeName": "big0001",
+                "safeName": "big0001"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "BIG0001",
+                "safeName": "BIG0001"
+              },
+              "pascalCase": {
+                "unsafeName": "Big0001",
+                "safeName": "Big0001"
+              }
+            },
+            "wireValue": "BIG-0001"
+          },
+          {
+            "name": {
+              "originalName": "Net0000",
+              "camelCase": {
+                "unsafeName": "net0000",
+                "safeName": "net0000"
+              },
+              "snakeCase": {
+                "unsafeName": "net0000",
+                "safeName": "net0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0000",
+                "safeName": "NET0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0000",
+                "safeName": "Net0000"
+              }
+            },
+            "wireValue": "NET-0000"
+          },
+          {
+            "name": {
+              "originalName": "Net0001",
+              "camelCase": {
+                "unsafeName": "net0001",
+                "safeName": "net0001"
+              },
+              "snakeCase": {
+                "unsafeName": "net0001",
+                "safeName": "net0001"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0001",
+                "safeName": "NET0001"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0001",
+                "safeName": "Net0001"
+              }
+            },
+            "wireValue": "NET-0001"
+          },
+          {
+            "name": {
+              "originalName": "Net0002",
+              "camelCase": {
+                "unsafeName": "net0002",
+                "safeName": "net0002"
+              },
+              "snakeCase": {
+                "unsafeName": "net0002",
+                "safeName": "net0002"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0002",
+                "safeName": "NET0002"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0002",
+                "safeName": "Net0002"
+              }
+            },
+            "wireValue": "NET-0002"
+          },
+          {
+            "name": {
+              "originalName": "Net0003",
+              "camelCase": {
+                "unsafeName": "net0003",
+                "safeName": "net0003"
+              },
+              "snakeCase": {
+                "unsafeName": "net0003",
+                "safeName": "net0003"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0003",
+                "safeName": "NET0003"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0003",
+                "safeName": "Net0003"
+              }
+            },
+            "wireValue": "NET-0003"
+          }
+        ],
+        "type": "enum"
+      },
+      "type_speak:SpeakCloseFrame": {
+        "declaration": {
+          "name": {
+            "originalName": "SpeakCloseFrame",
+            "camelCase": {
+              "unsafeName": "speakCloseFrame",
+              "safeName": "speakCloseFrame"
+            },
+            "snakeCase": {
+              "unsafeName": "speak_close_frame",
+              "safeName": "speak_close_frame"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK_CLOSE_FRAME",
+              "safeName": "SPEAK_CLOSE_FRAME"
+            },
+            "pascalCase": {
+              "unsafeName": "SpeakCloseFrame",
+              "safeName": "SpeakCloseFrame"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "speak",
+                "camelCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK",
+                  "safeName": "SPEAK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Speak",
+                  "safeName": "Speak"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "code",
+                "camelCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "snakeCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CODE",
+                  "safeName": "CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Code",
+                  "safeName": "Code"
+                }
+              },
+              "wireValue": "code"
+            },
+            "typeReference": {
+              "value": "INTEGER",
+              "type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "payload",
+                "camelCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "snakeCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAYLOAD",
+                  "safeName": "PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Payload",
+                  "safeName": "Payload"
+                }
+              },
+              "wireValue": "payload"
+            },
+            "typeReference": {
+              "value": "type_speak:SpeakCloseFramePayload",
+              "type": "named"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
       "type_speak:SpeakSubscribeEvent": {
         "declaration": {
           "name": {
@@ -84598,6 +86417,10 @@
           },
           {
             "value": "type_speak:ControlMessagesResponse",
+            "type": "named"
+          },
+          {
+            "value": "type_speak:SpeakCloseFrame",
             "type": "named"
           }
         ],
@@ -84732,25 +86555,25 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_speak:SpeakControlMessagesRequest": {
+      "type_speak:SpeakControlMessagesRequestType": {
         "declaration": {
           "name": {
-            "originalName": "SpeakControlMessagesRequest",
+            "originalName": "SpeakControlMessagesRequestType",
             "camelCase": {
-              "unsafeName": "speakControlMessagesRequest",
-              "safeName": "speakControlMessagesRequest"
+              "unsafeName": "speakControlMessagesRequestType",
+              "safeName": "speakControlMessagesRequestType"
             },
             "snakeCase": {
-              "unsafeName": "speak_control_messages_request",
-              "safeName": "speak_control_messages_request"
+              "unsafeName": "speak_control_messages_request_type",
+              "safeName": "speak_control_messages_request_type"
             },
             "screamingSnakeCase": {
-              "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST",
-              "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST"
+              "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE",
+              "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST_TYPE"
             },
             "pascalCase": {
-              "unsafeName": "SpeakControlMessagesRequest",
-              "safeName": "SpeakControlMessagesRequest"
+              "unsafeName": "SpeakControlMessagesRequestType",
+              "safeName": "SpeakControlMessagesRequestType"
             }
           },
           "fernFilepath": {
@@ -84866,6 +86689,104 @@
           }
         ],
         "type": "enum"
+      },
+      "type_speak:SpeakControlMessagesRequest": {
+        "declaration": {
+          "name": {
+            "originalName": "SpeakControlMessagesRequest",
+            "camelCase": {
+              "unsafeName": "speakControlMessagesRequest",
+              "safeName": "speakControlMessagesRequest"
+            },
+            "snakeCase": {
+              "unsafeName": "speak_control_messages_request",
+              "safeName": "speak_control_messages_request"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SPEAK_CONTROL_MESSAGES_REQUEST",
+              "safeName": "SPEAK_CONTROL_MESSAGES_REQUEST"
+            },
+            "pascalCase": {
+              "unsafeName": "SpeakControlMessagesRequest",
+              "safeName": "SpeakControlMessagesRequest"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "speak",
+                "camelCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "snakeCase": {
+                  "unsafeName": "speak",
+                  "safeName": "speak"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPEAK",
+                  "safeName": "SPEAK"
+                },
+                "pascalCase": {
+                  "unsafeName": "Speak",
+                  "safeName": "Speak"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "speak",
+              "camelCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "snakeCase": {
+                "unsafeName": "speak",
+                "safeName": "speak"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SPEAK",
+                "safeName": "SPEAK"
+              },
+              "pascalCase": {
+                "unsafeName": "Speak",
+                "safeName": "Speak"
+              }
+            }
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              },
+              "wireValue": "type"
+            },
+            "typeReference": {
+              "value": "type_speak:SpeakControlMessagesRequestType",
+              "type": "named"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
       },
       "type_speak:SpeakPublishEvent": {
         "declaration": {
@@ -85101,25 +87022,25 @@
         ],
         "type": "enum"
       },
-      "type_listen:ListenDictation": {
+      "type_listen:ListenDiarize": {
         "declaration": {
           "name": {
-            "originalName": "ListenDictation",
+            "originalName": "ListenDiarize",
             "camelCase": {
-              "unsafeName": "listenDictation",
-              "safeName": "listenDictation"
+              "unsafeName": "listenDiarize",
+              "safeName": "listenDiarize"
             },
             "snakeCase": {
-              "unsafeName": "listen_dictation",
-              "safeName": "listen_dictation"
+              "unsafeName": "listen_diarize",
+              "safeName": "listen_diarize"
             },
             "screamingSnakeCase": {
-              "unsafeName": "LISTEN_DICTATION",
-              "safeName": "LISTEN_DICTATION"
+              "unsafeName": "LISTEN_DIARIZE",
+              "safeName": "LISTEN_DIARIZE"
             },
             "pascalCase": {
-              "unsafeName": "ListenDictation",
-              "safeName": "ListenDictation"
+              "unsafeName": "ListenDiarize",
+              "safeName": "ListenDiarize"
             }
           },
           "fernFilepath": {
@@ -85214,25 +87135,25 @@
         ],
         "type": "enum"
       },
-      "type_listen:ListenDiarize": {
+      "type_listen:ListenDictation": {
         "declaration": {
           "name": {
-            "originalName": "ListenDiarize",
+            "originalName": "ListenDictation",
             "camelCase": {
-              "unsafeName": "listenDiarize",
-              "safeName": "listenDiarize"
+              "unsafeName": "listenDictation",
+              "safeName": "listenDictation"
             },
             "snakeCase": {
-              "unsafeName": "listen_diarize",
-              "safeName": "listen_diarize"
+              "unsafeName": "listen_dictation",
+              "safeName": "listen_dictation"
             },
             "screamingSnakeCase": {
-              "unsafeName": "LISTEN_DIARIZE",
-              "safeName": "LISTEN_DIARIZE"
+              "unsafeName": "LISTEN_DICTATION",
+              "safeName": "LISTEN_DICTATION"
             },
             "pascalCase": {
-              "unsafeName": "ListenDiarize",
-              "safeName": "ListenDiarize"
+              "unsafeName": "ListenDictation",
+              "safeName": "ListenDictation"
             }
           },
           "fernFilepath": {
@@ -87211,6 +89132,28 @@
           },
           {
             "name": {
+              "originalName": "Nova3Medical",
+              "camelCase": {
+                "unsafeName": "nova3Medical",
+                "safeName": "nova3Medical"
+              },
+              "snakeCase": {
+                "unsafeName": "nova3medical",
+                "safeName": "nova3medical"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NOVA3MEDICAL",
+                "safeName": "NOVA3MEDICAL"
+              },
+              "pascalCase": {
+                "unsafeName": "Nova3Medical",
+                "safeName": "Nova3Medical"
+              }
+            },
+            "wireValue": "nova-3-medical"
+          },
+          {
+            "name": {
               "originalName": "Nova2",
               "camelCase": {
                 "unsafeName": "nova2",
@@ -88367,6 +90310,94 @@
               }
             },
             "wireValue": "false"
+          },
+          {
+            "name": {
+              "originalName": "pci",
+              "camelCase": {
+                "unsafeName": "pci",
+                "safeName": "pci"
+              },
+              "snakeCase": {
+                "unsafeName": "pci",
+                "safeName": "pci"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PCI",
+                "safeName": "PCI"
+              },
+              "pascalCase": {
+                "unsafeName": "Pci",
+                "safeName": "Pci"
+              }
+            },
+            "wireValue": "pci"
+          },
+          {
+            "name": {
+              "originalName": "numbers",
+              "camelCase": {
+                "unsafeName": "numbers",
+                "safeName": "numbers"
+              },
+              "snakeCase": {
+                "unsafeName": "numbers",
+                "safeName": "numbers"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NUMBERS",
+                "safeName": "NUMBERS"
+              },
+              "pascalCase": {
+                "unsafeName": "Numbers",
+                "safeName": "Numbers"
+              }
+            },
+            "wireValue": "numbers"
+          },
+          {
+            "name": {
+              "originalName": "aggressive_numbers",
+              "camelCase": {
+                "unsafeName": "aggressiveNumbers",
+                "safeName": "aggressiveNumbers"
+              },
+              "snakeCase": {
+                "unsafeName": "aggressive_numbers",
+                "safeName": "aggressive_numbers"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "AGGRESSIVE_NUMBERS",
+                "safeName": "AGGRESSIVE_NUMBERS"
+              },
+              "pascalCase": {
+                "unsafeName": "AggressiveNumbers",
+                "safeName": "AggressiveNumbers"
+              }
+            },
+            "wireValue": "aggressive_numbers"
+          },
+          {
+            "name": {
+              "originalName": "ssn",
+              "camelCase": {
+                "unsafeName": "ssn",
+                "safeName": "ssn"
+              },
+              "snakeCase": {
+                "unsafeName": "ssn",
+                "safeName": "ssn"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SSN",
+                "safeName": "SSN"
+              },
+              "pascalCase": {
+                "unsafeName": "Ssn",
+                "safeName": "Ssn"
+              }
+            },
+            "wireValue": "ssn"
           }
         ],
         "type": "enum"
@@ -90566,6 +92597,289 @@
         ],
         "type": "undiscriminatedUnion"
       },
+      "type_listen:ListenCloseFramePayload": {
+        "declaration": {
+          "name": {
+            "originalName": "ListenCloseFramePayload",
+            "camelCase": {
+              "unsafeName": "listenCloseFramePayload",
+              "safeName": "listenCloseFramePayload"
+            },
+            "snakeCase": {
+              "unsafeName": "listen_close_frame_payload",
+              "safeName": "listen_close_frame_payload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LISTEN_CLOSE_FRAME_PAYLOAD",
+              "safeName": "LISTEN_CLOSE_FRAME_PAYLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "ListenCloseFramePayload",
+              "safeName": "ListenCloseFramePayload"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "listen",
+                "camelCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "snakeCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LISTEN",
+                  "safeName": "LISTEN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Listen",
+                  "safeName": "Listen"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "listen",
+              "camelCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "snakeCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LISTEN",
+                "safeName": "LISTEN"
+              },
+              "pascalCase": {
+                "unsafeName": "Listen",
+                "safeName": "Listen"
+              }
+            }
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "originalName": "None",
+              "camelCase": {
+                "unsafeName": "none",
+                "safeName": "none"
+              },
+              "snakeCase": {
+                "unsafeName": "none",
+                "safeName": "none"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NONE",
+                "safeName": "NONE"
+              },
+              "pascalCase": {
+                "unsafeName": "None",
+                "safeName": "None"
+              }
+            },
+            "wireValue": "None"
+          },
+          {
+            "name": {
+              "originalName": "Data0000",
+              "camelCase": {
+                "unsafeName": "data0000",
+                "safeName": "data0000"
+              },
+              "snakeCase": {
+                "unsafeName": "data0000",
+                "safeName": "data0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DATA0000",
+                "safeName": "DATA0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Data0000",
+                "safeName": "Data0000"
+              }
+            },
+            "wireValue": "DATA-0000"
+          },
+          {
+            "name": {
+              "originalName": "Net0000",
+              "camelCase": {
+                "unsafeName": "net0000",
+                "safeName": "net0000"
+              },
+              "snakeCase": {
+                "unsafeName": "net0000",
+                "safeName": "net0000"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0000",
+                "safeName": "NET0000"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0000",
+                "safeName": "Net0000"
+              }
+            },
+            "wireValue": "NET-0000"
+          },
+          {
+            "name": {
+              "originalName": "Net0001",
+              "camelCase": {
+                "unsafeName": "net0001",
+                "safeName": "net0001"
+              },
+              "snakeCase": {
+                "unsafeName": "net0001",
+                "safeName": "net0001"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "NET0001",
+                "safeName": "NET0001"
+              },
+              "pascalCase": {
+                "unsafeName": "Net0001",
+                "safeName": "Net0001"
+              }
+            },
+            "wireValue": "NET-0001"
+          }
+        ],
+        "type": "enum"
+      },
+      "type_listen:ListenCloseFrame": {
+        "declaration": {
+          "name": {
+            "originalName": "ListenCloseFrame",
+            "camelCase": {
+              "unsafeName": "listenCloseFrame",
+              "safeName": "listenCloseFrame"
+            },
+            "snakeCase": {
+              "unsafeName": "listen_close_frame",
+              "safeName": "listen_close_frame"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LISTEN_CLOSE_FRAME",
+              "safeName": "LISTEN_CLOSE_FRAME"
+            },
+            "pascalCase": {
+              "unsafeName": "ListenCloseFrame",
+              "safeName": "ListenCloseFrame"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "listen",
+                "camelCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "snakeCase": {
+                  "unsafeName": "listen",
+                  "safeName": "listen"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LISTEN",
+                  "safeName": "LISTEN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Listen",
+                  "safeName": "Listen"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "listen",
+              "camelCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "snakeCase": {
+                "unsafeName": "listen",
+                "safeName": "listen"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LISTEN",
+                "safeName": "LISTEN"
+              },
+              "pascalCase": {
+                "unsafeName": "Listen",
+                "safeName": "Listen"
+              }
+            }
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "code",
+                "camelCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "snakeCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CODE",
+                  "safeName": "CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Code",
+                  "safeName": "Code"
+                }
+              },
+              "wireValue": "code"
+            },
+            "typeReference": {
+              "value": "INTEGER",
+              "type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "payload",
+                "camelCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "snakeCase": {
+                  "unsafeName": "payload",
+                  "safeName": "payload"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAYLOAD",
+                  "safeName": "PAYLOAD"
+                },
+                "pascalCase": {
+                  "unsafeName": "Payload",
+                  "safeName": "Payload"
+                }
+              },
+              "wireValue": "payload"
+            },
+            "typeReference": {
+              "value": "type_listen:ListenCloseFramePayload",
+              "type": "named"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
       "type_listen:ListenSubscribeEvent": {
         "declaration": {
           "name": {
@@ -90638,6 +92952,10 @@
           },
           {
             "value": "type_listen:ControlMessageResponse",
+            "type": "named"
+          },
+          {
+            "value": "type_listen:ListenCloseFrame",
             "type": "named"
           }
         ],
@@ -93301,6 +95619,40 @@
               "value": {
                 "value": "STRING",
                 "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "keyterms",
+                "camelCase": {
+                  "unsafeName": "keyterms",
+                  "safeName": "keyterms"
+                },
+                "snakeCase": {
+                  "unsafeName": "keyterms",
+                  "safeName": "keyterms"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "KEYTERMS",
+                  "safeName": "KEYTERMS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Keyterms",
+                  "safeName": "Keyterms"
+                }
+              },
+              "wireValue": "keyterms"
+            },
+            "typeReference": {
+              "value": {
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "list"
               },
               "type": "optional"
             }
@@ -113465,6 +115817,28 @@
                 "safeName": "Public"
               }
             }
+          },
+          {
+            "id": "agent",
+            "name": {
+              "originalName": "agent",
+              "camelCase": {
+                "unsafeName": "agent",
+                "safeName": "agent"
+              },
+              "snakeCase": {
+                "unsafeName": "agent",
+                "safeName": "agent"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "AGENT",
+                "safeName": "AGENT"
+              },
+              "pascalCase": {
+                "unsafeName": "Agent",
+                "safeName": "Agent"
+              }
+            }
           }
         ],
         "environments": [
@@ -113491,7 +115865,8 @@
             },
             "urls": {
               "Base": "https://api.deepgram.com",
-              "public": "wss://api.deepgram.com"
+              "public": "wss://api.deepgram.com",
+              "agent": "wss://agent.deepgram.com"
             }
           }
         ],
@@ -113922,8 +116297,11 @@
         "type_speak:SpeakSampleRate",
         "type_speak:ControlMessagesResponseType",
         "type_speak:ControlMessagesResponse",
+        "type_speak:SpeakCloseFramePayload",
+        "type_speak:SpeakCloseFrame",
         "type_speak:SpeakSubscribeEvent",
         "type_speak:TextToSpeechRequest",
+        "type_speak:SpeakControlMessagesRequestType",
         "type_speak:SpeakControlMessagesRequest",
         "type_speak:SpeakPublishEvent"
       ],
@@ -113997,8 +116375,8 @@
       },
       "types": [
         "type_listen:ListenCallbackMethod",
-        "type_listen:ListenDictation",
         "type_listen:ListenDiarize",
+        "type_listen:ListenDictation",
         "type_listen:ListenEncoding",
         "type_listen:ListenFillerWords",
         "type_listen:ListenInterimResults",
@@ -114021,6 +116399,8 @@
         "type_listen:ControlMessageResponseOne",
         "type_listen:ControlMessageResponseTwo",
         "type_listen:ControlMessageResponse",
+        "type_listen:ListenCloseFramePayload",
+        "type_listen:ListenCloseFrame",
         "type_listen:ListenSubscribeEvent",
         "type_listen:ListenControlMessagesRequestFinalize",
         "type_listen:ListenControlMessagesRequestCloseStream",

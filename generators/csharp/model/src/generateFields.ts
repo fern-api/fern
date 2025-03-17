@@ -19,19 +19,24 @@ export function generateFields({
 export function generateField({
     property,
     className,
-    context
+    context,
+    jsonProperty = true
 }: {
     property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
     className: string;
     context: ModelGeneratorContext;
+    jsonProperty?: boolean;
 }): csharp.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
     const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
         typeReference: property.valueType
     });
     const fieldAttributes = [];
-    if ("propertyAccess" in property && property.propertyAccess) {
-        fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
+    if (jsonProperty) {
+        if ("propertyAccess" in property && property.propertyAccess) {
+            fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
+        }
+        fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
     }
 
     return csharp.field({
@@ -41,10 +46,30 @@ export function generateField({
         get: true,
         set: true,
         summary: property.docs,
-        jsonPropertyName: property.name.wireValue,
         useRequired: true,
         initializer: maybeLiteralInitializer,
         annotations: fieldAttributes
+    });
+}
+
+export function generateFieldForFileProperty({
+    property,
+    className,
+    context
+}: {
+    property: FernIr.FileProperty;
+    className: string;
+    context: ModelGeneratorContext;
+}): csharp.Field {
+    const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
+
+    return csharp.field({
+        name: getPropertyName({ className, objectProperty: property.key, context }),
+        type: fieldType,
+        access: csharp.Access.Public,
+        get: true,
+        set: true,
+        useRequired: !property.isOptional
     });
 }
 

@@ -14,6 +14,23 @@
       ]
     },
     {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
       "type": "number"
     }
   ],

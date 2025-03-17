@@ -9,13 +9,36 @@ export function writeArguments({ writer, arguments_ }: { writer: Writer; argumen
         writer.write("()");
         return;
     }
+    const shouldWriteMultiline = filteredArguments.some((arg) => {
+        return arg instanceof TypeLiteral && !arg.shouldWriteInLine();
+    });
+    if (shouldWriteMultiline) {
+        writeMultilineArguments({ writer, arguments_: filteredArguments });
+        return;
+    }
+    writer.write("(");
+    filteredArguments.forEach((argument, index) => {
+        if (index > 0) {
+            writer.write(", ");
+        }
+        writeArgument({ writer, argument });
+    });
+    writer.write(")");
+}
+
+function writeMultilineArguments({ writer, arguments_ }: { writer: Writer; arguments_: Argument[] }): void {
     writer.writeLine("(");
     writer.indent();
-    for (const argument of filteredArguments) {
+    arguments_.forEach((argument, index) => {
+        if (index > 0) {
+            writer.writeLine(",");
+        }
         writeArgument({ writer, argument });
-        writer.writeLine(",");
-    }
+    });
     writer.dedent();
+    if (arguments_.length > 0) {
+        writer.newLine();
+    }
     writer.write(")");
 }
 

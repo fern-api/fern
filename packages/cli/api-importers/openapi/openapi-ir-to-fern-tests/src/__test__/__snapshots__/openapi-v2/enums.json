@@ -40,22 +40,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "StatusEnum",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "statusEnum",
+                  "safeName": "statusEnum"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "status_enum",
+                  "safeName": "status_enum"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "STATUS_ENUM",
+                  "safeName": "STATUS_ENUM"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "StatusEnum",
+                  "safeName": "StatusEnum"
                 }
               },
               "typeId": "StatusEnum",
@@ -70,22 +70,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "PriorityEnum",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "priorityEnum",
+                  "safeName": "priorityEnum"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "priority_enum",
+                  "safeName": "priority_enum"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PRIORITY_ENUM",
+                  "safeName": "PRIORITY_ENUM"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "PriorityEnum",
+                  "safeName": "PriorityEnum"
                 }
               },
               "typeId": "PriorityEnum",
@@ -100,22 +100,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "ErrorCodeEnum",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "errorCodeEnum",
+                  "safeName": "errorCodeEnum"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "error_code_enum",
+                  "safeName": "error_code_enum"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ERROR_CODE_ENUM",
+                  "safeName": "ERROR_CODE_ENUM"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ErrorCodeEnum",
+                  "safeName": "ErrorCodeEnum"
                 }
               },
               "typeId": "ErrorCodeEnum",
@@ -502,22 +502,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "ExampleResponse",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "exampleResponse",
+                      "safeName": "exampleResponse"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "example_response",
+                      "safeName": "example_response"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EXAMPLE_RESPONSE",
+                      "safeName": "EXAMPLE_RESPONSE"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "ExampleResponse",
+                      "safeName": "ExampleResponse"
                     }
                   },
                   "typeId": "ExampleResponse",

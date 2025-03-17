@@ -10,9 +10,8 @@ import {
     QueryParameter,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../../AbstractConverter";
-import { ErrorCollector } from "../../../ErrorCollector";
 import { SdkGroupNameExtension } from "../../../extensions/x-fern-sdk-group-name";
 import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-name";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
@@ -34,6 +33,15 @@ export declare namespace AbstractOperationConverter {
         group?: string[];
         inlinedTypes: Record<string, TypeDeclaration>;
     }
+}
+
+interface ConvertedRequestBody {
+    value: HttpRequestBody;
+    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+}
+interface ConvertedResponseBody {
+    value: HttpResponse;
+    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
 export abstract class AbstractOperationConverter extends AbstractConverter<
@@ -98,9 +106,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return { pathParameters, queryParameters, headers };
         }
 
-        for (const parameter of this.operation.parameters) {
+        for (let parameter of this.operation.parameters) {
             if (context.isReferenceObject(parameter)) {
-                continue;
+                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+                if (resolvedReference.resolved) {
+                    parameter = resolvedReference.value;
+                } else {
+                    continue;
+                }
             }
 
             const parameterConverter = new ParameterConverter({
@@ -161,7 +174,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): Promise<HttpRequestBody | undefined | null> {
+    }): Promise<ConvertedRequestBody | undefined | null> {
         if (this.operation.requestBody == null) {
             return undefined;
         }
@@ -195,7 +208,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ...this.inlinedTypes,
                 ...convertedRequestBody.inlinedTypes
             };
-            return convertedRequestBody.requestBody;
+            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples };
         }
 
         return undefined;
@@ -213,7 +226,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
-    }): Promise<HttpResponse | undefined> {
+    }): Promise<ConvertedResponseBody | undefined> {
         if (this.operation.responses == null) {
             return undefined;
         }
@@ -252,8 +265,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     ...convertedResponseBody.inlinedTypes
                 };
                 return {
-                    statusCode: statusCodeNum,
-                    body: convertedResponseBody.responseBody
+                    value: {
+                        statusCode: statusCodeNum,
+                        body: convertedResponseBody.responseBody
+                    },
+                    examples: convertedResponseBody.examples
                 };
             }
         }

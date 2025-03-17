@@ -8,9 +8,8 @@ import {
     StringValidationRules,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace PrimitiveSchemaConverter {

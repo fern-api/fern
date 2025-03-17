@@ -40,22 +40,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "IbanField",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ibanField",
+                  "safeName": "ibanField"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "iban_field",
+                  "safeName": "iban_field"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "IBAN_FIELD",
+                  "safeName": "IBAN_FIELD"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "IbanField",
+                  "safeName": "IbanField"
                 }
               },
               "typeId": "IbanField",
@@ -70,22 +70,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "OtherField",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "otherField",
+                  "safeName": "otherField"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "other_field",
+                  "safeName": "other_field"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "OTHER_FIELD",
+                  "safeName": "OTHER_FIELD"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "OtherField",
+                  "safeName": "OtherField"
                 }
               },
               "typeId": "OtherField",
@@ -246,22 +246,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Other",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "other",
+                  "safeName": "other"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "other",
+                  "safeName": "other"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "OTHER",
+                  "safeName": "OTHER"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Other",
+                  "safeName": "Other"
                 }
               },
               "typeId": "Other",

@@ -1,5 +1,6 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
-import { ExampleGenerator, generateField } from "@fern-api/fern-csharp-model";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -155,7 +156,30 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     }
                 }
             },
-            fileUpload: () => undefined,
+            fileUpload: (request) => {
+                for (const property of request.properties) {
+                    switch (property.type) {
+                        case "bodyProperty":
+                            class_.addField(
+                                generateField({
+                                    property,
+                                    className: this.classReference.name,
+                                    context: this.context,
+                                    jsonProperty: false
+                                })
+                            );
+                            break;
+                        case "file":
+                            class_.addField(
+                                generateFieldForFileProperty({
+                                    property: property.value,
+                                    className: this.classReference.name,
+                                    context: this.context
+                                })
+                            );
+                    }
+                }
+            },
             bytes: () => undefined,
             _other: () => undefined
         });

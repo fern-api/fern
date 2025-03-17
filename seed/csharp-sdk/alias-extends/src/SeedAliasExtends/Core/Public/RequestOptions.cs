@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using SeedAliasExtends.Core;
 
@@ -30,4 +32,16 @@ public partial class RequestOptions : IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
+
+    /// <summary>
+    /// Additional query parameters sent with the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get; init; } =
+        Enumerable.Empty<KeyValuePair<string, string>>();
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is only applied to JSON requests.
+    /// </summary>
+    public object? AdditionalBodyProperties { get; init; }
 }

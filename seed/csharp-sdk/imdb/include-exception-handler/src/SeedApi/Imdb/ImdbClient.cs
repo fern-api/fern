@@ -85,7 +85,10 @@ public partial class ImdbClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
-                            Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
+                            Path = string.Format(
+                                "/movies/{0}",
+                                ValueConvert.ToPathParameterString(movieId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

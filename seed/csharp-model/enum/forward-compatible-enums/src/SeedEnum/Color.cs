@@ -6,9 +6,9 @@ namespace SeedEnum;
 [JsonConverter(typeof(StringEnumSerializer<Color>))]
 public readonly record struct Color : IStringEnum
 {
-    public static readonly Color Red = Custom(Values.Red);
+    public static readonly Color Red = new(Values.Red);
 
-    public static readonly Color Blue = Custom(Values.Blue);
+    public static readonly Color Blue = new(Values.Blue);
 
     public Color(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct Color : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Color Custom(string value)
+    public static Color FromCustom(string value)
     {
         return new Color(value);
     }
@@ -44,6 +44,10 @@ public readonly record struct Color : IStringEnum
     public static bool operator ==(Color value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(Color value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(Color value) => value.Value;
+
+    public static explicit operator Color(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

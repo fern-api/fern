@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
@@ -18,6 +17,7 @@ export declare namespace ResponseBodyConverter {
     export interface Output {
         responseBody: HttpResponseBody;
         inlinedTypes: Record<string, TypeDeclaration>;
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }
 }
 
@@ -72,6 +72,20 @@ export class ResponseBodyConverter extends AbstractConverter<
                 continue;
             }
 
+            const examples =
+                mediaTypeObject.examples != null
+                    ? Object.fromEntries(
+                          await Promise.all(
+                              Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
+                                  key,
+                                  context.isReferenceObject(example)
+                                      ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                                      : example
+                              ])
+                          )
+                      )
+                    : undefined;
+
             if (contentType.includes("json")) {
                 const responseBody = HttpResponseBody.json(
                     JsonResponse.response({
@@ -81,7 +95,8 @@ export class ResponseBodyConverter extends AbstractConverter<
                 );
                 return {
                     responseBody,
-                    inlinedTypes: convertedSchema.inlinedTypes
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples
                 };
             }
         }

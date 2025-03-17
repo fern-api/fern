@@ -46,7 +46,10 @@ public partial class SeedApiClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"account/{JsonUtils.SerializeAsString(accountId)}",
+                    Path = string.Format(
+                        "account/{0}",
+                        ValueConvert.ToPathParameterString(accountId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

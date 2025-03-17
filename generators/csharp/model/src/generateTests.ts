@@ -1,4 +1,4 @@
-import { CSharpFile } from "@fern-api/csharp-codegen";
+import { CSharpFile } from "@fern-api/csharp-base";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 

@@ -1,4 +1,4 @@
-import { CSharpFile } from "@fern-api/csharp-codegen";
+import { CSharpFile } from "@fern-api/csharp-base";
 
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { VersionGenerator } from "./version/VersionGenerator";

@@ -25,17 +25,11 @@ export class ClassReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (writer.packageName === this.packageName) {
-            writer.write(this.name);
-            return;
-        }
-
-        writer.addImport(this.packageName);
+        writer.addImport(`${this.packageName}.${this.name}`);
         if (this.fullyQualified) {
             writer.write(`${this.packageName}.${this.name}`);
             return;
         }
-
         writer.write(this.name);
     }
 }

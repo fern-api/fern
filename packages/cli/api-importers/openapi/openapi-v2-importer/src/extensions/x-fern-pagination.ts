@@ -1,32 +1,17 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
+import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
-import { AbstractConverter } from "../AbstractConverter";
-import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
+import {
+    CursorPaginationExtensionSchema,
+    OffsetPaginationExtensionSchema,
+    PaginationExtensionSchema
+} from "../schemas/PaginationSchema";
 
 const REQUEST_PREFIX = "$request.";
 const RESPONSE_PREFIX = "$response.";
-
-const CursorPaginationExtensionSchema = z.object({
-    cursor: z.string(),
-    next_cursor: z.string(),
-    results: z.string()
-});
-
-const OffsetPaginationExtensionSchema = z.object({
-    offset: z.string(),
-    results: z.string(),
-    step: z.string().optional(),
-    "has-next-page": z.string().optional()
-});
-
-const PaginationExtensionSchema = z.union([
-    z.boolean(),
-    CursorPaginationExtensionSchema,
-    OffsetPaginationExtensionSchema
-]);
 
 export declare namespace FernPaginationExtension {
     export interface Args extends AbstractConverter.Args {

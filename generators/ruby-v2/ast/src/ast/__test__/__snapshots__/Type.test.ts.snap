@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Type > array 1`] = `"Array[String]"`;
+
+exports[`Type > boolean 1`] = `"bool"`;
+
+exports[`Type > boolish 1`] = `"boolish"`;
+
+exports[`Type > bot 1`] = `"bot"`;
+
+exports[`Type > class 1`] = `"class"`;
+
+exports[`Type > generics 1`] = `"Foo[String, Integer]"`;
+
+exports[`Type > hash 1`] = `"Hash[String, Integer]"`;
+
+exports[`Type > instance 1`] = `"instance"`;
+
+exports[`Type > integer 1`] = `"Integer"`;
+
+exports[`Type > nil 1`] = `"nil"`;
+
+exports[`Type > self 1`] = `"self"`;
+
+exports[`Type > string 1`] = `"String"`;
+
+exports[`Type > top 1`] = `"top"`;
+
+exports[`Type > unions 1`] = `"String | Integer"`;
+
+exports[`Type > untyped 1`] = `"untyped"`;
+
+exports[`Type > void 1`] = `"void"`;

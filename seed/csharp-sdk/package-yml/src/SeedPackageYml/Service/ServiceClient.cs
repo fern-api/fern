@@ -30,8 +30,11 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(id)}//{JsonUtils.SerializeAsString(nestedId)}",
+                    Path = string.Format(
+                        "/{0}//{1}",
+                        ValueConvert.ToPathParameterString(id),
+                        ValueConvert.ToPathParameterString(nestedId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

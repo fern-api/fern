@@ -54,7 +54,10 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/create",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/create",
+                        ValueConvert.ToPathParameterString(serviceParam)
+                    ),
                     Body = request.Body,
                     Query = _query,
                     Options = options,
@@ -123,7 +126,10 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/all",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/all",
+                        ValueConvert.ToPathParameterString(serviceParam)
+                    ),
                     Query = _query,
                     Options = options,
                 },
@@ -172,8 +178,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -230,8 +239,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -280,8 +292,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

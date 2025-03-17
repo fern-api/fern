@@ -10,7 +10,7 @@ public record Directory
     public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; set; }
+    public IEnumerable<SeedObjectsWithImports.File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
     public IEnumerable<Directory>? Directories { get; set; }

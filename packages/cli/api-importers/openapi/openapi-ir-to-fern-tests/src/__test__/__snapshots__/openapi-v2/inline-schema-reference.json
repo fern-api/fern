@@ -244,30 +244,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "ExampleGetResponsesSchemaOneOf": {
+    "ExampleGetResponsesSchemaOneOfThree": {
       "name": {
-        "typeId": "ExampleGetResponsesSchemaOneOf",
+        "typeId": "ExampleGetResponsesSchemaOneOfThree",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "ExampleGetResponsesSchemaOneOf",
+          "originalName": "ExampleGetResponsesSchemaOneOfThree",
           "camelCase": {
-            "unsafeName": "exampleGetResponsesSchemaOneOf",
-            "safeName": "exampleGetResponsesSchemaOneOf"
+            "unsafeName": "exampleGetResponsesSchemaOneOfThree",
+            "safeName": "exampleGetResponsesSchemaOneOfThree"
           },
           "snakeCase": {
-            "unsafeName": "example_get_responses_schema_one_of",
-            "safeName": "example_get_responses_schema_one_of"
+            "unsafeName": "example_get_responses_schema_one_of_three",
+            "safeName": "example_get_responses_schema_one_of_three"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF",
-            "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF"
+            "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_THREE",
+            "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_THREE"
           },
           "pascalCase": {
-            "unsafeName": "ExampleGetResponsesSchemaOneOf",
-            "safeName": "ExampleGetResponsesSchemaOneOf"
+            "unsafeName": "ExampleGetResponsesSchemaOneOfThree",
+            "safeName": "ExampleGetResponsesSchemaOneOfThree"
           }
         }
       },
@@ -360,22 +360,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Schema1",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema1",
+                  "safeName": "schema1"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema_1",
+                  "safeName": "schema_1"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SCHEMA_1",
+                  "safeName": "SCHEMA_1"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Schema1",
+                  "safeName": "Schema1"
                 }
               },
               "typeId": "Schema1",
@@ -390,22 +390,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Schema2",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema2",
+                  "safeName": "schema2"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema_2",
+                  "safeName": "schema_2"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SCHEMA_2",
+                  "safeName": "SCHEMA_2"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Schema2",
+                  "safeName": "Schema2"
                 }
               },
               "typeId": "Schema2",
@@ -420,25 +420,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "ExampleGetResponsesSchemaOneOf",
+                "originalName": "ExampleGetResponsesSchemaOneOfThree",
                 "camelCase": {
-                  "unsafeName": "exampleGetResponsesSchemaOneOf",
-                  "safeName": "exampleGetResponsesSchemaOneOf"
+                  "unsafeName": "exampleGetResponsesSchemaOneOfThree",
+                  "safeName": "exampleGetResponsesSchemaOneOfThree"
                 },
                 "snakeCase": {
-                  "unsafeName": "example_get_responses_schema_one_of",
-                  "safeName": "example_get_responses_schema_one_of"
+                  "unsafeName": "example_get_responses_schema_one_of_three",
+                  "safeName": "example_get_responses_schema_one_of_three"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF",
-                  "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF"
+                  "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_THREE",
+                  "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_THREE"
                 },
                 "pascalCase": {
-                  "unsafeName": "ExampleGetResponsesSchemaOneOf",
-                  "safeName": "ExampleGetResponsesSchemaOneOf"
+                  "unsafeName": "ExampleGetResponsesSchemaOneOfThree",
+                  "safeName": "ExampleGetResponsesSchemaOneOfThree"
                 }
               },
-              "typeId": "ExampleGetResponsesSchemaOneOf",
+              "typeId": "ExampleGetResponsesSchemaOneOfThree",
               "inline": false,
               "type": "named"
             }
