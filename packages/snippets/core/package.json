@@ -33,7 +33,6 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/browser-compatible-fern-workspace": "workspace:*",
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/source-resolver": "workspace:*",

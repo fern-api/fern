@@ -8577,9 +8577,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../cli/configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../cli/generation/ir-generator
