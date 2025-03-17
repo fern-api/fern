@@ -1,17 +1,10 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { OpenAPIWorkspace } from "@fern-api/browser-compatible-fern-workspace";
-import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
 import { OpenAPISpec } from "../Spec";
 
-export function convertSpecToWorkspace({
-    context,
-    spec,
-}: {
-    context: TaskContext;
-    spec: OpenAPISpec;
-}): FernWorkspace {
+export function convertSpecToWorkspace({ context, spec }: { context: TaskContext; spec: OpenAPISpec }): FernWorkspace {
     const openapi = new OpenAPIWorkspace({
         spec: {
             parsed: spec.openapi,

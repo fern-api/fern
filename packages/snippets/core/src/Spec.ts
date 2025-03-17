@@ -1,7 +1,7 @@
 import { OpenAPI as OpenAPITypes } from "openapi-types";
-import { dynamic } from "@fern-api/ir-sdk";
 
 import { OpenAPIWorkspace } from "@fern-api/browser-compatible-fern-workspace";
+import { dynamic } from "@fern-api/ir-sdk";
 
 export type Spec = OpenAPISpec | DynamicIntermediateRepresentationSpec;
 
