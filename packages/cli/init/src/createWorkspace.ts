@@ -59,9 +59,7 @@ export async function createOpenAPIWorkspace({
         cliVersion,
         context,
         apiConfiguration: {
-            specs: [
-                { openapi: relative(directoryOfWorkspace, openAPIFilePath) }
-            ]
+            specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
         }
     });
 }
@@ -129,8 +127,10 @@ async function writeGeneratorsConfiguration({
         "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
             yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }), {
                 sortKeys: (a, b) => {
-                    if (a === 'api') return -1;
-                    if (b === 'api') return 1;
+                    if (a === "api") {
+                        return -1;
+                    }
+                    if (b === "api") return 1;
                     return a.localeCompare(b);
                 }
             })

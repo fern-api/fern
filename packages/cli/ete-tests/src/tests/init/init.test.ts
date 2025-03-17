@@ -1,3 +1,6 @@
+import { copyFile } from "fs/promises";
+import tmp from "tmp-promise";
+
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import {
     AbsoluteFilePath,
@@ -6,10 +9,7 @@ import {
     getDirectoryContentsForSnapshot,
     join
 } from "@fern-api/fs-utils";
-import tmp from "tmp-promise";
 
-
-import { copyFile } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -54,11 +54,8 @@ describe("fern init", () => {
             RelativeFilePath.of("openapi"),
             RelativeFilePath.of("petstore-openapi.yml")
         );
-        const targetOpenAPI = join(
-            AbsoluteFilePath.of(tmpDir.path),
-            RelativeFilePath.of("petstore-openapi.yml")
-        );
-        await copyFile(sourceOpenAPI, targetOpenAPI)
+        const targetOpenAPI = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("petstore-openapi.yml"));
+        await copyFile(sourceOpenAPI, targetOpenAPI);
 
         const pathOfDirectory = await init({
             additionalArgs: [
