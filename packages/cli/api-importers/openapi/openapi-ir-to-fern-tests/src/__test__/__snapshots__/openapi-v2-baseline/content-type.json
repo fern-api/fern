@@ -324,6 +324,7 @@
                   },
                   "isOptional": false,
                   "contentType": "application/octet-stream",
+                  "docs": "Binary file contents. The file name of the file will be used as the document ID.",
                   "type": "file"
                 },
                 "type": "file"

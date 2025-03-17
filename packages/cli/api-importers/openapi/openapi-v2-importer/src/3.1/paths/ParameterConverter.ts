@@ -10,9 +10,8 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
@@ -60,13 +59,13 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         this.parameter = parameter;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): ParameterConverter.Output | undefined {
+    }): Promise<ParameterConverter.Output | undefined> {
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
@@ -76,14 +75,14 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                 schemaOrReference: this.parameter.schema,
                 wrapAsOptional: this.parameter.required == null || !this.parameter.required
             });
-            const converted = schemaOrReferenceConverter.convert({ context, errorCollector });
+            const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
             if (converted != null) {
                 typeReference = converted.type;
                 inlinedTypes = converted.inlinedTypes ?? {};
             }
         }
 
-        const availability = context.getAvailability({
+        const availability = await context.getAvailability({
             node: this.parameter,
             breadcrumbs: this.breadcrumbs,
             errorCollector

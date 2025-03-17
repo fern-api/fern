@@ -130,7 +130,6 @@ client.user.create_user(
 
 The name of the user to create.
 This name is unique to each user.
-
     
 </dd>
 </dl>
@@ -142,7 +141,6 @@ This name is unique to each user.
 
 The age of the user.
 This property is not required.
-
     
 </dd>
 </dl>

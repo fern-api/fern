@@ -18,11 +18,9 @@ public partial class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.V2.V3.Problem.GetLightweightProblemsAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -66,11 +64,9 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.V2.V3.Problem.GetProblemsAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -114,11 +110,9 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ProblemInfoV2> GetLatestProblemAsync(
         string problemId,
         RequestOptions? options = null,
@@ -131,7 +125,10 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/problems-v2/problem-info/{JsonUtils.SerializeAsString(problemId)}",
+                    Path = string.Format(
+                        "/problems-v2/problem-info/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -163,11 +160,9 @@ public partial class ProblemClient
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.V2.V3.Problem.GetProblemVersionAsync("problemId", 1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ProblemInfoV2> GetProblemVersionAsync(
         string problemId,
         int problemVersion,
@@ -181,8 +176,11 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/problems-v2/problem-info/{JsonUtils.SerializeAsString(problemId)}/version/{JsonUtils.SerializeAsString(problemVersion)}",
+                    Path = string.Format(
+                        "/problems-v2/problem-info/{0}/version/{1}",
+                        ValueConvert.ToPathParameterString(problemId),
+                        ValueConvert.ToPathParameterString(problemVersion)
+                    ),
                     Options = options,
                 },
                 cancellationToken

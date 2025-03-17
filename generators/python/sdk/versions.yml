@@ -1,4 +1,35 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.18
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        original parameter name internally, causing errors.
+
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
+- version: 4.3.16
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where GeneratorExit was unintentionally being swallowed by code blocks within the HttpClient.stream() contextmanager.
+
+- version: 4.3.15
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where extraneous NameError-causing update_forward_refs invocations were being emitted.
+
 - version: 4.3.14
   irVersion: 53
   changelogEntry:

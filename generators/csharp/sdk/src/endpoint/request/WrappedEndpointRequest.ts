@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 
 import {
@@ -173,8 +174,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             case "reference":
             case "inlinedRequestBody":
                 return "json";
+            case "fileUpload":
+                return "multipartform";
+            default:
+                assertNever(this.endpoint.requestBody);
         }
-        return undefined;
     }
 
     private stringify({
@@ -242,35 +246,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
-            inlinedRequestBody: (inlinedRequestBody) => {
-                if (this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0) {
-                    return {
-                        requestBodyReference: `${this.getParameterName()}`
-                    };
-                }
-                const allProperties = [
-                    ...inlinedRequestBody.properties,
-                    ...(inlinedRequestBody.extendedProperties ?? [])
-                ];
-                const requestBody = csharp.dictionary({
-                    keyType: csharp.Type.string(),
-                    valueType: csharp.Type.object(),
-                    values: {
-                        type: "entries",
-                        entries: allProperties.map((property) => ({
-                            key: csharp.codeblock(`"${property.name.wireValue}"`),
-                            value: csharp.codeblock(
-                                `${this.getParameterName()}.${property.name.name.pascalCase.safeName}`
-                            )
-                        }))
-                    }
-                });
+            inlinedRequestBody: () => {
                 return {
-                    requestBodyReference: this.getRequestBodyVariableName(),
-                    code: csharp.codeblock((writer) => {
-                        writer.write(`var ${this.getRequestBodyVariableName()} = `);
-                        writer.writeNodeStatement(requestBody);
-                    })
+                    requestBodyReference: this.getParameterName()
                 };
             },
             fileUpload: () => undefined,

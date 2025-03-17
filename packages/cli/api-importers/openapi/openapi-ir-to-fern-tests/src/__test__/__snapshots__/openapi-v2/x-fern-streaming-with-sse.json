@@ -369,22 +369,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "CreateCompletionRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "createCompletionRequest",
+                  "safeName": "createCompletionRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "create_completion_request",
+                  "safeName": "create_completion_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CREATE_COMPLETION_REQUEST",
+                  "safeName": "CREATE_COMPLETION_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CreateCompletionRequest",
+                  "safeName": "CreateCompletionRequest"
                 }
               },
               "typeId": "CreateCompletionRequest",

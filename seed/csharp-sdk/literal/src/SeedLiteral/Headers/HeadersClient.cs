@@ -14,8 +14,7 @@ public partial class HeadersClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Headers.SendAsync(
     ///     new SendLiteralsInHeadersRequest
     ///     {
@@ -24,8 +23,7 @@ public partial class HeadersClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInHeadersRequest request,
         RequestOptions? options = null,
@@ -39,7 +37,6 @@ public partial class HeadersClient
                 { "X-Async", JsonUtils.Serialize(request.Async) },
             }
         );
-        var requestBody = new Dictionary<string, object>() { { "query", request.Query } };
         var response = await _client
             .SendRequestAsync(
                 new RawClient.JsonApiRequest
@@ -47,7 +44,7 @@ public partial class HeadersClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "headers",
-                    Body = requestBody,
+                    Body = request,
                     Headers = _headers,
                     Options = options,
                 },

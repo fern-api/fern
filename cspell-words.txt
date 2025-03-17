@@ -95,6 +95,7 @@ couldn
 covcheck
 cread
 creds
+cref
 Crequest
 Crestor
 csharp
@@ -241,6 +242,7 @@ icao
 icns
 Identitical
 idgen
+idictionary
 idna
 ietf
 IHGUMUOY

@@ -8,7 +8,7 @@ The Seed C# library provides convenient access to the Seed API from C#.
 ## Installation
 
 ```sh
-nuget install SeedBasicAuth
+dotnet add package SeedBasicAuth
 ```
 
 ## Usage

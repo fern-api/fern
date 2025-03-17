@@ -12,6 +12,7 @@ import {
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";
+import { UnionGenerator } from "../union/UnionGenerator";
 
 export class ExampleGenerator {
     private context: ModelGeneratorContext;
@@ -82,7 +83,8 @@ export class ExampleGenerator {
                 }),
             object: (exampleObjectType) =>
                 this.getSnippetForTypeId(exampleNamedType.typeName.typeId, exampleObjectType, parseDatetimes),
-            union: (exampleUnionType) => this.getSnippetForUnion(exampleUnionType, parseDatetimes),
+            union: (exampleUnionType) =>
+                this.getSnippetForUnion(exampleNamedType.typeName.typeId, exampleUnionType, parseDatetimes),
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
                 this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType, parseDatetimes),
             _other: () => {
@@ -116,8 +118,22 @@ export class ExampleGenerator {
         });
     }
 
-    private getSnippetForUnion(p: ExampleUnionType, parseDatetimes: boolean): csharp.AstNode {
-        return p.singleUnionType.shape._visit<csharp.AstNode>({
+    private getSnippetForUnion(
+        typeId: string,
+        exampleUnionType: ExampleUnionType,
+        parseDatetimes: boolean
+    ): csharp.AstNode {
+        if (this.context.shouldGenerateDiscriminatedUnions()) {
+            const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
+            if (typeDeclaration.shape.type !== "union") {
+                throw new Error("Unexpected non union in Example Generator");
+            }
+            return new UnionGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet({
+                exampleUnion: exampleUnionType,
+                parseDatetimes
+            });
+        }
+        return exampleUnionType.singleUnionType.shape._visit<csharp.AstNode>({
             samePropertiesAsObject: (p) => this.getSnippetForTypeId(p.typeId, p.object, parseDatetimes),
             singleProperty: (p) => this.getSnippetForTypeReference({ exampleTypeReference: p, parseDatetimes }),
             // todo: figure out what to put here

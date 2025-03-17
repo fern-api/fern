@@ -1082,22 +1082,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "EndUser",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "endUser",
+                      "safeName": "endUser"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "end_user",
+                      "safeName": "end_user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "END_USER",
+                      "safeName": "END_USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EndUser",
+                      "safeName": "EndUser"
                     }
                   },
                   "typeId": "EndUser",
@@ -1583,22 +1583,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "EndUserRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "endUserRequest",
+                  "safeName": "endUserRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "end_user_request",
+                  "safeName": "end_user_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "END_USER_REQUEST",
+                  "safeName": "END_USER_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "EndUserRequest",
+                  "safeName": "EndUserRequest"
                 }
               },
               "typeId": "EndUserRequest",
@@ -1617,22 +1617,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "EndUser",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "endUser",
+                      "safeName": "endUser"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "end_user",
+                      "safeName": "end_user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "END_USER",
+                      "safeName": "END_USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EndUser",
+                      "safeName": "EndUser"
                     }
                   },
                   "typeId": "EndUser",
@@ -2295,22 +2295,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "EndUsers",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "endUsers",
+                      "safeName": "endUsers"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "end_users",
+                      "safeName": "end_users"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "END_USERS",
+                      "safeName": "END_USERS"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "EndUsers",
+                      "safeName": "EndUsers"
                     }
                   },
                   "typeId": "EndUsers",

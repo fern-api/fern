@@ -1,8 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
+/// <summary>
+/// An OAuth token response.
+/// </summary>
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]
@@ -13,6 +17,13 @@ public record TokenResponse
 
     [JsonPropertyName("refresh_token")]
     public string? RefreshToken { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

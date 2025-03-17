@@ -14,8 +14,7 @@ public partial class AuthClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.GetTokenAsync(
     ///     new GetTokenRequest
     ///     {
@@ -26,8 +25,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> GetTokenAsync(
         GetTokenRequest request,
         RequestOptions? options = null,

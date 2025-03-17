@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
-public final class Foo {
+public final class Foo implements IFoo {
     private final String name;
 
     private Foo(String name) {
@@ -21,6 +21,7 @@ public final class Foo {
     }
 
     @JsonProperty("name")
+    @java.lang.Override
     public String getName() {
         return name;
     }

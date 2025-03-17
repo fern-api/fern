@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -9,9 +10,19 @@ public record ListElement
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new ListElement type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
     {
-        return JsonUtils.Serialize(this);
+        return new ListElement { Id = value.Id };
     }
 
     /// <summary>
@@ -27,11 +38,8 @@ public record ListElement
         return result;
     }
 
-    /// <summary>
-    /// Returns a new ListElement type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
+    public override string ToString()
     {
-        return new ListElement { Id = value.Id };
+        return JsonUtils.Serialize(this);
     }
 }

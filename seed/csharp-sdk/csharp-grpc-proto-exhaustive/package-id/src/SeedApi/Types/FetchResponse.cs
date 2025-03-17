@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -15,9 +16,27 @@ public record FetchResponse
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new FetchResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static FetchResponse FromProto(ProtoDataV1Grpc.FetchResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new FetchResponse
+        {
+            Columns = value.Columns?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => Column.FromProto(kvp.Value)
+            ),
+            Namespace = value.Namespace,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+        };
     }
 
     /// <summary>
@@ -45,19 +64,8 @@ public record FetchResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new FetchResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static FetchResponse FromProto(ProtoDataV1Grpc.FetchResponse value)
+    public override string ToString()
     {
-        return new FetchResponse
-        {
-            Columns = value.Columns?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => Column.FromProto(kvp.Value)
-            ),
-            Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

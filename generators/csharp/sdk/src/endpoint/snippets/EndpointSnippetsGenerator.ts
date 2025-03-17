@@ -104,7 +104,8 @@ export class EndpointSnippetsGenerator {
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             rootNamespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            customConfig: this.context.customConfig,
+            formatter: this.context.formatter
         });
         return {
             imports: formattedAstNodeSnippet.imports,

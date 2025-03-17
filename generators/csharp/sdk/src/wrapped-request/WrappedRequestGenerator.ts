@@ -1,5 +1,6 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
-import { ExampleGenerator } from "@fern-api/fern-csharp-model";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -121,51 +122,64 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             );
         }
 
-        const addJsonAnnotations = this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0;
-
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
+                const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
+                const useRequired = !type.isOptional();
                 class_.addField(
                     csharp.field({
                         name: this.wrapper.bodyKey.pascalCase.safeName,
-                        type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
+                        type,
                         access: csharp.Access.Public,
                         get: true,
                         set: true,
                         summary: reference.docs,
-                        useRequired: true
+                        useRequired,
+                        annotations: [this.context.getJsonIgnoreAnnotation()]
                     })
                 );
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const propertyName = property.name.name.pascalCase.safeName;
-                    const maybeLiteralInitializer = this.context.getLiteralInitializerFromTypeReference({
-                        typeReference: property.valueType
+                    const field = generateField({
+                        property,
+                        className: this.classReference.name,
+                        context: this.context
                     });
-                    class_.addField(
-                        csharp.field({
-                            name: propertyName,
-                            type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
-                            access: csharp.Access.Public,
-                            get: true,
-                            set: true,
-                            summary: property.docs,
-                            jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            useRequired: true,
-                            initializer: maybeLiteralInitializer
-                        })
-                    );
+                    class_.addField(field);
 
                     if (isProtoRequest) {
                         protobufProperties.push({
-                            propertyName,
+                            propertyName: field.name,
                             typeReference: property.valueType
                         });
                     }
                 }
             },
-            fileUpload: () => undefined,
+            fileUpload: (request) => {
+                for (const property of request.properties) {
+                    switch (property.type) {
+                        case "bodyProperty":
+                            class_.addField(
+                                generateField({
+                                    property,
+                                    className: this.classReference.name,
+                                    context: this.context,
+                                    jsonProperty: false
+                                })
+                            );
+                            break;
+                        case "file":
+                            class_.addField(
+                                generateFieldForFileProperty({
+                                    property: property.value,
+                                    className: this.classReference.name,
+                                    context: this.context
+                                })
+                            );
+                    }
+                }
+            },
             bytes: () => undefined,
             _other: () => undefined
         });

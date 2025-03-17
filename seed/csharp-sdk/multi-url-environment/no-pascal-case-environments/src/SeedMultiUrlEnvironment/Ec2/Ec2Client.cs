@@ -14,11 +14,9 @@ public partial class Ec2Client
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task BootInstanceAsync(
         BootInstanceRequest request,
         RequestOptions? options = null,

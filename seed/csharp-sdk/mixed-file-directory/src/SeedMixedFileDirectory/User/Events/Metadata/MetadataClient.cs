@@ -18,11 +18,9 @@ public partial class MetadataClient
     /// <summary>
     /// Get event metadata.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Metadata> GetMetadataAsync(
         GetEventMetadataRequest request,
         RequestOptions? options = null,

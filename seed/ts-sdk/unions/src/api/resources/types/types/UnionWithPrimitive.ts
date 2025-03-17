@@ -4,6 +4,19 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "integer",
+ *         value: 9
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         value: "bar"
+ *     }
+ */
 export type UnionWithPrimitive = SeedUnions.UnionWithPrimitive.Integer | SeedUnions.UnionWithPrimitive.String;
 
 export namespace UnionWithPrimitive {

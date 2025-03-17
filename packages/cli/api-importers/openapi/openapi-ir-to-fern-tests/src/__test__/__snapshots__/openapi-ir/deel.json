@@ -7687,8 +7687,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Upload the file you want to attach to this entry.",
               "type": "file"
             },
+            "description": "Upload the file you want to attach to this entry.",
             "exploded": false
           }
         ],
@@ -7992,8 +7994,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Upload the file you want to attach to this entry.",
               "type": "file"
             },
+            "description": "Upload the file you want to attach to this entry.",
             "exploded": false
           }
         ],

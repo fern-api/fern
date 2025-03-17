@@ -1,9 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtends;
+using SeedExtends.Core;
 
 namespace SeedExtends.Test;
 
@@ -11,29 +9,43 @@ namespace SeedExtends.Test;
 public class NestedTypeTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "docs": "This is an example nested type.",
+              "name": "NestedExample",
+              "raw": "{\"nested\": \"example\"}"
+            }
+            """;
+        var expectedObject = new NestedType
+        {
+            Docs = "This is an example nested type.",
+            Name = "NestedExample",
+            Raw = "{\"nested\": \"example\"}",
+        };
+        var deserializedObject = JsonUtils.Deserialize<NestedType>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var expectedJson = """
+            {
+              "docs": "This is an example nested type.",
+              "name": "NestedExample",
+              "raw": "{\"nested\": \"example\"}"
+            }
+            """;
+        var actualObj = new NestedType
         {
-          ""docs"": ""This is an example nested type."",
-          ""name"": ""NestedExample"",
-          ""raw"": ""{\""nested\"": \""example\""}""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Docs = "This is an example nested type.",
+            Name = "NestedExample",
+            Raw = "{\"nested\": \"example\"}",
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<NestedType>(
-            inputJson,
-            serializerOptions
-        );
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

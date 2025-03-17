@@ -300,30 +300,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "ExampleGetResponsesSchemaOneOf": {
+    "ExampleGetResponsesSchemaOneOfOne": {
       "name": {
-        "typeId": "ExampleGetResponsesSchemaOneOf",
+        "typeId": "ExampleGetResponsesSchemaOneOfOne",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "ExampleGetResponsesSchemaOneOf",
+          "originalName": "ExampleGetResponsesSchemaOneOfOne",
           "camelCase": {
-            "unsafeName": "exampleGetResponsesSchemaOneOf",
-            "safeName": "exampleGetResponsesSchemaOneOf"
+            "unsafeName": "exampleGetResponsesSchemaOneOfOne",
+            "safeName": "exampleGetResponsesSchemaOneOfOne"
           },
           "snakeCase": {
-            "unsafeName": "example_get_responses_schema_one_of",
-            "safeName": "example_get_responses_schema_one_of"
+            "unsafeName": "example_get_responses_schema_one_of_one",
+            "safeName": "example_get_responses_schema_one_of_one"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF",
-            "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF"
+            "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_ONE",
+            "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_ONE"
           },
           "pascalCase": {
-            "unsafeName": "ExampleGetResponsesSchemaOneOf",
-            "safeName": "ExampleGetResponsesSchemaOneOf"
+            "unsafeName": "ExampleGetResponsesSchemaOneOfOne",
+            "safeName": "ExampleGetResponsesSchemaOneOfOne"
           }
         }
       },
@@ -416,22 +416,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "Schema",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema",
+                  "safeName": "schema"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "schema",
+                  "safeName": "schema"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SCHEMA",
+                  "safeName": "SCHEMA"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "Schema",
+                  "safeName": "Schema"
                 }
               },
               "typeId": "Schema",
@@ -446,25 +446,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "ExampleGetResponsesSchemaOneOf",
+                "originalName": "ExampleGetResponsesSchemaOneOfOne",
                 "camelCase": {
-                  "unsafeName": "exampleGetResponsesSchemaOneOf",
-                  "safeName": "exampleGetResponsesSchemaOneOf"
+                  "unsafeName": "exampleGetResponsesSchemaOneOfOne",
+                  "safeName": "exampleGetResponsesSchemaOneOfOne"
                 },
                 "snakeCase": {
-                  "unsafeName": "example_get_responses_schema_one_of",
-                  "safeName": "example_get_responses_schema_one_of"
+                  "unsafeName": "example_get_responses_schema_one_of_one",
+                  "safeName": "example_get_responses_schema_one_of_one"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF",
-                  "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF"
+                  "unsafeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_ONE",
+                  "safeName": "EXAMPLE_GET_RESPONSES_SCHEMA_ONE_OF_ONE"
                 },
                 "pascalCase": {
-                  "unsafeName": "ExampleGetResponsesSchemaOneOf",
-                  "safeName": "ExampleGetResponsesSchemaOneOf"
+                  "unsafeName": "ExampleGetResponsesSchemaOneOfOne",
+                  "safeName": "ExampleGetResponsesSchemaOneOfOne"
                 }
               },
-              "typeId": "ExampleGetResponsesSchemaOneOf",
+              "typeId": "ExampleGetResponsesSchemaOneOfOne",
               "inline": false,
               "type": "named"
             }

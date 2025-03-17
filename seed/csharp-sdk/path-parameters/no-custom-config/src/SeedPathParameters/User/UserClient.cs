@@ -14,11 +14,9 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUserAsync(
         string tenantId,
         string userId,
@@ -33,8 +31,11 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format(
+                        "/{0}/user/{1}",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -63,8 +64,7 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(
     ///     "tenant_id",
     ///     new User
@@ -73,8 +73,7 @@ public partial class UserClient
     ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         string tenantId,
         User request,
@@ -88,7 +87,10 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(tenantId)}/user/",
+                    Path = string.Format(
+                        "/{0}/user/",
+                        ValueConvert.ToPathParameterString(tenantId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -118,8 +120,7 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.UpdateUserAsync(
     ///     "tenant_id",
     ///     "user_id",
@@ -132,8 +133,7 @@ public partial class UserClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> UpdateUserAsync(
         string tenantId,
         string userId,
@@ -148,8 +148,11 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format(
+                        "/{0}/user/{1}",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Body = request.Body,
                     Options = options,
                 },
@@ -179,11 +182,9 @@ public partial class UserClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<User>> SearchUsersAsync(
         string tenantId,
         string userId,
@@ -203,8 +204,11 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}/search",
+                    Path = string.Format(
+                        "/{0}/user/{1}/search",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Query = _query,
                     Options = options,
                 },

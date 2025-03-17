@@ -31,8 +31,7 @@ public partial class SeedCsharpAccessClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateUserAsync(
     ///     new User
     ///     {
@@ -42,8 +41,7 @@ public partial class SeedCsharpAccessClient
     ///         Password = "password",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,

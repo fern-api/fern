@@ -51,11 +51,9 @@ public partial class SeedExamplesClient
 
     public TypesClient Types { get; init; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> EchoAsync(
         string request,
         RequestOptions? options = null,
@@ -98,11 +96,9 @@ public partial class SeedExamplesClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateTypeAsync(BasicType.Primitive);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Identifier> CreateTypeAsync(
         OneOf<BasicType, ComplexType> request,
         RequestOptions? options = null,

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
@@ -6,6 +8,11 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class RequestOptions : IRequestOptions
 {
+    /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    Headers IRequestOptions.Headers { get; init; } = new();
+
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
@@ -27,7 +34,14 @@ public partial class RequestOptions : IRequestOptions
     public TimeSpan? Timeout { get; init; }
 
     /// <summary>
-    /// The http headers sent with the request.
+    /// Additional query parameters sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get; init; } =
+        Enumerable.Empty<KeyValuePair<string, string>>();
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is only applied to JSON requests.
+    /// </summary>
+    public object? AdditionalBodyProperties { get; init; }
 }

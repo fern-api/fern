@@ -18,8 +18,7 @@ public partial class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
@@ -73,8 +72,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
@@ -120,8 +118,7 @@ public partial class ProblemClient
     /// <summary>
     /// Updates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.UpdateProblemAsync(
     ///     "problemId",
     ///     new CreateProblemRequest
@@ -176,8 +173,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
@@ -191,7 +187,10 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/problem-crud/update/{JsonUtils.SerializeAsString(problemId)}",
+                    Path = string.Format(
+                        "/problem-crud/update/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -224,11 +223,9 @@ public partial class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
@@ -241,7 +238,10 @@ public partial class ProblemClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/problem-crud/delete/{JsonUtils.SerializeAsString(problemId)}",
+                    Path = string.Format(
+                        "/problem-crud/delete/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -264,8 +264,7 @@ public partial class ProblemClient
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
@@ -278,8 +277,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,

@@ -1,10 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
-import { FernEnumExtension } from "../../extensions/x-fern-enum";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
@@ -37,15 +35,15 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         this.inlined = inlined;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): SchemaConverter.Output | undefined {
+    }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
-            const fernEnumConverter = new FernEnumExtension({
+            const fernEnumConverter = new Extensions.FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
@@ -59,7 +57,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
             const enumType = enumConverter.convert({ context, errorCollector });
             if (enumType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
+                    typeDeclaration: await this.createTypeDeclaration({
                         shape: enumType.enum,
                         context,
                         errorCollector
@@ -73,7 +71,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         const primitiveType = primitiveConverter.convert({ context, errorCollector });
         if (primitiveType != null) {
             return {
-                typeDeclaration: this.createTypeDeclaration({
+                typeDeclaration: await this.createTypeDeclaration({
                     shape: Type.alias({
                         aliasOf: primitiveType,
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,10 +89,10 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const arrayType = arrayConverter.convert({ context, errorCollector });
+            const arrayType = await arrayConverter.convert({ context, errorCollector });
             if (arrayType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
+                    typeDeclaration: await this.createTypeDeclaration({
                         shape: Type.alias({
                             aliasOf: arrayType.typeReference,
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -114,10 +112,10 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                 schema: this.schema,
                 inlinedTypes: {}
             });
-            const oneOfType = oneOfConverter.convert({ context, errorCollector });
+            const oneOfType = await oneOfConverter.convert({ context, errorCollector });
             if (oneOfType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
+                    typeDeclaration: await this.createTypeDeclaration({
                         shape: oneOfType.union,
                         context,
                         errorCollector
@@ -133,10 +131,10 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
                 schema: this.schema,
                 inlinedTypes: {}
             });
-            const objectType = objectConverter.convert({ context, errorCollector });
+            const objectType = await objectConverter.convert({ context, errorCollector });
             if (objectType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
+                    typeDeclaration: await this.createTypeDeclaration({
                         shape: objectType.object,
                         context,
                         errorCollector
@@ -149,7 +147,7 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         return undefined;
     }
 
-    public createTypeDeclaration({
+    public async createTypeDeclaration({
         shape,
         context,
         errorCollector
@@ -157,14 +155,18 @@ export class SchemaConverter extends AbstractConverter<OpenAPIConverterContext3_
         shape: Type;
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): TypeDeclaration {
+    }): Promise<TypeDeclaration> {
         return {
             name: this.convertDeclaredTypeName({ context }),
             shape,
             autogeneratedExamples: [],
             userProvidedExamples: [],
             encoding: undefined,
-            availability: context.getAvailability({ node: this.schema, breadcrumbs: this.breadcrumbs, errorCollector }),
+            availability: await context.getAvailability({
+                node: this.schema,
+                breadcrumbs: this.breadcrumbs,
+                errorCollector
+            }),
             docs: this.schema.description,
             referencedTypes: new Set(),
             source: undefined,

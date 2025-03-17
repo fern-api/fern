@@ -1,8 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
 
 namespace SeedValidation;
 
+/// <summary>
+/// Defines properties with default values and validation rules.
+/// </summary>
 public record Type
 {
     [JsonPropertyName("decimal")]
@@ -16,6 +20,13 @@ public record Type
 
     [JsonPropertyName("shape")]
     public required Shape Shape { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
     public override string ToString()
     {

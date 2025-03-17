@@ -6,6 +6,11 @@ namespace SeedExhaustive.Core;
 public partial class ClientOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get; init; } = "";
@@ -24,11 +29,6 @@ public partial class ClientOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// Clones this and returns a new instance

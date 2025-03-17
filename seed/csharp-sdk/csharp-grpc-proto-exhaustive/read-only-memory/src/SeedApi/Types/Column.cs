@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -18,9 +19,26 @@ public record Column
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new Column type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Column FromProto(ProtoDataV1Grpc.Column value)
     {
-        return JsonUtils.Serialize(this);
+        return new Column
+        {
+            Id = value.Id,
+            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+        };
     }
 
     /// <summary>
@@ -45,18 +63,8 @@ public record Column
         return result;
     }
 
-    /// <summary>
-    /// Returns a new Column type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static Column FromProto(ProtoDataV1Grpc.Column value)
+    public override string ToString()
     {
-        return new Column
-        {
-            Id = value.Id,
-            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-            IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

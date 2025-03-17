@@ -1,7 +1,9 @@
-import { HttpEndpoint } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { OpenAPIV3_1 } from "openapi-types";
 
-import { ErrorCollector } from "../../../ErrorCollector";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
+
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -23,13 +25,13 @@ export class OperationConverter extends AbstractOperationConverter {
         this.idempotent = idempotent;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): OperationConverter.Output | undefined {
+    }): Promise<OperationConverter.Output | undefined> {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -39,24 +41,22 @@ export class OperationConverter extends AbstractOperationConverter {
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
 
-        const { headers, pathParameters, queryParameters } = this.convertParameters({
+        const { headers, pathParameters, queryParameters } = await this.convertParameters({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const requestBody = this.convertRequestBody({
+        const convertedRequestBody = await this.convertRequestBody({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method
         });
-        if (requestBody === null) {
-            return undefined;
-        }
+        const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
-        const response = this.convertResponseBody({
+        const response = await this.convertResponseBody({
             context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "responses"],
@@ -78,10 +78,10 @@ export class OperationConverter extends AbstractOperationConverter {
                 headers,
                 requestBody,
                 sdkRequest: undefined,
-                response,
+                response: response?.value,
                 errors: [],
                 auth: this.operation.security != null || context.spec.security != null,
-                availability: context.getAvailability({
+                availability: await context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
@@ -98,5 +98,17 @@ export class OperationConverter extends AbstractOperationConverter {
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private convertExamples({
+        requestExamples,
+        responseExamples,
+        context
+    }: {
+        requestExamples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        responseExamples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        context: OpenAPIConverterContext3_1;
+    }): ExampleEndpointCall[] {
+        return [];
     }
 }

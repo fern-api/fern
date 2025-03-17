@@ -11,6 +11,7 @@ public record ReqWithHeaders
     [JsonIgnore]
     public required string XTestEndpointHeader { get; set; }
 
+    [JsonIgnore]
     public required string Body { get; set; }
 
     public override string ToString()

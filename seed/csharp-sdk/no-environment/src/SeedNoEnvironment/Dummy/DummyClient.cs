@@ -14,11 +14,9 @@ public partial class DummyClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Dummy.GetDummyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetDummyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

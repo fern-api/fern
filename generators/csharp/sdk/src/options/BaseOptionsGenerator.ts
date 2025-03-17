@@ -1,4 +1,7 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
+
+import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -98,6 +101,27 @@ export class BaseOptionsGenerator {
         });
     }
 
+    public maybeGetLiteralHeaderField({
+        header,
+        options
+    }: {
+        header: HttpHeader;
+        options: OptionArgs;
+    }): csharp.Field | undefined {
+        if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+            return undefined;
+        }
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: header.name.name.pascalCase.safeName,
+            get: true,
+            init: true,
+            type: this.getLiteralRootClientParameterType({ literal: header.valueType.container.literal }),
+            summary: header.docs,
+            initializer: options.includeInitializer ? csharp.codeblock("null") : undefined
+        });
+    }
+
     public getRequestOptionFields(): csharp.Field[] {
         const optionArgs: OptionArgs = {
             optional: true,
@@ -112,7 +136,13 @@ export class BaseOptionsGenerator {
                 interfaceReference: this.context.getRequestOptionsInterfaceReference()
             }),
             this.getMaxRetriesField(optionArgs),
-            this.getTimeoutField(optionArgs)
+            this.getTimeoutField(optionArgs),
+            this.getQueryParametersField({
+                optional: false,
+                includeInitializer: true
+            }),
+            this.getBodyPropertiesField(optionArgs),
+            ...this.getLiteralHeaderOptions(optionArgs)
         ];
     }
 
@@ -126,7 +156,9 @@ export class BaseOptionsGenerator {
             this.getHttpClientField(optionArgs),
             this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
             this.getMaxRetriesField(optionArgs),
-            this.getTimeoutField(optionArgs)
+            this.getTimeoutField(optionArgs),
+            this.getQueryParametersField({ optional: false, includeInitializer: false }),
+            this.getBodyPropertiesField(optionArgs)
         ];
     }
 
@@ -141,5 +173,56 @@ export class BaseOptionsGenerator {
                 summary: header.docs
             })
         );
+    }
+
+    public getLiteralHeaderOptions(optionArgs: OptionArgs): csharp.Field[] {
+        const fields: csharp.Field[] = [];
+        for (const header of this.context.ir.headers) {
+            const field = this.maybeGetLiteralHeaderField({ header, options: optionArgs });
+            if (field != null) {
+                fields.push(field);
+            }
+        }
+        return fields;
+    }
+
+    private getLiteralRootClientParameterType({ literal }: { literal: Literal }): csharp.Type {
+        switch (literal.type) {
+            case "string":
+                return csharp.Type.optional(csharp.Type.string());
+            case "boolean":
+                return csharp.Type.optional(csharp.Type.boolean());
+            default:
+                assertNever(literal);
+        }
+    }
+
+    private getQueryParametersField({ includeInitializer }: OptionArgs): csharp.Field {
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: "AdditionalQueryParameters",
+            type: this.context.getAdditionalQueryParametersType(),
+            summary: "Additional query parameters sent with the request.",
+            get: true,
+            init: true,
+            skipDefaultInitializer: true,
+            initializer: includeInitializer
+                ? csharp.codeblock((writer) => {
+                      writer.writeNode(this.context.getEnumerableEmptyKeyValuePairsInitializer());
+                  })
+                : undefined
+        });
+    }
+
+    private getBodyPropertiesField({ includeInitializer }: OptionArgs): csharp.Field {
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: "AdditionalBodyProperties",
+            type: this.context.getAdditionalBodyPropertiesType(),
+            summary: "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
+            get: true,
+            init: true,
+            initializer: includeInitializer ? csharp.codeblock("null") : undefined
+        });
     }
 }

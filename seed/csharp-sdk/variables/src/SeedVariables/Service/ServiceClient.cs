@@ -14,11 +14,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.PostAsync("endpointParam");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task PostAsync(
         string endpointParam,
         RequestOptions? options = null,
@@ -31,7 +29,7 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(endpointParam)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
                     Options = options,
                 },
                 cancellationToken

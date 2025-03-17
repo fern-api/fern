@@ -1,7 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -43,6 +42,7 @@ export function buildQueryParameter({
     if (
         queryParameter.description == null &&
         !typeReference.allowMultiple &&
+        queryParameterDefault == null &&
         queryParameter.parameterNameOverride == null &&
         queryParameter.availability == null
     ) {

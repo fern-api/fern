@@ -9,9 +9,15 @@ from .types import (
     FieldValue_ContainerValue,
     FieldValue_ObjectValue,
     FieldValue_PrimitiveValue,
+    FirstUnion,
+    FirstUnionFirstElement,
+    FirstUnionSecondElement,
     ObjectFieldValue,
     ObjectValue,
     PrimitiveValue,
+    SecondUnion,
+    SecondUnionFirstElement,
+    SecondUnionSecondElement,
 )
 
 __all__ = [
@@ -23,7 +29,13 @@ __all__ = [
     "FieldValue_ContainerValue",
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
+    "FirstUnion",
+    "FirstUnionFirstElement",
+    "FirstUnionSecondElement",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
+    "SecondUnion",
+    "SecondUnionFirstElement",
+    "SecondUnionSecondElement",
 ]

@@ -452,6 +452,8 @@ types:
       - form
 
   FileSchema:
+    extends:
+      - commons.WithDescription
     properties:
       isOptional: boolean
       isArray: boolean

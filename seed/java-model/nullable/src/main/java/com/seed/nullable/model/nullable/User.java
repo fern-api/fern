@@ -19,19 +19,39 @@ import java.util.Optional;
 public final class User {
     private final String name;
 
+    private final String id;
+
     private final Optional<List<String>> tags;
 
     private final Optional<Metadata> metadata;
 
-    private User(String name, Optional<List<String>> tags, Optional<Metadata> metadata) {
+    private final Optional<String> email;
+
+    private final WeirdNumber favoriteNumber;
+
+    private User(
+            String name,
+            String id,
+            Optional<List<String>> tags,
+            Optional<Metadata> metadata,
+            Optional<String> email,
+            WeirdNumber favoriteNumber) {
         this.name = name;
+        this.id = id;
         this.tags = tags;
         this.metadata = metadata;
+        this.email = email;
+        this.favoriteNumber = favoriteNumber;
     }
 
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     @JsonProperty("tags")
@@ -44,6 +64,16 @@ public final class User {
         return metadata;
     }
 
+    @JsonProperty("email")
+    public Optional<String> getEmail() {
+        return email;
+    }
+
+    @JsonProperty("favorite-number")
+    public WeirdNumber getFavoriteNumber() {
+        return favoriteNumber;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -51,12 +81,17 @@ public final class User {
     }
 
     private boolean equalTo(User other) {
-        return name.equals(other.name) && tags.equals(other.tags) && metadata.equals(other.metadata);
+        return name.equals(other.name)
+                && id.equals(other.id)
+                && tags.equals(other.tags)
+                && metadata.equals(other.metadata)
+                && email.equals(other.email)
+                && favoriteNumber.equals(other.favoriteNumber);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.tags, this.metadata);
+        return Objects.hash(this.name, this.id, this.tags, this.metadata, this.email, this.favoriteNumber);
     }
 
     @java.lang.Override
@@ -69,9 +104,17 @@ public final class User {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        IdStage name(String name);
 
         Builder from(User other);
+    }
+
+    public interface IdStage {
+        FavoriteNumberStage id(String id);
+    }
+
+    public interface FavoriteNumberStage {
+        _FinalStage favoriteNumber(WeirdNumber favoriteNumber);
     }
 
     public interface _FinalStage {
@@ -84,11 +127,21 @@ public final class User {
         _FinalStage metadata(Optional<Metadata> metadata);
 
         _FinalStage metadata(Metadata metadata);
+
+        _FinalStage email(Optional<String> email);
+
+        _FinalStage email(String email);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, _FinalStage {
+    public static final class Builder implements NameStage, IdStage, FavoriteNumberStage, _FinalStage {
         private String name;
+
+        private String id;
+
+        private WeirdNumber favoriteNumber;
+
+        private Optional<String> email = Optional.empty();
 
         private Optional<Metadata> metadata = Optional.empty();
 
@@ -99,15 +152,45 @@ public final class User {
         @java.lang.Override
         public Builder from(User other) {
             name(other.getName());
+            id(other.getId());
             tags(other.getTags());
             metadata(other.getMetadata());
+            email(other.getEmail());
+            favoriteNumber(other.getFavoriteNumber());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
+        public IdStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public FavoriteNumberStage id(String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("favorite-number")
+        public _FinalStage favoriteNumber(WeirdNumber favoriteNumber) {
+            this.favoriteNumber = Objects.requireNonNull(favoriteNumber, "favoriteNumber must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(String email) {
+            this.email = Optional.ofNullable(email);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "email", nulls = Nulls.SKIP)
+        public _FinalStage email(Optional<String> email) {
+            this.email = email;
             return this;
         }
 
@@ -139,7 +222,7 @@ public final class User {
 
         @java.lang.Override
         public User build() {
-            return new User(name, tags, metadata);
+            return new User(name, id, tags, metadata, email, favoriteNumber);
         }
     }
 }

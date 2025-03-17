@@ -1814,6 +1814,83 @@
         ]
       }
     },
+    "type_types:UnionWithDuplicatePrimitive": {
+      "name": "UnionWithDuplicatePrimitive",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "integer1",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "integer2",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "string1",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "string2",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "type_types:UnionWithoutKey": {
       "name": "UnionWithoutKey",
       "shape": {
@@ -1842,8 +1919,8 @@
         ]
       }
     },
-    "type_types:UnionWithUnknown": {
-      "name": "UnionWithUnknown",
+    "type_types:UnionWithNoProperties": {
+      "name": "UnionWithNoProperties",
       "shape": {
         "type": "discriminatedUnion",
         "discriminant": "type",
@@ -1858,7 +1935,39 @@
             }
           },
           {
-            "discriminantValue": "unknown",
+            "discriminantValue": "empty",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_types:UnionWithMultipleNoProperties": {
+      "name": "UnionWithMultipleNoProperties",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "foo",
+            "additionalProperties": {
+              "extends": [
+                "type_types:Foo"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "empty1",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "empty2",
             "additionalProperties": {
               "extends": [],
               "properties": []
@@ -2111,6 +2220,60 @@
         ]
       }
     },
+    "type_types:UnionWithDuplicateTypes": {
+      "name": "UnionWithDuplicateTypes",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "foo1",
+            "additionalProperties": {
+              "extends": [
+                "type_types:Foo"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "foo2",
+            "additionalProperties": {
+              "extends": [
+                "type_types:Foo"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_types:UnionWithSubTypes": {
+      "name": "UnionWithSubTypes",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "foo",
+            "additionalProperties": {
+              "extends": [
+                "type_types:Foo"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "fooExtended",
+            "additionalProperties": {
+              "extends": [
+                "type_types:FooExtended"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
     "type_types:Foo": {
       "name": "Foo",
       "shape": {
@@ -2123,6 +2286,26 @@
               "type": "primitive",
               "value": {
                 "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_types:FooExtended": {
+      "name": "FooExtended",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "type_types:Foo"
+        ],
+        "properties": [
+          {
+            "key": "age",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
               }
             }
           }
@@ -2566,14 +2749,19 @@
         "type_types:Union",
         "type_types:UnionWithDiscriminant",
         "type_types:UnionWithPrimitive",
+        "type_types:UnionWithDuplicatePrimitive",
         "type_types:UnionWithoutKey",
-        "type_types:UnionWithUnknown",
+        "type_types:UnionWithNoProperties",
+        "type_types:UnionWithMultipleNoProperties",
         "type_types:UnionWithLiteral",
         "type_types:UnionWithBaseProperties",
         "type_types:UnionWithTime",
         "type_types:UnionWithOptionalTime",
         "type_types:UnionWithSingleElement",
+        "type_types:UnionWithDuplicateTypes",
+        "type_types:UnionWithSubTypes",
         "type_types:Foo",
+        "type_types:FooExtended",
         "type_types:Bar"
       ],
       "subpackages": []

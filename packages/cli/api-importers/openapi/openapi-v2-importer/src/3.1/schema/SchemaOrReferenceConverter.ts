@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaConverter } from "./SchemaConverter";
 
@@ -46,15 +45,15 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         this.wrapAsNullable = wrapAsNullable;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): SchemaOrReferenceConverter.Output | undefined {
+    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         if (context.isReferenceObject(this.schemaOrReference)) {
-            const response = context.convertReferenceToTypeReference(this.schemaOrReference);
+            const response = await context.convertReferenceToTypeReference(this.schemaOrReference);
             if (!response.ok) {
                 return undefined;
             }
@@ -67,12 +66,12 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             schema: this.schemaOrReference,
             id: schemaId
         });
-        const availability = context.getAvailability({
+        const availability = await context.getAvailability({
             node: this.schemaOrReference,
             breadcrumbs: this.breadcrumbs,
             errorCollector
         });
-        const convertedSchema = schemaConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaConverter.convert({ context, errorCollector });
 
         if (convertedSchema != null) {
             if (convertedSchema.typeDeclaration.shape.type === "alias") {

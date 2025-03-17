@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
@@ -28,13 +27,13 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
         this.schema = schema;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): ArraySchemaConverter.Output | undefined {
+    }): Promise<ArraySchemaConverter.Output | undefined> {
         if (this.schema.items == null) {
             return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
         }
@@ -44,7 +43,7 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
             schemaOrReference: this.schema.items
         });
 
-        const convertedSchema = schemaOrReferenceConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
         if (convertedSchema != null) {
             return {
                 typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),

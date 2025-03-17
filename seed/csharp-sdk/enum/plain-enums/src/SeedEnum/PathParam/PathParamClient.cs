@@ -15,11 +15,9 @@ public partial class PathParamClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task SendAsync(
         Operand operand,
         OneOf<Color, Operand> operandOrColor,
@@ -33,8 +31,11 @@ public partial class PathParamClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"path/{JsonUtils.SerializeAsString(operand)}/{JsonUtils.SerializeAsString(operandOrColor)}",
+                    Path = string.Format(
+                        "path/{0}/{1}",
+                        ValueConvert.ToPathParameterString(operand),
+                        ValueConvert.ToPathParameterString(operandOrColor)
+                    ),
                     Options = options,
                 },
                 cancellationToken

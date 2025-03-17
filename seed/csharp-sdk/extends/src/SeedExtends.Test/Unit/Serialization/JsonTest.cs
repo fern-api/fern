@@ -1,9 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtends;
+using SeedExtends.Core;
 
 namespace SeedExtends.Test;
 
@@ -11,25 +9,39 @@ namespace SeedExtends.Test;
 public class JsonTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "docs": "Types extend this type to include a docs and json property.",
+              "raw": "{\"docs\": true, \"json\": true}"
+            }
+            """;
+        var expectedObject = new Json
+        {
+            Docs = "Types extend this type to include a docs and json property.",
+            Raw = "{\"docs\": true, \"json\": true}",
+        };
+        var deserializedObject = JsonUtils.Deserialize<Json>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var expectedJson = """
+            {
+              "docs": "Types extend this type to include a docs and json property.",
+              "raw": "{\"docs\": true, \"json\": true}"
+            }
+            """;
+        var actualObj = new Json
         {
-          ""docs"": ""Types extend this type to include a docs and json property."",
-          ""raw"": ""{\""docs\"": true, \""json\"": true}""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Docs = "Types extend this type to include a docs and json property.",
+            Raw = "{\"docs\": true, \"json\": true}",
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Json>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

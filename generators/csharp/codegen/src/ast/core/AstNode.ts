@@ -1,6 +1,4 @@
-import { execSync } from "child_process";
-
-import { AbstractAstNode } from "@fern-api/base-generator";
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { Writer } from "./Writer";
@@ -22,7 +20,7 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences,
         rootNamespace,
         customConfig,
-        format = false,
+        formatter,
         skipImports = false
     }: {
         namespace: string;
@@ -30,7 +28,7 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences: Map<string, Set<Namespace>>;
         rootNamespace: string;
         customConfig: BaseCsharpCustomConfigSchema;
-        format?: boolean;
+        formatter?: AbstractFormatter;
         skipImports?: boolean;
     }): string {
         const writer = new Writer({
@@ -42,19 +40,21 @@ export abstract class AstNode extends AbstractAstNode {
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
-        return format ? AstNode.toFormattedSnippet(stringNode) : stringNode;
+        return formatter != null ? formatter.formatSync(stringNode) : stringNode;
     }
 
     public toFormattedSnippet({
         allNamespaceSegments,
         allTypeClassReferences,
         rootNamespace,
-        customConfig
+        customConfig,
+        formatter
     }: {
         allNamespaceSegments: Set<string>;
         allTypeClassReferences: Map<string, Set<Namespace>>;
         rootNamespace: string;
         customConfig: BaseCsharpCustomConfigSchema;
+        formatter: AbstractFormatter;
     }): FormattedAstNodeSnippet {
         const writer = new Writer({
             namespace: "",
@@ -66,24 +66,7 @@ export abstract class AstNode extends AbstractAstNode {
         this.write(writer);
         return {
             imports: writer.importsToString(),
-            body: AstNode.toFormattedSnippet(writer.buffer)
+            body: formatter.formatSync(writer.buffer)
         };
-    }
-
-    /**
-     * function for formatting snippets, useful in testing
-     */
-    private static toFormattedSnippet(code: string): string {
-        code += ";";
-        try {
-            const finalCode = AstNode.formatCSharpCode(code);
-            return finalCode;
-        } catch (e: unknown) {
-            return code;
-        }
-    }
-
-    private static formatCSharpCode(code: string): string {
-        return execSync("dotnet csharpier", { input: code, encoding: "utf-8" });
     }
 }

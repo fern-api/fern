@@ -167,18 +167,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
         }
+        const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+            requestType: endpointSignatureInfo.request?.getRequestType(),
+            endpoint,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            endpointRequest: endpointSignatureInfo.request
+        });
+        if (apiRequestCodeBlock.code) {
+            writer.writeNode(apiRequestCodeBlock.code);
+        }
+
         writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
         writer.writeNodeStatement(
             rawClient.sendRequestWithRequestWrapper({
-                request: rawClient.createHttpRequestWrapper({
-                    baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-                    requestType: endpointSignatureInfo.request?.getRequestType(),
-                    endpoint,
-                    bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                    pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                    headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                    queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
-                }),
+                request: apiRequestCodeBlock.requestReference,
                 clientReference: rawClientReference
             })
         );
@@ -437,7 +443,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: OffsetPagination;
         requestParam?: csharp.Parameter;
-        requestOptionsType: csharp.Type;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
         unpagedEndpointResponseType: csharp.Type;
         itemType: csharp.Type;
         writer: csharp.Writer;
@@ -519,9 +525,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         pagination: CursorPagination;
         requestParam?: csharp.Parameter;
-        requestOptionsType: csharp.Type;
-        unpagedEndpointResponseType: csharp.Type;
-        itemType: csharp.Type;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        unpagedEndpointResponseType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
         writer: csharp.Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
@@ -607,18 +613,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
         }
+
+        const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+            requestType: endpointSignatureInfo.request?.getRequestType(),
+            endpoint,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            endpointRequest: endpointSignatureInfo.request
+        });
+        if (apiRequestCodeBlock.code) {
+            writer.writeNode(apiRequestCodeBlock.code);
+        }
         writer.write(`var ${HTTP_REQUEST_VARIABLE_NAME} = `);
         writer.writeNodeStatement(
             rawClient.createHttpRequest({
-                request: rawClient.createHttpRequestWrapper({
-                    baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-                    requestType: endpointSignatureInfo.request?.getRequestType(),
-                    endpoint,
-                    bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                    pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                    headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                    queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
-                }),
+                request: apiRequestCodeBlock.requestReference,
                 clientReference: rawClientReference
             })
         );

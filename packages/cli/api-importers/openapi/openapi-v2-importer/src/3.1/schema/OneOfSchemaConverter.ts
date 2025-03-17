@@ -8,9 +8,8 @@ import {
     TypeId,
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
+import { AbstractConverter, ErrorCollector, convertNumberToSnakeCase } from "@fern-api/v2-importer-commons";
 
-import { AbstractConverter } from "../../AbstractConverter";
-import { ErrorCollector } from "../../ErrorCollector";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
@@ -38,26 +37,26 @@ export class OneOfSchemaConverter extends AbstractConverter<
         this.schema = schema;
     }
 
-    public convert({
+    public async convert({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): OneOfSchemaConverter.Output | undefined {
+    }): Promise<OneOfSchemaConverter.Output | undefined> {
         if (this.schema.discriminator != null) {
-            return this.convertAsDiscriminatedUnion({ context, errorCollector });
+            return await this.convertAsDiscriminatedUnion({ context, errorCollector });
         }
         return this.convertAsUndiscriminatedUnion({ context, errorCollector });
     }
 
-    private convertAsDiscriminatedUnion({
+    private async convertAsDiscriminatedUnion({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): OneOfSchemaConverter.Output | undefined {
+    }): Promise<OneOfSchemaConverter.Output | undefined> {
         const unionTypes: SingleUnionType[] = [];
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
@@ -72,7 +71,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             });
             const typeId = context.getTypeIdFromSchemaReference({ $ref: reference });
 
-            const convertedSchema = singleUnionTypeSchemaConverter.convert({ context, errorCollector });
+            const convertedSchema = await singleUnionTypeSchemaConverter.convert({ context, errorCollector });
 
             if (convertedSchema?.type != null && typeId != null) {
                 const nameAndWireValue = context.casingsGenerator.generateNameAndWireValue({
@@ -116,13 +115,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private convertAsUndiscriminatedUnion({
+    private async convertAsUndiscriminatedUnion({
         context,
         errorCollector
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): OneOfSchemaConverter.Output | undefined {
+    }): Promise<OneOfSchemaConverter.Output | undefined> {
         if (!this.schema.oneOf || this.schema.oneOf.length === 0) {
             return undefined;
         }
@@ -131,11 +130,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         for (const [index, subSchema] of this.schema.oneOf.entries()) {
-            const subBreadcrumbs = [...this.breadcrumbs, "oneOf", index.toString()];
+            const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
             // if subschema is a reference
             if (context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = context.convertReferenceToTypeReference(subSchema);
+                const maybeTypeReference = await context.convertReferenceToTypeReference(subSchema);
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
@@ -152,7 +151,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: subBreadcrumbs,
                 schema: subSchema
             });
-            const convertedSchema = schemaConverter.convert({ context, errorCollector });
+            const convertedSchema = await schemaConverter.convert({ context, errorCollector });
             if (convertedSchema != null) {
                 unionTypes.push({
                     type: context.createNamedTypeReference(schemaId),

@@ -5,20 +5,29 @@
 import * as serializers from "../../../index";
 import * as SeedNullable from "../../../../api/index";
 import * as core from "../../../../core";
+import { UserId } from "./UserId";
 import { Metadata } from "./Metadata";
+import { Email } from "./Email";
+import { WeirdNumber } from "./WeirdNumber";
 
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNullable.User> = core.serialization.object(
     {
         name: core.serialization.string(),
+        id: UserId,
         tags: core.serialization.list(core.serialization.string()).nullable(),
         metadata: Metadata.optionalNullable(),
+        email: Email,
+        favoriteNumber: core.serialization.property("favorite-number", WeirdNumber),
     },
 );
 
 export declare namespace User {
     export interface Raw {
         name: string;
+        id: UserId.Raw;
         tags: string[] | null;
         metadata?: (Metadata.Raw | null) | null;
+        email: Email.Raw;
+        "favorite-number": WeirdNumber.Raw;
     }
 }

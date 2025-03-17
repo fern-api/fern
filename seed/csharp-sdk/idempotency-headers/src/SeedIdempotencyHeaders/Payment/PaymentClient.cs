@@ -15,11 +15,9 @@ public partial class PaymentClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
         IdempotentRequestOptions? options = null,
@@ -62,11 +60,9 @@ public partial class PaymentClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Payment.DeleteAsync("paymentId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteAsync(
         string paymentId,
         RequestOptions? options = null,
@@ -79,7 +75,10 @@ public partial class PaymentClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/payment/{JsonUtils.SerializeAsString(paymentId)}",
+                    Path = string.Format(
+                        "/payment/{0}",
+                        ValueConvert.ToPathParameterString(paymentId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

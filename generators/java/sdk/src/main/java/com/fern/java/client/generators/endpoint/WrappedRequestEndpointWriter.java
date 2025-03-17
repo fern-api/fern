@@ -17,7 +17,6 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
@@ -43,19 +42,14 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.io.File;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
@@ -70,7 +64,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
     private final SdkRequest sdkRequest;
-
     private final String requestParameterName;
 
     public WrappedRequestEndpointWriter(
@@ -83,7 +76,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             SdkRequest sdkRequest,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedWrappedRequest generatedWrappedRequest,
-            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
+            AbstractHttpResponseParserGenerator responseParserGenerator,
+            HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory,
+            AbstractEndpointWriterVariableNameContext variables,
+            ClassName apiErrorClassName,
+            ClassName baseErrorClassName) {
         super(
                 httpService,
                 httpEndpoint,
@@ -92,50 +89,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 clientOptionsField,
                 generatedClientOptions,
                 generatedEnvironmentsClass,
-                generatedErrors);
+                responseParserGenerator,
+                httpEndpointMethodSpecsFactory,
+                variables,
+                apiErrorClassName,
+                baseErrorClassName);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
         this.requestParameterName =
                 sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
-    }
-
-    @Override
-    public Optional<SdkRequest> sdkRequest() {
-        return Optional.of(this.sdkRequest);
-    }
-
-    @Override
-    public List<EnrichedObjectProperty> getQueryParams() {
-        return generatedWrappedRequest.queryParams();
-    }
-
-    @Override
-    public List<ParameterSpec> additionalParameters() {
-        List<ParameterSpec> parameterSpecs = new ArrayList<>();
-        if (generatedWrappedRequest.requestBodyGetter().isPresent()
-                && generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
-            FileUploadRequestBodyGetters fileUploadRequest = (FileUploadRequestBodyGetters)
-                    (generatedWrappedRequest.requestBodyGetter().get());
-            fileUploadRequest.fileProperties().forEach(fileProperty -> {
-                ParameterSpec fileParameter = ParameterSpec.builder(
-                                fileProperty.visit(new FilePropertyIsOptional())
-                                        ? ParameterizedTypeName.get(Optional.class, File.class)
-                                        : ClassName.get(File.class),
-                                getFilePropertyParameterName(fileProperty))
-                        .build();
-                parameterSpecs.add(fileParameter);
-            });
-        }
-        parameterSpecs.add(requestParameterSpec().get());
-        return parameterSpecs;
-    }
-
-    @Override
-    public Optional<ParameterSpec> requestParameterSpec() {
-        return Optional.of(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
-                .build());
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -166,15 +130,18 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
-                initializeRequestBody(generatedObjectMapper, getRequestBodyPropertiesName(), requestBodyCodeBlock);
+                initializeRequestBody(
+                        generatedObjectMapper, variables.getRequestBodyPropertiesName(), requestBodyCodeBlock);
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
                 FileUploadRequestBodyGetters fileUploadRequestBodyGetter = ((FileUploadRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock, generatedObjectMapper);
-                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$L.build()", getOkhttpRequestBodyName()));
+                inlinedRequestBodyBuilder =
+                        Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
             }
         } else {
-            if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
             } else {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
@@ -197,7 +164,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(")\n");
         } else {
             requestBodyCodeBlock.add(
-                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName());
+                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
         requestBodyCodeBlock.add(
@@ -205,7 +172,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 Headers.class,
                 clientOptionsMember.name,
                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock.add("\n.addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
@@ -238,7 +205,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             }
         }
         requestBodyCodeBlock.addStatement(
-                "$T $L = $L.build()", Request.class, getOkhttpRequestName(), REQUEST_BUILDER_NAME);
+                "$T $L = $L.build()", Request.class, variables.getOkhttpRequestName(), REQUEST_BUILDER_NAME);
         return requestBodyCodeBlock.build();
     }
 
@@ -247,7 +214,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T $L = new $T<>()",
                 ParameterizedTypeName.get(Map.class, String.class, Object.class),
-                getRequestBodyPropertiesName(),
+                variables.getRequestBodyPropertiesName(),
                 HashMap.class);
         for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
             if (typeNameIsOptional(bodyProperty.poetTypeName())) {
@@ -256,14 +223,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
                         .addStatement(
                                 "$L.put($S, $L)",
-                                getRequestBodyPropertiesName(),
+                                variables.getRequestBodyPropertiesName(),
                                 bodyProperty.wireKey().get(),
                                 requestParameterName + "." + bodyProperty.getterProperty().name + "()")
                         .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(
                         "$L.put($S, $L)",
-                        getRequestBodyPropertiesName(),
+                        variables.getRequestBodyPropertiesName(),
                         bodyProperty.wireKey().get(),
                         requestParameterName + "." + bodyProperty.getterProperty().name + "()");
             }
@@ -281,18 +248,18 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         }
 
         requestBodyCodeBlock
-                .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
+                .addStatement("$T $L", RequestBody.class, variables.getOkhttpRequestBodyName())
                 .beginControlFlow("try");
         if (isOptional) {
             // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
             requestBodyCodeBlock
-                    .addStatement("$L = $T.create(\"\", null)", getOkhttpRequestBodyName(), RequestBody.class)
+                    .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
                     .beginControlFlow("if ($N.isPresent())", variableToJsonify);
         }
         requestBodyCodeBlock
                 .addStatement(
                         "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
-                        getOkhttpRequestBodyName(),
+                        variables.getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
@@ -316,7 +283,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T.Builder $L = new $T.Builder().setType($T.FORM)",
                 MultipartBody.class,
-                getMultipartBodyPropertiesName(),
+                variables.getMultipartBodyPropertiesName(),
                 MultipartBody.class,
                 MultipartBody.class);
         requestBodyCodeBlock.beginControlFlow("try");
@@ -339,7 +306,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     addDataPart = CodeBlock.of(
                             "$T.addFormDataPart($L, $S, $L, false)",
                             clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                            getMultipartBodyPropertiesName(),
+                            variables.getMultipartBodyPropertiesName(),
                             jsonProperty.wireKey().get(),
                             requestParameterName + "." + jsonProperty.getterProperty().name + "()"
                                     + (isOptional ? ".get()" : ""));
@@ -366,7 +333,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
                     dataPartBuilder.add(
                             "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
-                            getMultipartBodyPropertiesName(),
+                            variables.getMultipartBodyPropertiesName(),
                             jsonProperty.wireKey().get(),
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
@@ -402,10 +369,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         filePropertyKey.getName().getCamelCase().getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
-                String filePropertyParameterName = getFilePropertyParameterName(fileProperty);
+                String filePropertyParameterName =
+                        WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
+                                clientGeneratorContext, fileProperty);
                 if (fileProperty.visit(new FilePropertyIsOptional())) {
                     requestBodyCodeBlock
-                            .beginControlFlow("if ($N.isPresent())", getFilePropertyParameterName(fileProperty))
+                            .beginControlFlow("if ($N.isPresent())", filePropertyParameterName)
                             .addStatement(
                                     "String $L = $T.probeContentType($L.get().toPath())",
                                     mimeTypeVariableName,
@@ -420,7 +389,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     mimeTypeVariableName)
                             .addStatement(
                                     "$L.addFormDataPart($S, $L.get().getName(), $T.create($L, $L.get()))",
-                                    getMultipartBodyPropertiesName(),
+                                    variables.getMultipartBodyPropertiesName(),
                                     filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
@@ -443,12 +412,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     mimeTypeVariableName)
                             .addStatement(
                                     "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L))",
-                                    getMultipartBodyPropertiesName(),
+                                    variables.getMultipartBodyPropertiesName(),
                                     filePropertyKey.getWireValue(),
-                                    getFilePropertyParameterName(fileProperty),
+                                    filePropertyParameterName,
                                     RequestBody.class,
                                     mediaTypeVariableName,
-                                    getFilePropertyParameterName(fileProperty));
+                                    filePropertyParameterName);
                 }
             }
         }
@@ -462,14 +431,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
-    }
-
-    private static String getFilePropertyParameterName(FileProperty fileProperty) {
-        return fileProperty
-                .visit(new GetFilePropertyKey())
-                .getName()
-                .getCamelCase()
-                .getSafeName();
     }
 
     private static final class TypeReferenceIsCollection

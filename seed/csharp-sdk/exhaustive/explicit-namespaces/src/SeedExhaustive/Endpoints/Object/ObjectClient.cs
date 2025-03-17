@@ -16,8 +16,7 @@ public partial class ObjectClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -36,8 +35,7 @@ public partial class ObjectClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
@@ -80,13 +78,11 @@ public partial class ObjectClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -129,8 +125,7 @@ public partial class ObjectClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
     ///     new ObjectWithMapOfMap
     ///     {
@@ -143,8 +138,7 @@ public partial class ObjectClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
         ObjectWithMapOfMap request,
         RequestOptions? options = null,
@@ -187,8 +181,7 @@ public partial class ObjectClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
     ///     new NestedObjectWithOptionalField
     ///     {
@@ -211,8 +204,7 @@ public partial class ObjectClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request,
         RequestOptions? options = null,
@@ -255,8 +247,7 @@ public partial class ObjectClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
     ///     "string",
     ///     new NestedObjectWithRequiredField
@@ -280,8 +271,7 @@ public partial class ObjectClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
         NestedObjectWithRequiredField request,
@@ -295,8 +285,10 @@ public partial class ObjectClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/object/get-and-return-nested-with-required-field/{JsonUtils.SerializeAsString(string_)}",
+                    Path = string.Format(
+                        "/object/get-and-return-nested-with-required-field/{0}",
+                        ValueConvert.ToPathParameterString(string_)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -326,8 +318,7 @@ public partial class ObjectClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
     ///     new List&lt;NestedObjectWithRequiredField&gt;()
     ///     {
@@ -373,8 +364,7 @@ public partial class ObjectClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
         IEnumerable<NestedObjectWithRequiredField> request,
         RequestOptions? options = null,

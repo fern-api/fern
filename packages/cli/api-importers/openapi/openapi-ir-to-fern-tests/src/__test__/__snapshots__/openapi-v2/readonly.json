@@ -142,22 +142,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "UserSettings",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "userSettings",
+                  "safeName": "userSettings"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "user_settings",
+                  "safeName": "user_settings"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "USER_SETTINGS",
+                  "safeName": "USER_SETTINGS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "UserSettings",
+                  "safeName": "UserSettings"
                 }
               },
               "typeId": "UserSettings",
@@ -398,22 +398,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "UserSettings",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "userSettings",
+                  "safeName": "userSettings"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "user_settings",
+                  "safeName": "user_settings"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "USER_SETTINGS",
+                  "safeName": "USER_SETTINGS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "UserSettings",
+                  "safeName": "UserSettings"
                 }
               },
               "typeId": "UserSettings",
@@ -450,22 +450,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "UserStats",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "userStats",
+                  "safeName": "userStats"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "user_stats",
+                  "safeName": "user_stats"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "USER_STATS",
+                  "safeName": "USER_STATS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "UserStats",
+                  "safeName": "UserStats"
                 }
               },
               "typeId": "UserStats",
@@ -1030,22 +1030,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "UserCreate",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "userCreate",
+                  "safeName": "userCreate"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "user_create",
+                  "safeName": "user_create"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "USER_CREATE",
+                  "safeName": "USER_CREATE"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "UserCreate",
+                  "safeName": "UserCreate"
                 }
               },
               "typeId": "UserCreate",
@@ -1064,22 +1064,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "User",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "USER",
+                      "safeName": "USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "User",
+                      "safeName": "User"
                     }
                   },
                   "typeId": "User",
@@ -2776,22 +2776,22 @@
                     "packagePath": []
                   },
                   "name": {
-                    "originalName": "",
+                    "originalName": "User",
                     "camelCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "snakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "user",
+                      "safeName": "user"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "USER",
+                      "safeName": "USER"
                     },
                     "pascalCase": {
-                      "unsafeName": "",
-                      "safeName": ""
+                      "unsafeName": "User",
+                      "safeName": "User"
                     }
                   },
                   "typeId": "User",

@@ -13,7 +13,8 @@ export function generateDynamicIR({
     language,
     audiences,
     keywords,
-    smartCasing
+    smartCasing,
+    disableDynamicExamples
 }: {
     spec: Spec;
     language: generatorsYml.GenerationLanguage;
@@ -45,6 +46,7 @@ function generateDynamicIRFromOpenAPI({
     audiences?: Audiences;
     keywords?: string[];
     smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
 }): dynamic.DynamicIntermediateRepresentation {
     const context = createTaskContext();
     const workspace = convertSpecToWorkspace({ context, spec });
@@ -57,6 +59,7 @@ function generateDynamicIRFromOpenAPI({
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
         exampleGeneration: { disabled: true },
+        disableDynamicExamples,
         version: undefined,
         packageName: undefined,
         readme: undefined

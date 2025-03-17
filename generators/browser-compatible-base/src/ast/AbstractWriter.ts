@@ -10,6 +10,8 @@ export class AbstractWriter {
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
     private hasWrittenAnything = false;
+    /* Whether the last character written was a semi colon */
+    private lastCharacterIsSemicolon = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
 
@@ -180,6 +182,12 @@ export class AbstractWriter {
         this.writeInternal("\n");
     }
 
+    public writeSemicolonIfLastCharacterIsNot(): void {
+        if (!this.lastCharacterIsSemicolon) {
+            this.writeInternal(";");
+        }
+    }
+
     public writeNewLineIfLastLineNot(): void {
         if (!this.lastCharacterIsNewline) {
             this.writeInternal("\n");
@@ -230,6 +238,7 @@ export class AbstractWriter {
         if (text.length > 0) {
             this.hasWrittenAnything = true;
             this.lastCharacterIsNewline = text.endsWith("\n");
+            this.lastCharacterIsSemicolon = text.endsWith(";");
         }
         return (this.buffer += text);
     }

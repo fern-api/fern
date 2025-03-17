@@ -11,6 +11,10 @@
     {
       "name": "public",
       "url": "wss://api.deepgram.com"
+    },
+    {
+      "name": "agent",
+      "url": "wss://agent.deepgram.com"
     }
   ],
   "tags": {
@@ -22581,15 +22585,15 @@
       "handshake": {
         "headers": [
           {
-            "name": "Sec-Websocket-Protocol",
-            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "name": "Authorization",
+            "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
               "schema": {
-                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
               "generatedName": "",
-              "title": "SpeakSecWebSocketProtocol",
+              "title": "SpeakApiKey",
               "type": "primitive"
             },
             "source": {
@@ -22750,32 +22754,38 @@
               "generatedName": "SpeakSampleRate",
               "values": [
                 {
+                  "nameOverride": "EightThousand",
                   "generatedName": "EightThousand",
                   "value": "8000",
                   "casing": {}
                 },
                 {
+                  "nameOverride": "SixteenThousand",
                   "generatedName": "16000",
                   "value": "16000",
                   "casing": {}
                 },
                 {
+                  "nameOverride": "TwentyFourThousand",
                   "generatedName": "24000",
                   "value": "24000",
                   "casing": {}
                 },
                 {
+                  "nameOverride": "FortyFourThousandOneHundred",
                   "generatedName": "44100",
                   "value": "44100",
                   "casing": {}
                 },
                 {
+                  "nameOverride": "FortyEightThousand",
                   "generatedName": "48000",
                   "value": "48000",
                   "casing": {}
                 }
               ],
               "default": {
+                "nameOverride": "TwentyFourThousand",
                 "generatedName": "24000",
                 "value": "24000",
                 "casing": {}
@@ -22847,30 +22857,50 @@
               "type": "object"
             },
             {
-              "generatedName": "SpeakControlMessagesRequest",
-              "values": [
+              "allOf": [],
+              "properties": [
                 {
-                  "generatedName": "Flush",
-                  "value": "Flush",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "Clear",
-                  "value": "Clear",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "Close",
-                  "value": "Close",
-                  "casing": {}
+                  "conflict": {},
+                  "generatedName": "speakControlMessagesRequestType",
+                  "key": "type",
+                  "schema": {
+                    "generatedName": "SpeakControlMessagesRequestType",
+                    "values": [
+                      {
+                        "generatedName": "Flush",
+                        "value": "Flush",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Clear",
+                        "value": "Clear",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Close",
+                        "value": "Close",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
                 }
               ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "SpeakControlMessagesRequest",
               "groupName": [],
+              "additionalProperties": false,
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
               },
-              "type": "enum"
+              "type": "object"
             }
           ],
           "source": {
@@ -22961,6 +22991,99 @@
                 "type": "openapi"
               },
               "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "speakCloseFrameCode",
+                  "key": "code",
+                  "schema": {
+                    "description": "WebSocket close status code",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakCloseFrameCode",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "speakCloseFramePayload",
+                  "key": "payload",
+                  "schema": {
+                    "description": "Error reason code",
+                    "generatedName": "SpeakCloseFramePayload",
+                    "values": [
+                      {
+                        "generatedName": "None",
+                        "value": "None",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Message0000",
+                        "value": "MESSAGE-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Data0000",
+                        "value": "DATA-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Big0000",
+                        "value": "BIG-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Big0001",
+                        "value": "BIG-0001",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0000",
+                        "value": "NET-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0001",
+                        "value": "NET-0001",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0002",
+                        "value": "NET-0002",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0003",
+                        "value": "NET-0003",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "description": "When Deepgram encounters an error during streaming text to speech, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason\n",
+              "generatedName": "SpeakCloseFrame",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
             }
           ],
           "source": {
@@ -22978,6 +23101,7 @@
         }
       ],
       "path": "/v1/speak",
+      "description": "Deepgram Text to Speech WebSocket",
       "examples": [
         {
           "queryParameters": [],
@@ -23028,15 +23152,15 @@
       "handshake": {
         "headers": [
           {
-            "name": "Sec-Websocket-Protocol",
-            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "name": "Authorization",
+            "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
               "schema": {
-                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
               "generatedName": "",
-              "title": "ListenSecWebSocketProtocol",
+              "title": "ListenApiKey",
               "type": "primitive"
             },
             "source": {
@@ -23126,40 +23250,6 @@
             }
           },
           {
-            "name": "dictation",
-            "description": "Identify and extract key entities from content in submitted audio",
-            "schema": {
-              "description": "Identify and extract key entities from content in submitted audio",
-              "generatedName": "ListenDictation",
-              "values": [
-                {
-                  "generatedName": "true",
-                  "value": "true",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "false",
-                  "value": "false",
-                  "casing": {}
-                }
-              ],
-              "default": {
-                "generatedName": "false",
-                "value": "false",
-                "casing": {}
-              },
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "enum"
-            },
-            "source": {
-              "file": "../asyncapi.yml",
-              "type": "openapi"
-            }
-          },
-          {
             "name": "diarize",
             "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
             "schema": {
@@ -23205,6 +23295,40 @@
               "generatedName": "",
               "title": "ListenDiarizeVersion",
               "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "dictation",
+            "description": "Identify and extract key entities from content in submitted audio",
+            "schema": {
+              "description": "Identify and extract key entities from content in submitted audio",
+              "generatedName": "ListenDictation",
+              "values": [
+                {
+                  "generatedName": "true",
+                  "value": "true",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "false",
+                  "value": "false",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "false",
+                "value": "false",
+                "casing": {}
+              },
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "source": {
               "file": "../asyncapi.yml",
@@ -23374,23 +23498,6 @@
             }
           },
           {
-            "name": "keywords",
-            "description": "Keywords can boost or suppress specialized terminology and brands",
-            "schema": {
-              "schema": {
-                "example": "Twilio:2",
-                "type": "string"
-              },
-              "generatedName": "",
-              "title": "ListenKeywords",
-              "type": "primitive"
-            },
-            "source": {
-              "file": "../asyncapi.yml",
-              "type": "openapi"
-            }
-          },
-          {
             "name": "keyterm",
             "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
             "schema": {
@@ -23400,6 +23507,23 @@
               },
               "generatedName": "",
               "title": "ListenKeyterm",
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "keywords",
+            "description": "Keywords can boost or suppress specialized terminology and brands",
+            "schema": {
+              "schema": {
+                "example": "Twilio:2",
+                "type": "string"
+              },
+              "generatedName": "",
+              "title": "ListenKeywords",
               "type": "primitive"
             },
             "source": {
@@ -23729,6 +23853,11 @@
                   "casing": {}
                 },
                 {
+                  "generatedName": "Nova3Medical",
+                  "value": "nova-3-medical",
+                  "casing": {}
+                },
+                {
                   "generatedName": "Nova2",
                   "value": "nova-2",
                   "casing": {}
@@ -24026,6 +24155,26 @@
                 {
                   "generatedName": "false",
                   "value": "false",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "pci",
+                  "value": "pci",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "numbers",
+                  "value": "numbers",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "aggressive_numbers",
+                  "value": "aggressive_numbers",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ssn",
+                  "value": "ssn",
                   "casing": {}
                 }
               ],
@@ -25205,6 +25354,74 @@
                 "type": "undiscriminated"
               },
               "type": "oneOf"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "listenCloseFrameCode",
+                  "key": "code",
+                  "schema": {
+                    "description": "WebSocket close status code",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "ListenCloseFrameCode",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenCloseFramePayload",
+                  "key": "payload",
+                  "schema": {
+                    "description": "Error reason code",
+                    "generatedName": "ListenCloseFramePayload",
+                    "values": [
+                      {
+                        "generatedName": "None",
+                        "value": "None",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Data0000",
+                        "value": "DATA-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0000",
+                        "value": "NET-0000",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "Net0001",
+                        "value": "NET-0001",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../asyncapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "description": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason\n",
+              "generatedName": "ListenCloseFrame",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
             }
           ],
           "source": {
@@ -25222,6 +25439,7 @@
         }
       ],
       "path": "/v1/listen",
+      "description": "Deepgram Speech to Text WebSocket",
       "examples": [
         {
           "queryParameters": [],
@@ -25257,15 +25475,15 @@
       "handshake": {
         "headers": [
           {
-            "name": "Sec-Websocket-Protocol",
-            "description": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
+            "name": "Authorization",
+            "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
               "schema": {
-                "example": "token, YOUR_DEEPGRAM_API_KEY",
+                "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
               "generatedName": "",
-              "title": "AgentSecWebSocketProtocol",
+              "title": "AgentApiKey",
               "type": "primitive"
             },
             "source": {
@@ -25307,214 +25525,209 @@
                   "generatedName": "settingsConfigurationAudio",
                   "key": "audio",
                   "schema": {
-                    "generatedName": "settingsConfigurationAudio",
+                    "generatedName": "SettingsConfigurationAudio",
+                    "description": "Optional audio configuration settings",
                     "value": {
-                      "generatedName": "SettingsConfigurationAudio",
-                      "description": "Optional audio configuration settings",
-                      "value": {
-                        "allOf": [],
-                        "properties": [
-                          {
-                            "conflict": {},
+                      "allOf": [],
+                      "properties": [
+                        {
+                          "conflict": {},
+                          "generatedName": "settingsConfigurationAudioInput",
+                          "key": "input",
+                          "schema": {
                             "generatedName": "settingsConfigurationAudioInput",
-                            "key": "input",
-                            "schema": {
-                              "generatedName": "settingsConfigurationAudioInput",
+                            "value": {
+                              "generatedName": "SettingsConfigurationAudioInput",
+                              "description": "Optional audio input configuration settings",
                               "value": {
-                                "generatedName": "SettingsConfigurationAudioInput",
-                                "description": "Optional audio input configuration settings",
-                                "value": {
-                                  "allOf": [],
-                                  "properties": [
-                                    {
-                                      "conflict": {},
+                                "allOf": [],
+                                "properties": [
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioInputEncoding",
+                                    "key": "encoding",
+                                    "schema": {
                                       "generatedName": "settingsConfigurationAudioInputEncoding",
-                                      "key": "encoding",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioInputEncoding",
-                                        "value": {
-                                          "description": "Audio encoding format",
-                                          "schema": {
-                                            "default": "linear16",
-                                            "type": "string"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioInputEncoding",
-                                          "groupName": [],
-                                          "type": "primitive"
+                                      "value": {
+                                        "description": "Audio encoding format",
+                                        "schema": {
+                                          "default": "linear16",
+                                          "type": "string"
                                         },
+                                        "generatedName": "SettingsConfigurationAudioInputEncoding",
                                         "groupName": [],
-                                        "type": "optional"
+                                        "type": "primitive"
                                       },
-                                      "audiences": []
+                                      "groupName": [],
+                                      "type": "optional"
                                     },
-                                    {
-                                      "conflict": {},
+                                    "audiences": []
+                                  },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioInputSampleRate",
+                                    "key": "sample_rate",
+                                    "schema": {
                                       "generatedName": "settingsConfigurationAudioInputSampleRate",
-                                      "key": "sample_rate",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioInputSampleRate",
-                                        "value": {
-                                          "description": "Sample rate in Hz",
-                                          "schema": {
-                                            "default": 24000,
-                                            "type": "int"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioInputSampleRate",
-                                          "groupName": [],
-                                          "type": "primitive"
+                                      "value": {
+                                        "description": "Sample rate in Hz",
+                                        "schema": {
+                                          "default": 24000,
+                                          "type": "int"
                                         },
+                                        "generatedName": "SettingsConfigurationAudioInputSampleRate",
                                         "groupName": [],
-                                        "type": "optional"
+                                        "type": "primitive"
                                       },
-                                      "audiences": []
-                                    }
-                                  ],
-                                  "allOfPropertyConflicts": [],
-                                  "description": "Optional audio input configuration settings",
-                                  "generatedName": "SettingsConfigurationAudioInput",
-                                  "groupName": [],
-                                  "additionalProperties": false,
-                                  "source": {
-                                    "file": "../asyncapi.yml",
-                                    "type": "openapi"
-                                  },
-                                  "type": "object"
-                                },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  }
+                                ],
+                                "allOfPropertyConflicts": [],
+                                "description": "Optional audio input configuration settings",
+                                "generatedName": "SettingsConfigurationAudioInput",
                                 "groupName": [],
-                                "type": "nullable"
+                                "additionalProperties": false,
+                                "source": {
+                                  "file": "../asyncapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "object"
                               },
                               "groupName": [],
-                              "type": "optional"
+                              "type": "nullable"
                             },
-                            "audiences": []
+                            "groupName": [],
+                            "type": "optional"
                           },
-                          {
-                            "conflict": {},
+                          "audiences": []
+                        },
+                        {
+                          "conflict": {},
+                          "generatedName": "settingsConfigurationAudioOutput",
+                          "key": "output",
+                          "schema": {
                             "generatedName": "settingsConfigurationAudioOutput",
-                            "key": "output",
-                            "schema": {
-                              "generatedName": "settingsConfigurationAudioOutput",
+                            "value": {
+                              "generatedName": "SettingsConfigurationAudioOutput",
+                              "description": "Audio output configuration settings",
                               "value": {
-                                "generatedName": "SettingsConfigurationAudioOutput",
-                                "description": "Audio output configuration settings",
-                                "value": {
-                                  "allOf": [],
-                                  "properties": [
-                                    {
-                                      "conflict": {},
+                                "allOf": [],
+                                "properties": [
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioOutputEncoding",
+                                    "key": "encoding",
+                                    "schema": {
                                       "generatedName": "settingsConfigurationAudioOutputEncoding",
-                                      "key": "encoding",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioOutputEncoding",
-                                        "value": {
-                                          "schema": {
-                                            "type": "string"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioOutputEncoding",
-                                          "groupName": [],
-                                          "type": "primitive"
+                                      "value": {
+                                        "schema": {
+                                          "type": "string"
                                         },
+                                        "generatedName": "SettingsConfigurationAudioOutputEncoding",
                                         "groupName": [],
-                                        "type": "optional"
+                                        "type": "primitive"
                                       },
-                                      "audiences": []
+                                      "groupName": [],
+                                      "type": "optional"
                                     },
-                                    {
-                                      "conflict": {},
-                                      "generatedName": "settingsConfigurationAudioOutputSampleRate",
-                                      "key": "sample_rate",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioOutputSampleRate",
-                                        "value": {
-                                          "description": "Sample rate in Hz",
-                                          "schema": {
-                                            "default": 24000,
-                                            "type": "int"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioOutputSampleRate",
-                                          "groupName": [],
-                                          "type": "primitive"
-                                        },
-                                        "groupName": [],
-                                        "type": "optional"
-                                      },
-                                      "audiences": []
-                                    },
-                                    {
-                                      "conflict": {},
-                                      "generatedName": "settingsConfigurationAudioOutputBitrate",
-                                      "key": "bitrate",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioOutputBitrate",
-                                        "value": {
-                                          "schema": {
-                                            "type": "int"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioOutputBitrate",
-                                          "groupName": [],
-                                          "type": "primitive"
-                                        },
-                                        "groupName": [],
-                                        "type": "optional"
-                                      },
-                                      "audiences": []
-                                    },
-                                    {
-                                      "conflict": {},
-                                      "generatedName": "settingsConfigurationAudioOutputContainer",
-                                      "key": "container",
-                                      "schema": {
-                                        "generatedName": "settingsConfigurationAudioOutputContainer",
-                                        "value": {
-                                          "schema": {
-                                            "type": "string"
-                                          },
-                                          "generatedName": "SettingsConfigurationAudioOutputContainer",
-                                          "groupName": [],
-                                          "type": "primitive"
-                                        },
-                                        "groupName": [],
-                                        "type": "optional"
-                                      },
-                                      "audiences": []
-                                    }
-                                  ],
-                                  "allOfPropertyConflicts": [],
-                                  "description": "Audio output configuration settings",
-                                  "generatedName": "SettingsConfigurationAudioOutput",
-                                  "groupName": [],
-                                  "additionalProperties": false,
-                                  "source": {
-                                    "file": "../asyncapi.yml",
-                                    "type": "openapi"
+                                    "audiences": []
                                   },
-                                  "type": "object"
-                                },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioOutputSampleRate",
+                                    "key": "sample_rate",
+                                    "schema": {
+                                      "generatedName": "settingsConfigurationAudioOutputSampleRate",
+                                      "value": {
+                                        "description": "Sample rate in Hz",
+                                        "schema": {
+                                          "default": 24000,
+                                          "type": "int"
+                                        },
+                                        "generatedName": "SettingsConfigurationAudioOutputSampleRate",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioOutputBitrate",
+                                    "key": "bitrate",
+                                    "schema": {
+                                      "generatedName": "settingsConfigurationAudioOutputBitrate",
+                                      "value": {
+                                        "schema": {
+                                          "type": "int"
+                                        },
+                                        "generatedName": "SettingsConfigurationAudioOutputBitrate",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  },
+                                  {
+                                    "conflict": {},
+                                    "generatedName": "settingsConfigurationAudioOutputContainer",
+                                    "key": "container",
+                                    "schema": {
+                                      "generatedName": "settingsConfigurationAudioOutputContainer",
+                                      "value": {
+                                        "schema": {
+                                          "type": "string"
+                                        },
+                                        "generatedName": "SettingsConfigurationAudioOutputContainer",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
+                                      "groupName": [],
+                                      "type": "optional"
+                                    },
+                                    "audiences": []
+                                  }
+                                ],
+                                "allOfPropertyConflicts": [],
+                                "description": "Audio output configuration settings",
+                                "generatedName": "SettingsConfigurationAudioOutput",
                                 "groupName": [],
-                                "type": "nullable"
+                                "additionalProperties": false,
+                                "source": {
+                                  "file": "../asyncapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "object"
                               },
                               "groupName": [],
-                              "type": "optional"
+                              "type": "nullable"
                             },
-                            "audiences": []
-                          }
-                        ],
-                        "allOfPropertyConflicts": [],
-                        "description": "Optional audio configuration settings",
-                        "generatedName": "SettingsConfigurationAudio",
-                        "groupName": [],
-                        "additionalProperties": false,
-                        "source": {
-                          "file": "../asyncapi.yml",
-                          "type": "openapi"
-                        },
-                        "type": "object"
-                      },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        }
+                      ],
+                      "allOfPropertyConflicts": [],
+                      "description": "Optional audio configuration settings",
+                      "generatedName": "SettingsConfigurationAudio",
                       "groupName": [],
-                      "type": "nullable"
+                      "additionalProperties": false,
+                      "source": {
+                        "file": "../asyncapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "object"
                     },
                     "groupName": [],
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "audiences": []
                 },
@@ -25543,12 +25756,37 @@
                                   "value": {
                                     "description": "Model to use for speech recognition",
                                     "schema": {
-                                      "default": "nova-2",
+                                      "default": "nova-3",
                                       "type": "string"
                                     },
                                     "generatedName": "SettingsConfigurationAgentListenModel",
                                     "groupName": [],
                                     "type": "primitive"
+                                  },
+                                  "groupName": [],
+                                  "type": "optional"
+                                },
+                                "audiences": []
+                              },
+                              {
+                                "conflict": {},
+                                "generatedName": "settingsConfigurationAgentListenKeyterms",
+                                "key": "keyterms",
+                                "schema": {
+                                  "generatedName": "settingsConfigurationAgentListenKeyterms",
+                                  "value": {
+                                    "description": "List of keyterms to listen for, only available on nova-3",
+                                    "value": {
+                                      "schema": {
+                                        "type": "string"
+                                      },
+                                      "generatedName": "SettingsConfigurationAgentListenKeytermsItem",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "generatedName": "SettingsConfigurationAgentListenKeyterms",
+                                    "groupName": [],
+                                    "type": "array"
                                   },
                                   "groupName": [],
                                   "type": "optional"
@@ -26220,6 +26458,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Configure the voice agent and sets the input and output audio formats",
               "generatedName": "SettingsConfiguration",
               "groupName": [],
               "additionalProperties": false,
@@ -26265,6 +26504,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Send a message to give additional instructions to the Think model in the middle of a conversation",
               "generatedName": "UpdateInstructions",
               "groupName": [],
               "additionalProperties": false,
@@ -26310,6 +26550,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Send a message to change the Speak model in the middle of a conversation",
               "generatedName": "UpdateSpeak",
               "groupName": [],
               "additionalProperties": false,
@@ -26355,6 +26596,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Send a message to change the Speak model in the middle of a conversation",
               "generatedName": "InjectAgentMessage",
               "groupName": [],
               "additionalProperties": false,
@@ -26415,6 +26657,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Configure the voice agent and configure the function call response",
               "generatedName": "FunctionCallResponse",
               "groupName": [],
               "additionalProperties": false,
@@ -26445,6 +26688,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Send messages ensuring uninterrupted communication for your agent",
               "generatedName": "AgentKeepAlive",
               "groupName": [],
               "additionalProperties": false,
@@ -26488,6 +26732,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Receive injection refused message",
               "generatedName": "InjectionRefused",
               "groupName": [],
               "additionalProperties": false,
@@ -26534,6 +26779,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Receive a welcome message from the server to confirm the websocket has opened",
               "generatedName": "WelcomeMessage",
               "groupName": [],
               "additionalProperties": false,
@@ -26564,6 +26810,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Confirm the server has successfully received and applied the Settings Configuration message",
               "generatedName": "SettingsApplied",
               "groupName": [],
               "additionalProperties": false,
@@ -26637,6 +26884,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Conversation Text facilitates real-time communication by relaying spoken statements from both the user and the assistant",
               "generatedName": "ConversationText",
               "groupName": [],
               "additionalProperties": false,
@@ -26667,6 +26915,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "User Started Speaking notifies the client that the user has begun speaking",
               "generatedName": "UserStartedSpeaking",
               "groupName": [],
               "additionalProperties": false,
@@ -26712,6 +26961,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Agent Thinking informs the client when the agent is processing information",
               "generatedName": "AgentThinking",
               "groupName": [],
               "additionalProperties": false,
@@ -26796,6 +27046,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Request to call a function by sending a Function Call Request message",
               "generatedName": "FunctionCallRequest",
               "groupName": [],
               "additionalProperties": false,
@@ -26826,6 +27077,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Provides insights into function call workflows to assist in debugging",
               "generatedName": "FunctionCalling",
               "groupName": [],
               "additionalProperties": false,
@@ -26901,6 +27153,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Get notified when the server begins streaming an agent's audio response for playback",
               "generatedName": "AgentStartedSpeaking",
               "groupName": [],
               "additionalProperties": false,
@@ -26931,6 +27184,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Get signals that the server has finished sending the final audio segment to the client",
               "generatedName": "AgentAudioDone",
               "groupName": [],
               "additionalProperties": false,
@@ -26976,6 +27230,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
+              "description": "Receive an error message from the server when an error occurs",
               "generatedName": "AgentErrorResponse",
               "groupName": [],
               "additionalProperties": false,
@@ -26996,11 +27251,12 @@
       },
       "servers": [
         {
-          "name": "public",
-          "url": "wss://api.deepgram.com"
+          "name": "agent",
+          "url": "wss://agent.deepgram.com"
         }
       ],
       "path": "/agent",
+      "description": "Deepgram Voice Agent WebSocket",
       "examples": [
         {
           "queryParameters": [],

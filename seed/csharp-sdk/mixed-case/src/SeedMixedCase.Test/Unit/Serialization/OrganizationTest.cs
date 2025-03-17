@@ -1,9 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMixedCase;
+using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test;
 
@@ -11,27 +9,29 @@ namespace SeedMixedCase.Test;
 public class OrganizationTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "name": "orgName"
+            }
+            """;
+        var expectedObject = new Organization { Name = "orgName" };
+        var deserializedObject = JsonUtils.Deserialize<Organization>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""orgName""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Organization>(
-            inputJson,
-            serializerOptions
-        );
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var expectedJson = """
+            {
+              "name": "orgName"
+            }
+            """;
+        var actualObj = new Organization { Name = "orgName" };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

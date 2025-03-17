@@ -14,11 +14,9 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("userId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUserAsync(
         string userId,
         RequestOptions? options = null,
@@ -31,7 +29,7 @@ public partial class UserClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/users/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Options = options,
                 },
                 cancellationToken

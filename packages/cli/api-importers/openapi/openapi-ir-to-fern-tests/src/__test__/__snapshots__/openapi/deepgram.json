@@ -1841,6 +1841,7 @@ errors:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Voice Agent WebSocket",
           "examples": [
             {
               "messages": [
@@ -1861,9 +1862,9 @@ errors:
             },
           ],
           "headers": {
-            "Sec-Websocket-Protocol": {
-              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
-              "name": "secWebsocketProtocol",
+            "Authorization": {
+              "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
+              "name": "authorization",
               "type": "string",
             },
           },
@@ -1878,11 +1879,11 @@ errors:
             },
           },
           "path": "/agent",
-          "url": "public",
+          "url": "agent",
         },
         "types": {
           "AgentAudioDone": {
-            "docs": undefined,
+            "docs": "Get signals that the server has finished sending the final audio segment to the client",
             "inline": true,
             "properties": {
               "type": {
@@ -1895,7 +1896,7 @@ errors:
             },
           },
           "AgentErrorResponse": {
-            "docs": undefined,
+            "docs": "Receive an error message from the server when an error occurs",
             "inline": true,
             "properties": {
               "message": {
@@ -1912,7 +1913,7 @@ errors:
             },
           },
           "AgentKeepAlive": {
-            "docs": undefined,
+            "docs": "Send messages ensuring uninterrupted communication for your agent",
             "inline": true,
             "properties": {
               "type": {
@@ -1933,16 +1934,34 @@ errors:
               "openapi": "../asyncapi.yml",
             },
             "union": [
-              "SettingsConfiguration",
-              "UpdateInstructions",
-              "UpdateSpeak",
-              "InjectAgentMessage",
-              "FunctionCallResponse",
-              "AgentKeepAlive",
+              {
+                "docs": "Configure the voice agent and sets the input and output audio formats",
+                "type": "SettingsConfiguration",
+              },
+              {
+                "docs": "Send a message to give additional instructions to the Think model in the middle of a conversation",
+                "type": "UpdateInstructions",
+              },
+              {
+                "docs": "Send a message to change the Speak model in the middle of a conversation",
+                "type": "UpdateSpeak",
+              },
+              {
+                "docs": "Send a message to change the Speak model in the middle of a conversation",
+                "type": "InjectAgentMessage",
+              },
+              {
+                "docs": "Configure the voice agent and configure the function call response",
+                "type": "FunctionCallResponse",
+              },
+              {
+                "docs": "Send messages ensuring uninterrupted communication for your agent",
+                "type": "AgentKeepAlive",
+              },
             ],
           },
           "AgentStartedSpeaking": {
-            "docs": undefined,
+            "docs": "Get notified when the server begins streaming an agent's audio response for playback",
             "inline": true,
             "properties": {
               "total_latency": {
@@ -1975,21 +1994,54 @@ errors:
               "openapi": "../asyncapi.yml",
             },
             "union": [
-              "InjectionRefused",
-              "WelcomeMessage",
-              "SettingsApplied",
-              "ConversationText",
-              "UserStartedSpeaking",
-              "AgentThinking",
-              "FunctionCallRequest",
-              "FunctionCalling",
-              "AgentStartedSpeaking",
-              "AgentAudioDone",
-              "AgentErrorResponse",
+              {
+                "docs": "Receive injection refused message",
+                "type": "InjectionRefused",
+              },
+              {
+                "docs": "Receive a welcome message from the server to confirm the websocket has opened",
+                "type": "WelcomeMessage",
+              },
+              {
+                "docs": "Confirm the server has successfully received and applied the Settings Configuration message",
+                "type": "SettingsApplied",
+              },
+              {
+                "docs": "Conversation Text facilitates real-time communication by relaying spoken statements from both the user and the assistant",
+                "type": "ConversationText",
+              },
+              {
+                "docs": "User Started Speaking notifies the client that the user has begun speaking",
+                "type": "UserStartedSpeaking",
+              },
+              {
+                "docs": "Agent Thinking informs the client when the agent is processing information",
+                "type": "AgentThinking",
+              },
+              {
+                "docs": "Request to call a function by sending a Function Call Request message",
+                "type": "FunctionCallRequest",
+              },
+              {
+                "docs": "Provides insights into function call workflows to assist in debugging",
+                "type": "FunctionCalling",
+              },
+              {
+                "docs": "Get notified when the server begins streaming an agent's audio response for playback",
+                "type": "AgentStartedSpeaking",
+              },
+              {
+                "docs": "Get signals that the server has finished sending the final audio segment to the client",
+                "type": "AgentAudioDone",
+              },
+              {
+                "docs": "Receive an error message from the server when an error occurs",
+                "type": "AgentErrorResponse",
+              },
             ],
           },
           "AgentThinking": {
-            "docs": undefined,
+            "docs": "Agent Thinking informs the client when the agent is processing information",
             "inline": true,
             "properties": {
               "content": {
@@ -2006,7 +2058,7 @@ errors:
             },
           },
           "ConversationText": {
-            "docs": undefined,
+            "docs": "Conversation Text facilitates real-time communication by relaying spoken statements from both the user and the assistant",
             "inline": true,
             "properties": {
               "content": {
@@ -2038,7 +2090,7 @@ errors:
             },
           },
           "FunctionCallRequest": {
-            "docs": undefined,
+            "docs": "Request to call a function by sending a Function Call Request message",
             "inline": true,
             "properties": {
               "function_call_id": {
@@ -2063,7 +2115,7 @@ errors:
             },
           },
           "FunctionCallResponse": {
-            "docs": undefined,
+            "docs": "Configure the voice agent and configure the function call response",
             "inline": true,
             "properties": {
               "function_call_id": {
@@ -2084,7 +2136,7 @@ errors:
             },
           },
           "FunctionCalling": {
-            "docs": undefined,
+            "docs": "Provides insights into function call workflows to assist in debugging",
             "inline": true,
             "properties": {
               "type": {
@@ -2097,7 +2149,7 @@ errors:
             },
           },
           "InjectAgentMessage": {
-            "docs": undefined,
+            "docs": "Send a message to change the Speak model in the middle of a conversation",
             "inline": true,
             "properties": {
               "message": {
@@ -2114,7 +2166,7 @@ errors:
             },
           },
           "InjectionRefused": {
-            "docs": undefined,
+            "docs": "Receive injection refused message",
             "inline": true,
             "properties": {
               "type": {
@@ -2127,7 +2179,7 @@ errors:
             },
           },
           "SettingsApplied": {
-            "docs": undefined,
+            "docs": "Confirm the server has successfully received and applied the Settings Configuration message",
             "inline": true,
             "properties": {
               "type": {
@@ -2140,7 +2192,7 @@ errors:
             },
           },
           "SettingsConfiguration": {
-            "docs": undefined,
+            "docs": "Configure the voice agent and sets the input and output audio formats",
             "inline": true,
             "properties": {
               "agent": "SettingsConfigurationAgent",
@@ -2171,8 +2223,12 @@ errors:
             "docs": undefined,
             "inline": true,
             "properties": {
+              "keyterms": {
+                "docs": "List of keyterms to listen for, only available on nova-3",
+                "type": "optional<list<string>>",
+              },
               "model": {
-                "default": "nova-2",
+                "default": "nova-3",
                 "docs": "Model to use for speech recognition",
                 "type": "optional<string>",
               },
@@ -2380,7 +2436,7 @@ errors:
             },
           },
           "UpdateInstructions": {
-            "docs": undefined,
+            "docs": "Send a message to give additional instructions to the Think model in the middle of a conversation",
             "inline": true,
             "properties": {
               "instructions": {
@@ -2397,7 +2453,7 @@ errors:
             },
           },
           "UpdateSpeak": {
-            "docs": undefined,
+            "docs": "Send a message to change the Speak model in the middle of a conversation",
             "inline": true,
             "properties": {
               "model": {
@@ -2414,7 +2470,7 @@ errors:
             },
           },
           "UserStartedSpeaking": {
-            "docs": undefined,
+            "docs": "User Started Speaking notifies the client that the user has begun speaking",
             "inline": true,
             "properties": {
               "type": {
@@ -2427,7 +2483,7 @@ errors:
             },
           },
           "WelcomeMessage": {
-            "docs": undefined,
+            "docs": "Receive a welcome message from the server to confirm the websocket has opened",
             "inline": true,
             "properties": {
               "session_id": {
@@ -2453,15 +2509,14 @@ errors:
       },
       "rawContents": "channel:
   path: /agent
-  url: public
+  url: agent
   auth: false
+  docs: Deepgram Voice Agent WebSocket
   headers:
-    Sec-Websocket-Protocol:
+    Authorization:
       type: string
-      name: secWebsocketProtocol
-      docs: >-
-        Used to establish a WebSocket connection with authentication. Format
-        should be 'token, <DEEPGRAM_API_KEY>'
+      name: authorization
+      docs: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
   messages:
     subscribe:
       origin: server
@@ -2480,6 +2535,7 @@ errors:
             type: InjectionRefused
 types:
   InjectionRefused:
+    docs: Receive injection refused message
     properties:
       type:
         type: literal<"InjectionRefused">
@@ -2488,6 +2544,9 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   WelcomeMessage:
+    docs: >-
+      Receive a welcome message from the server to confirm the websocket has
+      opened
     properties:
       type:
         type: literal<"Welcome">
@@ -2501,6 +2560,9 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   SettingsApplied:
+    docs: >-
+      Confirm the server has successfully received and applied the Settings
+      Configuration message
     properties:
       type:
         type: literal<"SettingsApplied">
@@ -2517,6 +2579,9 @@ types:
     source:
       openapi: ../asyncapi.yml
   ConversationText:
+    docs: >-
+      Conversation Text facilitates real-time communication by relaying spoken
+      statements from both the user and the assistant
     properties:
       type:
         type: literal<"ConversationText">
@@ -2531,6 +2596,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   UserStartedSpeaking:
+    docs: User Started Speaking notifies the client that the user has begun speaking
     properties:
       type:
         type: literal<"UserStartedSpeaking">
@@ -2539,6 +2605,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   AgentThinking:
+    docs: Agent Thinking informs the client when the agent is processing information
     properties:
       type:
         type: literal<"AgentThinking">
@@ -2550,6 +2617,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   FunctionCallRequest:
+    docs: Request to call a function by sending a Function Call Request message
     properties:
       type:
         type: literal<"FunctionCallRequest">
@@ -2567,6 +2635,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   FunctionCalling:
+    docs: Provides insights into function call workflows to assist in debugging
     properties:
       type:
         type: literal<"FunctionCalling">
@@ -2575,6 +2644,9 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   AgentStartedSpeaking:
+    docs: >-
+      Get notified when the server begins streaming an agent's audio response
+      for playback
     properties:
       type:
         type: literal<"AgentStartedSpeaking">
@@ -2596,6 +2668,9 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   AgentAudioDone:
+    docs: >-
+      Get signals that the server has finished sending the final audio segment
+      to the client
     properties:
       type:
         type: literal<"AgentAudioDone">
@@ -2606,6 +2681,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   AgentErrorResponse:
+    docs: Receive an error message from the server when an error occurs
     properties:
       type:
         type: literal<"Error">
@@ -2619,17 +2695,42 @@ types:
   AgentSubscribeEvent:
     discriminated: false
     union:
-      - InjectionRefused
-      - WelcomeMessage
-      - SettingsApplied
-      - ConversationText
-      - UserStartedSpeaking
-      - AgentThinking
-      - FunctionCallRequest
-      - FunctionCalling
-      - AgentStartedSpeaking
-      - AgentAudioDone
-      - AgentErrorResponse
+      - type: InjectionRefused
+        docs: Receive injection refused message
+      - type: WelcomeMessage
+        docs: >-
+          Receive a welcome message from the server to confirm the websocket has
+          opened
+      - type: SettingsApplied
+        docs: >-
+          Confirm the server has successfully received and applied the Settings
+          Configuration message
+      - type: ConversationText
+        docs: >-
+          Conversation Text facilitates real-time communication by relaying
+          spoken statements from both the user and the assistant
+      - type: UserStartedSpeaking
+        docs: >-
+          User Started Speaking notifies the client that the user has begun
+          speaking
+      - type: AgentThinking
+        docs: >-
+          Agent Thinking informs the client when the agent is processing
+          information
+      - type: FunctionCallRequest
+        docs: Request to call a function by sending a Function Call Request message
+      - type: FunctionCalling
+        docs: Provides insights into function call workflows to assist in debugging
+      - type: AgentStartedSpeaking
+        docs: >-
+          Get notified when the server begins streaming an agent's audio
+          response for playback
+      - type: AgentAudioDone
+        docs: >-
+          Get signals that the server has finished sending the final audio
+          segment to the client
+      - type: AgentErrorResponse
+        docs: Receive an error message from the server when an error occurs
     source:
       openapi: ../asyncapi.yml
   SettingsConfigurationAudioInput:
@@ -2676,7 +2777,10 @@ types:
       model:
         type: optional<string>
         docs: Model to use for speech recognition
-        default: nova-2
+        default: nova-3
+      keyterms:
+        type: optional<list<string>>
+        docs: List of keyterms to listen for, only available on nova-3
     source:
       openapi: ../asyncapi.yml
     inline: true
@@ -2789,6 +2893,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   SettingsConfiguration:
+    docs: Configure the voice agent and sets the input and output audio formats
     properties:
       type: literal<"SettingsConfiguration">
       audio:
@@ -2800,6 +2905,9 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   UpdateInstructions:
+    docs: >-
+      Send a message to give additional instructions to the Think model in the
+      middle of a conversation
     properties:
       type:
         type: literal<"UpdateInstructions">
@@ -2811,6 +2919,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   UpdateSpeak:
+    docs: Send a message to change the Speak model in the middle of a conversation
     properties:
       type:
         type: literal<"UpdateSpeak">
@@ -2822,6 +2931,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   InjectAgentMessage:
+    docs: Send a message to change the Speak model in the middle of a conversation
     properties:
       type:
         type: literal<"InjectAgentMessage">
@@ -2833,6 +2943,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   FunctionCallResponse:
+    docs: Configure the voice agent and configure the function call response
     properties:
       type:
         type: literal<"FunctionCallResponse">
@@ -2847,6 +2958,7 @@ types:
       openapi: ../asyncapi.yml
     inline: true
   AgentKeepAlive:
+    docs: Send messages ensuring uninterrupted communication for your agent
     properties:
       type:
         type: literal<"KeepAlive">
@@ -2857,12 +2969,24 @@ types:
   AgentPublishEvent:
     discriminated: false
     union:
-      - SettingsConfiguration
-      - UpdateInstructions
-      - UpdateSpeak
-      - InjectAgentMessage
-      - FunctionCallResponse
-      - AgentKeepAlive
+      - type: SettingsConfiguration
+        docs: Configure the voice agent and sets the input and output audio formats
+      - type: UpdateInstructions
+        docs: >-
+          Send a message to give additional instructions to the Think model in
+          the middle of a conversation
+      - type: UpdateSpeak
+        docs: >-
+          Send a message to change the Speak model in the middle of a
+          conversation
+      - type: InjectAgentMessage
+        docs: >-
+          Send a message to change the Speak model in the middle of a
+          conversation
+      - type: FunctionCallResponse
+        docs: Configure the voice agent and configure the function call response
+      - type: AgentKeepAlive
+        docs: Send messages ensuring uninterrupted communication for your agent
     source:
       openapi: ../asyncapi.yml
 ",
@@ -2872,6 +2996,7 @@ types:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Speech to Text WebSocket",
           "examples": [
             {
               "messages": [
@@ -2887,9 +3012,9 @@ types:
             },
           ],
           "headers": {
-            "Sec-Websocket-Protocol": {
-              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
-              "name": "secWebsocketProtocol",
+            "Authorization": {
+              "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
+              "name": "authorization",
               "type": "string",
             },
           },
@@ -3193,6 +3318,46 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
+          "ListenCloseFrame": {
+            "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
+",
+            "inline": true,
+            "properties": {
+              "code": {
+                "docs": "WebSocket close status code",
+                "type": "integer",
+              },
+              "payload": {
+                "docs": "Error reason code",
+                "type": "ListenCloseFramePayload",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenCloseFramePayload": {
+            "docs": "Error reason code",
+            "enum": [
+              "None",
+              {
+                "name": "Data0000",
+                "value": "DATA-0000",
+              },
+              {
+                "name": "Net0000",
+                "value": "NET-0000",
+              },
+              {
+                "name": "Net0001",
+                "value": "NET-0001",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "ListenControlMessagesRequest": {
             "availability": undefined,
             "base-properties": {},
@@ -3447,6 +3612,10 @@ types:
                 "value": "nova-3-general",
               },
               {
+                "name": "Nova3Medical",
+                "value": "nova-3-medical",
+              },
+              {
                 "name": "Nova2",
                 "value": "nova-2",
               },
@@ -3606,6 +3775,10 @@ types:
             "enum": [
               "true",
               "false",
+              "pci",
+              "numbers",
+              "aggressive_numbers",
+              "ssn",
             ],
             "inline": undefined,
             "source": {
@@ -3635,6 +3808,11 @@ types:
             "union": [
               "TranscriptionResponse",
               "ControlMessageResponse",
+              {
+                "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
+",
+                "type": "ListenCloseFrame",
+              },
             ],
           },
           "ListenVadEvents": {
@@ -3762,14 +3940,6 @@ types:
     default: POST
     source:
       openapi: ../asyncapi.yml
-  ListenDictation:
-    enum:
-      - 'true'
-      - 'false'
-    docs: Identify and extract key entities from content in submitted audio
-    default: 'false'
-    source:
-      openapi: ../asyncapi.yml
   ListenDiarize:
     enum:
       - 'true'
@@ -3777,6 +3947,14 @@ types:
     docs: >-
       Recognize speaker changes. Each word in the transcript will be assigned a
       speaker number starting at 0
+    default: 'false'
+    source:
+      openapi: ../asyncapi.yml
+  ListenDictation:
+    enum:
+      - 'true'
+      - 'false'
+    docs: Identify and extract key entities from content in submitted audio
     default: 'false'
     source:
       openapi: ../asyncapi.yml
@@ -3910,6 +4088,8 @@ types:
         name: Nova3
       - value: nova-3-general
         name: Nova3General
+      - value: nova-3-medical
+        name: Nova3Medical
       - value: nova-2
         name: Nova2
       - value: nova-2-general
@@ -3996,6 +4176,10 @@ types:
     enum:
       - 'true'
       - 'false'
+      - pci
+      - numbers
+      - aggressive_numbers
+      - ssn
     docs: Redaction removes sensitive information from your transcripts
     default: 'false'
     source:
@@ -4164,11 +4348,44 @@ types:
     source:
       openapi: ../asyncapi.yml
     inline: true
+  ListenCloseFramePayload:
+    enum:
+      - None
+      - value: DATA-0000
+        name: Data0000
+      - value: NET-0000
+        name: Net0000
+      - value: NET-0001
+        name: Net0001
+    docs: Error reason code
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  ListenCloseFrame:
+    docs: >
+      When Deepgram encounters an error during streaming speech to text, a
+      WebSocket Close frame is sent. The frame contains a status code and
+      UTF-8-encoded payload describing the error reason
+    properties:
+      code:
+        type: integer
+        docs: WebSocket close status code
+      payload:
+        type: ListenCloseFramePayload
+        docs: Error reason code
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
   ListenSubscribeEvent:
     discriminated: false
     union:
       - TranscriptionResponse
       - ControlMessageResponse
+      - type: ListenCloseFrame
+        docs: >
+          When Deepgram encounters an error during streaming speech to text, a
+          WebSocket Close frame is sent. The frame contains a status code and
+          UTF-8-encoded payload describing the error reason
     source:
       openapi: ../asyncapi.yml
   ListenControlMessagesRequestFinalize:
@@ -4211,6 +4428,7 @@ channel:
   path: /v1/listen
   url: public
   auth: false
+  docs: Deepgram Speech to Text WebSocket
   query-parameters:
     callback:
       type: string
@@ -4223,10 +4441,6 @@ channel:
       type: string
       default: '1'
       docs: The number of channels in the submitted audio
-    dictation:
-      type: ListenDictation
-      default: 'false'
-      docs: Identify and extract key entities from content in submitted audio
     diarize:
       type: ListenDiarize
       default: 'false'
@@ -4239,6 +4453,10 @@ channel:
       docs: >-
         Version of the diarization feature to use. Only used when the
         diarization feature is enabled (`diarize=true` is passed to the API)
+    dictation:
+      type: ListenDictation
+      default: 'false'
+      docs: Identify and extract key entities from content in submitted audio
     encoding:
       type: ListenEncoding
       docs: Specify the expected encoding of your submitted audio
@@ -4271,14 +4489,14 @@ channel:
         transcription updates as more audio is received. When set to true, the
         endpoint sends continuous updates, meaning transcription results may
         evolve over time
-    keywords:
-      type: string
-      docs: Keywords can boost or suppress specialized terminology and brands
     keyterm:
       type: string
       docs: >-
         Key term prompting can boost or suppress specialized terminology and
         brands. Only compatible with Nova-3
+    keywords:
+      type: string
+      docs: Keywords can boost or suppress specialized terminology and brands
     language:
       type: ListenLanguage
       default: en
@@ -4350,12 +4568,10 @@ channel:
       default: latest
       docs: Version of an AI model to use
   headers:
-    Sec-Websocket-Protocol:
+    Authorization:
       type: string
-      name: secWebsocketProtocol
-      docs: >-
-        Used to establish a WebSocket connection with authentication. Format
-        should be 'token, <DEEPGRAM_API_KEY>'
+      name: authorization
+      docs: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
   messages:
     subscribe:
       origin: server
@@ -9603,6 +9819,7 @@ docs: Manage your projects
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Deepgram Text to Speech WebSocket",
           "examples": [
             {
               "messages": [
@@ -9621,9 +9838,9 @@ docs: Manage your projects
             },
           ],
           "headers": {
-            "Sec-Websocket-Protocol": {
-              "docs": "Used to establish a WebSocket connection with authentication. Format should be 'token, <DEEPGRAM_API_KEY>'",
-              "name": "secWebsocketProtocol",
+            "Authorization": {
+              "docs": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
+              "name": "authorization",
               "type": "string",
             },
           },
@@ -9687,7 +9904,77 @@ docs: Manage your projects
               "openapi": "../asyncapi.yml",
             },
           },
+          "SpeakCloseFrame": {
+            "docs": "When Deepgram encounters an error during streaming text to speech, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
+",
+            "inline": true,
+            "properties": {
+              "code": {
+                "docs": "WebSocket close status code",
+                "type": "integer",
+              },
+              "payload": {
+                "docs": "Error reason code",
+                "type": "SpeakCloseFramePayload",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakCloseFramePayload": {
+            "docs": "Error reason code",
+            "enum": [
+              "None",
+              {
+                "name": "Message0000",
+                "value": "MESSAGE-0000",
+              },
+              {
+                "name": "Data0000",
+                "value": "DATA-0000",
+              },
+              {
+                "name": "Big0000",
+                "value": "BIG-0000",
+              },
+              {
+                "name": "Big0001",
+                "value": "BIG-0001",
+              },
+              {
+                "name": "Net0000",
+                "value": "NET-0000",
+              },
+              {
+                "name": "Net0001",
+                "value": "NET-0001",
+              },
+              {
+                "name": "Net0002",
+                "value": "NET-0002",
+              },
+              {
+                "name": "Net0003",
+                "value": "NET-0003",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "SpeakControlMessagesRequest": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "type": "SpeakControlMessagesRequestType",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SpeakControlMessagesRequestType": {
             "enum": [
               "Flush",
               "Clear",
@@ -9794,10 +10081,22 @@ docs: Manage your projects
                 "name": "EightThousand",
                 "value": "8000",
               },
-              "16000",
-              "24000",
-              "44100",
-              "48000",
+              {
+                "name": "SixteenThousand",
+                "value": "16000",
+              },
+              {
+                "name": "TwentyFourThousand",
+                "value": "24000",
+              },
+              {
+                "name": "FortyFourThousandOneHundred",
+                "value": "44100",
+              },
+              {
+                "name": "FortyEightThousand",
+                "value": "48000",
+              },
             ],
             "inline": undefined,
             "source": {
@@ -9824,6 +10123,11 @@ docs: Manage your projects
                 },
               },
               "ControlMessagesResponse",
+              {
+                "docs": "When Deepgram encounters an error during streaming text to speech, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
+",
+                "type": "SpeakCloseFrame",
+              },
             ],
           },
           "TextToSpeechRequest": {
@@ -9893,10 +10197,14 @@ docs: Manage your projects
     enum:
       - value: '8000'
         name: EightThousand
-      - '16000'
-      - '24000'
-      - '44100'
-      - '48000'
+      - value: '16000'
+        name: SixteenThousand
+      - value: '24000'
+        name: TwentyFourThousand
+      - value: '44100'
+        name: FortyFourThousandOneHundred
+      - value: '48000'
+        name: FortyEightThousand
     docs: >-
       Sample Rate specifies the sample rate for the output audio. Based on
       encoding 8000 or 24000 are possible defaults. For some encodings sample
@@ -9924,6 +10232,44 @@ docs: Manage your projects
     source:
       openapi: ../asyncapi.yml
     inline: true
+  SpeakCloseFramePayload:
+    enum:
+      - None
+      - value: MESSAGE-0000
+        name: Message0000
+      - value: DATA-0000
+        name: Data0000
+      - value: BIG-0000
+        name: Big0000
+      - value: BIG-0001
+        name: Big0001
+      - value: NET-0000
+        name: Net0000
+      - value: NET-0001
+        name: Net0001
+      - value: NET-0002
+        name: Net0002
+      - value: NET-0003
+        name: Net0003
+    docs: Error reason code
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  SpeakCloseFrame:
+    docs: >
+      When Deepgram encounters an error during streaming text to speech, a
+      WebSocket Close frame is sent. The frame contains a status code and
+      UTF-8-encoded payload describing the error reason
+    properties:
+      code:
+        type: integer
+        docs: WebSocket close status code
+      payload:
+        type: SpeakCloseFramePayload
+        docs: Error reason code
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
   SpeakSubscribeEvent:
     discriminated: false
     union:
@@ -9932,6 +10278,11 @@ docs: Manage your projects
         validation:
           format: binary
       - ControlMessagesResponse
+      - type: SpeakCloseFrame
+        docs: >
+          When Deepgram encounters an error during streaming text to speech, a
+          WebSocket Close frame is sent. The frame contains a status code and
+          UTF-8-encoded payload describing the error reason
     source:
       openapi: ../asyncapi.yml
   TextToSpeechRequest:
@@ -9945,7 +10296,7 @@ docs: Manage your projects
     source:
       openapi: ../asyncapi.yml
     inline: true
-  SpeakControlMessagesRequest:
+  SpeakControlMessagesRequestType:
     enum:
       - Flush
       - Clear
@@ -9953,6 +10304,12 @@ docs: Manage your projects
     inline: true
     source:
       openapi: ../asyncapi.yml
+  SpeakControlMessagesRequest:
+    properties:
+      type: SpeakControlMessagesRequestType
+    source:
+      openapi: ../asyncapi.yml
+    inline: true
   SpeakPublishEvent:
     discriminated: false
     union:
@@ -9964,6 +10321,7 @@ channel:
   path: /v1/speak
   url: public
   auth: false
+  docs: Deepgram Text to Speech WebSocket
   query-parameters:
     encoding:
       type: SpeakEncoding
@@ -9983,12 +10341,10 @@ channel:
         encoding 8000 or 24000 are possible defaults. For some encodings sample
         rate is not configurable.
   headers:
-    Sec-Websocket-Protocol:
+    Authorization:
       type: string
-      name: secWebsocketProtocol
-      docs: >-
-        Used to establish a WebSocket connection with authentication. Format
-        should be 'token, <DEEPGRAM_API_KEY>'
+      name: authorization
+      docs: API key for authentication. Format should be token <DEEPGRAM_API_KEY>
   messages:
     subscribe:
       origin: server
@@ -11663,6 +12019,7 @@ docs: Transform text to speech
         "Default": {
           "urls": {
             "Base": "https://api.deepgram.com",
+            "agent": "wss://agent.deepgram.com",
             "public": "wss://api.deepgram.com",
           },
         },
@@ -11682,6 +12039,7 @@ environments:
     urls:
       Base: https://api.deepgram.com
       public: wss://api.deepgram.com
+      agent: wss://agent.deepgram.com
 default-environment: Default
 default-url: Base
 auth-schemes:

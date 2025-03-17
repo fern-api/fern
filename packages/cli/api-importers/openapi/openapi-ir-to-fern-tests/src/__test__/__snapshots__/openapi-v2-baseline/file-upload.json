@@ -214,6 +214,7 @@
                     "wireValue": "file"
                   },
                   "isOptional": false,
+                  "docs": "The file to upload",
                   "type": "file"
                 },
                 "type": "file"
@@ -243,6 +244,7 @@
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
+                  "docs": "An optional file to upload",
                   "type": "file"
                 },
                 "type": "file"
@@ -591,6 +593,7 @@
                   },
                   "isOptional": false,
                   "contentType": "application/octet-stream",
+                  "docs": "The file to upload",
                   "type": "file"
                 },
                 "type": "file"
@@ -620,6 +623,7 @@
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
+                  "docs": "An optional file to upload",
                   "type": "file"
                 },
                 "type": "file"

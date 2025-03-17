@@ -1611,22 +1611,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "CreateVoiceLanguage",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "createVoiceLanguage",
+                          "safeName": "createVoiceLanguage"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "create_voice_language",
+                          "safeName": "create_voice_language"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "CREATE_VOICE_LANGUAGE",
+                          "safeName": "CREATE_VOICE_LANGUAGE"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "CreateVoiceLanguage",
+                          "safeName": "CreateVoiceLanguage"
                         }
                       },
                       "typeId": "CreateVoiceLanguage",
@@ -1938,22 +1938,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "CreateVoiceModel",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "createVoiceModel",
+                          "safeName": "createVoiceModel"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "create_voice_model",
+                          "safeName": "create_voice_model"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "CREATE_VOICE_MODEL",
+                          "safeName": "CREATE_VOICE_MODEL"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "CreateVoiceModel",
+                          "safeName": "CreateVoiceModel"
                         }
                       },
                       "typeId": "CreateVoiceModel",
@@ -3180,22 +3180,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "GetSpeechOptionsRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "getSpeechOptionsRequest",
+                  "safeName": "getSpeechOptionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "get_speech_options_request",
+                  "safeName": "get_speech_options_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
+                  "safeName": "GET_SPEECH_OPTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GetSpeechOptionsRequest",
+                  "safeName": "GetSpeechOptionsRequest"
                 }
               },
               "typeId": "GetSpeechOptionsRequest",
@@ -3588,22 +3588,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "SpeechMarks",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "speechMarks",
+                  "safeName": "speechMarks"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "speech_marks",
+                  "safeName": "speech_marks"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SPEECH_MARKS",
+                  "safeName": "SPEECH_MARKS"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "SpeechMarks",
+                  "safeName": "SpeechMarks"
                 }
               },
               "typeId": "SpeechMarks",
@@ -4055,22 +4055,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "GetStreamOptionsRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "getStreamOptionsRequest",
+                  "safeName": "getStreamOptionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "get_stream_options_request",
+                  "safeName": "get_stream_options_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
+                  "safeName": "GET_STREAM_OPTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GetStreamOptionsRequest",
+                  "safeName": "GetStreamOptionsRequest"
                 }
               },
               "typeId": "GetStreamOptionsRequest",
@@ -4559,22 +4559,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "GetVoicesModel",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "getVoicesModel",
+                          "safeName": "getVoicesModel"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "get_voices_model",
+                          "safeName": "get_voices_model"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "GET_VOICES_MODEL",
+                          "safeName": "GET_VOICES_MODEL"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "GetVoicesModel",
+                          "safeName": "GetVoicesModel"
                         }
                       },
                       "typeId": "GetVoicesModel",
@@ -5060,22 +5060,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "GetVoiceLanguage",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "getVoiceLanguage",
+                          "safeName": "getVoiceLanguage"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "get_voice_language",
+                          "safeName": "get_voice_language"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "GET_VOICE_LANGUAGE",
+                          "safeName": "GET_VOICE_LANGUAGE"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "GetVoiceLanguage",
+                          "safeName": "GetVoiceLanguage"
                         }
                       },
                       "typeId": "GetVoiceLanguage",
@@ -5796,22 +5796,22 @@
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "",
+                        "originalName": "NestedChunk",
                         "camelCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "nestedChunk",
+                          "safeName": "nestedChunk"
                         },
                         "snakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "nested_chunk",
+                          "safeName": "nested_chunk"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "NESTED_CHUNK",
+                          "safeName": "NESTED_CHUNK"
                         },
                         "pascalCase": {
-                          "unsafeName": "",
-                          "safeName": ""
+                          "unsafeName": "NestedChunk",
+                          "safeName": "NestedChunk"
                         }
                       },
                       "typeId": "NestedChunk",
@@ -6279,22 +6279,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "ExperimentalStreamRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "experimentalStreamRequest",
+                  "safeName": "experimentalStreamRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "experimental_stream_request",
+                  "safeName": "experimental_stream_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "EXPERIMENTAL_STREAM_REQUEST",
+                  "safeName": "EXPERIMENTAL_STREAM_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "ExperimentalStreamRequest",
+                  "safeName": "ExperimentalStreamRequest"
                 }
               },
               "typeId": "ExperimentalStreamRequest",
@@ -6690,22 +6690,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "GetSpeechRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "getSpeechRequest",
+                  "safeName": "getSpeechRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "get_speech_request",
+                  "safeName": "get_speech_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GET_SPEECH_REQUEST",
+                  "safeName": "GET_SPEECH_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GetSpeechRequest",
+                  "safeName": "GetSpeechRequest"
                 }
               },
               "typeId": "GetSpeechRequest",
@@ -7396,22 +7396,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "GetStreamRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "getStreamRequest",
+                  "safeName": "getStreamRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "get_stream_request",
+                  "safeName": "get_stream_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GET_STREAM_REQUEST",
+                  "safeName": "GET_STREAM_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "GetStreamRequest",
+                  "safeName": "GetStreamRequest"
                 }
               },
               "typeId": "GetStreamRequest",
@@ -8100,22 +8100,22 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "",
+                "originalName": "CreateAccessTokenRequest",
                 "camelCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "createAccessTokenRequest",
+                  "safeName": "createAccessTokenRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "create_access_token_request",
+                  "safeName": "create_access_token_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CREATE_ACCESS_TOKEN_REQUEST",
+                  "safeName": "CREATE_ACCESS_TOKEN_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "",
-                  "safeName": ""
+                  "unsafeName": "CreateAccessTokenRequest",
+                  "safeName": "CreateAccessTokenRequest"
                 }
               },
               "typeId": "CreateAccessTokenRequest",
@@ -9162,6 +9162,7 @@
                   },
                   "isOptional": false,
                   "contentType": "multipart/form-data",
+                  "docs": "Audio sample file",
                   "type": "file"
                 },
                 "type": "file"

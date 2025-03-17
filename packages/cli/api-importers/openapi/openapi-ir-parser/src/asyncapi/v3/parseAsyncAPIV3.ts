@@ -318,9 +318,9 @@ export function parseAsyncAPIV3({
                         schema: convertSchemaWithExampleToSchema(param.schema)
                     }))
                 },
-                groupName: [
+                groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ],
+                ]),
                 publish:
                     channelSchemas[channelPath]?.publish != null
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].publish)
@@ -336,7 +336,7 @@ export function parseAsyncAPIV3({
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address ?? transformToValidPath(channelPath),
-                description: undefined,
+                description: channel.description,
                 examples,
                 source
             };
