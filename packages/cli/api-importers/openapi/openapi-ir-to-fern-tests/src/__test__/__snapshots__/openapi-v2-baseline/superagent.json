@@ -6565,7 +6565,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_agent.createAgent": {
         "auth": {
@@ -6956,7 +6957,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_agent.getAgent": {
         "auth": {
@@ -7084,7 +7086,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_agent.deleteAgent": {
         "auth": {
@@ -7212,7 +7215,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_agent.patchAgent": {
         "auth": {
@@ -7353,7 +7357,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_agent.promptAgent": {
         "auth": {
@@ -7621,7 +7626,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_auth.signIn": {
         "auth": {
@@ -7851,7 +7857,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_auth.signUp": {
         "auth": {
@@ -8149,7 +8156,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_user.readUserMe": {
         "auth": {
@@ -8248,7 +8256,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_user.readUser": {
         "auth": {
@@ -8376,7 +8385,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apiToken.listApiTokens": {
         "auth": {
@@ -8475,7 +8485,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apiToken.createApiToken": {
         "auth": {
@@ -8677,7 +8688,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apiToken.getApiToken": {
         "auth": {
@@ -8805,7 +8817,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apiToken.deleteApiToken": {
         "auth": {
@@ -8933,7 +8946,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.listDocuments": {
         "auth": {
@@ -9032,7 +9046,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.createDocument": {
         "auth": {
@@ -9426,7 +9441,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.getDocument": {
         "auth": {
@@ -9554,7 +9570,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.deleteDocument": {
         "auth": {
@@ -9682,7 +9699,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_prompts.listPrompts": {
         "auth": {
@@ -9781,7 +9799,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_prompts.createAPrompt": {
         "auth": {
@@ -10041,7 +10060,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_prompts.getPrompt": {
         "auth": {
@@ -10169,7 +10189,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_prompts.deletePrompt": {
         "auth": {
@@ -10297,7 +10318,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_prompts.patchPrompt": {
         "auth": {
@@ -10438,7 +10460,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_tools.listTools": {
         "auth": {
@@ -10537,7 +10560,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_tools.createATool": {
         "auth": {
@@ -10804,7 +10828,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_tools.getTool": {
         "auth": {
@@ -10932,7 +10957,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_tools.deleteTool": {
         "auth": {
@@ -11060,7 +11086,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_traces.listAgentTraces": {
         "auth": {
@@ -11159,7 +11186,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

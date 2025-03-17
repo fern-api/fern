@@ -26018,7 +26018,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.multipartFileUploadStart": {
         "declaration": {
@@ -26446,7 +26447,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.multipartFileUploadPart": {
         "declaration": {
@@ -26526,7 +26528,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.multipartFileUploadComplete": {
         "declaration": {
@@ -26736,7 +26739,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.fromURLUpload": {
         "declaration": {
@@ -27170,7 +27174,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.fromURLUploadStatus": {
         "declaration": {
@@ -27346,7 +27351,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_upload.fileUploadInfo": {
         "declaration": {
@@ -27550,7 +27556,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_groups.createFilesGroup": {
         "declaration": {
@@ -27827,7 +27834,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_groups.filesGroupInfo": {
         "declaration": {
@@ -28031,7 +28039,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

@@ -18404,7 +18404,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_extensions.get": {
         "auth": {
@@ -18605,7 +18606,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_extensions.post": {
         "auth": {
@@ -18807,7 +18809,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_extensions.delete": {
         "auth": {
@@ -19008,7 +19011,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_extensions.getById": {
         "auth": {
@@ -19136,7 +19140,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_profiles.get": {
         "auth": {
@@ -19371,7 +19376,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_profiles.post": {
         "auth": {
@@ -19607,7 +19613,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_profiles.delete": {
         "auth": {
@@ -19842,7 +19849,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_profiles.getById": {
         "auth": {
@@ -19970,7 +19978,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sessions.list": {
         "auth": {
@@ -20267,7 +20276,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sessions.post": {
         "auth": {
@@ -20472,7 +20482,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sessions.getinfo": {
         "auth": {
@@ -20600,7 +20611,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sessions.terminate": {
         "auth": {
@@ -20728,7 +20740,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sessions.events": {
         "auth": {
@@ -20856,7 +20869,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_windows.get-window-info": {
         "auth": {
@@ -21176,7 +21190,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_windows.prompt-content": {
         "auth": {
@@ -21559,7 +21574,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_windows.scrape-content": {
         "auth": {
@@ -21715,7 +21731,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_windows.summarize-content": {
         "auth": {
@@ -22070,7 +22087,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],
