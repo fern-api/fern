@@ -34336,9 +34336,7 @@ You can optionally define the result page size as well with the `per_page` param
               "request": {
                 "name": "LisDataEventsRequest",
                 "query-parameters": {
-                  "filter": {
-                    "type": "LisDataEventsRequestFilter",
-                  },
+                  "filter": "LisDataEventsRequestFilter",
                   "summary": {
                     "docs": "summary flag",
                     "type": "optional<boolean>",
@@ -34618,8 +34616,7 @@ service:
       request:
         name: LisDataEventsRequest
         query-parameters:
-          filter:
-            type: LisDataEventsRequestFilter
+          filter: LisDataEventsRequestFilter
           type:
             type: string
             docs: The value must be user

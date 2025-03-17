@@ -38,12 +38,8 @@
               "request": {
                 "name": "ListRequest",
                 "query-parameters": {
-                  "limit": {
-                    "type": "optional<integer>",
-                  },
-                  "pageNumber": {
-                    "type": "optional<integer>",
-                  },
+                  "limit": "optional<integer>",
+                  "pageNumber": "optional<integer>",
                 },
               },
               "response": {
@@ -120,10 +116,8 @@
       request:
         name: ListRequest
         query-parameters:
-          pageNumber:
-            type: optional<integer>
-          limit:
-            type: optional<integer>
+          pageNumber: optional<integer>
+          limit: optional<integer>
       response:
         docs: Success
         type: UsersResponse

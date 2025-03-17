@@ -8612,9 +8612,7 @@ errors:
 ",
                     "type": "optional<string>",
                   },
-                  "f.name": {
-                    "type": "optional<string>",
-                  },
+                  "f.name": "optional<string>",
                   "f.shipment.id": {
                     "docs": "Filter by the shipment resulting from the booking",
                     "type": "optional<integer>",
@@ -9612,8 +9610,7 @@ service:
           f.shipper_entity_ref:
             type: optional<string>
             docs: Filters the list based on the booking's shipper
-          f.name:
-            type: optional<string>
+          f.name: optional<string>
           f.cargo_ready_date:
             type: optional<string>
             docs: Filters the list for bookings with the specified cargo ready date

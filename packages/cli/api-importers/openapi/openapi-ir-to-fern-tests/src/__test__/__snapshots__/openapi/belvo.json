@@ -35335,9 +35335,7 @@ client.connect()
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
                     "type": "optional<string>",
                   },
-                  "name": {
-                    "type": "optional<string>",
-                  },
+                  "name": "optional<string>",
                   "name__in": {
                     "docs": "Return institutions with one or more of these Belvo-designated names.",
                     "type": "optional<string>",
@@ -35465,8 +35463,7 @@ service:
           display_name:
             type: optional<string>
             docs: Return institutions that partially match this display name.
-          name:
-            type: optional<string>
+          name: optional<string>
           name__in:
             type: optional<string>
             docs: >-
@@ -36246,21 +36243,11 @@ client.connect()
               "request": {
                 "name": "ListPortfolioRequest",
                 "query-parameters": {
-                  "created_at__gt": {
-                    "type": "optional<string>",
-                  },
-                  "created_at__gte": {
-                    "type": "optional<string>",
-                  },
-                  "created_at__lt": {
-                    "type": "optional<string>",
-                  },
-                  "created_at__lte": {
-                    "type": "optional<string>",
-                  },
-                  "created_at__range": {
-                    "type": "optional<string>",
-                  },
+                  "created_at__gt": "optional<string>",
+                  "created_at__gte": "optional<string>",
+                  "created_at__lt": "optional<string>",
+                  "created_at__lte": "optional<string>",
+                  "created_at__range": "optional<string>",
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
                     "type": "optional<string>",
@@ -36278,9 +36265,7 @@ client.connect()
                       "pattern": undefined,
                     },
                   },
-                  "link__in": {
-                    "type": "optional<string>",
-                  },
+                  "link__in": "optional<string>",
                   "omit": {
                     "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
                     "type": "optional<string>",
@@ -36725,18 +36710,12 @@ service:
               improve your performance.
             validation:
               format: uuid
-          created_at__gt:
-            type: optional<string>
-          created_at__gte:
-            type: optional<string>
-          created_at__lt:
-            type: optional<string>
-          created_at__lte:
-            type: optional<string>
-          created_at__range:
-            type: optional<string>
-          link__in:
-            type: optional<string>
+          created_at__gt: optional<string>
+          created_at__gte: optional<string>
+          created_at__lt: optional<string>
+          created_at__lte: optional<string>
+          created_at__range: optional<string>
+          link__in: optional<string>
       response:
         docs: Ok
         type: root.InvestmentsPortfoliosPaginatedResponse
