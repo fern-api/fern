@@ -9,14 +9,76 @@ import json
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from ..core.api_response import APIResponse, ResponseManager, AsyncResponseManager, AsyncAPIResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class DummyClient:
+class RawDummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> ResponseManager[APIResponse[typing.Iterator[StreamResponse]]]:
+        def _initial_request_func() -> APIResponse[typing.Iterator[StreamResponse]]:
+            _response = self._client_wrapper.httpx_client.stream(
+                "generate-stream",
+                method="POST",
+                json={
+                    "num_events": num_events,
+                    "stream": True,
+                },
+                request_options=request_options,
+                omit=OMIT,
+            )
+
+            class ResponseIterator:
+                def __init__(self, response):
+                    self.response = response
+                    
+                def __iter__(self):
+                    return self
+                    
+                def __next__(self):
+                    for text in self.response.iter_lines():
+                        try:
+                            if len(text) == 0:
+                                continue
+                            return typing.cast(
+                                StreamResponse,
+                                parse_obj_as(
+                                    type_=StreamResponse,  # type: ignore
+                                    object_=json.loads(text),
+                                ),
+                            )
+                        except Exception:
+                            pass
+                    
+                    try:
+                        self.response.read()
+                        response_json = self.response.json()
+                    except JSONDecodeError:
+                        raise ApiError(status_code=self.response.status_code, body=self.response.text)
+                    
+                    if 200 <= self.response.status_code < 300:
+                        raise StopIteration
+                    raise ApiError(status_code=self.response.status_code, body=response_json)
+            
+            return APIResponse(
+                response=_response,
+                data=ResponseIterator(_response)
+            )
+
+        return ResponseManager(
+            initial_request_func=_initial_request_func
+        )
+
+
+class DummyClient:
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawDummyClient(client_wrapper=client_wrapper)
 
     def generate_stream(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -46,90 +108,75 @@ class DummyClient:
         for chunk in response:
             yield chunk
         """
-        with self._client_wrapper.httpx_client.stream(
-            "generate-stream",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": True,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    for _text in _response.iter_lines():
+        with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as response:
+            for chunk in response.data:
+                yield chunk
+
+
+class AsyncRawDummyClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncResponseManager[AsyncAPIResponse[typing.AsyncIterator[StreamResponse]]]:
+        async def _initial_request_func() -> AsyncAPIResponse[typing.AsyncIterator[StreamResponse]]:
+            async with self._client_wrapper.httpx_client.stream(
+                "generate-stream",
+                method="POST",
+                json={
+                    "num_events": num_events,
+                    "stream": True,
+                },
+                request_options=request_options,
+                omit=OMIT,
+            ) as _response:
+
+                class AsyncResponseIterator:
+                    def __init__(self, response):
+                        self.response = response
+                        self._iter = self.response.aiter_lines()
+
+                    def __aiter__(self):
+                        return self
+
+                    async def __anext__(self):
+                        async for text in self._iter:
+                            try:
+                                if not text:
+                                    continue
+                                return typing.cast(
+                                    StreamResponse,
+                                    parse_obj_as(
+                                        type_=StreamResponse,  # type: ignore
+                                        object_=json.loads(text),
+                                    ),
+                                )
+                            except Exception:
+                                pass
+
                         try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                StreamResponse,
-                                parse_obj_as(
-                                    type_=StreamResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except Exception:
-                            pass
-                    return
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                            content = await self.response.aread()
+                            response_json = json.loads(content)
+                        except JSONDecodeError:
+                            raise ApiError(status_code=self.response.status_code, body=await self.response.atext())
+                        
+                        if 200 <= self.response.status_code < 300:
+                            raise StopAsyncIteration
+                        raise ApiError(status_code=self.response.status_code, body=response_json)
 
-    def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
-        """
-        Parameters
-        ----------
-        num_events : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StreamResponse
-
-        Examples
-        --------
-        from seed import SeedStreaming
-
-        client = SeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.dummy.generate(
-            num_events=5,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "generate",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": False,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StreamResponse,
-                    parse_obj_as(
-                        type_=StreamResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
+                return AsyncAPIResponse(
+                    response=_response,
+                    data=AsyncResponseIterator(_response)
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
+        return AsyncResponseManager(
+            initial_request_func=_initial_request_func
+        )
 
 class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawDummyClient(client_wrapper=client_wrapper)
 
     async def generate_stream(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -167,92 +214,6 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
-            "generate-stream",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": True,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    async for _text in _response.aiter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                StreamResponse,
-                                parse_obj_as(
-                                    type_=StreamResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except Exception:
-                            pass
-                    return
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def generate(
-        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> StreamResponse:
-        """
-        Parameters
-        ----------
-        num_events : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StreamResponse
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedStreaming
-
-        client = AsyncSeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.dummy.generate(
-                num_events=5,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "generate",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": False,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StreamResponse,
-                    parse_obj_as(
-                        type_=StreamResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        async with await self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as response:
+            async for chunk in response.data:
+                yield chunk

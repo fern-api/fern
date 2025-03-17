@@ -11,7 +11,7 @@ from .types.movie import Movie
 from ..core.jsonable_encoder import jsonable_encoder
 from .errors.movie_does_not_exist_error import MovieDoesNotExistError
 from ..core.client_wrapper import AsyncClientWrapper
-from ..core.api_response import APIResponse, wrap_func_to_exclude_raw_response, wrap_async_func_to_exclude_raw_response
+from ..core.api_response import APIResponse, AsyncAPIResponse, wrap_func_to_exclude_raw_response, wrap_async_func_to_exclude_raw_response
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -47,7 +47,7 @@ class RawImdbClient:
                     ),
                 )
                 return APIResponse(
-                    headers=dict(_response.headers),
+                    response=_response,
                     data=data,
                 )
             _response_json = _response.json()
@@ -71,7 +71,7 @@ class RawImdbClient:
                     ),
                 )
                 return APIResponse(
-                    headers=dict(_response.headers),
+                    response=_response,
                     data=data,
                 )
             if _response.status_code == 404:
@@ -177,7 +177,7 @@ class AsyncRawImdbClient:
 
     async def create_movie(
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
-    ) -> APIResponse[MovieId]:
+    ) -> AsyncAPIResponse[MovieId]:
         """
         Equivalent to the `create_movie` method on the `ImdbClient` class, but returns the raw APIResponse.
         """
@@ -201,8 +201,8 @@ class AsyncRawImdbClient:
                         object_=_response.json(),
                     ),
                 )
-                return APIResponse(
-                    headers=dict(_response.headers),
+                return AsyncAPIResponse(
+                    response=_response,
                     data=data,
                 )
             _response_json = _response.json()
@@ -210,7 +210,7 @@ class AsyncRawImdbClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
     
-    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> APIResponse[Movie]:
+    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncAPIResponse[Movie]:
         _response = await self._client_wrapper.httpx_client.request(
             f"movies/{jsonable_encoder(movie_id)}",
             method="GET",
@@ -225,8 +225,8 @@ class AsyncRawImdbClient:
                         object_=_response.json(),
                     ),
                 )
-                return APIResponse(
-                    headers=dict(_response.headers),
+                return AsyncAPIResponse(
+                    response=_response,
                     data=data,
                 )
             if _response.status_code == 404:
