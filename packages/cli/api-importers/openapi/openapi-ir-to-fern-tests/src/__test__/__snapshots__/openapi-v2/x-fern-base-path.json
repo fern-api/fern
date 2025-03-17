@@ -26,7 +26,7 @@
   "environments": {
     "defaultEnvironment": "https://api.acme.com",
     "environments": {
-      "environments": [
+      "baseUrls": [
         {
           "id": "https://api.acme.com",
           "name": {
@@ -47,11 +47,59 @@
               "unsafeName": "HttpsApiAcmeCom",
               "safeName": "HttpsApiAcmeCom"
             }
-          },
-          "url": "https://api.acme.com"
+          }
+        },
+        {
+          "id": "https://api.acme.com",
+          "name": {
+            "originalName": "https://api.acme.com",
+            "camelCase": {
+              "unsafeName": "httpsApiAcmeCom",
+              "safeName": "httpsApiAcmeCom"
+            },
+            "snakeCase": {
+              "unsafeName": "https_api_acme_com",
+              "safeName": "https_api_acme_com"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_API_ACME_COM",
+              "safeName": "HTTPS_API_ACME_COM"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsApiAcmeCom",
+              "safeName": "HttpsApiAcmeCom"
+            }
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "environments": [
+        {
+          "id": "Prod",
+          "name": {
+            "originalName": "Prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
+            }
+          },
+          "urls": {
+            "https://api.acme.com": "https://api.acme.com"
+          }
+        }
+      ],
+      "type": "multipleBaseUrls"
     }
   },
   "types": {},

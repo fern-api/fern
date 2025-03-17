@@ -21018,28 +21018,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "https://upload.uploadcare.com",
+    "defaultEnvironment": "Production server",
     "environments": {
       "environments": [
         {
-          "id": "https://upload.uploadcare.com",
+          "id": "Production server",
           "name": {
-            "originalName": "https://upload.uploadcare.com",
+            "originalName": "Production server",
             "camelCase": {
-              "unsafeName": "httpsUploadUploadcareCom",
-              "safeName": "httpsUploadUploadcareCom"
+              "unsafeName": "productionServer",
+              "safeName": "productionServer"
             },
             "snakeCase": {
-              "unsafeName": "https_upload_uploadcare_com",
-              "safeName": "https_upload_uploadcare_com"
+              "unsafeName": "production_server",
+              "safeName": "production_server"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_UPLOAD_UPLOADCARE_COM",
-              "safeName": "HTTPS_UPLOAD_UPLOADCARE_COM"
+              "unsafeName": "PRODUCTION_SERVER",
+              "safeName": "PRODUCTION_SERVER"
             },
             "pascalCase": {
-              "unsafeName": "HttpsUploadUploadcareCom",
-              "safeName": "HttpsUploadUploadcareCom"
+              "unsafeName": "ProductionServer",
+              "safeName": "ProductionServer"
             }
           },
           "url": "https://upload.uploadcare.com",

@@ -67,7 +67,7 @@
   "environments": {
     "defaultEnvironment": "https://api.hume.ai",
     "environments": {
-      "environments": [
+      "baseUrls": [
         {
           "id": "https://api.hume.ai",
           "name": {
@@ -88,11 +88,60 @@
               "unsafeName": "HttpsApiHumeAi",
               "safeName": "HttpsApiHumeAi"
             }
-          },
-          "url": "https://api.hume.ai"
+          }
+        },
+        {
+          "id": "prod",
+          "name": {
+            "originalName": "prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
+            }
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "environments": [
+        {
+          "id": "Prod",
+          "name": {
+            "originalName": "Prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
+            }
+          },
+          "urls": {
+            "https://api.hume.ai": "https://api.hume.ai",
+            "prod": "wss://api.hume.ai/v0/evi"
+          }
+        }
+      ],
+      "type": "multipleBaseUrls"
     }
   },
   "types": {

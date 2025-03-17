@@ -26,6 +26,74 @@
   "environments": {
     "defaultEnvironment": "Prod",
     "environments": {
+      "baseUrls": [
+        {
+          "id": "Prod",
+          "name": {
+            "originalName": "Prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
+            }
+          }
+        },
+        {
+          "id": "websocket",
+          "name": {
+            "originalName": "websocket",
+            "camelCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket",
+              "safeName": "websocket"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET",
+              "safeName": "WEBSOCKET"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket",
+              "safeName": "Websocket"
+            }
+          }
+        },
+        {
+          "id": "websocket2",
+          "name": {
+            "originalName": "websocket2",
+            "camelCase": {
+              "unsafeName": "websocket2",
+              "safeName": "websocket2"
+            },
+            "snakeCase": {
+              "unsafeName": "websocket_2",
+              "safeName": "websocket_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WEBSOCKET_2",
+              "safeName": "WEBSOCKET_2"
+            },
+            "pascalCase": {
+              "unsafeName": "Websocket2",
+              "safeName": "Websocket2"
+            }
+          }
+        }
+      ],
       "environments": [
         {
           "id": "Prod",
@@ -48,10 +116,14 @@
               "safeName": "Prod"
             }
           },
-          "url": "http://prod.api.com"
+          "urls": {
+            "Prod": "http://prod.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "type": "multipleBaseUrls"
     }
   },
   "types": {},

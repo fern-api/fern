@@ -1,9 +1,13 @@
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { CasingsGenerator } from "@fern-api/casings-generator";
+import * as FernIr from "@fern-api/ir-sdk";
 
 export function mergeIntermediateRepresentation(
-    ir1: IntermediateRepresentation,
-    ir2: IntermediateRepresentation
-): IntermediateRepresentation {
+    ir1: FernIr.IntermediateRepresentation,
+    ir2: FernIr.IntermediateRepresentation,
+    casingsGenerator: CasingsGenerator
+): FernIr.IntermediateRepresentation {
+    const environments = mergeEnvironments(ir1.environments, ir2.environments, casingsGenerator);
+
     return {
         apiName: ir1.apiName,
         basePath: ir1.basePath,
@@ -11,7 +15,7 @@ export function mergeIntermediateRepresentation(
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
         auth: ir1.auth ?? ir2.auth,
         headers: [...(ir1.headers ?? []), ...(ir2.headers ?? [])],
-        environments: ir1.environments ?? ir2.environments,
+        environments,
         types: {
             ...(ir1.types ?? {}),
             ...(ir2.types ?? {})
@@ -65,4 +69,52 @@ export function mergeIntermediateRepresentation(
         dynamic: ir1.dynamic ?? ir2.dynamic,
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig
     };
+}
+
+function mergeEnvironments(
+    environmentConfig1: FernIr.EnvironmentsConfig | undefined,
+    environmentConfig2: FernIr.EnvironmentsConfig | undefined,
+    casingsGenerator: CasingsGenerator
+): FernIr.EnvironmentsConfig | undefined {
+    if (environmentConfig1 == null && environmentConfig2 == null) {
+        return undefined;
+    } else if (environmentConfig2 == null) {
+        return environmentConfig1;
+    } else if (environmentConfig1 == null) {
+        return environmentConfig2;
+    }
+
+    const defaultEnvironment: FernIr.EnvironmentId | undefined =
+        environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment;
+
+    const environments1 = environmentConfig1.environments;
+    const environments2 = environmentConfig2.environments;
+
+    if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
+        // console.log("Merging Environments for both SingleBaseUrl Case...")
+        // console.log("environmentConfig1", JSON.stringify(environmentConfig1, null, 2));
+        // console.log("environmentConfig2", JSON.stringify(environmentConfig2, null, 2));
+        return {
+            defaultEnvironment,
+            environments: FernIr.Environments.multipleBaseUrls({
+                baseUrls: [
+                    ...environments1.environments.map((env) => ({ id: env.id, name: env.name })),
+                    ...environments2.environments.map((env) => ({ id: env.id, name: env.name }))
+                ],
+                environments: [
+                    {
+                        id: "Prod",
+                        name: casingsGenerator.generateName("Prod"),
+                        urls: Object.assign(
+                            {},
+                            ...environments1.environments.map((env) => ({ [env.id]: env.url })),
+                            ...environments2.environments.map((env) => ({ [env.id]: env.url }))
+                        ),
+                        docs: undefined
+                    }
+                ]
+            })
+        };
+    }
+    return environmentConfig1 ?? environmentConfig2;
 }

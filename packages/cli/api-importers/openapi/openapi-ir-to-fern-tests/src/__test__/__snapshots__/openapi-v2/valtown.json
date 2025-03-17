@@ -38351,28 +38351,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "https://api.val.town",
+    "defaultEnvironment": "Production",
     "environments": {
       "environments": [
         {
-          "id": "https://api.val.town",
+          "id": "Production",
           "name": {
-            "originalName": "https://api.val.town",
+            "originalName": "Production",
             "camelCase": {
-              "unsafeName": "httpsApiValTown",
-              "safeName": "httpsApiValTown"
+              "unsafeName": "production",
+              "safeName": "production"
             },
             "snakeCase": {
-              "unsafeName": "https_api_val_town",
-              "safeName": "https_api_val_town"
+              "unsafeName": "production",
+              "safeName": "production"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_API_VAL_TOWN",
-              "safeName": "HTTPS_API_VAL_TOWN"
+              "unsafeName": "PRODUCTION",
+              "safeName": "PRODUCTION"
             },
             "pascalCase": {
-              "unsafeName": "HttpsApiValTown",
-              "safeName": "HttpsApiValTown"
+              "unsafeName": "Production",
+              "safeName": "Production"
             }
           },
           "url": "https://api.val.town",

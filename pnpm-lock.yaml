@@ -8172,6 +8172,9 @@ importers:
 
   packages/commons/ir-utils:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../casings-generator
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils

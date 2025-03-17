@@ -25,28 +25,29 @@ export class ServersConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): EnvironmentsConfig | undefined {
-        // TODO (Eden): Correctly handle multiple servers
         if (this.servers == null || Object.keys(this.servers).length === 0) {
             return undefined;
         }
 
-        const serverEntries = Object.entries(this.servers);
-        const firstServer = serverEntries[0]?.[1];
-        if (firstServer == null) {
-            return undefined;
+        const environments: SingleBaseUrlEnvironment[] = [];
+        let defaultEnvironmentId: string | undefined;
+
+        for (const [serverId, server] of Object.entries(this.servers)) {
+            const environment: SingleBaseUrlEnvironment = {
+                id: serverId,
+                name: context.casingsGenerator.generateName(serverId),
+                url: this.constructServerUrl(server.protocol, server.url),
+                docs: undefined
+            };
+            environments.push(environment);
+
+            if (defaultEnvironmentId == null) {
+                defaultEnvironmentId = environment.id;
+            }
         }
 
-        const environments: SingleBaseUrlEnvironment[] = [
-            {
-                id: "default",
-                name: context.casingsGenerator.generateName("Default"),
-                url: this.constructServerUrl(firstServer.protocol, firstServer.url),
-                docs: undefined
-            }
-        ];
-
         return {
-            defaultEnvironment: environments[0]?.id,
+            defaultEnvironment: defaultEnvironmentId,
             environments: Environments.singleBaseUrl({
                 environments
             })

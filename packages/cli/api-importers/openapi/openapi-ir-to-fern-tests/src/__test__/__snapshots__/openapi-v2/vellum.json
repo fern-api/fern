@@ -64750,7 +64750,7 @@
             }
           },
           "urls": {
-            "https://api.vellum.ai": "https://api.vellum.ai",
+            "Default Server": "https://api.vellum.ai",
             "https://predict.vellum.ai": "https://predict.vellum.ai",
             "https://documents.vellum.ai": "https://documents.vellum.ai"
           }

@@ -2533,28 +2533,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "https://{handle}.ada.support/api",
+    "defaultEnvironment": "The subdomain of the client",
     "environments": {
       "environments": [
         {
-          "id": "https://{handle}.ada.support/api",
+          "id": "The subdomain of the client",
           "name": {
-            "originalName": "https://{handle}.ada.support/api",
+            "originalName": "The subdomain of the client",
             "camelCase": {
-              "unsafeName": "httpsHandleAdaSupportApi",
-              "safeName": "httpsHandleAdaSupportApi"
+              "unsafeName": "theSubdomainOfTheClient",
+              "safeName": "theSubdomainOfTheClient"
             },
             "snakeCase": {
-              "unsafeName": "https_handle_ada_support_api",
-              "safeName": "https_handle_ada_support_api"
+              "unsafeName": "the_subdomain_of_the_client",
+              "safeName": "the_subdomain_of_the_client"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_HANDLE_ADA_SUPPORT_API",
-              "safeName": "HTTPS_HANDLE_ADA_SUPPORT_API"
+              "unsafeName": "THE_SUBDOMAIN_OF_THE_CLIENT",
+              "safeName": "THE_SUBDOMAIN_OF_THE_CLIENT"
             },
             "pascalCase": {
-              "unsafeName": "HttpsHandleAdaSupportApi",
-              "safeName": "HttpsHandleAdaSupportApi"
+              "unsafeName": "TheSubdomainOfTheClient",
+              "safeName": "TheSubdomainOfTheClient"
             }
           },
           "url": "https://example.ada.support/api",

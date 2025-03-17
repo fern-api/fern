@@ -110,7 +110,7 @@ export class ServersConverter extends AbstractConverter<
     }): string {
         const serverNameExtension = new ServerNameExtension({ breadcrumbs: [], server });
         const serverName = serverNameExtension.convert({ context, errorCollector });
-        return serverName ?? server.url;
+        return serverName ?? server.description ?? server.url;
     }
 
     private getServerUrl(server: OpenAPIV3_1.ServerObject): string {
