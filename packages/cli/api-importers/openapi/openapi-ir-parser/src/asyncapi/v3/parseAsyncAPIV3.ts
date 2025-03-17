@@ -318,9 +318,9 @@ export function parseAsyncAPIV3({
                         schema: convertSchemaWithExampleToSchema(param.schema)
                     }))
                 },
-                groupName: [
+                groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ],
+                ]),
                 publish:
                     channelSchemas[channelPath]?.publish != null
                         ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].publish)

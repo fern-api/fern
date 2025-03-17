@@ -49,14 +49,6 @@ body:
     validations:
       required: false
 
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: "Anything else? (Optional)"
-      placeholder: "Links, screenshots, or related issues..."
-    validations:
-      required: false
-
   - type: dropdown
     id: contribute
     attributes:

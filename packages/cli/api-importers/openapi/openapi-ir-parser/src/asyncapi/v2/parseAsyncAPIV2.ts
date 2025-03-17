@@ -256,9 +256,9 @@ export function parseAsyncAPIV2({
                         };
                     })
                 },
-                groupName: [
+                groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ],
+                ]),
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
