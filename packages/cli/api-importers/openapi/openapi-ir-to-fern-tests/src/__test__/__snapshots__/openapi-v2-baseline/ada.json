@@ -8414,7 +8414,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_endUsers.updateEndUserById": {
         "auth": {
@@ -8645,7 +8646,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_endUsers.getEndUsers": {
         "auth": {
@@ -8877,7 +8879,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

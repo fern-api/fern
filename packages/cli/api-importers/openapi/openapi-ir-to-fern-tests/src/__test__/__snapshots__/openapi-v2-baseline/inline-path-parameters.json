@@ -1967,7 +1967,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.GetUser": {
         "declaration": {
@@ -2065,7 +2066,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.GetOrganizationUser": {
         "declaration": {
@@ -2220,7 +2222,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []
