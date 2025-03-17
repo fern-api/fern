@@ -38941,7 +38941,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documentIndexes.create": {
         "auth": {
@@ -39307,7 +39308,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.list": {
         "auth": {
@@ -39610,7 +39612,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_documents.upload": {
         "auth": {
@@ -39947,7 +39950,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_modelVersions.retrieve": {
         "auth": {
@@ -40084,7 +40088,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_modelVersions.model_version_compile_prompt": {
         "auth": {
@@ -40330,7 +40335,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_registeredPrompts.register_prompt": {
         "auth": {
@@ -40718,7 +40724,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sandboxes.upsert_sandbox_scenario": {
         "auth": {
@@ -41054,7 +41061,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_sandboxes.delete_sandbox_scenario": {
         "auth": {
@@ -41219,7 +41227,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_testSuites.upsert_test_suite_test_case": {
         "auth": {
@@ -41555,7 +41564,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_testSuites.delete_test_suite_test_case": {
         "auth": {
@@ -41720,7 +41730,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.execute-workflow-stream": {
         "auth": {
@@ -41980,7 +41991,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.generate": {
         "auth": {
@@ -42209,7 +42221,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.generate-stream": {
         "auth": {
@@ -42438,7 +42451,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.search": {
         "auth": {
@@ -42664,7 +42678,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.submit-completion-actuals": {
         "auth": {
@@ -42862,7 +42877,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

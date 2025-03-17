@@ -2919,7 +2919,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_users.listUsers": {
         "declaration": {
@@ -3129,7 +3130,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.getAUser": {
         "declaration": {
@@ -3196,7 +3198,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

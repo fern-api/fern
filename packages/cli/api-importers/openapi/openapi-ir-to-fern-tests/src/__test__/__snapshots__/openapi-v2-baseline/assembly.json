@@ -41193,7 +41193,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.list": {
         "auth": {
@@ -41558,7 +41559,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.create": {
         "auth": {
@@ -42835,7 +42837,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.get": {
         "auth": {
@@ -42972,7 +42975,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.delete": {
         "auth": {
@@ -43109,7 +43113,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.getSubtitles": {
         "auth": {
@@ -43376,7 +43381,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.getSentences": {
         "auth": {
@@ -43513,7 +43519,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.getParagraphs": {
         "auth": {
@@ -43650,7 +43657,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.wordSearch": {
         "auth": {
@@ -43892,7 +43900,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transcript.getRedactedAudio": {
         "auth": {
@@ -44029,7 +44038,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_realtime.createTemporaryToken": {
         "auth": {
@@ -44240,7 +44250,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lemur.summary": {
         "auth": {
@@ -44609,7 +44620,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lemur.questionAnswer": {
         "auth": {
@@ -44978,7 +44990,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lemur.actionItems": {
         "auth": {
@@ -45093,7 +45106,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lemur.task": {
         "auth": {
@@ -45459,7 +45473,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lemur.purgeRequestData": {
         "auth": {
@@ -45596,7 +45611,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

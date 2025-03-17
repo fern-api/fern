@@ -32181,7 +32181,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_appV1.CreateApp": {
         "auth": {
@@ -32287,7 +32288,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_appV1.UpdateApp": {
         "auth": {
@@ -32422,7 +32424,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_appV1.GetAppInfo": {
         "auth": {
@@ -32550,7 +32553,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_appV1.DeleteApp": {
         "auth": {
@@ -32678,7 +32682,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_authV1.LoginAnonymous": {
         "auth": {
@@ -32806,7 +32811,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_authV1.LoginNickname": {
         "auth": {
@@ -33037,7 +33043,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_authV1.LoginGoogle": {
         "auth": {
@@ -33268,7 +33275,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_buildV1.GetBuilds": {
         "auth": {
@@ -33396,7 +33404,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_buildV1.GetBuildInfo": {
         "auth": {
@@ -33552,7 +33561,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_buildV1.CreateBuild": {
         "auth": {
@@ -33680,7 +33690,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_buildV1.RunBuild": {
         "auth": {
@@ -33934,7 +33945,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_buildV1.DeleteBuild": {
         "auth": {
@@ -34090,7 +34102,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_deploymentV1.GetDeployments": {
         "auth": {
@@ -34218,7 +34231,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_deploymentV1.GetDeploymentInfo": {
         "auth": {
@@ -34374,7 +34388,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_deploymentV1.CreateDeployment": {
         "auth": {
@@ -34537,7 +34552,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_discoveryV1.GetPingServiceEndpoints": {
         "auth": {
@@ -34636,7 +34652,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV1.CreatePrivateLobbyDeprecated": {
         "auth": {
@@ -34926,7 +34943,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV1.CreatePublicLobbyDeprecated": {
         "auth": {
@@ -35216,7 +35234,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV1.ListActivePublicLobbiesDeprecated": {
         "auth": {
@@ -35506,7 +35525,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.CreatePrivateLobby": {
         "auth": {
@@ -35832,7 +35852,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.CreatePublicLobby": {
         "auth": {
@@ -36158,7 +36179,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.CreateLocalLobby": {
         "auth": {
@@ -36484,7 +36506,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.CreateLobby": {
         "auth": {
@@ -36838,7 +36861,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.ListActivePublicLobbies": {
         "auth": {
@@ -37068,7 +37092,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.GetLobbyInfo": {
         "auth": {
@@ -37224,7 +37249,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_lobbyV2.SetLobbyState": {
         "auth": {
@@ -37489,7 +37515,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_logV1.GetLogsForApp": {
         "auth": {
@@ -37781,7 +37808,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_logV1.GetLogsForProcess": {
         "auth": {
@@ -38070,7 +38098,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_logV1.GetLogsForDeployment": {
         "auth": {
@@ -38359,7 +38388,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_metricsV1.GetMetrics": {
         "auth": {
@@ -38713,7 +38743,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_processesV1.GetRunningProcesses": {
         "auth": {
@@ -38943,7 +38974,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_processesV1.GetStoppedProcesses": {
         "auth": {
@@ -39173,7 +39205,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_processesV1.GetProcessInfo": {
         "auth": {
@@ -39329,7 +39362,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.CreateRoom": {
         "auth": {
@@ -39560,7 +39594,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.GetRoomInfo": {
         "auth": {
@@ -39716,7 +39751,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.GetActiveRoomsForProcess": {
         "auth": {
@@ -39872,7 +39908,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.GetInactiveRoomsForProcess": {
         "auth": {
@@ -40028,7 +40065,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.DestroyRoom": {
         "auth": {
@@ -40184,7 +40222,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.SuspendRoom": {
         "auth": {
@@ -40340,7 +40379,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_roomV1.GetConnectionInfo": {
         "auth": {
@@ -40496,7 +40536,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

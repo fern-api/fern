@@ -1103,7 +1103,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_chatCompletions.create": {
         "declaration": {
@@ -1314,7 +1315,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

@@ -108515,7 +108515,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_textIntelligence.TextRead": {
         "auth": {
@@ -109008,7 +109009,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_textToSpeech.speak": {
         "auth": {
@@ -109400,7 +109402,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjects": {
         "auth": {
@@ -109508,7 +109511,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProject": {
         "auth": {
@@ -109840,7 +109844,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteProject": {
         "auth": {
@@ -109977,7 +109982,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.updateProject": {
         "auth": {
@@ -110220,7 +110226,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectBalances": {
         "auth": {
@@ -110357,7 +110364,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectBalance": {
         "auth": {
@@ -110522,7 +110530,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectModels": {
         "auth": {
@@ -110758,7 +110767,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectModel": {
         "auth": {
@@ -110923,7 +110933,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectKeys": {
         "auth": {
@@ -111060,7 +111071,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.createProjectKey": {
         "auth": {
@@ -111204,7 +111216,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectKey": {
         "auth": {
@@ -111369,7 +111382,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteProjectKey": {
         "auth": {
@@ -111534,7 +111548,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectMembers": {
         "auth": {
@@ -111671,7 +111686,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteProjectMember": {
         "auth": {
@@ -111836,7 +111852,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectMemberScopes": {
         "auth": {
@@ -112001,7 +112018,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.updateProjectMemberScopes": {
         "auth": {
@@ -112269,7 +112287,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectInvites": {
         "auth": {
@@ -112406,7 +112425,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.createProjectInvite": {
         "auth": {
@@ -112674,7 +112694,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteProjectInvite": {
         "auth": {
@@ -112839,7 +112860,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteProjectLeave": {
         "auth": {
@@ -112976,7 +112998,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectRequests": {
         "auth": {
@@ -113308,7 +113331,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectRequest": {
         "auth": {
@@ -113473,7 +113497,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectUsage": {
         "auth": {
@@ -113774,7 +113799,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectUsageFields": {
         "auth": {
@@ -114044,7 +114070,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getProjectUsageBreakdown": {
         "auth": {
@@ -114345,7 +114372,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listProjectPurchases": {
         "auth": {
@@ -114615,7 +114643,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listModels": {
         "auth": {
@@ -114822,7 +114851,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getModel": {
         "auth": {
@@ -114959,7 +114989,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.listSelfHostedDistCreds": {
         "auth": {
@@ -115096,7 +115127,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.createSelfHostedDistCreds": {
         "auth": {
@@ -115436,7 +115468,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.getSelfHostedCredentials": {
         "auth": {
@@ -115601,7 +115634,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_managementApi.deleteSelfHostedDistCreds": {
         "auth": {
@@ -115766,7 +115800,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

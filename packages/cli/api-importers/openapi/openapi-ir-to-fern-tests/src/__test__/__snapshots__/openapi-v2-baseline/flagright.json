@@ -79372,7 +79372,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.get-consumer-transaction": {
         "auth": {
@@ -79470,7 +79471,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.post-transaction-event": {
         "auth": {
@@ -79814,7 +79816,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.post-consumer-user": {
         "auth": {
@@ -79890,7 +79893,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.get-consumer-user": {
         "auth": {
@@ -79988,7 +79992,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.post-business-user": {
         "auth": {
@@ -80064,7 +80069,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.get-business-user-userId": {
         "auth": {
@@ -80162,7 +80168,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.post-user-event": {
         "auth": {
@@ -80447,7 +80454,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.post-business-user-event": {
         "auth": {
@@ -80732,7 +80740,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

@@ -61356,7 +61356,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accounts.getAccount": {
         "auth": {
@@ -61493,7 +61494,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accounts.listAccountBalances": {
         "auth": {
@@ -61737,7 +61739,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accounts.listEligibleAchAccounts": {
         "auth": {
@@ -62071,7 +62074,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_accountJointOwners.listAccountJointOwners": {
         "auth": {
@@ -62208,7 +62212,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_overdraftProtection.listEligibleOverdraftAccounts": {
         "auth": {
@@ -62478,7 +62483,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_overdraftProtection.getOverdraftProtection": {
         "auth": {
@@ -62615,7 +62621,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_overdraftProtection.patchOverdraftAccounts": {
         "auth": {
@@ -62857,7 +62864,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_jointOwners.createJointOwnerInvitation": {
         "auth": {
@@ -63243,7 +63251,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_institutions.lookUpInstitutionByLocator": {
         "auth": {
@@ -63537,7 +63546,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_institutions.listTransferSchedule": {
         "auth": {
@@ -63891,7 +63901,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_institutions.getCutoffTimes": {
         "auth": {
@@ -64162,7 +64173,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_institutions.getTransferDateRestrictions": {
         "auth": {
@@ -64494,7 +64506,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactions.listTransactions": {
         "auth": {
@@ -65083,7 +65096,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transactionCategories.listTransactionCategories": {
         "auth": {
@@ -65293,7 +65307,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transfers.listTransfers": {
         "auth": {
@@ -65658,7 +65673,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transfers.createTransfer": {
         "auth": {
@@ -66028,7 +66044,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transfers.getTransfer": {
         "auth": {
@@ -66165,7 +66182,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transfers.deleteTransfer": {
         "auth": {
@@ -66302,7 +66320,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_transfers.patchTransfer": {
         "auth": {
@@ -66701,7 +66720,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],
