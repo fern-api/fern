@@ -54,6 +54,7 @@ export const AsIsFiles = {
         TemplateTestCsProj: "test/Template.Test.csproj",
         TestCustomProps: "test/Test.Custom.props.Template",
         RawClientTests: {
+            AdditionalHeadersTests: "test/RawClientTests/AdditionalHeadersTests.Template.cs",
             AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs"

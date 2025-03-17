@@ -101,6 +101,38 @@ export class BaseOptionsGenerator {
         });
     }
 
+    public getAdditionalHeadersField({
+        summary,
+        includeInitializer
+    }: {
+        summary: string;
+        includeInitializer: boolean;
+    }): csharp.Field {
+        const type = csharp.Type.reference(
+            csharp.classReference({
+                name: "IEnumerable",
+                namespace: "System.Collections.Generic",
+                generics: [
+                    csharp.Type.reference(
+                        this.context.getKeyValuePairsClassReference({
+                            key: csharp.Type.string(),
+                            value: csharp.Type.string().toOptionalIfNotAlready()
+                        })
+                    )
+                ]
+            })
+        );
+        return csharp.field({
+            access: csharp.Access.Public,
+            name: "AdditionalHeaders",
+            get: true,
+            init: true,
+            type,
+            initializer: includeInitializer ? csharp.codeblock("[]") : undefined,
+            summary
+        });
+    }
+
     public maybeGetLiteralHeaderField({
         header,
         options
@@ -135,6 +167,11 @@ export class BaseOptionsGenerator {
                 includeInitializer: true,
                 interfaceReference: this.context.getRequestOptionsInterfaceReference()
             }),
+            this.getAdditionalHeadersField({
+                summary:
+                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
+                includeInitializer: true
+            }),
             this.getMaxRetriesField(optionArgs),
             this.getTimeoutField(optionArgs),
             this.getQueryParametersField({
@@ -155,6 +192,11 @@ export class BaseOptionsGenerator {
             BASE_URL_FIELD,
             this.getHttpClientField(optionArgs),
             this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
+            this.getAdditionalHeadersField({
+                summary:
+                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
+                includeInitializer: false
+            }),
             this.getMaxRetriesField(optionArgs),
             this.getTimeoutField(optionArgs),
             this.getQueryParametersField({ optional: false, includeInitializer: false }),

@@ -1,9 +1,9 @@
-using SystemTask = global::System.Threading.Tasks.Task;
+using NUnit.Framework;
 using WireMock.Matchers;
 using WireMock.Server;
+using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
-using NUnit.Framework;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.RawClientTests;
@@ -23,9 +23,7 @@ public class AdditionalParametersTests
         _server = WireMockServer.Start();
         _baseUrl = _server.Url ?? "";
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
-        _rawClient = new RawClient(
-            new ClientOptions { HttpClient = _httpClient }
-        );
+        _rawClient = new RawClient(new ClientOptions { HttpClient = _httpClient });
     }
 
     [Test]
@@ -40,8 +38,12 @@ public class AdditionalParametersTests
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
             Path = "/test",
-            Options = new RequestOptions {
-                AdditionalQueryParameters = new List<KeyValuePair<string, string>> { new("foo", "bar") }
+            Options = new RequestOptions
+            {
+                AdditionalQueryParameters = new List<KeyValuePair<string, string>>
+                {
+                    new("foo", "bar"),
+                },
             },
         };
 
@@ -69,7 +71,10 @@ public class AdditionalParametersTests
             Query = new Dictionary<string, object> { { "foo", "bar" } },
             Options = new RequestOptions
             {
-                AdditionalQueryParameters = new List<KeyValuePair<string, string>> { new("foo", "null") }
+                AdditionalQueryParameters = new List<KeyValuePair<string, string>>
+                {
+                    new("foo", "null"),
+                },
             },
         };
 
@@ -86,12 +91,8 @@ public class AdditionalParametersTests
     public async Task SendRequestAsync_AdditionalQueryParameters_Merge()
     {
         _server
-            .Given(WireMockRequest.Create()
-                .WithPath("/test")
-                .UsingGet())
-            .RespondWith(WireMockResponse.Create()
-                .WithStatusCode(200)
-                .WithBody("Success"));
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
         var request = new RawClient.JsonApiRequest()
         {
@@ -99,11 +100,13 @@ public class AdditionalParametersTests
             Method = HttpMethod.Get,
             Path = "/test",
             Query = new Dictionary<string, object> { { "foo", "baz" } },
-            Options = new RequestOptions {
-                AdditionalQueryParameters = new List<KeyValuePair<string, string>> {
+            Options = new RequestOptions
+            {
+                AdditionalQueryParameters = new List<KeyValuePair<string, string>>
+                {
                     new("foo", "one"),
-                    new("foo", "two")
-                }
+                    new("foo", "two"),
+                },
             },
         };
 
@@ -126,13 +129,14 @@ public class AdditionalParametersTests
     {
         string expectedBody = "{\n  \"foo\": \"bar\",\n  \"baz\": \"qux\"\n}";
         _server
-            .Given(WireMockRequest.Create()
-                .WithPath("/test")
-                .UsingPost()
-                .WithBody(new JsonMatcher(expectedBody)))
-            .RespondWith(WireMockResponse.Create()
-                .WithStatusCode(200)
-                .WithBody("Success"));
+            .Given(
+                WireMockRequest
+                    .Create()
+                    .WithPath("/test")
+                    .UsingPost()
+                    .WithBody(new JsonMatcher(expectedBody))
+            )
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
         var request = new RawClient.JsonApiRequest
         {
@@ -140,8 +144,9 @@ public class AdditionalParametersTests
             Method = HttpMethod.Post,
             Path = "/test",
             Body = new Dictionary<string, object> { { "foo", "bar" } },
-            Options = new RequestOptions {
-                AdditionalBodyProperties = new Dictionary<string, object> { { "baz", "qux" } }
+            Options = new RequestOptions
+            {
+                AdditionalBodyProperties = new Dictionary<string, object> { { "baz", "qux" } },
             },
         };
 
@@ -159,13 +164,14 @@ public class AdditionalParametersTests
     {
         string expectedBody = "{\n  \"foo\": null\n}";
         _server
-            .Given(WireMockRequest.Create()
-                .WithPath("/test")
-                .UsingPost()
-                .WithBody(new JsonMatcher(expectedBody)))
-            .RespondWith(WireMockResponse.Create()
-                .WithStatusCode(200)
-                .WithBody("Success"));
+            .Given(
+                WireMockRequest
+                    .Create()
+                    .WithPath("/test")
+                    .UsingPost()
+                    .WithBody(new JsonMatcher(expectedBody))
+            )
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
         var request = new RawClient.JsonApiRequest
         {
@@ -173,8 +179,9 @@ public class AdditionalParametersTests
             Method = HttpMethod.Post,
             Path = "/test",
             Body = new Dictionary<string, object> { { "foo", "bar" } },
-            Options = new RequestOptions {
-                AdditionalBodyProperties = new Dictionary<string, object?> { { "foo", null } }
+            Options = new RequestOptions
+            {
+                AdditionalBodyProperties = new Dictionary<string, object?> { { "foo", null } },
             },
         };
 
@@ -191,30 +198,31 @@ public class AdditionalParametersTests
     public async Task SendRequestAsync_AdditionalBodyProperties_DeepMerge()
     {
         const string expectedBody = """
-                                    {
-                                        "foo": {
-                                            "inner1": "original",
-                                            "inner2": "overridden",
-                                            "inner3": {
-                                                "deepProp1": "deep-override",
-                                                "deepProp2": "original",
-                                                "deepProp3": null,
-                                                "deepProp4": "new-value"
-                                            }
-                                        },
-                                        "bar": "new-value",
-                                        "baz": ["new","value"]
-                                    }
-                                    """;
+            {
+                "foo": {
+                    "inner1": "original",
+                    "inner2": "overridden",
+                    "inner3": {
+                        "deepProp1": "deep-override",
+                        "deepProp2": "original",
+                        "deepProp3": null,
+                        "deepProp4": "new-value"
+                    }
+                },
+                "bar": "new-value",
+                "baz": ["new","value"]
+            }
+            """;
 
         _server
-            .Given(WireMockRequest.Create()
-                .WithPath("/test-deep-merge")
-                .UsingPost()
-                .WithBody(new JsonMatcher(expectedBody)))
-            .RespondWith(WireMockResponse.Create()
-                .WithStatusCode(200)
-                .WithBody("Success"));
+            .Given(
+                WireMockRequest
+                    .Create()
+                    .WithPath("/test-deep-merge")
+                    .UsingPost()
+                    .WithBody(new JsonMatcher(expectedBody))
+            )
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
         var request = new RawClient.JsonApiRequest
         {
@@ -224,42 +232,54 @@ public class AdditionalParametersTests
             Body = new Dictionary<string, object>
             {
                 {
-                    "foo", new Dictionary<string, object>
+                    "foo",
+                    new Dictionary<string, object>
                     {
                         { "inner1", "original" },
                         { "inner2", "original" },
-                        { "inner3", new Dictionary<string, object>
+                        {
+                            "inner3",
+                            new Dictionary<string, object>
                             {
                                 { "deepProp1", "deep-original" },
                                 { "deepProp2", "original" },
-                                { "deepProp3", "" }
+                                { "deepProp3", "" },
                             }
-                        }
+                        },
                     }
                 },
-                { "baz", new List<string> { "original" } }
+                {
+                    "baz",
+                    new List<string> { "original" }
+                },
             },
             Options = new RequestOptions
             {
                 AdditionalBodyProperties = new Dictionary<string, object>
                 {
                     {
-                        "foo", new Dictionary<string, object>
+                        "foo",
+                        new Dictionary<string, object>
                         {
                             { "inner2", "overridden" },
-                            { "inner3", new Dictionary<string, object?>
+                            {
+                                "inner3",
+                                new Dictionary<string, object?>
                                 {
                                     { "deepProp1", "deep-override" },
                                     { "deepProp3", null },
-                                    { "deepProp4", "new-value" }
+                                    { "deepProp4", "new-value" },
                                 }
-                            }
+                            },
                         }
                     },
                     { "bar", "new-value" },
-                    { "baz", new List<string> { "new", "value" } }
-                }
-            }
+                    {
+                        "baz",
+                        new List<string> { "new", "value" }
+                    },
+                },
+            },
         };
 
         var response = await _rawClient.SendRequestAsync(request);
