@@ -2,14 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawNullableClient
 from ..core.request_options import RequestOptions
 from .types.user import User
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from .types.metadata import Metadata
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawNullableClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class NullableClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawNullableClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawNullableClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawNullableClient
+        """
+        return self._raw_client
 
     def get_users(
         self,
@@ -64,31 +73,15 @@ class NullableClient:
             extra=True,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "users",
-            method="GET",
-            params={
-                "usernames": usernames,
-                "avatar": avatar,
-                "activated": activated,
-                "tags": tags,
-                "extra": extra,
-            },
+        response = self._raw_client.get_users(
+            usernames=usernames,
+            avatar=avatar,
+            activated=activated,
+            tags=tags,
+            extra=extra,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[User],
-                    parse_obj_as(
-                        type_=typing.List[User],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create_user(
         self,
@@ -144,33 +137,14 @@ class NullableClient:
             avatar="avatar",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "users",
-            method="POST",
-            json={
-                "username": username,
-                "tags": tags,
-                "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=Metadata, direction="write"
-                ),
-                "avatar": avatar,
-            },
+        response = self._raw_client.create_user(
+            username=username,
+            tags=tags,
+            metadata=metadata,
+            avatar=avatar,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -199,33 +173,27 @@ class NullableClient:
             username="xy",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "users",
-            method="DELETE",
-            json={
-                "username": username,
-            },
+        response = self._raw_client.delete_user(
+            username=username,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncNullableClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawNullableClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawNullableClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawNullableClient
+        """
+        return self._raw_client
 
     async def get_users(
         self,
@@ -280,31 +248,15 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "users",
-            method="GET",
-            params={
-                "usernames": usernames,
-                "avatar": avatar,
-                "activated": activated,
-                "tags": tags,
-                "extra": extra,
-            },
+        response = await self._raw_client.get_users(
+            usernames=usernames,
+            avatar=avatar,
+            activated=activated,
+            tags=tags,
+            extra=extra,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[User],
-                    parse_obj_as(
-                        type_=typing.List[User],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create_user(
         self,
@@ -367,33 +319,14 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "users",
-            method="POST",
-            json={
-                "username": username,
-                "tags": tags,
-                "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=Metadata, direction="write"
-                ),
-                "avatar": avatar,
-            },
+        response = await self._raw_client.create_user(
+            username=username,
+            tags=tags,
+            metadata=metadata,
+            avatar=avatar,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -430,25 +363,8 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "users",
-            method="DELETE",
-            json={
-                "username": username,
-            },
+        response = await self._raw_client.delete_user(
+            username=username,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

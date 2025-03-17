@@ -2,14 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawPaymentClient
 from .types.currency import Currency
 from ..core.request_options import RequestOptions
 import uuid
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawPaymentClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class PaymentClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawPaymentClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawPaymentClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawPaymentClient
+        """
+        return self._raw_client
 
     def create(
         self,
@@ -59,33 +68,14 @@ class PaymentClient:
             currency="USD",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "payment",
-            method="POST",
-            json={
-                "amount": amount,
-                "currency": currency,
-            },
-            headers={
-                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
-                "Idempotency-Expiration": str(idempotency_expiration) if idempotency_expiration is not None else None,
-            },
+        response = self._raw_client.create(
+            amount=amount,
+            currency=currency,
+            idempotency_key=idempotency_key,
+            idempotency_expiration=idempotency_expiration,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    uuid.UUID,
-                    parse_obj_as(
-                        type_=uuid.UUID,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -112,23 +102,27 @@ class PaymentClient:
             payment_id="paymentId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"payment/{jsonable_encoder(payment_id)}",
-            method="DELETE",
+        response = self._raw_client.delete(
+            payment_id,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncPaymentClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawPaymentClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawPaymentClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawPaymentClient
+        """
+        return self._raw_client
 
     async def create(
         self,
@@ -178,33 +172,14 @@ class AsyncPaymentClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "payment",
-            method="POST",
-            json={
-                "amount": amount,
-                "currency": currency,
-            },
-            headers={
-                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
-                "Idempotency-Expiration": str(idempotency_expiration) if idempotency_expiration is not None else None,
-            },
+        response = await self._raw_client.create(
+            amount=amount,
+            currency=currency,
+            idempotency_key=idempotency_key,
+            idempotency_expiration=idempotency_expiration,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    uuid.UUID,
-                    parse_obj_as(
-                        type_=uuid.UUID,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -239,15 +214,8 @@ class AsyncPaymentClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"payment/{jsonable_encoder(payment_id)}",
-            method="DELETE",
+        response = await self._raw_client.delete(
+            payment_id,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

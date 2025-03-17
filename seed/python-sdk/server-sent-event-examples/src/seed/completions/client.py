@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawCompletionsClient
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
 import httpx_sse
@@ -10,6 +11,7 @@ import json
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawCompletionsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +19,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class CompletionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawCompletionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawCompletionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawCompletionsClient
+        """
+        return self._raw_client
 
     def stream(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -47,7 +60,7 @@ class CompletionsClient:
         for chunk in response:
             yield chunk
         """
-        with self._client_wrapper.httpx_client.stream(
+        with self._raw_client._client_wrapper.httpx_client.stream(
             "stream",
             method="POST",
             json={
@@ -82,7 +95,18 @@ class CompletionsClient:
 
 class AsyncCompletionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawCompletionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawCompletionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawCompletionsClient
+        """
+        return self._raw_client
 
     async def stream(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -120,7 +144,7 @@ class AsyncCompletionsClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with self._raw_client._client_wrapper.httpx_client.stream(
             "stream",
             method="POST",
             json={
