@@ -73,15 +73,16 @@ internal class RawClient(ClientOptions clientOptions)
         switch (request.Content)
         {
             case MultipartContent oldMultipartFormContent:
-                var originalBoundary = oldMultipartFormContent
-                    .Headers.ContentType.Parameters.First(p =>
-                        p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
-                    )
-                    .Value.Trim('"');
+                var originalBoundary =
+                    oldMultipartFormContent
+                        .Headers.ContentType?.Parameters.First(p =>
+                            p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Value?.Trim('"') ?? Guid.NewGuid().ToString();
                 var newMultipartContent = oldMultipartFormContent switch
                 {
                     MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
-                    MultipartContent => new MultipartContent(),
+                    _ => new MultipartContent(),
                 };
                 foreach (var content in oldMultipartFormContent)
                 {
@@ -181,12 +182,16 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var (encoding, mediaType) = ParseContentTypeOrDefault(
+                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                     contentType,
                     Encoding.UTF8,
                     "application/json"
                 );
                 var content = new StringContent(JsonUtils.Serialize(value), encoding, mediaType);
+                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+                {
+                    content.Headers.ContentType.CharSet = "";
+                }
                 form.Add(content, name);
             });
         }
@@ -230,12 +235,16 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var (encoding, mediaType) = ParseContentTypeOrDefault(
+                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                     contentType,
                     Encoding.UTF8,
                     "text/plain"
                 );
                 var content = new StringContent(value, encoding, mediaType);
+                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+                {
+                    content.Headers.ContentType.CharSet = "";
+                }
                 form.Add(content, name);
             });
         }
@@ -452,17 +461,24 @@ internal class RawClient(ClientOptions clientOptions)
                 return null;
             }
 
-            var (encoding, mediaType) = ParseContentTypeOrDefault(
+            var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                 ContentType,
                 Encoding.UTF8,
                 "application/json"
             );
-            return new StringContent(
+            var content = new StringContent(
                 JsonUtils.SerializeWithAdditionalProperties(
                     Body,
                     Options?.AdditionalBodyProperties
                 ),
-                encoding, mediaType);
+                encoding,
+                mediaType
+            );
+            if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+            {
+                content.Headers.ContentType.CharSet = "";
+            }
+            return content;
         }
     }
 
@@ -535,16 +551,20 @@ internal class RawClient(ClientOptions clientOptions)
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         httpRequest.Content = request.CreateContent();
-        SetHeaders(httpRequest, Options.Headers);
-        SetHeaders(httpRequest, request.Headers);
-        SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+        var mergedHeaders = new Dictionary<string, List<string>>();
+        MergeHeaders(mergedHeaders, Options.Headers);
+        MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
+        MergeHeaders(mergedHeaders, request.Headers);
+        MergeHeaders(mergedHeaders, request.Options?.Headers ?? new Headers());
 <% if (idempotencyHeaders) { %>
         if (request.Options is IIdempotentRequestOptions idempotentRequest)
         {
-            SetHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+            MergeHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
         }
 <% } %>
 
+        MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
+        SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;
     }
 
@@ -567,7 +587,7 @@ internal class RawClient(ClientOptions clientOptions)
                 if (
                     queryItem.Value
                     is global::System.Collections.IEnumerable collection
-                    and not string
+                        and not string
                 )
                 {
                     var items = collection
@@ -594,12 +614,15 @@ internal class RawClient(ClientOptions clientOptions)
     private static List<KeyValuePair<string, string>> GetQueryParameters(BaseApiRequest request)
     {
         var result = TransformToKeyValuePairs(request.Query);
-        if (request.Options?.AdditionalQueryParameters is null || !request.Options.AdditionalQueryParameters.Any())
+        if (
+            request.Options?.AdditionalQueryParameters is null
+            || !request.Options.AdditionalQueryParameters.Any()
+        )
         {
             return result;
         }
-        var additionalKeys = request.Options.AdditionalQueryParameters
-            .Select(p => p.Key)
+        var additionalKeys = request
+            .Options.AdditionalQueryParameters.Select(p => p.Key)
             .Distinct();
         foreach (var key in additionalKeys)
         {
@@ -610,7 +633,8 @@ internal class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> TransformToKeyValuePairs(
-        Dictionary<string, object> inputDict)
+        Dictionary<string, object> inputDict
+    )
     {
         var result = new List<KeyValuePair<string, string>>();
         foreach (var kvp in inputDict)
@@ -633,19 +657,66 @@ internal class RawClient(ClientOptions clientOptions)
         return result;
     }
 
-    private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    private static void MergeHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        Headers headers
+    )
     {
         foreach (var header in headers)
         {
             var value = header.Value?.Match(str => str, func => func.Invoke());
             if (value != null)
             {
-                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+                mergedHeaders[header.Key] = [value];
             }
         }
     }
 
-    private static (Encoding encoding, string mediaType) ParseContentTypeOrDefault(
+    private static void MergeAdditionalHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        IEnumerable<KeyValuePair<string, string?>> headers
+    )
+    {
+        var usedKeys = new HashSet<string>();
+        foreach (var header in headers)
+        {
+            if (header.Value is null)
+            {
+                mergedHeaders.Remove(header.Key);
+                usedKeys.Remove(header.Key);
+                continue;
+            }
+            if (usedKeys.Contains(header.Key))
+            {
+                mergedHeaders[header.Key].Add(header.Value);
+            }
+            else
+            {
+                mergedHeaders[header.Key] = [header.Value];
+                usedKeys.Add(header.Key);
+            }
+        }
+    }
+
+    private void SetHeaders(
+        HttpRequestMessage httpRequest,
+        Dictionary<string, List<string>> mergedHeaders
+    )
+    {
+        foreach (var kv in mergedHeaders)
+        {
+            foreach (var header in kv.Value)
+            {
+                if (header is null)
+                {
+                    continue;
+                }
+                httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
+            }
+        }
+    }
+
+    private static (Encoding encoding, string? charset, string mediaType) ParseContentTypeOrDefault(
         string? contentType,
         Encoding encodingFallback,
         string mediaTypeFallback
@@ -653,14 +724,20 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var encoding = encodingFallback;
         var mediaType = mediaTypeFallback;
+        string? charset = null;
         if (string.IsNullOrEmpty(contentType))
         {
-            return (encoding, mediaType);
+            return (encoding, charset, mediaType);
         }
 
-        var mediaTypeHeaderValue = MediaTypeHeaderValue.Parse(contentType);
+        if (!MediaTypeHeaderValue.TryParse(contentType, out var mediaTypeHeaderValue))
+        {
+            return (encoding, charset, mediaType);
+        }
+
         if (!string.IsNullOrEmpty(mediaTypeHeaderValue.CharSet))
         {
+            charset = mediaTypeHeaderValue.CharSet;
             encoding = Encoding.GetEncoding(mediaTypeHeaderValue.CharSet);
         }
 
@@ -669,6 +746,6 @@ internal class RawClient(ClientOptions clientOptions)
             mediaType = mediaTypeHeaderValue.MediaType;
         }
 
-        return (encoding, mediaType);
+        return (encoding, charset, mediaType);
     }
 }
