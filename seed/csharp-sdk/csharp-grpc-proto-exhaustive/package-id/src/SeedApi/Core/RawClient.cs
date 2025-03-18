@@ -77,7 +77,7 @@ internal class RawClient(ClientOptions clientOptions)
                         .Headers.ContentType?.Parameters.First(p =>
                             p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
                         )
-                        .Value?.Trim('"') ?? Guid.NewGuid().ToString("N");
+                        .Value?.Trim('"') ?? Guid.NewGuid().ToString();
                 var newMultipartContent = oldMultipartFormContent switch
                 {
                     MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
