@@ -89,16 +89,39 @@ function mergeEnvironments(
         return environmentConfig1;
     }
 
-    const defaultEnvironment: FernIr.EnvironmentId | undefined =
-        environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment;
+    const isWebsocketEnvironment1 = isWebsocketEnvironment(environmentConfig1);
+    const isWebsocketEnvironment2 = isWebsocketEnvironment(environmentConfig2);
+
+    if (
+        isWebsocketEnvironment1 &&
+        isWebsocketEnvironment2 &&
+        environmentConfig1.environments.type === "singleBaseUrl" &&
+        environmentConfig2.environments.type === "singleBaseUrl"
+    ) {
+        return {
+            defaultEnvironment: environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment,
+            environments: FernIr.Environments.singleBaseUrl({
+                environments: [
+                    ...environmentConfig1.environments.environments,
+                    ...environmentConfig2.environments.environments
+                ]
+            })
+        };
+    }
+
+    const defaultEnvironment: FernIr.EnvironmentId | undefined = isWebsocketEnvironment1
+        ? environmentConfig2.defaultEnvironment
+        : environmentConfig1.defaultEnvironment;
     const environments1 = environmentConfig1.environments;
     const environments2 = environmentConfig2.environments;
 
     if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
-        const existingEnvUrls = new Set(environments1.environments.map((env) => env.url));
-        const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.url));
+        const singleBaseUrlEnvironments1 = isWebsocketEnvironment1 ? environments2 : environments1;
+        const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2;
+        const existingEnvUrls = new Set(singleBaseUrlEnvironments1.environments.map((env) => env.url));
+        const uniqueEnvs2 = singleBaseUrlEnvironments2.environments.filter((env) => !existingEnvUrls.has(env.url));
 
-        if (environments1.environments[0] == null) {
+        if (singleBaseUrlEnvironments1.environments[0] == null) {
             return environmentConfig2;
         }
 
@@ -112,7 +135,7 @@ function mergeEnvironments(
                     { id: environmentId, name: environmentName },
                     ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
                 ],
-                environments: environments1.environments.map((env) => ({
+                environments: singleBaseUrlEnvironments1.environments.map((env) => ({
                     id: env.id,
                     name: env.name,
                     urls: {
@@ -164,4 +187,17 @@ function mergeEnvironments(
     }
 
     return environmentConfig1 ?? environmentConfig2;
+}
+
+function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {
+    if (environment.environments.type === "singleBaseUrl") {
+        return environment.environments.environments.some(
+            (env) => env.url.startsWith("ws://") || env.url.startsWith("wss://")
+        );
+    } else if (environment.environments.type === "multipleBaseUrls") {
+        return environment.environments.environments.some((env) =>
+            Object.values(env.urls).some((url) => url.startsWith("ws://") || url.startsWith("wss://"))
+        );
+    }
+    return false;
 }
