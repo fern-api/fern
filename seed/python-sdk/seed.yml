@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml

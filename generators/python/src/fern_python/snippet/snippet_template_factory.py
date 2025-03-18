@@ -630,7 +630,12 @@ class SnippetTemplateFactory:
                 ),
                 optional=lambda optional_value: FdrApiV1Read.TypeReference.factory.optional(
                     FdrApiV1Read.OptionalType(
-                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(self._unbox_type_reference(optional_value))
+                    )
+                ),
+                nullable=lambda nullable_value: FdrApiV1Read.TypeReference.factory.optional(
+                    FdrApiV1Read.OptionalType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(self._unbox_type_reference(nullable_value))
                     )
                 ),
                 literal=lambda literal_value: FdrApiV1Read.TypeReference.factory.literal(
@@ -1075,3 +1080,24 @@ class SnippetTemplateFactory:
                     )
                 )
         return snippet_templates
+
+    def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        return type_reference.visit(
+            container=lambda container: self._unbox_type_reference_container(
+                type_reference=type_reference,
+                container=container,
+            ),
+            named=lambda _: type_reference,
+            primitive=lambda _: type_reference,
+            unknown=lambda: type_reference,
+        )
+
+    def _unbox_type_reference_container(self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType) -> ir_types.TypeReference:
+        return container.visit(
+            list_=lambda _: type_reference,
+            map_=lambda _: type_reference,
+            set_=lambda _: type_reference,
+            nullable=lambda nullable: self._unbox_type_reference(type_reference=nullable),
+            optional=lambda optional: self._unbox_type_reference(type_reference=optional),
+            literal=lambda _: type_reference,
+        )
