@@ -388,7 +388,7 @@ navigation:
             icon: fa-regular fa-palette
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
-            icon: fa-regular fa-magnifying-glass
+            icon: fa-regular fa-code-pull-request
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
             icon: fa-regular fa-globe
@@ -400,6 +400,10 @@ navigation:
             icon: fa-regular fa-lock
             path: ./pages/docs/building-your-docs/rbac.mdx
             slug: rbac
+          - page: Search
+            icon: fa-regular fa-magnifying-glass
+            path: ./pages/docs/building-your-docs/search.mdx
+            slug: search
 
       - section: Writing Content
         slug: content
