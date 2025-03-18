@@ -61,12 +61,12 @@ class AsyncAPIResponse(Generic[R]):
 
 
 class StreamResponseManager(Generic[R]):
-    def __init__(self, initial_request_func: Callable[[], APIResponse[typing.Iterator[R]]]) -> None:
-        self._initial_request_func = initial_request_func
+    def __init__(self, stream_func: Callable[[], APIResponse[typing.Iterator[R]]]) -> None:
+        self._stream_func = stream_func
         self.__response: typing.Optional[APIResponse[typing.Iterator[R]]] = None
 
     def __enter__(self) -> APIResponse[typing.Iterator[R]]:
-        self.__response = self._initial_request_func()
+        self.__response = self._stream_func()
         return self.__response
 
     def __exit__(
@@ -80,12 +80,12 @@ class StreamResponseManager(Generic[R]):
 
 
 class AsyncStreamResponseManager(Generic[R]):
-    def __init__(self, initial_request_func: Callable[[], typing.Awaitable[AsyncAPIResponse[typing.AsyncIterator[R]]]]) -> None:
-        self._initial_request_func = initial_request_func
+    def __init__(self, stream_func: Callable[[], typing.Awaitable[AsyncAPIResponse[typing.AsyncIterator[R]]]]) -> None:
+        self._stream_func = stream_func
         self.__response: typing.Optional[AsyncAPIResponse[typing.AsyncIterator[R]]] = None
 
     async def __aenter__(self) -> AsyncAPIResponse[typing.AsyncIterator[R]]:
-        self.__response = await self._initial_request_func()
+        self.__response = await self._stream_func()
         return self.__response
 
     async def __aexit__(

@@ -54,7 +54,7 @@ class RawDummyClient:
                     raise StopIteration
                 raise ApiError(status_code=self.response.status_code, body=response_json)
             
-        def _initial_request_func() -> APIResponse[typing.Iterator[StreamResponse]]:
+        def _stream_func() -> APIResponse[typing.Iterator[StreamResponse]]:
             with self._client_wrapper.httpx_client.stream(
                 "generate-stream",
                 method="POST",
@@ -71,7 +71,7 @@ class RawDummyClient:
                 )
         
         return StreamResponseManager(
-            initial_request_func=_initial_request_func
+            stream_func=_stream_func
         )
 
 
@@ -175,7 +175,7 @@ class AsyncRawDummyClient:
                 
             def __aiter__(self):
                 return self
-                
+
             async def __anext__(self):
                 async for text in self.response.aiter_lines():
                     try:
@@ -190,7 +190,6 @@ class AsyncRawDummyClient:
                         )
                     except Exception:
                         pass
-                
                 try:
                     content = await self.response.aread()
                     response_json = json.loads(content)
@@ -201,7 +200,7 @@ class AsyncRawDummyClient:
                     raise StopAsyncIteration
                 raise ApiError(status_code=self.response.status_code, body=response_json)
             
-        async def _initial_request_func() -> AsyncAPIResponse[typing.AsyncIterator[StreamResponse]]:
+        async def _stream_func() -> AsyncAPIResponse[typing.AsyncIterator[StreamResponse]]:
             async with self._client_wrapper.httpx_client.stream(
                 "generate-stream",
                 method="POST",
@@ -218,7 +217,7 @@ class AsyncRawDummyClient:
                 )
         
         return AsyncStreamResponseManager(
-            initial_request_func=_initial_request_func
+            stream_func=_stream_func
         )
 
 class AsyncDummyClient:
