@@ -1,18 +1,12 @@
 # Stage 1: Java V2
-
 FROM node:20.18-alpine3.20 AS node
-RUN apk --no-cache add git zip
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
-
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
-
 # Apple Silicon: FROM bitnami/gradle:latest
 FROM gradle:jdk11-jammy
-
-COPY build/distributions/sdk.tar init.sh /
+COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
