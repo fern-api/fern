@@ -175,7 +175,9 @@ class EndpointResponseCodeWriter:
             )
             if response_body_union.type == "container":
                 response_container = response_body_union.container.get_as_union()
-                if response_container.type == "optional" and response_property is not None:
+                if (
+                    response_container.type == "optional" or response_container.type == "nullable"
+                ) and response_property is not None:
                     property_access_expression = AST.Expression(
                         f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property} if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}"
                     )
@@ -220,8 +222,10 @@ class EndpointResponseCodeWriter:
                     config=self._pagination_snippet_config,
                     offset=offset,
                 ),
+                custom=lambda _: raise_custom_pagination_error(),
             )
-            paginator.write(writer=writer)
+            if paginator is not None:
+                paginator.write(writer=writer)
         else:
             writer.write("return ")
             writer.write_node(pydantic_parse_expression)
@@ -286,7 +290,9 @@ class EndpointResponseCodeWriter:
                             ),
                             file_download=lambda _: self._handle_success_file_download(writer=writer),
                             text=lambda _: self._handle_success_text(writer=writer),
+                            bytes=lambda _: raise_bytes_response_error(),
                         ),
+                        bytes=lambda _: raise_bytes_response_error(),
                     )
 
             # in streaming responses, we need to call read() or aread()
@@ -365,6 +371,7 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
+                    bytes=lambda _: raise_bytes_response_error(),
                     stream_parameter=lambda stream_param_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_param_response.stream_response
                     )
@@ -375,6 +382,7 @@ class EndpointResponseCodeWriter:
                         ),
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
+                        bytes=lambda _: raise_bytes_response_error(),
                     ),
                 )
 
@@ -471,3 +479,11 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+
+def raise_bytes_response_error() -> None:
+    raise NotImplementedError("Bytes response is not supported yet")
+
+
+def raise_custom_pagination_error() -> None:
+    raise NotImplementedError("Custom pagination is not supported yet")

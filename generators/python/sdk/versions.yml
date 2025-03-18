@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.19
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
 - version: 4.3.18
   irVersion: 53
   changelogEntry:
