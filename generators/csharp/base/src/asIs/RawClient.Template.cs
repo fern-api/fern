@@ -73,15 +73,16 @@ internal class RawClient(ClientOptions clientOptions)
         switch (request.Content)
         {
             case MultipartContent oldMultipartFormContent:
-                var originalBoundary = oldMultipartFormContent
-                    .Headers.ContentType.Parameters.First(p =>
-                        p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
-                    )
-                    .Value.Trim('"');
+                var originalBoundary =
+                    oldMultipartFormContent
+                        .Headers.ContentType?.Parameters.First(p =>
+                            p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Value?.Trim('"') ?? Guid.NewGuid().ToString();
                 var newMultipartContent = oldMultipartFormContent switch
                 {
                     MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
-                    MultipartContent => new MultipartContent(),
+                    _ => new MultipartContent(),
                 };
                 foreach (var content in oldMultipartFormContent)
                 {
@@ -660,7 +661,7 @@ internal class RawClient(ClientOptions clientOptions)
 
     private static void MergeAdditionalHeaders(
         Dictionary<string, List<string>> mergedHeaders,
-        IEnumerable<KeyValuePair<string, string>> headers
+        IEnumerable<KeyValuePair<string, string?>> headers
     )
     {
         var usedKeys = new HashSet<string>();
