@@ -334,6 +334,19 @@ class SnippetTemplateFactory:
                 depth=depth,
             )
 
+        if container_union.type == "nullable":
+            value = container_union.nullable
+            return self.get_type_reference_template(
+                type_=value,
+                name=name,
+                location=location,
+                wire_or_original_name=wire_or_original_name,
+                name_breadcrumbs=name_breadcrumbs,
+                indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
+                depth=depth,
+            )
+
         if include_literal_templates and container_union.type == "literal":
             literal_value = container_union.literal.visit(
                 string=lambda s: f'"{s}"',

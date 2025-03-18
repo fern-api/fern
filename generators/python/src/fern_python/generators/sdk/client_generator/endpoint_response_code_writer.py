@@ -175,7 +175,7 @@ class EndpointResponseCodeWriter:
             )
             if response_body_union.type == "container":
                 response_container = response_body_union.container.get_as_union()
-                if response_container.type == "optional" and response_property is not None:
+                if (response_container.type == "optional" or response_container.type == "nullable") and response_property is not None:
                     property_access_expression = AST.Expression(
                         f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property} if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}"
                     )
