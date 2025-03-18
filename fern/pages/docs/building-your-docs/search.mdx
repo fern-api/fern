@@ -1,0 +1,28 @@
+---
+title: Search
+
+---
+
+Fern uses [Algolia DocSearch](https://docsearch.algolia.com/) to power search for your documentation. 
+DocSearch is designed specifically for documentation sites to help users quickly find what they need.
+
+## How search works
+
+DocSearch scans your Fern site, gathers key content, and builds an index to generate search results. 
+It includes built-in filters that let users refine their searches by content type:
+
+- **Versions:** For sites with separate documentation for different API versions.
+- **Endpoints:**  Filters results to API reference documentation
+- **Guides:** Filters results to non-API reference documentation.
+- **Changelog:** Filters results to changelog updates.
+
+If you are using the [AskAI](need-link?) beta feature, the search box also functions as your Fern site’s chat window.
+
+<Note>
+    **Note:** If an article includes the `norobots` or `noindex` frontmatter, it will not be indexed by Algolia and will not appear in search results.
+</Note>
+
+## Using an alternative search 
+
+You can override the built-in search with your own solution.
+
