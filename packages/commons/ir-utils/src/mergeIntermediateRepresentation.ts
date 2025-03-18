@@ -144,7 +144,7 @@ function mergeEnvironments(
         const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2;
 
         const changedEnvironmentIds1: Record<string, string> = {};
-        const { deconflictedEnvironments2, changedEnvironmentIds2 } = deconflictEnvironments(
+        const { deconflictedEnvironments2, changedEnvironmentIds2 } = deconflictSingleEnvironments(
             singleBaseUrlEnvironments1,
             singleBaseUrlEnvironments2,
             casingsGenerator
@@ -211,7 +211,7 @@ function mergeEnvironments(
                 ? (environments1 as FernIr.Environments.MultipleBaseUrls)
                 : (environments2 as FernIr.Environments.MultipleBaseUrls);
 
-        const { deconflictedEnvironments1, changedEnvironmentIds1 } = deconflictSingleMultipleEnvironments(
+        const { deconflictedEnvironments1, changedEnvironmentIds1 } = deconflictHybridEnvironments(
             singleBaseUrlEnvironment,
             multipleBaseUrlsEnvironment,
             casingsGenerator
@@ -242,10 +242,29 @@ function mergeEnvironments(
     }
 
     if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
-        const existingEnvUrls = new Set(environments1.environments.map((env) => env.urls));
-        const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.urls));
-        // TODO: Handle this case.
-        return { environments: undefined, changedEnvironmentIds1: undefined, changedEnvironmentIds2: undefined };
+        const { deconflictedEnvironments2, changedEnvironmentIds2 } = deconflictMultipleEnvironments(
+            environments1,
+            environments2,
+            casingsGenerator
+        );
+        const flattenedUrls = deconflictedEnvironments2.environments.flatMap((env) => Object.entries(env.urls));
+        return {
+            environments: {
+                defaultEnvironment,
+                environments: FernIr.Environments.multipleBaseUrls({
+                    baseUrls: [...environments1.baseUrls, ...deconflictedEnvironments2.baseUrls],
+                    environments: environments1.environments.map((env) => ({
+                        ...env,
+                        urls: {
+                            ...env.urls,
+                            ...Object.fromEntries(flattenedUrls)
+                        }
+                    }))
+                })
+            },
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2
+        };
     }
 
     return {
@@ -304,7 +323,7 @@ function mergeServicesAndChannels(
     return { services, websocketChannels };
 }
 
-function deconflictEnvironments(
+function deconflictSingleEnvironments(
     environments1: FernIr.Environments.SingleBaseUrl,
     environments2: FernIr.Environments.SingleBaseUrl,
     casingsGenerator: CasingsGenerator
@@ -330,7 +349,7 @@ function deconflictEnvironments(
     return { deconflictedEnvironments2, changedEnvironmentIds2 };
 }
 
-function deconflictSingleMultipleEnvironments(
+function deconflictHybridEnvironments(
     environments1: FernIr.Environments.SingleBaseUrl,
     environments2: FernIr.Environments.MultipleBaseUrls,
     casingsGenerator: CasingsGenerator
@@ -356,6 +375,47 @@ function deconflictSingleMultipleEnvironments(
     return { deconflictedEnvironments1, changedEnvironmentIds1 };
 }
 
+function deconflictMultipleEnvironments(
+    environments1: FernIr.Environments.MultipleBaseUrls,
+    environments2: FernIr.Environments.MultipleBaseUrls,
+    casingsGenerator: CasingsGenerator
+): { deconflictedEnvironments2: FernIr.Environments.MultipleBaseUrls; changedEnvironmentIds2: Record<string, string> } {
+    const changedEnvironmentIds2: Record<string, string> = {};
+
+    const environment1BaseUrlIds = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.id));
+    const environment1BaseUrlNames = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.name));
+
+    const deconflictedBaseUrls = environments2.baseUrls.map((baseUrl) => {
+        if (environment1BaseUrlIds.has(baseUrl.id) || environment1BaseUrlNames.has(baseUrl.name)) {
+            const newName = generateUniqueName(baseUrl.id, environment1BaseUrlIds);
+            changedEnvironmentIds2[baseUrl.id] = newName;
+            return { ...baseUrl, id: newName, name: casingsGenerator.generateName(newName) };
+        }
+        return baseUrl;
+    });
+
+    const deconflictedEnvironments = environments2.environments.map((env) => {
+        if (environment1BaseUrlIds.has(env.id) || environment1BaseUrlNames.has(env.name)) {
+            const newName = generateUniqueName(env.id, environment1BaseUrlIds);
+            changedEnvironmentIds2[env.id] = newName;
+            return {
+                ...env,
+                urls: Object.fromEntries(
+                    Object.entries(env.urls).map(([key, value]) => [changedEnvironmentIds2[key] ?? key, value])
+                )
+            };
+        }
+        return env;
+    });
+
+    const deconflictedEnvironments2 = FernIr.Environments.multipleBaseUrls({
+        baseUrls: deconflictedBaseUrls,
+        environments: deconflictedEnvironments
+    });
+
+    return { deconflictedEnvironments2, changedEnvironmentIds2 };
+}
+
 function generateUniqueName(id: string, existingIds: Set<string>): string {
     let uniqueName = id;
     let suffix = 1;
@@ -369,11 +429,11 @@ function generateUniqueName(id: string, existingIds: Set<string>): string {
 function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {
     if (environment.environments.type === "singleBaseUrl") {
         return environment.environments.environments.some(
-            (env) => env.url.startsWith("ws://") || env.url.startsWith("wss://")
+            (env) => env.url && (env.url.startsWith("ws://") || env.url.startsWith("wss://"))
         );
     } else if (environment.environments.type === "multipleBaseUrls") {
         return environment.environments.environments.some((env) =>
-            Object.values(env.urls).some((url) => url.startsWith("ws://") || url.startsWith("wss://"))
+            Object.values(env.urls).some((url) => url && (url.startsWith("ws://") || url.startsWith("wss://")))
         );
     }
     return false;
