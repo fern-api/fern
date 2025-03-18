@@ -175,7 +175,9 @@ class EndpointResponseCodeWriter:
             )
             if response_body_union.type == "container":
                 response_container = response_body_union.container.get_as_union()
-                if (response_container.type == "optional" or response_container.type == "nullable") and response_property is not None:
+                if (
+                    response_container.type == "optional" or response_container.type == "nullable"
+                ) and response_property is not None:
                     property_access_expression = AST.Expression(
                         f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property} if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}"
                     )
@@ -482,6 +484,6 @@ class EndpointResponseCodeWriter:
 def raise_bytes_response_error() -> None:
     raise NotImplementedError("Bytes response is not supported yet")
 
+
 def raise_custom_pagination_error() -> None:
     raise NotImplementedError("Custom pagination is not supported yet")
-    

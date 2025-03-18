@@ -228,7 +228,7 @@ class TypeReferenceToTypeHintConverter:
             float_=AST.TypeHint.float_,
         )
         return to_return
-    
+
     def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
         return type_reference.visit(
             container=lambda container: self._unbox_type_reference_container(
@@ -240,7 +240,9 @@ class TypeReferenceToTypeHintConverter:
             unknown=lambda: type_reference,
         )
 
-    def _unbox_type_reference_container(self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType) -> ir_types.TypeReference:
+    def _unbox_type_reference_container(
+        self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType
+    ) -> ir_types.TypeReference:
         return container.visit(
             list_=lambda _: type_reference,
             map_=lambda _: type_reference,

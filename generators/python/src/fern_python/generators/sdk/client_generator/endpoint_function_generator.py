@@ -965,7 +965,7 @@ class EndpointFunctionGenerator:
     def _get_non_streaming_response_body_type(
         self, non_stream_response: ir_types.NonStreamHttpResponseBody, is_async: bool
     ) -> AST.TypeHint:
-        result =  non_stream_response.visit(
+        result = non_stream_response.visit(
             file_download=lambda _: self._get_file_download_response_body_type(is_async),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
@@ -1384,7 +1384,10 @@ class EndpointFunctionGenerator:
         self, query_parameter: ir_types.QueryParameter, query_parameter_type_hint: AST.TypeHint
     ) -> AST.TypeHint:
         value_type = query_parameter.value_type.get_as_union()
-        is_optional = value_type.type == "container" and (value_type.container.get_as_union().type == "optional" or value_type.container.get_as_union().type == "nullable")
+        is_optional = value_type.type == "container" and (
+            value_type.container.get_as_union().type == "optional"
+            or value_type.container.get_as_union().type == "nullable"
+        )
         if is_optional and query_parameter.allow_multiple:
             return AST.TypeHint.optional(
                 AST.TypeHint.union(
@@ -1447,7 +1450,10 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
     if union.type == "reference":
         request_body = union.request_body_type.get_as_union()
         if request_body.type == "container":
-            return request_body.container.get_as_union().type == "optional" or request_body.container.get_as_union().type == "nullable"
+            return (
+                request_body.container.get_as_union().type == "optional"
+                or request_body.container.get_as_union().type == "nullable"
+            )
     return False
 
 
@@ -1744,9 +1750,14 @@ class EndpointFunctionSnippetGenerator:
             td_shape = td.shape.get_as_union()
             if td_shape.type == "alias":
                 resolved_type = td_shape.resolved_type.get_as_union()
-                return resolved_type.type == "container" and (resolved_type.container.get_as_union().type == "optional" or resolved_type.container.get_as_union().type == "nullable")
+                return resolved_type.type == "container" and (
+                    resolved_type.container.get_as_union().type == "optional"
+                    or resolved_type.container.get_as_union().type == "nullable"
+                )
 
-        return union.type == "container" and (union.container.get_as_union().type == "optional" or union.container.get_as_union().type == "nullable")
+        return union.type == "container" and (
+            union.container.get_as_union().type == "optional" or union.container.get_as_union().type == "nullable"
+        )
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
@@ -1772,6 +1783,7 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "nullable":
             return unwrap_optional_type(container_as_union.nullable)
     return type_reference
+
 
 def raise_bytes_response_error() -> None:
     raise NotImplementedError("Bytes response type not yet supported")
