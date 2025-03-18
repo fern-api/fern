@@ -45,11 +45,15 @@ class QueryEndpointParameter(EndpointParameter):
             container_type = query_param_type.container.get_as_union()
             if container_type.type == "optional":
                 return AST.TypeHint.optional(
-                    AST.TypeHint.list(convert_to_singular_type(self._context, self._unbox_type_reference(container_type.optional)))
+                    AST.TypeHint.list(
+                        convert_to_singular_type(self._context, self._unbox_type_reference(container_type.optional))
+                    )
                 )
             if container_type.type == "nullable":
                 return AST.TypeHint.optional(
-                    AST.TypeHint.list(convert_to_singular_type(self._context, self._unbox_type_reference(container_type.nullable)))
+                    AST.TypeHint.list(
+                        convert_to_singular_type(self._context, self._unbox_type_reference(container_type.nullable))
+                    )
                 )
         return AST.TypeHint.list(convert_to_singular_type(self._context, self._query_parameter.value_type))
 
