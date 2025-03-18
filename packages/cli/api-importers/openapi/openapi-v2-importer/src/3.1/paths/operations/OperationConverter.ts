@@ -69,7 +69,7 @@ export class OperationConverter extends AbstractOperationConverter {
             method
         });
 
-        const server = this.operation.servers?.[0] ?? this.servers?.[0];
+        const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? context.spec.servers?.[0];
 
         return {
             group,

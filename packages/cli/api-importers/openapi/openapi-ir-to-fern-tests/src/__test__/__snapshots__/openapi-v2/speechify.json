@@ -6264,6 +6264,7 @@
               "safeName": "ExperimentalStreamCreate"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/experimental/audio/stream",
             "parts": []
@@ -6675,6 +6676,7 @@
               "safeName": "GetSpeech"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/audio/speech",
             "parts": []
@@ -7328,6 +7330,7 @@
               "safeName": "GetStream"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/audio/stream",
             "parts": []
@@ -8085,6 +8088,7 @@
               "safeName": "CreateAccessToken"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/auth/token",
             "parts": []
@@ -8465,6 +8469,7 @@
               "safeName": "ListApiKeys"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/token",
             "parts": []
@@ -8525,6 +8530,7 @@
               "safeName": "CreateApiKey"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/token",
             "parts": []
@@ -8585,6 +8591,7 @@
               "safeName": "DeleteApiKey"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/token/",
             "parts": [
@@ -8757,6 +8764,7 @@
               "safeName": "UpdateApiKey"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/token/",
             "parts": [
@@ -9011,6 +9019,7 @@
               "safeName": "GetVoices"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/voices",
             "parts": []
@@ -9071,6 +9080,7 @@
               "safeName": "CreateVoice"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/voices",
             "parts": []
@@ -9241,6 +9251,7 @@
               "safeName": "DeleteVoice"
             }
           },
+          "baseUrl": "https://api.sws.speechify.com",
           "path": {
             "head": "/v1/voices/",
             "parts": [

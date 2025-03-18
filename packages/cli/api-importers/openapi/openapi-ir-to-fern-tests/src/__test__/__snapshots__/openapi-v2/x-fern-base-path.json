@@ -157,6 +157,7 @@
               "safeName": "ExampleEndpoint"
             }
           },
+          "baseUrl": "https://api.acme.com",
           "path": {
             "head": "/example",
             "parts": []

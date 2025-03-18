@@ -1026,6 +1026,7 @@
               "safeName": "GetEndUserById"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1/",
             "parts": [
@@ -1529,6 +1530,7 @@
               "safeName": "UpdateEndUserById"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1/",
             "parts": [
@@ -2190,6 +2192,7 @@
               "safeName": "GetEndUsers"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1",
             "parts": []

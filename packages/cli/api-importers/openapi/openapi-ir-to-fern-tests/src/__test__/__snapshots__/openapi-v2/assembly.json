@@ -15467,6 +15467,7 @@
               "safeName": "Upload"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/upload",
             "parts": []
@@ -15722,6 +15723,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -16127,6 +16129,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -26434,6 +26437,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -34434,6 +34438,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42434,6 +42439,7 @@
               "safeName": "GetSubtitles"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42838,6 +42844,7 @@
               "safeName": "GetSentences"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -45380,6 +45387,7 @@
               "safeName": "GetParagraphs"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -47922,6 +47930,7 @@
               "safeName": "WordSearch"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -49642,6 +49651,7 @@
               "safeName": "GetRedactedAudio"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -50117,6 +50127,7 @@
               "safeName": "CreateTemporaryToken"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/realtime/token",
             "parts": []
@@ -50505,6 +50516,7 @@
               "safeName": "Summary"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/summary",
             "parts": []
@@ -51343,6 +51355,7 @@
               "safeName": "QuestionAnswer"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/question-answer",
             "parts": []
@@ -53248,6 +53261,7 @@
               "safeName": "ActionItems"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/action-items",
             "parts": []
@@ -54018,6 +54032,7 @@
               "safeName": "Task"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/task",
             "parts": []
@@ -54851,6 +54866,7 @@
               "safeName": "PurgeRequestData"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/",
             "parts": [

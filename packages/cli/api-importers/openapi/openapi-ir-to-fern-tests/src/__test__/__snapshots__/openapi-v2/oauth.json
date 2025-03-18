@@ -416,6 +416,7 @@
               "safeName": "GetToken"
             }
           },
+          "baseUrl": "https://api.example.com/v1",
           "path": {
             "head": "/oauth/token",
             "parts": []

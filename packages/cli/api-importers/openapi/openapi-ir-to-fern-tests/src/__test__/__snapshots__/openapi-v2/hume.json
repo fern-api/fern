@@ -19293,6 +19293,7 @@
               "safeName": "ListJobs"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs",
             "parts": []
@@ -28379,6 +28380,7 @@
               "safeName": "StartJob"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs",
             "parts": []
@@ -29035,6 +29037,7 @@
               "safeName": "GetJobPredictions"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [
@@ -42129,6 +42132,7 @@
               "safeName": "GetJobArtifacts"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [
@@ -42304,6 +42308,7 @@
               "safeName": "GetJob"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [

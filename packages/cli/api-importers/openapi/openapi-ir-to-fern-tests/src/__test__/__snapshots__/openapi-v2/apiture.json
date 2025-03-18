@@ -16384,6 +16384,7 @@
               "safeName": "ListAccounts"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts",
             "parts": []
@@ -22056,6 +22057,7 @@
               "safeName": "GetAccount"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -23736,6 +23738,7 @@
               "safeName": "ListAccountBalances"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accountBalances",
             "parts": []
@@ -25611,6 +25614,7 @@
               "safeName": "ListEligibleAchAccounts"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/achEligibleAccounts",
             "parts": []
@@ -31656,6 +31660,7 @@
               "safeName": "ListAccountJointOwners"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -32342,6 +32347,7 @@
               "safeName": "ListEligibleOverdraftAccounts"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -33054,6 +33060,7 @@
               "safeName": "GetOverdraftProtection"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -33262,6 +33269,7 @@
               "safeName": "PatchOverdraftAccounts"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -33595,6 +33603,7 @@
               "safeName": "CreateJointOwnerInvitation"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -34766,6 +34775,7 @@
               "safeName": "LookUpInstitutionByLocator"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/institutionByLocator",
             "parts": []
@@ -38395,6 +38405,7 @@
               "safeName": "ListTransferSchedule"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/institutions/",
             "parts": [
@@ -39596,6 +39607,7 @@
               "safeName": "GetCutoffTimes"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/institutions/",
             "parts": [
@@ -40714,6 +40726,7 @@
               "safeName": "GetTransferDateRestrictions"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/institutions/",
             "parts": [
@@ -42465,6 +42478,7 @@
               "safeName": "ListTransactions"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -48133,6 +48147,7 @@
               "safeName": "ListTransactionCategories"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transactionCategories",
             "parts": []
@@ -49095,6 +49110,7 @@
               "safeName": "ListTransfers"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transfers",
             "parts": []
@@ -55372,6 +55388,7 @@
               "safeName": "CreateTransfer"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transfers",
             "parts": []
@@ -59954,6 +59971,7 @@
               "safeName": "GetTransfer"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transfers/",
             "parts": [
@@ -62608,6 +62626,7 @@
               "safeName": "DeleteTransfer"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transfers/",
             "parts": [
@@ -62679,6 +62698,7 @@
               "safeName": "PatchTransfer"
             }
           },
+          "baseUrl": "https://api.apiture.com/banking",
           "path": {
             "head": "/transfers/",
             "parts": [

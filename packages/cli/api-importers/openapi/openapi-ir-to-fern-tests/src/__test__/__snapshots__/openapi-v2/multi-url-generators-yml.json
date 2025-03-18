@@ -444,6 +444,7 @@
               "safeName": "ListUsers"
             }
           },
+          "baseUrl": "https://a.com",
           "path": {
             "head": "/users",
             "parts": []
@@ -911,6 +912,7 @@
               "safeName": "GetUserInformation"
             }
           },
+          "baseUrl": "https://a.com",
           "path": {
             "head": "/users/",
             "parts": [
@@ -1488,6 +1490,7 @@
               "safeName": "GetAuthenticationToken"
             }
           },
+          "baseUrl": "https://a.com",
           "path": {
             "head": "/token",
             "parts": []

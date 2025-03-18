@@ -6,7 +6,17 @@ export function mergeIntermediateRepresentation(
     ir2: FernIr.IntermediateRepresentation,
     casingsGenerator: CasingsGenerator
 ): FernIr.IntermediateRepresentation {
-    const environments = mergeEnvironments(ir1.environments, ir2.environments, casingsGenerator);
+    const { environments, changedEnvironmentIds1, changedEnvironmentIds2 } = mergeEnvironments(
+        ir1.environments,
+        ir2.environments,
+        casingsGenerator
+    );
+    const { services, websocketChannels } = mergeServicesAndChannels(
+        ir1,
+        ir2,
+        changedEnvironmentIds1,
+        changedEnvironmentIds2
+    );
 
     return {
         apiName: ir1.apiName,
@@ -28,10 +38,7 @@ export function mergeIntermediateRepresentation(
             ...(ir1.errors ?? {}),
             ...(ir2.errors ?? {})
         },
-        services: {
-            ...(ir1.services ?? {}),
-            ...(ir2.services ?? {})
-        },
+        services,
         webhookGroups: {
             ...(ir1.webhookGroups ?? {}),
             ...(ir2.webhookGroups ?? {})
@@ -40,10 +47,7 @@ export function mergeIntermediateRepresentation(
             ...(ir1.subpackages ?? {}),
             ...(ir2.subpackages ?? {})
         },
-        websocketChannels: {
-            ...(ir1.websocketChannels ?? {}),
-            ...(ir2.websocketChannels ?? {})
-        },
+        websocketChannels,
         rootPackage: {
             service: ir1.rootPackage.service ?? ir2.rootPackage.service,
             types: [...(ir1.rootPackage.types ?? []), ...(ir2.rootPackage.types ?? [])],
@@ -75,18 +79,34 @@ function mergeEnvironments(
     environmentConfig1: FernIr.EnvironmentsConfig | undefined,
     environmentConfig2: FernIr.EnvironmentsConfig | undefined,
     casingsGenerator: CasingsGenerator
-): FernIr.EnvironmentsConfig | undefined {
+): {
+    environments: FernIr.EnvironmentsConfig | undefined;
+    changedEnvironmentIds1: Record<string, string> | undefined;
+    changedEnvironmentIds2: Record<string, string> | undefined;
+} {
     if (environmentConfig1 == null && environmentConfig2 == null) {
-        return undefined;
+        return { environments: undefined, changedEnvironmentIds1: undefined, changedEnvironmentIds2: undefined };
     }
     if (environmentConfig2 == null) {
-        return environmentConfig1;
+        return {
+            environments: environmentConfig1,
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2: undefined
+        };
     }
     if (environmentConfig1 == null) {
-        return environmentConfig2;
+        return {
+            environments: environmentConfig2,
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2: undefined
+        };
     }
     if (JSON.stringify(environmentConfig1) === JSON.stringify(environmentConfig2)) {
-        return environmentConfig1;
+        return {
+            environments: environmentConfig1,
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2: undefined
+        };
     }
 
     const isWebsocketEnvironment1 = isWebsocketEnvironment(environmentConfig1);
@@ -99,13 +119,17 @@ function mergeEnvironments(
         environmentConfig2.environments.type === "singleBaseUrl"
     ) {
         return {
-            defaultEnvironment: environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment,
-            environments: FernIr.Environments.singleBaseUrl({
-                environments: [
-                    ...environmentConfig1.environments.environments,
-                    ...environmentConfig2.environments.environments
-                ]
-            })
+            environments: {
+                defaultEnvironment: environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment,
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        ...environmentConfig1.environments.environments,
+                        ...environmentConfig2.environments.environments
+                    ]
+                })
+            },
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2: undefined
         };
     }
 
@@ -118,33 +142,59 @@ function mergeEnvironments(
     if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
         const singleBaseUrlEnvironments1 = isWebsocketEnvironment1 ? environments2 : environments1;
         const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2;
-        const existingEnvUrls = new Set(singleBaseUrlEnvironments1.environments.map((env) => env.url));
-        const uniqueEnvs2 = singleBaseUrlEnvironments2.environments.filter((env) => !existingEnvUrls.has(env.url));
+
+        const changedEnvironmentIds1: Record<string, string> = {};
+        const { deconflictedEnvironments2, changedEnvironmentIds2 } = deconflictEnvironments(
+            singleBaseUrlEnvironments1,
+            singleBaseUrlEnvironments2,
+            casingsGenerator
+        );
+
+        const environment1UrlToId = new Map(singleBaseUrlEnvironments1.environments.map((env) => [env.url, env.id]));
+        const uniqueEnvs2 = deconflictedEnvironments2.environments.filter((env) => !environment1UrlToId.has(env.url));
+        deconflictedEnvironments2.environments.forEach((env) => {
+            const existingId = environment1UrlToId.get(env.url);
+            if (existingId != null) {
+                changedEnvironmentIds2[env.id] = existingId;
+            }
+        });
 
         if (singleBaseUrlEnvironments1.environments[0] == null) {
-            return environmentConfig2;
+            return {
+                environments: environmentConfig2,
+                changedEnvironmentIds1: undefined,
+                changedEnvironmentIds2: undefined
+            };
         }
 
         const environmentId = "Base";
         const environmentName = casingsGenerator.generateName("Base");
 
+        singleBaseUrlEnvironments1.environments.forEach((env) => {
+            changedEnvironmentIds1[env.id] = environmentId;
+        });
+
         return {
-            defaultEnvironment,
-            environments: FernIr.Environments.multipleBaseUrls({
-                baseUrls: [
-                    { id: environmentId, name: environmentName },
-                    ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
-                ],
-                environments: singleBaseUrlEnvironments1.environments.map((env) => ({
-                    id: env.id,
-                    name: env.name,
-                    urls: {
-                        [environmentId]: env.url,
-                        ...Object.fromEntries(uniqueEnvs2.map((env) => [env.id, env.url]))
-                    },
-                    docs: undefined
-                }))
-            })
+            environments: {
+                defaultEnvironment,
+                environments: FernIr.Environments.multipleBaseUrls({
+                    baseUrls: [
+                        { id: environmentId, name: environmentName },
+                        ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
+                    ],
+                    environments: singleBaseUrlEnvironments1.environments.map((env) => ({
+                        id: env.id,
+                        name: env.name,
+                        urls: {
+                            [environmentId]: env.url,
+                            ...Object.fromEntries(uniqueEnvs2.map((env) => [env.id, env.url]))
+                        },
+                        docs: undefined
+                    }))
+                })
+            },
+            changedEnvironmentIds1,
+            changedEnvironmentIds2
         };
     }
 
@@ -161,21 +211,33 @@ function mergeEnvironments(
                 ? (environments1 as FernIr.Environments.MultipleBaseUrls)
                 : (environments2 as FernIr.Environments.MultipleBaseUrls);
 
+        const { deconflictedEnvironments1, changedEnvironmentIds1 } = deconflictSingleMultipleEnvironments(
+            singleBaseUrlEnvironment,
+            multipleBaseUrlsEnvironment,
+            casingsGenerator
+        );
+
         return {
-            defaultEnvironment,
-            environments: FernIr.Environments.multipleBaseUrls({
-                baseUrls: [
-                    ...multipleBaseUrlsEnvironment.baseUrls,
-                    ...singleBaseUrlEnvironment.environments.map((env) => ({ id: env.id, name: env.name }))
-                ],
-                environments: multipleBaseUrlsEnvironment.environments.map((env) => ({
-                    ...env,
-                    urls: {
-                        ...env.urls,
-                        ...Object.fromEntries(singleBaseUrlEnvironment.environments.map((env) => [env.id, env.url]))
-                    }
-                }))
-            })
+            environments: {
+                defaultEnvironment,
+                environments: FernIr.Environments.multipleBaseUrls({
+                    baseUrls: [
+                        ...multipleBaseUrlsEnvironment.baseUrls,
+                        ...deconflictedEnvironments1.environments.map((env) => ({ id: env.id, name: env.name }))
+                    ],
+                    environments: multipleBaseUrlsEnvironment.environments.map((env) => ({
+                        ...env,
+                        urls: {
+                            ...env.urls,
+                            ...Object.fromEntries(
+                                deconflictedEnvironments1.environments.map((env) => [env.id, env.url])
+                            )
+                        }
+                    }))
+                })
+            },
+            changedEnvironmentIds1: environments1.type === "singleBaseUrl" ? changedEnvironmentIds1 : undefined,
+            changedEnvironmentIds2: environments1.type === "singleBaseUrl" ? undefined : changedEnvironmentIds1
         };
     }
 
@@ -183,10 +245,125 @@ function mergeEnvironments(
         const existingEnvUrls = new Set(environments1.environments.map((env) => env.urls));
         const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.urls));
         // TODO: Handle this case.
-        return undefined;
+        return { environments: undefined, changedEnvironmentIds1: undefined, changedEnvironmentIds2: undefined };
     }
 
-    return environmentConfig1 ?? environmentConfig2;
+    return {
+        environments: environmentConfig1 ?? environmentConfig2,
+        changedEnvironmentIds1: undefined,
+        changedEnvironmentIds2: undefined
+    };
+}
+
+function mergeServicesAndChannels(
+    ir1: FernIr.IntermediateRepresentation,
+    ir2: FernIr.IntermediateRepresentation,
+    changedEnvironmentIds1: Record<string, string> | undefined,
+    changedEnvironmentIds2: Record<string, string> | undefined
+): { services: Record<string, FernIr.HttpService>; websocketChannels: Record<string, FernIr.WebSocketChannel> } {
+    if (changedEnvironmentIds1 != null) {
+        for (const [key, value] of Object.entries(changedEnvironmentIds1)) {
+            for (const service of Object.values(ir1.services)) {
+                for (const endpoint of Object.values(service.endpoints)) {
+                    if (endpoint.baseUrl == key) {
+                        endpoint.baseUrl = value;
+                    }
+                }
+            }
+            for (const websocketChannel of Object.values(ir1.websocketChannels ?? {})) {
+                if (websocketChannel.baseUrl == key) {
+                    websocketChannel.baseUrl = value;
+                }
+            }
+        }
+    }
+    if (changedEnvironmentIds2 != null) {
+        for (const [key, value] of Object.entries(changedEnvironmentIds2)) {
+            for (const service of Object.values(ir2.services)) {
+                for (const endpoint of Object.values(service.endpoints)) {
+                    if (endpoint.baseUrl == key) {
+                        endpoint.baseUrl = value;
+                    }
+                }
+            }
+            for (const websocketChannel of Object.values(ir2.websocketChannels ?? {})) {
+                if (websocketChannel.baseUrl == key) {
+                    websocketChannel.baseUrl = value;
+                }
+            }
+        }
+    }
+    const services = {
+        ...(ir1.services ?? {}),
+        ...(ir2.services ?? {})
+    };
+    const websocketChannels = {
+        ...(ir1.websocketChannels ?? {}),
+        ...(ir2.websocketChannels ?? {})
+    };
+    return { services, websocketChannels };
+}
+
+function deconflictEnvironments(
+    environments1: FernIr.Environments.SingleBaseUrl,
+    environments2: FernIr.Environments.SingleBaseUrl,
+    casingsGenerator: CasingsGenerator
+): { deconflictedEnvironments2: FernIr.Environments.SingleBaseUrl; changedEnvironmentIds2: Record<string, string> } {
+    const changedEnvironmentIds2: Record<string, string> = {};
+    const environment1Ids = new Set(environments1.environments.map((env) => env.id));
+    const environment1Names = new Set(environments1.environments.map((env) => env.name));
+    const deconflictedEnvironments = environments2.environments.map((env) => {
+        if (environment1Ids.has(env.id) || environment1Names.has(env.name)) {
+            const newName = generateUniqueName(env.id, environment1Ids);
+            changedEnvironmentIds2[env.id] = newName;
+            return {
+                ...env,
+                id: newName,
+                name: casingsGenerator.generateName(newName)
+            };
+        }
+        return env;
+    });
+    const deconflictedEnvironments2 = FernIr.Environments.singleBaseUrl({
+        environments: deconflictedEnvironments
+    });
+    return { deconflictedEnvironments2, changedEnvironmentIds2 };
+}
+
+function deconflictSingleMultipleEnvironments(
+    environments1: FernIr.Environments.SingleBaseUrl,
+    environments2: FernIr.Environments.MultipleBaseUrls,
+    casingsGenerator: CasingsGenerator
+): { deconflictedEnvironments1: FernIr.Environments.SingleBaseUrl; changedEnvironmentIds1: Record<string, string> } {
+    const changedEnvironmentIds1: Record<string, string> = {};
+    const environment2Ids = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.id));
+    const environment2Names = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.name));
+    const deconflictedEnvironments = environments1.environments.map((env) => {
+        if (environment2Ids.has(env.id) || environment2Names.has(env.name)) {
+            const newName = generateUniqueName(env.id, environment2Ids);
+            changedEnvironmentIds1[env.id] = newName;
+            return {
+                ...env,
+                id: newName,
+                name: casingsGenerator.generateName(newName)
+            };
+        }
+        return env;
+    });
+    const deconflictedEnvironments1 = FernIr.Environments.singleBaseUrl({
+        environments: deconflictedEnvironments
+    });
+    return { deconflictedEnvironments1, changedEnvironmentIds1 };
+}
+
+function generateUniqueName(id: string, existingIds: Set<string>): string {
+    let uniqueName = id;
+    let suffix = 1;
+    while (existingIds.has(uniqueName)) {
+        uniqueName = `${id}-${suffix}`;
+        suffix++;
+    }
+    return uniqueName;
 }
 
 function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {

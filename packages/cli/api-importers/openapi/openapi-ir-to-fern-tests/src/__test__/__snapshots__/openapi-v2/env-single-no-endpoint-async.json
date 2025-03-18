@@ -228,6 +228,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/pets",
             "parts": []

@@ -444,6 +444,7 @@
               "safeName": "Chat"
             }
           },
+          "baseUrl": "https://api.streamingtest.io",
           "path": {
             "head": "/v2/chats",
             "parts": []

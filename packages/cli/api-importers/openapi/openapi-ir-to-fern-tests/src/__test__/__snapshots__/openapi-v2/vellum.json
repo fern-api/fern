@@ -26273,6 +26273,7 @@
               "safeName": "Retrieve"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/deployments/",
             "parts": [
@@ -27330,6 +27331,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/document-indexes",
             "parts": []
@@ -28634,6 +28636,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/documents",
             "parts": []
@@ -47290,6 +47293,7 @@
               "safeName": "Retrieve"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -53270,6 +53274,7 @@
               "safeName": "ModelVersionCompilePrompt"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -53951,6 +53956,7 @@
               "safeName": "RegisterPrompt"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/registered-prompts/register",
             "parts": []
@@ -58993,6 +58999,7 @@
               "safeName": "UpsertSandboxScenario"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -62949,6 +62956,7 @@
               "safeName": "DeleteSandboxScenario"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -63287,6 +63295,7 @@
               "safeName": "UpsertTestSuiteTestCase"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [
@@ -64446,6 +64455,7 @@
               "safeName": "DeleteTestSuiteTestCase"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [

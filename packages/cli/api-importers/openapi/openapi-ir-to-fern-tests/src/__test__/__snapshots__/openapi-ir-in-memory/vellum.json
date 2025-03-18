@@ -264,7 +264,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -346,7 +346,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -429,7 +429,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -773,7 +773,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -838,7 +838,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -1003,7 +1003,7 @@
           "servers": [
             {
               "url": "https://documents.vellum.ai",
-              "x-name": "Documents"
+              "x-fern-server-name": "Documents"
             }
           ]
         }
@@ -3874,7 +3874,7 @@
       {
         "url": "https://api.vellum.ai",
         "description": "Default Server",
-        "x-name": "Default"
+        "x-fern-server-name": "Default"
       }
     ]
   }
