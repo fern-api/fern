@@ -1,14 +1,13 @@
 import functools
 import httpx
 import typing
+from contextlib import AbstractContextManager
 from types import TracebackType
 from typing import Any, Callable, Generic, TypeVar
 from typing_extensions import ParamSpec # type: ignore
 
 P = ParamSpec("P")
 R = TypeVar("R")
-_APIResponseT = TypeVar("_APIResponseT", bound="APIResponse[Any]")
-_AsyncAPIResponseT = TypeVar("_AsyncAPIResponseT", bound="AsyncAPIResponse[Any]")
 
 
 class APIResponse(Generic[R]):
@@ -35,7 +34,7 @@ class APIResponse(Generic[R]):
         """
         self._response.close()
 
-
+        
 class AsyncAPIResponse(Generic[R]):
     _response: httpx.Response
     _data: R
@@ -61,12 +60,12 @@ class AsyncAPIResponse(Generic[R]):
         await self._response.aclose()
 
 
-class ResponseManager(Generic[_APIResponseT]):
-    def __init__(self, initial_request_func: Callable[[], _APIResponseT]) -> None:
+class StreamResponseManager(Generic[R]):
+    def __init__(self, initial_request_func: Callable[[], APIResponse[typing.Iterator[R]]]) -> None:
         self._initial_request_func = initial_request_func
-        self.__response: typing.Optional[_APIResponseT] = None
+        self.__response: typing.Optional[APIResponse[typing.Iterator[R]]] = None
 
-    def __enter__(self) -> _APIResponseT:
+    def __enter__(self) -> APIResponse[typing.Iterator[R]]:
         self.__response = self._initial_request_func()
         return self.__response
 
@@ -80,12 +79,12 @@ class ResponseManager(Generic[_APIResponseT]):
             self.__response.close()
 
 
-class AsyncResponseManager(Generic[_AsyncAPIResponseT]):
-    def __init__(self, initial_request_func: Callable[[], typing.Awaitable[_AsyncAPIResponseT]]) -> None:
+class AsyncStreamResponseManager(Generic[R]):
+    def __init__(self, initial_request_func: Callable[[], typing.Awaitable[AsyncAPIResponse[typing.AsyncIterator[R]]]]) -> None:
         self._initial_request_func = initial_request_func
-        self.__response: typing.Optional[_AsyncAPIResponseT] = None
+        self.__response: typing.Optional[AsyncAPIResponse[typing.AsyncIterator[R]]] = None
 
-    async def __aenter__(self) -> _AsyncAPIResponseT:
+    async def __aenter__(self) -> AsyncAPIResponse[typing.AsyncIterator[R]]:
         self.__response = await self._initial_request_func()
         return self.__response
 
