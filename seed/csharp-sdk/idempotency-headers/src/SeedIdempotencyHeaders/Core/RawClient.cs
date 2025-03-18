@@ -551,7 +551,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         if (request.Options is IIdempotentRequestOptions idempotentRequest)
         {
-            MergeHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+            MergeHeaders(mergedHeaders, idempotentRequest.GetIdempotencyHeaders());
         }
 
         MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);

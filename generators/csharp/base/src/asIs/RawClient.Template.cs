@@ -559,7 +559,7 @@ internal class RawClient(ClientOptions clientOptions)
 <% if (idempotencyHeaders) { %>
         if (request.Options is IIdempotentRequestOptions idempotentRequest)
         {
-            MergeHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+            MergeHeaders(mergedHeaders, idempotentRequest.GetIdempotencyHeaders());
         }
 <% } %>
 
