@@ -17,7 +17,7 @@ class PythonV2Generator:
     def __init__(self, coordinator: GeneratorExecWrapper):
         self.coordinator = coordinator
 
-    def run(self):
+    def run(self) -> None:
         if len(sys.argv) < 2:
             raise RuntimeError("Internal error; failed to resolve configuration file path")
 
