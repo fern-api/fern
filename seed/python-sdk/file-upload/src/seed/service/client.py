@@ -14,6 +14,7 @@ from ..core.api_error import ApiError
 import json
 from ..core.jsonable_encoder import jsonable_encoder
 from .types.my_object_with_optional import MyObjectWithOptional
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -406,6 +407,57 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def optional_args(
+        self,
+        *,
+        image_file: typing.Optional[core.File] = OMIT,
+        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request : typing.Optional[typing.Optional[typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "optional-args",
+            method="POST",
+            data={},
+            files={
+                "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
+                **(
+                    {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
+                    if request is not OMIT
+                    else {}
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -788,6 +840,57 @@ class AsyncServiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def optional_args(
+        self,
+        *,
+        image_file: typing.Optional[core.File] = OMIT,
+        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request : typing.Optional[typing.Optional[typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "optional-args",
+            method="POST",
+            data={},
+            files={
+                "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
+                **(
+                    {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
+                    if request is not OMIT
+                    else {}
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
