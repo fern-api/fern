@@ -7,7 +7,7 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 - version: 1.15.2
-  createdAt: "2025-03-17"
+  createdAt: "2025-03-18"
   irVersion: 57
   changelogEntry:
     - type: fix
