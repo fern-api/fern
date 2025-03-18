@@ -46867,6 +46867,7 @@
         }
       },
       "displayName": "/chat",
+      "baseUrl": "prod",
       "path": {
         "head": "/chat",
         "parts": []

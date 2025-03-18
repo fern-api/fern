@@ -55537,6 +55537,7 @@
         }
       },
       "displayName": "/{userId}",
+      "baseUrl": "API",
       "path": {
         "head": "/{userId}",
         "parts": []

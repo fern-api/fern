@@ -55,13 +55,15 @@ export class ServersConverter extends AbstractConverter<
                 id: DEFAULT_BASE_URL_ID,
                 name: context.casingsGenerator.generateName(DEFAULT_BASE_URL_ID)
             };
-            const endpointUrls = this.endpointLevelServers.map((server) => {
-                const serverName = ServersConverter.getServerName({ server, errorCollector, context });
-                return {
-                    id: serverName,
-                    name: context.casingsGenerator.generateName(serverName)
-                };
-            });
+            const endpointUrls = this.endpointLevelServers
+                .map((server) => {
+                    const serverName = ServersConverter.getServerName({ server, errorCollector, context });
+                    return {
+                        id: serverName,
+                        name: context.casingsGenerator.generateName(serverName)
+                    };
+                })
+                .filter((url, index, self) => self.findIndex((t) => t.id === url.id) === index);
 
             const baseUrls = [defaultBaseUrl, ...endpointUrls];
 
