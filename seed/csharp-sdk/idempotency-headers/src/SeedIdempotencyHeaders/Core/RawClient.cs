@@ -65,15 +65,16 @@ internal class RawClient(ClientOptions clientOptions)
         switch (request.Content)
         {
             case MultipartContent oldMultipartFormContent:
-                var originalBoundary = oldMultipartFormContent
-                    .Headers.ContentType.Parameters.First(p =>
-                        p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
-                    )
-                    .Value.Trim('"');
+                var originalBoundary =
+                    oldMultipartFormContent
+                        .Headers.ContentType?.Parameters.First(p =>
+                            p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Value?.Trim('"') ?? Guid.NewGuid().ToString();
                 var newMultipartContent = oldMultipartFormContent switch
                 {
                     MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
-                    MultipartContent => new MultipartContent(),
+                    _ => new MultipartContent(),
                 };
                 foreach (var content in oldMultipartFormContent)
                 {
@@ -173,12 +174,16 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var (encoding, mediaType) = ParseContentTypeOrDefault(
+                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                     contentType,
                     Encoding.UTF8,
                     "application/json"
                 );
                 var content = new StringContent(JsonUtils.Serialize(value), encoding, mediaType);
+                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+                {
+                    content.Headers.ContentType.CharSet = "";
+                }
                 form.Add(content, name);
             });
         }
@@ -222,12 +227,16 @@ internal class RawClient(ClientOptions clientOptions)
 
             _partAdders.Add(form =>
             {
-                var (encoding, mediaType) = ParseContentTypeOrDefault(
+                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                     contentType,
                     Encoding.UTF8,
                     "text/plain"
                 );
                 var content = new StringContent(value, encoding, mediaType);
+                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+                {
+                    content.Headers.ContentType.CharSet = "";
+                }
                 form.Add(content, name);
             });
         }
@@ -444,12 +453,12 @@ internal class RawClient(ClientOptions clientOptions)
                 return null;
             }
 
-            var (encoding, mediaType) = ParseContentTypeOrDefault(
+            var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
                 ContentType,
                 Encoding.UTF8,
                 "application/json"
             );
-            return new StringContent(
+            var content = new StringContent(
                 JsonUtils.SerializeWithAdditionalProperties(
                     Body,
                     Options?.AdditionalBodyProperties
@@ -457,6 +466,11 @@ internal class RawClient(ClientOptions clientOptions)
                 encoding,
                 mediaType
             );
+            if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
+            {
+                content.Headers.ContentType.CharSet = "";
+            }
+            return content;
         }
     }
 
@@ -651,7 +665,7 @@ internal class RawClient(ClientOptions clientOptions)
 
     private static void MergeAdditionalHeaders(
         Dictionary<string, List<string>> mergedHeaders,
-        IEnumerable<KeyValuePair<string, string>> headers
+        IEnumerable<KeyValuePair<string, string?>> headers
     )
     {
         var usedKeys = new HashSet<string>();
@@ -693,7 +707,7 @@ internal class RawClient(ClientOptions clientOptions)
         }
     }
 
-    private static (Encoding encoding, string mediaType) ParseContentTypeOrDefault(
+    private static (Encoding encoding, string? charset, string mediaType) ParseContentTypeOrDefault(
         string? contentType,
         Encoding encodingFallback,
         string mediaTypeFallback
@@ -701,14 +715,20 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var encoding = encodingFallback;
         var mediaType = mediaTypeFallback;
+        string? charset = null;
         if (string.IsNullOrEmpty(contentType))
         {
-            return (encoding, mediaType);
+            return (encoding, charset, mediaType);
         }
 
-        var mediaTypeHeaderValue = MediaTypeHeaderValue.Parse(contentType);
+        if (!MediaTypeHeaderValue.TryParse(contentType, out var mediaTypeHeaderValue))
+        {
+            return (encoding, charset, mediaType);
+        }
+
         if (!string.IsNullOrEmpty(mediaTypeHeaderValue.CharSet))
         {
+            charset = mediaTypeHeaderValue.CharSet;
             encoding = Encoding.GetEncoding(mediaTypeHeaderValue.CharSet);
         }
 
@@ -717,6 +737,6 @@ internal class RawClient(ClientOptions clientOptions)
             mediaType = mediaTypeHeaderValue.MediaType;
         }
 
-        return (encoding, mediaType);
+        return (encoding, charset, mediaType);
     }
 }

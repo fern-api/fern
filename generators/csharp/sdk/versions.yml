@@ -6,6 +6,12 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.15.1
+  createdAt: "2025-03-17"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: If a Content-Type header does not include charset, make sure the charset is also not included in the HTTP request.
 
 - version: 1.15.0
   createdAt: "2025-03-17"
