@@ -7,7 +7,11 @@ from .utilities import validate_response
 
 
 async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None:
-    expected_response: typing.Any = {"message": "The weather is sunny", "status": 200, "success": True}
+    expected_response: typing.Any = {
+        "message": "The weather is sunny",
+        "status": 200,
+        "success": True,
+    }
     expected_types: typing.Any = {"message": None, "status": "integer", "success": None}
     response = client.inlined.send(
         temperature=10.1,

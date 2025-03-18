@@ -42,14 +42,34 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
 
 async def test_get_playlists(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = [
-        {"name": "name", "problems": ["problems", "problems"], "playlist_id": "playlist_id", "owner-id": "owner-id"},
-        {"name": "name", "problems": ["problems", "problems"], "playlist_id": "playlist_id", "owner-id": "owner-id"},
+        {
+            "name": "name",
+            "problems": ["problems", "problems"],
+            "playlist_id": "playlist_id",
+            "owner-id": "owner-id",
+        },
+        {
+            "name": "name",
+            "problems": ["problems", "problems"],
+            "playlist_id": "playlist_id",
+            "owner-id": "owner-id",
+        },
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
-            0: {"name": None, "problems": ("list", {0: None, 1: None}), "playlist_id": None, "owner-id": None},
-            1: {"name": None, "problems": ("list", {0: None, 1: None}), "playlist_id": None, "owner-id": None},
+            0: {
+                "name": None,
+                "problems": ("list", {0: None, 1: None}),
+                "playlist_id": None,
+                "owner-id": None,
+            },
+            1: {
+                "name": None,
+                "problems": ("list", {0: None, 1: None}),
+                "playlist_id": None,
+                "owner-id": None,
+            },
         },
     )
     response = client.playlist.get_playlists(

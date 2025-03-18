@@ -82,5 +82,7 @@ from seed.types import IntegerUnionWithBaseProperties
 IntegerUnionWithBaseProperties(value=5)
 """
 UnionWithBaseProperties = typing.Union[
-    IntegerUnionWithBaseProperties, StringUnionWithBaseProperties, FooUnionWithBaseProperties
+    IntegerUnionWithBaseProperties,
+    StringUnionWithBaseProperties,
+    FooUnionWithBaseProperties,
 ]

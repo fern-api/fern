@@ -124,7 +124,9 @@ class AsyncSeedAudiences:
 
 
 def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedAudiencesEnvironment] = None
+    *,
+    base_url: typing.Optional[str] = None,
+    environment: typing.Optional[SeedAudiencesEnvironment] = None,
 ) -> str:
     if base_url is not None:
         return base_url

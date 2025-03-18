@@ -29,14 +29,16 @@ async def test_update_test_submission_status(client: SeedTrace, async_client: As
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.admin.update_test_submission_status(
-            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionStatus()
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            request=TestSubmissionStatus(),
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.admin.update_test_submission_status(
-            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionStatus()
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            request=TestSubmissionStatus(),
         )  # type: ignore[func-returns-value]
         is None
     )
@@ -67,14 +69,16 @@ async def test_update_workspace_submission_status(client: SeedTrace, async_clien
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.admin.update_workspace_submission_status(
-            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionStatus()
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            request=WorkspaceSubmissionStatus(),
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.admin.update_workspace_submission_status(
-            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionStatus()
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            request=WorkspaceSubmissionStatus(),
         )  # type: ignore[func-returns-value]
         is None
     )

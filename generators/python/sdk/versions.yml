@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.20
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
 - version: 4.3.19
   irVersion: 57
   changelogEntry:

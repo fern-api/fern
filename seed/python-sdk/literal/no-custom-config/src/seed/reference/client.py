@@ -70,7 +70,9 @@ class ReferenceClient:
                 "query": query,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObject, direction="write"
+                    object_=container_object,
+                    annotation=ContainerObject,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
@@ -157,7 +159,9 @@ class AsyncReferenceClient:
                 "query": query,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObject, direction="write"
+                    object_=container_object,
+                    annotation=ContainerObject,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,

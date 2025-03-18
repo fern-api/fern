@@ -9,10 +9,16 @@ from .utilities import validate_response
 async def test_find(client: SeedAudiences, async_client: AsyncSeedAudiences) -> None:
     expected_response: typing.Any = {"imported": "imported"}
     expected_types: typing.Any = {"imported": None}
-    response = client.foo.find(optional_string="optionalString", public_property="publicProperty", private_property=1)
+    response = client.foo.find(
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
+    )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.foo.find(
-        optional_string="optionalString", public_property="publicProperty", private_property=1
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
     )
     validate_response(async_response, expected_response, expected_types)

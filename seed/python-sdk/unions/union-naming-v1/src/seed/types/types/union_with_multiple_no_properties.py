@@ -85,5 +85,7 @@ FooUnionWithMultipleNoProperties(
 )
 """
 UnionWithMultipleNoProperties = typing.Union[
-    FooUnionWithMultipleNoProperties, Empty1UnionWithMultipleNoProperties, Empty2UnionWithMultipleNoProperties
+    FooUnionWithMultipleNoProperties,
+    Empty1UnionWithMultipleNoProperties,
+    Empty2UnionWithMultipleNoProperties,
 ]

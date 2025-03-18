@@ -51,7 +51,9 @@ class UnionWithBaseProperties(UniversalRootModel):
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
             typing.Union[
-                _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
+                _UnionWithBaseProperties.Integer,
+                _UnionWithBaseProperties.String,
+                _UnionWithBaseProperties.Foo,
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -59,13 +61,17 @@ class UnionWithBaseProperties(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
+            _UnionWithBaseProperties.Integer,
+            _UnionWithBaseProperties.String,
+            _UnionWithBaseProperties.Foo,
         ]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
             typing.Union[
-                _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
+                _UnionWithBaseProperties.Integer,
+                _UnionWithBaseProperties.String,
+                _UnionWithBaseProperties.Foo,
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -73,7 +79,9 @@ class UnionWithBaseProperties(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
+            _UnionWithBaseProperties.Integer,
+            _UnionWithBaseProperties.String,
+            _UnionWithBaseProperties.Foo,
         ]:
             return self.__root__
 

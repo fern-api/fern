@@ -7,7 +7,8 @@ from .utilities import validate_response
 
 
 async def test_get_presigned_url(
-    client: SeedMultiUrlEnvironmentNoDefault, async_client: AsyncSeedMultiUrlEnvironmentNoDefault
+    client: SeedMultiUrlEnvironmentNoDefault,
+    async_client: AsyncSeedMultiUrlEnvironmentNoDefault,
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
