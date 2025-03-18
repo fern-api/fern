@@ -12,6 +12,7 @@ publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
+    - pnpm --filter @fern-api/go-sdk dist:cli
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
