@@ -75,6 +75,7 @@ public record QueryColumn
         return result;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

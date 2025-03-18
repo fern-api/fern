@@ -47,6 +47,7 @@ public record GetUsersRequest
     [JsonIgnore]
     public IEnumerable<string> Filter { get; set; } = new List<string>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

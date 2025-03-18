@@ -32,6 +32,7 @@ public record SendLiteralsInQueryRequest
     [JsonIgnore]
     public bool? AliasOptionalStream { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

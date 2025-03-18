@@ -11,6 +11,7 @@ public record ListUserEventsRequest
     [JsonIgnore]
     public int? Limit { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
