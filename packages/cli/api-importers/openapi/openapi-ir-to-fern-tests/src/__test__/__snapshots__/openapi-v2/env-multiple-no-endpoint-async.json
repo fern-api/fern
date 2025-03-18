@@ -28,46 +28,24 @@
     "environments": {
       "baseUrls": [
         {
-          "id": "Prod",
+          "id": "Base",
           "name": {
-            "originalName": "Prod",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          }
-        },
-        {
-          "id": "Dev",
-          "name": {
-            "originalName": "Dev",
-            "camelCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "snakeCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEV",
-              "safeName": "DEV"
-            },
-            "pascalCase": {
-              "unsafeName": "Dev",
-              "safeName": "Dev"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
           }
         },
@@ -139,8 +117,34 @@
             }
           },
           "urls": {
-            "Prod": "http://prod.api.com",
-            "Dev": "http://dev.api.com",
+            "Base": "http://prod.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com"
+          }
+        },
+        {
+          "id": "Dev",
+          "name": {
+            "originalName": "Dev",
+            "camelCase": {
+              "unsafeName": "dev",
+              "safeName": "dev"
+            },
+            "snakeCase": {
+              "unsafeName": "dev",
+              "safeName": "dev"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEV",
+              "safeName": "DEV"
+            },
+            "pascalCase": {
+              "unsafeName": "Dev",
+              "safeName": "Dev"
+            }
+          },
+          "urls": {
+            "Base": "http://dev.api.com",
             "websocket": "wss://api.async.com",
             "websocket2": "wss://api2.async.com"
           }

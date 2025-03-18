@@ -69,24 +69,24 @@
     "environments": {
       "baseUrls": [
         {
-          "id": "AssemblyAI API",
+          "id": "Base",
           "name": {
-            "originalName": "AssemblyAI API",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "assemblyAiApi",
-              "safeName": "assemblyAiApi"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "assembly_ai_api",
-              "safeName": "assembly_ai_api"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "ASSEMBLY_AI_API",
-              "safeName": "ASSEMBLY_AI_API"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "AssemblyAiApi",
-              "safeName": "AssemblyAiApi"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
           }
         },
@@ -115,28 +115,28 @@
       ],
       "environments": [
         {
-          "id": "Prod",
+          "id": "AssemblyAI API",
           "name": {
-            "originalName": "Prod",
+            "originalName": "AssemblyAI API",
             "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "assemblyAiApi",
+              "safeName": "assemblyAiApi"
             },
             "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "assembly_ai_api",
+              "safeName": "assembly_ai_api"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
+              "unsafeName": "ASSEMBLY_AI_API",
+              "safeName": "ASSEMBLY_AI_API"
             },
             "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
+              "unsafeName": "AssemblyAiApi",
+              "safeName": "AssemblyAiApi"
             }
           },
           "urls": {
-            "AssemblyAI API": "https://api.assemblyai.com",
+            "Base": "https://api.assemblyai.com",
             "API": "wss://api.assemblyai.com/v2/realtime/ws"
           }
         }

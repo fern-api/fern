@@ -98,25 +98,29 @@ function mergeEnvironments(
         const existingEnvUrls = new Set(environments1.environments.map((env) => env.url));
         const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.url));
 
+        if (environments1.environments[0] == null) {
+            return environmentConfig2;
+        }
+
+        const environmentId = "Base";
+        const environmentName = casingsGenerator.generateName("Base");
+
         return {
             defaultEnvironment,
             environments: FernIr.Environments.multipleBaseUrls({
                 baseUrls: [
-                    ...environments1.environments.map((env) => ({ id: env.id, name: env.name })),
+                    { id: environmentId, name: environmentName },
                     ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
                 ],
-                environments: [
-                    {
-                        id: "Prod",
-                        name: casingsGenerator.generateName("Prod"),
-                        urls: Object.assign(
-                            {},
-                            ...environments1.environments.map((env) => ({ [env.id]: env.url })),
-                            ...uniqueEnvs2.map((env) => ({ [env.id]: env.url }))
-                        ),
-                        docs: undefined
-                    }
-                ]
+                environments: environments1.environments.map((env) => ({
+                    id: env.id,
+                    name: env.name,
+                    urls: {
+                        [environmentId]: env.url,
+                        ...Object.fromEntries(uniqueEnvs2.map((env) => [env.id, env.url]))
+                    },
+                    docs: undefined
+                }))
             })
         };
     }
@@ -155,7 +159,7 @@ function mergeEnvironments(
     if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
         const existingEnvUrls = new Set(environments1.environments.map((env) => env.urls));
         const uniqueEnvs2 = environments2.environments.filter((env) => !existingEnvUrls.has(env.urls));
-
+        // TODO: Handle this case.
         return undefined;
     }
 

@@ -28,24 +28,24 @@
     "environments": {
       "baseUrls": [
         {
-          "id": "Prod",
+          "id": "Base",
           "name": {
-            "originalName": "Prod",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
           }
         },
@@ -117,7 +117,7 @@
             }
           },
           "urls": {
-            "Prod": "http://prod.api.com",
+            "Base": "http://prod.api.com",
             "websocket": "wss://api.async.com",
             "websocket2": "wss://api2.async.com"
           }

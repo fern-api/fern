@@ -69,24 +69,24 @@
     "environments": {
       "baseUrls": [
         {
-          "id": "https://api.hume.ai",
+          "id": "Base",
           "name": {
-            "originalName": "https://api.hume.ai",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "httpsApiHumeAi",
-              "safeName": "httpsApiHumeAi"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "https_api_hume_ai",
-              "safeName": "https_api_hume_ai"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_API_HUME_AI",
-              "safeName": "HTTPS_API_HUME_AI"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "HttpsApiHumeAi",
-              "safeName": "HttpsApiHumeAi"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
           }
         },
@@ -115,28 +115,28 @@
       ],
       "environments": [
         {
-          "id": "Prod",
+          "id": "https://api.hume.ai",
           "name": {
-            "originalName": "Prod",
+            "originalName": "https://api.hume.ai",
             "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "httpsApiHumeAi",
+              "safeName": "httpsApiHumeAi"
             },
             "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
+              "unsafeName": "https_api_hume_ai",
+              "safeName": "https_api_hume_ai"
             },
             "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
+              "unsafeName": "HTTPS_API_HUME_AI",
+              "safeName": "HTTPS_API_HUME_AI"
             },
             "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
+              "unsafeName": "HttpsApiHumeAi",
+              "safeName": "HttpsApiHumeAi"
             }
           },
           "urls": {
-            "https://api.hume.ai": "https://api.hume.ai",
+            "Base": "https://api.hume.ai",
             "prod": "wss://api.hume.ai/v0/evi"
           }
         }
