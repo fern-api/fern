@@ -14,6 +14,7 @@ public record GetRequest
     [JsonIgnore]
     public required string Name { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -40,6 +40,7 @@ public sealed class MetadataValue(
         );
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

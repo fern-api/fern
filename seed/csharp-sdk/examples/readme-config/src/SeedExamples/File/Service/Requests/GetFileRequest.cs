@@ -8,6 +8,7 @@ public record GetFileRequest
     [JsonIgnore]
     public required string XFileApiVersion { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

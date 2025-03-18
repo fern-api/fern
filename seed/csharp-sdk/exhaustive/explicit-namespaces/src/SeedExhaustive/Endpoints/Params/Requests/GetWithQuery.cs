@@ -11,6 +11,7 @@ public record GetWithQuery
     [JsonIgnore]
     public required int Number { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

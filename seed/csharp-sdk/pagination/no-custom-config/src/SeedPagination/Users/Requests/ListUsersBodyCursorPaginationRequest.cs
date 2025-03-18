@@ -12,6 +12,7 @@ public record ListUsersBodyCursorPaginationRequest
     [JsonPropertyName("pagination")]
     public WithCursor? Pagination { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

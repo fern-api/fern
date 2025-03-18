@@ -20,6 +20,7 @@ public record SendEnumListAsQueryParamRequest
     public IEnumerable<OneOf<Color, Operand>> MaybeOperandOrColor { get; set; } =
         new List<OneOf<Color, Operand>>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
