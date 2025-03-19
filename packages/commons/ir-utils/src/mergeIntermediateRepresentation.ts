@@ -75,6 +75,10 @@ export function mergeIntermediateRepresentation(
     };
 }
 
+/**
+ * This method merges two environments configurations, which can either be a multiple base URL environment or a
+ * single base URL environment (WebSocket or non-WebSocket).
+ */
 function mergeEnvironments(
     environmentConfig1: FernIr.EnvironmentsConfig | undefined,
     environmentConfig2: FernIr.EnvironmentsConfig | undefined,
@@ -150,15 +154,6 @@ function mergeEnvironments(
             casingsGenerator
         );
 
-        const environment1UrlToId = new Map(singleBaseUrlEnvironments1.environments.map((env) => [env.url, env.id]));
-        const uniqueEnvs2 = deconflictedEnvironments2.environments.filter((env) => !environment1UrlToId.has(env.url));
-        deconflictedEnvironments2.environments.forEach((env) => {
-            const existingId = environment1UrlToId.get(env.url);
-            if (existingId != null) {
-                changedEnvironmentIds2[env.id] = existingId;
-            }
-        });
-
         if (singleBaseUrlEnvironments1.environments[0] == null) {
             return {
                 environments: environmentConfig2,
@@ -180,14 +175,16 @@ function mergeEnvironments(
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         { id: environmentId, name: environmentName },
-                        ...uniqueEnvs2.map((env) => ({ id: env.id, name: env.name }))
+                        ...deconflictedEnvironments2.environments.map((env) => ({ id: env.id, name: env.name }))
                     ],
                     environments: singleBaseUrlEnvironments1.environments.map((env) => ({
                         id: env.id,
                         name: env.name,
                         urls: {
                             [environmentId]: env.url,
-                            ...Object.fromEntries(uniqueEnvs2.map((env) => [env.id, env.url]))
+                            ...Object.fromEntries(
+                                deconflictedEnvironments2.environments.map((env) => [env.id, env.url])
+                            )
                         },
                         docs: undefined
                     }))
@@ -278,6 +275,11 @@ function mergeEnvironments(
     };
 }
 
+/**
+ * This method merges the services and websocket channels of two intermediate representations in two steps:
+ * 1. Update all outdated baseURL ids to the new, de-duplicated Ids (if applicable)
+ * 2. Merge the services and websocket channels
+ */
 function mergeServicesAndChannels(
     ir1: FernIr.IntermediateRepresentation,
     ir2: FernIr.IntermediateRepresentation,
@@ -327,6 +329,11 @@ function mergeServicesAndChannels(
     return { services, websocketChannels };
 }
 
+/**
+ * This method deconflicts two single base URL environments. The method performs the following steps:
+ * 1. Filter out environments from the second environment that have the same base URL as the first environment
+ * 2. Generate unique names for the environments that are duplicated in the first environment
+ */
 function deconflictSingleEnvironments(
     environments1: FernIr.Environments.SingleBaseUrl,
     environments2: FernIr.Environments.SingleBaseUrl,
@@ -335,24 +342,40 @@ function deconflictSingleEnvironments(
     const changedEnvironmentIds2: Record<string, string> = {};
     const environment1Ids = new Set(environments1.environments.map((env) => env.id));
     const environment1Names = new Set(environments1.environments.map((env) => env.name));
-    const deconflictedEnvironments = environments2.environments.map((env) => {
-        if (environment1Ids.has(env.id) || environment1Names.has(env.name)) {
-            const newName = generateUniqueName(env.id, environment1Ids);
-            changedEnvironmentIds2[env.id] = newName;
-            return {
-                ...env,
-                id: newName,
-                name: casingsGenerator.generateName(newName)
-            };
-        }
-        return env;
-    });
+    const environment1UrlToId = new Map(environments1.environments.map((env) => [env.url, env.id]));
+
+    const deconflictedEnvironments = environments2.environments
+        .filter((env) => {
+            const existingId = environment1UrlToId.get(env.url);
+            if (existingId != null) {
+                changedEnvironmentIds2[env.id] = existingId;
+                return false;
+            }
+            return true;
+        })
+        .map((env) => {
+            if (environment1Ids.has(env.id) || environment1Names.has(env.name)) {
+                const newName = generateUniqueName(env.id, environment1Ids);
+                changedEnvironmentIds2[env.id] = newName;
+                return {
+                    ...env,
+                    id: newName,
+                    name: casingsGenerator.generateName(newName)
+                };
+            }
+            return env;
+        });
+
     const deconflictedEnvironments2 = FernIr.Environments.singleBaseUrl({
         environments: deconflictedEnvironments
     });
     return { deconflictedEnvironments2, changedEnvironmentIds2 };
 }
 
+/**
+ * This method deconflicts a single base URL environment with a multiple base URL environment.
+ * Environments that have the same name or ID as an environment in the multiple base URL environment will be renamed.
+ */
 function deconflictHybridEnvironments(
     environments1: FernIr.Environments.SingleBaseUrl,
     environments2: FernIr.Environments.MultipleBaseUrls,
@@ -379,6 +402,11 @@ function deconflictHybridEnvironments(
     return { deconflictedEnvironments1, changedEnvironmentIds1 };
 }
 
+/**
+ * This method deconflicts two multiple base URL environments. The method performs the following steps:
+ * 1. Deconflict the base URLs of the second environment with the base URLs of the first environment
+ * 2. Deconflict the environments of the second environment with the environments of the first environment
+ */
 function deconflictMultipleEnvironments(
     environments1: FernIr.Environments.MultipleBaseUrls,
     environments2: FernIr.Environments.MultipleBaseUrls,
