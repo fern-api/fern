@@ -261,7 +261,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (webhookItem == null || !("post" in webhookItem) || !webhookItem.post?.operationId) {
                 continue;
             }
-            console.log(webhookItem.post);
             const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
                 breadcrumbs: ["webhooks", operationId],
