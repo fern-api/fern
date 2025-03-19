@@ -25,6 +25,7 @@ resharper_use_string_interpolation_highlighting = hint
 resharper_property_can_be_made_init_only_local_highlighting = hint
 resharper_member_hides_static_from_outer_class_highlighting = hint
 resharper_class_never_instantiated_local_highlighting = hint
+dotnet_diagnostic.CS1591.severity = suggestion
 
 [src/**/Types/*.cs]
 resharper_check_namespace_highlighting = none
