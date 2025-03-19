@@ -24,7 +24,8 @@ public class JsonAccessAttributeTests
     [Test]
     public void JsonAccessAttribute_ShouldWorkAsExpected()
     {
-        const string json = """ { "read_only_prop": "read", "write_only_prop": "write", "normal_prop": "normal_prop" } """;
+        const string json =
+            """ { "read_only_prop": "read", "write_only_prop": "write", "normal_prop": "normal_prop" } """;
         var obj = JsonUtils.Deserialize<MyClass>(json);
 
         Assert.Multiple(() =>
@@ -38,7 +39,8 @@ public class JsonAccessAttributeTests
         obj.NormalProp = "new_value";
 
         var serializedJson = JsonUtils.Serialize(obj);
-        const string expectedJson = "{\n  \"write_only_prop\": \"write\",\n  \"normal_prop\": \"new_value\"\n}";
-        Assert.That(serializedJson, Is.EqualTo(expectedJson));
+        const string expectedJson =
+            "{ \"write_only_prop\": \"write\",\n  \"normal_prop\": \"new_value\" }";
+        Assert.That(serializedJson, Is.EqualTo(expectedJson).IgnoreWhiteSpace);
     }
 }

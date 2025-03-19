@@ -6,6 +6,14 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.15.6
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Make tests pass that compare JSON strings regardless of how it is formatted by ignoring whitespace.
+
 - version: 1.15.4
   createdAt: "2025-03-18"
   irVersion: 57
