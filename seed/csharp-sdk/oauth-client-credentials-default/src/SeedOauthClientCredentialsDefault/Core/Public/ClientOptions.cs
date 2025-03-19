@@ -10,7 +10,7 @@ public partial class ClientOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal Headers Headers { get; init; } = Headers.Empty;
+    internal Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
