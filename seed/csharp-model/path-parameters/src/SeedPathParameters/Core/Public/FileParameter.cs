@@ -32,7 +32,7 @@ public record FileParameter : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc cref="Dispose" />
+    /// <inheritdoc cref="Dispose()" />
     protected virtual void Dispose(bool disposing)
     {
         if (_disposed)
