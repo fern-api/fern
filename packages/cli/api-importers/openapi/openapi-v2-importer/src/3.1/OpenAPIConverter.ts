@@ -84,15 +84,15 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             errorCollector
         }) as OpenAPIV3_1.Document;
 
-        this.convertServers({ context, errorCollector });
-
         await this.convertSecuritySchemes({ context, errorCollector });
 
         await this.convertSchemas({ context, errorCollector });
 
         await this.convertWebhooks({ context, errorCollector });
+      
+        const { endpointLevelServers } = await this.convertPaths({ context, errorCollector });
 
-        await this.convertPaths({ context, errorCollector });
+        this.convertServers({ context, errorCollector, endpointLevelServers });
 
         let ir = {
             ...this.ir,
@@ -208,18 +208,21 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
     private convertServers({
         context,
-        errorCollector
+        errorCollector,
+        endpointLevelServers
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
+        endpointLevelServers?: OpenAPIV3_1.ServerObject[];
     }): void {
         const serversConverter = new ServersConverter({
             breadcrumbs: ["servers"],
-            servers: context.spec.servers
+            servers: context.spec.servers,
+            endpointLevelServers
         });
         const convertedServers = serversConverter.convert({ context, errorCollector });
         if (convertedServers != null) {
-            this.ir.environments = convertedServers;
+            this.ir.environments = convertedServers.value;
         }
     }
 
@@ -296,8 +299,9 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
-    }): Promise<void> {
+    }): Promise<{ endpointLevelServers?: OpenAPIV3_1.ServerObject[] }> {
         const groupToEndpoints: Record<string, HttpEndpoint[]> = {};
+        const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
 
         for (const [path, pathItem] of Object.entries(context.spec.paths ?? {})) {
             if (pathItem == null) {
@@ -306,7 +310,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const pathConverter = new PathConverter({
                 breadcrumbs: ["paths", path],
                 pathItem,
-                path
+                path,
+                servers: context.spec.servers
             });
             const convertedPath = await pathConverter.convert({ context, errorCollector });
             if (convertedPath != null) {
@@ -316,6 +321,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                         groupToEndpoints[group] = [];
                     }
                     groupToEndpoints[group].push(endpoint.endpoint);
+
+                    // Collect endpoint-level servers
+                    if (endpoint.servers && endpoint.servers[0] != null) {
+                        endpointLevelServers.push(endpoint.servers[0]);
+                    }
                 }
                 for (const webhook of convertedPath.webhooks) {
                     const group = webhook.group?.join(".") ?? "";
@@ -333,6 +343,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
         this.addServicesToIr({ groupToEndpoints, context });
         this.addWebhookGroupsToIr({ webhookGroups: this.ir.webhookGroups, context });
+
+        return { endpointLevelServers };
     }
 
     private addServicesToIr({
@@ -402,6 +414,4 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
     }
-
-    // TODO: Add websockets to IR
 }
