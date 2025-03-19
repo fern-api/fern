@@ -21,6 +21,7 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
+COPY --from=node /assets/features.yml /assets/features.yml
 RUN chmod +x /bin/java-v2
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
