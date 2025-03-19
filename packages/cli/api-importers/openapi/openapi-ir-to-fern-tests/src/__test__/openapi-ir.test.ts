@@ -50,7 +50,7 @@ describe("openapi-ir", async () => {
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir-in-memory", async () => {
     const loader = new InMemoryOpenAPILoader();
-    const excludedFixtures = new Set(["multiple-specs", "env-exhaustive-stress-test"]);
+    const excludedFixtures = new Set(["multiple-specs", "env-exhaustive-stress-test", "env-exhaustive-multi-multi"]);
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
         if (!fixture.isDirectory() || excludedFixtures.has(fixture.name)) {
             continue;
