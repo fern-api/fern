@@ -1,0 +1,9 @@
+api:
+  - path: ../openapi1.yml
+  - path: ../openapi2.yml
+  - path: ../openapi3.yml
+  - path: ../openapi4.yml
+  - path: ../openapi5.yml
+  - path: ../openapi6.yml
+  - path: ../openapi7.yml
+  - path: ../openapi8.yml
