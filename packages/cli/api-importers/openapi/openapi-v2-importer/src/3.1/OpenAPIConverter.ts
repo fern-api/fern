@@ -258,14 +258,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(context.spec.webhooks ?? {})) {
-            // structure should match OAI 3.1 spec
             if (webhookItem == null || !("post" in webhookItem) || !webhookItem.post?.operationId) {
                 continue;
             }
-
+            console.log(webhookItem.post);
             const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
-                breadcrumbs: ["paths", operationId],
+                breadcrumbs: ["webhooks", operationId],
                 operation: webhookItem.post,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
@@ -274,7 +273,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const convertedWebHook = await webHookConverter.convert({ context, errorCollector });
 
             if (convertedWebHook != null) {
-                const group = convertedWebHook.group?.join(".") ?? "";
+                const group = convertedWebHook.group?.join(".") ?? operationId;
                 if (groupToWebhooks[group] == null) {
                     groupToWebhooks[group] = [];
                 }
