@@ -89,7 +89,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         await this.convertSchemas({ context, errorCollector });
 
         await this.convertWebhooks({ context, errorCollector });
-      
+
         const { endpointLevelServers } = await this.convertPaths({ context, errorCollector });
 
         this.convertServers({ context, errorCollector, endpointLevelServers });
