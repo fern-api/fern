@@ -47,6 +47,7 @@ from .environment_generators import (
     SingleBaseUrlEnvironmentGenerator,
 )
 from .error_generator.error_generator import ErrorGenerator
+from .v2.generator import PythonV2Generator
 
 
 class SdkGenerator(AbstractGenerator):
@@ -352,6 +353,12 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 ir=ir,
             )
+
+        # Finally, run the python-v2 generator.
+        pythonv2 = PythonV2Generator(
+            coordinator=generator_exec_wrapper,
+        )
+        pythonv2.run()
 
     def _generate_environments_base(
         self,

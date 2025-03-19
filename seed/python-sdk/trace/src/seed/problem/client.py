@@ -155,19 +155,27 @@ class ProblemClient:
             json={
                 "problemName": problem_name,
                 "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                    object_=problem_description,
+                    annotation=ProblemDescription,
+                    direction="write",
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files,
+                    annotation=typing.Dict[Language, ProblemFiles],
+                    direction="write",
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"
                 ),
                 "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                    object_=testcases,
+                    annotation=typing.Sequence[TestCaseWithExpectedResult],
+                    direction="write",
                 ),
                 "methodName": method_name,
             },
@@ -319,19 +327,27 @@ class ProblemClient:
             json={
                 "problemName": problem_name,
                 "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                    object_=problem_description,
+                    annotation=ProblemDescription,
+                    direction="write",
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files,
+                    annotation=typing.Dict[Language, ProblemFiles],
+                    direction="write",
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"
                 ),
                 "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                    object_=testcases,
+                    annotation=typing.Sequence[TestCaseWithExpectedResult],
+                    direction="write",
                 ),
                 "methodName": method_name,
             },
@@ -352,7 +368,12 @@ class ProblemClient:
             )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_problem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete_problem(
+        self,
+        problem_id: ProblemId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Soft deletes a problem
 
@@ -454,7 +475,9 @@ class ProblemClient:
             method="POST",
             json={
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"
@@ -618,19 +641,27 @@ class AsyncProblemClient:
             json={
                 "problemName": problem_name,
                 "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                    object_=problem_description,
+                    annotation=ProblemDescription,
+                    direction="write",
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files,
+                    annotation=typing.Dict[Language, ProblemFiles],
+                    direction="write",
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"
                 ),
                 "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                    object_=testcases,
+                    annotation=typing.Sequence[TestCaseWithExpectedResult],
+                    direction="write",
                 ),
                 "methodName": method_name,
             },
@@ -790,19 +821,27 @@ class AsyncProblemClient:
             json={
                 "problemName": problem_name,
                 "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                    object_=problem_description,
+                    annotation=ProblemDescription,
+                    direction="write",
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files,
+                    annotation=typing.Dict[Language, ProblemFiles],
+                    direction="write",
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"
                 ),
                 "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                    object_=testcases,
+                    annotation=typing.Sequence[TestCaseWithExpectedResult],
+                    direction="write",
                 ),
                 "methodName": method_name,
             },
@@ -824,7 +863,10 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_problem(
-        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        problem_id: ProblemId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Soft deletes a problem
@@ -943,7 +985,9 @@ class AsyncProblemClient:
             method="POST",
             json={
                 "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                    object_=input_params,
+                    annotation=typing.Sequence[VariableTypeAndName],
+                    direction="write",
                 ),
                 "outputType": convert_and_respect_annotation_metadata(
                     object_=output_type, annotation=VariableType, direction="write"

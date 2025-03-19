@@ -38,6 +38,7 @@ public record ListElement
         return result;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

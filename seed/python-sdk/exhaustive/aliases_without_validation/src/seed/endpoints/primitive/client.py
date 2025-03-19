@@ -251,7 +251,10 @@ class PrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_datetime(
-        self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: dt.datetime,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> dt.datetime:
         """
         Parameters
@@ -303,7 +306,10 @@ class PrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_date(
-        self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: dt.date,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> dt.date:
         """
         Parameters
@@ -355,7 +361,10 @@ class PrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: uuid.UUID,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
         Parameters
@@ -736,7 +745,10 @@ class AsyncPrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_datetime(
-        self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: dt.datetime,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> dt.datetime:
         """
         Parameters
@@ -795,7 +807,10 @@ class AsyncPrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_date(
-        self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: dt.date,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> dt.date:
         """
         Parameters
@@ -854,7 +869,10 @@ class AsyncPrimitiveClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: uuid.UUID,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
         Parameters

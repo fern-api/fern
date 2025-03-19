@@ -22,6 +22,7 @@ public record ListUsersOffsetStepPaginationRequest
     [JsonIgnore]
     public Order? Order { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

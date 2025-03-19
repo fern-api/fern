@@ -18,6 +18,7 @@ public record SendEnumAsQueryParamRequest
     [JsonIgnore]
     public OneOf<Color, Operand>? MaybeOperandOrColor { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

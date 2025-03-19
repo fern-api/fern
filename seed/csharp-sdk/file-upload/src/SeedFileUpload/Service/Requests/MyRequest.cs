@@ -34,6 +34,7 @@ public record MyRequest
 
     public IEnumerable<MyObject> AliasListOfObject { get; set; } = new List<MyObject>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

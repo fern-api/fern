@@ -37,11 +37,17 @@ async def test_update_many(client: SeedUnions, async_client: AsyncSeedUnions) ->
     expected_response: typing.Any = {"string": True}
     expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
     response = client.bigunion.update_many(
-        request=[BigUnion_NormalSweet(value="value"), BigUnion_NormalSweet(value="value")]
+        request=[
+            BigUnion_NormalSweet(value="value"),
+            BigUnion_NormalSweet(value="value"),
+        ]
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.bigunion.update_many(
-        request=[BigUnion_NormalSweet(value="value"), BigUnion_NormalSweet(value="value")]
+        request=[
+            BigUnion_NormalSweet(value="value"),
+            BigUnion_NormalSweet(value="value"),
+        ]
     )
     validate_response(async_response, expected_response, expected_types)

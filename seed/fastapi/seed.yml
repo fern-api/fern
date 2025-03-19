@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml

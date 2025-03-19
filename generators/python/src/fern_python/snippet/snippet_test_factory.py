@@ -278,6 +278,9 @@ class SnippetTestFactory:
                 optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
                 if item_type.optional is not None
                 else None,
+                nullable=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.nullable)
+                if item_type.nullable is not None
+                else None,
                 map_=lambda map_type: (
                     "dict",
                     dict(

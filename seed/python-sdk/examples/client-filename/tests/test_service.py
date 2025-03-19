@@ -120,7 +120,10 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
         "response": None,
         "identifiers": (
             "list",
-            {0: {"type": None, "value": None, "label": None}, 1: {"type": None, "value": None, "label": None}},
+            {
+                0: {"type": None, "value": None, "label": None},
+                1: {"type": None, "value": None, "label": None},
+            },
         ),
     }
     response = client.service.create_big_entity(
@@ -154,27 +157,49 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
             nodes=[
                 Node(
                     name="name",
-                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ],
                     trees=[Tree(nodes=[]), Tree(nodes=[])],
                 ),
                 Node(
                     name="name",
-                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ],
                     trees=[Tree(nodes=[]), Tree(nodes=[])],
                 ),
             ],
             trees=[
-                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
-                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+                Tree(
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ]
+                ),
+                Tree(
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ]
+                ),
             ],
         ),
         directory=Directory(
             name="name",
-            files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+            files=[
+                File(name="name", contents="contents"),
+                File(name="name", contents="contents"),
+            ],
             directories=[
                 Directory(
                     name="name",
-                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    files=[
+                        File(name="name", contents="contents"),
+                        File(name="name", contents="contents"),
+                    ],
                     directories=[
                         Directory(name="name", files=[], directories=[]),
                         Directory(name="name", files=[], directories=[]),
@@ -182,7 +207,10 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
                 ),
                 Directory(
                     name="name",
-                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    files=[
+                        File(name="name", contents="contents"),
+                        File(name="name", contents="contents"),
+                    ],
                     directories=[
                         Directory(name="name", files=[], directories=[]),
                         Directory(name="name", files=[], directories=[]),
@@ -229,27 +257,49 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
             nodes=[
                 Node(
                     name="name",
-                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ],
                     trees=[Tree(nodes=[]), Tree(nodes=[])],
                 ),
                 Node(
                     name="name",
-                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ],
                     trees=[Tree(nodes=[]), Tree(nodes=[])],
                 ),
             ],
             trees=[
-                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
-                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+                Tree(
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ]
+                ),
+                Tree(
+                    nodes=[
+                        Node(name="name", nodes=[], trees=[]),
+                        Node(name="name", nodes=[], trees=[]),
+                    ]
+                ),
             ],
         ),
         directory=Directory(
             name="name",
-            files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+            files=[
+                File(name="name", contents="contents"),
+                File(name="name", contents="contents"),
+            ],
             directories=[
                 Directory(
                     name="name",
-                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    files=[
+                        File(name="name", contents="contents"),
+                        File(name="name", contents="contents"),
+                    ],
                     directories=[
                         Directory(name="name", files=[], directories=[]),
                         Directory(name="name", files=[], directories=[]),
@@ -257,7 +307,10 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
                 ),
                 Directory(
                     name="name",
-                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    files=[
+                        File(name="name", contents="contents"),
+                        File(name="name", contents="contents"),
+                    ],
                     directories=[
                         Directory(name="name", files=[], directories=[]),
                         Directory(name="name", files=[], directories=[]),

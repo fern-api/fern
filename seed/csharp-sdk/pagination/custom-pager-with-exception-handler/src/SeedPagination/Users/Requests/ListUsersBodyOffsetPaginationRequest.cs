@@ -12,6 +12,7 @@ public record ListUsersBodyOffsetPaginationRequest
     [JsonPropertyName("pagination")]
     public WithPage? Pagination { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

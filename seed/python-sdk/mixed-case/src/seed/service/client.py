@@ -16,7 +16,12 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_resource(self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Resource:
+    def get_resource(
+        self,
+        resource_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Resource:
         """
         Parameters
         ----------
@@ -60,7 +65,11 @@ class ServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_resources(
-        self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        page_limit: int,
+        before_date: dt.date,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Resource]:
         """
         Parameters
@@ -121,7 +130,10 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def get_resource(
-        self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        resource_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Resource:
         """
         Parameters
@@ -174,7 +186,11 @@ class AsyncServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_resources(
-        self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        page_limit: int,
+        before_date: dt.date,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Resource]:
         """
         Parameters

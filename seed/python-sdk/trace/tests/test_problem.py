@@ -21,7 +21,10 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
     response = client.problem.create_problem(
         problem_name="problemName",
         problem_description=ProblemDescription(
-            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+            boards=[
+                ProblemDescriptionBoard_Html(value="boards"),
+                ProblemDescriptionBoard_Html(value="boards"),
+            ]
         ),
         files={
             "JAVA": ProblemFiles(
@@ -40,13 +43,21 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         testcases=[
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
@@ -58,7 +69,10 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
     async_response = await async_client.problem.create_problem(
         problem_name="problemName",
         problem_description=ProblemDescription(
-            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+            boards=[
+                ProblemDescriptionBoard_Html(value="boards"),
+                ProblemDescriptionBoard_Html(value="boards"),
+            ]
         ),
         files={
             "JAVA": ProblemFiles(
@@ -77,13 +91,21 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         testcases=[
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
@@ -100,7 +122,10 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         problem_id="problemId",
         problem_name="problemName",
         problem_description=ProblemDescription(
-            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+            boards=[
+                ProblemDescriptionBoard_Html(value="boards"),
+                ProblemDescriptionBoard_Html(value="boards"),
+            ]
         ),
         files={
             "JAVA": ProblemFiles(
@@ -119,13 +144,21 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         testcases=[
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
@@ -138,7 +171,10 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         problem_id="problemId",
         problem_name="problemName",
         problem_description=ProblemDescription(
-            boards=[ProblemDescriptionBoard_Html(value="boards"), ProblemDescriptionBoard_Html(value="boards")]
+            boards=[
+                ProblemDescriptionBoard_Html(value="boards"),
+                ProblemDescriptionBoard_Html(value="boards"),
+            ]
         ),
         files={
             "JAVA": ProblemFiles(
@@ -157,13 +193,21 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
         testcases=[
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
             TestCaseWithExpectedResult(
                 test_case=TestCase(
-                    id="id", params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)]
+                    id="id",
+                    params=[
+                        VariableValue_IntegerValue(value=1),
+                        VariableValue_IntegerValue(value=1),
+                    ],
                 ),
                 expected_result=VariableValue_IntegerValue(value=1),
             ),
@@ -208,7 +252,10 @@ async def test_get_default_starter_files(client: SeedTrace, async_client: AsyncS
                         "solutionFile": {"filename": None, "contents": None},
                         "readOnlyFiles": (
                             "list",
-                            {0: {"filename": None, "contents": None}, 1: {"filename": None, "contents": None}},
+                            {
+                                0: {"filename": None, "contents": None},
+                                1: {"filename": None, "contents": None},
+                            },
                         ),
                     },
                 )

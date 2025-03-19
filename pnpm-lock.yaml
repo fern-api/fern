@@ -1675,6 +1675,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2

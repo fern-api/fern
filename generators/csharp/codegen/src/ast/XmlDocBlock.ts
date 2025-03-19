@@ -7,9 +7,16 @@ export declare namespace XmlDocBlock {
         summary?: XmlDocNode;
         codeExample?: XmlDocNode;
         exceptions?: Map<string | AstNode, XmlDocNode>;
+        inheritdoc?: InheritdocNode;
     };
     type Arg = XmlDocProps | XmlDocNode;
     type XmlDocNode = string | ((writer: XmlDocWriter) => void) | null | undefined;
+    type InheritdocNode =
+        | {
+              cref: string | undefined;
+              path: string | undefined;
+          }
+        | true;
 }
 
 export class XmlDocBlock extends AstNode {
@@ -74,6 +81,21 @@ export class XmlDocBlock extends AstNode {
                 docWriter.write("</exception>");
                 docWriter.writeNewLineIfLastLineNot();
             });
+        }
+        if (this.arg.inheritdoc) {
+            docWriter.writePrefix();
+            docWriter.write("<inheritdoc");
+            if (this.arg.inheritdoc !== true) {
+                if (this.arg.inheritdoc.cref) {
+                    docWriter.write(` cref="${this.arg.inheritdoc.cref}"`);
+                }
+                if (this.arg.inheritdoc.path) {
+                    docWriter.write(` path="${this.arg.inheritdoc.path}"`);
+                }
+            }
+            docWriter.write(" />");
+
+            docWriter.writeNewLineIfLastLineNot();
         }
     }
 

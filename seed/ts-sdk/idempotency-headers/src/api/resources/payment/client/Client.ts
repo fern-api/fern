@@ -26,6 +26,11 @@ export declare namespace Payment {
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }
+
+    export interface IdempotentRequestOptions extends RequestOptions {
+        idempotencyKey: string;
+        idempotencyExpiration: number;
+    }
 }
 
 export class Payment {

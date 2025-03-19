@@ -20,6 +20,7 @@ public record GetUsersRequest
     [JsonIgnore]
     public bool? Extra { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
