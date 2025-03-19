@@ -239,13 +239,9 @@ function mergeEnvironments(
     }
 
     if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
-        const environment1IsLarger = environments1.baseUrls.length > environments2.baseUrls.length;
-        const multipleBaseUrlsEnvironments1 = environment1IsLarger ? environments1 : environments2;
-        const multipleBaseUrlsEnvironments2 = environment1IsLarger ? environments2 : environments1;
-
         const { deconflictedEnvironments, changedEnvironmentIds } = deconflictMultipleEnvironments(
-            multipleBaseUrlsEnvironments1,
-            multipleBaseUrlsEnvironments2,
+            environments1,
+            environments2,
             casingsGenerator
         );
         const flattenedUrls = deconflictedEnvironments.environments.flatMap((env) => Object.entries(env.urls));
@@ -253,8 +249,8 @@ function mergeEnvironments(
             environments: {
                 defaultEnvironment,
                 environments: FernIr.Environments.multipleBaseUrls({
-                    baseUrls: [...multipleBaseUrlsEnvironments1.baseUrls, ...deconflictedEnvironments.baseUrls],
-                    environments: multipleBaseUrlsEnvironments1.environments.map((env) => ({
+                    baseUrls: [...environments1.baseUrls, ...deconflictedEnvironments.baseUrls],
+                    environments: environments1.environments.map((env) => ({
                         ...env,
                         urls: {
                             ...env.urls,
@@ -263,8 +259,8 @@ function mergeEnvironments(
                     }))
                 })
             },
-            changedEnvironmentIds1: environment1IsLarger ? undefined : changedEnvironmentIds,
-            changedEnvironmentIds2: environment1IsLarger ? changedEnvironmentIds : undefined
+            changedEnvironmentIds1: undefined,
+            changedEnvironmentIds2: changedEnvironmentIds
         };
     }
 
