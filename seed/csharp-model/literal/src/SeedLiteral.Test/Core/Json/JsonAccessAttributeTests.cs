@@ -40,7 +40,7 @@ public class JsonAccessAttributeTests
 
         var serializedJson = JsonUtils.Serialize(obj);
         const string expectedJson =
-            "{\n  \"write_only_prop\": \"write\",\n  \"normal_prop\": \"new_value\"\n}";
-        Assert.That(serializedJson, Is.EqualTo(expectedJson));
+            "{ \"write_only_prop\": \"write\",\n  \"normal_prop\": \"new_value\" }";
+        Assert.That(serializedJson, Is.EqualTo(expectedJson).IgnoreWhiteSpace);
     }
 }
