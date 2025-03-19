@@ -64,12 +64,7 @@ export class BaseOptionsGenerator {
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(headersReference) : headersReference,
-            initializer: includeInitializer
-                ? csharp.codeblock((writer) => {
-                      writer.writeNode(headersReference);
-                      writer.write(".Empty");
-                  })
-                : undefined,
+            initializer: includeInitializer ? csharp.codeblock("new()") : undefined,
             summary: "The http headers sent with the request.",
             interfaceReference
         });
