@@ -19,6 +19,7 @@ export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractConverter.Args {
         channel: AsyncAPIV3.ChannelV3;
         channelPath: string;
+        group: string[] | undefined;
         operations: Record<string, AsyncAPIV3.Operation>;
     }
 
@@ -41,13 +42,15 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
     private readonly channel: AsyncAPIV3.ChannelV3;
     private readonly channelPath: string;
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
+    private readonly group: string[] | undefined;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, operations }: ChannelConverter3_0.Args) {
+    constructor({ breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
         super({ breadcrumbs });
         this.channel = channel;
         this.channelPath = channelPath;
         this.operations = operations;
+        this.group = group;
     }
 
     public async convert({
@@ -60,6 +63,8 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
+
+        const displayName = this.group ? this.group.join(".") : this.channelPath;
 
         if (this.channel.parameters) {
             await this.convertChannelParameters({
@@ -111,8 +116,8 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
 
         return {
             channel: {
-                name: context.casingsGenerator.generateName(this.channelPath),
-                displayName: this.channelPath,
+                name: context.casingsGenerator.generateName(displayName),
+                displayName,
                 baseUrl: this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector),
                 path: {
                     head: this.channel.address ?? this.channelPath,
