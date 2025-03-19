@@ -51,6 +51,7 @@ class ReferenceSectionBuilder:
                 list_=lambda tr: self._visit_type_reference(tr),
                 map_=lambda _: None,
                 optional=lambda tr: self._visit_type_reference(tr),
+                nullable=lambda tr: self._visit_type_reference(tr),
                 set_=lambda tr: self._visit_type_reference(tr),
                 literal=lambda _: None,
             ),

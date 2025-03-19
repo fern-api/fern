@@ -57,7 +57,12 @@ class SeedAlias:
             timeout=_defaulted_timeout,
         )
 
-    def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get(
+        self,
+        type_id: TypeId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
@@ -141,7 +146,12 @@ class AsyncSeedAlias:
             timeout=_defaulted_timeout,
         )
 
-    async def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get(
+        self,
+        type_id: TypeId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------

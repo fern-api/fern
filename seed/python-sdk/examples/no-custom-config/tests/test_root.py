@@ -17,7 +17,11 @@ async def test_echo(client: SeedExamples, async_client: AsyncSeedExamples) -> No
 
 
 async def test_create_type(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response: typing.Any = {"type": "primitive", "value": "value", "label": "label"}
+    expected_response: typing.Any = {
+        "type": "primitive",
+        "value": "value",
+        "label": "label",
+    }
     expected_types: typing.Any = {"type": None, "value": None, "label": None}
     response = client.create_type(request="primitive")
     validate_response(response, expected_response, expected_types)

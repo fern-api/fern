@@ -185,6 +185,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 if container_union.type == "optional":
                     reference_union = container_union.optional.get_as_union()
                     is_optional = True
+                elif container_union.type == "nullable":
+                    reference_union = container_union.nullable.get_as_union()
+                    is_optional = True
                 else:
                     break
             elif reference_union.type == "named":

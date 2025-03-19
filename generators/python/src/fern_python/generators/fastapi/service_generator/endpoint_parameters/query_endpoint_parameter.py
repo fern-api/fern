@@ -23,7 +23,10 @@ class QueryEndpointParameter(EndpointParameter):
 
     def get_default(self) -> AST.Expression:
         value_type = self._query_parameter.value_type.get_as_union()
-        is_optional = value_type.type == "container" and value_type.container.get_as_union().type == "optional"
+        is_optional = value_type.type == "container" and (
+            value_type.container.get_as_union().type == "optional"
+            or value_type.container.get_as_union().type == "nullable"
+        )
         default = None
         if is_optional:
             default = AST.Expression(AST.TypeHint.none())
@@ -42,9 +45,40 @@ class QueryEndpointParameter(EndpointParameter):
             container_type = query_param_type.container.get_as_union()
             if container_type.type == "optional":
                 return AST.TypeHint.optional(
-                    AST.TypeHint.list(convert_to_singular_type(self._context, container_type.optional))
+                    AST.TypeHint.list(
+                        convert_to_singular_type(self._context, self._unbox_type_reference(container_type.optional))
+                    )
+                )
+            if container_type.type == "nullable":
+                return AST.TypeHint.optional(
+                    AST.TypeHint.list(
+                        convert_to_singular_type(self._context, self._unbox_type_reference(container_type.nullable))
+                    )
                 )
         return AST.TypeHint.list(convert_to_singular_type(self._context, self._query_parameter.value_type))
+
+    def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        return type_reference.visit(
+            container=lambda container: self._unbox_type_reference_container(
+                type_reference=type_reference,
+                container=container,
+            ),
+            named=lambda _: type_reference,
+            primitive=lambda _: type_reference,
+            unknown=lambda: type_reference,
+        )
+
+    def _unbox_type_reference_container(
+        self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType
+    ) -> ir_types.TypeReference:
+        return container.visit(
+            list_=lambda _: type_reference,
+            map_=lambda _: type_reference,
+            set_=lambda _: type_reference,
+            nullable=lambda nullable: self._unbox_type_reference(type_reference=nullable),
+            optional=lambda optional: self._unbox_type_reference(type_reference=optional),
+            literal=lambda _: type_reference,
+        )
 
     @staticmethod
     def get_variable_name_of_query_parameter(query_parameter: ir_types.QueryParameter) -> str:

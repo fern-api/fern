@@ -10,19 +10,20 @@ public class IntOffsetTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithIntPage()
     {
-        var pager = await CreatePagerAsync();
-        await AssertPagerAsync(pager);
-    }
-
-    private async Task<Pager<object>> CreatePagerAsync()
-    {
         var responses = new List<Response>
         {
             new() { Data = new() { Items = ["item1", "item2"] } },
             new() { Data = new() { Items = ["item1"] } },
             new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = await OffsetPager<Request, object?, Response, int, object?, object>.CreateInstanceAsync(
+        Pager<object> pager = await OffsetPager<
+            Request,
+            object?,
+            Response,
+            int,
+            object?,
+            object
+        >.CreateInstanceAsync(
             new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
@@ -40,11 +41,7 @@ public class IntOffsetTest
             response => response?.Data?.Items?.ToList(),
             null
         );
-        return pager;
-    }
 
-    public async SystemTask AssertPagerAsync(Pager<object> pager)
-    {
         var pageCounter = 0;
         var itemCounter = 0;
         await foreach (var page in pager.AsPagesAsync())
@@ -62,7 +59,7 @@ public class IntOffsetTest
 
     private class Request
     {
-        public Pagination Pagination { get; set; }
+        public Pagination? Pagination { get; set; }
     }
 
     private class Pagination
@@ -72,11 +69,11 @@ public class IntOffsetTest
 
     private class Response
     {
-        public Data Data { get; set; }
+        public Data? Data { get; set; }
     }
 
     private class Data
     {
-        public IEnumerable<string> Items { get; set; }
+        public IEnumerable<string>? Items { get; set; }
     }
 }

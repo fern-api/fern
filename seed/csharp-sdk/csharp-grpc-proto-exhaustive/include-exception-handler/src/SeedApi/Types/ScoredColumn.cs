@@ -71,6 +71,7 @@ public record ScoredColumn
         return result;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

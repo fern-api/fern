@@ -6535,8 +6535,7 @@ service:
       request:
         name: ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest
         query-parameters:
-          title:
-            type: optional<string>
+          title: optional<string>
           cursor:
             type: optional<string>
             validation:
@@ -6748,8 +6747,7 @@ service:
       request:
         name: ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest
         query-parameters:
-          show:
-            type: optional<root.CollectionChatShow>
+          show: optional<root.CollectionChatShow>
           cursor:
             type: optional<string>
             validation:
@@ -14612,8 +14610,7 @@ service:
             type: optional<string>
             validation:
               format: uuid
-          title:
-            type: optional<string>
+          title: optional<string>
           cursor:
             type: optional<string>
             validation:
@@ -16415,9 +16412,7 @@ service:
                       "pattern": undefined,
                     },
                   },
-                  "membership": {
-                    "type": "optional<root.OrgMembership>",
-                  },
+                  "membership": "optional<root.OrgMembership>",
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -17072,8 +17067,7 @@ service:
       request:
         name: OrgListOrgGetRequest
         query-parameters:
-          membership:
-            type: optional<root.OrgMembership>
+          membership: optional<root.OrgMembership>
           cursor:
             type: optional<string>
             validation:
@@ -17226,8 +17220,7 @@ service:
       request:
         name: OrgInvitesListOrgOrgIdInviteGetRequest
         query-parameters:
-          show:
-            type: optional<root.OrgInviteShow>
+          show: optional<root.OrgInviteShow>
           cursor:
             type: optional<string>
             validation:

@@ -8,6 +8,7 @@ from .http_methods.client import HttpMethodsClient
 from .object.client import ObjectClient
 from .params.client import ParamsClient
 from .primitive.client import PrimitiveClient
+from .put.client import PutClient
 from .union.client import UnionClient
 from ..core.client_wrapper import AsyncClientWrapper
 from .container.client import AsyncContainerClient
@@ -17,6 +18,7 @@ from .http_methods.client import AsyncHttpMethodsClient
 from .object.client import AsyncObjectClient
 from .params.client import AsyncParamsClient
 from .primitive.client import AsyncPrimitiveClient
+from .put.client import AsyncPutClient
 from .union.client import AsyncUnionClient
 
 
@@ -30,6 +32,7 @@ class EndpointsClient:
         self.object = ObjectClient(client_wrapper=self._client_wrapper)
         self.params = ParamsClient(client_wrapper=self._client_wrapper)
         self.primitive = PrimitiveClient(client_wrapper=self._client_wrapper)
+        self.put = PutClient(client_wrapper=self._client_wrapper)
         self.union = UnionClient(client_wrapper=self._client_wrapper)
 
 
@@ -43,4 +46,5 @@ class AsyncEndpointsClient:
         self.object = AsyncObjectClient(client_wrapper=self._client_wrapper)
         self.params = AsyncParamsClient(client_wrapper=self._client_wrapper)
         self.primitive = AsyncPrimitiveClient(client_wrapper=self._client_wrapper)
+        self.put = AsyncPutClient(client_wrapper=self._client_wrapper)
         self.union = AsyncUnionClient(client_wrapper=self._client_wrapper)

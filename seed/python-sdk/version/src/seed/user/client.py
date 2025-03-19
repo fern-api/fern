@@ -16,7 +16,12 @@ class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_user(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    def get_user(
+        self,
+        user_id: UserId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
         """
         Parameters
         ----------
@@ -64,7 +69,12 @@ class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_user(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    async def get_user(
+        self,
+        user_id: UserId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
         """
         Parameters
         ----------

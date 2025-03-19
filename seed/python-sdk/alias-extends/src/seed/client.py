@@ -59,7 +59,11 @@ class SeedAliasExtends:
         )
 
     def extended_inline_request_body(
-        self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        child: str,
+        parent: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -152,7 +156,11 @@ class AsyncSeedAliasExtends:
         )
 
     async def extended_inline_request_body(
-        self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        child: str,
+        parent: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters

@@ -50,6 +50,7 @@ public record IndexedData
         return result;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

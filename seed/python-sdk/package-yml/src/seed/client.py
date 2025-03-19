@@ -63,7 +63,14 @@ class SeedPackageYml:
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
-    def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def echo(
+        self,
+        id: str,
+        *,
+        name: str,
+        size: int,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
         """
         Parameters
         ----------
@@ -166,7 +173,12 @@ class AsyncSeedPackageYml:
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
     async def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        name: str,
+        size: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters

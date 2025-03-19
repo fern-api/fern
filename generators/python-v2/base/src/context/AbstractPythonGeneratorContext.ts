@@ -60,5 +60,9 @@ export abstract class AbstractPythonGeneratorContext<
         return name.snakeCase.safeName;
     }
 
-    public abstract getModulePathForId(typeId: TypeId): string[];
+    public getModulePathForId(typeId: string): string[] {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const fernFilepath = typeDeclaration.name.fernFilepath;
+        return [...fernFilepath.allParts.flatMap((part) => ["resources", this.getSnakeCaseSafeName(part)]), "types"];
+    }
 }
