@@ -255,7 +255,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        const groupToWebhooks: Record<string, String[]> = {};
+        const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(context.spec.webhooks ?? {})) {
             // structure should match OAI 3.1 spec
