@@ -44,17 +44,23 @@ class UnionWithNoProperties(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -64,7 +70,9 @@ class UnionWithNoProperties(UniversalRootModel):
             return self.__root__.dict(**kwargs)
 
     def visit(
-        self, foo: typing.Callable[[types_types_foo_Foo], T_Result], empty: typing.Callable[[], T_Result]
+        self,
+        foo: typing.Callable[[types_types_foo_Foo], T_Result],
+        empty: typing.Callable[[], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":

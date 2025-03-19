@@ -344,7 +344,9 @@ class AsyncBaseSeedExhaustive:
 
 
 def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None
+    *,
+    base_url: typing.Optional[str] = None,
+    environment: typing.Optional[SeedExhaustiveEnvironment] = None,
 ) -> str:
     if base_url is not None:
         return base_url

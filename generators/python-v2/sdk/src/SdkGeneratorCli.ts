@@ -30,18 +30,19 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         return {};
     }
 
+    protected publishPackage(context: SdkGeneratorContext): Promise<void> {
+        return this.generate(context);
+    }
+
+    protected writeForGithub(context: SdkGeneratorContext): Promise<void> {
+        return this.generate(context);
+    }
+
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
         return await this.generate(context);
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await context.project.persist();
-    }
-
-    protected publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    protected writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
     }
 }

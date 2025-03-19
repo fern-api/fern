@@ -173,7 +173,10 @@ class NullableClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_user(
-        self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        username: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         Parameters
@@ -396,7 +399,10 @@ class AsyncNullableClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_user(
-        self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        username: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         Parameters

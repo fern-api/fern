@@ -26,5 +26,4 @@ class ListType(UniversalBaseModel):
 from .map_type import MapType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
-update_forward_refs(MapType, ListType=ListType)
 update_forward_refs(ListType)

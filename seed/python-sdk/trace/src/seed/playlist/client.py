@@ -191,7 +191,11 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Playlist:
         """
         Returns a playlist
@@ -333,7 +337,11 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Deletes a playlist
@@ -561,7 +569,11 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Playlist:
         """
         Returns a playlist
@@ -719,7 +731,11 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Deletes a playlist

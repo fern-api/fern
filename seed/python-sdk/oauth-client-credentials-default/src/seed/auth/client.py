@@ -18,7 +18,11 @@ class AuthClient:
         self._client_wrapper = client_wrapper
 
     def get_token(
-        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        client_id: str,
+        client_secret: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
@@ -79,7 +83,11 @@ class AsyncAuthClient:
         self._client_wrapper = client_wrapper
 
     async def get_token(
-        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        client_id: str,
+        client_secret: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters

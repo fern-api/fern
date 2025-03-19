@@ -19,7 +19,10 @@ class NoAuthClient:
         self._client_wrapper = client_wrapper
 
     def post_with_no_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         POST request with no auth
@@ -84,7 +87,10 @@ class AsyncNoAuthClient:
         self._client_wrapper = client_wrapper
 
     async def post_with_no_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         POST request with no auth
