@@ -11,6 +11,7 @@ public record GetWithMultipleQuery
     [JsonIgnore]
     public IEnumerable<int> Number { get; set; } = new List<int>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

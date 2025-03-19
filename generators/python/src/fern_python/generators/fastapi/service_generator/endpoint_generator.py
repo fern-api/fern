@@ -105,6 +105,7 @@ class EndpointGenerator:
             json=lambda json_response: True,
             streaming=lambda _: True,
             stream_parameter=lambda _: True,
+            bytes=lambda _: False,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -368,6 +369,7 @@ class EndpointGenerator:
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
             stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+            bytes=lambda _: raise_bytes_response_unsupported(),
         )
 
     def _get_json_response_body_type(
@@ -403,6 +405,10 @@ def raise_streaming_unsupported() -> Never:
 
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
+
+
+def raise_bytes_response_unsupported() -> Never:
+    raise RuntimeError("bytes response is not supported")
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

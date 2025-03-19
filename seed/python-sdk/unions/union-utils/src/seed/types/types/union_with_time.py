@@ -50,7 +50,9 @@ class UnionWithTime(UniversalRootModel):
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
@@ -58,7 +60,9 @@ class UnionWithTime(UniversalRootModel):
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

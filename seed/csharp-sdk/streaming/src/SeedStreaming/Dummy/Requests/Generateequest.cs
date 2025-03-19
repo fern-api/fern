@@ -11,6 +11,7 @@ public record Generateequest
     [JsonPropertyName("num_events")]
     public required int NumEvents { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

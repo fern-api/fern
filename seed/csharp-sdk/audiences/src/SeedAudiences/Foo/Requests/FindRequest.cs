@@ -14,6 +14,7 @@ public record FindRequest
     [JsonPropertyName("privateProperty")]
     public int? PrivateProperty { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

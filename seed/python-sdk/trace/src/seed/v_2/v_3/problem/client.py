@@ -104,7 +104,10 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(
-        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        problem_id: ProblemId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProblemInfoV2:
         """
         Returns latest version of a problem
@@ -152,7 +155,11 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(
-        self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        problem_id: ProblemId,
+        problem_version: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem
@@ -312,7 +319,10 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_latest_problem(
-        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        problem_id: ProblemId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProblemInfoV2:
         """
         Returns latest version of a problem
@@ -368,7 +378,11 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problem_version(
-        self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        problem_id: ProblemId,
+        problem_version: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem

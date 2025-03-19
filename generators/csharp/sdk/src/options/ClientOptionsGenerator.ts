@@ -40,6 +40,13 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 interfaceReference: undefined
             })
         );
+        class_.addField(
+            this.baseOptionsGenerator.getAdditionalHeadersField({
+                summary:
+                    "Additional headers to be sent with HTTP requests.\nHeaders with matching keys will be overwritten by headers set on the request.",
+                includeInitializer: true
+            })
+        );
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         class_.addFields(this.baseOptionsGenerator.getLiteralHeaderOptions(optionArgs));

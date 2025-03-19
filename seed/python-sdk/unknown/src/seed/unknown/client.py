@@ -17,7 +17,10 @@ class UnknownClient:
         self._client_wrapper = client_wrapper
 
     def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters
@@ -63,7 +66,10 @@ class UnknownClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        unknown: typing.Optional[typing.Any] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters
@@ -117,7 +123,10 @@ class AsyncUnknownClient:
         self._client_wrapper = client_wrapper
 
     async def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters
@@ -171,7 +180,10 @@ class AsyncUnknownClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        unknown: typing.Optional[typing.Any] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[typing.Optional[typing.Any]]:
         """
         Parameters

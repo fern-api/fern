@@ -8,9 +8,15 @@ from seed import AsyncSeedExhaustive
 
 @pytest.fixture
 def client() -> SeedExhaustive:
-    return SeedExhaustive(token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return SeedExhaustive(
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedExhaustive:
-    return AsyncSeedExhaustive(token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedExhaustive(
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )

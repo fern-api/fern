@@ -77,7 +77,9 @@ class InlinedClient:
                 "temperature": temperature,
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
-                    object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
+                    object_=object_with_literal,
+                    annotation=ATopLevelLiteral,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
@@ -170,7 +172,9 @@ class AsyncInlinedClient:
                 "temperature": temperature,
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
-                    object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
+                    object_=object_with_literal,
+                    annotation=ATopLevelLiteral,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,

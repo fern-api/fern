@@ -132,7 +132,9 @@ class AsyncSeedSingleUrlEnvironmentDefault:
 
 
 def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: SeedSingleUrlEnvironmentDefaultEnvironment
+    *,
+    base_url: typing.Optional[str] = None,
+    environment: SeedSingleUrlEnvironmentDefaultEnvironment,
 ) -> str:
     if base_url is not None:
         return base_url

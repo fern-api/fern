@@ -532,6 +532,9 @@ export abstract class AbstractCsharpGeneratorContext<
             override: true,
             parameters: [],
             return_: csharp.Type.string(),
+            doc: {
+                inheritdoc: true
+            },
             body: csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(

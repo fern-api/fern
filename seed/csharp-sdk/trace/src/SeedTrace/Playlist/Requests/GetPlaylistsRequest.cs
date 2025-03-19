@@ -27,6 +27,7 @@ public record GetPlaylistsRequest
     [JsonIgnore]
     public IEnumerable<string> MultipleField { get; set; } = new List<string>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
