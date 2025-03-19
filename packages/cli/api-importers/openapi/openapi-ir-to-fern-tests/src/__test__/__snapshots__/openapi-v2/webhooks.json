@@ -154,7 +154,66 @@
   },
   "services": {},
   "errors": {},
-  "webhookGroups": {},
+  "webhookGroups": {
+    "": [
+      {
+        "id": ".CreatePet",
+        "name": {
+          "originalName": "CreatePet",
+          "camelCase": {
+            "unsafeName": "createPet",
+            "safeName": "createPet"
+          },
+          "snakeCase": {
+            "unsafeName": "create_pet",
+            "safeName": "create_pet"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_PET",
+            "safeName": "CREATE_PET"
+          },
+          "pascalCase": {
+            "unsafeName": "CreatePet",
+            "safeName": "CreatePet"
+          }
+        },
+        "method": "POST",
+        "headers": [],
+        "payload": {
+          "payloadType": {
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "Pet",
+              "camelCase": {
+                "unsafeName": "pet",
+                "safeName": "pet"
+              },
+              "snakeCase": {
+                "unsafeName": "pet",
+                "safeName": "pet"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PET",
+                "safeName": "PET"
+              },
+              "pascalCase": {
+                "unsafeName": "Pet",
+                "safeName": "Pet"
+              }
+            },
+            "typeId": "Pet",
+            "inline": false,
+            "type": "named"
+          },
+          "type": "reference"
+        },
+        "examples": []
+      }
+    ]
+  },
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -176,6 +235,7 @@
     ],
     "errors": [],
     "subpackages": [],
+    "webhooks": "",
     "hasEndpointsInTree": false
   },
   "subpackages": {},
