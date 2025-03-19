@@ -33,7 +33,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        await this.generate(context);
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {

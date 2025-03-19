@@ -12,7 +12,7 @@ public class JavaV2Adapter {
 
     private static final Logger log = LoggerFactory.getLogger(JavaV2Adapter.class);
 
-    private static final String NODE = "node";
+    private static final String NODE = "/usr/local/bin/node";
 
     /**
      * Execute the Java V2 generator with the provided arguments.
@@ -38,12 +38,10 @@ public class JavaV2Adapter {
             if (exitCode == 0) {
                 log.info("Successfully ran Java V2 generator");
             } else {
-                log.warn("Java V2 generator exited with code {}", exitCode);
+                throw new RuntimeException("Java V2 generator exited with code " + exitCode);
             }
-        } catch (IOException e) {
-            log.error("Failed to execute Java V2 generator", e);
-        } catch (InterruptedException e) {
-            log.error("Java V2 generator process was interrupted before it could finish", e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
