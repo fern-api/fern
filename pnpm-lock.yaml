@@ -1097,9 +1097,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      encoding:
-        specifier: ^0.1.0
-        version: 0.1.13
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -20507,6 +20504,7 @@ snapshots:
   encoding@0.1.13:
     dependencies:
       iconv-lite: 0.6.3
+    optional: true
 
   end-of-stream@1.4.4:
     dependencies:
