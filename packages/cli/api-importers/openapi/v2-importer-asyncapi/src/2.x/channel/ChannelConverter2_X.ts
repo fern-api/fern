@@ -14,12 +14,13 @@ import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons
 import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
 import { ParameterConverter } from "../../core/channel/ParameterConverter";
-import { SchemaConverter } from "../../core/schema/SchemaConverter";
+import { SchemaOrReferenceConverter } from "../../core/schema/SchemaOrReferenceConverter";
 
 export declare namespace ChannelConverter2_X {
     export interface Args extends AbstractConverter.Args {
         channel: AsyncAPIV2.ChannelV2;
         channelPath: string;
+        group: string[] | undefined;
     }
 
     export interface Output {
@@ -31,12 +32,14 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterContext, ChannelConverter2_X.Output> {
     private readonly channel: AsyncAPIV2.ChannelV2;
     private readonly channelPath: string;
+    private readonly group: string[] | undefined;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath }: ChannelConverter2_X.Args) {
+    constructor({ breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
         super({ breadcrumbs });
         this.channel = channel;
         this.channelPath = channelPath;
+        this.group = group;
     }
 
     public async convert({
@@ -49,6 +52,8 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
+
+        const displayName = this.group ? this.group.join(".") : this.channelPath;
 
         if (this.channel.parameters) {
             await this.convertQueryParameters({
@@ -108,11 +113,11 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
 
         return {
             channel: {
-                name: context.casingsGenerator.generateName(this.channelPath),
-                displayName: this.channelPath,
+                name: context.casingsGenerator.generateName(displayName),
+                displayName,
                 baseUrl,
                 path: {
-                    head: this.channel.address ?? this.channelPath,
+                    head: this.transformToValidPath(this.channel.address ?? this.channelPath),
                     parts: []
                 },
                 auth: false,
@@ -148,7 +153,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         defaultId: string;
         breadcrumbName: string;
     }): Promise<WebSocketMessage | undefined> {
-        let convertedSchema: SchemaConverter.Output | undefined = undefined;
+        let convertedSchema: TypeDeclaration | undefined = undefined;
 
         if ("$ref" in operation.message) {
             const resolved = await context.resolveReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>(
@@ -160,12 +165,22 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         }
 
         if ("oneOf" in operation.message) {
-            const schemaConverter = new SchemaConverter({
-                id: operation.operationId ?? defaultId,
+            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, breadcrumbName],
-                schema: operation.message
+                schemaOrReference: operation.message,
+                schemaIdOverride: operation.operationId ?? defaultId
             });
-            convertedSchema = await schemaConverter.convert({ context, errorCollector });
+            const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
+                context,
+                errorCollector
+            });
+            if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
+                convertedSchema = schemaOrReferenceConverterOutput.schema;
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...schemaOrReferenceConverterOutput.inlinedTypes
+                };
+            }
         } else if ("payload" in operation.message) {
             let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
             if (context.isReferenceObject(operation.message.payload)) {
@@ -177,22 +192,27 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 payloadSchema = operation.message.payload;
             }
             if (payloadSchema != null) {
-                const schemaConverter = new SchemaConverter({
-                    id: operation.operationId ?? defaultId,
+                const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                     breadcrumbs: [...this.breadcrumbs, breadcrumbName],
-                    schema: payloadSchema
+                    schemaOrReference: payloadSchema,
+                    schemaIdOverride: operation.operationId ?? defaultId
                 });
-                convertedSchema = await schemaConverter.convert({ context, errorCollector });
+                const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
+                    context,
+                    errorCollector
+                });
+                if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
+                    convertedSchema = schemaOrReferenceConverterOutput.schema;
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...schemaOrReferenceConverterOutput.inlinedTypes
+                    };
+                }
             }
         }
 
         if (convertedSchema != null) {
-            this.inlinedTypes = {
-                ...this.inlinedTypes,
-                ...convertedSchema.inlinedTypes,
-                [convertedSchema.typeDeclaration.name.typeId]: convertedSchema.typeDeclaration
-            };
-            const convertedTypeDeclaration = convertedSchema.typeDeclaration;
+            const convertedTypeDeclaration = convertedSchema;
 
             const typeReference = FernIr.TypeReference.named({
                 fernFilepath: {
@@ -347,5 +367,12 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 }
             }
         }
+    }
+
+    private transformToValidPath(path: string): string {
+        if (!path.startsWith("/")) {
+            return "/" + path;
+        }
+        return path;
     }
 }
