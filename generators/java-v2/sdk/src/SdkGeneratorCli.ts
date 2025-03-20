@@ -82,13 +82,13 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
             for (const endpointExample of endpoint.examples ?? []) {
-                const syncClient = (
-                    await dynamicSnippetsGenerator.generate(convertDynamicEndpointSnippetRequest(endpointExample))
-                ).snippet;
+                const syncClient =
+                    (await dynamicSnippetsGenerator.generate(convertDynamicEndpointSnippetRequest(endpointExample)))
+                        .snippet + "\n";
 
-                const asyncClient = (
-                    await dynamicSnippetsGenerator.generate(convertDynamicEndpointSnippetRequest(endpointExample))
-                ).snippet;
+                const asyncClient =
+                    (await dynamicSnippetsGenerator.generate(convertDynamicEndpointSnippetRequest(endpointExample)))
+                        .snippet + "\n";
 
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
