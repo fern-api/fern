@@ -104,6 +104,11 @@ client.imdb().createMovie(..., RequestOptions.builder().maxRetries(1).build());
 Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
 
 ```java
+package com.example.usage;
+
+import com.seed.api.core.RequestOptions;
+
+client.imdb().createMovie(..., RequestOptions.builder().timeout(10).build());
 ```
 
 ## Contributing

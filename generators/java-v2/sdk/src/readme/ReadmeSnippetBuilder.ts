@@ -24,7 +24,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
-    private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
 
@@ -45,7 +44,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.rootPackageName = this.getRootPackageName();
         this.rootPackageClientName = this.getRootPackageClientName();
     }
 
@@ -273,7 +271,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+        const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
+        const builderMethodInvocation = java.invokeMethod({
+            on: requestOptionsClassReference,
+            method: "builder",
+            arguments_: []
+        });
+        const maxRetriesMethodInvocation = java.invokeMethod({
+            on: builderMethodInvocation,
+            method: "timeout",
+            arguments_: [java.codeblock("10")]
+        });
+        const buildMethodInvocation = java.invokeMethod({
+            on: maxRetriesMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [
+            ReadmeSnippetBuilder.ELLIPSES,
+            buildMethodInvocation
+        ]);
+
+        const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
@@ -307,14 +332,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
         }
         return snippets;
-    }
-
-    private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
-        if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
-        }
-        return snippet;
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
@@ -362,10 +379,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.environments?.defaultEnvironment ??
             this.context.ir.environments.environments.environments[0]?.id
         );
-    }
-
-    private getRootPackageName(): string {
-        return this.context.config.organization;
     }
 
     private getRootPackageClientName(): string {
