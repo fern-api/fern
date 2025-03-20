@@ -39,21 +39,15 @@ You can omit the token when constructing the client. In this case, the SDK will 
 ```java
 ```
 
-## Environments
+## Base Url
 
-This SDK allows you to configure different environments or custom URLs for API requests. 
-You can either use the predefined environments or specify your own custom URL.
+You can set a custom base URL when constructing the client.
 
 ```java
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.core.Environment;
 
-// Using environment
-SeedApiClient client = SeedApiClient.builder().environment(Environment.PRODUCTION).build();
-
-// Using custom base URL
 SeedApiClient client = SeedApiClient.builder().url("https://example.com").build();
 ```
 
@@ -67,7 +61,7 @@ package com.example.usage;
 import com.seed.api.core.SeedApiApiException;
 
 try {
-    client.client.Imdb.CreateMovie(...);
+    client.imdb().createMovie(...);
 } catch (SeedApiApiException e) {
     // Do something with the API exception...
 }

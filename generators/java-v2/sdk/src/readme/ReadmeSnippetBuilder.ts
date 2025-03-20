@@ -4,7 +4,7 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -16,6 +16,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
 
     private readonly context: SdkGeneratorContext;
@@ -67,7 +68,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Authentication]: {
                 renderer: this.renderAuthenticationSnippet.bind(this)
             },
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: {
+                renderer: this.renderEnvironmentsSnippet.bind(this),
+                predicate: (_endpoint: EndpointWithFilepath) => this.getDefaultEnvironmentId() != null
+            },
+            [ReadmeSnippetBuilder.BASE_URL_FEATURE_ID]: {
+                renderer: this.renderBaseUrlSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.CustomClient]: {
                 renderer: this.renderCustomClientSnippet.bind(this)
@@ -125,7 +132,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return "";
     }
 
-    private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
+    private renderEnvironmentsSnippet(_endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
 
         const builderMethodInvocation = java.invokeMethod({
@@ -134,7 +141,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             arguments_: []
         });
 
-        const productionEnvironmentName = "PRODUCTION";
+        // This is safe because it's validated in the predicate
+        const productionEnvironmentName = this.getDefaultEnvironmentId()!;
         const productionEnvironment = java.codeblock((writer) => {
             writer.writeNode(this.context.getEnvironmentClassReference());
             writer.write(".");
@@ -157,7 +165,27 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNode(buildWithEnvironmentMethodInvocation);
         });
 
-        const baseUrl = java.codeblock((writer) => writer.write(this.getBaseUrlOptionValue()));
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Using environment");
+            writer.writeNodeStatement(withEnvironment);
+        });
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
+    }
+
+    private renderBaseUrlSnippet(_endpoint: EndpointWithFilepath): string {
+        const clientClassReference = this.context.getRootClientClassReference();
+
+        const builderMethodInvocation = java.invokeMethod({
+            on: clientClassReference,
+            method: "builder",
+            arguments_: []
+        });
+
+        const baseUrl = java.codeblock((writer) => writer.write("\"https://example.com\""));
         const customUrlMethodInvocation = java.invokeMethod({
             on: builderMethodInvocation,
             method: "url",
@@ -176,10 +204,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         const snippet = java.codeblock((writer) => {
-            writer.writeLine("// Using environment");
-            writer.writeNodeStatement(withEnvironment);
-            writer.writeLine("\n");
-            writer.writeLine("// Using custom base URL");
             writer.writeNodeStatement(withCustomUrl);
         });
 
@@ -190,13 +214,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
-        const clientReference = java.codeblock((writer) => writer.write(this.rootPackageClientName));
-        const ellipses = java.codeblock((writer) => writer.write("..."));
-        const endpointMethodInvocation = java.invokeMethod({
-            on: clientReference,
-            method: this.getMethodCall(endpoint),
-            arguments_: [ellipses]
-        });
+        const ellipses = java.codeblock("...");
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [ellipses]);
 
         const apiExceptionClassReference = this.context.getApiExceptionClassReference();
         const exceptionDeclarationBlock = java.codeblock((writer) => {
@@ -288,21 +307,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoint;
     }
 
-    private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
-            endpoint.endpoint
-        )}`;
+    private getMethodCall(endpoint: EndpointWithFilepath, arguments_: java.AstNode[]): java.MethodInvocation {
+        return java.invokeMethod({
+            on: this.getAccessFromRootClient(endpoint.fernFilepath),
+            method: this.getEndpointMethodName(endpoint.endpoint),
+            arguments_
+        });
     }
 
-    private getAccessFromRootClient(fernFilepath: FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+    private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + "()");
         return clientAccessParts.length > 0
-            ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
-            : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
+            ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
+            : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME);
     }
 
     private getEndpointMethodName(endpoint: HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
+        return endpoint.name.camelCase.unsafeName;
     }
 
     private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
@@ -314,27 +335,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.environments?.defaultEnvironment ??
             this.context.ir.environments.environments.environments[0]?.id
         );
-    }
-
-    private getBaseUrlOptionValue(): string {
-        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
-    }
-
-    private getEnvironmentBaseUrlReference(): string | undefined {
-        const defaultEnvironmentId = this.getDefaultEnvironmentId();
-
-        if (defaultEnvironmentId == null || this.context.ir.environments == null) {
-            return undefined;
-        }
-
-        const { environments } = this.context.ir.environments;
-        const defaultEnvironment = environments.environments.find((env) => env.id === defaultEnvironmentId);
-
-        if (!defaultEnvironment) {
-            return undefined;
-        }
-
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
     }
 
     private getRootPackageName(): string {
