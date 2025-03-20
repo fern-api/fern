@@ -58,7 +58,8 @@ def with_content_type(*, file: File, default_content_type: str) -> File:
             return (filename, content, out_content_type)
         elif len(file) == 4:
             filename, content, file_content_type, headers = cast(  # type: ignore
-                Tuple[Optional[str], FileContent, Optional[str], Mapping[str, str]], file
+                Tuple[Optional[str], FileContent, Optional[str], Mapping[str, str]],
+                file,
             )
             out_content_type = file_content_type or default_content_type
             return (filename, content, out_content_type, headers)

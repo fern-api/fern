@@ -2678,7 +2678,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.postSuccessRef": {
         "declaration": {
@@ -2814,7 +2815,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.postSuccessInlinePropertyDeprecation": {
         "declaration": {
@@ -2950,7 +2952,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.postSuccessInlineObjectDeprecation": {
         "declaration": {
@@ -3055,7 +3058,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.postSuccessInlineBetaBody": {
         "declaration": {
@@ -3160,7 +3164,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

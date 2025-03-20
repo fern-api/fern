@@ -11,6 +11,7 @@ public record DeleteUserRequest
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

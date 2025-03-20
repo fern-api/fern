@@ -3065,7 +3065,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.user": {
         "declaration": {
@@ -3201,7 +3202,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.user_v2_stream": {
         "declaration": {
@@ -3337,7 +3339,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.user_v2": {
         "declaration": {
@@ -3473,7 +3476,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.user_v3_stream": {
         "declaration": {
@@ -3609,7 +3613,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.user_v3": {
         "declaration": {
@@ -3745,7 +3750,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

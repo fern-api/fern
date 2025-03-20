@@ -1365,7 +1365,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.getUserInformation": {
         "declaration": {
@@ -1432,7 +1433,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.getAuthenticationToken": {
         "declaration": {
@@ -1470,7 +1472,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

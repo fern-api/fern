@@ -13945,7 +13945,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_audio.GetSpeech": {
         "auth": {
@@ -14308,7 +14309,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_audio.GetStream": {
         "auth": {
@@ -14669,7 +14671,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_auth.CreateAccessToken": {
         "auth": {
@@ -14914,7 +14917,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apikey.ListAPIKeys": {
         "auth": {
@@ -15022,7 +15026,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apikey.CreateAPIKey": {
         "auth": {
@@ -15130,7 +15135,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apikey.DeleteAPIKey": {
         "auth": {
@@ -15267,7 +15273,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_apikey.UpdateApiKey": {
         "auth": {
@@ -15411,7 +15418,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_voices.GetVoices": {
         "auth": {
@@ -15519,7 +15527,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_voices.CreateVoice": {
         "auth": {
@@ -15783,7 +15792,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_voices.DeleteVoice": {
         "auth": {
@@ -15920,7 +15930,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": [],

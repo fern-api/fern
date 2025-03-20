@@ -10498,6 +10498,7 @@
               "safeName": "BaseUpload"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/base/",
             "parts": []
@@ -10903,6 +10904,7 @@
               "safeName": "MultipartFileUploadStart"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/multipart/start/",
             "parts": []
@@ -11435,6 +11437,7 @@
               "safeName": "MultipartFileUploadPart"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/<presigned-url-x>",
             "parts": []
@@ -11496,6 +11499,7 @@
               "safeName": "MultipartFileUploadComplete"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/multipart/complete/",
             "parts": []
@@ -11693,6 +11697,7 @@
               "safeName": "FromUrlUpload"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/from_url/",
             "parts": []
@@ -12233,6 +12238,7 @@
               "safeName": "FromUrlUploadStatus"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/from_url/status/",
             "parts": []
@@ -12373,6 +12379,7 @@
               "safeName": "FileUploadInfo"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/info/",
             "parts": []
@@ -19692,6 +19699,7 @@
               "safeName": "CreateFilesGroup"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/group/",
             "parts": []
@@ -20001,6 +20009,7 @@
               "safeName": "FilesGroupInfo"
             }
           },
+          "baseUrl": "Production server",
           "path": {
             "head": "/group/info/",
             "parts": []
@@ -21018,28 +21027,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "Production server",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "Production server",
           "name": {
-            "originalName": "Default",
+            "originalName": "Production server",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "productionServer",
+              "safeName": "productionServer"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "production_server",
+              "safeName": "production_server"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "PRODUCTION_SERVER",
+              "safeName": "PRODUCTION_SERVER"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "ProductionServer",
+              "safeName": "ProductionServer"
             }
           },
           "url": "https://upload.uploadcare.com",

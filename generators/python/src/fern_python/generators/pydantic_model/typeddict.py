@@ -158,6 +158,9 @@ class FernTypedDict:
             if container_reference_unioned.type == "optional":
                 type_reference = container_reference_unioned.optional
                 is_optional = True
+            if container_reference_unioned.type == "nullable":
+                type_reference = container_reference_unioned.nullable
+                is_optional = True
 
         type_hint = self._get_type_hint_for_type_reference(type_reference, as_if_type_checking)
         if json_field_name != name:

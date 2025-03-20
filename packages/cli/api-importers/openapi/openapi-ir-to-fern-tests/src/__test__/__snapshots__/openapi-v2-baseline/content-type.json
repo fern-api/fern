@@ -955,7 +955,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       },
       "endpoint_.testWithDualContentTypeRequestTypes": {
         "declaration": {
@@ -1095,7 +1096,8 @@
         },
         "response": {
           "type": "json"
-        }
+        },
+        "examples": []
       }
     },
     "pathParameters": []

@@ -4492,7 +4492,15 @@ types:
               "request": {
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
-                  "project_id": "optional<string>",
+                  "project_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -5034,7 +5042,10 @@ service:
       request:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
-          project_id: optional<string>
+          project_id:
+            type: optional<string>
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: list<root.Chat>
@@ -6229,7 +6240,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -6299,7 +6318,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -6497,7 +6524,10 @@ service:
         name: ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest
         query-parameters:
           title: optional<string>
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -6706,7 +6736,10 @@ service:
         name: ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest
         query-parameters:
           show: optional<root.CollectionChatShow>
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -13599,7 +13632,15 @@ service:
               "request": {
                 "name": "DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -13735,9 +13776,33 @@ service:
               "request": {
                 "name": "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest",
                 "query-parameters": {
-                  "collection_id": "optional<string>",
-                  "connection_id": "optional<string>",
-                  "cursor": "optional<string>",
+                  "collection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "connection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -14413,10 +14478,19 @@ service:
       request:
         name: DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest
         query-parameters:
-          connection_id: optional<string>
+          connection_id:
+            type: optional<string>
+            validation:
+              format: uuid
           title: optional<string>
-          cursor: optional<string>
-          collection_id: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          collection_id:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 25
@@ -14753,7 +14827,10 @@ service:
         name: >-
           DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest
         query-parameters:
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 25
@@ -16103,7 +16180,15 @@ service:
               "request": {
                 "name": "OrgInvitesListOrgOrgIdInviteGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -16184,7 +16269,15 @@ service:
               "request": {
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "membership": "optional<root.OrgMembership>",
                   "page_limit": {
                     "default": 100,
@@ -16838,7 +16931,10 @@ service:
         name: OrgListOrgGetRequest
         query-parameters:
           membership: optional<root.OrgMembership>
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100
@@ -16988,7 +17084,10 @@ service:
         name: OrgInvitesListOrgOrgIdInviteGetRequest
         query-parameters:
           show: optional<root.OrgInviteShow>
-          cursor: optional<string>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
           page_limit:
             type: optional<integer>
             default: 100

@@ -11,6 +11,7 @@ public record HeaderAuthRequest
     [JsonIgnore]
     public required string XEndpointHeader { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -30,6 +30,7 @@ public record DeleteResponse
         return new ProtoDataV1Grpc.DeleteResponse();
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

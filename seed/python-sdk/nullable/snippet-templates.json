@@ -359,6 +359,82 @@
                                         ],
                                         "type": "generic"
                                     }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "status=$FERN_INPUT",
+                                        "discriminantField": "type",
+                                        "members": {
+                                            "active": {
+                                                "imports": [
+                                                    "from seed.nullable import Status"
+                                                ],
+                                                "isOptional": true,
+                                                "templateString": "status=Status()",
+                                                "templateInputs": [],
+                                                "type": "generic"
+                                            },
+                                            "archived": {
+                                                "imports": [
+                                                    "from seed.nullable import Status_Archived"
+                                                ],
+                                                "isOptional": true,
+                                                "templateString": "status=Status_Archived(value=$FERN_INPUT)",
+                                                "templateInputs": [
+                                                    {
+                                                        "type": "template",
+                                                        "value": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "status=$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": "metadata.status.value",
+                                                                    "type": "payload"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "soft-deleted": {
+                                                "imports": [
+                                                    "from seed.nullable import Status_SoftDeleted"
+                                                ],
+                                                "isOptional": true,
+                                                "templateString": "status=Status_SoftDeleted(value=$FERN_INPUT)",
+                                                "templateInputs": [
+                                                    {
+                                                        "type": "template",
+                                                        "value": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "status=$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": "metadata.status.value.status.value",
+                                                                    "type": "payload"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE"
+                                        },
+                                        "type": "discriminatedUnion"
+                                    }
                                 }
                             ],
                             "inputDelimiter": ",\n\t\t",
@@ -518,6 +594,82 @@
                                                 }
                                             ],
                                             "type": "generic"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "status=$FERN_INPUT",
+                                            "discriminantField": "type",
+                                            "members": {
+                                                "active": {
+                                                    "imports": [
+                                                        "from seed.nullable import Status"
+                                                    ],
+                                                    "isOptional": true,
+                                                    "templateString": "status=Status()",
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "archived": {
+                                                    "imports": [
+                                                        "from seed.nullable import Status_Archived"
+                                                    ],
+                                                    "isOptional": true,
+                                                    "templateString": "status=Status_Archived(value=$FERN_INPUT)",
+                                                    "templateInputs": [
+                                                        {
+                                                            "type": "template",
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "templateString": "status=$FERN_INPUT",
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "BODY",
+                                                                        "path": "metadata.status.value",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "soft-deleted": {
+                                                    "imports": [
+                                                        "from seed.nullable import Status_SoftDeleted"
+                                                    ],
+                                                    "isOptional": true,
+                                                    "templateString": "status=Status_SoftDeleted(value=$FERN_INPUT)",
+                                                    "templateInputs": [
+                                                        {
+                                                            "type": "template",
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "templateString": "status=$FERN_INPUT",
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "BODY",
+                                                                        "path": "metadata.status.value.status.value",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE"
+                                            },
+                                            "type": "discriminatedUnion"
                                         }
                                     }
                                 ],

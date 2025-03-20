@@ -42,17 +42,23 @@ class UnionWithoutKey(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

@@ -23,6 +23,12 @@ public partial class RequestOptions : IRequestOptions
     public HttpClient? HttpClient { get; init; }
 
     /// <summary>
+    /// Additional headers to be sent with the request.
+    /// Headers previously set with matching keys will be overwritten.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get; init; } = [];
+
+    /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public int? MaxRetries { get; init; }

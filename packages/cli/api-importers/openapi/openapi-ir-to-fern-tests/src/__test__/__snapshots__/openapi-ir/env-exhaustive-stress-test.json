@@ -1,0 +1,544 @@
+{
+  "title": "Test API",
+  "servers": [
+    {
+      "url": "https://alpha.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://beta.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://gamma.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://delta.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://mu.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://omega.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://zeta.spscommerce.com",
+      "description": "prod"
+    },
+    {
+      "url": "https://eta.spscommerce.com",
+      "description": "prod"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "alpha",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "alpha"
+        ],
+        "methodName": "getAlpha"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "AlphaGetAlphaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "AlphaGetAlphaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi1.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/alpha",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi1.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "beta",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "beta"
+        ],
+        "methodName": "getBeta"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "BetaGetBetaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "BetaGetBetaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi2.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/beta",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi2.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "gamma",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "gamma"
+        ],
+        "methodName": "getGamma"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GammaGetGammaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GammaGetGammaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi3.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/gamma",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi3.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "delta",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "delta"
+        ],
+        "methodName": "getDelta"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeltaGetDeltaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "DeltaGetDeltaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi4.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/delta",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi4.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "mu",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "mu"
+        ],
+        "methodName": "getMu"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "MuGetMuRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "MuGetMuResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi5.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/mu",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi5.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "omega",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "omega"
+        ],
+        "methodName": "getOmega"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "OmegaGetOmegaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "OmegaGetOmegaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi6.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/omega",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi6.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "zeta",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "zeta"
+        ],
+        "methodName": "getZeta"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ZetaGetZetaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ZetaGetZetaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi7.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/zeta",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi7.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "eta",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "eta"
+        ],
+        "methodName": "getEta"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "EtaGetEtaRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "EtaGetEtaResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi8.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/eta",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi8.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
