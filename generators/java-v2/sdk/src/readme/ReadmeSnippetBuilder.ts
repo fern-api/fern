@@ -138,17 +138,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             method: "environment",
             arguments_: [productionEnvironment]
         });
-
-        const buildMethodInvocation = java.invokeMethod({
+        const buildWithEnvironmentMethodInvocation = java.invokeMethod({
             on: environmentMethodInvocation,
             method: "build",
             arguments_: []
         });
 
-        const snippet = java.codeblock((writer) => {
+        const withEnvironment = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = `);
-            writer.writeNodeStatement(buildMethodInvocation);
+            writer.writeNode(buildWithEnvironmentMethodInvocation);
+        });
+
+        const baseUrl = java.codeblock((writer) => writer.write(this.getBaseUrlOptionValue()));
+        const customUrlMethodInvocation = java.invokeMethod({
+            on: builderMethodInvocation,
+            method: "url",
+            arguments_: [baseUrl]
+        });
+
+        const buildWithCustomUrlMethodInvocation = java.invokeMethod({
+            on: customUrlMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+        const withCustomUrl = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = `);
+            writer.writeNode(buildWithCustomUrlMethodInvocation);
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Using environment");
+            writer.writeNodeStatement(withEnvironment);
+            writer.writeLine("\n");
+            writer.writeLine("// Using custom base URL");
+            writer.writeNodeStatement(withCustomUrl);
         });
 
         return snippet.toString({

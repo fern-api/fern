@@ -34,8 +34,8 @@ public class Example {
 
 ## Environments
 
-You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
-URL, which is particularly useful in test environments.
+This SDK allows you to configure different environments or custom URLs for API requests. 
+You can either use the predefined environments or specify your own custom URL.
 
 ```java
 package com.example.usage;
@@ -43,7 +43,11 @@ package com.example.usage;
 import com.seed.api.SeedApiClient;
 import com.seed.api.core.Environment;
 
+// Using environment
 SeedApiClient client = SeedApiClient.builder().environment(Environment.PRODUCTION).build();
+
+// Using custom base URL
+SeedApiClient client = SeedApiClient.builder().url("https://example.com").build();
 ```
 
 ## Errors
