@@ -32,6 +32,13 @@ public class Example {
 }
 ```
 
+## Authentication
+
+You can omit the token when constructing the client. In this case, the SDK will automatically read the token from the environment variable:
+
+```java
+```
+
 ## Environments
 
 This SDK allows you to configure different environments or custom URLs for API requests. 
@@ -52,28 +59,29 @@ SeedApiClient client = SeedApiClient.builder().url("https://example.com").build(
 
 ## Errors
 
-Structured error types are returned from API calls that return non-success status codes. These errors are compatible
-with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-```
+package com.example.usage;
 
-## Request Options
+import com.seed.api.core.SeedApiApiException;
 
-A variety of request options are included to adapt the behavior of the library, which includes configuring
-authorization tokens, or providing your own instrumented `*http.Client`.
-
-These request options can either be
-specified on the client so that they're applied on every request, or for an individual request, like so:
-
-> Providing your own `*http.Client` is recommended. Otherwise, the `http.DefaultClient` will be used,
-> and your client will wait indefinitely for a response (unless the per-request, context-based timeout
-> is used).
-
-```java
+try {
+    client.client.Imdb.CreateMovie(...);
+} catch (SeedApiApiException e) {
+    // Do something with the API exception...
+}
 ```
 
 ## Advanced
+
+### Custom Client
+
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+However, you can pass your own client like so:
+
+```java
+```
 
 ### Retries
 

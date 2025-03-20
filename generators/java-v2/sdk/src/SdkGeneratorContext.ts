@@ -30,6 +30,17 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
+    public getApiExceptionClassReference(): java.ClassReference {
+        return java.classReference({
+            name: this.getApiExceptionClassName(),
+            packageName: this.getCorePackageName()
+        });
+    }
+
+    public getApiExceptionClassName(): string {
+        return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`;
+    }
+
     public getEnvironmentClassReference(): java.ClassReference {
         return java.classReference({
             name: this.getEnvironmentClassName(),

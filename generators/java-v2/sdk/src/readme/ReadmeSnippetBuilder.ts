@@ -64,11 +64,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
-            [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
-                renderer: this.renderRequestOptionsSnippet.bind(this)
+            [FernGeneratorCli.StructuredFeatureId.Authentication]: {
+                renderer: this.renderAuthenticationSnippet.bind(this)
             },
+            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
+            [FernGeneratorCli.StructuredFeatureId.CustomClient]: {
+                renderer: this.renderCustomClientSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             ...(this.isPaginationEnabled
@@ -118,6 +121,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
 
+    private renderAuthenticationSnippet(endpoint: EndpointWithFilepath): string {
+        return "";
+    }
+
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
 
@@ -146,7 +153,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const withEnvironment = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
-            writer.write(` ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = `);
+            writer.write(` ${this.rootPackageClientName} = `);
             writer.writeNode(buildWithEnvironmentMethodInvocation);
         });
 
@@ -164,7 +171,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
         const withCustomUrl = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
-            writer.write(` ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = `);
+            writer.write(` ${this.rootPackageClientName} = `);
             writer.writeNode(buildWithCustomUrlMethodInvocation);
         });
 
@@ -182,11 +189,36 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
     }
 
-    private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+    private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
+        const clientReference = java.codeblock((writer) => writer.write(this.rootPackageClientName));
+        const ellipses = java.codeblock((writer) => writer.write("..."));
+        const endpointMethodInvocation = java.invokeMethod({
+            on: clientReference,
+            method: this.getMethodCall(endpoint),
+            arguments_: [ellipses]
+        });
+
+        const apiExceptionClassReference = this.context.getApiExceptionClassReference();
+        const exceptionDeclarationBlock = java.codeblock((writer) => {
+            writer.writeNode(apiExceptionClassReference);
+            writer.write(" e");
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.controlFlowWithoutStatement("try");
+            writer.writeNodeStatement(endpointMethodInvocation);
+            writer.contiguousControlFlow("catch", exceptionDeclarationBlock);
+            writer.writeLine("// Do something with the API exception...");
+            writer.endControlFlow();
+        });
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
     }
 
-    private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
+    private renderCustomClientSnippet(endpoint: EndpointWithFilepath): string {
         return "";
     }
 
