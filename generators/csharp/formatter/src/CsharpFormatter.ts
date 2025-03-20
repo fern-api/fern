@@ -63,7 +63,10 @@ export class CsharpFormatter extends AbstractFormatter {
             content += ";";
         }
         try {
-            return execSync(this.csharpier, { input: content, encoding: "utf-8" });
+            return execSync([this.csharpier, "--fast", "--no-msbuild-check"].join(" "), {
+                input: content,
+                encoding: "utf-8"
+            });
         } catch (e: unknown) {
             return content;
         }

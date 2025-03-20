@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { access, mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
 
@@ -178,10 +178,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        await loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToSrcDirectory
-        });
+        await access(path.join(absolutePathToSrcDirectory, `${this.name}.sln`)).catch(() =>
+            loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
+                doNotPipeOutput: true,
+                cwd: absolutePathToSrcDirectory
+            })
+        );
 
         const absolutePathToProjectDirectory = join(absolutePathToSrcDirectory, RelativeFilePath.of(this.name));
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
