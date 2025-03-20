@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
+    private static ELLIPSES = java.codeblock("...");
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -185,7 +186,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             arguments_: []
         });
 
-        const baseUrl = java.codeblock((writer) => writer.write("\"https://example.com\""));
+        const baseUrl = java.codeblock((writer) => writer.write('"https://example.com"'));
         const customUrlMethodInvocation = java.invokeMethod({
             on: builderMethodInvocation,
             method: "url",
@@ -214,8 +215,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
-        const ellipses = java.codeblock("...");
-        const endpointMethodInvocation = this.getMethodCall(endpoint, [ellipses]);
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
         const apiExceptionClassReference = this.context.getApiExceptionClassReference();
         const exceptionDeclarationBlock = java.codeblock((writer) => {
@@ -242,7 +242,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+        const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
+        const builderMethodInvocation = java.invokeMethod({
+            on: requestOptionsClassReference,
+            method: "builder",
+            arguments_: []
+        });
+        const maxRetriesMethodInvocation = java.invokeMethod({
+            on: builderMethodInvocation,
+            method: "maxRetries",
+            arguments_: [java.codeblock("1")]
+        });
+        const buildMethodInvocation = java.invokeMethod({
+            on: maxRetriesMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [
+            ReadmeSnippetBuilder.ELLIPSES,
+            buildMethodInvocation
+        ]);
+
+        const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {

@@ -30,6 +30,17 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
+    public getRequestOptionsClassReference(): java.ClassReference {
+        return java.classReference({
+            name: this.getRequestOptionsClassName(),
+            packageName: this.getCorePackageName()
+        });
+    }
+
+    public getRequestOptionsClassName(): string {
+        return "RequestOptions";
+    }
+
     public getApiExceptionClassReference(): java.ClassReference {
         return java.classReference({
             name: this.getApiExceptionClassName(),
