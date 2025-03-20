@@ -12,6 +12,7 @@ public record WithContentTypeRequest
 
     public MyObject? FooBar { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

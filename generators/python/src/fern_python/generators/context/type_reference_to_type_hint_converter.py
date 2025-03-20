@@ -147,9 +147,28 @@ class TypeReferenceToTypeHintConverter:
                 ),
                 unknown=lambda: AST.TypeHint.list(AST.TypeHint.any()),
             ),
-            optional=lambda wrapped_type: AST.TypeHint.optional(
+            nullable=lambda wrapped_type: AST.TypeHint.optional(
+                self.get_type_hint_for_type_reference(
+                    type_reference=self._unbox_type_reference(wrapped_type),
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                    as_if_type_checking_import=as_if_type_checking_import,
+                    in_endpoint=in_endpoint,
+                    for_typeddict=for_typeddict,
+                )
+            )
+            if not for_typeddict
+            else AST.TypeHint.not_required(
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                    as_if_type_checking_import=as_if_type_checking_import,
+                    in_endpoint=in_endpoint,
+                    for_typeddict=for_typeddict,
+                )
+            ),
+            optional=lambda wrapped_type: AST.TypeHint.optional(
+                self.get_type_hint_for_type_reference(
+                    type_reference=self._unbox_type_reference(wrapped_type),
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
@@ -209,3 +228,26 @@ class TypeReferenceToTypeHintConverter:
             float_=AST.TypeHint.float_,
         )
         return to_return
+
+    def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        return type_reference.visit(
+            container=lambda container: self._unbox_type_reference_container(
+                type_reference=type_reference,
+                container=container,
+            ),
+            named=lambda _: type_reference,
+            primitive=lambda _: type_reference,
+            unknown=lambda: type_reference,
+        )
+
+    def _unbox_type_reference_container(
+        self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType
+    ) -> ir_types.TypeReference:
+        return container.visit(
+            list_=lambda _: type_reference,
+            map_=lambda _: type_reference,
+            set_=lambda _: type_reference,
+            nullable=lambda nullable: self._unbox_type_reference(type_reference=nullable),
+            optional=lambda optional: self._unbox_type_reference(type_reference=optional),
+            literal=lambda _: type_reference,
+        )

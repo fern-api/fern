@@ -21,21 +21,51 @@ def test_convert_and_respect_annotation_metadata() -> None:
     converted = convert_and_respect_annotation_metadata(
         object_=data, annotation=ObjectWithOptionalFieldParams, direction="write"
     )
-    assert converted == {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"}
+    assert converted == {
+        "string": "string",
+        "long": 12345,
+        "bool": True,
+        "literal": "lit_one",
+        "any": "any",
+    }
 
 
 def test_convert_and_respect_annotation_metadata_in_list() -> None:
     data: List[ObjectWithOptionalFieldParams] = [
-        {"string": "string", "long_": 12345, "bool_": True, "literal": "lit_one", "any": "any"},
-        {"string": "another string", "long_": 67890, "list_": [], "literal": "lit_one", "any": "any"},
+        {
+            "string": "string",
+            "long_": 12345,
+            "bool_": True,
+            "literal": "lit_one",
+            "any": "any",
+        },
+        {
+            "string": "another string",
+            "long_": 67890,
+            "list_": [],
+            "literal": "lit_one",
+            "any": "any",
+        },
     ]
     converted = convert_and_respect_annotation_metadata(
         object_=data, annotation=List[ObjectWithOptionalFieldParams], direction="write"
     )
 
     assert converted == [
-        {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"},
-        {"string": "another string", "long": 67890, "list": [], "literal": "lit_one", "any": "any"},
+        {
+            "string": "string",
+            "long": 12345,
+            "bool": True,
+            "literal": "lit_one",
+            "any": "any",
+        },
+        {
+            "string": "another string",
+            "long": 67890,
+            "list": [],
+            "literal": "lit_one",
+            "any": "any",
+        },
     ]
 
 

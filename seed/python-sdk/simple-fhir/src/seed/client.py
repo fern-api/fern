@@ -58,7 +58,12 @@ class SeedApi:
             timeout=_defaulted_timeout,
         )
 
-    def get_account(self, account_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Account:
+    def get_account(
+        self,
+        account_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Account:
         """
         Parameters
         ----------
@@ -148,7 +153,12 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
         )
 
-    async def get_account(self, account_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Account:
+    async def get_account(
+        self,
+        account_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Account:
         """
         Parameters
         ----------

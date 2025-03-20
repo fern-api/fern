@@ -13,7 +13,12 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def post(
+        self,
+        endpoint_param: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
@@ -55,7 +60,12 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def post(
+        self,
+        endpoint_param: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------

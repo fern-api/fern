@@ -6,29 +6,42 @@ import typing
 from .utilities import validate_response
 from seed.nullable import Metadata
 import datetime
+from seed.nullable import Status
 
 
 async def test_get_users(client: SeedNullable, async_client: AsyncSeedNullable) -> None:
     expected_response: typing.Any = [
         {
             "name": "name",
+            "id": "id",
             "tags": ["tags", "tags"],
             "metadata": {
                 "createdAt": "2024-01-15T09:30:00Z",
                 "updatedAt": "2024-01-15T09:30:00Z",
                 "avatar": "avatar",
                 "activated": True,
+                "status": {"type": "active"},
             },
+            "email": "email",
+            "favorite-number": 1,
+            "numbers": [1, 1],
+            "strings": {"strings": {"key": "value"}},
         },
         {
             "name": "name",
+            "id": "id",
             "tags": ["tags", "tags"],
             "metadata": {
                 "createdAt": "2024-01-15T09:30:00Z",
                 "updatedAt": "2024-01-15T09:30:00Z",
                 "avatar": "avatar",
                 "activated": True,
+                "status": {"type": "active"},
             },
+            "email": "email",
+            "favorite-number": 1,
+            "numbers": [1, 1],
+            "strings": {"strings": {"key": "value"}},
         },
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
@@ -36,13 +49,35 @@ async def test_get_users(client: SeedNullable, async_client: AsyncSeedNullable) 
         {
             0: {
                 "name": None,
+                "id": None,
                 "tags": ("list", {0: None, 1: None}),
-                "metadata": {"createdAt": "datetime", "updatedAt": "datetime", "avatar": None, "activated": None},
+                "metadata": {
+                    "createdAt": "datetime",
+                    "updatedAt": "datetime",
+                    "avatar": None,
+                    "activated": None,
+                    "status": "no_validate",
+                },
+                "email": None,
+                "favorite-number": "integer",
+                "numbers": ("list", {0: "integer", 1: "integer"}),
+                "strings": ("dict", {0: (None, None)}),
             },
             1: {
                 "name": None,
+                "id": None,
                 "tags": ("list", {0: None, 1: None}),
-                "metadata": {"createdAt": "datetime", "updatedAt": "datetime", "avatar": None, "activated": None},
+                "metadata": {
+                    "createdAt": "datetime",
+                    "updatedAt": "datetime",
+                    "avatar": None,
+                    "activated": None,
+                    "status": "no_validate",
+                },
+                "email": None,
+                "favorite-number": "integer",
+                "numbers": ("list", {0: "integer", 1: "integer"}),
+                "strings": ("dict", {0: (None, None)}),
             },
         },
     )
@@ -60,18 +95,35 @@ async def test_get_users(client: SeedNullable, async_client: AsyncSeedNullable) 
 async def test_create_user(client: SeedNullable, async_client: AsyncSeedNullable) -> None:
     expected_response: typing.Any = {
         "name": "name",
+        "id": "id",
         "tags": ["tags", "tags"],
         "metadata": {
             "createdAt": "2024-01-15T09:30:00Z",
             "updatedAt": "2024-01-15T09:30:00Z",
             "avatar": "avatar",
             "activated": True,
+            "status": {"type": "active"},
         },
+        "email": "email",
+        "favorite-number": 1,
+        "numbers": [1, 1],
+        "strings": {"strings": {"key": "value"}},
     }
     expected_types: typing.Any = {
         "name": None,
+        "id": None,
         "tags": ("list", {0: None, 1: None}),
-        "metadata": {"createdAt": "datetime", "updatedAt": "datetime", "avatar": None, "activated": None},
+        "metadata": {
+            "createdAt": "datetime",
+            "updatedAt": "datetime",
+            "avatar": None,
+            "activated": None,
+            "status": "no_validate",
+        },
+        "email": None,
+        "favorite-number": "integer",
+        "numbers": ("list", {0: "integer", 1: "integer"}),
+        "strings": ("dict", {0: (None, None)}),
     }
     response = client.nullable.create_user(
         username="username",
@@ -81,6 +133,7 @@ async def test_create_user(client: SeedNullable, async_client: AsyncSeedNullable
             updated_at=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
             avatar="avatar",
             activated=True,
+            status=Status(),
         ),
         avatar="avatar",
     )
@@ -94,6 +147,7 @@ async def test_create_user(client: SeedNullable, async_client: AsyncSeedNullable
             updated_at=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
             avatar="avatar",
             activated=True,
+            status=Status(),
         ),
         avatar="avatar",
     )

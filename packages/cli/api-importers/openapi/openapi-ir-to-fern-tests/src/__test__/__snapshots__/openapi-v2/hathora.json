@@ -8208,6 +8208,7 @@
               "safeName": "GetApps"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/apps/v1/list",
             "parts": []
@@ -13435,6 +13436,7 @@
               "safeName": "CreateApp"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/apps/v1/create",
             "parts": []
@@ -15097,6 +15099,7 @@
               "safeName": "UpdateApp"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/apps/v1/update/",
             "parts": [
@@ -16940,6 +16943,7 @@
               "safeName": "GetAppInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/apps/v1/info/",
             "parts": [
@@ -18297,6 +18301,7 @@
               "safeName": "DeleteApp"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/apps/v1/delete/",
             "parts": [
@@ -18592,6 +18597,7 @@
               "safeName": "LoginAnonymous"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/auth/v1/",
             "parts": [
@@ -18971,6 +18977,7 @@
               "safeName": "LoginNickname"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/auth/v1/",
             "parts": [
@@ -19456,6 +19463,7 @@
               "safeName": "LoginGoogle"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/auth/v1/",
             "parts": [
@@ -19996,6 +20004,7 @@
               "safeName": "GetBuilds"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/builds/v1/",
             "parts": [
@@ -22972,6 +22981,7 @@
               "safeName": "GetBuildInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/builds/v1/",
             "parts": [
@@ -24729,6 +24739,7 @@
               "safeName": "CreateBuild"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/builds/v1/",
             "parts": [
@@ -26312,6 +26323,7 @@
               "safeName": "RunBuild"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/builds/v1/",
             "parts": [
@@ -26626,6 +26638,7 @@
               "safeName": "DeleteBuild"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/builds/v1/",
             "parts": [
@@ -27095,6 +27108,7 @@
               "safeName": "GetDeployments"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/deployments/v1/",
             "parts": [
@@ -30165,6 +30179,7 @@
               "safeName": "GetDeploymentInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/deployments/v1/",
             "parts": [
@@ -31967,6 +31982,7 @@
               "safeName": "CreateDeployment"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/deployments/v1/",
             "parts": [
@@ -34669,6 +34685,7 @@
               "safeName": "GetPingServiceEndpoints"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/discovery/v1/ping",
             "parts": []
@@ -35457,6 +35474,7 @@
               "safeName": "CreatePrivateLobbyDeprecated"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v1/",
             "parts": [
@@ -36037,6 +36055,7 @@
               "safeName": "CreatePublicLobbyDeprecated"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v1/",
             "parts": [
@@ -36617,6 +36636,7 @@
               "safeName": "ListActivePublicLobbiesDeprecated"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v1/",
             "parts": [
@@ -38969,6 +38989,7 @@
               "safeName": "CreatePrivateLobby"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -40581,6 +40602,7 @@
               "safeName": "CreatePublicLobby"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -42193,6 +42215,7 @@
               "safeName": "CreateLocalLobby"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -43805,6 +43828,7 @@
               "safeName": "CreateLobby"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -45548,6 +45572,7 @@
               "safeName": "ListActivePublicLobbies"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -47729,6 +47754,7 @@
               "safeName": "GetLobbyInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -49031,6 +49057,7 @@
               "safeName": "SetLobbyState"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/lobby/v2/",
             "parts": [
@@ -50536,6 +50563,7 @@
               "safeName": "GetLogsForApp"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/logs/v1/",
             "parts": [
@@ -51081,6 +51109,7 @@
               "safeName": "GetLogsForProcess"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/logs/v1/",
             "parts": [
@@ -51665,6 +51694,7 @@
               "safeName": "GetLogsForDeployment"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/logs/v1/",
             "parts": [
@@ -52302,6 +52332,7 @@
               "safeName": "GetMetrics"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/metrics/v1/",
             "parts": [
@@ -52845,6 +52876,7 @@
               "safeName": "GetRunningProcesses"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/processes/v1/",
             "parts": [
@@ -56180,6 +56212,7 @@
               "safeName": "GetStoppedProcesses"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/processes/v1/",
             "parts": [
@@ -59211,6 +59244,7 @@
               "safeName": "GetProcessInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/processes/v1/",
             "parts": [
@@ -60986,6 +61020,7 @@
               "safeName": "CreateRoom"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -61480,6 +61515,7 @@
               "safeName": "GetRoomInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -63633,6 +63669,7 @@
               "safeName": "GetActiveRoomsForProcess"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -64131,6 +64168,7 @@
               "safeName": "GetInactiveRoomsForProcess"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -64629,6 +64667,7 @@
               "safeName": "DestroyRoom"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -65045,6 +65084,7 @@
               "safeName": "SuspendRoom"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -65461,6 +65501,7 @@
               "safeName": "GetConnectionInfo"
             }
           },
+          "baseUrl": "https://api.hathora.dev",
           "path": {
             "head": "/rooms/v1/",
             "parts": [
@@ -65754,31 +65795,54 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.hathora.dev",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.hathora.dev",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.hathora.dev",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiHathoraDev",
+              "safeName": "httpsApiHathoraDev"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_hathora_dev",
+              "safeName": "https_api_hathora_dev"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_HATHORA_DEV",
+              "safeName": "HTTPS_API_HATHORA_DEV"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiHathoraDev",
+              "safeName": "HttpsApiHathoraDev"
             }
           },
           "url": "https://api.hathora.dev"
+        },
+        {
+          "id": "/",
+          "name": {
+            "originalName": "/",
+            "camelCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "snakeCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "",
+              "safeName": ""
+            },
+            "pascalCase": {
+              "unsafeName": "",
+              "safeName": ""
+            }
+          },
+          "url": "/"
         }
       ],
       "type": "singleBaseUrl"

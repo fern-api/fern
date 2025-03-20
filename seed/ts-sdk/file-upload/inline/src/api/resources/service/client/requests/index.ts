@@ -4,3 +4,4 @@ export { type JustFileWithQueryParamsRequest } from "./JustFileWithQueryParamsRe
 export { type WithContentTypeRequest } from "./WithContentTypeRequest";
 export { type WithFormEncodingRequest } from "./WithFormEncodingRequest";
 export { type MyOtherRequest } from "./MyOtherRequest";
+export { type OptionalArgsRequest } from "./OptionalArgsRequest";

@@ -10,6 +10,7 @@ import { HttpMethods } from "../resources/httpMethods/client/Client";
 import { Object_ } from "../resources/object/client/Client";
 import { Params } from "../resources/params/client/Client";
 import { Primitive } from "../resources/primitive/client/Client";
+import { Put } from "../resources/put/client/Client";
 import { Union } from "../resources/union/client/Client";
 
 export declare namespace Endpoints {
@@ -29,6 +30,7 @@ export class Endpoints {
     protected _object: Object_ | undefined;
     protected _params: Params | undefined;
     protected _primitive: Primitive | undefined;
+    protected _put: Put | undefined;
     protected _union: Union | undefined;
 
     constructor(protected readonly _options: Endpoints.Options) {}
@@ -59,6 +61,10 @@ export class Endpoints {
 
     public get primitive(): Primitive {
         return (this._primitive ??= new Primitive(this._options));
+    }
+
+    public get put(): Put {
+        return (this._put ??= new Put(this._options));
     }
 
     public get union(): Union {

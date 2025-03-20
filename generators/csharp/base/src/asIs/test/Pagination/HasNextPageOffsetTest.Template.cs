@@ -10,12 +10,6 @@ public class HasNextPageOffsetTest
     [Test]
     public async SystemTask OffsetPagerShouldWorkWithHasNextPage()
     {
-        var pager = await CreatePagerAsync();
-        await AssertPagerAsync(pager);
-    }
-
-    private static async Task<Pager<object>> CreatePagerAsync()
-    {
         var responses = new List<Response>
         {
             new()
@@ -34,8 +28,15 @@ public class HasNextPageOffsetTest
                 HasNext = false,
             },
         }.GetEnumerator();
-        Pager<object> pager = await OffsetPager<Request, object?, Response, int, object?, object>.CreateInstanceAsync(
-            new() { Pagination = new() { Page = 1 } },
+        Pager<object> pager = await OffsetPager<
+            Request,
+            object?,
+            Response,
+            int,
+            object?,
+            object
+        >.CreateInstanceAsync(
+            new Request { Pagination = new Pagination { Page = 1 } },
             null,
             (_, _, _) =>
             {
@@ -52,11 +53,7 @@ public class HasNextPageOffsetTest
             response => response?.Data?.Items?.ToList(),
             response => response.HasNext
         );
-        return pager;
-    }
 
-    private static async SystemTask AssertPagerAsync(Pager<object> pager)
-    {
         var pageCounter = 0;
         var itemCounter = 0;
         await foreach (var page in pager.AsPagesAsync())
@@ -74,7 +71,7 @@ public class HasNextPageOffsetTest
 
     private class Request
     {
-        public Pagination Pagination { get; set; }
+        public Pagination? Pagination { get; set; }
     }
 
     private class Pagination
@@ -84,12 +81,12 @@ public class HasNextPageOffsetTest
 
     private class Response
     {
-        public Data Data { get; set; }
+        public Data? Data { get; set; }
         public bool HasNext { get; set; }
     }
 
     private class Data
     {
-        public IEnumerable<string> Items { get; set; }
+        public IEnumerable<string>? Items { get; set; }
     }
 }

@@ -23,6 +23,7 @@ public record GetDefaultStarterFilesRequest
     [JsonPropertyName("methodName")]
     public required string MethodName { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

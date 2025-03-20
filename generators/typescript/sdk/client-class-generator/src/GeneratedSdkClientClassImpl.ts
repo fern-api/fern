@@ -499,7 +499,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ? [this.generatedWebsocketImplementation.getModuleStatement(context)]
                 : [])
         ];
-        context.sourceFile.addModule(serviceModule);
 
         const serviceClass: SetRequired<
             ClassDeclarationStructure,
@@ -789,6 +788,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        context.sourceFile.addModule(serviceModule);
         context.sourceFile.addClass(serviceClass);
     }
 

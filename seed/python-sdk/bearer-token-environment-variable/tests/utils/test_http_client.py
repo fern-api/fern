@@ -14,7 +14,10 @@ def test_get_json_request_body() -> None:
     assert data_body is None
 
     json_body_extras, data_body_extras = get_request_body(
-        json={"goodbye": "world"}, data=None, request_options=get_request_options(), omit=None
+        json={"goodbye": "world"},
+        data=None,
+        request_options=get_request_options(),
+        omit=None,
     )
 
     assert json_body_extras == {"goodbye": "world", "see you": "later"}
@@ -27,7 +30,10 @@ def test_get_files_request_body() -> None:
     assert json_body is None
 
     json_body_extras, data_body_extras = get_request_body(
-        json=None, data={"goodbye": "world"}, request_options=get_request_options(), omit=None
+        json=None,
+        data={"goodbye": "world"},
+        request_options=get_request_options(),
+        omit=None,
     )
 
     assert data_body_extras == {"goodbye": "world", "see you": "later"}

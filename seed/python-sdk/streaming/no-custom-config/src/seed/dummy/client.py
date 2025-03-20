@@ -19,7 +19,10 @@ class DummyClient:
         self._client_wrapper = client_wrapper
 
     def generate_stream(
-        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        num_events: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[StreamResponse]:
         """
         Parameters
@@ -78,7 +81,12 @@ class DummyClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
+    def generate(
+        self,
+        *,
+        num_events: int,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StreamResponse:
         """
         Parameters
         ----------
@@ -132,7 +140,10 @@ class AsyncDummyClient:
         self._client_wrapper = client_wrapper
 
     async def generate_stream(
-        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        num_events: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[StreamResponse]:
         """
         Parameters
@@ -200,7 +211,10 @@ class AsyncDummyClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def generate(
-        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        num_events: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StreamResponse:
         """
         Parameters

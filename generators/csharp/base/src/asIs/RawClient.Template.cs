@@ -555,11 +555,11 @@ internal class RawClient(ClientOptions clientOptions)
         MergeHeaders(mergedHeaders, Options.Headers);
         MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
         MergeHeaders(mergedHeaders, request.Headers);
-        MergeHeaders(mergedHeaders, request.Options?.Headers ?? new Headers());
+        MergeHeaders(mergedHeaders, request.Options?.Headers);
 <% if (idempotencyHeaders) { %>
         if (request.Options is IIdempotentRequestOptions idempotentRequest)
         {
-            MergeHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+            MergeHeaders(mergedHeaders, idempotentRequest.GetIdempotencyHeaders());
         }
 <% } %>
 
@@ -659,9 +659,13 @@ internal class RawClient(ClientOptions clientOptions)
 
     private static void MergeHeaders(
         Dictionary<string, List<string>> mergedHeaders,
-        Headers headers
+        Headers? headers
     )
     {
+        if (headers is null)
+        {
+            return;
+        }
         foreach (var header in headers)
         {
             var value = header.Value?.Match(str => str, func => func.Invoke());
@@ -674,9 +678,13 @@ internal class RawClient(ClientOptions clientOptions)
 
     private static void MergeAdditionalHeaders(
         Dictionary<string, List<string>> mergedHeaders,
-        IEnumerable<KeyValuePair<string, string?>> headers
+        IEnumerable<KeyValuePair<string, string?>>? headers
     )
     {
+        if (headers is null)
+        {
+            return;
+        }
         var usedKeys = new HashSet<string>();
         foreach (var header in headers)
         {

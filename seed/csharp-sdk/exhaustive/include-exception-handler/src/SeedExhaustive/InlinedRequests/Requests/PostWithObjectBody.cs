@@ -15,6 +15,7 @@ public record PostWithObjectBody
     [JsonPropertyName("NestedObject")]
     public required ObjectWithOptionalField NestedObject { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

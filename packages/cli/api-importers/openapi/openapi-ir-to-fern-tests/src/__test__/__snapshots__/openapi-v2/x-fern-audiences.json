@@ -163,6 +163,7 @@
               "safeName": "PostV1Users"
             }
           },
+          "baseUrl": "production",
           "path": {
             "head": "/v1/users",
             "parts": []

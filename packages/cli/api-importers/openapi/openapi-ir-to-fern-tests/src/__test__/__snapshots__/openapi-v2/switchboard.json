@@ -7631,6 +7631,7 @@
               "safeName": "AndRedirect"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/auth",
             "parts": []
@@ -7832,6 +7833,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/extensions",
             "parts": []
@@ -10811,6 +10813,7 @@
               "safeName": "Post"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/extensions",
             "parts": []
@@ -13453,6 +13456,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/extensions",
             "parts": []
@@ -13557,6 +13561,7 @@
               "safeName": "GetById"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/extensions/",
             "parts": [
@@ -16237,6 +16242,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/profiles",
             "parts": []
@@ -19454,6 +19460,7 @@
               "safeName": "Post"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/profiles",
             "parts": []
@@ -22265,6 +22272,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/profiles",
             "parts": []
@@ -22417,6 +22425,7 @@
               "safeName": "GetById"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/profiles/",
             "parts": [
@@ -25182,6 +25191,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions",
             "parts": []
@@ -31671,6 +31681,7 @@
               "safeName": "Post"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions",
             "parts": []
@@ -35966,6 +35977,7 @@
               "safeName": "Getinfo"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -39864,6 +39876,7 @@
               "safeName": "Terminate"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -40037,6 +40050,7 @@
               "safeName": "Events"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -40265,6 +40279,7 @@
               "safeName": "GetWindowInfo"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -43036,6 +43051,7 @@
               "safeName": "PromptContent"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -46549,6 +46565,7 @@
               "safeName": "ScrapeContent"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -50060,6 +50077,7 @@
               "safeName": "SummarizeContent"
             }
           },
+          "baseUrl": "https://api.airtop.ai/v1",
           "path": {
             "head": "/sessions/",
             "parts": [
@@ -53503,28 +53521,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.airtop.ai/v1",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.airtop.ai/v1",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.airtop.ai/v1",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiAirtopAiV1",
+              "safeName": "httpsApiAirtopAiV1"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_airtop_ai_v_1",
+              "safeName": "https_api_airtop_ai_v_1"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_AIRTOP_AI_V_1",
+              "safeName": "HTTPS_API_AIRTOP_AI_V_1"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiAirtopAiV1",
+              "safeName": "HttpsApiAirtopAiV1"
             }
           },
           "url": "https://api.airtop.ai/v1"

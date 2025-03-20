@@ -14,6 +14,7 @@ public record GetMetadataRequest
     [JsonIgnore]
     public required string XApiVersion { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

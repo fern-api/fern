@@ -8,11 +8,15 @@ from seed import AsyncSeedNoEnvironment
 
 @pytest.fixture
 def client() -> SeedNoEnvironment:
-    return SeedNoEnvironment(token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return SeedNoEnvironment(
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedNoEnvironment:
     return AsyncSeedNoEnvironment(
-        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )

@@ -6,6 +6,42 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+
+- version: 1.15.6
+  createdAt: "2025-03-19"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Make tests pass that compare JSON strings regardless of how it is formatted by ignoring whitespace.
+      
+- version: 1.15.5
+  createdAt: "2025-03-19"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where headers were shared across different client instantiations when they should maintain their own state.
+
+- version: 1.15.4
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Make `FileParameter` disposable.
+
+- version: 1.15.3
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix multipart form tests and add charset tests for multipart form tests.
+
+- version: 1.15.2
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix a compilation error when using typed idempotency headers.
+
 - version: 1.15.1
   createdAt: "2025-03-17"
   irVersion: 57

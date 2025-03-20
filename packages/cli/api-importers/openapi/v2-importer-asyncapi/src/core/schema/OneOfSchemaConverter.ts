@@ -132,7 +132,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         for (const [index, subSchema] of this.schema.oneOf.entries()) {
             const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
-            // if subschema is a reference
             if (context.isReferenceObject(subSchema)) {
                 const maybeTypeReference = await context.convertReferenceToTypeReference(subSchema);
                 if (maybeTypeReference.ok) {
@@ -144,7 +143,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            // if subschema is inlined
             const schemaId = context.convertBreadcrumbsToName(subBreadcrumbs);
             const schemaConverter = new SchemaConverter({
                 id: schemaId,

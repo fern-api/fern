@@ -129,7 +129,12 @@ class SeedValidation:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        decimal: float,
+        even: int,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
         """
         Parameters
@@ -306,7 +311,12 @@ class AsyncSeedValidation:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        decimal: float,
+        even: int,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
         """
         Parameters
