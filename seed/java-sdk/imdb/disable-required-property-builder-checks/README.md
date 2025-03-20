@@ -80,7 +80,7 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient.builder(customClient).httpClient().build();
+SeedApiClient client = SeedApiClient.builder().httpClient(customClient).build();
 ```
 
 ### Retries

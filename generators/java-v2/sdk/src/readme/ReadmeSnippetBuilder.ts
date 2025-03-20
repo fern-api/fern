@@ -232,7 +232,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
     }
 
-    private renderCustomClientSnippet(endpoint: EndpointWithFilepath): string {
+    private renderCustomClientSnippet(_endpoint: EndpointWithFilepath): string {
         const okHttpClientClassReference = this.context.getOkHttpClientClassReference();
         const okHttpClientAssignment = java.codeblock((writer) => {
             writer.writeNode(okHttpClientClassReference);
@@ -244,13 +244,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const clientBuilderMethodInvocation = java.invokeMethod({
             on: clientClassReference,
             method: "builder",
-            arguments_: [java.codeblock("customClient")]
+            arguments_: []
         });
 
         const customClientMethodInvocation = java.invokeMethod({
             on: clientBuilderMethodInvocation,
             method: "httpClient",
-            arguments_: []
+            arguments_: [java.codeblock("customClient")]
         });
 
         const clientBuildMethodInvocation = java.invokeMethod({
