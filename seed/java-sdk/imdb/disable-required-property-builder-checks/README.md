@@ -75,6 +75,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
+import com.seed.api.SeedApiClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+SeedApiClient client = SeedApiClient.builder(customClient).httpClient().build();
 ```
 
 ### Retries
@@ -92,8 +98,6 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```java
-package com.example.usage;
-
 import com.seed.api.core.RequestOptions;
 
 client.imdb().createMovie(..., RequestOptions.builder().maxRetries(1).build());
@@ -104,8 +108,6 @@ client.imdb().createMovie(..., RequestOptions.builder().maxRetries(1).build());
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```java
-package com.example.usage;
-
 import com.seed.api.SeedApiClient;
 import com.seed.api.core.RequestOptions;
 

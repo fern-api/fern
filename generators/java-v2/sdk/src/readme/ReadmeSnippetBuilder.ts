@@ -169,10 +169,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNodeStatement(withEnvironment);
         });
 
-        return snippet.toString({
-            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig
-        });
+        return this.renderSnippet(snippet);
     }
 
     private renderBaseUrlSnippet(_endpoint: EndpointWithFilepath): string {
@@ -236,7 +233,45 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderCustomClientSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+        const okHttpClientClassReference = this.context.getOkHttpClientClassReference();
+        const okHttpClientAssignment = java.codeblock((writer) => {
+            writer.writeNode(okHttpClientClassReference);
+            writer.write(" customClient = ...");
+        });
+
+        const clientClassReference = this.context.getRootClientClassReference();
+
+        const clientBuilderMethodInvocation = java.invokeMethod({
+            on: clientClassReference,
+            method: "builder",
+            arguments_: [java.codeblock("customClient")]
+        });
+
+        const customClientMethodInvocation = java.invokeMethod({
+            on: clientBuilderMethodInvocation,
+            method: "httpClient",
+            arguments_: []
+        });
+
+        const clientBuildMethodInvocation = java.invokeMethod({
+            on: customClientMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const clientWithCustomClient = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${this.rootPackageClientName} = `);
+            writer.writeNode(clientBuildMethodInvocation);
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeNodeStatement(okHttpClientAssignment);
+            writer.writeLine("\n");
+            writer.writeNodeStatement(clientWithCustomClient);
+        });
+
+        return this.renderSnippet(snippet);
     }
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
@@ -264,10 +299,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
 
-        return snippet.toString({
-            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig
-        });
+        return this.renderSnippet(snippet);
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
@@ -327,10 +359,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNodeStatement(endpointMethodInvocation);
         });
 
-        return snippet.toString({
-            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig
-        });
+        return this.renderSnippet(snippet);
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
@@ -415,5 +444,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getRootPackageClientName(): string {
         return "client";
+    }
+
+    /**
+     * renders a snippet, skipping the package statement
+     */
+    private renderSnippet(snippet: java.AstNode): string {
+        const asString = snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
+        if (asString.split("\n").length < 3) {
+            return asString;
+        } else {
+            return asString.split("\n").slice(2).join("\n");
+        }
     }
 }

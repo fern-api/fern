@@ -30,6 +30,13 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
+    public getOkHttpClientClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "OkHttpClient",
+            packageName: "okhttp3"
+        });
+    }
+
     public getRequestOptionsClassReference(): java.ClassReference {
         return java.classReference({
             name: this.getRequestOptionsClassName(),
