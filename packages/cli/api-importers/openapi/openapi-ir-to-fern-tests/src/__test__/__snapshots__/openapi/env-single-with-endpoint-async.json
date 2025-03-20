@@ -1,0 +1,193 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "list": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/pets",
+              "response": {
+                "docs": "A response",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+              "url": "Debug",
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /pets
+      method: GET
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: A response
+        type: string
+        status-code: 200
+      url: Debug
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "testChannel.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [],
+            },
+          ],
+          "messages": {
+            "publish": {
+              "body": "TestChannelPublishEvent",
+              "origin": "client",
+            },
+          },
+          "path": "/test",
+          "url": "websocket",
+        },
+        "types": {
+          "TestChannelPublishEvent": {
+            "enum": [],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /test
+  url: websocket
+  auth: false
+  messages:
+    publish:
+      origin: client
+      body: TestChannelPublishEvent
+  examples:
+    - messages: []
+types:
+  TestChannelPublishEvent:
+    enum: []
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "testChannel2.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [],
+            },
+          ],
+          "messages": {
+            "publish": {
+              "body": "TestChannel2PublishEvent",
+              "origin": "client",
+            },
+          },
+          "path": "/test2",
+          "url": "websocket2",
+        },
+        "types": {
+          "TestChannel2PublishEvent": {
+            "enum": [],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /test2
+  url: websocket2
+  auth: false
+  messages:
+    publish:
+      origin: client
+      body: TestChannel2PublishEvent
+  examples:
+    - messages: []
+types:
+  TestChannel2PublishEvent:
+    enum: []
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Prod",
+      "default-url": "Base",
+      "display-name": "Test API",
+      "environments": {
+        "Prod": {
+          "urls": {
+            "Base": "http://prod.api.com",
+            "Debug": "http://debug.api.com",
+            "websocket": "wss://api.async.com",
+            "websocket2": "wss://api2.async.com",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test API
+environments:
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+default-environment: Prod
+default-url: Base
+",
+  },
+}

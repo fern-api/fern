@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      The V2 Parser now handles environment merging across multiple OpenAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.26
+
+- changelogEntry:
+  - summary: |
       The CLI now recognizes that the latest Python SDK uses IRv57.
     type: internal
   irVersion: 57

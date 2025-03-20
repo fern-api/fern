@@ -65,35 +65,83 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "AssemblyAI API",
     "environments": {
-      "environments": [
+      "baseUrls": [
         {
-          "id": "default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
-          },
-          "url": "https://api.assemblyai.com",
-          "docs": "AssemblyAI API"
+          }
+        },
+        {
+          "id": "API",
+          "name": {
+            "originalName": "API",
+            "camelCase": {
+              "unsafeName": "api",
+              "safeName": "api"
+            },
+            "snakeCase": {
+              "unsafeName": "api",
+              "safeName": "api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API",
+              "safeName": "API"
+            },
+            "pascalCase": {
+              "unsafeName": "Api",
+              "safeName": "Api"
+            }
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "environments": [
+        {
+          "id": "AssemblyAI API",
+          "name": {
+            "originalName": "AssemblyAI API",
+            "camelCase": {
+              "unsafeName": "assemblyAiApi",
+              "safeName": "assemblyAiApi"
+            },
+            "snakeCase": {
+              "unsafeName": "assembly_ai_api",
+              "safeName": "assembly_ai_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ASSEMBLY_AI_API",
+              "safeName": "ASSEMBLY_AI_API"
+            },
+            "pascalCase": {
+              "unsafeName": "AssemblyAiApi",
+              "safeName": "AssemblyAiApi"
+            }
+          },
+          "urls": {
+            "Base": "https://api.assemblyai.com",
+            "API": "wss://api.assemblyai.com/v2/realtime/ws"
+          }
+        }
+      ],
+      "type": "multipleBaseUrls"
     }
   },
   "types": {
@@ -15419,6 +15467,7 @@
               "safeName": "Upload"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/upload",
             "parts": []
@@ -15674,6 +15723,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -16079,6 +16129,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -26386,6 +26437,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -34386,6 +34438,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42386,6 +42439,7 @@
               "safeName": "GetSubtitles"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42790,6 +42844,7 @@
               "safeName": "GetSentences"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -45332,6 +45387,7 @@
               "safeName": "GetParagraphs"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -47874,6 +47930,7 @@
               "safeName": "WordSearch"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -49594,6 +49651,7 @@
               "safeName": "GetRedactedAudio"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -50069,6 +50127,7 @@
               "safeName": "CreateTemporaryToken"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/realtime/token",
             "parts": []
@@ -50457,6 +50516,7 @@
               "safeName": "Summary"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/summary",
             "parts": []
@@ -51295,6 +51355,7 @@
               "safeName": "QuestionAnswer"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/question-answer",
             "parts": []
@@ -53200,6 +53261,7 @@
               "safeName": "ActionItems"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/action-items",
             "parts": []
@@ -53970,6 +54032,7 @@
               "safeName": "Task"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/task",
             "parts": []
@@ -54803,6 +54866,7 @@
               "safeName": "PurgeRequestData"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/",
             "parts": [
@@ -55489,6 +55553,7 @@
         }
       },
       "displayName": "/{userId}",
+      "baseUrl": "API",
       "path": {
         "head": "/{userId}",
         "parts": []

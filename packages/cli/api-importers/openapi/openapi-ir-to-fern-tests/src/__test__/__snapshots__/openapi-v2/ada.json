@@ -1026,6 +1026,7 @@
               "safeName": "GetEndUserById"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1/",
             "parts": [
@@ -1529,6 +1530,7 @@
               "safeName": "UpdateEndUserById"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1/",
             "parts": [
@@ -2190,6 +2192,7 @@
               "safeName": "GetEndUsers"
             }
           },
+          "baseUrl": "The subdomain of the client",
           "path": {
             "head": "/end-users/v1",
             "parts": []
@@ -2533,28 +2536,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "The subdomain of the client",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "The subdomain of the client",
           "name": {
-            "originalName": "Default",
+            "originalName": "The subdomain of the client",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "theSubdomainOfTheClient",
+              "safeName": "theSubdomainOfTheClient"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "the_subdomain_of_the_client",
+              "safeName": "the_subdomain_of_the_client"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "THE_SUBDOMAIN_OF_THE_CLIENT",
+              "safeName": "THE_SUBDOMAIN_OF_THE_CLIENT"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "TheSubdomainOfTheClient",
+              "safeName": "TheSubdomainOfTheClient"
             }
           },
           "url": "https://example.ada.support/api",

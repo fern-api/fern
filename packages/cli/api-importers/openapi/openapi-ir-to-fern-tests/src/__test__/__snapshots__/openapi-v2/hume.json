@@ -65,34 +65,83 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.hume.ai",
     "environments": {
-      "environments": [
+      "baseUrls": [
         {
-          "id": "default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
-          },
-          "url": "https://api.hume.ai"
+          }
+        },
+        {
+          "id": "prod",
+          "name": {
+            "originalName": "prod",
+            "camelCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "snakeCase": {
+              "unsafeName": "prod",
+              "safeName": "prod"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROD",
+              "safeName": "PROD"
+            },
+            "pascalCase": {
+              "unsafeName": "Prod",
+              "safeName": "Prod"
+            }
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "environments": [
+        {
+          "id": "https://api.hume.ai",
+          "name": {
+            "originalName": "https://api.hume.ai",
+            "camelCase": {
+              "unsafeName": "httpsApiHumeAi",
+              "safeName": "httpsApiHumeAi"
+            },
+            "snakeCase": {
+              "unsafeName": "https_api_hume_ai",
+              "safeName": "https_api_hume_ai"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTPS_API_HUME_AI",
+              "safeName": "HTTPS_API_HUME_AI"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpsApiHumeAi",
+              "safeName": "HttpsApiHumeAi"
+            }
+          },
+          "urls": {
+            "Base": "https://api.hume.ai",
+            "prod": "wss://api.hume.ai/v0/evi"
+          }
+        }
+      ],
+      "type": "multipleBaseUrls"
     }
   },
   "types": {
@@ -19244,6 +19293,7 @@
               "safeName": "ListJobs"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs",
             "parts": []
@@ -28330,6 +28380,7 @@
               "safeName": "StartJob"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs",
             "parts": []
@@ -28986,6 +29037,7 @@
               "safeName": "GetJobPredictions"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [
@@ -42080,6 +42132,7 @@
               "safeName": "GetJobArtifacts"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [
@@ -42255,6 +42308,7 @@
               "safeName": "GetJob"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v0/batch/jobs/",
             "parts": [
@@ -46818,6 +46872,7 @@
         }
       },
       "displayName": "/chat",
+      "baseUrl": "prod",
       "path": {
         "head": "/chat",
         "parts": []

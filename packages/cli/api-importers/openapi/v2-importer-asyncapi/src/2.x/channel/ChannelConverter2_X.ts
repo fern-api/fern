@@ -109,12 +109,13 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             messages.push(publishMessage);
         }
 
+        const baseUrl = this.channel.servers?.[0] ?? Object.keys(context.spec.servers ?? {})[0];
+
         return {
             channel: {
                 name: context.casingsGenerator.generateName(displayName),
                 displayName,
-                // TODO: Correctly feed in servers
-                baseUrl: this.channel.servers?.[0],
+                baseUrl,
                 path: {
                     head: this.channel.address ?? this.channelPath,
                     parts: []

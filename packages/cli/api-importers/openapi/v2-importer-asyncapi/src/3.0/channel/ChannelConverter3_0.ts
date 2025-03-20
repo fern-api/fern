@@ -114,11 +114,15 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             }
         }
 
+        const baseUrl =
+            this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector) ??
+            Object.keys(context.spec.servers ?? {})[0];
+
         return {
             channel: {
                 name: context.casingsGenerator.generateName(displayName),
                 displayName,
-                baseUrl: this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector),
+                baseUrl,
                 path: {
                     head: this.channel.address ?? this.channelPath,
                     parts: []
