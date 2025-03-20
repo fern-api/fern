@@ -31,8 +31,10 @@
   "devDependencies": {
     "@fern-api/java-ast": "workspace:*",
     "@fern-api/java-base": "workspace:*",
+    "@fern-api/java-dynamic-snippets": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.17",
