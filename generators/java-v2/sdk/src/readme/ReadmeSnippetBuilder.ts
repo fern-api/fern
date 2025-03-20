@@ -272,17 +272,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
-        const builderMethodInvocation = java.invokeMethod({
+        const requestOptionsBuilderMethodInvocation = java.invokeMethod({
             on: requestOptionsClassReference,
             method: "builder",
             arguments_: []
         });
         const maxRetriesMethodInvocation = java.invokeMethod({
-            on: builderMethodInvocation,
+            on: requestOptionsBuilderMethodInvocation,
             method: "timeout",
             arguments_: [java.codeblock("10")]
         });
-        const buildMethodInvocation = java.invokeMethod({
+        const requestOptionsBuildMethodInvocation = java.invokeMethod({
             on: maxRetriesMethodInvocation,
             method: "build",
             arguments_: []
@@ -290,10 +290,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const endpointMethodInvocation = this.getMethodCall(endpoint, [
             ReadmeSnippetBuilder.ELLIPSES,
-            buildMethodInvocation
+            requestOptionsBuildMethodInvocation
         ]);
 
-        const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
+        const clientClassReference = this.context.getRootClientClassReference();
+
+        const clientBuilderMethodInvocation = java.invokeMethod({
+            on: clientClassReference,
+            method: "builder",
+            arguments_: []
+        });
+
+        const timeoutMethodInvocation = java.invokeMethod({
+            on: clientBuilderMethodInvocation,
+            method: "timeout",
+            arguments_: [java.codeblock("10")]
+        });
+
+        const clientBuildMethodInvocation = java.invokeMethod({
+            on: timeoutMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const clientWithTimeout = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${this.rootPackageClientName} = `);
+            writer.writeNode(clientBuildMethodInvocation);
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Client level");
+            writer.writeNodeStatement(clientWithTimeout);
+            writer.writeLine("\n");
+            writer.writeLine("// Request level");
+            writer.writeNodeStatement(endpointMethodInvocation);
+        });
 
         return snippet.toString({
             packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,

@@ -47,4 +47,5 @@ features:
   - id: TIMEOUTS
     advanced: true
     description: |
-      Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
+      The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
