@@ -1,4 +1,4 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { AsyncFileGenerator, CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
@@ -21,7 +21,11 @@ export declare namespace SubClientGenerator {
     }
 }
 
-export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SubPackageClientGenerator extends AsyncFileGenerator<
+    CSharpFile,
+    SdkCustomConfigSchema,
+    SdkGeneratorContext
+> {
     private classReference: csharp.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
@@ -40,7 +44,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
-    public doGenerate(): CSharpFile {
+    public async doGenerate(): Promise<CSharpFile> {
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
@@ -84,19 +88,9 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         }
 
         class_.addConstructor(this.getConstructorMethod());
-
         if (this.service != null && this.serviceId != null) {
-            for (const endpoint of this.service.endpoints) {
-                const methods = this.context.endpointGenerator.generate({
-                    serviceId: this.serviceId,
-                    endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME,
-                    rawClient: this.rawClient,
-                    rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
-                    grpcClientInfo: this.grpcClientInfo
-                });
-                class_.addMethods(methods);
-            }
+            const methods = await this.generateEndpoints();
+            class_.addMethods(methods);
         }
 
         return new CSharpFile({
@@ -107,6 +101,21 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });
+    }
+
+    private async generateEndpoints(): Promise<csharp.Method[]> {
+        const serviceId = this.serviceId!;
+        const endpointPromises = this.service!.endpoints.map(async (endpoint) => {
+            return await this.context.endpointGenerator.generate({
+                serviceId,
+                endpoint,
+                rawClientReference: CLIENT_MEMBER_NAME,
+                rawClient: this.rawClient,
+                rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
+                grpcClientInfo: this.grpcClientInfo
+            });
+        });
+        return await Promise.all(endpointPromises).then((methods) => methods.flat());
     }
 
     private getConstructorMethod(): csharp.Class.Constructor {

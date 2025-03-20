@@ -10,21 +10,25 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
 import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator";
 
-export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
+export async function buildReference({ context }: { context: SdkGeneratorContext }): Promise<ReferenceConfigBuilder> {
     const builder = new ReferenceConfigBuilder();
-    for (const [serviceId, service] of Object.entries(context.ir.services)) {
+    const serviceEntries = Object.entries(context.ir.services);
+
+    const sectionPromises = serviceEntries.map(async ([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ service }) });
-        const endpoints = getEndpointReferencesForService({ context, serviceId, service });
+        const endpoints = await getEndpointReferencesForService({ context, serviceId, service });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
         }
-    }
+    });
+
+    await Promise.all(sectionPromises);
     return builder;
 }
 
-function getEndpointReferencesForService({
+async function getEndpointReferencesForService({
     context,
     serviceId,
     service
@@ -32,10 +36,9 @@ function getEndpointReferencesForService({
     context: SdkGeneratorContext;
     serviceId: ServiceId;
     service: HttpService;
-}): FernGeneratorCli.EndpointReference[] {
-    const result: FernGeneratorCli.EndpointReference[] = [];
-    for (const endpoint of service.endpoints) {
-        const singleEndpointSnippet = context.snippetGenerator.generateSingleEndpointSnippet({
+}): Promise<FernGeneratorCli.EndpointReference[]> {
+    const endpointPromises = service.endpoints.map(async (endpoint) => {
+        const singleEndpointSnippet = await context.snippetGenerator.generateSingleEndpointSnippet({
             serviceId,
             endpoint,
             example: context.getExampleEndpointCallOrThrow(endpoint)
@@ -45,19 +48,20 @@ function getEndpointReferencesForService({
                 serviceId,
                 endpoint
             });
-            result.push(
-                getEndpointReference({
-                    context,
-                    serviceId,
-                    service,
-                    endpoint,
-                    endpointSignatureInfo,
-                    singleEndpointSnippet
-                })
-            );
+            return getEndpointReference({
+                context,
+                serviceId,
+                service,
+                endpoint,
+                endpointSignatureInfo,
+                singleEndpointSnippet
+            });
         }
-    }
-    return result;
+        return null;
+    });
+
+    const endpoints = await Promise.all(endpointPromises);
+    return endpoints.filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => endpoint !== null);
 }
 
 function getEndpointReference({
