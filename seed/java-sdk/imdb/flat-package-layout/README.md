@@ -38,6 +38,12 @@ You can choose between different environments by using the `option.WithBaseURL` 
 URL, which is particularly useful in test environments.
 
 ```java
+package com.example.usage;
+
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.Environment;
+
+SeedApiClient client = SeedApiClient.builder().environment(Environment.PRODUCTION).build();
 ```
 
 ## Errors

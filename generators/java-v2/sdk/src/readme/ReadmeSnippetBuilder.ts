@@ -1,5 +1,6 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -15,6 +16,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static SNIPPET_PACKAGE_NAME = "com.example.usage";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -117,7 +119,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+        const clientClassReference = this.context.getRootClientClassReference();
+
+        const builderMethodInvocation = java.invokeMethod({
+            on: clientClassReference,
+            method: "builder",
+            arguments_: []
+        });
+
+        const productionEnvironmentName = "PRODUCTION";
+        const productionEnvironment = java.codeblock((writer) => {
+            writer.writeNode(this.context.getEnvironmentClassReference());
+            writer.write(".");
+            writer.write(productionEnvironmentName);
+        });
+        const environmentMethodInvocation = java.invokeMethod({
+            on: builderMethodInvocation,
+            method: "environment",
+            arguments_: [productionEnvironment]
+        });
+
+        const buildMethodInvocation = java.invokeMethod({
+            on: environmentMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = `);
+            writer.writeNodeStatement(buildMethodInvocation);
+        });
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
