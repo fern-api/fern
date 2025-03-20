@@ -3,10 +3,6 @@ features:
     description: |
       Instantiate and use the client with the following:
 
-  - id: AUTHENTICATION
-    description: |
-      You can omit the token when constructing the client. In this case, the SDK will automatically read the token from the environment variable:
-
   - id: ENVIRONMENTS
     description: |
       This SDK allows you to configure different environments for API requests.

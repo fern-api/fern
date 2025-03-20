@@ -64,9 +64,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [FernGeneratorCli.StructuredFeatureId.Authentication]: {
-                renderer: this.renderAuthenticationSnippet.bind(this)
-            },
             [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: {
                 renderer: this.renderEnvironmentsSnippet.bind(this),
                 predicate: (_endpoint: EndpointWithFilepath) => this.getDefaultEnvironmentId() != null
@@ -125,10 +122,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
     ): string[] {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
-    }
-
-    private renderAuthenticationSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
     }
 
     private renderEnvironmentsSnippet(_endpoint: EndpointWithFilepath): string {

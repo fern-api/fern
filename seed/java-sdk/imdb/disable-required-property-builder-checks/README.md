@@ -32,13 +32,6 @@ public class Example {
 }
 ```
 
-## Authentication
-
-You can omit the token when constructing the client. In this case, the SDK will automatically read the token from the environment variable:
-
-```java
-```
-
 ## Base Url
 
 You can set a custom base URL when constructing the client.
