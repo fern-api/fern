@@ -53,8 +53,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 const endpointSnippets = await this.generateSnippets({ context });
                 await this.generateReadme({
                     context,
-                    // TODO(ajgateno): Support and require snippets
-                    endpointSnippets: []
+                    endpointSnippets
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");

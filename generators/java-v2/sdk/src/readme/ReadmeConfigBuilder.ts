@@ -2,6 +2,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -15,9 +16,28 @@ export class ReadmeConfigBuilder {
         featureConfig: FernGeneratorCli.FeatureConfig;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): FernGeneratorCli.ReadmeConfig {
+        const readmeSnippetBuilder = new ReadmeSnippetBuilder({
+            context,
+            endpointSnippets
+        });
+        const snippetsByFeatureId = readmeSnippetBuilder.buildReadmeSnippetsByFeatureId();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
-        // TODO(ajgateno): Add examples with dynamic snippet generation
+        for (const feature of featureConfig.features) {
+            const snippetsForFeature = snippetsByFeatureId[feature.id];
+
+            if (snippetsForFeature == null || !snippetsForFeature.length) {
+                continue;
+            }
+
+            features.push({
+                id: feature.id,
+                advanced: feature.advanced,
+                description: feature.description,
+                snippets: snippetsForFeature,
+                snippetsAreOptional: false
+            });
+        }
 
         return {
             remote,
