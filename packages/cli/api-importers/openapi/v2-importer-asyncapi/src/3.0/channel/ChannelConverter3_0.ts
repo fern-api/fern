@@ -124,7 +124,7 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                 displayName,
                 baseUrl,
                 path: {
-                    head: this.channel.address ?? this.channelPath,
+                    head: this.transformToValidPath(this.channel.address ?? this.channelPath),
                     parts: []
                 },
                 auth: false,
@@ -275,5 +275,12 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
             throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
         }
         return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+    }
+
+    private transformToValidPath(path: string): string {
+        if (!path.startsWith("/")) {
+            return "/" + path;
+        }
+        return path;
     }
 }

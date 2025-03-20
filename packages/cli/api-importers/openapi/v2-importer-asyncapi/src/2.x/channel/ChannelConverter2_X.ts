@@ -117,7 +117,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 displayName,
                 baseUrl,
                 path: {
-                    head: this.channel.address ?? this.channelPath,
+                    head: this.transformToValidPath(this.channel.address ?? this.channelPath),
                     parts: []
                 },
                 auth: false,
@@ -367,5 +367,12 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 }
             }
         }
+    }
+
+    private transformToValidPath(path: string): string {
+        if (!path.startsWith("/")) {
+            return "/" + path;
+        }
+        return path;
     }
 }
