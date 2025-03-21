@@ -26273,6 +26273,7 @@
               "safeName": "Retrieve"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/deployments/",
             "parts": [
@@ -27330,6 +27331,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/document-indexes",
             "parts": []
@@ -28634,6 +28636,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/documents",
             "parts": []
@@ -32671,6 +32674,7 @@
               "safeName": "Upload"
             }
           },
+          "baseUrl": "Documents",
           "path": {
             "head": "/v1/upload-document",
             "parts": []
@@ -33362,6 +33366,7 @@
               "safeName": "ExecuteWorkflowStream"
             }
           },
+          "baseUrl": "Predict",
           "path": {
             "head": "/v1/execute-workflow-stream",
             "parts": []
@@ -35512,6 +35517,7 @@
               "safeName": "Generate"
             }
           },
+          "baseUrl": "Predict",
           "path": {
             "head": "/v1/generate",
             "parts": []
@@ -40851,6 +40857,7 @@
               "safeName": "GenerateStream"
             }
           },
+          "baseUrl": "Predict",
           "path": {
             "head": "/v1/generate-stream",
             "parts": []
@@ -44172,6 +44179,7 @@
               "safeName": "Search"
             }
           },
+          "baseUrl": "Predict",
           "path": {
             "head": "/v1/search",
             "parts": []
@@ -46018,6 +46026,7 @@
               "safeName": "SubmitCompletionActuals"
             }
           },
+          "baseUrl": "Predict",
           "path": {
             "head": "/v1/submit-completion-actuals",
             "parts": []
@@ -47284,6 +47293,7 @@
               "safeName": "Retrieve"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -53264,6 +53274,7 @@
               "safeName": "ModelVersionCompilePrompt"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -53945,6 +53956,7 @@
               "safeName": "RegisterPrompt"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/registered-prompts/register",
             "parts": []
@@ -58987,6 +58999,7 @@
               "safeName": "UpsertSandboxScenario"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -62943,6 +62956,7 @@
               "safeName": "DeleteSandboxScenario"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -63281,6 +63295,7 @@
               "safeName": "UpsertTestSuiteTestCase"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [
@@ -64440,6 +64455,7 @@
               "safeName": "DeleteTestSuiteTestCase"
             }
           },
+          "baseUrl": "Default",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [
@@ -64718,11 +64734,79 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "Default",
     "environments": {
+      "baseUrls": [
+        {
+          "id": "Base",
+          "name": {
+            "originalName": "Base",
+            "camelCase": {
+              "unsafeName": "base",
+              "safeName": "base"
+            },
+            "snakeCase": {
+              "unsafeName": "base",
+              "safeName": "base"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BASE",
+              "safeName": "BASE"
+            },
+            "pascalCase": {
+              "unsafeName": "Base",
+              "safeName": "Base"
+            }
+          }
+        },
+        {
+          "id": "Predict",
+          "name": {
+            "originalName": "Predict",
+            "camelCase": {
+              "unsafeName": "predict",
+              "safeName": "predict"
+            },
+            "snakeCase": {
+              "unsafeName": "predict",
+              "safeName": "predict"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PREDICT",
+              "safeName": "PREDICT"
+            },
+            "pascalCase": {
+              "unsafeName": "Predict",
+              "safeName": "Predict"
+            }
+          }
+        },
+        {
+          "id": "Documents",
+          "name": {
+            "originalName": "Documents",
+            "camelCase": {
+              "unsafeName": "documents",
+              "safeName": "documents"
+            },
+            "snakeCase": {
+              "unsafeName": "documents",
+              "safeName": "documents"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DOCUMENTS",
+              "safeName": "DOCUMENTS"
+            },
+            "pascalCase": {
+              "unsafeName": "Documents",
+              "safeName": "Documents"
+            }
+          }
+        }
+      ],
       "environments": [
         {
-          "id": "default",
+          "id": "Default",
           "name": {
             "originalName": "Default",
             "camelCase": {
@@ -64742,11 +64826,15 @@
               "safeName": "Default"
             }
           },
-          "url": "https://api.vellum.ai",
+          "urls": {
+            "Base": "https://api.vellum.ai",
+            "Predict": "https://predict.vellum.ai",
+            "Documents": "https://documents.vellum.ai"
+          },
           "docs": "Default Server"
         }
       ],
-      "type": "singleBaseUrl"
+      "type": "multipleBaseUrls"
     }
   },
   "rootPackage": {

@@ -4928,6 +4928,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -4944,6 +4947,43 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/api-importers/openrpc/openrpc-to-ir:
+    dependencies:
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../../ir-sdk
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../../openapi/v2-importer-commons
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -8319,6 +8359,9 @@ importers:
 
   packages/commons/ir-utils:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../casings-generator
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils

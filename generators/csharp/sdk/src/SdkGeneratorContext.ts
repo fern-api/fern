@@ -248,10 +248,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getPublicCoreAsIsFiles(): string[] {
+        const files = [AsIsFiles.FileParameter];
         if (this.hasGrpcEndpoints()) {
-            return [AsIsFiles.GrpcRequestOptions];
+            files.push(AsIsFiles.GrpcRequestOptions);
         }
-        return [AsIsFiles.FileParameter];
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {

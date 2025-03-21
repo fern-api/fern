@@ -8255,6 +8255,7 @@
               "safeName": "Vals"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/search/vals",
             "parts": []
@@ -10975,6 +10976,7 @@
               "safeName": "Username"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/alias/",
             "parts": [
@@ -11503,6 +11505,7 @@
               "safeName": "Val"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/alias/",
             "parts": [
@@ -12907,6 +12910,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/me",
             "parts": []
@@ -13386,6 +13390,7 @@
               "safeName": "Likes"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/me/likes",
             "parts": []
@@ -15973,6 +15978,7 @@
               "safeName": "Comments"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/me/comments",
             "parts": []
@@ -18502,6 +18508,7 @@
               "safeName": "References"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/me/references",
             "parts": []
@@ -20470,6 +20477,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/blob",
             "parts": []
@@ -21197,6 +21205,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/blob/",
             "parts": [
@@ -21375,6 +21384,7 @@
               "safeName": "Store"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/blob/",
             "parts": [
@@ -21583,6 +21593,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/blob/",
             "parts": [
@@ -21816,6 +21827,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/users/",
             "parts": [
@@ -22344,6 +22356,7 @@
               "safeName": "Vals"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/users/",
             "parts": [
@@ -25098,6 +25111,7 @@
               "safeName": "Execute"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/sqlite/execute",
             "parts": []
@@ -25723,6 +25737,7 @@
               "safeName": "Batch"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/sqlite/batch",
             "parts": []
@@ -27230,6 +27245,7 @@
               "safeName": "EvalPost"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/eval",
             "parts": []
@@ -27601,6 +27617,7 @@
               "safeName": "EvalGet"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/eval/",
             "parts": [
@@ -27940,6 +27957,7 @@
               "safeName": "RunGet"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/run/",
             "parts": [
@@ -28162,6 +28180,7 @@
               "safeName": "RunPost"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/run/",
             "parts": [
@@ -28456,6 +28475,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals",
             "parts": []
@@ -30111,6 +30131,7 @@
               "safeName": "Put"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals",
             "parts": []
@@ -30357,6 +30378,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -31603,6 +31625,7 @@
               "safeName": "Update"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -32228,6 +32251,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -32404,6 +32428,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -33697,6 +33722,7 @@
               "safeName": "CreateVersion"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -35468,6 +35494,7 @@
               "safeName": "GetVersion"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -36978,6 +37005,7 @@
               "safeName": "DeleteVersion"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -37263,6 +37291,7 @@
               "safeName": "Cancel"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/vals/",
             "parts": [
@@ -37742,6 +37771,7 @@
               "safeName": "Send"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/v1/email",
             "parts": []
@@ -38351,28 +38381,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "Production",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "Production",
           "name": {
-            "originalName": "Default",
+            "originalName": "Production",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "production",
+              "safeName": "production"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "production",
+              "safeName": "production"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "PRODUCTION",
+              "safeName": "PRODUCTION"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Production",
+              "safeName": "Production"
             }
           },
           "url": "https://api.val.town",

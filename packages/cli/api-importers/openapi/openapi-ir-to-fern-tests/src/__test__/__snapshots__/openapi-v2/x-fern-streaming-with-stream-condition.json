@@ -444,6 +444,7 @@
               "safeName": "Chat"
             }
           },
+          "baseUrl": "https://api.streamingtest.io",
           "path": {
             "head": "/v2/chats",
             "parts": []
@@ -1110,28 +1111,28 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.streamingtest.io",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.streamingtest.io",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.streamingtest.io",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiStreamingtestIo",
+              "safeName": "httpsApiStreamingtestIo"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_streamingtest_io",
+              "safeName": "https_api_streamingtest_io"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_STREAMINGTEST_IO",
+              "safeName": "HTTPS_API_STREAMINGTEST_IO"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiStreamingtestIo",
+              "safeName": "HttpsApiStreamingtestIo"
             }
           },
           "url": "https://api.streamingtest.io"

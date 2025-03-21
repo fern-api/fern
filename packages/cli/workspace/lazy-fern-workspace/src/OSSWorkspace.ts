@@ -19,6 +19,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/v2-importer-asyncapi";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
+import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -133,8 +134,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 );
                 errorCollector.logErrors();
             }
+            const casingsGenerator = constructCasingsGenerator({
+                generationLanguage: "typescript",
+                keywords: undefined,
+                smartCasing: false
+            });
             if (result != null) {
-                mergedIr = mergedIr === undefined ? result : mergeIntermediateRepresentation(mergedIr, result);
+                mergedIr =
+                    mergedIr === undefined
+                        ? result
+                        : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
             }
         }
         if (mergedIr === undefined) {
