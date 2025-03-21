@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-encoding` for schemas
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Metadata:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MetadataValue'
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Struct
+    MetadataValue:
+      nullable: true
+      oneOf:
+        - type: number
+          format: double
+        - type: string
+        - type: boolean
+        - type: array
+          items:
+            $ref: '#/components/schemas/Value'
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Value

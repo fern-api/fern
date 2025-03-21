@@ -1,0 +1,4 @@
+api:
+  path: ../openapi.json
+  settings: 
+    unions: v1
