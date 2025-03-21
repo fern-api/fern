@@ -24,28 +24,28 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "https://api.acme.com",
     "environments": {
       "environments": [
         {
-          "id": "default",
+          "id": "https://api.acme.com",
           "name": {
-            "originalName": "Default",
+            "originalName": "https://api.acme.com",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "httpsApiAcmeCom",
+              "safeName": "httpsApiAcmeCom"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "https_api_acme_com",
+              "safeName": "https_api_acme_com"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "HTTPS_API_ACME_COM",
+              "safeName": "HTTPS_API_ACME_COM"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "HttpsApiAcmeCom",
+              "safeName": "HttpsApiAcmeCom"
             }
           },
           "url": "https://api.acme.com"
@@ -157,6 +157,7 @@
               "safeName": "ExampleEndpoint"
             }
           },
+          "baseUrl": "https://api.acme.com",
           "path": {
             "head": "/example",
             "parts": []

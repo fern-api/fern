@@ -5,24 +5,29 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
+import { ServersConverter } from "../../servers/ServersConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
+        servers?: OpenAPIV3_1.ServerObject[];
     }
 
     export interface Output extends AbstractOperationConverter.Output {
         endpoint: HttpEndpoint;
+        servers?: OpenAPIV3_1.ServerObject[];
     }
 }
 
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
+    private readonly servers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ breadcrumbs, operation, method, path, idempotent }: OperationConverter.Args) {
+    constructor({ breadcrumbs, operation, method, path, idempotent, servers }: OperationConverter.Args) {
         super({ breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
+        this.servers = servers;
     }
 
     public async convert({
@@ -64,6 +69,8 @@ export class OperationConverter extends AbstractOperationConverter {
             method
         });
 
+        const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? context.spec.servers?.[0];
+
         return {
             group,
             endpoint: {
@@ -71,7 +78,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 displayName: this.operation.summary,
                 method: httpMethod,
                 name: context.casingsGenerator.generateName(method),
-                baseUrl: undefined,
+                baseUrl:
+                    server != null ? ServersConverter.getServerName({ server, context, errorCollector }) : undefined,
                 path: constructHttpPath(this.path),
                 pathParameters,
                 queryParameters,
@@ -96,7 +104,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 pagination: undefined,
                 transport: undefined
             },
-            inlinedTypes: this.inlinedTypes
+            inlinedTypes: this.inlinedTypes,
+            servers: this.operation.servers
         };
     }
 

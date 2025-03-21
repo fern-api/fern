@@ -458,7 +458,7 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment.PRODUCTION;
+import com.acme.acme.core.Environment;
 import com.acme.acme.types.GetPresignedURLRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -482,7 +482,7 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment.STAGING;
+import com.acme.acme.core.Environment;
 import com.acme.acme.types.GetPresignedURLRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -612,7 +612,7 @@ exports[`snippets (default) > single-url-environment-default > 'Production envir
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment.PRODUCTION;
+import com.acme.acme.core.Environment;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -630,7 +630,7 @@ exports[`snippets (default) > single-url-environment-default > 'Staging environm
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment.STAGING;
+import com.acme.acme.core.Environment;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()

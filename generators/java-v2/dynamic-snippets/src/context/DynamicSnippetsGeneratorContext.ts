@@ -97,24 +97,21 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return "Environment";
     }
 
-    public getEnvironmentTypeReferenceFromID(environmentID: string): java.ClassReference | undefined {
+    public getEnvironmentTypeReferenceFromID(environmentID: string): java.AstNode | undefined {
         const environmentName = this.resolveEnvironmentName(environmentID);
         if (environmentName == null) {
             return undefined;
         }
-        return this.getEnvironmentClassReferenceForEnumName(environmentName);
+        return java.codeblock((writer) => {
+            writer.writeNode(this.getEnvironmentClassReference());
+            writer.write(".");
+            writer.write(this.getEnumName(environmentName));
+        });
     }
 
     public getEnvironmentClassReference(): java.ClassReference {
         return java.classReference({
             name: this.getEnvironmentClassName(),
-            packageName: this.getCorePackageName()
-        });
-    }
-
-    private getEnvironmentClassReferenceForEnumName(name: FernIr.Name): java.ClassReference {
-        return java.classReference({
-            name: `${this.getEnvironmentClassName()}.${this.getEnumName(name)}`,
             packageName: this.getCorePackageName()
         });
     }

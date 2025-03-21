@@ -1,24 +1,50 @@
-import { execSync } from "child_process";
+import execa from "execa";
 
 import { AbstractFormatter } from "@fern-api/base-generator";
+import { findDotnetToolPath } from "@fern-api/csharp-base";
 
 export class CsharpFormatter extends AbstractFormatter {
+    private readonly csharpier: string;
+
+    constructor() {
+        super();
+        this.csharpier = findDotnetToolPath("dotnet-csharpier");
+    }
+
+    private appendSemicolon(content: string): string {
+        return content.endsWith(";") ? content : content + ";";
+    }
+
     public async format(content: string): Promise<string> {
-        return this.formatCode(content);
+        content = this.appendSemicolon(content);
+
+        const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check"], {
+            input: content,
+            encoding: "utf-8",
+            stripFinalNewline: false
+        });
+        return stdout;
+    }
+
+    public override async formatMultiple(contents: string[]): Promise<string[]> {
+        const content = contents.map((c, index) => `Dummy${index}.cs\u0003${this.appendSemicolon(c)}\u0003`).join();
+
+        const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check", "--pipe-multiple-files"], {
+            input: content,
+            encoding: "utf-8",
+            stripFinalNewline: false
+        });
+        return stdout.split("\u0003");
     }
 
     public formatSync(content: string): string {
-        return this.formatCode(content);
-    }
+        content = this.appendSemicolon(content);
 
-    private formatCode(content: string): string {
-        if (!content.endsWith(";")) {
-            content += ";";
-        }
-        try {
-            return execSync("dotnet csharpier", { input: content, encoding: "utf-8" });
-        } catch (e: unknown) {
-            return content;
-        }
+        const { stdout } = execa.sync(this.csharpier, ["--fast", "--no-msbuild-check"], {
+            input: content,
+            encoding: "utf-8",
+            stripFinalNewline: false
+        });
+        return stdout;
     }
 }

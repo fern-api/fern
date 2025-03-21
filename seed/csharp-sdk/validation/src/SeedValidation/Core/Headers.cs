@@ -5,11 +5,6 @@ namespace SeedValidation.Core;
 /// </summary>
 internal sealed class Headers : Dictionary<string, HeaderValue>
 {
-    /// <summary>
-    /// An empty instance of the Headers class.
-    /// </summary>
-    internal static readonly Headers Empty = new();
-
     internal Headers() { }
 
     /// <summary>

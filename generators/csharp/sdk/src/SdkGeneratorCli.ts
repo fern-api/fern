@@ -91,7 +91,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
-        for (const endpoint of service.endpoints) {
+        service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
@@ -102,10 +102,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 const wrappedRequest = wrappedRequestGenerator.generate();
                 context.project.addSourceFiles(wrappedRequest);
             }
-        }
+        });
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
@@ -124,7 +126,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
+        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClient = new SubPackageClientGenerator({
                 context,
@@ -137,7 +139,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
             }
-        }
+        });
 
         const baseOptionsGenerator = new BaseOptionsGenerator(context);
 
@@ -222,7 +224,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         context.project.addTestFiles(test);
 
         if (context.config.output.snippetFilepath != null) {
-            const snippets = new SnippetJsonGenerator({ context }).generate();
+            const snippets = await new SnippetJsonGenerator({ context }).generate();
             await writeFile(
                 context.config.output.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)

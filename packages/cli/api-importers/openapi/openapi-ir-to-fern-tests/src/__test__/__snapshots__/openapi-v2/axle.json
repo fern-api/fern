@@ -5217,6 +5217,7 @@
               "safeName": "StartIgnition"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/ignition",
             "parts": []
@@ -6640,6 +6641,7 @@
               "safeName": "ExchangeToken"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/token/exchange",
             "parts": []
@@ -7507,6 +7509,7 @@
               "safeName": "GetAccount"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/accounts/",
             "parts": [
@@ -8899,6 +8902,7 @@
               "safeName": "GetPolicy"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/policies/",
             "parts": [
@@ -17120,6 +17124,7 @@
               "safeName": "GetCarrier"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/carriers/",
             "parts": [
@@ -18694,6 +18699,7 @@
               "safeName": "GetCarriers"
             }
           },
+          "baseUrl": "Production",
           "path": {
             "head": "/carriers",
             "parts": []

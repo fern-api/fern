@@ -10,10 +10,8 @@ import {
     QueryParameter,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
-import { SdkGroupNameExtension } from "../../../extensions/x-fern-sdk-group-name";
-import { SdkMethodNameExtension } from "../../../extensions/x-fern-sdk-method-name";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
@@ -284,13 +282,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): GroupNameAndLocation | undefined {
-        const methodNameExtension = new SdkMethodNameExtension({
+        const methodNameExtension = new Extensions.SdkMethodNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
         });
         const method = methodNameExtension.convert({ context, errorCollector })?.methodName;
 
-        const groupNameExtension = new SdkGroupNameExtension({
+        const groupNameExtension = new Extensions.SdkGroupNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
         });

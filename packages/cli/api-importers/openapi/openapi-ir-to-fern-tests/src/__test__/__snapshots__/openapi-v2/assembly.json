@@ -65,35 +65,83 @@
   },
   "headers": [],
   "environments": {
-    "defaultEnvironment": "default",
+    "defaultEnvironment": "AssemblyAI API",
     "environments": {
-      "environments": [
+      "baseUrls": [
         {
-          "id": "default",
+          "id": "Base",
           "name": {
-            "originalName": "Default",
+            "originalName": "Base",
             "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default_"
+              "unsafeName": "base",
+              "safeName": "base"
             },
             "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
+              "unsafeName": "BASE",
+              "safeName": "BASE"
             },
             "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
+              "unsafeName": "Base",
+              "safeName": "Base"
             }
-          },
-          "url": "https://api.assemblyai.com",
-          "docs": "AssemblyAI API"
+          }
+        },
+        {
+          "id": "API",
+          "name": {
+            "originalName": "API",
+            "camelCase": {
+              "unsafeName": "api",
+              "safeName": "api"
+            },
+            "snakeCase": {
+              "unsafeName": "api",
+              "safeName": "api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API",
+              "safeName": "API"
+            },
+            "pascalCase": {
+              "unsafeName": "Api",
+              "safeName": "Api"
+            }
+          }
         }
       ],
-      "type": "singleBaseUrl"
+      "environments": [
+        {
+          "id": "AssemblyAI API",
+          "name": {
+            "originalName": "AssemblyAI API",
+            "camelCase": {
+              "unsafeName": "assemblyAiApi",
+              "safeName": "assemblyAiApi"
+            },
+            "snakeCase": {
+              "unsafeName": "assembly_ai_api",
+              "safeName": "assembly_ai_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ASSEMBLY_AI_API",
+              "safeName": "ASSEMBLY_AI_API"
+            },
+            "pascalCase": {
+              "unsafeName": "AssemblyAiApi",
+              "safeName": "AssemblyAiApi"
+            }
+          },
+          "urls": {
+            "Base": "https://api.assemblyai.com",
+            "API": "wss://api.assemblyai.com/v2/realtime/ws"
+          }
+        }
+      ],
+      "type": "multipleBaseUrls"
     }
   },
   "types": {
@@ -13216,6 +13264,804 @@
       "referencedTypes": {},
       "inline": false
     },
+    "SendAudio": {
+      "name": {
+        "typeId": "SendAudio",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "SendAudio",
+          "camelCase": {
+            "unsafeName": "sendAudio",
+            "safeName": "sendAudio"
+          },
+          "snakeCase": {
+            "unsafeName": "send_audio",
+            "safeName": "send_audio"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SEND_AUDIO",
+            "safeName": "SEND_AUDIO"
+          },
+          "pascalCase": {
+            "unsafeName": "SendAudio",
+            "safeName": "SendAudio"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "audio_data",
+                "camelCase": {
+                  "unsafeName": "audioData",
+                  "safeName": "audioData"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_data",
+                  "safeName": "audio_data"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_DATA",
+                  "safeName": "AUDIO_DATA"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioData",
+                  "safeName": "AudioData"
+                }
+              },
+              "wireValue": "audio_data"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "validation": {},
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file."
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": true,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "TerminateSession": {
+      "name": {
+        "typeId": "TerminateSession",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "TerminateSession",
+          "camelCase": {
+            "unsafeName": "terminateSession",
+            "safeName": "terminateSession"
+          },
+          "snakeCase": {
+            "unsafeName": "terminate_session",
+            "safeName": "terminate_session"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TERMINATE_SESSION",
+            "safeName": "TERMINATE_SESSION"
+          },
+          "pascalCase": {
+            "unsafeName": "TerminateSession",
+            "safeName": "TerminateSession"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "terminate_session",
+                "camelCase": {
+                  "unsafeName": "terminateSession",
+                  "safeName": "terminateSession"
+                },
+                "snakeCase": {
+                  "unsafeName": "terminate_session",
+                  "safeName": "terminate_session"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TERMINATE_SESSION",
+                  "safeName": "TERMINATE_SESSION"
+                },
+                "pascalCase": {
+                  "unsafeName": "TerminateSession",
+                  "safeName": "TerminateSession"
+                }
+              },
+              "wireValue": "terminate_session"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "BOOLEAN",
+                "v2": {
+                  "type": "boolean"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "A boolean value to communicate that you wish to end your real-time session forever."
+          }
+        ],
+        "extends": [
+          {
+            "typeId": "RealtimeBaseMessage",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "RealtimeBaseMessage",
+              "camelCase": {
+                "unsafeName": "realtimeBaseMessage",
+                "safeName": "realtimeBaseMessage"
+              },
+              "snakeCase": {
+                "unsafeName": "realtime_base_message",
+                "safeName": "realtime_base_message"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REALTIME_BASE_MESSAGE",
+                "safeName": "REALTIME_BASE_MESSAGE"
+              },
+              "pascalCase": {
+                "unsafeName": "RealtimeBaseMessage",
+                "safeName": "RealtimeBaseMessage"
+              }
+            }
+          }
+        ],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "SessionBegins": {
+      "name": {
+        "typeId": "SessionBegins",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "SessionBegins",
+          "camelCase": {
+            "unsafeName": "sessionBegins",
+            "safeName": "sessionBegins"
+          },
+          "snakeCase": {
+            "unsafeName": "session_begins",
+            "safeName": "session_begins"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSION_BEGINS",
+            "safeName": "SESSION_BEGINS"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionBegins",
+            "safeName": "SessionBegins"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "message_type",
+                "camelCase": {
+                  "unsafeName": "messageType",
+                  "safeName": "messageType"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_type",
+                  "safeName": "message_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_TYPE",
+                  "safeName": "MESSAGE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageType",
+                  "safeName": "MessageType"
+                }
+              },
+              "wireValue": "message_type"
+            },
+            "valueType": {
+              "container": {
+                "literal": {
+                  "string": "SessionBegins",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "type": "container"
+            },
+            "docs": "Describes the type of the message."
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "session_id",
+                "camelCase": {
+                  "unsafeName": "sessionId",
+                  "safeName": "sessionId"
+                },
+                "snakeCase": {
+                  "unsafeName": "session_id",
+                  "safeName": "session_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSION_ID",
+                  "safeName": "SESSION_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionId",
+                  "safeName": "SessionId"
+                }
+              },
+              "wireValue": "session_id"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "validation": {},
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "Unique identifier for the established session."
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "expires_at",
+                "camelCase": {
+                  "unsafeName": "expiresAt",
+                  "safeName": "expiresAt"
+                },
+                "snakeCase": {
+                  "unsafeName": "expires_at",
+                  "safeName": "expires_at"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXPIRES_AT",
+                  "safeName": "EXPIRES_AT"
+                },
+                "pascalCase": {
+                  "unsafeName": "ExpiresAt",
+                  "safeName": "ExpiresAt"
+                }
+              },
+              "wireValue": "expires_at"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "validation": {
+                    "pattern": "^(?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))$"
+                  },
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "Timestamp when this session will expire."
+          }
+        ],
+        "extends": [
+          {
+            "typeId": "RealtimeBaseMessage",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "RealtimeBaseMessage",
+              "camelCase": {
+                "unsafeName": "realtimeBaseMessage",
+                "safeName": "realtimeBaseMessage"
+              },
+              "snakeCase": {
+                "unsafeName": "realtime_base_message",
+                "safeName": "realtime_base_message"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REALTIME_BASE_MESSAGE",
+                "safeName": "REALTIME_BASE_MESSAGE"
+              },
+              "pascalCase": {
+                "unsafeName": "RealtimeBaseMessage",
+                "safeName": "RealtimeBaseMessage"
+              }
+            }
+          }
+        ],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "SessionTerminated": {
+      "name": {
+        "typeId": "SessionTerminated",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "SessionTerminated",
+          "camelCase": {
+            "unsafeName": "sessionTerminated",
+            "safeName": "sessionTerminated"
+          },
+          "snakeCase": {
+            "unsafeName": "session_terminated",
+            "safeName": "session_terminated"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSION_TERMINATED",
+            "safeName": "SESSION_TERMINATED"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionTerminated",
+            "safeName": "SessionTerminated"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "message_type",
+                "camelCase": {
+                  "unsafeName": "messageType",
+                  "safeName": "messageType"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_type",
+                  "safeName": "message_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_TYPE",
+                  "safeName": "MESSAGE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageType",
+                  "safeName": "MessageType"
+                }
+              },
+              "wireValue": "message_type"
+            },
+            "valueType": {
+              "container": {
+                "literal": {
+                  "string": "SessionTerminated",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "type": "container"
+            },
+            "docs": "Describes the type of the message."
+          }
+        ],
+        "extends": [
+          {
+            "typeId": "RealtimeBaseMessage",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "RealtimeBaseMessage",
+              "camelCase": {
+                "unsafeName": "realtimeBaseMessage",
+                "safeName": "realtimeBaseMessage"
+              },
+              "snakeCase": {
+                "unsafeName": "realtime_base_message",
+                "safeName": "realtime_base_message"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REALTIME_BASE_MESSAGE",
+                "safeName": "REALTIME_BASE_MESSAGE"
+              },
+              "pascalCase": {
+                "unsafeName": "RealtimeBaseMessage",
+                "safeName": "RealtimeBaseMessage"
+              }
+            }
+          }
+        ],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "RealtimeError": {
+      "name": {
+        "typeId": "RealtimeError",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "RealtimeError",
+          "camelCase": {
+            "unsafeName": "realtimeError",
+            "safeName": "realtimeError"
+          },
+          "snakeCase": {
+            "unsafeName": "realtime_error",
+            "safeName": "realtime_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REALTIME_ERROR",
+            "safeName": "REALTIME_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "RealtimeError",
+            "safeName": "RealtimeError"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "error",
+                "camelCase": {
+                  "unsafeName": "error",
+                  "safeName": "error"
+                },
+                "snakeCase": {
+                  "unsafeName": "error",
+                  "safeName": "error"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ERROR",
+                  "safeName": "ERROR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Error",
+                  "safeName": "Error_"
+                }
+              },
+              "wireValue": "error"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "validation": {},
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": true,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "PartialTranscript": {
+      "name": {
+        "typeId": "PartialTranscript",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "PartialTranscript",
+          "camelCase": {
+            "unsafeName": "partialTranscript",
+            "safeName": "partialTranscript"
+          },
+          "snakeCase": {
+            "unsafeName": "partial_transcript",
+            "safeName": "partial_transcript"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PARTIAL_TRANSCRIPT",
+            "safeName": "PARTIAL_TRANSCRIPT"
+          },
+          "pascalCase": {
+            "unsafeName": "PartialTranscript",
+            "safeName": "PartialTranscript"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "message_type",
+                "camelCase": {
+                  "unsafeName": "messageType",
+                  "safeName": "messageType"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_type",
+                  "safeName": "message_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_TYPE",
+                  "safeName": "MESSAGE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageType",
+                  "safeName": "MessageType"
+                }
+              },
+              "wireValue": "message_type"
+            },
+            "valueType": {
+              "container": {
+                "literal": {
+                  "string": "PartialTranscript",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "type": "container"
+            },
+            "docs": "Describes the type of message."
+          }
+        ],
+        "extends": [
+          {
+            "typeId": "RealtimeBaseTranscript",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "RealtimeBaseTranscript",
+              "camelCase": {
+                "unsafeName": "realtimeBaseTranscript",
+                "safeName": "realtimeBaseTranscript"
+              },
+              "snakeCase": {
+                "unsafeName": "realtime_base_transcript",
+                "safeName": "realtime_base_transcript"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REALTIME_BASE_TRANSCRIPT",
+                "safeName": "REALTIME_BASE_TRANSCRIPT"
+              },
+              "pascalCase": {
+                "unsafeName": "RealtimeBaseTranscript",
+                "safeName": "RealtimeBaseTranscript"
+              }
+            }
+          }
+        ],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
+    "FinalTranscript": {
+      "name": {
+        "typeId": "FinalTranscript",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "FinalTranscript",
+          "camelCase": {
+            "unsafeName": "finalTranscript",
+            "safeName": "finalTranscript"
+          },
+          "snakeCase": {
+            "unsafeName": "final_transcript",
+            "safeName": "final_transcript"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FINAL_TRANSCRIPT",
+            "safeName": "FINAL_TRANSCRIPT"
+          },
+          "pascalCase": {
+            "unsafeName": "FinalTranscript",
+            "safeName": "FinalTranscript"
+          }
+        }
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "message_type",
+                "camelCase": {
+                  "unsafeName": "messageType",
+                  "safeName": "messageType"
+                },
+                "snakeCase": {
+                  "unsafeName": "message_type",
+                  "safeName": "message_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE_TYPE",
+                  "safeName": "MESSAGE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MessageType",
+                  "safeName": "MessageType"
+                }
+              },
+              "wireValue": "message_type"
+            },
+            "valueType": {
+              "container": {
+                "literal": {
+                  "string": "FinalTranscript",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "type": "container"
+            },
+            "docs": "Describes the type of message."
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "punctuated",
+                "camelCase": {
+                  "unsafeName": "punctuated",
+                  "safeName": "punctuated"
+                },
+                "snakeCase": {
+                  "unsafeName": "punctuated",
+                  "safeName": "punctuated"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PUNCTUATED",
+                  "safeName": "PUNCTUATED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Punctuated",
+                  "safeName": "Punctuated"
+                }
+              },
+              "wireValue": "punctuated"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "BOOLEAN",
+                "v2": {
+                  "type": "boolean"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "Whether the text has been punctuated and cased."
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "text_formatted",
+                "camelCase": {
+                  "unsafeName": "textFormatted",
+                  "safeName": "textFormatted"
+                },
+                "snakeCase": {
+                  "unsafeName": "text_formatted",
+                  "safeName": "text_formatted"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TEXT_FORMATTED",
+                  "safeName": "TEXT_FORMATTED"
+                },
+                "pascalCase": {
+                  "unsafeName": "TextFormatted",
+                  "safeName": "TextFormatted"
+                }
+              },
+              "wireValue": "text_formatted"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "BOOLEAN",
+                "v2": {
+                  "type": "boolean"
+                }
+              },
+              "type": "primitive"
+            },
+            "docs": "Whether the text has been formatted (e.g. Dollar -> $)"
+          }
+        ],
+        "extends": [
+          {
+            "typeId": "RealtimeBaseTranscript",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "RealtimeBaseTranscript",
+              "camelCase": {
+                "unsafeName": "realtimeBaseTranscript",
+                "safeName": "realtimeBaseTranscript"
+              },
+              "snakeCase": {
+                "unsafeName": "realtime_base_transcript",
+                "safeName": "realtime_base_transcript"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REALTIME_BASE_TRANSCRIPT",
+                "safeName": "REALTIME_BASE_TRANSCRIPT"
+              },
+              "pascalCase": {
+                "unsafeName": "RealtimeBaseTranscript",
+                "safeName": "RealtimeBaseTranscript"
+              }
+            }
+          }
+        ],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false
+    },
     "RealtimeBaseMessage": {
       "name": {
         "typeId": "RealtimeBaseMessage",
@@ -13496,80 +14342,6 @@
       "referencedTypes": {},
       "inline": false
     },
-    "RealtimeError": {
-      "name": {
-        "typeId": "RealtimeError",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "RealtimeError",
-          "camelCase": {
-            "unsafeName": "realtimeError",
-            "safeName": "realtimeError"
-          },
-          "snakeCase": {
-            "unsafeName": "realtime_error",
-            "safeName": "realtime_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "REALTIME_ERROR",
-            "safeName": "REALTIME_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "RealtimeError",
-            "safeName": "RealtimeError"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "error",
-                "camelCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "snakeCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ERROR",
-                  "safeName": "ERROR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Error",
-                  "safeName": "Error_"
-                }
-              },
-              "wireValue": "error"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            }
-          }
-        ],
-        "extends": [],
-        "extendedProperties": [],
-        "extraProperties": true,
-        "type": "object"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
     "MessageType": {
       "name": {
         "typeId": "MessageType",
@@ -13840,282 +14612,6 @@
         "extends": [],
         "types": [],
         "type": "union"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "SessionBegins": {
-      "name": {
-        "typeId": "SessionBegins",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "SessionBegins",
-          "camelCase": {
-            "unsafeName": "sessionBegins",
-            "safeName": "sessionBegins"
-          },
-          "snakeCase": {
-            "unsafeName": "session_begins",
-            "safeName": "session_begins"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SESSION_BEGINS",
-            "safeName": "SESSION_BEGINS"
-          },
-          "pascalCase": {
-            "unsafeName": "SessionBegins",
-            "safeName": "SessionBegins"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "message_type",
-                "camelCase": {
-                  "unsafeName": "messageType",
-                  "safeName": "messageType"
-                },
-                "snakeCase": {
-                  "unsafeName": "message_type",
-                  "safeName": "message_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE_TYPE",
-                  "safeName": "MESSAGE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MessageType",
-                  "safeName": "MessageType"
-                }
-              },
-              "wireValue": "message_type"
-            },
-            "valueType": {
-              "container": {
-                "literal": {
-                  "string": "SessionBegins",
-                  "type": "string"
-                },
-                "type": "literal"
-              },
-              "type": "container"
-            },
-            "docs": "Describes the type of the message."
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "session_id",
-                "camelCase": {
-                  "unsafeName": "sessionId",
-                  "safeName": "sessionId"
-                },
-                "snakeCase": {
-                  "unsafeName": "session_id",
-                  "safeName": "session_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SESSION_ID",
-                  "safeName": "SESSION_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "SessionId",
-                  "safeName": "SessionId"
-                }
-              },
-              "wireValue": "session_id"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {},
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            },
-            "docs": "Unique identifier for the established session."
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "expires_at",
-                "camelCase": {
-                  "unsafeName": "expiresAt",
-                  "safeName": "expiresAt"
-                },
-                "snakeCase": {
-                  "unsafeName": "expires_at",
-                  "safeName": "expires_at"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EXPIRES_AT",
-                  "safeName": "EXPIRES_AT"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExpiresAt",
-                  "safeName": "ExpiresAt"
-                }
-              },
-              "wireValue": "expires_at"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "pattern": "^(?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))$"
-                  },
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            },
-            "docs": "Timestamp when this session will expire."
-          }
-        ],
-        "extends": [
-          {
-            "typeId": "RealtimeBaseMessage",
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "name": {
-              "originalName": "RealtimeBaseMessage",
-              "camelCase": {
-                "unsafeName": "realtimeBaseMessage",
-                "safeName": "realtimeBaseMessage"
-              },
-              "snakeCase": {
-                "unsafeName": "realtime_base_message",
-                "safeName": "realtime_base_message"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REALTIME_BASE_MESSAGE",
-                "safeName": "REALTIME_BASE_MESSAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "RealtimeBaseMessage",
-                "safeName": "RealtimeBaseMessage"
-              }
-            }
-          }
-        ],
-        "extendedProperties": [],
-        "extraProperties": false,
-        "type": "object"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "SessionTerminated": {
-      "name": {
-        "typeId": "SessionTerminated",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "SessionTerminated",
-          "camelCase": {
-            "unsafeName": "sessionTerminated",
-            "safeName": "sessionTerminated"
-          },
-          "snakeCase": {
-            "unsafeName": "session_terminated",
-            "safeName": "session_terminated"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SESSION_TERMINATED",
-            "safeName": "SESSION_TERMINATED"
-          },
-          "pascalCase": {
-            "unsafeName": "SessionTerminated",
-            "safeName": "SessionTerminated"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "message_type",
-                "camelCase": {
-                  "unsafeName": "messageType",
-                  "safeName": "messageType"
-                },
-                "snakeCase": {
-                  "unsafeName": "message_type",
-                  "safeName": "message_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE_TYPE",
-                  "safeName": "MESSAGE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MessageType",
-                  "safeName": "MessageType"
-                }
-              },
-              "wireValue": "message_type"
-            },
-            "valueType": {
-              "container": {
-                "literal": {
-                  "string": "SessionTerminated",
-                  "type": "string"
-                },
-                "type": "literal"
-              },
-              "type": "container"
-            },
-            "docs": "Describes the type of the message."
-          }
-        ],
-        "extends": [
-          {
-            "typeId": "RealtimeBaseMessage",
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "name": {
-              "originalName": "RealtimeBaseMessage",
-              "camelCase": {
-                "unsafeName": "realtimeBaseMessage",
-                "safeName": "realtimeBaseMessage"
-              },
-              "snakeCase": {
-                "unsafeName": "realtime_base_message",
-                "safeName": "realtime_base_message"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REALTIME_BASE_MESSAGE",
-                "safeName": "REALTIME_BASE_MESSAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "RealtimeBaseMessage",
-                "safeName": "RealtimeBaseMessage"
-              }
-            }
-          }
-        ],
-        "extendedProperties": [],
-        "extraProperties": false,
-        "type": "object"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],
@@ -14401,278 +14897,6 @@
       "referencedTypes": {},
       "inline": false
     },
-    "PartialTranscript": {
-      "name": {
-        "typeId": "PartialTranscript",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "PartialTranscript",
-          "camelCase": {
-            "unsafeName": "partialTranscript",
-            "safeName": "partialTranscript"
-          },
-          "snakeCase": {
-            "unsafeName": "partial_transcript",
-            "safeName": "partial_transcript"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PARTIAL_TRANSCRIPT",
-            "safeName": "PARTIAL_TRANSCRIPT"
-          },
-          "pascalCase": {
-            "unsafeName": "PartialTranscript",
-            "safeName": "PartialTranscript"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "message_type",
-                "camelCase": {
-                  "unsafeName": "messageType",
-                  "safeName": "messageType"
-                },
-                "snakeCase": {
-                  "unsafeName": "message_type",
-                  "safeName": "message_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE_TYPE",
-                  "safeName": "MESSAGE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MessageType",
-                  "safeName": "MessageType"
-                }
-              },
-              "wireValue": "message_type"
-            },
-            "valueType": {
-              "container": {
-                "literal": {
-                  "string": "PartialTranscript",
-                  "type": "string"
-                },
-                "type": "literal"
-              },
-              "type": "container"
-            },
-            "docs": "Describes the type of message."
-          }
-        ],
-        "extends": [
-          {
-            "typeId": "RealtimeBaseTranscript",
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "name": {
-              "originalName": "RealtimeBaseTranscript",
-              "camelCase": {
-                "unsafeName": "realtimeBaseTranscript",
-                "safeName": "realtimeBaseTranscript"
-              },
-              "snakeCase": {
-                "unsafeName": "realtime_base_transcript",
-                "safeName": "realtime_base_transcript"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REALTIME_BASE_TRANSCRIPT",
-                "safeName": "REALTIME_BASE_TRANSCRIPT"
-              },
-              "pascalCase": {
-                "unsafeName": "RealtimeBaseTranscript",
-                "safeName": "RealtimeBaseTranscript"
-              }
-            }
-          }
-        ],
-        "extendedProperties": [],
-        "extraProperties": false,
-        "type": "object"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "FinalTranscript": {
-      "name": {
-        "typeId": "FinalTranscript",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "FinalTranscript",
-          "camelCase": {
-            "unsafeName": "finalTranscript",
-            "safeName": "finalTranscript"
-          },
-          "snakeCase": {
-            "unsafeName": "final_transcript",
-            "safeName": "final_transcript"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "FINAL_TRANSCRIPT",
-            "safeName": "FINAL_TRANSCRIPT"
-          },
-          "pascalCase": {
-            "unsafeName": "FinalTranscript",
-            "safeName": "FinalTranscript"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "message_type",
-                "camelCase": {
-                  "unsafeName": "messageType",
-                  "safeName": "messageType"
-                },
-                "snakeCase": {
-                  "unsafeName": "message_type",
-                  "safeName": "message_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE_TYPE",
-                  "safeName": "MESSAGE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MessageType",
-                  "safeName": "MessageType"
-                }
-              },
-              "wireValue": "message_type"
-            },
-            "valueType": {
-              "container": {
-                "literal": {
-                  "string": "FinalTranscript",
-                  "type": "string"
-                },
-                "type": "literal"
-              },
-              "type": "container"
-            },
-            "docs": "Describes the type of message."
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "punctuated",
-                "camelCase": {
-                  "unsafeName": "punctuated",
-                  "safeName": "punctuated"
-                },
-                "snakeCase": {
-                  "unsafeName": "punctuated",
-                  "safeName": "punctuated"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PUNCTUATED",
-                  "safeName": "PUNCTUATED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Punctuated",
-                  "safeName": "Punctuated"
-                }
-              },
-              "wireValue": "punctuated"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
-              },
-              "type": "primitive"
-            },
-            "docs": "Whether the text has been punctuated and cased."
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "text_formatted",
-                "camelCase": {
-                  "unsafeName": "textFormatted",
-                  "safeName": "textFormatted"
-                },
-                "snakeCase": {
-                  "unsafeName": "text_formatted",
-                  "safeName": "text_formatted"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TEXT_FORMATTED",
-                  "safeName": "TEXT_FORMATTED"
-                },
-                "pascalCase": {
-                  "unsafeName": "TextFormatted",
-                  "safeName": "TextFormatted"
-                }
-              },
-              "wireValue": "text_formatted"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
-              },
-              "type": "primitive"
-            },
-            "docs": "Whether the text has been formatted (e.g. Dollar -> $)"
-          }
-        ],
-        "extends": [
-          {
-            "typeId": "RealtimeBaseTranscript",
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "name": {
-              "originalName": "RealtimeBaseTranscript",
-              "camelCase": {
-                "unsafeName": "realtimeBaseTranscript",
-                "safeName": "realtimeBaseTranscript"
-              },
-              "snakeCase": {
-                "unsafeName": "realtime_base_transcript",
-                "safeName": "realtime_base_transcript"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REALTIME_BASE_TRANSCRIPT",
-                "safeName": "REALTIME_BASE_TRANSCRIPT"
-              },
-              "pascalCase": {
-                "unsafeName": "RealtimeBaseTranscript",
-                "safeName": "RealtimeBaseTranscript"
-              }
-            }
-          }
-        ],
-        "extendedProperties": [],
-        "extraProperties": false,
-        "type": "object"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
     "Word": {
       "name": {
         "typeId": "Word",
@@ -14924,107 +15148,6 @@
         "extends": [],
         "extendedProperties": [],
         "extraProperties": true,
-        "type": "object"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "TerminateSession": {
-      "name": {
-        "typeId": "TerminateSession",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "TerminateSession",
-          "camelCase": {
-            "unsafeName": "terminateSession",
-            "safeName": "terminateSession"
-          },
-          "snakeCase": {
-            "unsafeName": "terminate_session",
-            "safeName": "terminate_session"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TERMINATE_SESSION",
-            "safeName": "TERMINATE_SESSION"
-          },
-          "pascalCase": {
-            "unsafeName": "TerminateSession",
-            "safeName": "TerminateSession"
-          }
-        }
-      },
-      "shape": {
-        "properties": [
-          {
-            "name": {
-              "name": {
-                "originalName": "terminate_session",
-                "camelCase": {
-                  "unsafeName": "terminateSession",
-                  "safeName": "terminateSession"
-                },
-                "snakeCase": {
-                  "unsafeName": "terminate_session",
-                  "safeName": "terminate_session"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TERMINATE_SESSION",
-                  "safeName": "TERMINATE_SESSION"
-                },
-                "pascalCase": {
-                  "unsafeName": "TerminateSession",
-                  "safeName": "TerminateSession"
-                }
-              },
-              "wireValue": "terminate_session"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "BOOLEAN",
-                "v2": {
-                  "type": "boolean"
-                }
-              },
-              "type": "primitive"
-            },
-            "docs": "A boolean value to communicate that you wish to end your real-time session forever."
-          }
-        ],
-        "extends": [
-          {
-            "typeId": "RealtimeBaseMessage",
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "name": {
-              "originalName": "RealtimeBaseMessage",
-              "camelCase": {
-                "unsafeName": "realtimeBaseMessage",
-                "safeName": "realtimeBaseMessage"
-              },
-              "snakeCase": {
-                "unsafeName": "realtime_base_message",
-                "safeName": "realtime_base_message"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REALTIME_BASE_MESSAGE",
-                "safeName": "REALTIME_BASE_MESSAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "RealtimeBaseMessage",
-                "safeName": "RealtimeBaseMessage"
-              }
-            }
-          }
-        ],
-        "extendedProperties": [],
-        "extraProperties": false,
         "type": "object"
       },
       "autogeneratedExamples": [],
@@ -15419,6 +15542,7 @@
               "safeName": "Upload"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/upload",
             "parts": []
@@ -15674,6 +15798,7 @@
               "safeName": "List"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -16079,6 +16204,7 @@
               "safeName": "Create"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript",
             "parts": []
@@ -26386,6 +26512,7 @@
               "safeName": "Get"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -34386,6 +34513,7 @@
               "safeName": "Delete"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42386,6 +42514,7 @@
               "safeName": "GetSubtitles"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -42790,6 +42919,7 @@
               "safeName": "GetSentences"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -45332,6 +45462,7 @@
               "safeName": "GetParagraphs"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -47874,6 +48005,7 @@
               "safeName": "WordSearch"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -49594,6 +49726,7 @@
               "safeName": "GetRedactedAudio"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/transcript/",
             "parts": [
@@ -50069,6 +50202,7 @@
               "safeName": "CreateTemporaryToken"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/v2/realtime/token",
             "parts": []
@@ -50457,6 +50591,7 @@
               "safeName": "Summary"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/summary",
             "parts": []
@@ -51295,6 +51430,7 @@
               "safeName": "QuestionAnswer"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/question-answer",
             "parts": []
@@ -53200,6 +53336,7 @@
               "safeName": "ActionItems"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/action-items",
             "parts": []
@@ -53970,6 +54107,7 @@
               "safeName": "Task"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/generate/task",
             "parts": []
@@ -54803,6 +54941,7 @@
               "safeName": "PurgeRequestData"
             }
           },
+          "baseUrl": "Base",
           "path": {
             "head": "/lemur/v3/",
             "parts": [
@@ -55489,6 +55628,7 @@
         }
       },
       "displayName": "/{userId}",
+      "baseUrl": "API",
       "path": {
         "head": "/{userId}",
         "parts": []
@@ -55849,6 +55989,13 @@
       "LemurTaskParameters",
       "LemurModel",
       "Error",
+      "SendAudio",
+      "TerminateSession",
+      "SessionBegins",
+      "SessionTerminated",
+      "RealtimeError",
+      "PartialTranscript",
+      "FinalTranscript",
       "RealtimeBaseMessage",
       "RealtimeMessage",
       "RealtimeError",

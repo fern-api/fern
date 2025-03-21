@@ -93,6 +93,8 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 errorCollector
             }) as AsyncAPIV3.DocumentV3;
             await this.convertChannelMessages({ context, errorCollector });
+        } else {
+            await this.convertComponentMessages({ context, errorCollector });
         }
 
         await this.convertSchemas({ context, errorCollector });
@@ -238,6 +240,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (message.payload == null) {
                     continue;
                 }
+
                 let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
                 if (context.isReferenceObject(message.payload)) {
                     const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
@@ -255,7 +258,6 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     breadcrumbs: ["channels", channelPath, "messages", messageId],
                     schema: payloadSchema
                 });
-
                 const convertedSchema = await schemaConverter.convert({ context, errorCollector });
                 if (convertedSchema != null) {
                     this.ir.rootPackage.types.push(messageId);
@@ -265,6 +267,53 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                         [messageId]: convertedSchema.typeDeclaration
                     };
                 }
+            }
+        }
+    }
+
+    private async convertComponentMessages({
+        context,
+        errorCollector
+    }: {
+        context: AsyncAPIConverterContext;
+        errorCollector: ErrorCollector;
+    }): Promise<void> {
+        for (const [id, message] of Object.entries(context.spec.components?.messages ?? {})) {
+            if (message.payload == null) {
+                continue;
+            }
+
+            let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
+            if (context.isReferenceObject(message.payload)) {
+                const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
+                if (resolved.resolved) {
+                    payloadSchema = resolved.value;
+                }
+            } else {
+                payloadSchema = message.payload;
+            }
+            if (payloadSchema == null) {
+                continue;
+            }
+
+            const schemaConverter = new SchemaConverter({
+                id,
+                breadcrumbs: ["components", "messages", id],
+                schema: payloadSchema
+            });
+
+            const convertedSchema = await schemaConverter.convert({
+                context,
+                errorCollector
+            });
+
+            if (convertedSchema != null) {
+                this.ir.rootPackage.types.push(id);
+                this.ir.types = {
+                    ...this.ir.types,
+                    ...convertedSchema.inlinedTypes,
+                    [id]: convertedSchema.typeDeclaration
+                };
             }
         }
     }
@@ -332,20 +381,28 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         errorCollector: ErrorCollector;
     }): Promise<void> {
         for (const [channelPath, channel] of Object.entries(context.spec.channels ?? {})) {
+            const groupNameExtension = new Extensions.SdkGroupNameExtension({
+                breadcrumbs: ["channels", channelPath],
+                operation: channel
+            });
+            const group = groupNameExtension.convert({ context, errorCollector })?.groups;
+
             if (this.isAsyncAPIV3(context)) {
                 const spec = context.spec as AsyncAPIV3.DocumentV3;
                 const operations = spec.operations ?? {};
+
                 const channelConverter = new ChannelConverter3_0({
                     breadcrumbs: ["channels", channelPath],
                     channel,
                     channelPath,
-                    operations
+                    operations,
+                    group
                 });
                 const convertedChannel = await channelConverter.convert({ context, errorCollector });
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [channelPath]: convertedChannel.channel
+                        [group ? group.join(".") : channelPath]: convertedChannel.channel
                     };
                     this.ir.types = {
                         ...this.ir.types,
@@ -356,13 +413,14 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 const channelConverter = new ChannelConverter2_X({
                     breadcrumbs: ["channels", channelPath],
                     channel,
-                    channelPath
+                    channelPath,
+                    group
                 });
                 const convertedChannel = await channelConverter.convert({ context, errorCollector });
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [channelPath]: convertedChannel.channel
+                        [group ? group.join(".") : channelPath]: convertedChannel.channel
                     };
                     this.ir.types = {
                         ...this.ir.types,

@@ -12,17 +12,21 @@ publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
+    - pnpm --filter @fern-api/java-sdk dist:cli
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
-    context: ./generators/java/sdk
+    context: .
 test:
   docker:
     image: fernapi/fern-java-sdk:latest
+    context: .
     command:
       - cd generators/java
       - ./gradlew :sdk:distTar
-      - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
+      - cd ../../
+      - pnpm --filter @fern-api/java-sdk dist:cli
+      - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:

@@ -21,6 +21,7 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
 import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -90,15 +91,18 @@ export async function getPreviewDocsDefinition({
         }
     }
 
-    const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map(
-            async (workspace) =>
-                await workspace.toFernWorkspace(
-                    { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                )
-        )
-    );
+    let fernWorkspaces: FernWorkspace[] = [];
+    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
+        fernWorkspaces = await Promise.all(
+            apiWorkspaces.map(
+                async (workspace) =>
+                    await workspace.toFernWorkspace(
+                        { context },
+                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
+                    )
+            )
+        );
+    }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
