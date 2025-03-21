@@ -38,8 +38,6 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
     "@fern-api/configs": "workspace:*",
-    "@fern-api/ir-generator": "workspace:*",
-    "@fern-api/cli-source-resolver": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
