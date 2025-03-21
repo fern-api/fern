@@ -7,6 +7,15 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.9
+  createdAt: "2025-03-21"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Significantly improve performance of the generator itself by asynchronously formatting snippets in parallel.
+        For example, Square's SDK generates in less than 20 seconds as opposed to more than 3 minutes previously.
+
 - version: 1.15.8
   createdAt: "2025-03-21"
   irVersion: 57

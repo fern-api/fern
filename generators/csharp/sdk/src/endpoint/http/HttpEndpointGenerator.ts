@@ -51,7 +51,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string;
         rawClient: RawClient;
     }): csharp.Method[] {
-        const methods = [];
+        const methods: csharp.Method[] = [];
         if (this.hasPagination(endpoint)) {
             methods.push(
                 this.generatePagerMethod({

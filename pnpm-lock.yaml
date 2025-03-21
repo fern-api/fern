@@ -440,6 +440,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -455,6 +458,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
