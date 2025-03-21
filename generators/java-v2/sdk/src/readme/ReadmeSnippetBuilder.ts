@@ -374,6 +374,33 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const endpointMethodCall = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
+        const streamItemsMethodCall = java.invokeMethod({
+            on: java.codeblock("response"),
+            method: "streamItems",
+            arguments_: []
+        });
+
+        const mapMethodCall = java.invokeMethod({
+            on: streamItemsMethodCall,
+            method: "map",
+            arguments_: [java.codeblock("item -> ...")]
+        });
+
+        const manualPaginationSnippet = java.codeblock((writer) => {
+            writer.writeLine("for (");
+            writer.indent();
+            writer.indent();
+            writer.writeNode(java.Type.list(returnTypeClassReference));
+            writer.writeTextStatement(" items = response.getItems");
+            writer.writeTextStatement("response.hasNext()");
+            writer.write("items = items.nextPage().getItems()");
+            writer.writeLine(") {");
+            writer.dedent();
+            writer.writeLine("// Do something with items");
+            writer.dedent();
+            writer.writeLine("}");
+        });
+
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.getRootPackageClientName()} = `);
@@ -383,9 +410,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.write(" response = ");
             writer.writeNodeStatement(endpointMethodCall);
             writer.writeLine("\n");
+            writer.writeLine("// Iterator");
             writer.controlFlow("for", java.codeblock("item : response"));
             writer.writeLine("// Do something with item");
             writer.endControlFlow();
+            writer.writeLine("\n");
+            writer.writeLine("// Streaming");
+            writer.writeNodeStatement(mapMethodCall);
+            writer.writeLine("\n");
+            writer.writeLine("// Manual pagination");
+            writer.writeNode(manualPaginationSnippet);
         });
 
         return this.renderSnippet(snippet);

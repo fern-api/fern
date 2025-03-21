@@ -70,13 +70,26 @@ Paginated requests will return an Iterable<T>, which can be used to loop through
 import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.complex.types.PaginatedConversationResponse;
+import java.util.List;
 
 SeedPaginationClient client = SeedPaginationClient.builder().build();
 
 SyncPagingIterable<PaginatedConversationResponse> response = client.complex().search(...);
 
+// Iterator
 for (item : response) {
     // Do something with item
+}
+
+// Streaming
+response.streamItems().map(item -> ...);
+
+// Manual pagination
+for (
+        List<PaginatedConversationResponse> items = response.getItems;
+        response.hasNext();
+        items = items.nextPage().getItems()) {
+    // Do something with items
 }
 ```
 
