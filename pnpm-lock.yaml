@@ -455,6 +455,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2

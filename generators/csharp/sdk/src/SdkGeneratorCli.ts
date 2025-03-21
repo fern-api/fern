@@ -194,7 +194,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = context.getHttpServiceOrThrow(rootServiceId);
-            this.generateRequests(context, service, rootServiceId);
+            await this.generateRequests(context, service, rootServiceId);
         }
 
         context.ir.environments?.environments._visit({

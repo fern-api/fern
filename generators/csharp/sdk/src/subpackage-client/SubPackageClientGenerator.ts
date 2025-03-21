@@ -104,8 +104,15 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
     }
 
     private async generateEndpoints(): Promise<csharp.Method[]> {
-        const serviceId = this.serviceId!;
-        const endpointPromises = this.service!.endpoints.map(async (endpoint) => {
+        const service = this.service;
+        if (!service) {
+            throw new Error("Internal error; Service is not defined");
+        }
+        const serviceId = this.serviceId;
+        if (!serviceId) {
+            throw new Error("Internal error; ServiceId is not defined");
+        }
+        const endpointPromises = service.endpoints.map(async (endpoint) => {
             return await this.context.endpointGenerator.generate({
                 serviceId,
                 endpoint,
