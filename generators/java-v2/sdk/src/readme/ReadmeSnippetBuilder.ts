@@ -368,7 +368,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         const returnTypeClassReference = this.context.getReturnTypeForEndpoint(endpoint.endpoint);
-        const paginationClassReference = java.Type.parameterizedReference(this.context.getPaginationClassReference(), [
+        const paginationClassReference = java.Type.generic(this.context.getPaginationClassReference(), [
             returnTypeClassReference
         ]);
 

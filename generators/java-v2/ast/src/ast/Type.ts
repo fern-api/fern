@@ -19,7 +19,7 @@ type InternalType =
     | Object_
     | Optional
     | Reference
-    | ParameterizedReference
+    | Generic
     | Set
     | String_
     | UUID
@@ -88,8 +88,8 @@ interface Reference {
     value: ClassReference;
 }
 
-interface ParameterizedReference {
-    type: "parameterizedReference";
+interface Generic {
+    type: "generic";
     value: ClassReference;
     parameters: Type[];
 }
@@ -175,7 +175,7 @@ export class Type extends AstNode {
             case "reference":
                 writer.writeNode(this.internalType.value);
                 break;
-            case "parameterizedReference":
+            case "generic":
                 writer.writeNode(this.internalType.value);
                 writer.write("<");
                 for (const [index, parameter] of this.internalType.parameters.entries()) {
@@ -308,9 +308,9 @@ export class Type extends AstNode {
         });
     }
 
-    public static parameterizedReference(value: ClassReference, parameters: Type[]): Type {
+    public static generic(value: ClassReference, parameters: Type[]): Type {
         return new this({
-            type: "parameterizedReference",
+            type: "generic",
             value,
             parameters
         });
