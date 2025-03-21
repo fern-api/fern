@@ -12,10 +12,12 @@ export class CsharpFormatter extends AbstractFormatter {
         this.csharpier = findDotnetToolPath("dotnet-csharpier");
     }
 
+    private appendSemicolon(content: string): string {
+        return content.endsWith(";") ? content : content + ";";
+    }
+
     public async format(content: string): Promise<string> {
-        if (!content.endsWith(";")) {
-            content += ";";
-        }
+        content = this.appendSemicolon(content);
 
         const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check"], {
             input: content,
@@ -26,15 +28,8 @@ export class CsharpFormatter extends AbstractFormatter {
     }
 
     public override async formatMultiple(contents: string[]): Promise<string[]> {
-        const content = contents
-            .map((c) => {
-                if (!c.endsWith(";")) {
-                    c += ";";
-                }
-                return c;
-            })
-            .map((c, index) => `Dummy${index}.cs\u0003${c}\u0003`)
-            .join();
+        const content = contents.map((c, index) => `Dummy${index}.cs\u0003${this.appendSemicolon(c)}\u0003`).join();
+
         const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check", "--pipe-multiple-files"], {
             input: content,
             encoding: "utf-8",
@@ -44,9 +39,8 @@ export class CsharpFormatter extends AbstractFormatter {
     }
 
     public formatSync(content: string): string {
-        if (!content.endsWith(";")) {
-            content += ";";
-        }
+        content = this.appendSemicolon(content);
+
         const { stdout } = execa.sync(this.csharpier, ["--fast", "--no-msbuild-check"], {
             input: content,
             encoding: "utf-8",

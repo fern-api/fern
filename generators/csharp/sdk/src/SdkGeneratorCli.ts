@@ -90,21 +90,19 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         await this.generate(context);
     }
 
-    private async generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
-        await Promise.all(
-            service.endpoints.map(async (endpoint) => {
-                if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
-                    const wrappedRequestGenerator = new WrappedRequestGenerator({
-                        wrapper: endpoint.sdkRequest.shape,
-                        context,
-                        endpoint,
-                        serviceId
-                    });
-                    const wrappedRequest = wrappedRequestGenerator.generate();
-                    context.project.addSourceFiles(wrappedRequest);
-                }
-            })
-        );
+    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+        service.endpoints.forEach((endpoint) => {
+            if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                const wrappedRequestGenerator = new WrappedRequestGenerator({
+                    wrapper: endpoint.sdkRequest.shape,
+                    context,
+                    endpoint,
+                    serviceId
+                });
+                const wrappedRequest = wrappedRequestGenerator.generate();
+                context.project.addSourceFiles(wrappedRequest);
+            }
+        });
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
@@ -128,23 +126,20 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        await Promise.all(
-            Object.entries(context.ir.subpackages).map(async ([_, subpackage]) => {
-                const service =
-                    subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
-                const subClient = new SubPackageClientGenerator({
-                    context,
-                    subpackage,
-                    serviceId: subpackage.service,
-                    service
-                });
-                context.project.addSourceFiles(await subClient.generate());
+        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subClient = new SubPackageClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service
+            });
+            context.project.addSourceFiles(subClient.generate());
 
-                if (subpackage.service != null && service != null) {
-                    await this.generateRequests(context, service, subpackage.service);
-                }
-            })
-        );
+            if (subpackage.service != null && service != null) {
+                this.generateRequests(context, service, subpackage.service);
+            }
+        });
 
         const baseOptionsGenerator = new BaseOptionsGenerator(context);
 
@@ -191,12 +186,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         }
 
         const rootClient = new RootClientGenerator(context);
-        context.project.addSourceFiles(await rootClient.generate());
+        context.project.addSourceFiles(rootClient.generate());
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = context.getHttpServiceOrThrow(rootServiceId);
-            await this.generateRequests(context, service, rootServiceId);
+            this.generateRequests(context, service, rootServiceId);
         }
 
         context.ir.environments?.environments._visit({
@@ -271,7 +266,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        const builder = await buildReference({ context });
+        const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)

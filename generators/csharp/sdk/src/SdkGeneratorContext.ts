@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from "lodash-es";
 
-import { GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
@@ -51,8 +51,8 @@ export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
-    public readonly formatter: CsharpFormatter;
-    public readonly nopFormatter: NopFormatter;
+    public readonly formatter: AbstractFormatter;
+    public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
