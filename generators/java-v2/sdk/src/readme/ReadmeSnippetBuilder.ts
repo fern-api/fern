@@ -133,12 +133,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             arguments_: []
         });
 
-        // This is safe because it's validated in the predicate
-        const productionEnvironmentName = this.getDefaultEnvironmentId()!;
+        const defaultEnvironmentId = this.getDefaultEnvironmentId();
+        // This should never happen because the precondition prevents this code from running
+        // if we don't have a default environment ID, but we need this check for the linter.
+        if (defaultEnvironmentId == null) {
+            throw new Error("Could not get default environment ID for README snippet");
+        }
+
         const productionEnvironment = java.codeblock((writer) => {
             writer.writeNode(this.context.getEnvironmentClassReference());
             writer.write(".");
-            writer.write(productionEnvironmentName);
+            writer.write(defaultEnvironmentId);
         });
         const environmentMethodInvocation = java.invokeMethod({
             on: builderMethodInvocation,
