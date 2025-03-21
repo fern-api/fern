@@ -11,6 +11,9 @@ public final class JavaV2Arguments {
     private final File executable;
     private final File generatorConfig;
 
+    // Useful for debugging locally but makes remote jobs fail
+    private final boolean enableLogging = false;
+
     public JavaV2Arguments(String configPath) {
         this(JAVA_V2_EXECUTABLE_PATH, configPath);
     }
@@ -33,5 +36,9 @@ public final class JavaV2Arguments {
     /** The path of the generator config to pass into the Java V2 generator. */
     public Path generatorConfig() {
         return Path.of(generatorConfig.getAbsolutePath());
+    }
+
+    public boolean enableLogging() {
+        return enableLogging;
     }
 }

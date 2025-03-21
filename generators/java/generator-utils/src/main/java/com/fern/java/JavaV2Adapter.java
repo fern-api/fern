@@ -25,11 +25,13 @@ public class JavaV2Adapter {
             };
             Process v2 = Runtime.getRuntime().exec(command);
 
-            try (InputStream v2Result = v2.getInputStream()) {
-                BufferedReader resultReader = new BufferedReader(new InputStreamReader(v2Result));
-                String line;
-                while ((line = resultReader.readLine()) != null) {
-                    log.debug("Java V2: {}", line);
+            if (args.enableLogging()) {
+                try (InputStream v2Result = v2.getInputStream()) {
+                    BufferedReader resultReader = new BufferedReader(new InputStreamReader(v2Result));
+                    String line;
+                    while ((line = resultReader.readLine()) != null) {
+                        log.debug("Java V2: {}", line);
+                    }
                 }
             }
 
