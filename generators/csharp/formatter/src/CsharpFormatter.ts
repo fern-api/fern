@@ -25,6 +25,24 @@ export class CsharpFormatter extends AbstractFormatter {
         return stdout;
     }
 
+    public override async formatMultiple(contents: string[]): Promise<string[]> {
+        const content = contents
+            .map((c) => {
+                if (!c.endsWith(";")) {
+                    c += ";";
+                }
+                return c;
+            })
+            .map((c, index) => `Dummy${index}.cs\u0003${c}\u0003`)
+            .join();
+        const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check", "--pipe-multiple-files"], {
+            input: content,
+            encoding: "utf-8",
+            stripFinalNewline: false
+        });
+        return stdout.split("\u0003");
+    }
+
     public formatSync(content: string): string {
         if (!content.endsWith(";")) {
             content += ";";
