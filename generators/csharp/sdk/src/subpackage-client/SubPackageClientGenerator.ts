@@ -1,4 +1,4 @@
-import { AsyncFileGenerator, CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
@@ -21,11 +21,7 @@ export declare namespace SubClientGenerator {
     }
 }
 
-export class SubPackageClientGenerator extends AsyncFileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: csharp.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
@@ -44,7 +40,7 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
-    public async doGenerate(): Promise<CSharpFile> {
+    public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
@@ -89,7 +85,7 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
 
         class_.addConstructor(this.getConstructorMethod());
         if (this.service != null && this.serviceId != null) {
-            const methods = await this.generateEndpoints();
+            const methods = this.generateEndpoints();
             class_.addMethods(methods);
         }
 
@@ -103,7 +99,7 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
         });
     }
 
-    private async generateEndpoints(): Promise<csharp.Method[]> {
+    private generateEndpoints(): csharp.Method[] {
         const service = this.service;
         if (!service) {
             throw new Error("Internal error; Service is not defined");
@@ -112,8 +108,8 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
         if (!serviceId) {
             throw new Error("Internal error; ServiceId is not defined");
         }
-        const endpointPromises = service.endpoints.map(async (endpoint) => {
-            return await this.context.endpointGenerator.generate({
+        return service.endpoints.flatMap((endpoint) => {
+            return this.context.endpointGenerator.generate({
                 serviceId,
                 endpoint,
                 rawClientReference: CLIENT_MEMBER_NAME,
@@ -122,7 +118,6 @@ export class SubPackageClientGenerator extends AsyncFileGenerator<
                 grpcClientInfo: this.grpcClientInfo
             });
         });
-        return await Promise.all(endpointPromises).then((methods) => methods.flat());
     }
 
     private getConstructorMethod(): csharp.Class.Constructor {

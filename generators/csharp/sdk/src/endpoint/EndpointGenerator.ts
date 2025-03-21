@@ -19,7 +19,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         this.grpc = new GrpcEndpointGenerator({ context });
     }
 
-    public async generate({
+    public generate({
         serviceId,
         endpoint,
         rawClientReference,
@@ -33,10 +33,10 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         rawGrpcClientReference: string;
         rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
-    }): Promise<csharp.Method[]> {
+    }): csharp.Method[] {
         if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
             return [
-                await this.grpc.generate({
+                this.grpc.generate({
                     serviceId,
                     endpoint,
                     rawGrpcClientReference,
@@ -44,7 +44,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 })
             ];
         } else {
-            return await this.http.generate({
+            return this.http.generate({
                 serviceId,
                 endpoint,
                 rawClientReference,

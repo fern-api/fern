@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AsyncFileGenerator, CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
@@ -50,7 +50,7 @@ interface HeaderInfo {
     prefix?: string;
 }
 
-export class RootClientGenerator extends AsyncFileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private rawClient: RawClient;
     private serviceId: ServiceId | undefined;
     private grpcClientInfo: GrpcClientInfo | undefined;
@@ -69,7 +69,7 @@ export class RootClientGenerator extends AsyncFileGenerator<CSharpFile, SdkCusto
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
 
-    public async doGenerate(): Promise<CSharpFile> {
+    public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getRootClientClassReference(),
             partial: true,
@@ -121,8 +121,8 @@ export class RootClientGenerator extends AsyncFileGenerator<CSharpFile, SdkCusto
         const rootServiceId = this.context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
-            const endpointPromises = service.endpoints.map(async (endpoint) => {
-                return await this.context.endpointGenerator.generate({
+            const methods = service.endpoints.flatMap((endpoint) => {
+                return this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -131,8 +131,7 @@ export class RootClientGenerator extends AsyncFileGenerator<CSharpFile, SdkCusto
                     grpcClientInfo: this.grpcClientInfo
                 });
             });
-            const methods = await Promise.all(endpointPromises);
-            class_.addMethods(methods.flat());
+            class_.addMethods(methods);
         }
 
         const { optionalParameters } = this.getConstructorParameters();

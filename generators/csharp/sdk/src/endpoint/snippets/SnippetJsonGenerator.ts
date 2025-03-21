@@ -56,7 +56,7 @@ export class SnippetJsonGenerator {
             Object.values(this.context.ir.services).flatMap((service) =>
                 service.endpoints.map(async (httpEndpoint) => {
                     const isPager = isPaginationEnabled && httpEndpoint.pagination != null;
-                    const snippets = await this.getSnippetsForEndpoint(httpEndpoint.id);
+                    const snippets = this.getSnippetsForEndpoint(httpEndpoint.id);
                     return snippets.map((endpointSnippet) => {
                         const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager);
                         return {
@@ -81,8 +81,8 @@ export class SnippetJsonGenerator {
         };
     }
 
-    private async getSnippetsForEndpoint(endpointId: string): Promise<SingleEndpointSnippet[]> {
-        const snippetsForEndpoint = await this.context.snippetGenerator.getSnippetsForEndpoint(endpointId);
+    private getSnippetsForEndpoint(endpointId: string): SingleEndpointSnippet[] {
+        const snippetsForEndpoint = this.context.snippetGenerator.getSnippetsForEndpoint(endpointId);
         if (snippetsForEndpoint == null) {
             return [];
         }
