@@ -1,8 +1,7 @@
 import execa from "execa";
 
 import { AbstractFormatter } from "@fern-api/base-generator";
-
-import { findDotnetToolPath } from "./findDotNetToolPath";
+import { findDotnetToolPath } from "@fern-api/csharp-base";
 
 export class CsharpFormatter extends AbstractFormatter {
     private readonly csharpier: string;

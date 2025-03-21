@@ -5,5 +5,4 @@ void runCli();
 export async function runCli(): Promise<void> {
     const cli = new SdkGeneratorCLI();
     await cli.run();
-    process.exit(0);
 }
