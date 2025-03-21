@@ -44,7 +44,7 @@ SeedMultiLineDocsClient client = SeedMultiLineDocsClient
     .build();
 ```
 
-## Errors
+## Exception Handling
 
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 

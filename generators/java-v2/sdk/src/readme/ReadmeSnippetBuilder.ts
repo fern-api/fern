@@ -16,6 +16,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
@@ -71,7 +72,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [ReadmeSnippetBuilder.BASE_URL_FEATURE_ID]: {
                 renderer: this.renderBaseUrlSnippet.bind(this)
             },
-            [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
+            [ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID]: {
+                renderer: this.renderExceptionHandlingSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.CustomClient]: {
                 renderer: this.renderCustomClientSnippet.bind(this)
             },
@@ -189,7 +192,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.renderSnippet(snippet);
     }
 
-    private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
+    private renderExceptionHandlingSnippet(endpoint: EndpointWithFilepath): string {
         const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
         const apiExceptionClassReference = this.context.getApiExceptionClassReference();

@@ -16,7 +16,7 @@ features:
       Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call 
       `nextPage` to perform the pagination manually
 
-  - id: ERRORS
+  - id: EXCEPTION_HANDLING
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
