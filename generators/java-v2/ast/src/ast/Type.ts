@@ -19,9 +19,13 @@ type InternalType =
     | Object_
     | Optional
     | Reference
+    | ParameterizedReference
     | Set
     | String_
-    | UUID;
+    | UUID
+    | Void
+    | Iterable
+    | InputStream;
 
 interface BigInteger {
     type: "bigInteger";
@@ -84,6 +88,12 @@ interface Reference {
     value: ClassReference;
 }
 
+interface ParameterizedReference {
+    type: "parameterizedReference";
+    value: ClassReference;
+    parameters: Type[];
+}
+
 interface Set {
     type: "set";
     value: Type;
@@ -97,11 +107,25 @@ interface UUID {
     type: "uuid";
 }
 
+interface Void {
+    type: "void";
+}
+
+interface Iterable {
+    type: "iterable";
+    value: Type;
+}
+
+interface InputStream {
+    type: "inputStream";
+}
+
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType) {
         super();
     }
 
+    // TODO: Add unboxed variants for primitive types
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "bigInteger":
@@ -151,6 +175,17 @@ export class Type extends AstNode {
             case "reference":
                 writer.writeNode(this.internalType.value);
                 break;
+            case "parameterizedReference":
+                writer.writeNode(this.internalType.value);
+                writer.write("<");
+                for (const [index, parameter] of this.internalType.parameters.entries()) {
+                    writer.writeNode(parameter);
+                    if (index < this.internalType.parameters.length - 1) {
+                        writer.write(", ");
+                    }
+                }
+                writer.write(">");
+                break;
             case "set": {
                 this.writeSet({ writer, set: this.internalType });
                 break;
@@ -160,6 +195,15 @@ export class Type extends AstNode {
                 break;
             case "uuid":
                 writer.writeNode(UUIDClassReference);
+                break;
+            case "void":
+                writer.write("Void");
+                break;
+            case "iterable":
+                this.writeIterable({ writer, iterable: this.internalType });
+                break;
+            case "inputStream":
+                writer.writeNode(InputStreamClassReference);
                 break;
             default:
                 assertNever(this.internalType);
@@ -264,6 +308,14 @@ export class Type extends AstNode {
         });
     }
 
+    public static parameterizedReference(value: ClassReference, parameters: Type[]): Type {
+        return new this({
+            type: "parameterizedReference",
+            value,
+            parameters
+        });
+    }
+
     public static set(value: Type): Type {
         return new this({
             type: "set",
@@ -280,6 +332,25 @@ export class Type extends AstNode {
     public static uuid(): Type {
         return new this({
             type: "uuid"
+        });
+    }
+
+    public static void(): Type {
+        return new this({
+            type: "void"
+        });
+    }
+
+    public static iterable(value: Type): Type {
+        return new this({
+            type: "iterable",
+            value
+        });
+    }
+
+    public static inputStream(): Type {
+        return new this({
+            type: "inputStream"
         });
     }
 
@@ -303,6 +374,13 @@ export class Type extends AstNode {
         writer.writeNode(OptionalClassReference);
         writer.write("<");
         optional.value.write(writer);
+        writer.write(">");
+    }
+
+    private writeIterable({ writer, iterable }: { writer: Writer; iterable: Iterable }): void {
+        writer.writeNode(OptionalClassReference);
+        writer.write("<");
+        iterable.value.write(writer);
         writer.write(">");
     }
 
@@ -361,4 +439,9 @@ export const SetClassReference = new ClassReference({
 export const UUIDClassReference = new ClassReference({
     name: "UUID",
     packageName: "java.util"
+});
+
+export const InputStreamClassReference = new ClassReference({
+    name: "InputStream",
+    packageName: "java.io"
 });

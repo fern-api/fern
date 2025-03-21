@@ -37,8 +37,6 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-package com.example.usage;
-
 import com.seed.api.SeedApiClient;
 
 SeedApiClient client = SeedApiClient.builder().url("https://example.com").build();
@@ -49,8 +47,6 @@ SeedApiClient client = SeedApiClient.builder().url("https://example.com").build(
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-package com.example.usage;
-
 import com.seed.api.core.SeedApiApiException;
 
 try {

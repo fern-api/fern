@@ -4,6 +4,107 @@
 
 The Seed Java library provides convenient access to the Seed API from Java.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```java
+package com.example.usage;
+
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
+
+public class Example {
+    public static void run() {
+        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+            .builder()
+            .build();
+
+        client.organization().create(
+            CreateOrganizationRequest
+                .builder()
+                .name("name")
+                .build()
+        );
+    }
+}
+```
+
+## Base Url
+
+You can set a custom base URL when constructing the client.
+
+```java
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder().url("https://example.com").build();
+```
+
+## Errors
+
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+
+```java
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
+
+try {
+    client.organization().create(...);
+} catch (SeedMixedFileDirectoryApiException e) {
+    // Do something with the API exception...
+}
+```
+
+## Advanced
+
+### Custom Client
+
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+However, you can pass your own client like so:
+
+```java
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder().httpClient(customClient).build();
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```java
+import com.seed.mixedFileDirectory.core.RequestOptions;
+
+client.organization().create(..., RequestOptions.builder().maxRetries(1).build());
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```java
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.core.RequestOptions;
+
+// Client level
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder().timeout(10).build();
+
+// Request level
+client.organization().create(..., RequestOptions.builder().timeout(10).build());
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

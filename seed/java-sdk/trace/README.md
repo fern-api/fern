@@ -4,6 +4,119 @@
 
 The Seed Java library provides convenient access to the Seed API from Java.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```java
+package com.example.usage;
+
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.submission.types.TestSubmissionStatus;
+import java.util.UUID;
+
+public class Example {
+    public static void run() {
+        SeedTraceClient client = SeedTraceClient
+            .builder()
+            .token("<token>")
+            .build();
+
+        client.admin().updateTestSubmissionStatus(
+            UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            TestSubmissionStatus.stopped()
+        );
+    }
+}
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```java
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.core.Environment;
+
+// Using environment
+SeedTraceClient client = SeedTraceClient.builder().environment(Environment.Prod).build();
+```
+
+## Base Url
+
+You can set a custom base URL when constructing the client.
+
+```java
+import com.seed.trace.SeedTraceClient;
+
+SeedTraceClient client = SeedTraceClient.builder().url("https://example.com").build();
+```
+
+## Errors
+
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+
+```java
+import com.seed.trace.core.SeedTraceApiException;
+
+try {
+    client.admin().updateTestSubmissionStatus(...);
+} catch (SeedTraceApiException e) {
+    // Do something with the API exception...
+}
+```
+
+## Advanced
+
+### Custom Client
+
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+However, you can pass your own client like so:
+
+```java
+import com.seed.trace.SeedTraceClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+SeedTraceClient client = SeedTraceClient.builder().httpClient(customClient).build();
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```java
+import com.seed.trace.core.RequestOptions;
+
+client.admin().updateTestSubmissionStatus(..., RequestOptions.builder().maxRetries(1).build());
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```java
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.core.RequestOptions;
+
+// Client level
+SeedTraceClient client = SeedTraceClient.builder().timeout(10).build();
+
+// Request level
+client.admin().updateTestSubmissionStatus(..., RequestOptions.builder().timeout(10).build());
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

@@ -196,10 +196,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNodeStatement(withCustomUrl);
         });
 
-        return snippet.toString({
-            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig
-        });
+        return this.renderSnippet(snippet);
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
@@ -219,10 +216,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.endControlFlow();
         });
 
-        return snippet.toString({
-            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig
-        });
+        return this.renderSnippet(snippet);
     }
 
     private renderCustomClientSnippet(_endpoint: EndpointWithFilepath): string {
@@ -356,7 +350,40 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        return "";
+        const clientClassReference = this.context.getRootClientClassReference();
+        const clientBuilderMethodInvocation = java.invokeMethod({
+            on: clientClassReference,
+            method: "builder",
+            arguments_: []
+        });
+        const clientBuildMethodInvocation = java.invokeMethod({
+            on: clientBuilderMethodInvocation,
+            method: "build",
+            arguments_: []
+        });
+
+        const returnTypeClassReference = this.context.getReturnTypeForEndpoint(endpoint.endpoint);
+        const paginationClassReference = java.Type.parameterizedReference(this.context.getPaginationClassReference(), [
+            returnTypeClassReference
+        ]);
+
+        const endpointMethodCall = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${this.getRootPackageClientName()} = `);
+            writer.writeNodeStatement(clientBuildMethodInvocation);
+            writer.writeLine("\n");
+            writer.writeNode(paginationClassReference);
+            writer.write(" response = ");
+            writer.writeNodeStatement(endpointMethodCall);
+            writer.writeLine("\n");
+            writer.controlFlow("for", java.codeblock("item : response"));
+            writer.writeLine("// Do something with item");
+            writer.endControlFlow();
+        });
+
+        return this.renderSnippet(snippet);
     }
 
     private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
