@@ -42,7 +42,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.anyAuth.SeedAnyAuthClient;
 
-SeedAnyAuthClient client = SeedAnyAuthClient.builder().url("https://example.com").build();
+SeedAnyAuthClient client = SeedAnyAuthClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -72,7 +75,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedAnyAuthClient client = SeedAnyAuthClient.builder().httpClient(customClient).build();
+SeedAnyAuthClient client = SeedAnyAuthClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -92,7 +98,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.anyAuth.core.RequestOptions;
 
-client.auth().getToken(..., RequestOptions.builder().maxRetries(1).build());
+client.auth().getToken(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -104,10 +116,19 @@ import com.seed.anyAuth.SeedAnyAuthClient;
 import com.seed.anyAuth.core.RequestOptions;
 
 // Client level
-SeedAnyAuthClient client = SeedAnyAuthClient.builder().timeout(10).build();
+SeedAnyAuthClient client = SeedAnyAuthClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.auth().getToken(..., RequestOptions.builder().timeout(10).build());
+client.auth().getToken(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

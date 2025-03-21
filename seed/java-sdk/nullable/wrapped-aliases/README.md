@@ -60,7 +60,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.nullable.SeedNullableClient;
 
-SeedNullableClient client = SeedNullableClient.builder().url("https://example.com").build();
+SeedNullableClient client = SeedNullableClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -90,7 +93,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedNullableClient client = SeedNullableClient.builder().httpClient(customClient).build();
+SeedNullableClient client = SeedNullableClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -110,7 +116,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.nullable.core.RequestOptions;
 
-client.nullable().createUser(..., RequestOptions.builder().maxRetries(1).build());
+client.nullable().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -122,10 +134,19 @@ import com.seed.nullable.SeedNullableClient;
 import com.seed.nullable.core.RequestOptions;
 
 // Client level
-SeedNullableClient client = SeedNullableClient.builder().timeout(10).build();
+SeedNullableClient client = SeedNullableClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.nullable().createUser(..., RequestOptions.builder().timeout(10).build());
+client.nullable().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

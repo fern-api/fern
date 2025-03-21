@@ -41,7 +41,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.validation.SeedValidationClient;
 
-SeedValidationClient client = SeedValidationClient.builder().url("https://example.com").build();
+SeedValidationClient client = SeedValidationClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -71,7 +74,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedValidationClient client = SeedValidationClient.builder().httpClient(customClient).build();
+SeedValidationClient client = SeedValidationClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -91,7 +97,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.validation.core.RequestOptions;
 
-client.create(..., RequestOptions.builder().maxRetries(1).build());
+client.create(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -103,10 +115,19 @@ import com.seed.validation.SeedValidationClient;
 import com.seed.validation.core.RequestOptions;
 
 // Client level
-SeedValidationClient client = SeedValidationClient.builder().timeout(10).build();
+SeedValidationClient client = SeedValidationClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.create(..., RequestOptions.builder().timeout(10).build());
+client.create(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

@@ -39,8 +39,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 import com.seed.multiUrlEnvironment.core.Environment;
 
-// Using environment
-SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient.builder().environment(Environment.Production).build();
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
+    .builder()
+    .environment(Environment.Production)
+    .build();
 ```
 
 ## Base Url
@@ -50,7 +52,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 
-SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient.builder().url("https://example.com").build();
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -80,7 +85,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient.builder().httpClient(customClient).build();
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -100,7 +108,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.multiUrlEnvironment.core.RequestOptions;
 
-client.ec2().bootInstance(..., RequestOptions.builder().maxRetries(1).build());
+client.ec2().bootInstance(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -112,10 +126,19 @@ import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
 
 // Client level
-SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient.builder().timeout(10).build();
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.ec2().bootInstance(..., RequestOptions.builder().timeout(10).build());
+client.ec2().bootInstance(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

@@ -44,7 +44,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.object.SeedObjectClient;
 
-SeedObjectClient client = SeedObjectClient.builder().url("https://example.com").build();
+SeedObjectClient client = SeedObjectClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -74,7 +77,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedObjectClient client = SeedObjectClient.builder().httpClient(customClient).build();
+SeedObjectClient client = SeedObjectClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -94,7 +100,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.object.core.RequestOptions;
 
-client.getRoot(..., RequestOptions.builder().maxRetries(1).build());
+client.getRoot(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -106,10 +118,19 @@ import com.seed.object.SeedObjectClient;
 import com.seed.object.core.RequestOptions;
 
 // Client level
-SeedObjectClient client = SeedObjectClient.builder().timeout(10).build();
+SeedObjectClient client = SeedObjectClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.getRoot(..., RequestOptions.builder().timeout(10).build());
+client.getRoot(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

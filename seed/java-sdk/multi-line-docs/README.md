@@ -38,7 +38,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.multiLineDocs.SeedMultiLineDocsClient;
 
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient.builder().url("https://example.com").build();
+SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -68,7 +71,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient.builder().httpClient(customClient).build();
+SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -88,7 +94,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.multiLineDocs.core.RequestOptions;
 
-client.user().createUser(..., RequestOptions.builder().maxRetries(1).build());
+client.user().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -100,10 +112,19 @@ import com.seed.multiLineDocs.SeedMultiLineDocsClient;
 import com.seed.multiLineDocs.core.RequestOptions;
 
 // Client level
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient.builder().timeout(10).build();
+SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.user().createUser(..., RequestOptions.builder().timeout(10).build());
+client.user().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

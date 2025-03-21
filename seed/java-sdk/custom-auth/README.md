@@ -35,7 +35,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.customAuth.SeedCustomAuthClient;
 
-SeedCustomAuthClient client = SeedCustomAuthClient.builder().url("https://example.com").build();
+SeedCustomAuthClient client = SeedCustomAuthClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -65,7 +68,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedCustomAuthClient client = SeedCustomAuthClient.builder().httpClient(customClient).build();
+SeedCustomAuthClient client = SeedCustomAuthClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -85,7 +91,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.customAuth.core.RequestOptions;
 
-client.customAuth().postWithCustomAuth(..., RequestOptions.builder().maxRetries(1).build());
+client.customAuth().postWithCustomAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -97,10 +109,19 @@ import com.seed.customAuth.SeedCustomAuthClient;
 import com.seed.customAuth.core.RequestOptions;
 
 // Client level
-SeedCustomAuthClient client = SeedCustomAuthClient.builder().timeout(10).build();
+SeedCustomAuthClient client = SeedCustomAuthClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.customAuth().postWithCustomAuth(..., RequestOptions.builder().timeout(10).build());
+client.customAuth().postWithCustomAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

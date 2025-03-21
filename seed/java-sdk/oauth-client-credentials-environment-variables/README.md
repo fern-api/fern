@@ -41,7 +41,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;
 
-SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.builder().url("https://example.com").build();
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -71,7 +74,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.builder().httpClient(customClient).build();
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -91,7 +97,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
 
-client.auth().getTokenWithClientCredentials(..., RequestOptions.builder().maxRetries(1).build());
+client.auth().getTokenWithClientCredentials(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -103,10 +115,19 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCreden
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
 
 // Client level
-SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.builder().timeout(10).build();
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.auth().getTokenWithClientCredentials(..., RequestOptions.builder().timeout(10).build());
+client.auth().getTokenWithClientCredentials(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

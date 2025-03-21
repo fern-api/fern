@@ -58,7 +58,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.pagination.SeedPaginationClient;
 
-SeedPaginationClient client = SeedPaginationClient.builder().url("https://example.com").build();
+SeedPaginationClient client = SeedPaginationClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Pagination
@@ -72,7 +75,9 @@ import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.complex.types.PaginatedConversationResponse;
 import java.util.List;
 
-SeedPaginationClient client = SeedPaginationClient.builder().build();
+SeedPaginationClient client = SeedPaginationClient
+    .builder()
+    .build();
 
 SyncPagingIterable<PaginatedConversationResponse> response = client.complex().search(...);
 
@@ -120,7 +125,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedPaginationClient client = SeedPaginationClient.builder().httpClient(customClient).build();
+SeedPaginationClient client = SeedPaginationClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -140,7 +148,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.pagination.core.RequestOptions;
 
-client.complex().search(..., RequestOptions.builder().maxRetries(1).build());
+client.complex().search(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -152,10 +166,19 @@ import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.core.RequestOptions;
 
 // Client level
-SeedPaginationClient client = SeedPaginationClient.builder().timeout(10).build();
+SeedPaginationClient client = SeedPaginationClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.complex().search(..., RequestOptions.builder().timeout(10).build());
+client.complex().search(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

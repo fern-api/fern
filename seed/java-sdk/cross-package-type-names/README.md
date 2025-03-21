@@ -39,7 +39,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
 
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient.builder().url("https://example.com").build();
+SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -69,7 +72,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient.builder().httpClient(customClient).build();
+SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -89,7 +95,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.crossPackageTypeNames.core.RequestOptions;
 
-client.foo().find(..., RequestOptions.builder().maxRetries(1).build());
+client.foo().find(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -101,10 +113,19 @@ import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
 
 // Client level
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient.builder().timeout(10).build();
+SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.foo().find(..., RequestOptions.builder().timeout(10).build());
+client.foo().find(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

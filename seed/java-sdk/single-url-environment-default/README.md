@@ -33,8 +33,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient;
 import com.seed.singleUrlEnvironmentDefault.core.Environment;
 
-// Using environment
-SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient.builder().environment(Environment.Production).build();
+SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient
+    .builder()
+    .environment(Environment.Production)
+    .build();
 ```
 
 ## Base Url
@@ -44,7 +46,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient;
 
-SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient.builder().url("https://example.com").build();
+SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -74,7 +79,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient.builder().httpClient(customClient).build();
+SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -94,7 +102,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
 
-client.dummy().getDummy(..., RequestOptions.builder().maxRetries(1).build());
+client.dummy().getDummy(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -106,10 +120,19 @@ import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClien
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
 
 // Client level
-SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient.builder().timeout(10).build();
+SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.dummy().getDummy(..., RequestOptions.builder().timeout(10).build());
+client.dummy().getDummy(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

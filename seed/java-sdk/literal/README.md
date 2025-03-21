@@ -39,7 +39,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.literal.SeedLiteralClient;
 
-SeedLiteralClient client = SeedLiteralClient.builder().url("https://example.com").build();
+SeedLiteralClient client = SeedLiteralClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -69,7 +72,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedLiteralClient client = SeedLiteralClient.builder().httpClient(customClient).build();
+SeedLiteralClient client = SeedLiteralClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -89,7 +95,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.literal.core.RequestOptions;
 
-client.headers().send(..., RequestOptions.builder().maxRetries(1).build());
+client.headers().send(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -101,10 +113,19 @@ import com.seed.literal.SeedLiteralClient;
 import com.seed.literal.core.RequestOptions;
 
 // Client level
-SeedLiteralClient client = SeedLiteralClient.builder().timeout(10).build();
+SeedLiteralClient client = SeedLiteralClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.headers().send(..., RequestOptions.builder().timeout(10).build());
+client.headers().send(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

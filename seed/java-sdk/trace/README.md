@@ -38,8 +38,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.trace.SeedTraceClient;
 import com.seed.trace.core.Environment;
 
-// Using environment
-SeedTraceClient client = SeedTraceClient.builder().environment(Environment.Prod).build();
+SeedTraceClient client = SeedTraceClient
+    .builder()
+    .environment(Environment.Prod)
+    .build();
 ```
 
 ## Base Url
@@ -49,7 +51,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.trace.SeedTraceClient;
 
-SeedTraceClient client = SeedTraceClient.builder().url("https://example.com").build();
+SeedTraceClient client = SeedTraceClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -79,7 +84,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedTraceClient client = SeedTraceClient.builder().httpClient(customClient).build();
+SeedTraceClient client = SeedTraceClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -99,7 +107,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.trace.core.RequestOptions;
 
-client.admin().updateTestSubmissionStatus(..., RequestOptions.builder().maxRetries(1).build());
+client.admin().updateTestSubmissionStatus(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -111,10 +125,19 @@ import com.seed.trace.SeedTraceClient;
 import com.seed.trace.core.RequestOptions;
 
 // Client level
-SeedTraceClient client = SeedTraceClient.builder().timeout(10).build();
+SeedTraceClient client = SeedTraceClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.admin().updateTestSubmissionStatus(..., RequestOptions.builder().timeout(10).build());
+client.admin().updateTestSubmissionStatus(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

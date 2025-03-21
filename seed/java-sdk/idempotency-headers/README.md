@@ -40,7 +40,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
 
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient.builder().url("https://example.com").build();
+SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -70,7 +73,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient.builder().httpClient(customClient).build();
+SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -90,7 +96,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.idempotencyHeaders.core.RequestOptions;
 
-client.payment().create(..., RequestOptions.builder().maxRetries(1).build());
+client.payment().create(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -102,10 +114,19 @@ import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
 import com.seed.idempotencyHeaders.core.RequestOptions;
 
 // Client level
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient.builder().timeout(10).build();
+SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.payment().create(..., RequestOptions.builder().timeout(10).build());
+client.payment().create(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

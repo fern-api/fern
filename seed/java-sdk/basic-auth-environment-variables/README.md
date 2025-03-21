@@ -35,7 +35,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;
 
-SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient.builder().url("https://example.com").build();
+SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -65,7 +68,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient.builder().httpClient(customClient).build();
+SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -85,7 +91,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
 
-client.basicAuth().postWithBasicAuth(..., RequestOptions.builder().maxRetries(1).build());
+client.basicAuth().postWithBasicAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -97,10 +109,19 @@ import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesC
 import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
 
 // Client level
-SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient.builder().timeout(10).build();
+SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.basicAuth().postWithBasicAuth(..., RequestOptions.builder().timeout(10).build());
+client.basicAuth().postWithBasicAuth(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

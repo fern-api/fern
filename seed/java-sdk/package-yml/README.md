@@ -38,7 +38,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.packageYml.SeedPackageYmlClient;
 
-SeedPackageYmlClient client = SeedPackageYmlClient.builder().url("https://example.com").build();
+SeedPackageYmlClient client = SeedPackageYmlClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -68,7 +71,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedPackageYmlClient client = SeedPackageYmlClient.builder().httpClient(customClient).build();
+SeedPackageYmlClient client = SeedPackageYmlClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -88,7 +94,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.packageYml.core.RequestOptions;
 
-client.echo(..., RequestOptions.builder().maxRetries(1).build());
+client.echo(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -100,10 +112,19 @@ import com.seed.packageYml.SeedPackageYmlClient;
 import com.seed.packageYml.core.RequestOptions;
 
 // Client level
-SeedPackageYmlClient client = SeedPackageYmlClient.builder().timeout(10).build();
+SeedPackageYmlClient client = SeedPackageYmlClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.echo(..., RequestOptions.builder().timeout(10).build());
+client.echo(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

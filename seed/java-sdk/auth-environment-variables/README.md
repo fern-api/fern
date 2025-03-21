@@ -32,7 +32,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
 
-SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient.builder().url("https://example.com").build();
+SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -62,7 +65,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient.builder().httpClient(customClient).build();
+SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -82,7 +88,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.authEnvironmentVariables.core.RequestOptions;
 
-client.service().getWithApiKey(..., RequestOptions.builder().maxRetries(1).build());
+client.service().getWithApiKey(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -94,10 +106,19 @@ import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
 import com.seed.authEnvironmentVariables.core.RequestOptions;
 
 // Client level
-SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient.builder().timeout(10).build();
+SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().getWithApiKey(..., RequestOptions.builder().timeout(10).build());
+client.service().getWithApiKey(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

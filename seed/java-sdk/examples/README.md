@@ -33,8 +33,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.core.Environment;
 
-// Using environment
-SeedExamplesClient client = SeedExamplesClient.builder().environment(Environment.Production).build();
+SeedExamplesClient client = SeedExamplesClient
+    .builder()
+    .environment(Environment.Production)
+    .build();
 ```
 
 ## Base Url
@@ -44,7 +46,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.examples.SeedExamplesClient;
 
-SeedExamplesClient client = SeedExamplesClient.builder().url("https://example.com").build();
+SeedExamplesClient client = SeedExamplesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -74,7 +79,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedExamplesClient client = SeedExamplesClient.builder().httpClient(customClient).build();
+SeedExamplesClient client = SeedExamplesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -94,7 +102,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.examples.core.RequestOptions;
 
-client.echo(..., RequestOptions.builder().maxRetries(1).build());
+client.echo(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -106,10 +120,19 @@ import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.core.RequestOptions;
 
 // Client level
-SeedExamplesClient client = SeedExamplesClient.builder().timeout(10).build();
+SeedExamplesClient client = SeedExamplesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.echo(..., RequestOptions.builder().timeout(10).build());
+client.echo(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

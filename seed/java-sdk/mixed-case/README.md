@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.mixedCase.SeedMixedCaseClient;
 
-SeedMixedCaseClient client = SeedMixedCaseClient.builder().url("https://example.com").build();
+SeedMixedCaseClient client = SeedMixedCaseClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMixedCaseClient client = SeedMixedCaseClient.builder().httpClient(customClient).build();
+SeedMixedCaseClient client = SeedMixedCaseClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.mixedCase.core.RequestOptions;
 
-client.service().getResource(..., RequestOptions.builder().maxRetries(1).build());
+client.service().getResource(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.mixedCase.SeedMixedCaseClient;
 import com.seed.mixedCase.core.RequestOptions;
 
 // Client level
-SeedMixedCaseClient client = SeedMixedCaseClient.builder().timeout(10).build();
+SeedMixedCaseClient client = SeedMixedCaseClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().getResource(..., RequestOptions.builder().timeout(10).build());
+client.service().getResource(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

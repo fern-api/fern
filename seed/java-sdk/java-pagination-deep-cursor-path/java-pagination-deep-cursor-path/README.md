@@ -55,7 +55,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
 
-SeedDeepCursorPathClient client = SeedDeepCursorPathClient.builder().url("https://example.com").build();
+SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Pagination
@@ -67,13 +70,28 @@ Paginated requests will return an Iterable<T>, which can be used to loop through
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
 import com.seed.deepCursorPath.core.pagination.SyncPagingIterable;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.Response;
+import java.util.List;
 
-SeedDeepCursorPathClient client = SeedDeepCursorPathClient.builder().build();
+SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+    .builder()
+    .build();
 
 SyncPagingIterable<Response> response = client.deepCursorPath().doThing(...);
 
+// Iterator
 for (item : response) {
     // Do something with item
+}
+
+// Streaming
+response.streamItems().map(item -> ...);
+
+// Manual pagination
+for (
+        List<Response> items = response.getItems;
+        response.hasNext();
+        items = items.nextPage().getItems()) {
+    // Do something with items
 }
 ```
 
@@ -104,7 +122,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedDeepCursorPathClient client = SeedDeepCursorPathClient.builder().httpClient(customClient).build();
+SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -124,7 +145,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.deepCursorPath.core.RequestOptions;
 
-client.deepCursorPath().doThing(..., RequestOptions.builder().maxRetries(1).build());
+client.deepCursorPath().doThing(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -136,10 +163,19 @@ import com.seed.deepCursorPath.SeedDeepCursorPathClient;
 import com.seed.deepCursorPath.core.RequestOptions;
 
 // Client level
-SeedDeepCursorPathClient client = SeedDeepCursorPathClient.builder().timeout(10).build();
+SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.deepCursorPath().doThing(..., RequestOptions.builder().timeout(10).build());
+client.deepCursorPath().doThing(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

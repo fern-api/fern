@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.unions.SeedUnionsClient;
 
-SeedUnionsClient client = SeedUnionsClient.builder().url("https://example.com").build();
+SeedUnionsClient client = SeedUnionsClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedUnionsClient client = SeedUnionsClient.builder().httpClient(customClient).build();
+SeedUnionsClient client = SeedUnionsClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.unions.core.RequestOptions;
 
-client.bigunion().get(..., RequestOptions.builder().maxRetries(1).build());
+client.bigunion().get(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.unions.SeedUnionsClient;
 import com.seed.unions.core.RequestOptions;
 
 // Client level
-SeedUnionsClient client = SeedUnionsClient.builder().timeout(10).build();
+SeedUnionsClient client = SeedUnionsClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.bigunion().get(..., RequestOptions.builder().timeout(10).build());
+client.bigunion().get(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

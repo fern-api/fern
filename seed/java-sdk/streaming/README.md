@@ -38,7 +38,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.streaming.SeedStreamingClient;
 
-SeedStreamingClient client = SeedStreamingClient.builder().url("https://example.com").build();
+SeedStreamingClient client = SeedStreamingClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -68,7 +71,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedStreamingClient client = SeedStreamingClient.builder().httpClient(customClient).build();
+SeedStreamingClient client = SeedStreamingClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -88,7 +94,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.streaming.core.RequestOptions;
 
-client.dummy().generateStream(..., RequestOptions.builder().maxRetries(1).build());
+client.dummy().generateStream(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -100,10 +112,19 @@ import com.seed.streaming.SeedStreamingClient;
 import com.seed.streaming.core.RequestOptions;
 
 // Client level
-SeedStreamingClient client = SeedStreamingClient.builder().timeout(10).build();
+SeedStreamingClient client = SeedStreamingClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.dummy().generateStream(..., RequestOptions.builder().timeout(10).build());
+client.dummy().generateStream(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

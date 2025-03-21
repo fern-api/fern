@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.errorProperty.SeedErrorPropertyClient;
 
-SeedErrorPropertyClient client = SeedErrorPropertyClient.builder().url("https://example.com").build();
+SeedErrorPropertyClient client = SeedErrorPropertyClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedErrorPropertyClient client = SeedErrorPropertyClient.builder().httpClient(customClient).build();
+SeedErrorPropertyClient client = SeedErrorPropertyClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.errorProperty.core.RequestOptions;
 
-client.propertyBasedError().throwError(..., RequestOptions.builder().maxRetries(1).build());
+client.propertyBasedError().throwError(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.errorProperty.SeedErrorPropertyClient;
 import com.seed.errorProperty.core.RequestOptions;
 
 // Client level
-SeedErrorPropertyClient client = SeedErrorPropertyClient.builder().timeout(10).build();
+SeedErrorPropertyClient client = SeedErrorPropertyClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.propertyBasedError().throwError(..., RequestOptions.builder().timeout(10).build());
+client.propertyBasedError().throwError(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

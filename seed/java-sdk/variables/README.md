@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.variables.SeedVariablesClient;
 
-SeedVariablesClient client = SeedVariablesClient.builder().url("https://example.com").build();
+SeedVariablesClient client = SeedVariablesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedVariablesClient client = SeedVariablesClient.builder().httpClient(customClient).build();
+SeedVariablesClient client = SeedVariablesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.variables.core.RequestOptions;
 
-client.service().post(..., RequestOptions.builder().maxRetries(1).build());
+client.service().post(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.variables.SeedVariablesClient;
 import com.seed.variables.core.RequestOptions;
 
 // Client level
-SeedVariablesClient client = SeedVariablesClient.builder().timeout(10).build();
+SeedVariablesClient client = SeedVariablesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().post(..., RequestOptions.builder().timeout(10).build());
+client.service().post(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

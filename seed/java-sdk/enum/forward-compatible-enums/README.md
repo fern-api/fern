@@ -47,7 +47,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.enum.SeedEnumClient;
 
-SeedEnumClient client = SeedEnumClient.builder().url("https://example.com").build();
+SeedEnumClient client = SeedEnumClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -77,7 +80,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedEnumClient client = SeedEnumClient.builder().httpClient(customClient).build();
+SeedEnumClient client = SeedEnumClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -97,7 +103,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.enum.core.RequestOptions;
 
-client.inlinedRequest().send(..., RequestOptions.builder().maxRetries(1).build());
+client.inlinedRequest().send(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -109,10 +121,19 @@ import com.seed.enum.SeedEnumClient;
 import com.seed.enum.core.RequestOptions;
 
 // Client level
-SeedEnumClient client = SeedEnumClient.builder().timeout(10).build();
+SeedEnumClient client = SeedEnumClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.inlinedRequest().send(..., RequestOptions.builder().timeout(10).build());
+client.inlinedRequest().send(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

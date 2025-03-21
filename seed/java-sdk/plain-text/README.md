@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.plainText.SeedPlainTextClient;
 
-SeedPlainTextClient client = SeedPlainTextClient.builder().url("https://example.com").build();
+SeedPlainTextClient client = SeedPlainTextClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedPlainTextClient client = SeedPlainTextClient.builder().httpClient(customClient).build();
+SeedPlainTextClient client = SeedPlainTextClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.plainText.core.RequestOptions;
 
-client.service().getText(..., RequestOptions.builder().maxRetries(1).build());
+client.service().getText(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.plainText.SeedPlainTextClient;
 import com.seed.plainText.core.RequestOptions;
 
 // Client level
-SeedPlainTextClient client = SeedPlainTextClient.builder().timeout(10).build();
+SeedPlainTextClient client = SeedPlainTextClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().getText(..., RequestOptions.builder().timeout(10).build());
+client.service().getText(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

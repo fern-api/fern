@@ -40,8 +40,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.audiences.SeedAudiencesClient;
 import com.seed.audiences.core.Environment;
 
-// Using environment
-SeedAudiencesClient client = SeedAudiencesClient.builder().environment(Environment.environment-a).build();
+SeedAudiencesClient client = SeedAudiencesClient
+    .builder()
+    .environment(Environment.environment-a)
+    .build();
 ```
 
 ## Base Url
@@ -51,7 +53,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.audiences.SeedAudiencesClient;
 
-SeedAudiencesClient client = SeedAudiencesClient.builder().url("https://example.com").build();
+SeedAudiencesClient client = SeedAudiencesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -81,7 +86,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedAudiencesClient client = SeedAudiencesClient.builder().httpClient(customClient).build();
+SeedAudiencesClient client = SeedAudiencesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -101,7 +109,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.audiences.core.RequestOptions;
 
-client.foo().find(..., RequestOptions.builder().maxRetries(1).build());
+client.foo().find(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -113,10 +127,19 @@ import com.seed.audiences.SeedAudiencesClient;
 import com.seed.audiences.core.RequestOptions;
 
 // Client level
-SeedAudiencesClient client = SeedAudiencesClient.builder().timeout(10).build();
+SeedAudiencesClient client = SeedAudiencesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.foo().find(..., RequestOptions.builder().timeout(10).build());
+client.foo().find(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

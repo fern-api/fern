@@ -39,8 +39,10 @@ This SDK allows you to configure different environments for API requests.
 import com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;
 import com.seed.multiUrlEnvironmentNoDefault.core.Environment;
 
-// Using environment
-SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder().environment(Environment.Production).build();
+SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
+    .builder()
+    .environment(Environment.Production)
+    .build();
 ```
 
 ## Base Url
@@ -50,7 +52,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;
 
-SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder().url("https://example.com").build();
+SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -80,7 +85,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder().httpClient(customClient).build();
+SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -100,7 +108,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.multiUrlEnvironmentNoDefault.core.RequestOptions;
 
-client.ec2().bootInstance(..., RequestOptions.builder().maxRetries(1).build());
+client.ec2().bootInstance(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -112,10 +126,19 @@ import com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultCli
 import com.seed.multiUrlEnvironmentNoDefault.core.RequestOptions;
 
 // Client level
-SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder().timeout(10).build();
+SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.ec2().bootInstance(..., RequestOptions.builder().timeout(10).build());
+client.ec2().bootInstance(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

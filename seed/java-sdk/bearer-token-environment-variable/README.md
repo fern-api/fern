@@ -32,7 +32,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;
 
-SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient.builder().url("https://example.com").build();
+SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -62,7 +65,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient.builder().httpClient(customClient).build();
+SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -82,7 +88,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
 
-client.service().getWithBearerToken(..., RequestOptions.builder().maxRetries(1).build());
+client.service().getWithBearerToken(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -94,10 +106,19 @@ import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariabl
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
 
 // Client level
-SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient.builder().timeout(10).build();
+SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().getWithBearerToken(..., RequestOptions.builder().timeout(10).build());
+client.service().getWithBearerToken(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

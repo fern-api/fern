@@ -37,7 +37,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.nurseryApi.SeedNurseryApiClient;
 
-SeedNurseryApiClient client = SeedNurseryApiClient.builder().url("https://example.com").build();
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -67,7 +70,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedNurseryApiClient client = SeedNurseryApiClient.builder().httpClient(customClient).build();
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -87,7 +93,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.nurseryApi.core.RequestOptions;
 
-client.package_().test(..., RequestOptions.builder().maxRetries(1).build());
+client.package_().test(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -99,10 +111,19 @@ import com.seed.nurseryApi.SeedNurseryApiClient;
 import com.seed.nurseryApi.core.RequestOptions;
 
 // Client level
-SeedNurseryApiClient client = SeedNurseryApiClient.builder().timeout(10).build();
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.package_().test(..., RequestOptions.builder().timeout(10).build());
+client.package_().test(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.alias.SeedAliasClient;
 
-SeedAliasClient client = SeedAliasClient.builder().url("https://example.com").build();
+SeedAliasClient client = SeedAliasClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedAliasClient client = SeedAliasClient.builder().httpClient(customClient).build();
+SeedAliasClient client = SeedAliasClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.alias.core.RequestOptions;
 
-client.get(..., RequestOptions.builder().maxRetries(1).build());
+client.get(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.alias.SeedAliasClient;
 import com.seed.alias.core.RequestOptions;
 
 // Client level
-SeedAliasClient client = SeedAliasClient.builder().timeout(10).build();
+SeedAliasClient client = SeedAliasClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.get(..., RequestOptions.builder().timeout(10).build());
+client.get(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

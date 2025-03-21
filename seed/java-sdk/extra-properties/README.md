@@ -39,7 +39,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.extraProperties.SeedExtraPropertiesClient;
 
-SeedExtraPropertiesClient client = SeedExtraPropertiesClient.builder().url("https://example.com").build();
+SeedExtraPropertiesClient client = SeedExtraPropertiesClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -69,7 +72,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedExtraPropertiesClient client = SeedExtraPropertiesClient.builder().httpClient(customClient).build();
+SeedExtraPropertiesClient client = SeedExtraPropertiesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -89,7 +95,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.extraProperties.core.RequestOptions;
 
-client.user().createUser(..., RequestOptions.builder().maxRetries(1).build());
+client.user().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -101,10 +113,19 @@ import com.seed.extraProperties.SeedExtraPropertiesClient;
 import com.seed.extraProperties.core.RequestOptions;
 
 // Client level
-SeedExtraPropertiesClient client = SeedExtraPropertiesClient.builder().timeout(10).build();
+SeedExtraPropertiesClient client = SeedExtraPropertiesClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.user().createUser(..., RequestOptions.builder().timeout(10).build());
+client.user().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

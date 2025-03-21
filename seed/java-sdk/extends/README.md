@@ -39,7 +39,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.extends.SeedExtendsClient;
 
-SeedExtendsClient client = SeedExtendsClient.builder().url("https://example.com").build();
+SeedExtendsClient client = SeedExtendsClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -69,7 +72,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedExtendsClient client = SeedExtendsClient.builder().httpClient(customClient).build();
+SeedExtendsClient client = SeedExtendsClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -89,7 +95,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.extends.core.RequestOptions;
 
-client.extendedInlineRequestBody(..., RequestOptions.builder().maxRetries(1).build());
+client.extendedInlineRequestBody(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -101,10 +113,19 @@ import com.seed.extends.SeedExtendsClient;
 import com.seed.extends.core.RequestOptions;
 
 // Client level
-SeedExtendsClient client = SeedExtendsClient.builder().timeout(10).build();
+SeedExtendsClient client = SeedExtendsClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.extendedInlineRequestBody(..., RequestOptions.builder().timeout(10).build());
+client.extendedInlineRequestBody(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

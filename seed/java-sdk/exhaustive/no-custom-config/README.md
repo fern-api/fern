@@ -38,7 +38,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.exhaustive.SeedExhaustiveClient;
 
-SeedExhaustiveClient client = SeedExhaustiveClient.builder().url("https://example.com").build();
+SeedExhaustiveClient client = SeedExhaustiveClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -68,7 +71,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedExhaustiveClient client = SeedExhaustiveClient.builder().httpClient(customClient).build();
+SeedExhaustiveClient client = SeedExhaustiveClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -88,7 +94,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.exhaustive.core.RequestOptions;
 
-client.endpoints().container().getAndReturnListOfPrimitives(..., RequestOptions.builder().maxRetries(1).build());
+client.endpoints().container().getAndReturnListOfPrimitives(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -100,10 +112,19 @@ import com.seed.exhaustive.SeedExhaustiveClient;
 import com.seed.exhaustive.core.RequestOptions;
 
 // Client level
-SeedExhaustiveClient client = SeedExhaustiveClient.builder().timeout(10).build();
+SeedExhaustiveClient client = SeedExhaustiveClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.endpoints().container().getAndReturnListOfPrimitives(..., RequestOptions.builder().timeout(10).build());
+client.endpoints().container().getAndReturnListOfPrimitives(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

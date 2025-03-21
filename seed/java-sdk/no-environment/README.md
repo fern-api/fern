@@ -32,7 +32,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.noEnvironment.SeedNoEnvironmentClient;
 
-SeedNoEnvironmentClient client = SeedNoEnvironmentClient.builder().url("https://example.com").build();
+SeedNoEnvironmentClient client = SeedNoEnvironmentClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -62,7 +65,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedNoEnvironmentClient client = SeedNoEnvironmentClient.builder().httpClient(customClient).build();
+SeedNoEnvironmentClient client = SeedNoEnvironmentClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -82,7 +88,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.noEnvironment.core.RequestOptions;
 
-client.dummy().getDummy(..., RequestOptions.builder().maxRetries(1).build());
+client.dummy().getDummy(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -94,10 +106,19 @@ import com.seed.noEnvironment.SeedNoEnvironmentClient;
 import com.seed.noEnvironment.core.RequestOptions;
 
 // Client level
-SeedNoEnvironmentClient client = SeedNoEnvironmentClient.builder().timeout(10).build();
+SeedNoEnvironmentClient client = SeedNoEnvironmentClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.dummy().getDummy(..., RequestOptions.builder().timeout(10).build());
+client.dummy().getDummy(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

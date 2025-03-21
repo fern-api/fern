@@ -39,7 +39,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.customprefix.SeedApiClient;
 
-SeedApiClient client = SeedApiClient.builder().url("https://example.com").build();
+SeedApiClient client = SeedApiClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -69,7 +72,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient.builder().httpClient(customClient).build();
+SeedApiClient client = SeedApiClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -89,7 +95,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.customprefix.core.RequestOptions;
 
-client.imdb().createMovie(..., RequestOptions.builder().maxRetries(1).build());
+client.imdb().createMovie(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -101,10 +113,19 @@ import com.customprefix.SeedApiClient;
 import com.customprefix.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient.builder().timeout(10).build();
+SeedApiClient client = SeedApiClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.imdb().createMovie(..., RequestOptions.builder().timeout(10).build());
+client.imdb().createMovie(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

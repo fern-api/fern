@@ -41,7 +41,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder().url("https://example.com").build();
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -71,7 +74,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder().httpClient(customClient).build();
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -91,7 +97,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.oauthClientCredentials.core.RequestOptions;
 
-client.auth().getToken(..., RequestOptions.builder().maxRetries(1).build());
+client.auth().getToken(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -103,10 +115,19 @@ import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 import com.seed.oauthClientCredentials.core.RequestOptions;
 
 // Client level
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder().timeout(10).build();
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.auth().getToken(..., RequestOptions.builder().timeout(10).build());
+client.auth().getToken(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

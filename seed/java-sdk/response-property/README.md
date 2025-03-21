@@ -31,7 +31,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.responseProperty.SeedResponsePropertyClient;
 
-SeedResponsePropertyClient client = SeedResponsePropertyClient.builder().url("https://example.com").build();
+SeedResponsePropertyClient client = SeedResponsePropertyClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -61,7 +64,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedResponsePropertyClient client = SeedResponsePropertyClient.builder().httpClient(customClient).build();
+SeedResponsePropertyClient client = SeedResponsePropertyClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -81,7 +87,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.responseProperty.core.RequestOptions;
 
-client.service().getMovie(..., RequestOptions.builder().maxRetries(1).build());
+client.service().getMovie(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -93,10 +105,19 @@ import com.seed.responseProperty.SeedResponsePropertyClient;
 import com.seed.responseProperty.core.RequestOptions;
 
 // Client level
-SeedResponsePropertyClient client = SeedResponsePropertyClient.builder().timeout(10).build();
+SeedResponsePropertyClient client = SeedResponsePropertyClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.service().getMovie(..., RequestOptions.builder().timeout(10).build());
+client.service().getMovie(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing

@@ -41,7 +41,10 @@ You can set a custom base URL when constructing the client.
 ```java
 import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
 
-SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder().url("https://example.com").build();
+SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Errors
@@ -71,7 +74,10 @@ import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder().httpClient(customClient).build();
+SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
@@ -91,7 +97,13 @@ Use the `maxRetries` request option to configure this behavior.
 ```java
 import com.seed.objectsWithImports.core.RequestOptions;
 
-client.optional().sendOptionalBody(..., RequestOptions.builder().maxRetries(1).build());
+client.optional().sendOptionalBody(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
 ```
 
 ### Timeouts
@@ -103,10 +115,19 @@ import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
 import com.seed.objectsWithImports.core.RequestOptions;
 
 // Client level
-SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder().timeout(10).build();
+SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
+    .builder()
+    .tiemout(10)
+    .build();
 
 // Request level
-client.optional().sendOptionalBody(..., RequestOptions.builder().timeout(10).build());
+client.optional().sendOptionalBody(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
 ## Contributing
