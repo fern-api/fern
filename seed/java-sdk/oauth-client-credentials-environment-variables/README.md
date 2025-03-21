@@ -4,6 +4,132 @@
 
 The Seed Java library provides convenient access to the Seed API from Java.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```java
+package com.example.usage;
+
+import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.requests.GetTokenRequest;
+
+public class Example {
+    public static void run() {
+        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+            .builder()
+            .build();
+
+        client.auth().getTokenWithClientCredentials(
+            GetTokenRequest
+                .builder()
+                .clientId("client_id")
+                .clientSecret("client_secret")
+                .audience("https://api.example.com")
+                .grantType("client_credentials")
+                .scope("scope")
+                .build()
+        );
+    }
+}
+```
+
+## Base Url
+
+You can set a custom base URL when constructing the client.
+
+```java
+import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;
+
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .url("https://example.com")
+    .build();
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+
+```java
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesApiException;
+
+try {
+    client.auth().getTokenWithClientCredentials(...);
+} catch (SeedOauthClientCredentialsEnvironmentVariablesApiException e) {
+    // Do something with the API exception...
+}
+```
+
+## Advanced
+
+### Custom Client
+
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+However, you can pass your own client like so:
+
+```java
+import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .httpClient(customClient)
+    .build();
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```java
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
+
+client.auth().getTokenWithClientCredentials(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```java
+import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
+
+// Client level
+SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
+    .builder()
+    .tiemout(10)
+    .build();
+
+// Request level
+client.auth().getTokenWithClientCredentials(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

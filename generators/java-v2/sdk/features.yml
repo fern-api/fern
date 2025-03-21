@@ -5,46 +5,44 @@ features:
 
   - id: ENVIRONMENTS
     description: |
-      You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
-      URL, which is particularly useful in test environments.
+      This SDK allows you to configure different environments for API requests.
+
+  - id: BASE_URL
+    description: |
+      You can set a custom base URL when constructing the client.
 
   - id: PAGINATION
     description: |
-      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+      Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call 
+      `nextPage` to perform the pagination manually
 
-  - id: ERRORS
+  - id: EXCEPTION_HANDLING
     description: |
-      Structured error types are returned from API calls that return non-success status codes. These errors are compatible
-      with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
+      When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
-  - id: REQUEST_OPTIONS
+  - id: CUSTOM_CLIENT
+    advanced: true
     description: |
-      A variety of request options are included to adapt the behavior of the library, which includes configuring
-      authorization tokens, or providing your own instrumented `*http.Client`.
-      
-      These request options can either be
-      specified on the client so that they're applied on every request, or for an individual request, like so:
-
-      > Providing your own `*http.Client` is recommended. Otherwise, the `http.DefaultClient` will be used,
-      > and your client will wait indefinitely for a response (unless the per-request, context-based timeout
-      > is used).
+      This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+      However, you can pass your own client like so:
 
   - id: RETRIES
     advanced: true
     description: |
       The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-      as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+      as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
       retry limit (default: 2).
 
-      A request is deemed retryable when any of the following HTTP status codes is returned:
+      A request is deemed retriable when any of the following HTTP status codes is returned:
 
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
       - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-      Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
+      Use the `maxRetries` request option to configure this behavior.
 
   - id: TIMEOUTS
     advanced: true
     description: |
-      Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
+      The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+

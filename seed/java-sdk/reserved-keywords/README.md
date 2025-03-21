@@ -4,6 +4,128 @@
 
 The Seed Java library provides convenient access to the Seed API from Java.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```java
+package com.example.usage;
+
+import com.seed.nurseryApi.SeedNurseryApiClient;
+import com.seed.nurseryApi.resources.package_.requests.TestRequest;
+
+public class Example {
+    public static void run() {
+        SeedNurseryApiClient client = SeedNurseryApiClient
+            .builder()
+            .build();
+
+        client.package_().test(
+            TestRequest
+                .builder()
+                .for_("for")
+                .build()
+        );
+    }
+}
+```
+
+## Base Url
+
+You can set a custom base URL when constructing the client.
+
+```java
+import com.seed.nurseryApi.SeedNurseryApiClient;
+
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .url("https://example.com")
+    .build();
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+
+```java
+import com.seed.nurseryApi.core.SeedNurseryApiApiException;
+
+try {
+    client.package_().test(...);
+} catch (SeedNurseryApiApiException e) {
+    // Do something with the API exception...
+}
+```
+
+## Advanced
+
+### Custom Client
+
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+However, you can pass your own client like so:
+
+```java
+import com.seed.nurseryApi.SeedNurseryApiClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .httpClient(customClient)
+    .build();
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```java
+import com.seed.nurseryApi.core.RequestOptions;
+
+client.package_().test(
+    ...,
+    RequestOptions
+        .builder()
+        .maxRetries(1)
+        .build()
+);
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```java
+import com.seed.nurseryApi.SeedNurseryApiClient;
+import com.seed.nurseryApi.core.RequestOptions;
+
+// Client level
+SeedNurseryApiClient client = SeedNurseryApiClient
+    .builder()
+    .tiemout(10)
+    .build();
+
+// Request level
+client.package_().test(
+    ...,
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

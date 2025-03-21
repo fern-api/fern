@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support automatic README.md generation
+      type: feat
+  createdAt: '2025-03-21'
+  irVersion: 55
+  version: 2.27.0
+- changelogEntry:
+    - summary: |
         Expose max retries for clients
       type: feat
   createdAt: '2025-03-13'
