@@ -440,6 +440,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -455,6 +458,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -4437,6 +4443,49 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/api-importers/asyncapi-to-ir:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../v2-importer-commons
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/api-importers/commons:
     dependencies:
       '@fern-api/configuration':
@@ -4580,6 +4629,58 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/api-importers/openapi-to-ir:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../v2-importer-commons
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -4779,15 +4880,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
-      '@fern-api/cli-source-resolver':
-        specifier: workspace:*
-        version: link:../../../cli-source-resolver
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../configs
-      '@fern-api/ir-generator':
-        specifier: workspace:*
-        version: link:../../../generation/ir-generator
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4813,69 +4908,11 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/api-importers/openapi/openapi-v2-importer:
+  packages/cli/api-importers/openrpc-to-ir:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
-        version: link:../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
-        specifier: workspace:*
-        version: link:../v2-importer-commons
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.23.8
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../configs
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/api-importers/openapi/v2-importer-asyncapi:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/core-utils
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/ir-utils
+        version: link:../../../ir-sdk
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../v2-importer-commons
@@ -4885,7 +4922,7 @@ importers:
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../configs
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4908,26 +4945,26 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/api-importers/openapi/v2-importer-commons:
+  packages/cli/api-importers/v2-importer-commons:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../../workspace/commons
+        version: link:../../workspace/commons
       '@fern-api/casings-generator':
         specifier: workspace:*
-        version: link:../../../../commons/casings-generator
+        version: link:../../../commons/casings-generator
       '@fern-api/cli-logger':
         specifier: workspace:*
-        version: link:../../../cli-logger
+        version: link:../../cli-logger
       '@fern-api/configuration':
         specifier: workspace:*
-        version: link:../../../configuration
+        version: link:../../configuration
       '@fern-api/ir-sdk':
         specifier: workspace:*
-        version: link:../../../../ir-sdk
+        version: link:../../../ir-sdk
       '@fern-api/logger':
         specifier: workspace:*
-        version: link:../../../logger
+        version: link:../../logger
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -4937,13 +4974,16 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       zod:
         specifier: ^3.22.3
         version: 3.23.8
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../configs
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4953,6 +4993,52 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/api-importers/v2-importer-tests:
+    dependencies:
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../../workspace/lazy-fern-workspace
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace/loader
+    devDependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -7693,6 +7779,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../commons
+      '@fern-api/asyncapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/asyncapi-to-ir
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../../cli-logger
@@ -7732,21 +7821,18 @@ importers:
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir-parser
-      '@fern-api/openapi-v2-parser':
+      '@fern-api/openapi-to-ir':
         specifier: workspace:*
-        version: link:../../api-importers/openapi/openapi-v2-importer
+        version: link:../../api-importers/openapi-to-ir
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/v2-importer-asyncapi':
-        specifier: workspace:*
-        version: link:../../api-importers/openapi/v2-importer-asyncapi
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
-        version: link:../../api-importers/openapi/v2-importer-commons
+        version: link:../../api-importers/v2-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584(encoding@0.1.13)
@@ -11670,10 +11756,6 @@ packages:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
 
-  call-bind-apply-helpers@1.0.1:
-    resolution: {integrity: sha512-BhYE+WDaywFg2TBWYNXAE+8B1ATnThNBqXHP5nQu0jWJdVvY2hvkpyB3qOmtmDePiS5/BDQ8wASEWGMWRG148g==}
-    engines: {node: '>= 0.4'}
-
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -12907,10 +12989,6 @@ packages:
 
   get-intrinsic@1.2.4:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
-    engines: {node: '>= 0.4'}
-
-  get-intrinsic@1.2.7:
-    resolution: {integrity: sha512-VW6Pxhsrk0KAOqs3WEd0klDiF/+V7gQOpAvY1jVU/LHmaD/kQO4523aiJuikX/QAKYiW6x8Jh+RJej1almdtCA==}
     engines: {node: '>= 0.4'}
 
   get-intrinsic@1.3.0:
@@ -15337,10 +15415,6 @@ packages:
 
   side-channel-weakmap@1.0.2:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
-    engines: {node: '>= 0.4'}
-
-  side-channel@1.0.6:
-    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
 
   side-channel@1.1.0:
@@ -19536,7 +19610,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-object-atoms: 1.0.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-string: 1.0.7
 
   array-timsort@1.0.3: {}
@@ -19590,7 +19664,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-array-buffer: 3.0.4
       is-shared-array-buffer: 1.0.3
 
@@ -19601,7 +19675,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.9
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-array-buffer: 3.0.5
 
   arrify@1.0.1: {}
@@ -19827,11 +19901,6 @@ snapshots:
 
   cac@6.7.14: {}
 
-  call-bind-apply-helpers@1.0.1:
-    dependencies:
-      es-errors: 1.3.0
-      function-bind: 1.1.2
-
   call-bind-apply-helpers@1.0.2:
     dependencies:
       es-errors: 1.3.0
@@ -19847,15 +19916,15 @@ snapshots:
 
   call-bind@1.0.8:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
+      call-bind-apply-helpers: 1.0.2
       es-define-property: 1.0.1
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       set-function-length: 1.2.2
 
   call-bound@1.0.3:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
-      get-intrinsic: 1.2.7
+      call-bind-apply-helpers: 1.0.2
+      get-intrinsic: 1.3.0
 
   call-me-maybe@1.0.2: {}
 
@@ -20489,7 +20558,7 @@ snapshots:
 
   dunder-proto@1.0.1:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
+      call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
 
@@ -20610,11 +20679,11 @@ snapshots:
       data-view-byte-offset: 1.0.1
       es-define-property: 1.0.1
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       es-set-tostringtag: 2.1.0
       es-to-primitive: 1.3.0
       function.prototype.name: 1.1.8
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       get-proto: 1.0.1
       get-symbol-description: 1.1.0
       globalthis: 1.0.4
@@ -20654,7 +20723,7 @@ snapshots:
 
   es-define-property@1.0.0:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   es-define-property@1.0.1: {}
 
@@ -20668,7 +20737,7 @@ snapshots:
       es-errors: 1.3.0
       es-set-tostringtag: 2.0.3
       function-bind: 1.1.2
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       globalthis: 1.0.4
       gopd: 1.2.0
       has-property-descriptors: 1.0.2
@@ -20692,7 +20761,7 @@ snapshots:
 
   es-set-tostringtag@2.0.3:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
@@ -21426,19 +21495,6 @@ snapshots:
       has-symbols: 1.0.3
       hasown: 2.0.2
 
-  get-intrinsic@1.2.7:
-    dependencies:
-      call-bind-apply-helpers: 1.0.1
-      es-define-property: 1.0.1
-      es-errors: 1.3.0
-      es-object-atoms: 1.0.0
-      function-bind: 1.1.2
-      get-proto: 1.0.1
-      gopd: 1.2.0
-      has-symbols: 1.1.0
-      hasown: 2.0.2
-      math-intrinsics: 1.1.0
-
   get-intrinsic@1.3.0:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -21459,7 +21515,7 @@ snapshots:
   get-proto@1.0.1:
     dependencies:
       dunder-proto: 1.0.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   get-stdin@9.0.0: {}
 
@@ -21480,13 +21536,13 @@ snapshots:
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   get-symbol-description@1.1.0:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   glob-parent@5.1.2:
     dependencies:
@@ -21934,13 +21990,13 @@ snapshots:
   is-array-buffer@3.0.4:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   is-array-buffer@3.0.5:
     dependencies:
       call-bind: 1.0.8
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   is-arrayish@0.2.1: {}
 
@@ -21991,7 +22047,7 @@ snapshots:
   is-data-view@1.0.2:
     dependencies:
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-typed-array: 1.1.15
 
   is-date-object@1.0.5:
@@ -22200,7 +22256,7 @@ snapshots:
   iterator.prototype@1.1.3:
     dependencies:
       define-properties: 1.2.1
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       reflect.getprototypeof: 1.0.6
       set-function-name: 2.0.2
@@ -23595,7 +23651,7 @@ snapshots:
       call-bind: 1.0.8
       call-bound: 1.0.3
       define-properties: 1.2.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
@@ -23687,7 +23743,7 @@ snapshots:
 
   own-keys@1.0.1:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
@@ -24026,11 +24082,11 @@ snapshots:
 
   qs@6.12.1:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   qs@6.13.0:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   querystringify@2.2.0: {}
 
@@ -24140,7 +24196,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.9
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
       which-builtin-type: 1.2.1
@@ -24151,7 +24207,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       globalthis: 1.0.4
       which-builtin-type: 1.1.3
 
@@ -24430,7 +24486,7 @@ snapshots:
   safe-array-concat@1.1.2:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       isarray: 2.0.5
 
@@ -24438,7 +24494,7 @@ snapshots:
     dependencies:
       call-bind: 1.0.8
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       isarray: 2.0.5
 
@@ -24544,7 +24600,7 @@ snapshots:
       define-data-property: 1.1.4
       es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       gopd: 1.2.0
       has-property-descriptors: 1.0.2
 
@@ -24559,7 +24615,7 @@ snapshots:
     dependencies:
       dunder-proto: 1.0.1
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   setprototypeof@1.2.0: {}
 
@@ -24604,23 +24660,16 @@ snapshots:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.3
 
   side-channel-weakmap@1.0.2:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.3
       side-channel-map: 1.0.1
-
-  side-channel@1.0.6:
-    dependencies:
-      call-bind: 1.0.7
-      es-errors: 1.3.0
-      get-intrinsic: 1.2.4
-      object-inspect: 1.13.3
 
   side-channel@1.1.0:
     dependencies:
@@ -24747,7 +24796,7 @@ snapshots:
       es-abstract: 1.23.5
       es-errors: 1.3.0
       es-object-atoms: 1.0.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       gopd: 1.2.0
       has-symbols: 1.1.0
       internal-slot: 1.0.7
@@ -24778,7 +24827,7 @@ snapshots:
       define-data-property: 1.1.4
       define-properties: 1.2.1
       es-abstract: 1.23.9
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       has-property-descriptors: 1.0.2
 
   string.prototype.trim@1.2.9:
@@ -24799,7 +24848,7 @@ snapshots:
       call-bind: 1.0.8
       call-bound: 1.0.3
       define-properties: 1.2.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   string.prototype.trimstart@1.0.8:
     dependencies:

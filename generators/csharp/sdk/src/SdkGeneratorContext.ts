@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from "lodash-es";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
@@ -51,7 +51,8 @@ export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
-    public readonly formatter: CsharpFormatter;
+    public readonly formatter: AbstractFormatter;
+    public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
@@ -63,6 +64,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.formatter = new CsharpFormatter();
+        this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
@@ -246,10 +248,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getPublicCoreAsIsFiles(): string[] {
+        const files = [AsIsFiles.FileParameter];
         if (this.hasGrpcEndpoints()) {
-            return [AsIsFiles.GrpcRequestOptions];
+            files.push(AsIsFiles.GrpcRequestOptions);
         }
-        return [AsIsFiles.FileParameter];
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {

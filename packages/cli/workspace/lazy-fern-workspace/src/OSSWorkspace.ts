@@ -8,15 +8,15 @@ import {
     IdentifiableSource,
     Spec
 } from "@fern-api/api-workspace-commons";
+import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
-import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-v2-parser";
+import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/v2-importer-asyncapi";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";

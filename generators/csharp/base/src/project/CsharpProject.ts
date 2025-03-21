@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { access, mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
 
@@ -9,6 +9,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
 const SRC_DIRECTORY_NAME = "src";
@@ -162,12 +163,10 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
         try {
-            await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
+            const csharpier = findDotnetToolPath("dotnet-csharpier");
+            await loggingExeca(this.context.logger, csharpier, ["--fast", "--no-msbuild-check", "."], {
                 doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory,
-                env: {
-                    DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-                }
+                cwd: absolutePathToSrcDirectory
             });
         } catch (error) {
             this.context.logger.warn("csharpier command failed, continuing without formatting.");
@@ -179,10 +178,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        await loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToSrcDirectory
-        });
+        await access(path.join(absolutePathToSrcDirectory, `${this.name}.sln`)).catch(() =>
+            loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
+                doNotPipeOutput: true,
+                cwd: absolutePathToSrcDirectory
+            })
+        );
 
         const absolutePathToProjectDirectory = join(absolutePathToSrcDirectory, RelativeFilePath.of(this.name));
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);

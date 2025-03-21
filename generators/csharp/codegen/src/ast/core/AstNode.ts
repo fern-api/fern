@@ -42,6 +42,34 @@ export abstract class AstNode extends AbstractAstNode {
         const stringNode = writer.toString(skipImports);
         return formatter != null ? formatter.formatSync(stringNode) : stringNode;
     }
+    public toStringAsync({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig,
+        formatter,
+        skipImports = false
+    }: {
+        namespace: string;
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        rootNamespace: string;
+        customConfig: BaseCsharpCustomConfigSchema;
+        formatter?: AbstractFormatter;
+        skipImports?: boolean;
+    }): Promise<string> {
+        const writer = new Writer({
+            namespace,
+            allNamespaceSegments,
+            allTypeClassReferences,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        const stringNode = writer.toString(skipImports);
+        return formatter != null ? formatter.format(stringNode) : Promise.resolve(stringNode);
+    }
 
     public toFormattedSnippet({
         allNamespaceSegments,
@@ -67,6 +95,33 @@ export abstract class AstNode extends AbstractAstNode {
         return {
             imports: writer.importsToString(),
             body: formatter.formatSync(writer.buffer)
+        };
+    }
+
+    public async toFormattedSnippetAsync({
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig,
+        formatter
+    }: {
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        rootNamespace: string;
+        customConfig: BaseCsharpCustomConfigSchema;
+        formatter: AbstractFormatter;
+    }): Promise<FormattedAstNodeSnippet> {
+        const writer = new Writer({
+            namespace: "",
+            allNamespaceSegments,
+            allTypeClassReferences,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        return {
+            imports: writer.importsToString(),
+            body: await formatter.format(writer.buffer)
         };
     }
 }
