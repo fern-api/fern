@@ -7,13 +7,22 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.7
+  createdAt: "2025-03-20"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Significantly improve performance of the generator itself by asynchronously formatting snippets in parallel.
+        For example, Square's SDK generates in 1m3s as opposed to 3m30s previously.
+
 - version: 1.15.6
   createdAt: "2025-03-19"
   irVersion: 57
   changelogEntry:
     - type: fix
       summary: Make tests pass that compare JSON strings regardless of how it is formatted by ignoring whitespace.
-      
+
 - version: 1.15.5
   createdAt: "2025-03-19"
   irVersion: 57
