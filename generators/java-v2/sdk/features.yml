@@ -21,6 +21,7 @@ features:
       When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
   - id: CUSTOM_CLIENT
+    advanced: true
     description: |
       This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
       However, you can pass your own client like so:
