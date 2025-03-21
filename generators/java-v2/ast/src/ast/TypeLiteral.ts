@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { java } from "..";
 import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
 import { ArraysClassReference, OptionalClassReference, Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -129,7 +130,7 @@ interface Optional {
 
 interface Raw {
     type: "raw";
-    value: string;
+    value: string | AstNode;
 }
 
 interface Reference {
@@ -220,7 +221,11 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "raw": {
-                writer.write(this.internalType.value);
+                if (this.internalType.value instanceof AstNode) {
+                    writer.writeNode(this.internalType.value);
+                } else {
+                    writer.write(this.internalType.value);
+                }
                 break;
             }
             case "reference":
@@ -379,7 +384,7 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static raw(value: string): TypeLiteral {
+    public static raw(value: string | AstNode): TypeLiteral {
         return new this({
             type: "raw",
             value

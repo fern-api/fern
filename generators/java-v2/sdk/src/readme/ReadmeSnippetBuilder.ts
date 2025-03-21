@@ -126,13 +126,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderEnvironmentsSnippet(_endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
-
-        const builderMethodInvocation = java.invokeMethod({
-            on: clientClassReference,
-            method: "builder",
-            arguments_: []
-        });
-
         const defaultEnvironmentId = this.getDefaultEnvironmentId();
         // This should never happen because the precondition prevents this code from running
         // if we don't have a default environment ID, but we need this check for the linter.
@@ -145,25 +138,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.write(".");
             writer.write(defaultEnvironmentId);
         });
-        const environmentMethodInvocation = java.invokeMethod({
-            on: builderMethodInvocation,
-            method: "environment",
-            arguments_: [productionEnvironment]
-        });
-        const buildWithEnvironmentMethodInvocation = java.invokeMethod({
-            on: environmentMethodInvocation,
-            method: "build",
-            arguments_: []
+
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: [
+                {
+                    name: "environment",
+                    value: java.TypeLiteral.raw(productionEnvironment)
+                }
+            ]
         });
 
         const withEnvironment = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.rootPackageClientName} = `);
-            writer.writeNode(buildWithEnvironmentMethodInvocation);
+            writer.writeNode(clientInitialization);
         });
 
         const snippet = java.codeblock((writer) => {
-            writer.writeLine("// Using environment");
             writer.writeNodeStatement(withEnvironment);
         });
 
@@ -173,28 +165,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderBaseUrlSnippet(_endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
 
-        const builderMethodInvocation = java.invokeMethod({
-            on: clientClassReference,
-            method: "builder",
-            arguments_: []
+        const baseUrl = java.codeblock('"https://example.com"');
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: [
+                {
+                    name: "url",
+                    value: java.TypeLiteral.raw(baseUrl)
+                }
+            ]
         });
 
-        const baseUrl = java.codeblock((writer) => writer.write('"https://example.com"'));
-        const customUrlMethodInvocation = java.invokeMethod({
-            on: builderMethodInvocation,
-            method: "url",
-            arguments_: [baseUrl]
-        });
-
-        const buildWithCustomUrlMethodInvocation = java.invokeMethod({
-            on: customUrlMethodInvocation,
-            method: "build",
-            arguments_: []
-        });
         const withCustomUrl = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.rootPackageClientName} = `);
-            writer.writeNode(buildWithCustomUrlMethodInvocation);
+            writer.writeNode(clientInitialization);
         });
 
         const snippet = java.codeblock((writer) => {
@@ -233,28 +218,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const clientClassReference = this.context.getRootClientClassReference();
 
-        const clientBuilderMethodInvocation = java.invokeMethod({
-            on: clientClassReference,
-            method: "builder",
-            arguments_: []
-        });
-
-        const customClientMethodInvocation = java.invokeMethod({
-            on: clientBuilderMethodInvocation,
-            method: "httpClient",
-            arguments_: [java.codeblock("customClient")]
-        });
-
-        const clientBuildMethodInvocation = java.invokeMethod({
-            on: customClientMethodInvocation,
-            method: "build",
-            arguments_: []
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: [
+                {
+                    name: "httpClient",
+                    value: java.TypeLiteral.raw(java.codeblock("customClient"))
+                }
+            ]
         });
 
         const clientWithCustomClient = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.rootPackageClientName} = `);
-            writer.writeNode(clientBuildMethodInvocation);
+            writer.writeNode(clientInitialization);
         });
 
         const snippet = java.codeblock((writer) => {
@@ -268,25 +245,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
-        const builderMethodInvocation = java.invokeMethod({
-            on: requestOptionsClassReference,
-            method: "builder",
-            arguments_: []
-        });
-        const maxRetriesMethodInvocation = java.invokeMethod({
-            on: builderMethodInvocation,
-            method: "maxRetries",
-            arguments_: [java.codeblock("1")]
-        });
-        const buildMethodInvocation = java.invokeMethod({
-            on: maxRetriesMethodInvocation,
-            method: "build",
-            arguments_: []
+
+        const requestOptionsInitialization = java.TypeLiteral.builder({
+            classReference: requestOptionsClassReference,
+            parameters: [
+                {
+                    name: "maxRetries",
+                    value: java.TypeLiteral.raw(java.codeblock("1"))
+                }
+            ]
         });
 
         const endpointMethodInvocation = this.getMethodCall(endpoint, [
             ReadmeSnippetBuilder.ELLIPSES,
-            buildMethodInvocation
+            requestOptionsInitialization
         ]);
 
         const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
@@ -296,51 +268,36 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
-        const requestOptionsBuilderMethodInvocation = java.invokeMethod({
-            on: requestOptionsClassReference,
-            method: "builder",
-            arguments_: []
-        });
-        const maxRetriesMethodInvocation = java.invokeMethod({
-            on: requestOptionsBuilderMethodInvocation,
-            method: "timeout",
-            arguments_: [java.codeblock("10")]
-        });
-        const requestOptionsBuildMethodInvocation = java.invokeMethod({
-            on: maxRetriesMethodInvocation,
-            method: "build",
-            arguments_: []
+        const requestOptionsInitialization = java.TypeLiteral.builder({
+            classReference: requestOptionsClassReference,
+            parameters: [
+                {
+                    name: "timeout",
+                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                }
+            ]
         });
 
         const endpointMethodInvocation = this.getMethodCall(endpoint, [
             ReadmeSnippetBuilder.ELLIPSES,
-            requestOptionsBuildMethodInvocation
+            requestOptionsInitialization
         ]);
 
         const clientClassReference = this.context.getRootClientClassReference();
-
-        const clientBuilderMethodInvocation = java.invokeMethod({
-            on: clientClassReference,
-            method: "builder",
-            arguments_: []
-        });
-
-        const timeoutMethodInvocation = java.invokeMethod({
-            on: clientBuilderMethodInvocation,
-            method: "timeout",
-            arguments_: [java.codeblock("10")]
-        });
-
-        const clientBuildMethodInvocation = java.invokeMethod({
-            on: timeoutMethodInvocation,
-            method: "build",
-            arguments_: []
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: [
+                {
+                    name: "tiemout",
+                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                }
+            ]
         });
 
         const clientWithTimeout = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.rootPackageClientName} = `);
-            writer.writeNode(clientBuildMethodInvocation);
+            writer.writeNode(clientInitialization);
         });
 
         const snippet = java.codeblock((writer) => {
@@ -356,15 +313,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
-        const clientBuilderMethodInvocation = java.invokeMethod({
-            on: clientClassReference,
-            method: "builder",
-            arguments_: []
-        });
-        const clientBuildMethodInvocation = java.invokeMethod({
-            on: clientBuilderMethodInvocation,
-            method: "build",
-            arguments_: []
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: []
         });
 
         const returnTypeClassReference = this.context.getReturnTypeForEndpoint(endpoint.endpoint);
@@ -404,7 +355,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.getRootPackageClientName()} = `);
-            writer.writeNodeStatement(clientBuildMethodInvocation);
+            writer.writeNodeStatement(clientInitialization);
             writer.writeLine("\n");
             writer.writeNode(paginationClassReference);
             writer.write(" response = ");
