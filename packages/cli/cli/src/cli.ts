@@ -456,12 +456,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
             }
             if (argv.api != null) {
-                if (argv.brokenLinks != null) {
-                    cliContext.logger.warn("--broken-links is ignored when generating docs");
-                }
-                if (argv.strictBrokenLinks != null) {
-                    cliContext.logger.warn("--strict-broken-links is ignored when generating docs");
-                }
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
