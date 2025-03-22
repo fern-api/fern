@@ -436,6 +436,17 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description: "Ignore prompts to confirm generation, defaults to false"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -445,6 +456,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
             }
             if (argv.api != null) {
+                if (argv.brokenLinks != null) {
+                    cliContext.logger.warn("--broken-links is ignored when generating docs");
+                }
+                if (argv.strictBrokenLinks != null) {
+                    cliContext.logger.warn("--strict-broken-links is ignored when generating docs");
+                }
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -479,7 +496,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    brokenLinks: argv.brokenLinks,
+                    strictBrokenLinks: argv.strictBrokenLinks
                 });
             }
             // default to loading api workspace to preserve legacy behavior
