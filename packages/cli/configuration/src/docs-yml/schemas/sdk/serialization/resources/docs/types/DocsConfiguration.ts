@@ -18,6 +18,7 @@ import { NavbarLink } from "./NavbarLink";
 import { FooterLinksConfig } from "./FooterLinksConfig";
 import { ExperimentalConfig } from "./ExperimentalConfig";
 import { ProgrammingLanguage } from "./ProgrammingLanguage";
+import { AiChatConfig } from "./AiChatConfig";
 import { MetadataConfig } from "./MetadataConfig";
 import { RedirectConfig } from "./RedirectConfig";
 import { LogoConfiguration } from "./LogoConfiguration";
@@ -46,6 +47,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     footerLinks: core.serialization.property("footer-links", FooterLinksConfig.optional()),
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
+    aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     logo: LogoConfiguration.optional(),
@@ -74,6 +76,7 @@ export declare namespace DocsConfiguration {
         "footer-links"?: FooterLinksConfig.Raw | null;
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
+        "ai-chat"?: AiChatConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         logo?: LogoConfiguration.Raw | null;
