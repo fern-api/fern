@@ -14,5 +14,16 @@ class SubpackageClientDeclarationReferencer(SdkDeclarationReferencer[ir_types.Su
             file=Filepath.FilepathPart(module_name="client"),
         )
 
+    def get_socket_filepath(self, *, name: ir_types.Subpackage, as_request: bool = False) -> Filepath:
+        return Filepath(
+            directories=self._get_directories_for_fern_filepath(
+                fern_filepath=name.fern_filepath,
+            ),
+            file=Filepath.FilepathPart(module_name="socket_client"),
+        )
+
     def get_class_name(self, *, name: ir_types.Subpackage, as_request: bool = False) -> str:
         return name.name.pascal_case.unsafe_name + "Client"
+
+    def get_socket_class_name(self, *, name: ir_types.Subpackage, as_request: bool = False) -> str:
+        return name.name.pascal_case.unsafe_name + "SocketClient"

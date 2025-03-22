@@ -98,9 +98,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_filepath(name=subpackage)
 
+    def get_socket_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_client_declaration_referencer.get_socket_filepath(name=subpackage)
+
     def get_class_name_of_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_client_declaration_referencer.get_socket_class_name(name=subpackage)
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
