@@ -18,6 +18,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient
+from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 
 
 @dataclass
@@ -56,6 +57,7 @@ class ClientGenerator:
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
+        websocket: Optional[ir_types.WebSocketChannel],
     ):
         self._context = context
         self._package = package
@@ -66,6 +68,7 @@ class ClientGenerator:
         self._snippet_writer = snippet_writer
         self._is_default_body_parameter_used = False
         self._endpoint_metadata_collector = endpoint_metadata_collector
+        self._websocket = websocket
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
@@ -135,7 +138,16 @@ class ClientGenerator:
                             self._snippet_registry.register_sync_client_endpoint_snippet(
                                 endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                             )
-
+        if self._websocket is not None:
+            websocket_connect_method_generator = WebsocketConnectMethodGenerator(
+                context=self._context,
+                websocket=self._websocket,
+                client_wrapper_member_name=self._get_client_wrapper_member_name(),
+                is_async=is_async,
+            )
+            generated_connect_method = websocket_connect_method_generator.generate()
+            class_declaration.add_method(generated_connect_method.function)
+            # TODO: Do we need the _is_default_body_parameter_used flag here?
         return class_declaration
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
@@ -170,9 +182,11 @@ class ClientGenerator:
                     ]
                     writer.write_node(
                         AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                            if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            class_=(
+                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                if is_async
+                                else self._context.get_reference_to_subpackage_service(subpackage_id)
+                            ),
                             kwargs=kwargs,
                         )
                     )
