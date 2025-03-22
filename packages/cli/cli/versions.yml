@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      The default behavior of `fern generate` now excludes broken link checking by default.
+      This can be overridden by passing `--broken-links` or `--strict-broken-links`.
+    type: feat
+  irVersion: 57
+  version: 0.56.30
+
+- changelogEntry:
+  - summary: |
       Fix an edge case in the OpenAPI converter where unused types were being incorrectly added to the Fern definition.
     type: fix
   irVersion: 57

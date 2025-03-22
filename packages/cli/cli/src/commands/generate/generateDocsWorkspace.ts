@@ -12,12 +12,16 @@ export async function generateDocsWorkspace({
     project,
     cliContext,
     instance,
-    preview
+    preview,
+    brokenLinks,
+    strictBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     instance: string | undefined;
     preview: boolean;
+    brokenLinks: boolean;
+    strictBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -62,7 +66,8 @@ export async function generateDocsWorkspace({
             logWarnings: false,
             fernWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
-            errorOnBrokenLinks: false
+            errorOnBrokenLinks: strictBrokenLinks,
+            excludeRules: brokenLinks || strictBrokenLinks ? [] : ["valid-markdown-links"]
         });
 
         const ossWorkspaces = await filterOssWorkspaces(project);
