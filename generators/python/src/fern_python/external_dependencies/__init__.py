@@ -6,6 +6,7 @@ from .json import Json
 from .pydantic import Pydantic, PydanticVersionCompatibility
 from .starlette import Starlette
 from .urllib_parse import UrlLibParse
+from .websockets import Websockets
 
 __all__ = [
     "FastAPI",
@@ -18,4 +19,5 @@ __all__ = [
     "UrlLibParse",
     "PydanticVersionCompatibility",
     "HttpxSSE",
+    "Websockets",
 ]

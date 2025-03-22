@@ -51,6 +51,7 @@ class ClientGenerator:
         *,
         context: SdkGeneratorContext,
         package: ir_types.Package,
+        subpackage_id: ir_types.SubpackageId,
         class_name: str,
         async_class_name: str,
         generated_root_client: GeneratedRootClient,
@@ -61,6 +62,7 @@ class ClientGenerator:
     ):
         self._context = context
         self._package = package
+        self._subpackage_id = subpackage_id
         self._class_name = class_name
         self._async_class_name = async_class_name
         self._generated_root_client = generated_root_client
@@ -141,13 +143,14 @@ class ClientGenerator:
         if self._websocket is not None:
             websocket_connect_method_generator = WebsocketConnectMethodGenerator(
                 context=self._context,
+                package=self._package,
+                subpackage_id=self._subpackage_id,
                 websocket=self._websocket,
                 client_wrapper_member_name=self._get_client_wrapper_member_name(),
                 is_async=is_async,
             )
             generated_connect_method = websocket_connect_method_generator.generate()
             class_declaration.add_method(generated_connect_method.function)
-            # TODO: Do we need the _is_default_body_parameter_used flag here?
         return class_declaration
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:

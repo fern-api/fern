@@ -499,6 +499,7 @@ class SdkGenerator(AbstractGenerator):
         ClientGenerator(
             context=context,
             package=subpackage,
+            subpackage_id=subpackage_id,
             class_name=context.get_class_name_of_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,

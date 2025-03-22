@@ -5,8 +5,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies import HttpX
-from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.external_dependencies import Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
     WebsocketConnectResponseCodeWriter,
@@ -47,11 +46,15 @@ class WebsocketConnectMethodGenerator:
         self,
         *,
         context: SdkGeneratorContext,
+        package: ir_types.Package,
+        subpackage_id: ir_types.SubpackageId,
         websocket: ir_types.WebSocketChannel,
         client_wrapper_member_name: str,
         is_async: bool,
     ):
         self._context = context
+        self._package = package
+        self._subpackage_id = subpackage_id
         self._websocket = websocket
         self._client_wrapper_member_name = client_wrapper_member_name
         self._is_async = is_async
@@ -278,8 +281,17 @@ class WebsocketConnectMethodGenerator:
             # )
             # httpx_request = get_httpx_request(is_streaming=is_streaming, response_code_writer=response_code_writer)
             # writer.write_node(httpx_request)
-            # FOR NOW, just render write a TODO
+
             writer.write_line("# TODO: Implement the connect method for the websocket")
+            writer.write_line("try:")
+            with writer.indent():
+                if is_async:
+                    writer.write_node(Websockets.async_connect(url=self._get_environment_as_str(websocket=websocket)))
+                else:
+                    writer.write_node(Websockets.sync_connect(url=self._get_environment_as_str(websocket=websocket)))
+
+            response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
+            response_code_writer.write(writer)
 
         return AST.CodeWriter(write)
 
@@ -444,7 +456,7 @@ class WebsocketConnectMethodGenerator:
     def _write_response_body_type(self, writer: NodeWriter) -> None:
         writer.write_line("Returns")
         writer.write_line("-------")
-        writer.write_line("None")
+        writer.write_line(self._context.get_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id))
 
     def _write_docs(self, writer: NodeWriter, docs: str) -> None:
         split = docs.split("\n")
@@ -512,20 +524,19 @@ class WebsocketConnectMethodGenerator:
 
     # Only get the environment expression if the environment is multipleBaseUrls, if it's
     # not we'll leverage the URL from the client wrapper
-    def _get_environment_as_str(self, *, endpoint: ir_types.HttpEndpoint) -> Optional[AST.Expression]:
+    def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> str:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
-                base_url = endpoint.base_url
+                base_url = websocket.base_url
                 if base_url is None:
                     raise RuntimeError("Service is missing base_url")
                 url_reference = get_base_url_property_name(
                     get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
-                return AST.Expression(
-                    f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
-                )
-        return None
+                return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
+        # TODO: DO WE WANT TO JUST RETURN AN EMPTY STRING HERE?
+        return ""
 
     # Note if we ever somehow allow for objects in headers, we'd need to handle the alias conversion (same as with the other types, via `convert_and_respect_annotation_metadata_raw`)
     def _get_headers_for_endpoint(
