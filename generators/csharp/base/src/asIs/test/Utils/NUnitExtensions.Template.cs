@@ -12,8 +12,9 @@ public static class NUnitExtensions
     /// </summary>
     /// <param name="constraint"></param>
     /// <returns></returns>
-    public static EqualConstraint UsingDefaults(this EqualConstraint constraint)
-        => constraint.UsingPropertiesComparer()
+    public static EqualConstraint UsingDefaults(this EqualConstraint constraint) =>
+        constraint
+            .UsingPropertiesComparer()
             .UsingReadOnlyMemoryComparer<int>()
             .UsingReadOnlyMemoryComparer<uint>()
             .UsingReadOnlyMemoryComparer<long>()

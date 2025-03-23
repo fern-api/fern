@@ -17,23 +17,26 @@ public static class EqualConstraintExtensions
     public static EqualConstraint UsingOneOfComparer(this EqualConstraint constraint)
     {
         // Register a comparer factory for IOneOf types
-        constraint.Using<IOneOf>((x, y) => {
-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-            if(x.Value is null && y.Value is null)
+        constraint.Using<IOneOf>(
+            (x, y) =>
             {
-                return true;
-            }
+                // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+                if (x.Value is null && y.Value is null)
+                {
+                    return true;
+                }
 
-            if (x.Value is null)
-            {
-                return false;
-            }
+                if (x.Value is null)
+                {
+                    return false;
+                }
 
-            var propertiesComparer = new NUnitEqualityComparer();
-            var tolerance = Tolerance.Default;
-            propertiesComparer.CompareProperties = true;
-            return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
-        });
+                var propertiesComparer = new NUnitEqualityComparer();
+                var tolerance = Tolerance.Default;
+                propertiesComparer.CompareProperties = true;
+                return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
+            }
+        );
 
         return constraint;
     }
