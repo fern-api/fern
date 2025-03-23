@@ -48,8 +48,7 @@ public class GetWithNoRequestBodyTest : BaseMockServerTest
         var response = await Client.NoReqBody.GetWithNoRequestBodyAsync(RequestOptions);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

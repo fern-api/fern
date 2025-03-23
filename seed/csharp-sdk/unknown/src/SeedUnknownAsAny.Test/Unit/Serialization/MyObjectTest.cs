@@ -28,7 +28,7 @@ public class MyObjectTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<MyObject>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

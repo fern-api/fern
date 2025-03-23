@@ -113,7 +113,7 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithOptionalField>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

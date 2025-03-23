@@ -33,7 +33,7 @@ public class GetMetadataTest : BaseMockServerTest
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 
@@ -63,7 +63,7 @@ public class GetMetadataTest : BaseMockServerTest
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

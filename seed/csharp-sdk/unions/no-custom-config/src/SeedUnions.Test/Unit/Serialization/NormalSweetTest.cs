@@ -18,7 +18,7 @@ public class NormalSweetTest
             """;
         var expectedObject = new NormalSweet { Value = "example1" };
         var deserializedObject = JsonUtils.Deserialize<NormalSweet>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class NormalSweetTest
             """;
         var expectedObject = new NormalSweet { Value = "example2" };
         var deserializedObject = JsonUtils.Deserialize<NormalSweet>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class NormalSweetTest
             """;
         var expectedObject = new NormalSweet { Value = "example3" };
         var deserializedObject = JsonUtils.Deserialize<NormalSweet>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

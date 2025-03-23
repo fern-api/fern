@@ -21,7 +21,7 @@ public class DocsTest
             Docs_ = "Types extend this type to include a docs property.",
         };
         var deserializedObject = JsonUtils.Deserialize<Docs>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

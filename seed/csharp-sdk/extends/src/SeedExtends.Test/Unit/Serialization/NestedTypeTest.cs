@@ -25,7 +25,7 @@ public class NestedTypeTest
             Raw = "{\"nested\": \"example\"}",
         };
         var deserializedObject = JsonUtils.Deserialize<NestedType>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

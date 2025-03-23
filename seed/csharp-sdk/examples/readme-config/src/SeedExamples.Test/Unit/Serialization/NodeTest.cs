@@ -57,7 +57,7 @@ public class NodeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -123,7 +123,7 @@ public class NodeTest
             """;
         var expectedObject = new Node { Name = "left" };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -150,7 +150,7 @@ public class NodeTest
             """;
         var expectedObject = new Node { Name = "right" };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

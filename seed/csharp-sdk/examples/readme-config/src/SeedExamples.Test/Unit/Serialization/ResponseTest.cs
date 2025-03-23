@@ -48,7 +48,7 @@ public class ResponseTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Response>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

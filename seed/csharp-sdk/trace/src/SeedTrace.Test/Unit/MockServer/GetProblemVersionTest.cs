@@ -327,8 +327,7 @@ public class GetProblemVersionTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
     }
 }

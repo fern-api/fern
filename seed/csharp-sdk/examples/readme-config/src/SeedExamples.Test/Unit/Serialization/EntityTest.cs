@@ -19,7 +19,7 @@ public class EntityTest
             """;
         var expectedObject = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
         var deserializedObject = JsonUtils.Deserialize<Entity>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

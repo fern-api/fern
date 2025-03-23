@@ -49,7 +49,7 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<GetExecutionSessionStateResponse>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

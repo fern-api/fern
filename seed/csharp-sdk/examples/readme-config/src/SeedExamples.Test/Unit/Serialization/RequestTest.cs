@@ -18,7 +18,7 @@ public class RequestTest
             """;
         var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
         var deserializedObject = JsonUtils.Deserialize<Request>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
