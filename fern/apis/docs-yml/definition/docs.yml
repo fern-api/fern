@@ -1046,6 +1046,7 @@ types:
     properties:
       display-name: string
       subtitle: optional<string>
+      icon: string
       value: string
       path:
         type: string

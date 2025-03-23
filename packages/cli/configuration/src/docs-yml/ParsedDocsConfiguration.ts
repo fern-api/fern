@@ -162,6 +162,7 @@ export interface ProductInfo {
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
+    icon: string;
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation | ProductGroupDocsNavigation;

@@ -6,31 +6,35 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
-  - url: fern.docs.dev.buildwithfern.com/learn
-    edit-this-page:
-      github:
-        owner: fern-api
-        repo: fern
-        branch: main
+  # - url: fern.docs.dev.buildwithfern.com/learn
+  #   edit-this-page:
+  #     github:
+  #       owner: fern-api
+  #       repo: fern
+  #       branch: main
 title: Fern
 
-products:
-  - display-name: SDKs
-    value: sdks
-    path: ./products/sdks/latest.yml
-    slug: sdks
-    # versions:
-    #   - display-name: Latest
-    #     path: ./products/sdks/latest.yml
-    #     availability: ga
-  - display-name: Docs
-    value: docs
-    path: ./products/docs/latest.yml
-    slug: docs
-      # versions:
-      #   - display-name: Latest
-      #     path: ./products/docs/latest.yml
-      #     availability: ga
+# products:
+#   - display-name: SDKs
+#     value: sdks
+#     path: ./products/sdks/latest.yml
+#     slug: sdks
+#     icon: fa-regular fa-code
+#     subtitle: Generate client libraries in multiple languages
+#     # versions:
+#     #   - display-name: Latest
+#     #     path: ./products/sdks/latest.yml
+#     #     availability: ga
+#   - display-name: Docs
+#     value: docs
+#     path: ./products/docs/latest.yml
+#     slug: docs
+#     icon: fa-regular fa-book
+#     subtitle: A beautiful, interactive documentation website
+#       # versions:
+#       #   - display-name: Latest
+#       #     path: ./products/docs/latest.yml
+#       #     availability: ga
 
 css: ./assets/styles.css
 
@@ -79,8 +83,8 @@ layout:
   tabs-placement: header
 
 analytics:
-  posthog:
-    api-key: ${POSTHOG_API_KEY}
+  # posthog:
+  #   api-key: ${POSTHOG_API_KEY}
   gtm:
     container-id: GTM-55W3VNDW
 

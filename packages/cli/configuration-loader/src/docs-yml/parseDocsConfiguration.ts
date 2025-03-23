@@ -383,6 +383,7 @@ async function getNavigationConfiguration({
                 navigation,
                 slug: product.slug,
                 subtitle: product.subtitle,
+                icon: product.icon,
             });
         }
         return {
