@@ -7836,99 +7836,109 @@
       "groupName": [
         "/{userId}"
       ],
-      "publish": {
-        "value": {
-          "description": "Send messages to the WebSocket",
-          "generatedName": "sendMessage",
-          "nameOverride": "sendMessage",
-          "schemas": [
-            {
-              "generatedName": "RealtimeZero",
-              "schema": "AudioData",
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "value": {
+              "description": "Send messages to the WebSocket",
+              "generatedName": "sendMessage",
+              "nameOverride": "sendMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "AudioData",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "TerminateSession",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "RealtimeOne",
-              "schema": "TerminateSession",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.yml",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
+            "type": "oneOf"
+          }
         },
-        "type": "oneOf"
-      },
-      "subscribe": {
-        "value": {
-          "description": "Receive messages from the WebSocket",
-          "generatedName": "receiveMessage",
-          "nameOverride": "receiveMessage",
-          "schemas": [
-            {
-              "generatedName": "RealtimeZero",
-              "schema": "SessionBegins",
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "value": {
+              "description": "Receive messages from the WebSocket",
+              "generatedName": "receiveMessage",
+              "nameOverride": "receiveMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "SessionBegins",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "PartialTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeTwo",
+                  "schema": "FinalTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeThree",
+                  "schema": "SessionTerminated",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeFour",
+                  "schema": "RealtimeError",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "RealtimeOne",
-              "schema": "PartialTranscript",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeTwo",
-              "schema": "FinalTranscript",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeThree",
-              "schema": "SessionTerminated",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeFour",
-              "schema": "RealtimeError",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.yml",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
-        },
-        "type": "oneOf"
-      },
+            "type": "oneOf"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "API",

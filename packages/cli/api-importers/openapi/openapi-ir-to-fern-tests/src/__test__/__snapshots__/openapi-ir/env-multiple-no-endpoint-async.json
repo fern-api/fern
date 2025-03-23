@@ -93,15 +93,7 @@
       "groupName": [
         "testChannel"
       ],
-      "publish": {
-        "generatedName": "TestChannelPublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "websocket",
@@ -131,15 +123,7 @@
       "groupName": [
         "testChannel2"
       ],
-      "publish": {
-        "generatedName": "TestChannel2PublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "websocket2",

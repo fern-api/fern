@@ -134,40 +134,18 @@
               "messages": [],
             },
           ],
-          "messages": {
-            "publish": {
-              "body": "TestChannelPublishEvent",
-              "origin": "client",
-            },
-          },
+          "messages": {},
           "path": "/test",
           "url": "websocket",
-        },
-        "types": {
-          "TestChannelPublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi1.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
   path: /test
   url: websocket
   auth: false
-  messages:
-    publish:
-      origin: client
-      body: TestChannelPublishEvent
+  messages: {}
   examples:
     - messages: []
-types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi1.yml
 ",
     },
     "testChannel2.yml": {
@@ -180,40 +158,18 @@ types:
               "messages": [],
             },
           ],
-          "messages": {
-            "publish": {
-              "body": "TestChannel2PublishEvent",
-              "origin": "client",
-            },
-          },
+          "messages": {},
           "path": "/test2",
           "url": "websocket2",
-        },
-        "types": {
-          "TestChannel2PublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi1.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
   path: /test2
   url: websocket2
   auth: false
-  messages:
-    publish:
-      origin: client
-      body: TestChannel2PublishEvent
+  messages: {}
   examples:
     - messages: []
-types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi1.yml
 ",
     },
     "testChannels.yml": {
@@ -226,40 +182,18 @@ types:
               "messages": [],
             },
           ],
-          "messages": {
-            "publish": {
-              "body": "TestChannelsPublishEvent",
-              "origin": "client",
-            },
-          },
+          "messages": {},
           "path": "/test",
           "url": "betawebsocket",
-        },
-        "types": {
-          "TestChannelsPublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi2.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
   path: /test
   url: betawebsocket
   auth: false
-  messages:
-    publish:
-      origin: client
-      body: TestChannelsPublishEvent
+  messages: {}
   examples:
     - messages: []
-types:
-  TestChannelsPublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi2.yml
 ",
     },
     "testChannels2.yml": {
@@ -272,40 +206,18 @@ types:
               "messages": [],
             },
           ],
-          "messages": {
-            "publish": {
-              "body": "TestChannels2PublishEvent",
-              "origin": "client",
-            },
-          },
+          "messages": {},
           "path": "/test2",
           "url": "betawebsocket2",
-        },
-        "types": {
-          "TestChannels2PublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi2.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
   path: /test2
   url: betawebsocket2
   auth: false
-  messages:
-    publish:
-      origin: client
-      body: TestChannels2PublishEvent
+  messages: {}
   examples:
     - messages: []
-types:
-  TestChannels2PublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi2.yml
 ",
     },
   },

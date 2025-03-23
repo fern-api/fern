@@ -186,15 +186,7 @@
       "groupName": [
         "testChannel"
       ],
-      "publish": {
-        "generatedName": "TestChannelPublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi1.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "websocket",
@@ -224,15 +216,7 @@
       "groupName": [
         "testChannel2"
       ],
-      "publish": {
-        "generatedName": "TestChannel2PublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi1.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "websocket2",
@@ -262,15 +246,7 @@
       "groupName": [
         "testChannels"
       ],
-      "publish": {
-        "generatedName": "TestChannelsPublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi2.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "betawebsocket",
@@ -300,15 +276,7 @@
       "groupName": [
         "testChannels2"
       ],
-      "publish": {
-        "generatedName": "TestChannels2PublishEvent",
-        "values": [],
-        "source": {
-          "file": "../asyncapi2.yml",
-          "type": "openapi"
-        },
-        "type": "enum"
-      },
+      "messages": [],
       "servers": [
         {
           "name": "betawebsocket2",
