@@ -299,6 +299,7 @@ async function getAreRootApiFilesEquivalent(
     const differences: string[] = [];
     await visitObject(rootApiFile, {
         version: noop,
+        product: noop,
         name: noop,
         imports: noop,
         "default-url": noop,

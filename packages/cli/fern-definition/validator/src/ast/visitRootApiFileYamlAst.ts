@@ -8,6 +8,7 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
     visitor.file?.(contents, []);
     visitObject(contents, {
         version: noop,
+        product: noop,
         name: noop,
         "default-url": noop,
         "display-name": noop,
