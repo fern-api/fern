@@ -30,6 +30,11 @@ export function getReferencedApiSections(config: docsYml.ParsedDocsConfiguration
                 visitNavigation({ navigation: version.navigation, collector });
             });
             break;
+        case "productgroup":
+            config.navigation.products.forEach((product) => {
+                visitNavigation({ navigation: product.navigation, collector });
+            });
+            break;
         default:
             assertNever(config.navigation);
     }
@@ -40,7 +45,7 @@ export function visitNavigation({
     navigation,
     collector
 }: {
-    navigation: docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation;
+    navigation: docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation | docsYml.VersionedDocsNavigation;
     collector: ApiSectionCollector;
 }): void {
     switch (navigation.type) {
@@ -56,6 +61,11 @@ export function visitNavigation({
         case "untabbed":
             navigation.items.forEach((item) => {
                 visitDocsNavigationItem({ item, collector });
+            });
+            break;
+        case "versioned":
+            navigation.versions.forEach((version) => {
+                visitNavigation({ navigation: version.navigation, collector });
             });
             break;
         default:

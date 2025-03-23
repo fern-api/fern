@@ -128,6 +128,7 @@ types:
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
+      products: optional<list<ProductConfig>>
       landing-page: optional<PageConfiguration>
       navigation:
         type: optional<NavigationConfig>
@@ -1060,3 +1061,24 @@ types:
       message:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
+
+  ProductConfig:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      display-name: string
+      subtitle: optional<string>
+      icon: string
+      value: string
+      path:
+        type: string
+        docs: The relative path to the version's docs.yml file.
+      slug:
+        type: optional<string>
+        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      versions: optional<list<VersionConfig>>
+
+  ProductFileConfig:
+    properties:
+      tabs: optional<map<TabId, TabConfig>>
+      landing-page: optional<PageConfiguration>
+      navigation: NavigationConfig
