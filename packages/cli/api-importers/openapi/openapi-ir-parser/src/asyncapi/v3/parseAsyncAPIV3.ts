@@ -20,7 +20,6 @@ import { FernEnumConfig } from "../../openapi/v3/extensions/getFernEnum";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertEnum } from "../../schema/convertEnum";
 import { convertSchema } from "../../schema/convertSchemas";
-import { constructUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getSchemas } from "../../utils/getSchemas";
 import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
@@ -32,6 +31,12 @@ import { ChannelId, ServerContext } from "../sharedTypes";
 import { constructServerUrl, transformToValidPath } from "../sharedUtils";
 import { AsyncAPIV3 } from "../v3";
 import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
+
+interface ChannelEvents {
+    subscribe: OpenAPIV3.ReferenceObject[];
+    publish: OpenAPIV3.ReferenceObject[];
+    __parsedMessages: WebsocketMessageSchema[];
+}
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
@@ -131,19 +136,15 @@ export function parseAsyncAPIV3({
         };
     }
 
-    const channelEvents: Record<
-        string,
-        { subscribe: OpenAPIV3.ReferenceObject[]; publish: OpenAPIV3.ReferenceObject[] }
-    > = {};
+    const channelEvents: Record<string, ChannelEvents> = {};
     for (const [operationId, operation] of Object.entries(document.operations ?? {})) {
         if (getExtension<boolean>(operation, FernAsyncAPIExtension.IGNORE)) {
             continue;
         }
 
         const channelPath = getChannelPathFromOperation(operation);
-
         if (!channelEvents[channelPath]) {
-            channelEvents[channelPath] = { subscribe: [], publish: [] };
+            channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [] };
         }
 
         if (operation.action === "receive") {
@@ -155,38 +156,33 @@ export function parseAsyncAPIV3({
         }
     }
 
-    const channelSchemas: Record<
-        string,
-        { subscribe: SchemaWithExample | undefined; publish: SchemaWithExample | undefined }
-    > = {};
-    for (const [path, events] of Object.entries(channelEvents)) {
-        channelSchemas[path] = { subscribe: undefined, publish: undefined };
-        const channelName = path.split("/").pop() ?? path;
-        const channelPrefix = channelName.charAt(0).toUpperCase() + channelName.slice(1);
+    for (const [channelPath, events] of Object.entries(channelEvents)) {
+        const channelMessages: WebsocketMessageSchema[] = [];
 
-        if (events.subscribe.length > 0 && messageSchemas[path] != null) {
-            channelSchemas[path].subscribe = convertMessagesToSchema({
-                generatedName: channelPrefix + "SubscribeEvent",
-                channelPath: path,
+        channelMessages.push(
+            ...convertMessageReferencesToWebsocketSchemas({
                 messages: events.subscribe,
-                breadcrumbs,
-                context,
-                source,
-                messageSchemas: messageSchemas[path],
-                duplicatedMessageIds
-            });
-        }
-        if (events.publish.length > 0 && messageSchemas[path] != null) {
-            channelSchemas[path].publish = convertMessagesToSchema({
-                generatedName: channelPrefix + "PublishEvent",
-                channelPath: path,
+                channelPath,
+                origin: "server",
+                messageSchemas: messageSchemas[channelPath] ?? {},
+                duplicatedMessageIds,
+                context
+            })
+        );
+
+        channelMessages.push(
+            ...convertMessageReferencesToWebsocketSchemas({
                 messages: events.publish,
-                breadcrumbs,
-                context,
-                source,
-                messageSchemas: messageSchemas[path],
-                duplicatedMessageIds
-            });
+                channelPath,
+                origin: "client",
+                messageSchemas: messageSchemas[channelPath] ?? {},
+                duplicatedMessageIds,
+                context
+            })
+        );
+
+        if (channelEvents[channelPath] != null) {
+            channelEvents[channelPath].__parsedMessages = channelMessages;
         }
     }
 
@@ -269,10 +265,16 @@ export function parseAsyncAPIV3({
         if (
             headers.length > 0 ||
             queryParameters.length > 0 ||
-            (channelSchemas[channelPath] != null &&
-                (channelSchemas[channelPath].publish != null || channelSchemas[channelPath].subscribe != null))
+            (channelEvents[channelPath] != null &&
+                (channelEvents[channelPath].publish != null || channelEvents[channelPath].subscribe != null))
         ) {
             const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
+            const messages: WebsocketMessageSchema[] = channelEvents[channelPath]?.__parsedMessages ?? [];
+            const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
+                messages,
+                channelPath,
+                messageSchemas: messageSchemas[channelPath] ?? {}
+            });
             let examples: WebsocketSessionExample[] = [];
             if (fernExamples.length > 0) {
                 examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
@@ -282,8 +284,8 @@ export function parseAsyncAPIV3({
                         headers,
                         queryParameters
                     },
-                    publish: channelSchemas[channelPath]?.publish,
-                    subscribe: channelSchemas[channelPath]?.subscribe,
+                    publish: examplePublishMessage,
+                    subscribe: exampleSubscribeMessage,
                     source,
                     namespace: context.namespace
                 });
@@ -293,27 +295,12 @@ export function parseAsyncAPIV3({
                         headers,
                         queryParameters
                     },
-                    publish: channelSchemas[channelPath]?.publish,
-                    subscribe: channelSchemas[channelPath]?.subscribe
+                    publish: examplePublishMessage,
+                    subscribe: exampleSubscribeMessage
                 });
                 if (autogenExample != null) {
                     examples.push(autogenExample);
                 }
-            }
-            const messages: WebsocketMessageSchema[] = [];
-            if (channelSchemas[channelPath]?.publish != null) {
-                messages.push({
-                    origin: "client",
-                    name: "publish",
-                    body: convertSchemaWithExampleToSchema(channelSchemas[channelPath].publish)
-                });
-            }
-            if (channelSchemas[channelPath]?.subscribe != null) {
-                messages.push({
-                    origin: "server",
-                    name: "subscribe",
-                    body: convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
-                });
             }
 
             parsedChannels[channelPath] = {
@@ -442,56 +429,61 @@ function buildEnumSchema({
     });
 }
 
-function convertMessagesToSchema({
-    generatedName,
-    channelPath,
+function convertMessageReferencesToWebsocketSchemas({
     messages,
-    context,
-    breadcrumbs,
-    source,
+    channelPath,
+    origin,
     messageSchemas,
-    duplicatedMessageIds
+    duplicatedMessageIds,
+    context
 }: {
-    breadcrumbs: string[];
-    generatedName: string;
-    channelPath: string;
     messages: OpenAPIV3.ReferenceObject[];
-    context: AsyncAPIV3ParserContext;
-    source: Source;
+    channelPath: string;
+    origin: "server" | "client";
     messageSchemas: Record<SchemaId, SchemaWithExample>;
     duplicatedMessageIds: Array<SchemaId>;
-}): SchemaWithExample | undefined {
-    if (messages.length > 0) {
-        const subtypes: SchemaWithExample[] = [];
-        for (const message of messages) {
-            const resolvedMessage = context.resolveMessageReference(message);
-            let schemaId: string;
-            if (duplicatedMessageIds.some((duplicatedMessageId) => duplicatedMessageId === resolvedMessage.name)) {
-                schemaId = `${channelPath}_${resolvedMessage.name}`;
-            } else {
-                schemaId = resolvedMessage.name as string;
-            }
-            const schema = messageSchemas[schemaId];
-            if (schema != null) {
-                subtypes.push(schema);
-            }
+    context: AsyncAPIV3ParserContext;
+}): WebsocketMessageSchema[] {
+    const results: WebsocketMessageSchema[] = [];
+
+    messages.forEach((messageRef, i) => {
+        const resolvedMessage = context.resolveMessageReference(messageRef);
+        let schemaId = resolvedMessage.name as string;
+
+        if (duplicatedMessageIds.includes(schemaId)) {
+            schemaId = `${channelPath}_${schemaId}`;
         }
-        return constructUndiscriminatedOneOf({
-            description: undefined,
-            availability: undefined,
-            subtypes,
-            nameOverride: undefined,
-            generatedName,
-            title: undefined,
-            groupName: undefined,
-            wrapAsNullable: false,
-            breadcrumbs,
-            context,
-            encoding: undefined,
-            source,
-            namespace: context.namespace,
-            subtypePrefixOverrides: []
-        });
-    }
-    return undefined;
+
+        const schema = messageSchemas[schemaId];
+        if (schema != null) {
+            results.push({
+                origin,
+                name: schemaId ?? `${origin}Message${i + 1}`,
+                body: convertSchemaWithExampleToSchema(schema)
+            });
+        }
+    });
+
+    return results;
+}
+
+function getExampleSchemas({
+    messages,
+    channelPath,
+    messageSchemas
+}: {
+    messages: WebsocketMessageSchema[];
+    channelPath: string;
+    messageSchemas: Record<SchemaId, SchemaWithExample>;
+}): {
+    examplePublishMessage: SchemaWithExample | undefined;
+    exampleSubscribeMessage: SchemaWithExample | undefined;
+} {
+    const examplePublishMessageId = messages.find((message) => message.origin === "client")?.name;
+    const exampleSubscribeMessageId = messages.find((message) => message.origin === "server")?.name;
+    const examplePublishMessage = examplePublishMessageId != null ? messageSchemas[examplePublishMessageId] : undefined;
+    const exampleSubscribeMessage =
+        exampleSubscribeMessageId != null ? messageSchemas[exampleSubscribeMessageId] : undefined;
+
+    return { examplePublishMessage, exampleSubscribeMessage };
 }
