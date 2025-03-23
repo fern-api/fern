@@ -22,6 +22,11 @@ type JustFileWithQueryParamsRequest struct {
 	File                  io.Reader `json:"-" url:"-"`
 }
 
+type OptionalArgsRequest struct {
+	ImageFile io.Reader   `json:"-" url:"-"`
+	Request   interface{} `json:"request,omitempty" url:"-"`
+}
+
 type MyRequest struct {
 	File                  io.Reader               `json:"-" url:"-"`
 	FileList              []io.Reader             `json:"-" url:"-"`

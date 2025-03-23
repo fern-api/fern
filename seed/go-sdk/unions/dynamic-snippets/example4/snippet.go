@@ -4,6 +4,7 @@ import (
     client "github.com/fern-api/unions-go/client"
     option "github.com/fern-api/unions-go/option"
     context "context"
+    unions "github.com/fern-api/unions-go"
 )
 
 func do() () {
@@ -12,7 +13,13 @@ func do() () {
             "https://api.fern.com",
         ),
     )
-    client.Bigunion.Update(
+    client.Union.Update(
         context.TODO(),
+        &unions.Shape{
+            Circle: &unions.Circle{
+                Radius: 1.1,
+            },
+            Id: "id",
+        },
     )
 }
