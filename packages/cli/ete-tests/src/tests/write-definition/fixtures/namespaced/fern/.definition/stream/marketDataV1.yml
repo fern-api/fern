@@ -1,8 +1,4 @@
 types:
-  MarketDataV1PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi/sample.yml
   MarketDataV1Symbol:
     docs: >
       Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
@@ -79,10 +75,7 @@ channel:
   auth: false
   examples:
     - messages: []
-  messages:
-    publish:
-      body: MarketDataV1PublishEvent
-      origin: client
+  messages: {}
   path: /v1/marketdata/{symbol}
   query-parameters:
     symbol:
