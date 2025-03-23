@@ -55,7 +55,7 @@ public class GetLightweightProblemsTest : BaseMockServerTest
             Is.EqualTo(
                     JsonUtils.Deserialize<IEnumerable<V2.V3.LightweightProblemInfoV2>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

@@ -42,7 +42,7 @@ public class GetOrganizationTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
         );
     }
 }

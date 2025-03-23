@@ -45,8 +45,7 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse)).UsingDefaults()
         );
     }
 }

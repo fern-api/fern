@@ -58,7 +58,7 @@ export class UnionSerializationTestGenerator extends FileGenerator<
                         })
                     );
                     writer.writeTextStatement(
-                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer())"
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
                     );
                 }),
                 isAsync: false

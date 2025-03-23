@@ -41,7 +41,7 @@ public class GetMetadataTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -59,7 +59,7 @@ public class GetAndReturnListOfObjectsTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

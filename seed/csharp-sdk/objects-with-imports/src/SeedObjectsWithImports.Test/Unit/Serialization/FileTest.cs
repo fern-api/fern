@@ -25,7 +25,7 @@ public class FileTest
             Info = FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class FileTest
             Info = FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

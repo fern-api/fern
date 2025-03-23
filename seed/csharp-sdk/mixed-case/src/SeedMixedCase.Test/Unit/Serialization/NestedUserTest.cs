@@ -42,7 +42,7 @@ public class NestedUserTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<NestedUser>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

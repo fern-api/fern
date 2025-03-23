@@ -615,7 +615,7 @@ public class GetProblemsTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<V2.V3.ProblemInfoV2>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

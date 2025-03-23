@@ -30,7 +30,7 @@ public class MomentTest
             ),
         };
         var deserializedObject = JsonUtils.Deserialize<Moment>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

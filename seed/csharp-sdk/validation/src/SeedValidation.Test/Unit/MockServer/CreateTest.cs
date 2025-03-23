@@ -56,7 +56,7 @@ public class CreateTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
         );
     }
 }

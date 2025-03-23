@@ -95,7 +95,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getAsIsTestUtils(): string[] {
-        return [AsIsFiles.Test.JsonElementComparer];
+        return Object.values(AsIsFiles.Test.Utils);
     }
 
     public getExtraDependencies(): Record<string, string> {

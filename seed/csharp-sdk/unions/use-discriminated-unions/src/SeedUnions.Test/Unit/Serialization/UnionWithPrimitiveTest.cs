@@ -19,7 +19,7 @@ public class UnionWithPrimitiveTest
             """;
         var expectedObject = new UnionWithPrimitive(new UnionWithPrimitive.Integer(9));
         var deserializedObject = JsonUtils.Deserialize<UnionWithPrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class UnionWithPrimitiveTest
             """;
         var expectedObject = new UnionWithPrimitive(new UnionWithPrimitive.String("bar"));
         var deserializedObject = JsonUtils.Deserialize<UnionWithPrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

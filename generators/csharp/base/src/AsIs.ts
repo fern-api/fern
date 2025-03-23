@@ -59,7 +59,12 @@ export const AsIsFiles = {
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs"
         },
-        JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
+        Utils: {
+            JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
+            NUnitExtensions: "test/Utils/NUnitExtensions.Template.cs",
+            OneOfComparer: "test/Utils/OneOfComparer.Template.cs",
+            ReadOnlyMemoryComparer: "test/Utils/ReadOnlyMemoryComparer.Template.cs"
+        },
         Pagination: [
             "test/Pagination/GuidCursorTest.Template.cs",
             "test/Pagination/HasNextPageOffsetTest.Template.cs",

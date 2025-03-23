@@ -18,7 +18,7 @@ public class BarTest
             """;
         var expectedObject = new Bar { Name = "example1" };
         var deserializedObject = JsonUtils.Deserialize<Bar>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class BarTest
             """;
         var expectedObject = new Bar { Name = "example2" };
         var deserializedObject = JsonUtils.Deserialize<Bar>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

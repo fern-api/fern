@@ -32,7 +32,7 @@ public class TreeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Tree>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

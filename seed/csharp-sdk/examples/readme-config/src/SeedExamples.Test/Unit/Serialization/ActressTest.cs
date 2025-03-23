@@ -19,7 +19,7 @@ public class ActressTest
             """;
         var expectedObject = new Actress { Name = "Jennifer Lawrence", Id = "actor_456" };
         var deserializedObject = JsonUtils.Deserialize<Actress>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
