@@ -10,6 +10,7 @@ import {
     SchemaWithExample,
     Source,
     WebsocketChannel,
+    WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
@@ -299,6 +300,21 @@ export function parseAsyncAPIV3({
                     examples.push(autogenExample);
                 }
             }
+            const messages: WebsocketMessageSchema[] = [];
+            if (channelSchemas[channelPath]?.publish != null) {
+                messages.push({
+                    origin: "client",
+                    name: "publish",
+                    body: convertSchemaWithExampleToSchema(channelSchemas[channelPath].publish)
+                });
+            }
+            if (channelSchemas[channelPath]?.subscribe != null) {
+                messages.push({
+                    origin: "server",
+                    name: "subscribe",
+                    body: convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
+                });
+            }
 
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -321,14 +337,7 @@ export function parseAsyncAPIV3({
                 groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
                 ]),
-                publish:
-                    channelSchemas[channelPath]?.publish != null
-                        ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].publish)
-                        : undefined,
-                subscribe:
-                    channelSchemas[channelPath]?.subscribe != null
-                        ? convertSchemaWithExampleToSchema(channelSchemas[channelPath].subscribe)
-                        : undefined,
+                messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 servers:
                     channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??

@@ -9,6 +9,7 @@ import {
     SchemaWithExample,
     Source,
     WebsocketChannel,
+    WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
@@ -232,6 +233,21 @@ export function parseAsyncAPIV2({
 
             const address = getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_CHANNEL_ADDRESS);
             const path = address != null ? address : transformToValidPath(channelPath);
+            const messages: WebsocketMessageSchema[] = [];
+            if (publishSchema != null) {
+                messages.push({
+                    origin: "client",
+                    name: "publish",
+                    body: convertSchemaWithExampleToSchema(publishSchema)
+                });
+            }
+            if (subscribeSchema != null) {
+                messages.push({
+                    origin: "server",
+                    name: "subscribe",
+                    body: convertSchemaWithExampleToSchema(subscribeSchema)
+                });
+            }
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -259,9 +275,7 @@ export function parseAsyncAPIV2({
                 groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
                 ]),
-                publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
-                subscribe:
-                    subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
+                messages,
                 servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers)).filter(
                     (server): server is ServerContext => server != null
                 ),
