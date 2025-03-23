@@ -18,6 +18,7 @@ export interface DocsConfiguration {
     roles?: FernDocsConfig.RoleId[];
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
+    products?: FernDocsConfig.ProductConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;
     /** The navigation config is skipped when multiple versions are present. */
     navigation?: FernDocsConfig.NavigationConfig;

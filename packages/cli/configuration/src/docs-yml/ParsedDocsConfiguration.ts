@@ -141,6 +141,11 @@ export interface VersionedDocsNavigation {
     versions: VersionInfo[];
 }
 
+export interface ProductGroupDocsNavigation {
+    type: "productgroup";
+    products: ProductInfo[];
+}
+
 export interface VersionInfo
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
@@ -151,7 +156,15 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
+export interface ProductInfo {
+    landingPage: DocsNavigationItem.Page | undefined;
+    subtitle: string | undefined;
+    product: string;
+    navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
+    slug: string | undefined;
+}
+
+export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation | ProductGroupDocsNavigation;
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
