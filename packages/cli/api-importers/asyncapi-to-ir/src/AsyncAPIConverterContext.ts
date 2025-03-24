@@ -53,20 +53,25 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
     }): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
         let updatedReference: OpenAPIV3_1.ReferenceObject = reference;
         let typeId: string | undefined;
-        if (reference.$ref.includes("schemas")) {
-            typeId = this.getTypeIdFromSchemaReference(reference);
-        } else if (reference.$ref.includes("messages")) {
-            typeId = this.getTypeIdFromMessageReference(reference);
-        }
-        if (channelPath != null && deduplicationMap != null && typeId != null) {
-            if (deduplicationMap[channelPath] != null && deduplicationMap[channelPath][typeId] != null) {
-                typeId = deduplicationMap[channelPath][typeId];
+
+        const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
+        const messageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
+
+        if (schemaMatch && schemaMatch[1]) {
+            typeId = schemaMatch[1];
+        } else if (messageMatch && messageMatch[1]) {
+            typeId = messageMatch[1];
+            if (channelPath != null && deduplicationMap != null && typeId != null) {
+                if (deduplicationMap[channelPath] != null && deduplicationMap[channelPath][typeId] != null) {
+                    typeId = deduplicationMap[channelPath][typeId];
+                }
             }
         }
+
         if (typeId == null) {
             return { ok: false };
         }
-        updatedReference = this.rebuildReference(reference, typeId);
+        updatedReference = this.replaceReferencedTypeId(reference, typeId);
         const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(updatedReference);
         if (!resolvedReference.resolved) {
             return { ok: false };
@@ -161,7 +166,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return undefined;
     }
 
-    private rebuildReference(
+    private replaceReferencedTypeId(
         reference: OpenAPIV3_1.ReferenceObject,
         updatedTypeId: string
     ): OpenAPIV3_1.ReferenceObject {
