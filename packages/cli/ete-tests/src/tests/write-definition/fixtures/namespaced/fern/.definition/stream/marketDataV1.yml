@@ -1,3 +1,5 @@
+imports:
+  streamRoot: __package__.yml
 types:
   MarketDataV1Symbol:
     docs: >
@@ -75,7 +77,10 @@ channel:
   auth: false
   examples:
     - messages: []
-  messages: {}
+  messages:
+    marketData:
+      body: streamRoot.Market
+      origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
     symbol:

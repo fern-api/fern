@@ -1,7 +1,12 @@
 channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket

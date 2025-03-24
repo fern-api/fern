@@ -310,8 +310,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket
 ",
@@ -322,8 +327,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
   path: /test2
   url: websocket2
 ",
@@ -438,8 +448,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket
 ",
@@ -450,8 +465,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
   path: /test2
   url: websocket2
 ",
@@ -731,7 +751,9 @@ service:
         "type": "file",
       },
       {
-        "contents": "types:
+        "contents": "imports:
+  streamRoot: __package__.yml
+types:
   MarketDataV1Symbol:
     docs: >
       Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
@@ -808,7 +830,10 @@ channel:
   auth: false
   examples:
     - messages: []
-  messages: {}
+  messages:
+    marketData:
+      body: streamRoot.Market
+      origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
     symbol:
@@ -2775,8 +2800,13 @@ name: api
         "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket
 ",
@@ -2787,8 +2817,13 @@ name: api
         "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
   path: /test2
   url: websocket2
 ",
@@ -2890,8 +2925,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket
 ",
@@ -2902,8 +2942,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
   path: /test2
   url: websocket2
 ",
@@ -3008,8 +3053,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
   path: /test
   url: websocket
 ",
@@ -3020,8 +3070,13 @@ name: api
     "contents": "channel:
   auth: false
   examples:
-    - messages: []
-  messages: {}
+    - messages:
+        - body: string
+          type: publish
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
   path: /test2
   url: websocket2
 ",
