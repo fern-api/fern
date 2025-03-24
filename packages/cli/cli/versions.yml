@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Added support for default values in example generation to prevent SDK generation failures due to corrupted OpenAPI examples.
+    type: feat
+  irVersion: 57
+  version: 0.56.31
+
+- changelogEntry:
+  - summary: |
       The default behavior of `fern generate` now excludes broken link checking by default.
       This can be overridden by passing `--broken-links` or `--strict-broken-links`.
     type: feat
