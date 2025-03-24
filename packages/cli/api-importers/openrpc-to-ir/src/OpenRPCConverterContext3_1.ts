@@ -1,5 +1,6 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
+import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
 /**
@@ -20,5 +21,32 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3.SecuritySchemeObject
     ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
         return parameter != null && "$ref" in parameter;
+    }
+
+    public async convertReferenceToTypeReference(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+        const typeId = this.getTypeIdFromSchemaReference(reference);
+        if (typeId == null) {
+            return { ok: false };
+        }
+        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        if (!resolvedReference.resolved) {
+            return { ok: false };
+        }
+        return {
+            ok: true,
+            reference: TypeReference.named({
+                fernFilepath: {
+                    allParts: [],
+                    packagePath: [],
+                    file: undefined
+                },
+                name: this.casingsGenerator.generateName(typeId),
+                typeId,
+                default: undefined,
+                inline: false
+            })
+        };
     }
 }
