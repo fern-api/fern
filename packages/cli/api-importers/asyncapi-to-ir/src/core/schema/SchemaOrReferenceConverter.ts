@@ -53,9 +53,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         if (context.isReferenceObject(this.schemaOrReference)) {
-            const response = await context.convertReferenceToTypeReference({
-                reference: this.schemaOrReference
-            });
+            const response = await context.convertReferenceToTypeReference(this.schemaOrReference);
             if (!response.ok) {
                 return undefined;
             }

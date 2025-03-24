@@ -556,25 +556,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "testChannel_sendMessage",
+                "originalName": "sendMessage",
                 "camelCase": {
-                  "unsafeName": "testChannelSendMessage",
-                  "safeName": "testChannelSendMessage"
+                  "unsafeName": "sendMessage",
+                  "safeName": "sendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "test_channel_send_message",
-                  "safeName": "test_channel_send_message"
+                  "unsafeName": "send_message",
+                  "safeName": "send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
-                  "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                  "unsafeName": "SEND_MESSAGE",
+                  "safeName": "SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "TestChannelSendMessage",
-                  "safeName": "TestChannelSendMessage"
+                  "unsafeName": "SendMessage",
+                  "safeName": "SendMessage"
                 }
               },
-              "typeId": "testChannel_sendMessage",
+              "typeId": "sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -626,25 +626,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "testChannel2_sendMessage",
+                "originalName": "sendMessage",
                 "camelCase": {
-                  "unsafeName": "testChannel2SendMessage",
-                  "safeName": "testChannel2SendMessage"
+                  "unsafeName": "sendMessage",
+                  "safeName": "sendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "test_channel_2_send_message",
-                  "safeName": "test_channel_2_send_message"
+                  "unsafeName": "send_message",
+                  "safeName": "send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TEST_CHANNEL_2_SEND_MESSAGE",
-                  "safeName": "TEST_CHANNEL_2_SEND_MESSAGE"
+                  "unsafeName": "SEND_MESSAGE",
+                  "safeName": "SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "TestChannel2SendMessage",
-                  "safeName": "TestChannel2SendMessage"
+                  "unsafeName": "SendMessage",
+                  "safeName": "SendMessage"
                 }
               },
-              "typeId": "testChannel2_sendMessage",
+              "typeId": "sendMessage",
               "inline": false,
               "type": "named"
             },

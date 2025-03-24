@@ -87,9 +87,7 @@ export class ObjectSchemaConverter extends AbstractConverter<AsyncAPIConverterCo
 
             // if allOf is a schema reference, add to extends
             if (context.isReferenceObject(allOfSchema)) {
-                const maybeTypeReference = await context.convertReferenceToTypeReference({
-                    reference: allOfSchema
-                });
+                const maybeTypeReference = await context.convertReferenceToTypeReference(allOfSchema);
                 if (maybeTypeReference.ok) {
                     extends_.push(maybeTypeReference.reference);
                 }
