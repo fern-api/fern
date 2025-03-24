@@ -5,11 +5,12 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir-to-fern docs", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (!fixture.isDirectory() || (filterFixture && !fixture.name.includes(filterFixture))) {
             continue;
         }
 
@@ -39,7 +40,7 @@ describe("openapi-ir-to-fern docs", async () => {
                 );
 
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+                await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
             },
             90_000
         );
