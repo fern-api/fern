@@ -12,6 +12,7 @@ import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0";
 import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0";
 import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext";
 import { SchemaConverter } from "./core/schema/SchemaConverter";
+import { ChannelId, MessageId } from "./sharedTypes";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -23,7 +24,7 @@ export declare namespace OpenAPIConverter {
 
 export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContext, IntermediateRepresentation> {
     private ir: BaseIntermediateRepresentation;
-    private deduplicationMap: Record<string, Record<string, string>> | undefined;
+    private deduplicationMap: Record<ChannelId, Record<MessageId, MessageId>> | undefined;
 
     constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
         super({ breadcrumbs });

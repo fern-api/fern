@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { ChannelId } from "../sharedTypes";
+import { ChannelId, MessageId } from "../sharedTypes";
 
 export interface DocumentV3 {
     asyncapi: string;
@@ -28,7 +28,7 @@ export interface ServerV3 {
 export interface ChannelV3 {
     address?: string;
     bindings?: Bindings;
-    messages?: Record<string, MessageV3>;
+    messages?: Record<MessageId, MessageV3>;
     servers?: OpenAPIV3.ReferenceObject[];
     // TODO: Add support for reference objects
     parameters?: Record<string, ChannelParameter>;
