@@ -94,7 +94,20 @@
       "groupName": [
         "testChannel"
       ],
-      "messages": [],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannel_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannelSendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "websocket",
@@ -106,7 +119,18 @@
         {
           "queryParameters": [],
           "headers": [],
-          "messages": []
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       ],
       "source": {
@@ -124,7 +148,20 @@
       "groupName": [
         "testChannel2"
       ],
-      "messages": [],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannel2_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannel2SendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "websocket2",
@@ -136,7 +173,18 @@
         {
           "queryParameters": [],
           "headers": [],
-          "messages": []
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
         }
       ],
       "source": {

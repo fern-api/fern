@@ -67,10 +67,20 @@
           "auth": false,
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+              ],
             },
           ],
-          "messages": {},
+          "messages": {
+            "testChannel_sendMessage": {
+              "body": "string",
+              "origin": "client",
+            },
+          },
           "path": "/test",
           "url": "websocket",
         },
@@ -79,9 +89,14 @@
   path: /test
   url: websocket
   auth: false
-  messages: {}
+  messages:
+    testChannel_sendMessage:
+      origin: client
+      body: string
   examples:
-    - messages: []
+    - messages:
+        - type: publish
+          body: string
 ",
     },
     "testChannel2.yml": {
@@ -91,10 +106,20 @@
           "auth": false,
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+              ],
             },
           ],
-          "messages": {},
+          "messages": {
+            "testChannel2_sendMessage": {
+              "body": "string",
+              "origin": "client",
+            },
+          },
           "path": "/test2",
           "url": "websocket2",
         },
@@ -103,9 +128,14 @@
   path: /test2
   url: websocket2
   auth: false
-  messages: {}
+  messages:
+    testChannel2_sendMessage:
+      origin: client
+      body: string
   examples:
-    - messages: []
+    - messages:
+        - type: publish
+          body: string
 ",
     },
   },

@@ -76,14 +76,22 @@ export function parseAsyncAPIV3({
         }
         if (channel.messages) {
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                if (message && message.payload != null) {
+                if (message && (message.payload != null || "$ref" in message)) {
                     if (!seenMessages[messageId]) {
                         seenMessages[messageId] = [];
                     }
-                    seenMessages[messageId].push({
-                        channelId,
-                        payload: message.payload
-                    });
+                    if ("$ref" in message) {
+                        const resolved = context.resolveMessageReference(message as OpenAPIV3.ReferenceObject);
+                        seenMessages[messageId].push({
+                            channelId,
+                            payload: resolved.payload
+                        });
+                    } else {
+                        seenMessages[messageId].push({
+                            channelId,
+                            payload: message.payload
+                        });
+                    }
                 }
             }
         }
