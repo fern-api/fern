@@ -4,7 +4,7 @@ import com.seed.pathParameters.SeedPathParametersClient;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 
 public class Example6 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPathParametersClient client = SeedPathParametersClient
             .builder()
             .url("https://api.fern.com")

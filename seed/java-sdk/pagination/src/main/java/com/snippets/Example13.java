@@ -4,7 +4,7 @@ import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 
 public class Example13 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")

@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.errorProperty.SeedErrorPropertyClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedErrorPropertyClient client = SeedErrorPropertyClient
             .builder()
             .build();

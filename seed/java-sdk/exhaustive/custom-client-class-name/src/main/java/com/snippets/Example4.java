@@ -4,7 +4,7 @@ import com.seed.exhaustive.Best;
 import java.util.HashMap;
 
 public class Example4 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

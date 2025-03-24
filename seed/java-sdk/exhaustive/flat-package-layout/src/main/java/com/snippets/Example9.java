@@ -4,7 +4,7 @@ import com.seed.exhaustive.SeedExhaustiveClient;
 import com.seed.exhaustive.types.types.WeatherReport;
 
 public class Example9 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

@@ -16,7 +16,7 @@ import com.seed.validation.requests.CreateRequest;
 import com.seed.validation.types.Shape;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedValidationClient client = SeedValidationClient
             .builder()
             .build();

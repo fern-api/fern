@@ -4,7 +4,7 @@ import com.customprefix.SeedApiClient;
 import com.customprefix.resources.imdb.types.CreateMovieRequest;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")

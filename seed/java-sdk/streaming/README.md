@@ -15,7 +15,7 @@ import com.seed.streaming.SeedStreamingClient;
 import com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedStreamingClient client = SeedStreamingClient
             .builder()
             .build();

@@ -5,7 +5,7 @@ import com.seed.exhaustive.resources.types.union.types.Animal;
 import com.seed.exhaustive.resources.types.union.types.Dog;
 
 public class Example39 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.noEnvironment.SeedNoEnvironmentClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedNoEnvironmentClient client = SeedNoEnvironmentClient
             .builder()
             .token("<token>")

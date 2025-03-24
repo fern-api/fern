@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.alias.SeedAliasClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAliasClient client = SeedAliasClient
             .builder()
             .build();

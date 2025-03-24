@@ -4,7 +4,7 @@ import com.seed.validation.SeedValidationClient;
 import com.seed.validation.requests.GetRequest;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedValidationClient client = SeedValidationClient
             .builder()
             .url("https://api.fern.com")

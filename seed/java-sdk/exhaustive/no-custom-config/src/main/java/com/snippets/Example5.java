@@ -5,7 +5,7 @@ import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.util.HashMap;
 
 public class Example5 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

@@ -4,7 +4,7 @@ import com.seed.mixedCase.SeedMixedCaseClient;
 import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 
 public class Example3 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedMixedCaseClient client = SeedMixedCaseClient
             .builder()
             .url("https://api.fern.com")

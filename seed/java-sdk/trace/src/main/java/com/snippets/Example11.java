@@ -4,7 +4,7 @@ import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.migration.requests.GetAttemptedMigrationsRequest;
 
 public class Example11 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

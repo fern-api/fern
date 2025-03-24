@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.plainText.SeedPlainTextClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPlainTextClient client = SeedPlainTextClient
             .builder()
             .build();

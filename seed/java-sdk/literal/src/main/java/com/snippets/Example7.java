@@ -4,7 +4,7 @@ import com.seed.literal.SeedLiteralClient;
 import com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;
 
 public class Example7 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedLiteralClient client = SeedLiteralClient
             .builder()
             .url("https://api.fern.com")

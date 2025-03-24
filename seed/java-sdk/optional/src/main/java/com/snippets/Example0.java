@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
             .builder()
             .url("https://api.fern.com")

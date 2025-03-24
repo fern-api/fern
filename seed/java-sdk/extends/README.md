@@ -15,7 +15,7 @@ import com.seed.extends.SeedExtendsClient;
 import com.seed.extends.requests.Inlined;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExtendsClient client = SeedExtendsClient
             .builder()
             .build();

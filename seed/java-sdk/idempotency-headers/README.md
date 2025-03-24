@@ -16,7 +16,7 @@ import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentReque
 import com.seed.idempotencyHeaders.resources.payment.types.Currency;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
             .builder()
             .token("<token>")

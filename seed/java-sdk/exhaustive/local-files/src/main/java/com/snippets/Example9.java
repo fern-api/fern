@@ -4,7 +4,7 @@ import com.fern.sdk.SeedExhaustiveClient;
 import com.fern.sdk.resources.types.enum_.types.WeatherReport;
 
 public class Example9 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

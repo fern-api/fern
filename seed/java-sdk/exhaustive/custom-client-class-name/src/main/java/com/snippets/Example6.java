@@ -5,7 +5,7 @@ import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.util.Optional;
 
 public class Example6 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

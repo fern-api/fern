@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.api.SeedApiClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .build();

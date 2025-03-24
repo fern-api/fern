@@ -5,7 +5,7 @@ import com.seed.unions.resources.union.types.Circle;
 import com.seed.unions.resources.union.types.Shape;
 
 public class Example4 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedUnionsClient client = SeedUnionsClient
             .builder()
             .url("https://api.fern.com")

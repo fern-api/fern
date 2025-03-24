@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Example18 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

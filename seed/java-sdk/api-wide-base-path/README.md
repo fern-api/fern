@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.apiWideBasePath.SeedApiWideBasePathClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiWideBasePathClient client = SeedApiWideBasePathClient
             .builder()
             .build();

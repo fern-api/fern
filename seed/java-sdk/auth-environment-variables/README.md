@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
             .builder()
             .apiKey("<value>")

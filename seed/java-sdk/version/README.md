@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.version.SeedVersionClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedVersionClient client = SeedVersionClient
             .builder()
             .build();

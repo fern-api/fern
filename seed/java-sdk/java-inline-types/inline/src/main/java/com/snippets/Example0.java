@@ -5,7 +5,7 @@ import com.seed.object.requests.PostRootRequest;
 import com.seed.object.types.RequestTypeInlineType1;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedObjectClient client = SeedObjectClient
             .builder()
             .url("https://api.fern.com")

@@ -6,7 +6,7 @@ import com.seed.literal.resources.inlined.types.ANestedLiteral;
 import com.seed.literal.resources.inlined.types.ATopLevelLiteral;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedLiteralClient client = SeedLiteralClient
             .builder()
             .url("https://api.fern.com")
