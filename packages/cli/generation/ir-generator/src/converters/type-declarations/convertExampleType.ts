@@ -1,9 +1,9 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
+    RawSchemas,
     isRawAliasDefinition,
     isRawObjectDefinition,
-    RawSchemas,
     visitRawTypeDeclaration,
     visitRawTypeReference
 } from "@fern-api/fern-definition-schema";
