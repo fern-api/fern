@@ -6065,8 +6065,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805(encoding@0.1.13)(typescript@5.7.2)
+        specifier: 0.132.5-458dd6370
+        version: 0.132.5-458dd6370(encoding@0.1.13)(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
