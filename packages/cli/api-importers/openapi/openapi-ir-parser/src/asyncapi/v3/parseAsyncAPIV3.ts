@@ -76,7 +76,7 @@ export function parseAsyncAPIV3({
         }
         if (channel.messages) {
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                if (message && (message.payload != null || "$ref" in message)) {
+                if (message && ("payload" in message || "$ref" in message)) {
                     if (!seenMessages[messageId]) {
                         seenMessages[messageId] = [];
                     }

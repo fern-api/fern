@@ -150,11 +150,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
             try {
                 const responseText = await response.text();
-                // Try parsing as JSON first
                 try {
                     resolvedReference = JSON.parse(responseText);
                 } catch {
-                    // If JSON parsing fails, try YAML parsing
                     resolvedReference = yaml.load(responseText);
                 }
                 if (resolvedReference == null) {
@@ -181,7 +179,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };
             }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             resolvedReference = (resolvedReference as any)[key];
         }
 

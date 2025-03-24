@@ -59,7 +59,9 @@ export interface Bindings {
     ws?: WebSocketBindings;
 }
 
-export interface MessageV3 {
+export type MessageV3 = ChannelMessage | OpenAPIV3.ReferenceObject;
+
+export interface ChannelMessage {
     name?: string;
     description?: string;
     payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;

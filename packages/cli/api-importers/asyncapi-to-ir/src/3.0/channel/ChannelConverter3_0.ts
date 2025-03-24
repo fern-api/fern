@@ -21,6 +21,7 @@ export declare namespace ChannelConverter3_0 {
         channelPath: string;
         group: string[] | undefined;
         operations: Record<string, AsyncAPIV3.Operation>;
+        deduplicationMap: Record<string, Record<string, string>> | undefined;
     }
 
     export interface Output {
@@ -43,14 +44,16 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
     private readonly channelPath: string;
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
     private readonly group: string[] | undefined;
+    private readonly deduplicationMap: Record<string, Record<string, string>> | undefined;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
+    constructor({ breadcrumbs, channel, channelPath, operations, group, deduplicationMap }: ChannelConverter3_0.Args) {
         super({ breadcrumbs });
         this.channel = channel;
         this.channelPath = channelPath;
         this.operations = operations;
         this.group = group;
+        this.deduplicationMap = deduplicationMap;
     }
 
     public async convert({
@@ -92,7 +95,11 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
             for (const message of operation.messages) {
-                const resolved = await context.convertReferenceToTypeReference(message);
+                const resolved = await context.convertReferenceToTypeReference({
+                    reference: message,
+                    channelPath: this.channelPath,
+                    deduplicationMap: this.deduplicationMap
+                });
                 if (resolved.ok) {
                     const messageBody = FernIr.WebSocketMessageBody.reference({
                         bodyType: resolved.reference,

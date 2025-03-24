@@ -42,19 +42,32 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return messageMatch[1];
     }
 
-    public async convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+    public async convertReferenceToTypeReference({
+        reference,
+        channelPath,
+        deduplicationMap
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        channelPath?: string;
+        deduplicationMap?: Record<string, Record<string, string>>;
+    }): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+        let updatedReference: OpenAPIV3_1.ReferenceObject = reference;
         let typeId: string | undefined;
         if (reference.$ref.includes("schemas")) {
             typeId = this.getTypeIdFromSchemaReference(reference);
         } else if (reference.$ref.includes("messages")) {
             typeId = this.getTypeIdFromMessageReference(reference);
         }
+        if (channelPath != null && deduplicationMap != null && typeId != null) {
+            if (deduplicationMap[channelPath] != null) {
+                typeId = deduplicationMap[channelPath][typeId];
+            }
+        }
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        updatedReference = this.rebuildReference(reference, typeId);
+        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(updatedReference);
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
@@ -146,5 +159,16 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         }
 
         return undefined;
+    }
+
+    private rebuildReference(
+        reference: OpenAPIV3_1.ReferenceObject,
+        updatedTypeId: string
+    ): OpenAPIV3_1.ReferenceObject {
+        const parts = reference.$ref.split("/");
+        parts[parts.length - 1] = updatedTypeId;
+        return {
+            $ref: parts.join("/")
+        };
     }
 }

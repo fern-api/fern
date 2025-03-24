@@ -9,7 +9,7 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         return `#/channels/${message.channelId}/messages/${message.messageId}`;
     }
 
-    public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.MessageV3 {
+    public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelMessage {
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
@@ -27,10 +27,14 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             if (resolvedInChannel == null) {
                 throw new Error(`${message.$ref} is undefined`);
             }
-            return {
-                name: messageKey,
-                ...resolvedInChannel
-            };
+            if ("$ref" in resolvedInChannel) {
+                return this.resolveMessageReference(resolvedInChannel as OpenAPIV3.ReferenceObject);
+            } else {
+                return {
+                    name: messageKey,
+                    ...resolvedInChannel
+                };
+            }
         }
 
         const components = this.document.components;
@@ -39,7 +43,7 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         }
 
         const messageKey = message.$ref.substring(MESSAGE_REFERENCE_PREFIX.length);
-        const resolvedInComponents = components.messages[messageKey];
+        const resolvedInComponents = components.messages[messageKey] as AsyncAPIV3.ChannelMessage;
         if (resolvedInComponents == null) {
             throw new Error(`${message.$ref} is undefined`);
         }

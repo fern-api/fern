@@ -133,7 +133,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
             if (context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = await context.convertReferenceToTypeReference(subSchema);
+                const maybeTypeReference = await context.convertReferenceToTypeReference({
+                    reference: subSchema
+                });
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
