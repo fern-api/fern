@@ -22,7 +22,7 @@ import { convertEnum } from "../../schema/convertEnum";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
@@ -280,7 +280,6 @@ export function parseAsyncAPIV3({
             const messages: WebsocketMessageSchema[] = channelEvents[channelPath]?.__parsedMessages ?? [];
             const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
                 messages,
-                channelPath,
                 messageSchemas: messageSchemas[channelPath] ?? {}
             });
             let examples: WebsocketSessionExample[] = [];
@@ -292,19 +291,23 @@ export function parseAsyncAPIV3({
                         headers,
                         queryParameters
                     },
-                    publish: examplePublishMessage,
-                    subscribe: exampleSubscribeMessage,
                     source,
                     namespace: context.namespace
                 });
             } else {
+                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                if (examplePublishMessage != null) {
+                    exampleBuilderInputs.push(examplePublishMessage);
+                }
+                if (exampleSubscribeMessage != null) {
+                    exampleBuilderInputs.push(exampleSubscribeMessage);
+                }
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
                     handshake: {
                         headers,
                         queryParameters
                     },
-                    publish: examplePublishMessage,
-                    subscribe: exampleSubscribeMessage
+                    messages: exampleBuilderInputs
                 });
                 if (autogenExample != null) {
                     examples.push(autogenExample);
@@ -477,15 +480,13 @@ function convertMessageReferencesToWebsocketSchemas({
 
 function getExampleSchemas({
     messages,
-    channelPath,
     messageSchemas
 }: {
     messages: WebsocketMessageSchema[];
-    channelPath: string;
     messageSchemas: Record<SchemaId, SchemaWithExample>;
 }): {
-    examplePublishMessage: SchemaWithExample | undefined;
-    exampleSubscribeMessage: SchemaWithExample | undefined;
+    examplePublishMessage: SessionExampleBuilderInput | undefined;
+    exampleSubscribeMessage: SessionExampleBuilderInput | undefined;
 } {
     const examplePublishMessageId = messages.find((message) => message.origin === "client")?.name;
     const exampleSubscribeMessageId = messages.find((message) => message.origin === "server")?.name;
@@ -493,5 +494,20 @@ function getExampleSchemas({
     const exampleSubscribeMessage =
         exampleSubscribeMessageId != null ? messageSchemas[exampleSubscribeMessageId] : undefined;
 
-    return { examplePublishMessage, exampleSubscribeMessage };
+    return {
+        examplePublishMessage:
+            examplePublishMessage != null && examplePublishMessageId != null
+                ? {
+                      type: examplePublishMessageId,
+                      payload: examplePublishMessage
+                  }
+                : undefined,
+        exampleSubscribeMessage:
+            exampleSubscribeMessage != null && exampleSubscribeMessageId != null
+                ? {
+                      type: exampleSubscribeMessageId,
+                      payload: exampleSubscribeMessage
+                  }
+                : undefined
+    };
 }
