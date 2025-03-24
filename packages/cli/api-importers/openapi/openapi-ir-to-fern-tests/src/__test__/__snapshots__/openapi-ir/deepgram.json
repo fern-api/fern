@@ -23104,7 +23104,7 @@
           "headers": [],
           "messages": [
             {
-              "messageType": "publish",
+              "messageType": "textToSpeechRequest",
               "payload": {
                 "properties": {
                   "type": {
@@ -23126,7 +23126,7 @@
               }
             },
             {
-              "messageType": "subscribe",
+              "messageType": "textToSpeechResponse",
               "payload": {
                 "value": {
                   "value": "string",
@@ -25438,7 +25438,7 @@
           "headers": [],
           "messages": [
             {
-              "messageType": "publish",
+              "messageType": "transcriptionRequest",
               "payload": {
                 "value": {
                   "value": "string",
@@ -25448,7 +25448,7 @@
               }
             },
             {
-              "messageType": "subscribe",
+              "messageType": "transcriptionResponse",
               "payload": {
                 "properties": {},
                 "type": "object"
@@ -27299,7 +27299,7 @@
           "headers": [],
           "messages": [
             {
-              "messageType": "publish",
+              "messageType": "settingsConfiguration",
               "payload": {
                 "properties": {
                   "type": {
@@ -27318,7 +27318,7 @@
               }
             },
             {
-              "messageType": "subscribe",
+              "messageType": "injectionRefused",
               "payload": {
                 "properties": {
                   "type": {

@@ -134,7 +134,7 @@
               "messages": [
                 {
                   "body": "string",
-                  "type": "publish",
+                  "type": "testChannel_sendMessage",
                 },
               ],
             },
@@ -159,7 +159,7 @@
       body: string
   examples:
     - messages:
-        - type: publish
+        - type: testChannel_sendMessage
           body: string
 ",
     },
@@ -173,7 +173,7 @@
               "messages": [
                 {
                   "body": "string",
-                  "type": "publish",
+                  "type": "testChannel2_sendMessage",
                 },
               ],
             },
@@ -198,7 +198,7 @@
       body: string
   examples:
     - messages:
-        - type: publish
+        - type: testChannel2_sendMessage
           body: string
 ",
     },
@@ -212,7 +212,7 @@
               "messages": [
                 {
                   "body": "string",
-                  "type": "publish",
+                  "type": "testChannels_sendMessage",
                 },
               ],
             },
@@ -237,7 +237,7 @@
       body: string
   examples:
     - messages:
-        - type: publish
+        - type: testChannels_sendMessage
           body: string
 ",
     },
@@ -251,7 +251,7 @@
               "messages": [
                 {
                   "body": "string",
-                  "type": "publish",
+                  "type": "testChannels2_sendMessage",
                 },
               ],
             },
@@ -276,7 +276,7 @@
       body: string
   examples:
     - messages:
-        - type: publish
+        - type: testChannels2_sendMessage
           body: string
 ",
     },
