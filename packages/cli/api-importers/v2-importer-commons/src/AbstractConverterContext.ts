@@ -179,6 +179,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             resolvedReference = (resolvedReference as any)[key];
         }
 
