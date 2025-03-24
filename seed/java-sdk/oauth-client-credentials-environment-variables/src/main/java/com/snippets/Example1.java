@@ -4,7 +4,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCreden
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.requests.RefreshTokenRequest;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
             .builder()
             .clientId("<clientId>")

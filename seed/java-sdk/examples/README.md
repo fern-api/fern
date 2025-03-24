@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.examples.SeedExamplesClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExamplesClient client = SeedExamplesClient
             .builder()
             .token("<token>")

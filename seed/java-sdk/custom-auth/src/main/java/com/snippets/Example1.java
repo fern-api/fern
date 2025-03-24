@@ -4,7 +4,7 @@ import com.seed.customAuth.SeedCustomAuthClient;
 import java.util.HashMap;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedCustomAuthClient client = SeedCustomAuthClient
             .builder()
             .customAuthScheme("<value>")

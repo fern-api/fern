@@ -15,7 +15,7 @@ import com.seed.api.SeedApiClient;
 import com.seed.api.resources.imdb.types.CreateMovieRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")

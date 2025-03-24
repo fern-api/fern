@@ -5,7 +5,7 @@ import com.fern.sdk.resources.types.union.types.Animal;
 import com.fern.sdk.resources.types.union.types.Dog;
 
 public class Example39 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

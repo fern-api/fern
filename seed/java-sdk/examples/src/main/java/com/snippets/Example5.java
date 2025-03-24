@@ -4,7 +4,7 @@ import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.file.service.requests.GetFileRequest;
 
 public class Example5 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExamplesClient client = SeedExamplesClient
             .builder()
             .token("<token>")

@@ -8,7 +8,7 @@ import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOper
 import com.seed.pagination.resources.complex.types.StartingAfterPaging;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")

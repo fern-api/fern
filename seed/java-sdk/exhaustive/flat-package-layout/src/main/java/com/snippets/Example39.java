@@ -5,7 +5,7 @@ import com.seed.exhaustive.types.types.Animal;
 import com.seed.exhaustive.types.types.Dog;
 
 public class Example39 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

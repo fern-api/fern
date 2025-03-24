@@ -5,7 +5,7 @@ import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationReq
 import com.seed.pagination.resources.users.types.Order;
 
 public class Example5 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")

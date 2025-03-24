@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient
             .builder()
             .token("<token>")

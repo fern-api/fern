@@ -56,6 +56,13 @@ export class Method extends AstNode {
 
         if (this.parameters.length === 0) {
             writer.write("()");
+        } else if (this.parameters.length === 1) {
+            writer.write("(");
+            if (this.parameters[0] == null) {
+                throw new Error("Cannot render parameter " + this.parameters[0]);
+            }
+            writer.writeNode(this.parameters[0]);
+            writer.write(")");
         } else {
             writer.writeLine("(");
             writer.indent();

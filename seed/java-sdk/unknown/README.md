@@ -15,7 +15,7 @@ import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
 import java.util.HashMap;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
             .builder()
             .build();

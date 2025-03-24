@@ -8,7 +8,7 @@ import com.seed.object.types.DiscriminatedUnion1InlineType1InlineType1;
 import com.seed.object.types.ReferenceType;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedObjectClient client = SeedObjectClient
             .builder()
             .url("https://api.fern.com")

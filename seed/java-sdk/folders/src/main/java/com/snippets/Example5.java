@@ -4,7 +4,7 @@ import com.seed.api.SeedApiClient;
 import java.util.HashMap;
 
 public class Example5 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .url("https://api.fern.com")

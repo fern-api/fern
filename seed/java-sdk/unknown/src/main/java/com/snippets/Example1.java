@@ -5,7 +5,7 @@ import com.seed.unknownAsAny.resources.unknown.types.MyObject;
 import java.util.HashMap;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
             .builder()
             .url("https://api.fern.com")

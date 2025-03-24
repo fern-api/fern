@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class Example15 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

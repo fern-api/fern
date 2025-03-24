@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.responseProperty.SeedResponsePropertyClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedResponsePropertyClient client = SeedResponsePropertyClient
             .builder()
             .build();

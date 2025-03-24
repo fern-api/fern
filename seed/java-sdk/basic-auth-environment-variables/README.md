@@ -15,7 +15,7 @@ import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesC
 import java.util.HashMap;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
             .builder()
             .credentials("<username>", "<password>")

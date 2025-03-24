@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

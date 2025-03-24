@@ -15,7 +15,7 @@ import com.seed.packageYml.SeedPackageYmlClient;
 import com.seed.packageYml.types.EchoRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPackageYmlClient client = SeedPackageYmlClient
             .builder()
             .build();
