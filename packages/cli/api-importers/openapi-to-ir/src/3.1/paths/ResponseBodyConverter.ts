@@ -1,10 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
 export declare namespace ResponseBodyConverter {
     export interface Args extends AbstractConverter.Args {
@@ -61,7 +60,7 @@ export class ResponseBodyConverter extends AbstractConverter<
             }
 
             const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
                 schemaOrReference: mediaTypeObject.schema,
                 schemaIdOverride: schemaId

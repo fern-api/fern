@@ -1,11 +1,25 @@
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { ContainerType, DeclaredTypeName, Package, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import {
+    Availability,
+    AvailabilityStatus,
+    ContainerType,
+    DeclaredTypeName,
+    ObjectPropertyAccess,
+    Package,
+    TypeDeclaration,
+    TypeId,
+    TypeReference
+} from "@fern-api/ir-sdk";
 import { Logger } from "@fern-api/logger";
+
+import { Extensions } from ".";
+import { ErrorCollector } from "./ErrorCollector";
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -133,7 +147,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
         let resolvedReference: unknown = this.spec;
         let fragment: string | undefined;
 
-        // Handle URL references
         if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
@@ -162,19 +175,16 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 return { resolved: false };
             }
 
-            // If there's no fragment, return the whole document
             if (!fragment) {
                 return { resolved: true, value: resolvedReference as T };
             }
         }
 
-        // Skip the initial '#' if present and split into keys
         const keys = (fragment ?? reference.$ref)
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "") // Remove leading http(s):// or # and optional /
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
 
-        // Navigate through keys
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };
@@ -188,6 +198,88 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    public async getPropertyAccess(
+        schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+    ): Promise<ObjectPropertyAccess | undefined> {
+        let schema = schemaOrReference;
+
+        while (this.isReferenceObject(schema)) {
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            schema = resolved.value;
+        }
+
+        if (schema.readOnly && schema.writeOnly) {
+            return undefined;
+        }
+
+        if (schema.readOnly) {
+            return ObjectPropertyAccess.ReadOnly;
+        }
+
+        if (schema.writeOnly) {
+            return ObjectPropertyAccess.WriteOnly;
+        }
+
+        return undefined;
+    }
+
+    public async getAvailability({
+        node,
+        breadcrumbs,
+        errorCollector
+    }: {
+        node:
+            | OpenAPIV3_1.ReferenceObject
+            | OpenAPIV3_1.SchemaObject
+            | OpenAPIV3_1.OperationObject
+            | OpenAPIV3_1.ParameterObject;
+        breadcrumbs: string[];
+        errorCollector: ErrorCollector;
+    }): Promise<Availability | undefined> {
+        while (this.isReferenceObject(node)) {
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            node = resolved.value;
+        }
+
+        const availabilityExtension = new Extensions.FernAvailabilityExtension({
+            node,
+            breadcrumbs
+        });
+        const availability = await availabilityExtension.convert({
+            context: this,
+            errorCollector
+        });
+        if (availability != null) {
+            return {
+                status: availability,
+                message: undefined
+            };
+        }
+
+        if (node.deprecated === true) {
+            return {
+                status: AvailabilityStatus.Deprecated,
+                message: undefined
+            };
+        }
+
+        return undefined;
+    }
+
+    public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
+        const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
+        if (!schemaMatch || !schemaMatch[1]) {
+            return undefined;
+        }
+        return schemaMatch[1];
     }
 
     public createNamedTypeReference(id: string): TypeReference {
@@ -236,6 +328,14 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
         return value;
     }
+
+    public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
+        return typeof value === "object" && value !== null && "$ref" in value;
+    }
+
+    public abstract convertReferenceToTypeReference(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
 
     /**
      * TypeReference helper methods to check various properties

@@ -8,9 +8,8 @@ import {
     StringValidationRules,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.Args {
@@ -18,7 +17,7 @@ export declare namespace PrimitiveSchemaConverter {
     }
 }
 
-export class PrimitiveSchemaConverter extends AbstractConverter<AsyncAPIConverterContext, TypeReference> {
+export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, TypeReference> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
@@ -30,7 +29,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AsyncAPIConverte
         context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): TypeReference | undefined {
         switch (this.schema.type) {

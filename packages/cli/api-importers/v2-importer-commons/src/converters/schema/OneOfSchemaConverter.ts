@@ -8,9 +8,8 @@ import {
     TypeId,
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector, convertNumberToSnakeCase } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector, convertNumberToSnakeCase } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
@@ -27,7 +26,7 @@ export declare namespace OneOfSchemaConverter {
 }
 
 export class OneOfSchemaConverter extends AbstractConverter<
-    OpenAPIConverterContext3_1,
+    AbstractConverterContext<object>,
     OneOfSchemaConverter.Output | undefined
 > {
     private readonly schema: OpenAPIV3_1.SchemaObject;
@@ -41,7 +40,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
         if (this.schema.discriminator != null) {
@@ -54,7 +53,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
         const unionTypes: SingleUnionType[] = [];
@@ -119,7 +118,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
         if (!this.schema.oneOf || this.schema.oneOf.length === 0) {
@@ -132,7 +131,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         for (const [index, subSchema] of this.schema.oneOf.entries()) {
             const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
-            // if subschema is a reference
             if (context.isReferenceObject(subSchema)) {
                 const maybeTypeReference = await context.convertReferenceToTypeReference(subSchema);
                 if (maybeTypeReference.ok) {
@@ -144,7 +142,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            // if subschema is inlined
             const schemaId = context.convertBreadcrumbsToName(subBreadcrumbs);
             const schemaConverter = new SchemaConverter({
                 id: schemaId,

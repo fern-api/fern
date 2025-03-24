@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { Type } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector, FernEnumConfig } from "@fern-api/v2-importer-commons";
 
-import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector, FernEnumConfig } from "../..";
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.Args {
@@ -16,7 +15,10 @@ export declare namespace EnumSchemaConverter {
     }
 }
 
-export class EnumSchemaConverter extends AbstractConverter<AsyncAPIConverterContext, EnumSchemaConverter.Output> {
+export class EnumSchemaConverter extends AbstractConverter<
+    AbstractConverterContext<object>,
+    EnumSchemaConverter.Output
+> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly maybeFernEnum: FernEnumConfig | undefined;
 
@@ -30,14 +32,13 @@ export class EnumSchemaConverter extends AbstractConverter<AsyncAPIConverterCont
         context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): EnumSchemaConverter.Output | undefined {
         if (!this.schema.enum) {
             return undefined;
         }
 
-        // Only keep string enum values
         const stringEnumValues = this.schema.enum.filter((value) => typeof value === "string");
 
         const values = stringEnumValues.map((value) => {
