@@ -181,7 +181,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                     ...schemaOrReferenceConverterOutput.inlinedTypes
                 };
             }
-        } else if ("payload" in operation.message) {
+        } else if (context.isMessageWithPayload(operation.message)) {
             let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
             if (context.isReferenceObject(operation.message.payload)) {
                 const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(operation.message.payload);

@@ -67,26 +67,22 @@
           "auth": false,
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+              ],
             },
           ],
           "messages": {
-            "publish": {
-              "body": "TestChannelPublishEvent",
+            "testChannel_sendMessage": {
+              "body": "string",
               "origin": "client",
             },
           },
           "path": "/test",
           "url": "websocket",
-        },
-        "types": {
-          "TestChannelPublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
@@ -94,16 +90,13 @@
   url: websocket
   auth: false
   messages:
-    publish:
+    testChannel_sendMessage:
       origin: client
-      body: TestChannelPublishEvent
+      body: string
   examples:
-    - messages: []
-types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi.yml
+    - messages:
+        - type: publish
+          body: string
 ",
     },
     "testChannel2.yml": {
@@ -113,26 +106,22 @@ types:
           "auth": false,
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "publish",
+                },
+              ],
             },
           ],
           "messages": {
-            "publish": {
-              "body": "TestChannel2PublishEvent",
+            "testChannel2_sendMessage": {
+              "body": "string",
               "origin": "client",
             },
           },
           "path": "/test2",
           "url": "websocket2",
-        },
-        "types": {
-          "TestChannel2PublishEvent": {
-            "enum": [],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
         },
       },
       "rawContents": "channel:
@@ -140,16 +129,13 @@ types:
   url: websocket2
   auth: false
   messages:
-    publish:
+    testChannel2_sendMessage:
       origin: client
-      body: TestChannel2PublishEvent
+      body: string
   examples:
-    - messages: []
-types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: ../asyncapi.yml
+    - messages:
+        - type: publish
+          body: string
 ",
     },
   },

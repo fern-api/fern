@@ -1,5 +1,5 @@
 export { AbstractConverter } from "./AbstractConverter";
-export { AbstractConverterContext } from "./AbstractConverterContext";
+export { AbstractConverterContext, type Spec } from "./AbstractConverterContext";
 export { AbstractExtension } from "./AbstractExtension";
 export { ErrorCollector } from "./ErrorCollector";
 export * as Extensions from "./extensions";
