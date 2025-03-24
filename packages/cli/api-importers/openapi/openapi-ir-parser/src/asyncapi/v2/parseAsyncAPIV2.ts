@@ -204,20 +204,6 @@ export function parseAsyncAPIV2({
             // Reads the `x-fern-examples` extension from the channel
             const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
             let examples: WebsocketSessionExample[] = [];
-            const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
-            if (publishSchema != null) {
-                exampleBuilderInputs.push({
-                    type: "publish",
-                    payload: publishSchema
-                });
-            }
-            if (subscribeSchema != null) {
-                exampleBuilderInputs.push({
-                    type: "subscribe",
-                    payload: subscribeSchema
-                });
-            }
-
             if (fernExamples.length > 0) {
                 examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
                     context,
@@ -230,6 +216,19 @@ export function parseAsyncAPIV2({
                     namespace: context.namespace
                 });
             } else {
+                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                if (publishSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "publish",
+                        payload: publishSchema
+                    });
+                }
+                if (subscribeSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "subscribe",
+                        payload: subscribeSchema
+                    });
+                }
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
                     handshake: {
                         headers,

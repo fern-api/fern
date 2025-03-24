@@ -278,10 +278,6 @@ export function parseAsyncAPIV3({
         ) {
             const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
             const messages: WebsocketMessageSchema[] = channelEvents[channelPath]?.__parsedMessages ?? [];
-            const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
-                messages,
-                messageSchemas: messageSchemas[channelPath] ?? {}
-            });
             let examples: WebsocketSessionExample[] = [];
             if (fernExamples.length > 0) {
                 examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
@@ -296,6 +292,10 @@ export function parseAsyncAPIV3({
                 });
             } else {
                 const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
+                    messages,
+                    messageSchemas: messageSchemas[channelPath] ?? {}
+                });
                 if (examplePublishMessage != null) {
                     exampleBuilderInputs.push(examplePublishMessage);
                 }

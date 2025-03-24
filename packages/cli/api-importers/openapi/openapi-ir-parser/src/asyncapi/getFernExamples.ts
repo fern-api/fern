@@ -4,7 +4,7 @@ import { AsyncAPIV2 } from "./v2";
 import { AsyncAPIV3 } from "./v3";
 
 export interface WebsocketSessionExampleMessage {
-    type: "subscribe" | "publish";
+    type: string;
     channelId?: string;
     messageId: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
