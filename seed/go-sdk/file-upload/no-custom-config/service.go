@@ -16,6 +16,10 @@ type JustFileWithQueryParamsRequest struct {
 	OptionalListOfStrings []*string `json:"-" url:"optionalListOfStrings,omitempty"`
 }
 
+type OptionalArgsRequest struct {
+	Request interface{} `json:"request,omitempty" url:"-"`
+}
+
 type MyRequest struct {
 	MaybeString           *string                 `json:"maybe_string,omitempty" url:"-"`
 	Integer               int                     `json:"integer" url:"-"`

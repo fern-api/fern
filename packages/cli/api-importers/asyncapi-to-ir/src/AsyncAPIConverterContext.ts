@@ -26,6 +26,10 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return parameter != null && "$ref" in parameter;
     }
 
+    public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
+        return msg != null && typeof msg === "object" && "payload" in msg;
+    }
+
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
         if (!schemaMatch || !schemaMatch[1]) {
@@ -46,11 +50,16 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         reference: OpenAPIV3_1.ReferenceObject
     ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
         let typeId: string | undefined;
-        if (reference.$ref.includes("schemas")) {
-            typeId = this.getTypeIdFromSchemaReference(reference);
-        } else if (reference.$ref.includes("messages")) {
-            typeId = this.getTypeIdFromMessageReference(reference);
+
+        const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
+        const messageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
+
+        if (schemaMatch && schemaMatch[1]) {
+            typeId = schemaMatch[1];
+        } else if (messageMatch && messageMatch[1]) {
+            typeId = messageMatch[1];
         }
+
         if (typeId == null) {
             return { ok: false };
         }

@@ -1001,194 +1001,204 @@
       "groupName": [
         "/chat"
       ],
-      "publish": {
-        "value": {
-          "generatedName": "PublishEvent",
-          "schemas": [
-            {
-              "generatedName": "WebsocketZero",
-              "schema": "AudioInput",
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "value": {
+              "generatedName": "PublishEvent",
+              "schemas": [
+                {
+                  "generatedName": "WebsocketZero",
+                  "schema": "AudioInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketOne",
+                  "schema": "SessionSettings",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketTwo",
+                  "schema": "UserInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketThree",
+                  "schema": "AssistantInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFour",
+                  "schema": "ToolResponseMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFive",
+                  "schema": "ToolErrorMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSix",
+                  "schema": "PauseAssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSeven",
+                  "schema": "ResumeAssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.json",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "WebsocketOne",
-              "schema": "SessionSettings",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketTwo",
-              "schema": "UserInput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketThree",
-              "schema": "AssistantInput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFour",
-              "schema": "ToolResponseMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFive",
-              "schema": "ToolErrorMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSix",
-              "schema": "PauseAssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSeven",
-              "schema": "ResumeAssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.json",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
+            "type": "oneOf"
+          }
         },
-        "type": "oneOf"
-      },
-      "subscribe": {
-        "value": {
-          "generatedName": "SubscribeEvent",
-          "schemas": [
-            {
-              "generatedName": "WebsocketZero",
-              "schema": "AssistantEnd",
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "value": {
+              "generatedName": "SubscribeEvent",
+              "schemas": [
+                {
+                  "generatedName": "WebsocketZero",
+                  "schema": "AssistantEnd",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketOne",
+                  "schema": "AssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketTwo",
+                  "schema": "AudioOutput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketThree",
+                  "schema": "ChatMetadata",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFour",
+                  "schema": "Error",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFive",
+                  "schema": "UserInterruption",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSix",
+                  "schema": "UserMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSeven",
+                  "schema": "ToolCallMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketEight",
+                  "schema": "ToolResponseMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketNine",
+                  "schema": "ToolErrorMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.json",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "WebsocketOne",
-              "schema": "AssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketTwo",
-              "schema": "AudioOutput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketThree",
-              "schema": "ChatMetadata",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFour",
-              "schema": "Error",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFive",
-              "schema": "UserInterruption",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSix",
-              "schema": "UserMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSeven",
-              "schema": "ToolCallMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketEight",
-              "schema": "ToolResponseMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketNine",
-              "schema": "ToolErrorMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.json",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
-        },
-        "type": "oneOf"
-      },
+            "type": "oneOf"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "prod",

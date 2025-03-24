@@ -114,10 +114,20 @@ types:
       groupName: commons.SdkGroupName
       summary: optional<string>
       handshake: WebsocketHandshake
-      publish: optional<Schema>
-      subscribe: optional<Schema>
+      messages: list<WebsocketMessageSchema>
       servers: list<WebsocketServer>
       examples: list<WebsocketSessionExample>
+  
+  WebsocketMessageSchema:
+    properties:
+      name: string
+      origin: WebsocketMessageOrigin
+      body: Schema
+      
+  WebsocketMessageOrigin:
+    enum:
+      - client
+      - server
 
   WebsocketHandshake:
     properties:

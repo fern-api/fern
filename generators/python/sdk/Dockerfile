@@ -21,6 +21,10 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 
+# Install ruff.
+RUN pip install ruff
+RUN ruff --version
+
 # Copy Node CLI from first stage and rename it /bin/go-v2
 COPY --from=node /dist/cli.cjs /bin/python-v2
 RUN chmod +x /bin/python-v2

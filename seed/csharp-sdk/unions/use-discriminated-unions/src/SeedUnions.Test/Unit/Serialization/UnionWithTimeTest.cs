@@ -20,7 +20,7 @@ public class UnionWithTimeTest
             """;
         var expectedObject = new UnionWithTime(new UnionWithTime.ValueInner(5));
         var deserializedObject = JsonUtils.Deserialize<UnionWithTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class UnionWithTimeTest
             """;
         var expectedObject = new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1)));
         var deserializedObject = JsonUtils.Deserialize<UnionWithTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class UnionWithTimeTest
             )
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

@@ -54,7 +54,9 @@ class SeedMultiUrlEnvironment:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             token=token,
@@ -112,7 +114,9 @@ class AsyncSeedMultiUrlEnvironment:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             token=token,

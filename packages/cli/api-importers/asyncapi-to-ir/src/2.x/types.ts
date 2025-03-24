@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { ChannelId } from "../sharedTypes";
+import { ChannelId, MessageId } from "../sharedTypes";
 
 export interface DocumentV2 {
     asyncapi: string;
@@ -8,7 +8,7 @@ export interface DocumentV2 {
     channels?: Record<ChannelId, ChannelV2>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
-        messages?: Record<string, MessageV2>;
+        messages?: Record<MessageId, MessageV2>;
     };
     tags?: Tag[];
 }

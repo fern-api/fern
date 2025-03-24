@@ -56,8 +56,7 @@ public class SearchUsersTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
         );
     }
 }

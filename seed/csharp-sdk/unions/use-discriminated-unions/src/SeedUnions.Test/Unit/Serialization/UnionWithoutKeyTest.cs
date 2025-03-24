@@ -21,7 +21,7 @@ public class UnionWithoutKeyTest
             new UnionWithoutKey.Foo(new Foo { Name = "example1" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithoutKey>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class UnionWithoutKeyTest
             new UnionWithoutKey.Bar(new Bar { Name = "example1" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithoutKey>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

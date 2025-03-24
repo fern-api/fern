@@ -54,7 +54,7 @@ public class SearchOrganizationsTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Organization>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

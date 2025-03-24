@@ -797,45 +797,6 @@ types:
       openapi: ../openapi.json
 ",
     },
-    "api.yml": {
-      "absoluteFilepath": "/DUMMY_PATH",
-      "contents": {
-        "types": {
-          "GetStreamRequestAccept": {
-            "enum": [
-              {
-                "name": "AudioMpeg",
-                "value": "audio/mpeg",
-              },
-              {
-                "name": "AudioOgg",
-                "value": "audio/ogg",
-              },
-              {
-                "name": "AudioAac",
-                "value": "audio/aac",
-              },
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-        },
-      },
-      "rawContents": "types:
-  GetStreamRequestAccept:
-    enum:
-      - value: audio/mpeg
-        name: AudioMpeg
-      - value: audio/ogg
-        name: AudioOgg
-      - value: audio/aac
-        name: AudioAac
-    source:
-      openapi: ../openapi.json
-",
-    },
     "apikey.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {

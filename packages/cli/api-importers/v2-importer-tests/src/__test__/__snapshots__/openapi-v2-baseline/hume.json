@@ -61,6 +61,316 @@
   "headers": [],
   "idempotencyHeaders": [],
   "types": {
+    "type_chat:PublishEvent": {
+      "name": {
+        "name": {
+          "originalName": "PublishEvent",
+          "camelCase": {
+            "unsafeName": "publishEvent",
+            "safeName": "publishEvent"
+          },
+          "snakeCase": {
+            "unsafeName": "publish_event",
+            "safeName": "publish_event"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PUBLISH_EVENT",
+            "safeName": "PUBLISH_EVENT"
+          },
+          "pascalCase": {
+            "unsafeName": "PublishEvent",
+            "safeName": "PublishEvent"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "chat",
+              "camelCase": {
+                "unsafeName": "chat",
+                "safeName": "chat"
+              },
+              "snakeCase": {
+                "unsafeName": "chat",
+                "safeName": "chat"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CHAT",
+                "safeName": "CHAT"
+              },
+              "pascalCase": {
+                "unsafeName": "Chat",
+                "safeName": "Chat"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "chat",
+            "camelCase": {
+              "unsafeName": "chat",
+              "safeName": "chat"
+            },
+            "snakeCase": {
+              "unsafeName": "chat",
+              "safeName": "chat"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CHAT",
+              "safeName": "CHAT"
+            },
+            "pascalCase": {
+              "unsafeName": "Chat",
+              "safeName": "Chat"
+            }
+          }
+        },
+        "typeId": "type_chat:PublishEvent"
+      },
+      "shape": {
+        "members": [
+          {
+            "type": {
+              "name": {
+                "originalName": "AudioInput",
+                "camelCase": {
+                  "unsafeName": "audioInput",
+                  "safeName": "audioInput"
+                },
+                "snakeCase": {
+                  "unsafeName": "audio_input",
+                  "safeName": "audio_input"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AUDIO_INPUT",
+                  "safeName": "AUDIO_INPUT"
+                },
+                "pascalCase": {
+                  "unsafeName": "AudioInput",
+                  "safeName": "AudioInput"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:AudioInput",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "SessionSettings",
+                "camelCase": {
+                  "unsafeName": "sessionSettings",
+                  "safeName": "sessionSettings"
+                },
+                "snakeCase": {
+                  "unsafeName": "session_settings",
+                  "safeName": "session_settings"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSION_SETTINGS",
+                  "safeName": "SESSION_SETTINGS"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionSettings",
+                  "safeName": "SessionSettings"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:SessionSettings",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "UserInput",
+                "camelCase": {
+                  "unsafeName": "userInput",
+                  "safeName": "userInput"
+                },
+                "snakeCase": {
+                  "unsafeName": "user_input",
+                  "safeName": "user_input"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "USER_INPUT",
+                  "safeName": "USER_INPUT"
+                },
+                "pascalCase": {
+                  "unsafeName": "UserInput",
+                  "safeName": "UserInput"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:UserInput",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "AssistantInput",
+                "camelCase": {
+                  "unsafeName": "assistantInput",
+                  "safeName": "assistantInput"
+                },
+                "snakeCase": {
+                  "unsafeName": "assistant_input",
+                  "safeName": "assistant_input"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ASSISTANT_INPUT",
+                  "safeName": "ASSISTANT_INPUT"
+                },
+                "pascalCase": {
+                  "unsafeName": "AssistantInput",
+                  "safeName": "AssistantInput"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:AssistantInput",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "ToolResponseMessage",
+                "camelCase": {
+                  "unsafeName": "toolResponseMessage",
+                  "safeName": "toolResponseMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "tool_response_message",
+                  "safeName": "tool_response_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOOL_RESPONSE_MESSAGE",
+                  "safeName": "TOOL_RESPONSE_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "ToolResponseMessage",
+                  "safeName": "ToolResponseMessage"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:ToolResponseMessage",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "ToolErrorMessage",
+                "camelCase": {
+                  "unsafeName": "toolErrorMessage",
+                  "safeName": "toolErrorMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "tool_error_message",
+                  "safeName": "tool_error_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TOOL_ERROR_MESSAGE",
+                  "safeName": "TOOL_ERROR_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "ToolErrorMessage",
+                  "safeName": "ToolErrorMessage"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:ToolErrorMessage",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "PauseAssistantMessage",
+                "camelCase": {
+                  "unsafeName": "pauseAssistantMessage",
+                  "safeName": "pauseAssistantMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "pause_assistant_message",
+                  "safeName": "pause_assistant_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PAUSE_ASSISTANT_MESSAGE",
+                  "safeName": "PAUSE_ASSISTANT_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PauseAssistantMessage",
+                  "safeName": "PauseAssistantMessage"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:PauseAssistantMessage",
+              "type": "named"
+            }
+          },
+          {
+            "type": {
+              "name": {
+                "originalName": "ResumeAssistantMessage",
+                "camelCase": {
+                  "unsafeName": "resumeAssistantMessage",
+                  "safeName": "resumeAssistantMessage"
+                },
+                "snakeCase": {
+                  "unsafeName": "resume_assistant_message",
+                  "safeName": "resume_assistant_message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RESUME_ASSISTANT_MESSAGE",
+                  "safeName": "RESUME_ASSISTANT_MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "ResumeAssistantMessage",
+                  "safeName": "ResumeAssistantMessage"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:ResumeAssistantMessage",
+              "type": "named"
+            }
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
+      "referencedTypes": {},
+      "encoding": {
+        "json": {}
+      },
+      "userProvidedExamples": [],
+      "autogeneratedExamples": []
+    },
     "type_chat:SubscribeEvent": {
       "name": {
         "name": {
@@ -416,316 +726,6 @@
                 "packagePath": []
               },
               "typeId": "type_:ToolErrorMessage",
-              "type": "named"
-            }
-          }
-        ],
-        "type": "undiscriminatedUnion"
-      },
-      "referencedTypes": {},
-      "encoding": {
-        "json": {}
-      },
-      "userProvidedExamples": [],
-      "autogeneratedExamples": []
-    },
-    "type_chat:PublishEvent": {
-      "name": {
-        "name": {
-          "originalName": "PublishEvent",
-          "camelCase": {
-            "unsafeName": "publishEvent",
-            "safeName": "publishEvent"
-          },
-          "snakeCase": {
-            "unsafeName": "publish_event",
-            "safeName": "publish_event"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PUBLISH_EVENT",
-            "safeName": "PUBLISH_EVENT"
-          },
-          "pascalCase": {
-            "unsafeName": "PublishEvent",
-            "safeName": "PublishEvent"
-          }
-        },
-        "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "chat",
-              "camelCase": {
-                "unsafeName": "chat",
-                "safeName": "chat"
-              },
-              "snakeCase": {
-                "unsafeName": "chat",
-                "safeName": "chat"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT",
-                "safeName": "CHAT"
-              },
-              "pascalCase": {
-                "unsafeName": "Chat",
-                "safeName": "Chat"
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "chat",
-            "camelCase": {
-              "unsafeName": "chat",
-              "safeName": "chat"
-            },
-            "snakeCase": {
-              "unsafeName": "chat",
-              "safeName": "chat"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CHAT",
-              "safeName": "CHAT"
-            },
-            "pascalCase": {
-              "unsafeName": "Chat",
-              "safeName": "Chat"
-            }
-          }
-        },
-        "typeId": "type_chat:PublishEvent"
-      },
-      "shape": {
-        "members": [
-          {
-            "type": {
-              "name": {
-                "originalName": "AudioInput",
-                "camelCase": {
-                  "unsafeName": "audioInput",
-                  "safeName": "audioInput"
-                },
-                "snakeCase": {
-                  "unsafeName": "audio_input",
-                  "safeName": "audio_input"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AUDIO_INPUT",
-                  "safeName": "AUDIO_INPUT"
-                },
-                "pascalCase": {
-                  "unsafeName": "AudioInput",
-                  "safeName": "AudioInput"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:AudioInput",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "SessionSettings",
-                "camelCase": {
-                  "unsafeName": "sessionSettings",
-                  "safeName": "sessionSettings"
-                },
-                "snakeCase": {
-                  "unsafeName": "session_settings",
-                  "safeName": "session_settings"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SESSION_SETTINGS",
-                  "safeName": "SESSION_SETTINGS"
-                },
-                "pascalCase": {
-                  "unsafeName": "SessionSettings",
-                  "safeName": "SessionSettings"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:SessionSettings",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "UserInput",
-                "camelCase": {
-                  "unsafeName": "userInput",
-                  "safeName": "userInput"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_input",
-                  "safeName": "user_input"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_INPUT",
-                  "safeName": "USER_INPUT"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserInput",
-                  "safeName": "UserInput"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:UserInput",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "AssistantInput",
-                "camelCase": {
-                  "unsafeName": "assistantInput",
-                  "safeName": "assistantInput"
-                },
-                "snakeCase": {
-                  "unsafeName": "assistant_input",
-                  "safeName": "assistant_input"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASSISTANT_INPUT",
-                  "safeName": "ASSISTANT_INPUT"
-                },
-                "pascalCase": {
-                  "unsafeName": "AssistantInput",
-                  "safeName": "AssistantInput"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:AssistantInput",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "ToolResponseMessage",
-                "camelCase": {
-                  "unsafeName": "toolResponseMessage",
-                  "safeName": "toolResponseMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "tool_response_message",
-                  "safeName": "tool_response_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TOOL_RESPONSE_MESSAGE",
-                  "safeName": "TOOL_RESPONSE_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ToolResponseMessage",
-                  "safeName": "ToolResponseMessage"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:ToolResponseMessage",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "ToolErrorMessage",
-                "camelCase": {
-                  "unsafeName": "toolErrorMessage",
-                  "safeName": "toolErrorMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "tool_error_message",
-                  "safeName": "tool_error_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TOOL_ERROR_MESSAGE",
-                  "safeName": "TOOL_ERROR_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ToolErrorMessage",
-                  "safeName": "ToolErrorMessage"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:ToolErrorMessage",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "PauseAssistantMessage",
-                "camelCase": {
-                  "unsafeName": "pauseAssistantMessage",
-                  "safeName": "pauseAssistantMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "pause_assistant_message",
-                  "safeName": "pause_assistant_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PAUSE_ASSISTANT_MESSAGE",
-                  "safeName": "PAUSE_ASSISTANT_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "PauseAssistantMessage",
-                  "safeName": "PauseAssistantMessage"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:PauseAssistantMessage",
-              "type": "named"
-            }
-          },
-          {
-            "type": {
-              "name": {
-                "originalName": "ResumeAssistantMessage",
-                "camelCase": {
-                  "unsafeName": "resumeAssistantMessage",
-                  "safeName": "resumeAssistantMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "resume_assistant_message",
-                  "safeName": "resume_assistant_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESUME_ASSISTANT_MESSAGE",
-                  "safeName": "RESUME_ASSISTANT_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ResumeAssistantMessage",
-                  "safeName": "ResumeAssistantMessage"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:ResumeAssistantMessage",
               "type": "named"
             }
           }
@@ -20998,8 +20998,8 @@
       ]
     },
     "sharedTypes": [
-      "type_chat:SubscribeEvent",
       "type_chat:PublishEvent",
+      "type_chat:SubscribeEvent",
       "type_:Bcp47Tag",
       "type_:Completed",
       "type_:Empty",
@@ -21297,79 +21297,6 @@
       ],
       "messages": [
         {
-          "type": "subscribe",
-          "origin": "server",
-          "body": {
-            "bodyType": {
-              "name": {
-                "originalName": "SubscribeEvent",
-                "camelCase": {
-                  "unsafeName": "subscribeEvent",
-                  "safeName": "subscribeEvent"
-                },
-                "snakeCase": {
-                  "unsafeName": "subscribe_event",
-                  "safeName": "subscribe_event"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SUBSCRIBE_EVENT",
-                  "safeName": "SUBSCRIBE_EVENT"
-                },
-                "pascalCase": {
-                  "unsafeName": "SubscribeEvent",
-                  "safeName": "SubscribeEvent"
-                }
-              },
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "originalName": "chat",
-                    "camelCase": {
-                      "unsafeName": "chat",
-                      "safeName": "chat"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "chat",
-                      "safeName": "chat"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CHAT",
-                      "safeName": "CHAT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Chat",
-                      "safeName": "Chat"
-                    }
-                  }
-                ],
-                "packagePath": [],
-                "file": {
-                  "originalName": "chat",
-                  "camelCase": {
-                    "unsafeName": "chat",
-                    "safeName": "chat"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "chat",
-                    "safeName": "chat"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "CHAT",
-                    "safeName": "CHAT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Chat",
-                    "safeName": "Chat"
-                  }
-                }
-              },
-              "typeId": "type_chat:SubscribeEvent",
-              "type": "named"
-            },
-            "type": "reference"
-          }
-        },
-        {
           "type": "publish",
           "origin": "client",
           "body": {
@@ -21437,6 +21364,79 @@
                 }
               },
               "typeId": "type_chat:PublishEvent",
+              "type": "named"
+            },
+            "type": "reference"
+          }
+        },
+        {
+          "type": "subscribe",
+          "origin": "server",
+          "body": {
+            "bodyType": {
+              "name": {
+                "originalName": "SubscribeEvent",
+                "camelCase": {
+                  "unsafeName": "subscribeEvent",
+                  "safeName": "subscribeEvent"
+                },
+                "snakeCase": {
+                  "unsafeName": "subscribe_event",
+                  "safeName": "subscribe_event"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SUBSCRIBE_EVENT",
+                  "safeName": "SUBSCRIBE_EVENT"
+                },
+                "pascalCase": {
+                  "unsafeName": "SubscribeEvent",
+                  "safeName": "SubscribeEvent"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "chat",
+                    "camelCase": {
+                      "unsafeName": "chat",
+                      "safeName": "chat"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "chat",
+                      "safeName": "chat"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CHAT",
+                      "safeName": "CHAT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Chat",
+                      "safeName": "Chat"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "chat",
+                  "camelCase": {
+                    "unsafeName": "chat",
+                    "safeName": "chat"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "chat",
+                    "safeName": "chat"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CHAT",
+                    "safeName": "CHAT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Chat",
+                    "safeName": "Chat"
+                  }
+                }
+              },
+              "typeId": "type_chat:SubscribeEvent",
               "type": "named"
             },
             "type": "reference"
@@ -21892,6 +21892,107 @@
   "dynamic": {
     "version": "1.0.0",
     "types": {
+      "type_chat:PublishEvent": {
+        "declaration": {
+          "name": {
+            "originalName": "PublishEvent",
+            "camelCase": {
+              "unsafeName": "publishEvent",
+              "safeName": "publishEvent"
+            },
+            "snakeCase": {
+              "unsafeName": "publish_event",
+              "safeName": "publish_event"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PUBLISH_EVENT",
+              "safeName": "PUBLISH_EVENT"
+            },
+            "pascalCase": {
+              "unsafeName": "PublishEvent",
+              "safeName": "PublishEvent"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "chat",
+                "camelCase": {
+                  "unsafeName": "chat",
+                  "safeName": "chat"
+                },
+                "snakeCase": {
+                  "unsafeName": "chat",
+                  "safeName": "chat"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CHAT",
+                  "safeName": "CHAT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Chat",
+                  "safeName": "Chat"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "chat",
+              "camelCase": {
+                "unsafeName": "chat",
+                "safeName": "chat"
+              },
+              "snakeCase": {
+                "unsafeName": "chat",
+                "safeName": "chat"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CHAT",
+                "safeName": "CHAT"
+              },
+              "pascalCase": {
+                "unsafeName": "Chat",
+                "safeName": "Chat"
+              }
+            }
+          }
+        },
+        "types": [
+          {
+            "value": "type_:AudioInput",
+            "type": "named"
+          },
+          {
+            "value": "type_:SessionSettings",
+            "type": "named"
+          },
+          {
+            "value": "type_:UserInput",
+            "type": "named"
+          },
+          {
+            "value": "type_:AssistantInput",
+            "type": "named"
+          },
+          {
+            "value": "type_:ToolResponseMessage",
+            "type": "named"
+          },
+          {
+            "value": "type_:ToolErrorMessage",
+            "type": "named"
+          },
+          {
+            "value": "type_:PauseAssistantMessage",
+            "type": "named"
+          },
+          {
+            "value": "type_:ResumeAssistantMessage",
+            "type": "named"
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
       "type_chat:SubscribeEvent": {
         "declaration": {
           "name": {
@@ -21996,107 +22097,6 @@
           },
           {
             "value": "type_:ToolErrorMessage",
-            "type": "named"
-          }
-        ],
-        "type": "undiscriminatedUnion"
-      },
-      "type_chat:PublishEvent": {
-        "declaration": {
-          "name": {
-            "originalName": "PublishEvent",
-            "camelCase": {
-              "unsafeName": "publishEvent",
-              "safeName": "publishEvent"
-            },
-            "snakeCase": {
-              "unsafeName": "publish_event",
-              "safeName": "publish_event"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PUBLISH_EVENT",
-              "safeName": "PUBLISH_EVENT"
-            },
-            "pascalCase": {
-              "unsafeName": "PublishEvent",
-              "safeName": "PublishEvent"
-            }
-          },
-          "fernFilepath": {
-            "allParts": [
-              {
-                "originalName": "chat",
-                "camelCase": {
-                  "unsafeName": "chat",
-                  "safeName": "chat"
-                },
-                "snakeCase": {
-                  "unsafeName": "chat",
-                  "safeName": "chat"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHAT",
-                  "safeName": "CHAT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Chat",
-                  "safeName": "Chat"
-                }
-              }
-            ],
-            "packagePath": [],
-            "file": {
-              "originalName": "chat",
-              "camelCase": {
-                "unsafeName": "chat",
-                "safeName": "chat"
-              },
-              "snakeCase": {
-                "unsafeName": "chat",
-                "safeName": "chat"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT",
-                "safeName": "CHAT"
-              },
-              "pascalCase": {
-                "unsafeName": "Chat",
-                "safeName": "Chat"
-              }
-            }
-          }
-        },
-        "types": [
-          {
-            "value": "type_:AudioInput",
-            "type": "named"
-          },
-          {
-            "value": "type_:SessionSettings",
-            "type": "named"
-          },
-          {
-            "value": "type_:UserInput",
-            "type": "named"
-          },
-          {
-            "value": "type_:AssistantInput",
-            "type": "named"
-          },
-          {
-            "value": "type_:ToolResponseMessage",
-            "type": "named"
-          },
-          {
-            "value": "type_:ToolErrorMessage",
-            "type": "named"
-          },
-          {
-            "value": "type_:PauseAssistantMessage",
-            "type": "named"
-          },
-          {
-            "value": "type_:ResumeAssistantMessage",
             "type": "named"
           }
         ],
@@ -36633,8 +36633,8 @@
         }
       },
       "types": [
-        "type_chat:SubscribeEvent",
-        "type_chat:PublishEvent"
+        "type_chat:PublishEvent",
+        "type_chat:SubscribeEvent"
       ],
       "errors": [],
       "subpackages": [],

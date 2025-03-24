@@ -87,11 +87,6 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
         if (this.isAsyncAPIV3(context)) {
-            context.spec = this.deduplicateChannelMessages({
-                document: context.spec as AsyncAPIV3.DocumentV3,
-                context,
-                errorCollector
-            }) as AsyncAPIV3.DocumentV3;
             await this.convertChannelMessages({ context, errorCollector });
         } else {
             await this.convertComponentMessages({ context, errorCollector });
@@ -178,55 +173,6 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         return document;
     }
 
-    private deduplicateChannelMessages({
-        document,
-        context,
-        errorCollector
-    }: {
-        document: AsyncAPIV3.DocumentV3;
-        context: AsyncAPIConverterContext;
-        errorCollector: ErrorCollector;
-    }): AsyncAPIV3.DocumentV3 {
-        const seenMessages: Record<string, Array<{ channelPath: string; message: AsyncAPIV3.MessageV3 }>> = {};
-        for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
-            for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
-                if (!seenMessages[messageId]) {
-                    seenMessages[messageId] = [];
-                }
-                seenMessages[messageId].push({
-                    channelPath,
-                    message
-                });
-            }
-        }
-
-        const deduplicatedDocument = { ...document };
-        deduplicatedDocument.channels = { ...document.channels };
-
-        for (const [messageId, occurrences] of Object.entries(seenMessages)) {
-            if (occurrences.length === 1) {
-                continue;
-            }
-
-            for (const { channelPath, message } of occurrences) {
-                const channel = deduplicatedDocument.channels[channelPath];
-                if (channel == null || channel.messages == null) {
-                    continue;
-                }
-
-                const newMessageId = `${channelPath}_${messageId}`;
-                const updatedMessages = {
-                    ...channel.messages,
-                    [newMessageId]: message
-                };
-
-                const { [messageId]: _, ...remainingMessages } = updatedMessages;
-                channel.messages = remainingMessages;
-            }
-        }
-        return deduplicatedDocument;
-    }
-
     private async convertChannelMessages({
         context,
         errorCollector
@@ -237,34 +183,51 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         const spec = context.spec as AsyncAPIV3.DocumentV3;
         for (const [channelPath, channel] of Object.entries(spec.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
-                if (message.payload == null) {
+                if (!context.isMessageWithPayload(message) && !context.isReferenceObject(message)) {
                     continue;
                 }
 
-                let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-                if (context.isReferenceObject(message.payload)) {
-                    const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
-                    if (resolved.resolved) {
-                        payloadSchema = resolved.value;
+                let messageSchema: OpenAPIV3.SchemaObject | undefined = undefined;
+                if (context.isMessageWithPayload(message)) {
+                    if (context.isReferenceObject(message.payload)) {
+                        const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
+                        if (resolved.resolved) {
+                            messageSchema = resolved.value;
+                        }
+                    } else {
+                        messageSchema = message.payload;
                     }
-                } else {
-                    payloadSchema = message.payload;
+                } else if (context.isReferenceObject(message)) {
+                    const resolved = await context.resolveReference<AsyncAPIV3.ChannelMessage>(message);
+                    if (resolved.resolved) {
+                        const resolvedPayload = resolved.value.payload;
+                        if (context.isReferenceObject(resolvedPayload)) {
+                            const resolvedPayloadResolved =
+                                await context.resolveReference<OpenAPIV3.SchemaObject>(resolvedPayload);
+                            if (resolvedPayloadResolved.resolved) {
+                                messageSchema = resolvedPayloadResolved.value;
+                            }
+                        } else {
+                            messageSchema = resolvedPayload;
+                        }
+                    }
                 }
-                if (payloadSchema == null) {
+                if (messageSchema == null) {
                     continue;
                 }
+                const typeId = `${channelPath}_${messageId}`;
                 const schemaConverter = new SchemaConverter({
-                    id: messageId,
+                    id: typeId,
                     breadcrumbs: ["channels", channelPath, "messages", messageId],
-                    schema: payloadSchema
+                    schema: messageSchema
                 });
                 const convertedSchema = await schemaConverter.convert({ context, errorCollector });
                 if (convertedSchema != null) {
-                    this.ir.rootPackage.types.push(messageId);
+                    this.ir.rootPackage.types.push(typeId);
                     this.ir.types = {
                         ...this.ir.types,
                         ...convertedSchema.inlinedTypes,
-                        [messageId]: convertedSchema.typeDeclaration
+                        [typeId]: convertedSchema.typeDeclaration
                     };
                 }
             }

@@ -43,8 +43,7 @@ public class GetAndReturnSetOfPrimitivesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<HashSet<string>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<HashSet<string>>(mockResponse)).UsingDefaults()
         );
     }
 }

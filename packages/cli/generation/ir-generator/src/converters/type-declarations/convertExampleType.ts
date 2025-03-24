@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
     RawSchemas,
     isRawAliasDefinition,
@@ -390,7 +390,11 @@ function convertPrimitiveExample({
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected string. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.STRING
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -400,7 +404,11 @@ function convertPrimitiveExample({
         },
         dateTime: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected ISO datetime. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.DATE_TIME
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.datetime({
@@ -411,13 +419,21 @@ function convertPrimitiveExample({
         },
         date: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected ISO date. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.DATE
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
         },
         base64: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected base64 encoded string. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.BASE64
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({
@@ -427,55 +443,63 @@ function convertPrimitiveExample({
         },
         uint: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected unsigned integer. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(Examples.UINT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
         },
         uint64: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected unsigned 64-bit integer. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(Examples.UINT64));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected integer. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(Examples.INT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },
         float: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected float. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(Examples.FLOAT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected double. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(Examples.DOUBLE));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
         },
         long: () => {
             if (typeof example !== "number") {
-                throw new Error(`Expected long. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(Examples.UINT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
         },
         boolean: () => {
             if (typeof example !== "boolean") {
-                throw new Error(`Expected boolean. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(Examples.BOOLEAN));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
         },
         uuid: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected uuid. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.UUID
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
         },
         bigInteger: () => {
             if (typeof example !== "string") {
-                throw new Error(`Expected big integer. Received ${example}`);
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.string({
+                        original: Examples.BIG_INTEGER
+                    })
+                );
             }
             return ExampleTypeReferenceShape.primitive(
                 ExamplePrimitive.string({

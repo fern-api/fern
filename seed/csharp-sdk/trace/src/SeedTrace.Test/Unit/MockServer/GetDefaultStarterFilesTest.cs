@@ -88,7 +88,7 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

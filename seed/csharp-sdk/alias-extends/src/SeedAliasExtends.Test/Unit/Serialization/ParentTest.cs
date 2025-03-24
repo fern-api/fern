@@ -18,7 +18,7 @@ public class ParentTest
             """;
         var expectedObject = new Parent { Parent_ = "Property from the parent" };
         var deserializedObject = JsonUtils.Deserialize<Parent>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

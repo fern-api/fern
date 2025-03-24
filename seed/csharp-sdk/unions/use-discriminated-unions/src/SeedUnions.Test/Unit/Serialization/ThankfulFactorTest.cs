@@ -18,7 +18,7 @@ public class ThankfulFactorTest
             """;
         var expectedObject = new ThankfulFactor { Value = "example1" };
         var deserializedObject = JsonUtils.Deserialize<ThankfulFactor>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class ThankfulFactorTest
             """;
         var expectedObject = new ThankfulFactor { Value = "example2" };
         var deserializedObject = JsonUtils.Deserialize<ThankfulFactor>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class ThankfulFactorTest
             """;
         var expectedObject = new ThankfulFactor { Value = "example3" };
         var deserializedObject = JsonUtils.Deserialize<ThankfulFactor>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

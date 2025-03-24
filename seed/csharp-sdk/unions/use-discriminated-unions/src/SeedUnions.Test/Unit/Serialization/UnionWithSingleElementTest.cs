@@ -21,7 +21,7 @@ public class UnionWithSingleElementTest
             new UnionWithSingleElement.Foo(new Foo { Name = "example1" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithSingleElement>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

@@ -42,7 +42,7 @@ public class AddTest : BaseMockServerTest
         var response = await Client.Endpoints.Put.AddAsync("id", new PutRequest(), RequestOptions);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<PutResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<PutResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

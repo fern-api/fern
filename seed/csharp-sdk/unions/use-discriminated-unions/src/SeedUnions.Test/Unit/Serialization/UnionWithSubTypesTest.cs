@@ -21,7 +21,7 @@ public class UnionWithSubTypesTest
             new UnionWithSubTypes.Foo(new Foo { Name = "example1" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithSubTypes>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class UnionWithSubTypesTest
             new UnionWithSubTypes.FooExtended(new FooExtended { Name = "example2", Age = 5 })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithSubTypes>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
