@@ -26,6 +26,10 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return parameter != null && "$ref" in parameter;
     }
 
+    public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
+        return msg != null && typeof msg === "object" && "payload" in msg;
+    }
+
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
         if (!schemaMatch || !schemaMatch[1]) {
@@ -42,19 +46,37 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return messageMatch[1];
     }
 
-    public async convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+    public async convertReferenceToTypeReference({
+        reference,
+        channelPath,
+        deduplicationMap
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        channelPath?: string;
+        deduplicationMap?: Record<string, Record<string, string>>;
+    }): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+        let updatedReference: OpenAPIV3_1.ReferenceObject = reference;
         let typeId: string | undefined;
-        if (reference.$ref.includes("schemas")) {
-            typeId = this.getTypeIdFromSchemaReference(reference);
-        } else if (reference.$ref.includes("messages")) {
-            typeId = this.getTypeIdFromMessageReference(reference);
+
+        const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
+        const messageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
+
+        if (schemaMatch && schemaMatch[1]) {
+            typeId = schemaMatch[1];
+        } else if (messageMatch && messageMatch[1]) {
+            typeId = messageMatch[1];
+            if (channelPath != null && deduplicationMap != null && typeId != null) {
+                if (deduplicationMap[channelPath] != null && deduplicationMap[channelPath][typeId] != null) {
+                    typeId = deduplicationMap[channelPath][typeId];
+                }
+            }
         }
+
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        updatedReference = this.replaceReferencedTypeId(reference, typeId);
+        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(updatedReference);
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
@@ -146,5 +168,16 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         }
 
         return undefined;
+    }
+
+    private replaceReferencedTypeId(
+        reference: OpenAPIV3_1.ReferenceObject,
+        updatedTypeId: string
+    ): OpenAPIV3_1.ReferenceObject {
+        const parts = reference.$ref.split("/");
+        parts[parts.length - 1] = updatedTypeId;
+        return {
+            $ref: parts.join("/")
+        };
     }
 }

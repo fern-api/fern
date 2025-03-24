@@ -8,6 +8,8 @@ export * from "./HttpError";
 export * from "./Webhook";
 export * from "./WebhookExampleCall";
 export * from "./WebsocketChannel";
+export * from "./WebsocketMessageSchema";
+export * from "./WebsocketMessageOrigin";
 export * from "./WebsocketHandshake";
 export * from "./WebsocketSessionExample";
 export * from "./WebsocketMessageExample";

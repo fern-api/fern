@@ -12,6 +12,7 @@ import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0";
 import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0";
 import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext";
 import { SchemaConverter } from "./core/schema/SchemaConverter";
+import { ChannelId, MessageId } from "./sharedTypes";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -23,6 +24,7 @@ export declare namespace OpenAPIConverter {
 
 export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContext, IntermediateRepresentation> {
     private ir: BaseIntermediateRepresentation;
+    private deduplicationMap: Record<ChannelId, Record<MessageId, MessageId>> | undefined;
 
     constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
         super({ breadcrumbs });
@@ -86,12 +88,15 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             errorCollector
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
+        const deduplicationMap: Record<string, Record<string, string>> | undefined = undefined;
         if (this.isAsyncAPIV3(context)) {
-            context.spec = this.deduplicateChannelMessages({
+            const { document, deduplicationMap: deduplicationMap_ } = this.deduplicateChannelMessages({
                 document: context.spec as AsyncAPIV3.DocumentV3,
                 context,
                 errorCollector
-            }) as AsyncAPIV3.DocumentV3;
+            });
+            context.spec = document as AsyncAPIV3.DocumentV3;
+            this.deduplicationMap = deduplicationMap_;
             await this.convertChannelMessages({ context, errorCollector });
         } else {
             await this.convertComponentMessages({ context, errorCollector });
@@ -186,7 +191,11 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         document: AsyncAPIV3.DocumentV3;
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): AsyncAPIV3.DocumentV3 {
+    }): {
+        document: AsyncAPIV3.DocumentV3;
+        deduplicationMap: Record<string, Record<string, string>>;
+    } {
+        const deduplicationMap: Record<string, Record<string, string>> = {};
         const seenMessages: Record<string, Array<{ channelPath: string; message: AsyncAPIV3.MessageV3 }>> = {};
         for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
@@ -215,6 +224,12 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 }
 
                 const newMessageId = `${channelPath}_${messageId}`;
+                if (!(channelPath in deduplicationMap)) {
+                    deduplicationMap[channelPath] = {};
+                }
+                if (deduplicationMap[channelPath] != null) {
+                    deduplicationMap[channelPath][messageId] = newMessageId;
+                }
                 const updatedMessages = {
                     ...channel.messages,
                     [newMessageId]: message
@@ -224,7 +239,10 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 channel.messages = remainingMessages;
             }
         }
-        return deduplicatedDocument;
+        return {
+            document: deduplicatedDocument,
+            deduplicationMap
+        };
     }
 
     private async convertChannelMessages({
@@ -237,26 +255,42 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         const spec = context.spec as AsyncAPIV3.DocumentV3;
         for (const [channelPath, channel] of Object.entries(spec.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
-                if (message.payload == null) {
+                if (!context.isMessageWithPayload(message) && !context.isReferenceObject(message)) {
                     continue;
                 }
 
-                let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-                if (context.isReferenceObject(message.payload)) {
-                    const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
-                    if (resolved.resolved) {
-                        payloadSchema = resolved.value;
+                let messageSchema: OpenAPIV3.SchemaObject | undefined = undefined;
+                if (context.isMessageWithPayload(message)) {
+                    if (context.isReferenceObject(message.payload)) {
+                        const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
+                        if (resolved.resolved) {
+                            messageSchema = resolved.value;
+                        }
+                    } else {
+                        messageSchema = message.payload;
                     }
-                } else {
-                    payloadSchema = message.payload;
+                } else if (context.isReferenceObject(message)) {
+                    const resolved = await context.resolveReference<AsyncAPIV3.ChannelMessage>(message);
+                    if (resolved.resolved) {
+                        const resolvedPayload = resolved.value.payload;
+                        if (context.isReferenceObject(resolvedPayload)) {
+                            const resolvedPayloadResolved =
+                                await context.resolveReference<OpenAPIV3.SchemaObject>(resolvedPayload);
+                            if (resolvedPayloadResolved.resolved) {
+                                messageSchema = resolvedPayloadResolved.value;
+                            }
+                        } else {
+                            messageSchema = resolvedPayload;
+                        }
+                    }
                 }
-                if (payloadSchema == null) {
+                if (messageSchema == null) {
                     continue;
                 }
                 const schemaConverter = new SchemaConverter({
                     id: messageId,
                     breadcrumbs: ["channels", channelPath, "messages", messageId],
-                    schema: payloadSchema
+                    schema: messageSchema
                 });
                 const convertedSchema = await schemaConverter.convert({ context, errorCollector });
                 if (convertedSchema != null) {
@@ -396,7 +430,8 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     channel,
                     channelPath,
                     operations,
-                    group
+                    group,
+                    deduplicationMap: this.deduplicationMap
                 });
                 const convertedChannel = await channelConverter.convert({ context, errorCollector });
                 if (convertedChannel != null) {

@@ -307,18 +307,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -327,18 +324,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -451,18 +445,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -471,18 +462,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -763,11 +751,9 @@ service:
         "type": "file",
       },
       {
-        "contents": "types:
-  MarketDataV1PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi/sample.yml
+        "contents": "imports:
+  streamRoot: __package__.yml
+types:
   MarketDataV1Symbol:
     docs: >
       Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
@@ -845,8 +831,8 @@ channel:
   examples:
     - messages: []
   messages:
-    publish:
-      body: MarketDataV1PublishEvent
+    marketData:
+      body: streamRoot.Market
       origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
@@ -2811,18 +2797,15 @@ name: api
   {
     "contents": [
       {
-        "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: beta_one.yml
-channel:
+        "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -2831,18 +2814,15 @@ channel:
         "type": "file",
       },
       {
-        "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: beta_one.yml
-channel:
+        "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -2942,18 +2922,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -2962,18 +2939,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -3076,18 +3050,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -3096,18 +3067,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: publish
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
