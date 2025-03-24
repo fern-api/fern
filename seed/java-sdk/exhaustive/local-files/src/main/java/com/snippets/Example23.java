@@ -4,7 +4,7 @@ import com.fern.sdk.SeedExhaustiveClient;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
 
 public class Example23 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.variables.SeedVariablesClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedVariablesClient client = SeedVariablesClient
             .builder()
             .build();

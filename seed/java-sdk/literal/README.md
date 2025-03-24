@@ -15,7 +15,7 @@ import com.seed.literal.SeedLiteralClient;
 import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedLiteralClient client = SeedLiteralClient
             .builder()
             .build();

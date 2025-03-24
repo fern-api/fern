@@ -15,7 +15,7 @@ import com.seed.extraProperties.SeedExtraPropertiesClient;
 import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExtraPropertiesClient client = SeedExtraPropertiesClient
             .builder()
             .build();

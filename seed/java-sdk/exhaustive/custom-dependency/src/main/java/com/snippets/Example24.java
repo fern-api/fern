@@ -4,7 +4,7 @@ import com.seed.exhaustive.SeedExhaustiveClient;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 
 public class Example24 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

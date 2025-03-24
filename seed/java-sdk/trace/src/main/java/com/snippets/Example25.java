@@ -4,7 +4,7 @@ import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.commons.types.Language;
 
 public class Example25 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

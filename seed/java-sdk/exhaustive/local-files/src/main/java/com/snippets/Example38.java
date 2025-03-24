@@ -4,7 +4,7 @@ import com.fern.sdk.SeedExhaustiveClient;
 import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 
 public class Example38 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

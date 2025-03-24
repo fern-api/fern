@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Example5 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

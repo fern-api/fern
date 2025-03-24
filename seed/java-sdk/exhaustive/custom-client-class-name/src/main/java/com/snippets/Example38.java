@@ -4,7 +4,7 @@ import com.seed.exhaustive.Best;
 import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 
 public class Example38 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

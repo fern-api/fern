@@ -3,7 +3,7 @@ package com.snippets;
 import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
             .builder()
             .credentials("<username>", "<password>")

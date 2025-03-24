@@ -5,7 +5,7 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
 import java.util.UUID;
 
 public class Example10 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")

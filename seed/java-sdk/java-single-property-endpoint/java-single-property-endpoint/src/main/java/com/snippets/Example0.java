@@ -4,7 +4,7 @@ import com.seed.singleProperty.SeedSinglePropertyClient;
 import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedSinglePropertyClient client = SeedSinglePropertyClient
             .builder()
             .url("https://api.fern.com")

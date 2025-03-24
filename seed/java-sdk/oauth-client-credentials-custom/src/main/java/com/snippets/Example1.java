@@ -4,7 +4,7 @@ import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
             .builder()
             .clientId("<clientId>")

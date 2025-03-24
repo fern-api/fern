@@ -6,7 +6,7 @@ import com.seed.enum.types.ColorOrOperand;
 import com.seed.enum.types.Operand;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedEnumClient client = SeedEnumClient
             .builder()
             .url("https://api.fern.com")

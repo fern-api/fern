@@ -7,7 +7,7 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedDeepCursorPathClient client = SeedDeepCursorPathClient
             .builder()
             .url("https://api.fern.com")

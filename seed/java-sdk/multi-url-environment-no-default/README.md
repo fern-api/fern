@@ -15,7 +15,7 @@ import com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultCli
 import com.seed.multiUrlEnvironmentNoDefault.resources.ec2.requests.BootInstanceRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
             .builder()
             .token("<token>")

@@ -15,7 +15,7 @@ import com.seed.anyAuth.SeedAnyAuthClient;
 import com.seed.anyAuth.resources.auth.requests.GetTokenRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAnyAuthClient client = SeedAnyAuthClient
             .builder()
             .token("<token>")

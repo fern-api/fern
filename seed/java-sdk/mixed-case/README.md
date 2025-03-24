@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.mixedCase.SeedMixedCaseClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedMixedCaseClient client = SeedMixedCaseClient
             .builder()
             .build();

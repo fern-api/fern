@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class Example15 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

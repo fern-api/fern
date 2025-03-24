@@ -3,7 +3,7 @@ package com.snippets;
 import com.seed.anyAuth.SeedAnyAuthClient;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAnyAuthClient client = SeedAnyAuthClient
             .builder()
             .token("<token>")

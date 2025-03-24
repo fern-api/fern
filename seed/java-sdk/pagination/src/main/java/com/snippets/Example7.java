@@ -5,7 +5,7 @@ import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginatio
 import com.seed.pagination.resources.users.types.Order;
 
 public class Example7 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")

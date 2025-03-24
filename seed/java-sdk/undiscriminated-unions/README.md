@@ -15,7 +15,7 @@ import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
             .builder()
             .build();

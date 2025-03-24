@@ -3,7 +3,7 @@ package com.snippets;
 import com.seed.trace.SeedTraceClient;
 
 public class Example32 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")
