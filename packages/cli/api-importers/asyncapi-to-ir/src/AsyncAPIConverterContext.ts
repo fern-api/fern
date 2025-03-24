@@ -59,7 +59,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
             typeId = this.getTypeIdFromMessageReference(reference);
         }
         if (channelPath != null && deduplicationMap != null && typeId != null) {
-            if (deduplicationMap[channelPath] != null) {
+            if (deduplicationMap[channelPath] != null && deduplicationMap[channelPath][typeId] != null) {
                 typeId = deduplicationMap[channelPath][typeId];
             }
         }
