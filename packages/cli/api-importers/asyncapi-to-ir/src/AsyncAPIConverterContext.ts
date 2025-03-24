@@ -46,16 +46,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return messageMatch[1];
     }
 
-    public async convertReferenceToTypeReference({
-        reference,
-        channelPath,
-        deduplicationMap
-    }: {
-        reference: OpenAPIV3_1.ReferenceObject;
-        channelPath?: string;
-        deduplicationMap?: Record<string, Record<string, string>>;
-    }): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
-        let updatedReference: OpenAPIV3_1.ReferenceObject = reference;
+    public async convertReferenceToTypeReference(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
         let typeId: string | undefined;
 
         const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
@@ -65,18 +58,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
             typeId = schemaMatch[1];
         } else if (messageMatch && messageMatch[1]) {
             typeId = messageMatch[1];
-            if (channelPath != null && deduplicationMap != null && typeId != null) {
-                if (deduplicationMap[channelPath] != null && deduplicationMap[channelPath][typeId] != null) {
-                    typeId = deduplicationMap[channelPath][typeId];
-                }
-            }
         }
 
         if (typeId == null) {
             return { ok: false };
         }
-        updatedReference = this.replaceReferencedTypeId(reference, typeId);
-        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(updatedReference);
+        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
@@ -168,16 +155,5 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         }
 
         return undefined;
-    }
-
-    private replaceReferencedTypeId(
-        reference: OpenAPIV3_1.ReferenceObject,
-        updatedTypeId: string
-    ): OpenAPIV3_1.ReferenceObject {
-        const parts = reference.$ref.split("/");
-        parts[parts.length - 1] = updatedTypeId;
-        return {
-            $ref: parts.join("/")
-        };
     }
 }
