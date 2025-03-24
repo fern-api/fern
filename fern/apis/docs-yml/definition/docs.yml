@@ -167,7 +167,7 @@ types:
       model: optional<AIChatModel>
       "system-prompt": 
         type: optional<string>
-        docs: This is a system prompt to control your AI Chat in the documentation site. 
+        docs: This is a system prompt that acts as context given to the LLM for AI chat. 
     
   AIChatModel: 
     enum: 
