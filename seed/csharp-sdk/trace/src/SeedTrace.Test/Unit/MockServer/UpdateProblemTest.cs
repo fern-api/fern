@@ -187,8 +187,7 @@ public class UpdateProblemTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<UpdateProblemResponse>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<UpdateProblemResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -191,7 +191,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                         response,
                                         Is.EqualTo(`);
                                     writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(").UsingPropertiesComparer()");
+                                    writer.writeLine(").UsingDefaults()");
                                     break;
                                 case "oneOf":
                                 case "oneOfBase":
@@ -199,7 +199,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                         response.Value,
                                         Is.EqualTo(`);
                                     writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(".Value).UsingPropertiesComparer()");
+                                    writer.writeLine(".Value).UsingDefaults()");
                                     break;
                                 default:
                                     writer.writeLine(`Assert.That(

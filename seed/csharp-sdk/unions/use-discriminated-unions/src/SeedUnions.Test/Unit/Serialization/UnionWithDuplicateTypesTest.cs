@@ -21,7 +21,7 @@ public class UnionWithDuplicateTypesTest
             new UnionWithDuplicateTypes.Foo1(new Foo { Name = "example1" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicateTypes>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class UnionWithDuplicateTypesTest
             new UnionWithDuplicateTypes.Foo2(new Foo { Name = "example2" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicateTypes>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

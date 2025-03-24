@@ -362,7 +362,7 @@ public class GetAccountTest : BaseMockServerTest
         var response = await Client.GetAccountAsync("account_id", RequestOptions);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Account>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Account>(mockResponse)).UsingDefaults()
         );
     }
 }

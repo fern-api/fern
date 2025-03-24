@@ -18,7 +18,7 @@ public class GetShapeRequestTest
             """;
         var expectedObject = new GetShapeRequest { Id = "example" };
         var deserializedObject = JsonUtils.Deserialize<GetShapeRequest>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

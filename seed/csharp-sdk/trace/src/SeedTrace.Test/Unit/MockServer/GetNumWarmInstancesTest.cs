@@ -35,7 +35,7 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Dictionary<Language, int>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

@@ -22,7 +22,7 @@ public class UnionWithOptionalTimeTest
             new UnionWithOptionalTime.Date(new DateOnly(1994, 1, 1))
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithOptionalTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class UnionWithOptionalTimeTest
             )
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithOptionalTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -90,7 +90,7 @@ public class UnionWithOptionalTimeTest
             """;
         var expectedObject = new UnionWithOptionalTime(new UnionWithOptionalTime.Date(null));
         var deserializedObject = JsonUtils.Deserialize<UnionWithOptionalTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class UnionWithOptionalTimeTest
             """;
         var expectedObject = new UnionWithOptionalTime(new UnionWithOptionalTime.Datetime(null));
         var deserializedObject = JsonUtils.Deserialize<UnionWithOptionalTime>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

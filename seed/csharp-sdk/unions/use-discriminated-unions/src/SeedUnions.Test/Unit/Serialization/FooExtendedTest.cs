@@ -19,7 +19,7 @@ public class FooExtendedTest
             """;
         var expectedObject = new FooExtended { Name = "example1", Age = 5 };
         var deserializedObject = JsonUtils.Deserialize<FooExtended>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class FooExtendedTest
             """;
         var expectedObject = new FooExtended { Name = "example2", Age = 10 };
         var deserializedObject = JsonUtils.Deserialize<FooExtended>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

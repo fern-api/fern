@@ -53,7 +53,7 @@ public class DirectoryTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Directory>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

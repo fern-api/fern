@@ -52,7 +52,7 @@ public class GetAndReturnSetOfObjectsTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

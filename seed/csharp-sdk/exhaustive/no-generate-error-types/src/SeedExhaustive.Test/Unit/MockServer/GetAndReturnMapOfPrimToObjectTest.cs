@@ -57,7 +57,7 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

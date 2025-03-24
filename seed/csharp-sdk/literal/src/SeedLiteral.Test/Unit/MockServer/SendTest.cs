@@ -91,7 +91,7 @@ public class SendTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
         );
     }
 
@@ -163,7 +163,7 @@ public class SendTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

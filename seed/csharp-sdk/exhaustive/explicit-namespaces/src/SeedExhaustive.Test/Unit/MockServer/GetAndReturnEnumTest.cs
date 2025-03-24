@@ -40,7 +40,7 @@ public class GetAndReturnEnumTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<WeatherReport>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<WeatherReport>(mockResponse)).UsingDefaults()
         );
     }
 }

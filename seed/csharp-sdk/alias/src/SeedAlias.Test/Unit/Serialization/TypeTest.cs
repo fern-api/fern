@@ -19,7 +19,7 @@ public class TypeTest
             """;
         var expectedObject = new Type { Id = "type-df89sdg1", Name = "foo" };
         var deserializedObject = JsonUtils.Deserialize<Type>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

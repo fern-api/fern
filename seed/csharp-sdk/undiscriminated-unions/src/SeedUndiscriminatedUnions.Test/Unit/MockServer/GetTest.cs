@@ -51,7 +51,7 @@ public class GetTest : BaseMockServerTest
                         >(mockResponse)
                         .Value
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }
