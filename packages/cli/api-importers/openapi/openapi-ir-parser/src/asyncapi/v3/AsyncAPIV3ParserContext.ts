@@ -43,7 +43,7 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         }
 
         const messageKey = message.$ref.substring(MESSAGE_REFERENCE_PREFIX.length);
-        const resolvedInComponents = components.messages[messageKey] as AsyncAPIV3.ChannelMessage;
+        const resolvedInComponents = components.messages[messageKey];
         if (resolvedInComponents == null) {
             throw new Error(`${message.$ref} is undefined`);
         }

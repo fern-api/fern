@@ -10,7 +10,7 @@ export interface DocumentV3 {
     operations?: Record<string, Operation>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
-        messages?: Record<string, MessageV3>;
+        messages?: Record<string, ChannelMessage>;
     };
 }
 
