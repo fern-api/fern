@@ -53,4 +53,12 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             ...resolvedInComponents
         };
     }
+
+    public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
+        return msg != null && typeof msg === "object" && "payload" in msg;
+    }
+
+    public isReferenceObject(msg: unknown): msg is OpenAPIV3.ReferenceObject {
+        return msg != null && typeof msg === "object" && "$ref" in msg;
+    }
 }

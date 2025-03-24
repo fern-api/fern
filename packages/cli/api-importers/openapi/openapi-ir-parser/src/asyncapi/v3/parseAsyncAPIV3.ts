@@ -76,12 +76,12 @@ export function parseAsyncAPIV3({
         }
         if (channel.messages) {
             for (const [messageId, message] of Object.entries(channel.messages)) {
-                if (message && ("payload" in message || "$ref" in message)) {
+                if (context.isReferenceObject(message) || context.isMessageWithPayload(message)) {
                     if (!seenMessages[messageId]) {
                         seenMessages[messageId] = [];
                     }
-                    if ("$ref" in message) {
-                        const resolved = context.resolveMessageReference(message as OpenAPIV3.ReferenceObject);
+                    if (context.isReferenceObject(message)) {
+                        const resolved = context.resolveMessageReference(message);
                         seenMessages[messageId].push({
                             channelId,
                             payload: resolved.payload

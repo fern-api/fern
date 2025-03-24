@@ -26,6 +26,10 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return parameter != null && "$ref" in parameter;
     }
 
+    public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
+        return msg != null && typeof msg === "object" && "payload" in msg;
+    }
+
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
         if (!schemaMatch || !schemaMatch[1]) {

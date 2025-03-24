@@ -255,12 +255,12 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         const spec = context.spec as AsyncAPIV3.DocumentV3;
         for (const [channelPath, channel] of Object.entries(spec.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
-                if (!("payload" in message) && !context.isReferenceObject(message)) {
+                if (!context.isMessageWithPayload(message) && !context.isReferenceObject(message)) {
                     continue;
                 }
 
                 let messageSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-                if ("payload" in message) {
+                if (context.isMessageWithPayload(message)) {
                     if (context.isReferenceObject(message.payload)) {
                         const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
                         if (resolved.resolved) {
