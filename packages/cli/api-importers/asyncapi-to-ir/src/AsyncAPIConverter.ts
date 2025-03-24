@@ -23,6 +23,7 @@ export declare namespace OpenAPIConverter {
 
 export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContext, IntermediateRepresentation> {
     private ir: BaseIntermediateRepresentation;
+    private deduplicationMap: Record<string, Record<string, string>> | undefined;
 
     constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
         super({ breadcrumbs });
@@ -86,7 +87,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             errorCollector
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
-        let deduplicationMap: Record<string, Record<string, string>> | undefined = undefined;
+        const deduplicationMap: Record<string, Record<string, string>> | undefined = undefined;
         if (this.isAsyncAPIV3(context)) {
             const { document, deduplicationMap: deduplicationMap_ } = this.deduplicateChannelMessages({
                 document: context.spec as AsyncAPIV3.DocumentV3,
@@ -94,7 +95,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 errorCollector
             });
             context.spec = document as AsyncAPIV3.DocumentV3;
-            deduplicationMap = deduplicationMap_;
+            this.deduplicationMap = deduplicationMap_;
             await this.convertChannelMessages({ context, errorCollector });
         } else {
             await this.convertComponentMessages({ context, errorCollector });
@@ -104,7 +105,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
 
         await this.convertServers({ context, errorCollector });
 
-        await this.convertChannels({ context, errorCollector, deduplicationMap });
+        await this.convertChannels({ context, errorCollector });
 
         let ir = {
             ...this.ir,
@@ -407,12 +408,10 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
 
     private async convertChannels({
         context,
-        errorCollector,
-        deduplicationMap
+        errorCollector
     }: {
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-        deduplicationMap: Record<string, Record<string, string>> | undefined;
     }): Promise<void> {
         for (const [channelPath, channel] of Object.entries(context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
@@ -431,7 +430,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     channelPath,
                     operations,
                     group,
-                    deduplicationMap
+                    deduplicationMap: this.deduplicationMap
                 });
                 const convertedChannel = await channelConverter.convert({ context, errorCollector });
                 if (convertedChannel != null) {
