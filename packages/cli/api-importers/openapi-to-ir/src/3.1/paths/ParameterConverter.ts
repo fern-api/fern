@@ -10,10 +10,9 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
 export declare namespace ParameterConverter {
     export interface Args extends AbstractConverter.Args {
@@ -70,7 +69,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         if (this.parameter.schema != null) {
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
                 schemaOrReference: this.parameter.schema,
                 wrapAsOptional: this.parameter.required == null || !this.parameter.required

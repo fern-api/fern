@@ -13,7 +13,7 @@ import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons
 
 import { AsyncAPIV3 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { ParameterConverter } from "../../core/channel/ParameterConverter";
+import { ParameterConverter } from "../../core/ParameterConverter";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractConverter.Args {

@@ -30,6 +30,7 @@
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/configuration": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "openapi-types": "^12.1.3",

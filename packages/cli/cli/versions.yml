@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Refactor out schema converter nodes into the `v2-importer-commons` package.
+    type: fix
+  irVersion: 57
+  version: 0.56.33
+
+- changelogEntry:
+  - summary: |
       Improvements to channel parsing for v3 AsyncAPI specs.
     type: feat
   irVersion: 57

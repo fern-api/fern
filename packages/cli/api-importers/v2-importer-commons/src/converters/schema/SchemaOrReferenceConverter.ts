@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
 
 export declare namespace SchemaOrReferenceConverter {
@@ -23,7 +22,7 @@ export declare namespace SchemaOrReferenceConverter {
 }
 
 export class SchemaOrReferenceConverter extends AbstractConverter<
-    OpenAPIConverterContext3_1,
+    AbstractConverterContext<object>,
     SchemaOrReferenceConverter.Output | undefined
 > {
     private readonly schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
@@ -49,7 +48,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         if (context.isReferenceObject(this.schemaOrReference)) {
