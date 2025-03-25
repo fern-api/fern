@@ -3527,6 +3527,9 @@ importers:
       '@fern-typescript/type-schema-generator':
         specifier: workspace:*
         version: link:../../model/type-schema-generator
+      '@fern-typescript/websocket-type-schema-generator':
+        specifier: workspace:*
+        version: link:../websocket-type-schema-generator
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -3833,6 +3836,61 @@ importers:
       '@fern-typescript/contexts':
         specifier: workspace:*
         version: link:../../utils/contexts
+      ts-morph:
+        specifier: ^15.1.0
+        version: 15.1.0
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/typescript/sdk/websocket-type-schema-generator:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/core-utils
+      '@fern-fern/ir-sdk':
+        specifier: 57.0.0
+        version: 57.0.0
+      '@fern-typescript/abstract-schema-generator':
+        specifier: workspace:*
+        version: link:../../utils/abstract-schema-generator
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
+      '@fern-typescript/contexts':
+        specifier: workspace:*
+        version: link:../../utils/contexts
+      '@fern-typescript/resolvers':
+        specifier: workspace:*
+        version: link:../../utils/resolvers
+      '@fern-typescript/union-schema-generator':
+        specifier: workspace:*
+        version: link:../../model/union-schema-generator
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
