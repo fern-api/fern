@@ -30,6 +30,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.endpoint.AbstractDelegatingHttpEndpointMethodSpecs;
 import com.fern.java.client.generators.endpoint.AbstractHttpEndpointMethodSpecFactory;
 import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecs;
+import com.fern.java.client.generators.endpoint.RawHttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -143,27 +144,36 @@ public abstract class AbstractClientGeneratorUtils {
                 AbstractHttpEndpointMethodSpecFactory httpEndpointMethodSpecFactory =
                         endpointMethodSpecFactory(httpService, httpEndpoint);
                 HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
+                RawHttpEndpointMethodSpecs rawHttpEndpointMethodSpecs = new RawHttpEndpointMethodSpecs(
+                        httpEndpointMethodSpecs,
+                        generatorContext
+                                .getPoetClassNameFactory()
+                                .getHttpResponseClassName(
+                                        generatorContext.getGeneratorConfig().getOrganization(),
+                                        generatorContext.getGeneratorConfig().getWorkspaceName(),
+                                        generatorContext.getCustomConfig()));
                 AbstractDelegatingHttpEndpointMethodSpecs delegatingHttpEndpointMethodSpecs =
                         delegatingHttpEndpointMethodSpecs(httpEndpointMethodSpecs);
 
                 if (httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().isPresent()) {
-                    rawClientImplBuilder.addMethod(
-                            httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().get());
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getNoRequestBodyMethodSpec()
+                            .get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
                             .getNoRequestBodyMethodSpec()
                             .get());
                 }
 
-                rawClientImplBuilder.addMethod(httpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
+                rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
 
-                rawClientImplBuilder.addMethod(httpEndpointMethodSpecs.getRequestOptionsMethodSpec());
+                rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getRequestOptionsMethodSpec());
 
                 if (httpEndpointMethodSpecs
                         .getNonRequestOptionsByteArrayMethodSpec()
                         .isPresent()) {
-                    rawClientImplBuilder.addMethod(httpEndpointMethodSpecs
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
                             .getNonRequestOptionsByteArrayMethodSpec()
                             .get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
@@ -173,7 +183,7 @@ public abstract class AbstractClientGeneratorUtils {
 
                 if (httpEndpointMethodSpecs.getByteArrayMethodSpec().isPresent()) {
                     rawClientImplBuilder.addMethod(
-                            httpEndpointMethodSpecs.getByteArrayMethodSpec().get());
+                            rawHttpEndpointMethodSpecs.getByteArrayMethodSpec().get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
                             .getByteArrayMethodSpec()
                             .get());
