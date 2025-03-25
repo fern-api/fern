@@ -969,7 +969,7 @@ class EndpointFunctionGenerator:
             file_download=lambda _: self._get_file_download_response_body_type(is_async),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
-            bytes=lambda _: raise_bytes_response_error(),
+            bytes=lambda _: AST.TypeHint.bytes(),
         )
         if result is None:
             return AST.TypeHint.none()
@@ -1015,7 +1015,7 @@ class EndpointFunctionGenerator:
             stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
                 stream_param_response=stream_param_response, is_async=is_async, streaming_parameter=streaming_parameter
             ),
-            bytes=lambda _: raise_bytes_response_error(),
+            bytes=lambda _: AST.TypeHint.bytes(),
         )
 
         if response_type is None:
@@ -1053,7 +1053,7 @@ class EndpointFunctionGenerator:
                 ),
                 text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
                 stream_parameter=lambda _: None,
-                bytes=lambda _: NotImplementedError("Bytes response type not yet supported"),
+                bytes=lambda _: self._write_standard_return(writer, response_hint, None),
             )
         else:
             writer.write_line("Returns")
@@ -1783,7 +1783,3 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "nullable":
             return unwrap_optional_type(container_as_union.nullable)
     return type_reference
-
-
-def raise_bytes_response_error() -> None:
-    raise NotImplementedError("Bytes response type not yet supported")

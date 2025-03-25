@@ -231,6 +231,16 @@ class EndpointResponseCodeWriter:
             writer.write_node(pydantic_parse_expression)
         writer.write_newline_if_last_line_not()
 
+    def _handle_success_bytes(
+        self,
+        *,
+        writer: AST.NodeWriter,
+    ) -> None:
+        writer.write("return ")
+        writer.write_node(AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"))
+        writer.write("  # type: ignore ")
+        writer.write_newline_if_last_line_not()
+
     def _handle_success_text(
         self,
         *,
@@ -290,9 +300,9 @@ class EndpointResponseCodeWriter:
                             ),
                             file_download=lambda _: self._handle_success_file_download(writer=writer),
                             text=lambda _: self._handle_success_text(writer=writer),
-                            bytes=lambda _: raise_bytes_response_error(),
+                            bytes=lambda _: self._handle_success_bytes(writer=writer),
                         ),
-                        bytes=lambda _: raise_bytes_response_error(),
+                        bytes=lambda _: self._handle_success_bytes(writer=writer),
                     )
 
             # in streaming responses, we need to call read() or aread()
@@ -371,7 +381,7 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
-                    bytes=lambda _: raise_bytes_response_error(),
+                    bytes=lambda _: self._handle_success_bytes(writer=writer),
                     stream_parameter=lambda stream_param_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_param_response.stream_response
                     )
@@ -382,7 +392,7 @@ class EndpointResponseCodeWriter:
                         ),
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
-                        bytes=lambda _: raise_bytes_response_error(),
+                        bytes=lambda _: self._handle_success_bytes(writer=writer),
                     ),
                 )
 
@@ -479,10 +489,6 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
-
-
-def raise_bytes_response_error() -> None:
-    raise NotImplementedError("Bytes response is not supported yet")
 
 
 def raise_custom_pagination_error() -> None:
