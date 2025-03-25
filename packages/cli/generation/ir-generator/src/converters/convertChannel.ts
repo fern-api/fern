@@ -298,7 +298,16 @@ function convertMessageSchema({
             extends: getExtensionsAsList(body.extends ?? []).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            properties: []
+            properties: Object.entries(body.properties ?? {}).map(([key, property]) => ({
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: key, property }).name,
+                    wireValue: key
+                }),
+                value: file.parseTypeReference(property),
+                valueType: file.parseTypeReference(property),
+                availability: undefined,
+                docs: undefined
+            }))
         });
     }
 }
