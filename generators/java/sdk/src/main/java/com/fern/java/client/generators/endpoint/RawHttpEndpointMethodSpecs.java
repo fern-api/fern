@@ -58,7 +58,7 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
                         .build());
     }
 
-    protected TypeName wrapInRawHttpResponse(TypeName rawTypeName) {
+    private TypeName wrapInRawHttpResponse(TypeName rawTypeName) {
         if (rawTypeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) rawTypeName).rawType.equals(ClassName.get(CompletableFuture.class))) {
             TypeName typeArgument = Objects.requireNonNull(((ParameterizedTypeName) rawTypeName).typeArguments.get(0));
@@ -67,6 +67,7 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
                     ParameterizedTypeName.get(rawHttpResponseClassName, typeArgument));
         }
 
-        return ParameterizedTypeName.get(rawHttpResponseClassName, rawTypeName);
+        return ParameterizedTypeName.get(
+                rawHttpResponseClassName, rawTypeName.isPrimitive() ? rawTypeName.box() : rawTypeName);
     }
 }

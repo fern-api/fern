@@ -98,7 +98,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
-        httpResponseBuilder.addStatement("return $L", resultExpression);
+        httpResponseBuilder.addStatement("return new $T<>($L, response)", rawHttpResponseClassName(), resultExpression);
     }
 
     @Override
@@ -113,7 +113,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder.addStatement("return");
+        httpResponseBuilder.addStatement("return new $T<>(null, response)", rawHttpResponseClassName());
     }
 
     @Override

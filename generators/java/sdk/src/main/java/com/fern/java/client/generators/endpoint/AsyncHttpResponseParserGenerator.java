@@ -12,11 +12,13 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -146,7 +148,8 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
 
     @Override
     public void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
-        httpResponseBuilder.addStatement("$L.complete($L)", FUTURE, resultExpression);
+        httpResponseBuilder.addStatement(
+                "$L.complete(new $T<>($L, response))", FUTURE, rawHttpResponseClassName(), resultExpression);
         httpResponseBuilder.addStatement("return");
     }
 
@@ -160,14 +163,14 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     public void maybeInitializeFuture(CodeBlock.Builder httpResponseBuilder, TypeName responseType) {
         httpResponseBuilder.addStatement(
                 "$T $L = new $T<>()",
-                CompletableFutureUtils.wrapInCompletableFuture(responseType),
+                wrapInRawHttpResponse(CompletableFutureUtils.wrapInCompletableFuture(responseType)),
                 FUTURE,
                 CompletableFuture.class);
     }
 
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder.addStatement("$L.complete(null)", FUTURE);
+        httpResponseBuilder.addStatement("$L.complete(new $T<>(null, response))", FUTURE, rawHttpResponseClassName());
         httpResponseBuilder.addStatement("return");
     }
 
@@ -219,5 +222,18 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .unindent()
                 .add("}\n")
                 .build();
+    }
+
+    private TypeName wrapInRawHttpResponse(TypeName rawTypeName) {
+        if (rawTypeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) rawTypeName).rawType.equals(ClassName.get(CompletableFuture.class))) {
+            TypeName typeArgument = Objects.requireNonNull(((ParameterizedTypeName) rawTypeName).typeArguments.get(0));
+            return ParameterizedTypeName.get(
+                    ClassName.get(CompletableFuture.class),
+                    ParameterizedTypeName.get(rawHttpResponseClassName(), typeArgument));
+        }
+
+        return ParameterizedTypeName.get(
+                rawHttpResponseClassName(), rawTypeName.isPrimitive() ? rawTypeName.box() : rawTypeName);
     }
 }

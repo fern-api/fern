@@ -83,8 +83,8 @@ public abstract class AbstractClientGeneratorUtils {
                 .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                 .build();
         this.fernPackage = fernPackage;
-        this.clientImplName = clientImplName;
-        this.implBuilder = TypeSpec.classBuilder(clientImplName(clientImplName))
+        this.clientImplName = clientImplName(clientImplName);
+        this.implBuilder = TypeSpec.classBuilder(this.clientImplName)
                 .addModifiers(Modifier.PUBLIC)
                 .addField(clientOptionsField);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
@@ -127,6 +127,13 @@ public abstract class AbstractClientGeneratorUtils {
             FieldSpec rawClientFieldSpec = FieldSpec.builder(
                             rawClientImplName(clientImplName), RAW_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                     .build();
+
+            rawClientImplBuilder.addMethod(MethodSpec.constructorBuilder()
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(ParameterSpec.builder(clientOptionsField.type, clientOptionsField.name)
+                            .build())
+                    .addStatement("this.$L = $L", clientOptionsField.name, clientOptionsField.name)
+                    .build());
 
             implBuilder.addField(rawClientFieldSpec);
             implBuilder.addMethod(MethodSpec.methodBuilder(WITH_RAW_RESPONSES)
