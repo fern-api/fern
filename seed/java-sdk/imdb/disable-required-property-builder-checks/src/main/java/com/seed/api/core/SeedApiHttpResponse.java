@@ -15,7 +15,6 @@ public final class SeedApiHttpResponse<T> {
 
     /**
      * The response body, deserialized from the body field on this instance's {@link SeedApiHttpResponse#rawResponse()}.
-     * Is present iff the body field on this instance's {@link SeedApiHttpResponse#rawResponse()} is present.
      */
     public T value() {
         return this.value;
