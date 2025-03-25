@@ -8,7 +8,6 @@ import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.fern.java.ICustomConfig;
 import com.fern.java.utils.CasingUtils;
-import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
 import java.util.Optional;
@@ -110,7 +109,6 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                                 + "HttpResponse");
         return getCoreClassName(name);
     }
-
 
     public static String getBaseNamePrefix(String organization, String workspaceName) {
         return CasingUtils.convertKebabCaseToUpperCamelCase(organization)

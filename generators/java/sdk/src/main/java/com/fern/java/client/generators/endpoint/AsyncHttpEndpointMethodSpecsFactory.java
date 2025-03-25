@@ -5,13 +5,13 @@ import com.squareup.javapoet.MethodSpec;
 
 public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpecsFactory {
     @Override
-    public HttpEndpointMethodSpecs create(
+    public DefaultHttpEndpointMethodSpecs create(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec) {
-        return new HttpEndpointMethodSpecs(
+        return new DefaultHttpEndpointMethodSpecs(
                 wrapReturnTypeInCompletableFuture(requestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(nonRequestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(noRequestBodyMethodSpec),

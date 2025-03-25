@@ -10,7 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 public final class HttpResponseGenerator extends AbstractFileGenerator {
     public HttpResponseGenerator(ClientGeneratorContext generatorContext) {
-        super(generatorContext
+        super(
+                generatorContext
                         .getPoetClassNameFactory()
                         .getHttpResponseClassName(
                                 generatorContext.getGeneratorConfig().getOrganization(),

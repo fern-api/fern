@@ -9,8 +9,11 @@ import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.generators.endpoint.AbstractDelegatingHttpEndpointMethodSpecs;
 import com.fern.java.client.generators.endpoint.AbstractHttpEndpointMethodSpecFactory;
+import com.fern.java.client.generators.endpoint.AsyncDelegatingHttpEndpointMethodSpecs;
 import com.fern.java.client.generators.endpoint.AsyncHttpEndpointMethodSpecFactory;
+import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -41,6 +44,12 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
                 requestOptionsFile,
                 fernPackage,
                 generatedErrors);
+    }
+
+    @Override
+    protected AbstractDelegatingHttpEndpointMethodSpecs delegatingHttpEndpointMethodSpecs(
+            HttpEndpointMethodSpecs delegate) {
+        return new AsyncDelegatingHttpEndpointMethodSpecs(delegate, RAW_CLIENT_NAME, BODY_GETTER_NAME);
     }
 
     @Override

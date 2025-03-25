@@ -3,7 +3,7 @@ package com.fern.java.client.generators.endpoint;
 import com.squareup.javapoet.MethodSpec;
 
 public interface HttpEndpointMethodSpecsFactory {
-    HttpEndpointMethodSpecs create(
+    DefaultHttpEndpointMethodSpecs create(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
