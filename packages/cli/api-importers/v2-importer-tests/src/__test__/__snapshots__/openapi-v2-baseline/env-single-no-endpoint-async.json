@@ -278,14 +278,48 @@
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
-      "messages": [],
+      "messages": [
+        {
+          "type": "testChannel_sendMessage",
+          "origin": "client",
+          "body": {
+            "bodyType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "reference"
+          }
+        }
+      ],
       "examples": [
         {
           "url": "/test",
           "pathParameters": [],
           "headers": [],
           "queryParameters": [],
-          "messages": []
+          "messages": [
+            {
+              "type": "testChannel_sendMessage",
+              "body": {
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string",
+                "type": "reference"
+              }
+            }
+          ]
         }
       ]
     },
@@ -318,14 +352,48 @@
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
-      "messages": [],
+      "messages": [
+        {
+          "type": "testChannel2_sendMessage",
+          "origin": "client",
+          "body": {
+            "bodyType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "reference"
+          }
+        }
+      ],
       "examples": [
         {
           "url": "/test2",
           "pathParameters": [],
           "headers": [],
           "queryParameters": [],
-          "messages": []
+          "messages": [
+            {
+              "type": "testChannel2_sendMessage",
+              "body": {
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "string"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "jsonExample": "string",
+                "type": "reference"
+              }
+            }
+          ]
         }
       ]
     }

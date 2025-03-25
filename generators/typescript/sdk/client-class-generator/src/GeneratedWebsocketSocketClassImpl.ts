@@ -453,7 +453,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 "if (parsedResponse.ok) {",
                 `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.(parsedResponse.value);`,
                 "} else {",
-                "    this.eventHandlers.error?.(new Error(\"Received unknown message type\"));",
+                '    this.eventHandlers.error?.(new Error("Received unknown message type"));',
                 "}"
             );
         } else {
