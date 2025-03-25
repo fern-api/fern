@@ -5,7 +5,7 @@ import com.squareup.javapoet.MethodSpec;
 
 public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpecsFactory {
     @Override
-    public DefaultHttpEndpointMethodSpecs create(
+    public HttpEndpointMethodSpecs create(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,

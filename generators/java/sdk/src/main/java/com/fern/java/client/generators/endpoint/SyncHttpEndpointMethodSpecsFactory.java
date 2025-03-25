@@ -4,7 +4,7 @@ import com.squareup.javapoet.MethodSpec;
 
 public class SyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpecsFactory {
     @Override
-    public DefaultHttpEndpointMethodSpecs create(
+    public HttpEndpointMethodSpecs create(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,

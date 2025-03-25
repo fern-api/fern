@@ -100,11 +100,11 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
 
     public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
 
-    public DefaultHttpEndpointMethodSpecs create() {
+    public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
                 @Override
-                public DefaultHttpEndpointMethodSpecs visitJustRequestBody(SdkRequestBodyType sdkRequestBodyType) {
+                public HttpEndpointMethodSpecs visitJustRequestBody(SdkRequestBodyType sdkRequestBodyType) {
                     OnlyRequestEndpointWriterVariableNameContext variables =
                             new OnlyRequestEndpointWriterVariableNameContext(
                                     clientGeneratorContext,
@@ -140,7 +140,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                 }
 
                 @Override
-                public DefaultHttpEndpointMethodSpecs visitWrapper(SdkRequestWrapper wrapper) {
+                public HttpEndpointMethodSpecs visitWrapper(SdkRequestWrapper wrapper) {
                     WrappedRequestGenerator wrappedRequestGenerator = new WrappedRequestGenerator(
                             wrapper,
                             httpService,
@@ -225,7 +225,7 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                 }
 
                 @Override
-                public DefaultHttpEndpointMethodSpecs _visitUnknown(Object unknownType) {
+                public HttpEndpointMethodSpecs _visitUnknown(Object unknownType) {
                     return null;
                 }
             });

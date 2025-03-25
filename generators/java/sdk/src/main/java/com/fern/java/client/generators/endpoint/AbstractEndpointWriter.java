@@ -138,7 +138,7 @@ public abstract class AbstractEndpointWriter {
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
-    public final DefaultHttpEndpointMethodSpecs generate() {
+    public final HttpEndpointMethodSpecs generate() {
         // Step 1: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
