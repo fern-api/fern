@@ -45,7 +45,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
-            useBytesForBinaryResponse: specs.every((spec) => spec.settings?.useBytesForBinaryResponse),
+            useBytesForBinaryResponse: specs
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
+
+                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
+                .some((spec) => spec.settings?.useBytesForBinaryResponse),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
