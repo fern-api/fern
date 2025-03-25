@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.4.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for raw bytes responses.
+
 - version: 4.3.21
   irVersion: 57
   changelogEntry:

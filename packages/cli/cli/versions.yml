@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Parse inlined websocket message properties during Fern Definition -> IR.
+    type: fix
+  irVersion: 57
+  version: 0.56.35
+
+- changelogEntry:
+  - summary: |
       Fix websocket session example generation for 3.x specs.
     type: fix
   irVersion: 57
