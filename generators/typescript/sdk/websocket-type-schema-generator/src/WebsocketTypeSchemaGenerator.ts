@@ -1,9 +1,8 @@
 import { PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts";
 
-import { WebSocketChannel, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedWebsocketMessageBodySchemaImpl } from "./GeneratedWebsocketMessageBodySchemaImpl";
+import { GeneratedWebsocketResponseSchemaImpl } from "./GeneratedWebsocketResponseSchemaImpl";
 
 export declare namespace WebsocketTypeSchemaGenerator {
     export interface Init {
@@ -15,7 +14,7 @@ export declare namespace WebsocketTypeSchemaGenerator {
         export interface Args {
             packageId: PackageId;
             channel: WebSocketChannel;
-            messageBody: WebSocketMessageBody;
+            receiveMessages: WebSocketMessageBodyReference[];
             typeName: string;
         }
     }
@@ -33,19 +32,15 @@ export class WebsocketTypeSchemaGenerator {
     public generateInlinedWebsocketMessageBodySchema({
         packageId,
         channel,
-        messageBody,
+        receiveMessages,
         typeName
-    }: WebsocketTypeSchemaGenerator.GeneratedWebsocketMessageBodySchema.Args): GeneratedSdkInlinedRequestBodySchema {
-        if (messageBody.type !== "inlinedBody") {
-            throw new Error("Request is not inlined");
-        }
-        return new GeneratedWebsocketMessageBodySchemaImpl({
+    }: WebsocketTypeSchemaGenerator.GeneratedWebsocketMessageBodySchema.Args): GeneratedWebsocketResponseSchemaImpl {
+        return new GeneratedWebsocketResponseSchemaImpl({
             packageId,
             channel,
-            messageBody,
+            receiveMessages,
             typeName,
             includeSerdeLayer: this.includeSerdeLayer,
-            allowExtraFields: false,
             omitUndefined: this.omitUndefined
         });
     }

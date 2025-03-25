@@ -454,6 +454,10 @@ export class SdkGenerator {
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
         if (this.shouldGenerateWebsocketClients) {
+            if (this.config.includeSerdeLayer) {
+                this.generateUnionedResponseSchemas();
+                this.context.logger.debug("Generated unioned response schemas");
+            }
             this.generateWebsocketSockets();
             this.context.logger.debug("Generated websocket clients");
         }
@@ -673,7 +677,9 @@ export class SdkGenerator {
                     filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.websocket.getGeneratedWebsocketSocketClass(subpackageId, channel)?.writeToFile(context);
+                        context.websocket
+                            .getGeneratedWebsocketSocketClass(packageId, subpackageId, channel)
+                            ?.writeToFile(context);
                     }
                 });
             }
@@ -767,6 +773,35 @@ export class SdkGenerator {
                 }
             }
         });
+    }
+
+    private generateUnionedResponseSchemas(): { generated: boolean } {
+        let generated = false;
+        if (!this.config.includeSerdeLayer) {
+            return { generated };
+        }
+        this.forPackageChannel((channel, packageId) => {
+            const receiveMessages = channel.messages
+                .filter((message) => message.origin === "server")
+                .map((message) => message.body)
+                .filter((message) => message.type === "reference");
+            this.withSourceFile({
+                filepath: this.websocketTypeSchemaDeclarationReferencer.getExportedFilepath({
+                    packageId,
+                    channel
+                }),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.websocketTypeSchema
+                        .getGeneratedWebsocketResponseTypeSchema(packageId, channel, receiveMessages)
+                        .writeToFile(context);
+                    if (!generated) {
+                        generated = true;
+                    }
+                }
+            });
+        });
+        return { generated };
     }
 
     private generateInlinedRequestBodySchemas(): { generated: boolean } {

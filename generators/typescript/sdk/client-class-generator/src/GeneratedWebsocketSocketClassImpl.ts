@@ -1,4 +1,4 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import {
@@ -17,6 +17,7 @@ import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-
 
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
+        packageId: PackageId;
         includeSerdeLayer: boolean;
         channel: WebSocketChannel;
         serviceClassName: string;
@@ -37,10 +38,12 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private readonly channel: WebSocketChannel;
     private readonly includeSerdeLayer: boolean;
     private readonly serviceClassName: string;
+    private readonly packageId: PackageId;
 
-    constructor({ includeSerdeLayer, channel, serviceClassName }: GeneratedWebsocketSocketClassImpl.Init) {
+    constructor({ packageId, includeSerdeLayer, channel, serviceClassName }: GeneratedWebsocketSocketClassImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.channel = channel;
+        this.packageId = packageId;
         this.serviceClassName = serviceClassName;
     }
 
@@ -445,18 +448,14 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         ];
 
         if (this.includeSerdeLayer) {
-            bodyLines.push("let parsedResponse;");
-            const subscribeMessages = this.getMessagesForOrigin("server");
-            for (const message of subscribeMessages) {
-                bodyLines.push(
-                    `parsedResponse = ${getTextOfTsNode(this.getParsedExpression(message.body, context))};`,
-                    "if (parsedResponse.ok) {",
-                    `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.(parsedResponse.value);`,
-                    "    return;",
-                    "}"
-                );
-            }
-            bodyLines.push("this.eventHandlers.error?.(new Error(`Received unknown message type`));");
+            bodyLines.push(
+                `const parsedResponse = ${getTextOfTsNode(this.getUnionedParseResponse(context))};`,
+                "if (parsedResponse.ok) {",
+                `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.(parsedResponse.value);`,
+                "} else {",
+                "    this.eventHandlers.error?.(new Error(\"Received unknown message type\"));",
+                "}"
+            );
         } else {
             bodyLines.push(
                 `this.eventHandlers.message?.(data as ${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME});`
@@ -519,7 +518,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         const referenceToRequestBody = ts.factory.createIdentifier(requestBodyReference);
         switch (subscribeMessage.type) {
             case "inlinedBody": {
-                throw new Error("Inlined body messages are not supported yet");
+                throw new Error("Websocket inlined schemas are not supported at the moment.");
             }
             case "reference":
                 return context.typeSchema
@@ -535,27 +534,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         }
     }
 
-    private getParsedExpression(
-        responseMessage: WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference,
-        context: SdkContext
-    ): ts.Expression {
-        const referenceToRequestBody = ts.factory.createIdentifier("data");
-        switch (responseMessage.type) {
-            case "inlinedBody": {
-                throw new Error("Inlined body messages are not supported yet");
-            }
-            case "reference":
-                return context.typeSchema
-                    .getSchemaOfTypeReference(responseMessage.bodyType)
-                    .parse(referenceToRequestBody, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                        skipValidation: true,
-                        omitUndefined: false
-                    });
-        }
+    private getUnionedParseResponse(context: SdkContext): ts.Expression {
+        const receiveMessages = this.getMessagesForOrigin("server")
+            .map((message) => message.body)
+            .filter((body) => body.type === "reference");
+        return context.websocketTypeSchema
+            .getGeneratedWebsocketResponseTypeSchema(this.packageId, this.channel, receiveMessages)
+            .deserializeResponse(ts.factory.createIdentifier("data"), context);
     }
 
     private getMessagesForOrigin(origin: "client" | "server"): WebSocketMessage[] {
@@ -573,8 +558,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private getNodeForMessage(context: SdkContext, message: WebSocketMessage): ts.TypeNode {
         if (message.body.type === "inlinedBody") {
-            // TODO (Eden): Handle inlined body messages
-            throw new Error("Inlined body messages are not supported yet");
+            throw new Error("Websocket inlined schemas are not supported at the moment.");
         }
         const generatedType = context.type.getReferenceToType(message.body.bodyType);
         return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);

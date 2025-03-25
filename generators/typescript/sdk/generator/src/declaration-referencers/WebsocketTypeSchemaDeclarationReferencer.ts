@@ -44,10 +44,10 @@ export class WebsocketTypeSchemaDeclarationReferencer extends AbstractSdkClientC
     }
 
     public getExportedName(name: WebsocketTypeSchemaDeclarationReferencer.Name): string {
-        return name.channel.name.pascalCase.unsafeName;
+        return `${name.channel.name.pascalCase.unsafeName}SocketResponse`;
     }
 
-    public getReferenceToWebsocketSocketType(
+    public getReferenceToWebsocketResponseType(
         args: DeclarationReferencer.getReferenceTo.Options<WebsocketTypeSchemaDeclarationReferencer.Name>
     ): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);

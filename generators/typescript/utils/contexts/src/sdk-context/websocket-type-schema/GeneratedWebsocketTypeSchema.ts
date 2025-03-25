@@ -4,5 +4,5 @@ import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
 
 export interface GeneratedWebsocketTypeSchema extends GeneratedFile<SdkContext> {
-    serializeRequest: (referenceToParsedRequest: ts.Expression, context: SdkContext) => ts.Expression;
+    deserializeResponse: (referenceToRawResponse: ts.Expression, context: SdkContext) => ts.Expression;
 }

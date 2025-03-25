@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { Name, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
 
 import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -40,19 +40,15 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         this.packageResolver = packageResolver;
     }
 
-    public getGeneratedWebsocketTypeSchema(
+    public getGeneratedWebsocketResponseTypeSchema(
         packageId: PackageId,
-        channelName: Name,
-        messageBody: WebSocketMessageBody
+        channel: WebSocketChannel,
+        receiveMessages: WebSocketMessageBodyReference[]
     ): GeneratedWebsocketTypeSchema {
-        const channel = this.packageResolver.getWebSocketChannelDeclaration(packageId);
-        if (channel == null) {
-            throw new Error(`Channel ${channelName.originalName} does not exist`);
-        }
         return this.websocketTypeSchemaGenerator.generateInlinedWebsocketMessageBodySchema({
             packageId,
             channel,
-            messageBody,
+            receiveMessages,
             typeName: this.websocketTypeSchemaDeclarationReferencer.getExportedName({
                 packageId,
                 channel
@@ -60,12 +56,12 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         });
     }
 
-    public getReferenceToWebsocketTypeSchema(packageId: PackageId, channelName: Name): Reference {
+    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: Name): Reference {
         const channel = this.packageResolver.getWebSocketChannelDeclaration(packageId);
         if (channel == null) {
             throw new Error(`Channel ${channelName.originalName} does not exist`);
         }
-        return this.websocketTypeSchemaDeclarationReferencer.getReferenceToWebsocketSocketType({
+        return this.websocketTypeSchemaDeclarationReferencer.getReferenceToWebsocketResponseType({
             name: { packageId, channel },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
