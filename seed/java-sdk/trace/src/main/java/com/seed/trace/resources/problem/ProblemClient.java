@@ -3,222 +3,62 @@
  */
 package com.seed.trace.resources.problem;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.MediaTypes;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiException;
-import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
 import com.seed.trace.resources.problem.types.CreateProblemRequest;
 import com.seed.trace.resources.problem.types.CreateProblemResponse;
 import com.seed.trace.resources.problem.types.GetDefaultStarterFilesResponse;
 import com.seed.trace.resources.problem.types.UpdateProblemResponse;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ProblemClient {
     protected final ClientOptions clientOptions;
 
+    private final RawProblemClient rawClient;
+
     public ProblemClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawProblemClient(clientOptions);
     }
 
     /**
-     * Creates a problem
+     * Get responses with HTTP metadata like headers
      */
+    public RawProblemClient withRawResponses() {
+        return this.rawClient;
+    }
+
     public CreateProblemResponse createProblem(CreateProblemRequest request) {
-        return createProblem(request, null);
+        return this.rawClient.createProblem(request).body();
     }
 
-    /**
-     * Creates a problem
-     */
     public CreateProblemResponse createProblem(CreateProblemRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("create")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), CreateProblemResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.createProblem(request, requestOptions).body();
     }
 
-    /**
-     * Updates a problem
-     */
     public UpdateProblemResponse updateProblem(String problemId, CreateProblemRequest request) {
-        return updateProblem(problemId, request, null);
+        return this.rawClient.updateProblem(problemId, request).body();
     }
 
-    /**
-     * Updates a problem
-     */
     public UpdateProblemResponse updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("update")
-                .addPathSegment(problemId)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UpdateProblemResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.updateProblem(problemId, request, requestOptions).body();
     }
 
-    /**
-     * Soft deletes a problem
-     */
     public void deleteProblem(String problemId) {
-        deleteProblem(problemId, null);
+        return this.rawClient.deleteProblem(problemId).body();
     }
 
-    /**
-     * Soft deletes a problem
-     */
     public void deleteProblem(String problemId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("delete")
-                .addPathSegment(problemId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.deleteProblem(problemId, requestOptions).body();
     }
 
-    /**
-     * Returns default starter files for problem
-     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {
-        return getDefaultStarterFiles(request, null);
+        return this.rawClient.getDefaultStarterFiles(request).body();
     }
 
-    /**
-     * Returns default starter files for problem
-     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("default-starter-files")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetDefaultStarterFilesResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getDefaultStarterFiles(request, requestOptions).body();
     }
 }

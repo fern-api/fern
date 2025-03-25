@@ -4,24 +4,16 @@
 package com.seed.trace.resources.v2;
 
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiException;
-import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.core.Suppliers;
 import com.seed.trace.resources.v2.problem.ProblemClient;
 import com.seed.trace.resources.v2.v3.V3Client;
-import java.io.IOException;
 import java.util.function.Supplier;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class V2Client {
     protected final ClientOptions clientOptions;
+
+    private final RawV2Client rawClient;
 
     protected final Supplier<ProblemClient> problemClient;
 
@@ -29,40 +21,24 @@ public class V2Client {
 
     public V2Client(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawV2Client(clientOptions);
         this.problemClient = Suppliers.memoize(() -> new ProblemClient(clientOptions));
         this.v3Client = Suppliers.memoize(() -> new V3Client(clientOptions));
     }
 
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawV2Client withRawResponses() {
+        return this.rawClient;
+    }
+
     public void test() {
-        test(null);
+        return this.rawClient.test().body();
     }
 
     public void test(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.test(requestOptions).body();
     }
 
     public ProblemClient problem() {

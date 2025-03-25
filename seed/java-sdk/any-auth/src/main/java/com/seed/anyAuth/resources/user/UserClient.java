@@ -3,62 +3,33 @@
  */
 package com.seed.anyAuth.resources.user;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.anyAuth.core.ClientOptions;
-import com.seed.anyAuth.core.ObjectMappers;
 import com.seed.anyAuth.core.RequestOptions;
-import com.seed.anyAuth.core.SeedAnyAuthApiException;
-import com.seed.anyAuth.core.SeedAnyAuthException;
 import com.seed.anyAuth.resources.user.types.User;
-import java.io.IOException;
 import java.util.List;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class UserClient {
     protected final ClientOptions clientOptions;
 
+    private final RawUserClient rawClient;
+
     public UserClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawUserClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawUserClient withRawResponses() {
+        return this.rawClient;
     }
 
     public List<User> get() {
-        return get(null);
+        return this.rawClient.get().body();
     }
 
     public List<User> get(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<User>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedAnyAuthApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedAnyAuthException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.get(requestOptions).body();
     }
 }

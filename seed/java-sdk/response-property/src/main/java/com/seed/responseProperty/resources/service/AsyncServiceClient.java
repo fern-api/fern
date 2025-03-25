@@ -3,465 +3,83 @@
  */
 package com.seed.responseProperty.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.responseProperty.core.ClientOptions;
-import com.seed.responseProperty.core.MediaTypes;
-import com.seed.responseProperty.core.ObjectMappers;
 import com.seed.responseProperty.core.RequestOptions;
-import com.seed.responseProperty.core.SeedResponsePropertyApiException;
-import com.seed.responseProperty.core.SeedResponsePropertyException;
 import com.seed.responseProperty.resources.service.types.Movie;
-import com.seed.responseProperty.resources.service.types.WithDocs;
-import com.seed.responseProperty.types.StringResponse;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncServiceClient rawClient;
+
     public AsyncServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<Movie> getMovie(String request) {
-        return getMovie(request, null);
+        return this.rawClient.getMovie(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Movie> getMovie(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Movie> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        com.seed.responseProperty.resources.service.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
-                                        com.seed.responseProperty.resources.service.types.Response.class);
-                        future.complete(parsedResponse.getData());
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getMovie(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> getMovieDocs(String request) {
-        return getMovieDocs(request, null);
+        return this.rawClient.getMovieDocs(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> getMovieDocs(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<String> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        com.seed.responseProperty.resources.service.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
-                                        com.seed.responseProperty.resources.service.types.Response.class);
-                        future.complete(parsedResponse.getDocs());
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getMovieDocs(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> getMovieName(String request) {
-        return getMovieName(request, null);
+        return this.rawClient.getMovieName(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> getMovieName(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<String> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        StringResponse parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StringResponse.class);
-                        future.complete(parsedResponse.getData());
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getMovieName(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Map<String, String>> getMovieMetadata(String request) {
-        return getMovieMetadata(request, null);
+        return this.rawClient.getMovieMetadata(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Map<String, String>> getMovieMetadata(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Map<String, String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        com.seed.responseProperty.resources.service.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
-                                        com.seed.responseProperty.resources.service.types.Response.class);
-                        future.complete(parsedResponse.getMetadata());
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getMovieMetadata(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<Movie>> getOptionalMovie(String request) {
-        return getOptionalMovie(request, null);
+        return this.rawClient.getOptionalMovie(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<Movie>> getOptionalMovie(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Optional<Movie>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        Optional<com.seed.responseProperty.resources.service.types.Response> parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
-                                        new TypeReference<
-                                                Optional<
-                                                        com.seed
-                                                                .responseProperty
-                                                                .resources
-                                                                .service
-                                                                .types
-                                                                .Response>>() {});
-                        future.complete(parsedResponse.map(
-                                com.seed.responseProperty.resources.service.types.Response::getData));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getOptionalMovie(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieDocs(String request) {
-        return getOptionalMovieDocs(request, null);
+        return this.rawClient.getOptionalMovieDocs(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieDocs(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Optional<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        Optional<WithDocs> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Optional<WithDocs>>() {});
-                        future.complete(parsedResponse.map(WithDocs::getDocs));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getOptionalMovieDocs(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieName(String request) {
-        return getOptionalMovieName(request, null);
+        return this.rawClient.getOptionalMovieName(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieName(String request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("movie")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedResponsePropertyException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Optional<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        Optional<StringResponse> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Optional<StringResponse>>() {});
-                        future.complete(parsedResponse.map(StringResponse::getData));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedResponsePropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedResponsePropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedResponsePropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getOptionalMovieName(request, requestOptions).thenApply(response -> response.body());
     }
 }

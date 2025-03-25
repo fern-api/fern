@@ -4,76 +4,32 @@
 package com.seed.nurseryApi.resources.package_;
 
 import com.seed.nurseryApi.core.ClientOptions;
-import com.seed.nurseryApi.core.ObjectMappers;
-import com.seed.nurseryApi.core.QueryStringMapper;
 import com.seed.nurseryApi.core.RequestOptions;
-import com.seed.nurseryApi.core.SeedNurseryApiApiException;
-import com.seed.nurseryApi.core.SeedNurseryApiException;
 import com.seed.nurseryApi.resources.package_.requests.TestRequest;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncPackageClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncPackageClient rawClient;
+
     public AsyncPackageClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncPackageClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncPackageClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<Void> test(TestRequest request) {
-        return test(request, null);
+        return this.rawClient.test(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> test(TestRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
-        QueryStringMapper.addQueryParameter(httpUrl, "for", request.getFor(), false);
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedNurseryApiApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedNurseryApiException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedNurseryApiException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.test(request, requestOptions).thenApply(response -> response.body());
     }
 }

@@ -3,66 +3,31 @@
  */
 package com.seed.accept.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.accept.core.ClientOptions;
-import com.seed.accept.core.ObjectMappers;
 import com.seed.accept.core.RequestOptions;
-import com.seed.accept.core.SeedAcceptApiException;
-import com.seed.accept.core.SeedAcceptException;
-import com.seed.accept.resources.service.errors.NotFoundError;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawServiceClient rawClient;
+
     public ServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public void endpoint() {
-        endpoint(null);
+        return this.rawClient.endpoint().body();
     }
 
     public void endpoint(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("container")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 404) {
-                    throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new SeedAcceptApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedAcceptException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.endpoint(requestOptions).body();
     }
 }

@@ -5,65 +5,37 @@
 package com.fern.sdk.resources.endpoints.put;
 
 import com.fern.sdk.core.ClientOptions;
-import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 import com.fern.sdk.resources.endpoints.put.types.PutResponse;
-import java.io.IOException;
-import java.lang.Object;
 import java.lang.String;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class PutClient {
   protected final ClientOptions clientOptions;
 
+  private final RawPutClient rawClient;
+
   public PutClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
+    this.rawClient = new RawPutClient(clientOptions);
+  }
+
+  /**
+   * Get responses with HTTP metadata like headers
+   */
+  public RawPutClient withRawResponses() {
+    return this.rawClient;
   }
 
   public PutResponse add(String id) {
-    return add(id,PutRequest.builder().build());
+    return this.rawClient.add(id).body();
   }
 
   public PutResponse add(String id, PutRequest request) {
-    return add(id,request,null);
+    return this.rawClient.add(id, request).body();
   }
 
   public PutResponse add(String id, PutRequest request, RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-
-      .addPathSegment(id)
-      .build();
-    Request.Builder _requestBuilder = new Request.Builder()
-      .url(httpUrl)
-      .method("PUT", RequestBody.create("", null))
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Content-Type", "application/json")
-      .addHeader("Accept", "application/json");
-    Request okhttpRequest = _requestBuilder.build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    try (Response response = client.newCall(okhttpRequest).execute()) {
-      ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PutResponse.class);
-      }
-      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-    }
-    catch (IOException e) {
-      throw new SeedExhaustiveException("Network error executing HTTP request", e);
-    }
+    return this.rawClient.add(id, request, requestOptions).body();
   }
 }

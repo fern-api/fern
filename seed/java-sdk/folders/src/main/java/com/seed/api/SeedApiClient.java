@@ -4,25 +4,16 @@
 package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.SeedApiApiException;
-import com.seed.api.core.SeedApiException;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.a.AClient;
 import com.seed.api.resources.folder.FolderClient;
-import java.io.IOException;
 import java.util.function.Supplier;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
+
+    private final RawSeedApiClient rawClient;
 
     protected final Supplier<AClient> aClient;
 
@@ -30,40 +21,24 @@ public class SeedApiClient {
 
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawSeedApiClient(clientOptions);
         this.aClient = Suppliers.memoize(() -> new AClient(clientOptions));
         this.folderClient = Suppliers.memoize(() -> new FolderClient(clientOptions));
     }
 
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawSeedApiClient withRawResponses() {
+        return this.rawClient;
+    }
+
     public void foo() {
-        foo(null);
+        return this.rawClient.foo().body();
     }
 
     public void foo(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedApiApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.foo(requestOptions).body();
     }
 
     public AClient a() {

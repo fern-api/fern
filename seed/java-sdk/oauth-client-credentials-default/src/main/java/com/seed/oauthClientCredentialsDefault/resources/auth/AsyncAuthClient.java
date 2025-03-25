@@ -3,90 +3,34 @@
  */
 package com.seed.oauthClientCredentialsDefault.resources.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
-import com.seed.oauthClientCredentialsDefault.core.MediaTypes;
-import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
-import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiException;
-import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultException;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncAuthClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncAuthClient rawClient;
+
     public AsyncAuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncAuthClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncAuthClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request) {
-        return getToken(request, null);
+        return this.rawClient.getToken(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("token")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedOauthClientCredentialsDefaultException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<TokenResponse> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedOauthClientCredentialsDefaultApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedOauthClientCredentialsDefaultException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedOauthClientCredentialsDefaultException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
     }
 }

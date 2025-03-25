@@ -4,78 +4,34 @@
 package com.seed.apiWideBasePath.resources.service;
 
 import com.seed.apiWideBasePath.core.ClientOptions;
-import com.seed.apiWideBasePath.core.ObjectMappers;
 import com.seed.apiWideBasePath.core.RequestOptions;
-import com.seed.apiWideBasePath.core.SeedApiWideBasePathApiException;
-import com.seed.apiWideBasePath.core.SeedApiWideBasePathException;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncServiceClient rawClient;
+
     public AsyncServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<Void> post(String serviceParam, String resourceParam, int endpointParam) {
-        return post(serviceParam, resourceParam, endpointParam, null);
+        return this.rawClient.post(serviceParam, resourceParam, endpointParam).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> post(
             String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegment(serviceParam)
-                .addPathSegment(Integer.toString(endpointParam))
-                .addPathSegment(resourceParam)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedApiWideBasePathApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedApiWideBasePathException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedApiWideBasePathException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .post(serviceParam, resourceParam, endpointParam, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

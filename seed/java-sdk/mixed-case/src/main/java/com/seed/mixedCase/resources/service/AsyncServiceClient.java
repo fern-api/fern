@@ -3,132 +3,44 @@
  */
 package com.seed.mixedCase.resources.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedCase.core.ClientOptions;
-import com.seed.mixedCase.core.ObjectMappers;
-import com.seed.mixedCase.core.QueryStringMapper;
 import com.seed.mixedCase.core.RequestOptions;
-import com.seed.mixedCase.core.SeedMixedCaseApiException;
-import com.seed.mixedCase.core.SeedMixedCaseException;
 import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 import com.seed.mixedCase.resources.service.types.Resource;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncServiceClient rawClient;
+
     public AsyncServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<Resource> getResource(String resourceId) {
-        return getResource(resourceId, null);
+        return this.rawClient.getResource(resourceId).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Resource> getResource(String resourceId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("resource")
-                .addPathSegment(resourceId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Resource> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Resource.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedMixedCaseApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedMixedCaseException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedMixedCaseException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getResource(resourceId, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<Resource>> listResources(ListResourcesRequest request) {
-        return listResources(request, null);
+        return this.rawClient.listResources(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<Resource>> listResources(
             ListResourcesRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("resource");
-        QueryStringMapper.addQueryParameter(httpUrl, "page_limit", Integer.toString(request.getPageLimit()), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "beforeDate", request.getBeforeDate(), false);
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<List<Resource>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<Resource>>() {}));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedMixedCaseApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedMixedCaseException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedMixedCaseException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.listResources(request, requestOptions).thenApply(response -> response.body());
     }
 }

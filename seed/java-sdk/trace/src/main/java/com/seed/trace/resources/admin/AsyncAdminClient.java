@@ -3,13 +3,8 @@
  */
 package com.seed.trace.resources.admin;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.MediaTypes;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiException;
-import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.admin.requests.StoreTracedTestCaseRequest;
 import com.seed.trace.resources.admin.requests.StoreTracedWorkspaceRequest;
 import com.seed.trace.resources.submission.types.TestSubmissionStatus;
@@ -17,488 +12,123 @@ import com.seed.trace.resources.submission.types.TestSubmissionUpdate;
 import com.seed.trace.resources.submission.types.TraceResponseV2;
 import com.seed.trace.resources.submission.types.WorkspaceSubmissionStatus;
 import com.seed.trace.resources.submission.types.WorkspaceSubmissionUpdate;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncAdminClient {
     protected final ClientOptions clientOptions;
 
+    private final RawAsyncAdminClient rawClient;
+
     public AsyncAdminClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawAsyncAdminClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawAsyncAdminClient withRawResponses() {
+        return this.rawClient;
     }
 
     public CompletableFuture<Void> updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
-        return updateTestSubmissionStatus(submissionId, request, null);
+        return this.rawClient.updateTestSubmissionStatus(submissionId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-test-submission-status")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .updateTestSubmissionStatus(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
-        return sendTestSubmissionUpdate(submissionId, request, null);
+        return this.rawClient.sendTestSubmissionUpdate(submissionId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> sendTestSubmissionUpdate(
             UUID submissionId, TestSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-test-submission-status-v2")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .sendTestSubmissionUpdate(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request) {
-        return updateWorkspaceSubmissionStatus(submissionId, request, null);
+        return this.rawClient
+                .updateWorkspaceSubmissionStatus(submissionId, request)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-workspace-submission-status")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .updateWorkspaceSubmissionStatus(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> sendWorkspaceSubmissionUpdate(UUID submissionId, WorkspaceSubmissionUpdate request) {
-        return sendWorkspaceSubmissionUpdate(submissionId, request, null);
+        return this.rawClient
+                .sendWorkspaceSubmissionUpdate(submissionId, request)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-workspace-submission-status-v2")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
-        return storeTracedTestCase(submissionId, testCaseId, request, null);
+        return this.rawClient
+                .storeTracedTestCase(submissionId, testCaseId, request)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-test-trace/submission")
-                .addPathSegment(submissionId.toString())
-                .addPathSegments("testCase")
-                .addPathSegment(testCaseId)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .storeTracedTestCase(submissionId, testCaseId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
-        return storeTracedTestCaseV2(submissionId, testCaseId, request, null);
+        return this.rawClient
+                .storeTracedTestCaseV2(submissionId, testCaseId, request)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-test-trace-v2/submission")
-                .addPathSegment(submissionId.toString())
-                .addPathSegments("testCase")
-                .addPathSegment(testCaseId)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
-        return storeTracedWorkspace(submissionId, request, null);
+        return this.rawClient.storeTracedWorkspace(submissionId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedWorkspace(
             UUID submissionId, StoreTracedWorkspaceRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-workspace-trace/submission")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .storeTracedWorkspace(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
-        return storeTracedWorkspaceV2(submissionId, request, null);
+        return this.rawClient.storeTracedWorkspaceV2(submissionId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> storeTracedWorkspaceV2(
             UUID submissionId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("admin")
-                .addPathSegments("store-workspace-trace-v2/submission")
-                .addPathSegment(submissionId.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .storeTracedWorkspaceV2(submissionId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

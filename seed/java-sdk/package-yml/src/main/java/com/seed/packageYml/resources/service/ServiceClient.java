@@ -4,55 +4,30 @@
 package com.seed.packageYml.resources.service;
 
 import com.seed.packageYml.core.ClientOptions;
-import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
-import com.seed.packageYml.core.SeedPackageYmlApiException;
-import com.seed.packageYml.core.SeedPackageYmlException;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawServiceClient rawClient;
+
     public ServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public void nop(String nestedId) {
-        nop(nestedId, null);
+        return this.rawClient.nop(nestedId).body();
     }
 
     public void nop(String nestedId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegment(nestedId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPackageYmlApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedPackageYmlException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.nop(nestedId, requestOptions).body();
     }
 }

@@ -3,13 +3,8 @@
  */
 package com.seed.fileUpload.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.fileUpload.core.ClientOptions;
-import com.seed.fileUpload.core.ObjectMappers;
-import com.seed.fileUpload.core.QueryStringMapper;
 import com.seed.fileUpload.core.RequestOptions;
-import com.seed.fileUpload.core.SeedFileUploadApiException;
-import com.seed.fileUpload.core.SeedFileUploadException;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
@@ -17,522 +12,81 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
-import java.io.IOException;
-import java.nio.file.Files;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawServiceClient rawClient;
+
     public ServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawServiceClient withRawResponses() {
+        return this.rawClient;
     }
 
     public void post(MyRequest request) {
-        post(request, null);
+        return this.rawClient.post(request).body();
     }
 
     public void post(MyRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            if (request.getMaybeString().isPresent()) {
-                body.addFormDataPart(
-                        "maybe_string",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeString().get()));
-            }
-            body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-            String fileListMimeType =
-                    Files.probeContentType(request.getFileList().toPath());
-            MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
-            body.addFormDataPart(
-                    "file_list",
-                    request.getFileList().getName(),
-                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
-            if (request.getMaybeFile().isPresent()) {
-                String maybeFileMimeType =
-                        Files.probeContentType(request.getMaybeFile().get().toPath());
-                MediaType maybeFileMimeTypeMediaType =
-                        maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
-                body.addFormDataPart(
-                        "maybe_file",
-                        request.getMaybeFile().get().getName(),
-                        RequestBody.create(
-                                maybeFileMimeTypeMediaType,
-                                request.getMaybeFile().get()));
-            }
-            if (request.getMaybeFileList().isPresent()) {
-                String maybeFileListMimeType =
-                        Files.probeContentType(request.getMaybeFileList().get().toPath());
-                MediaType maybeFileListMimeTypeMediaType =
-                        maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
-                body.addFormDataPart(
-                        "maybe_file_list",
-                        request.getMaybeFileList().get().getName(),
-                        RequestBody.create(
-                                maybeFileListMimeTypeMediaType,
-                                request.getMaybeFileList().get()));
-            }
-            if (request.getMaybeInteger().isPresent()) {
-                body.addFormDataPart(
-                        "maybe_integer",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeInteger().get()));
-            }
-            if (request.getOptionalListOfStrings().isPresent()) {
-                request.getOptionalListOfStrings().get().forEach(item -> {
-                    try {
-                        body.addFormDataPart(
-                                "optional_list_of_strings", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException("Failed to write value as JSON", e);
-                    }
-                });
-            }
-            request.getListOfObjects().forEach(item -> {
-                try {
-                    body.addFormDataPart("list_of_objects", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException("Failed to write value as JSON", e);
-                }
-            });
-            if (request.getOptionalMetadata().isPresent()) {
-                body.addFormDataPart(
-                        "optional_metadata",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOptionalMetadata().get()));
-            }
-            if (request.getOptionalObjectType().isPresent()) {
-                body.addFormDataPart(
-                        "optional_object_type",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOptionalObjectType().get()));
-            }
-            if (request.getOptionalId().isPresent()) {
-                body.addFormDataPart(
-                        "optional_id",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOptionalId().get()));
-            }
-            body.addFormDataPart(
-                    "alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getAliasObject()));
-            request.getListOfAliasObject().forEach(item -> {
-                try {
-                    body.addFormDataPart("list_of_alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException("Failed to write value as JSON", e);
-                }
-            });
-            request.getAliasListOfObject().forEach(item -> {
-                try {
-                    body.addFormDataPart("alias_list_of_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException("Failed to write value as JSON", e);
-                }
-            });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.post(request, requestOptions).body();
     }
 
     public void justFile(JustFileRequest request) {
-        justFile(request, null);
+        return this.rawClient.justFile(request).body();
     }
 
     public void justFile(JustFileRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("just-file")
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.justFile(request, requestOptions).body();
     }
 
     public void justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
-        justFileWithQueryParams(request, null);
+        return this.rawClient.justFileWithQueryParams(request).body();
     }
 
     public void justFileWithQueryParams(JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("just-file-with-query-params");
-        if (request.getMaybeString().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeString", request.getMaybeString().get(), false);
-        }
-        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()), false);
-        if (request.getMaybeInteger().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), false);
-        }
-        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), false);
-        if (request.getOptionalListOfStrings().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get(),
-                    false);
-        }
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.justFileWithQueryParams(request, requestOptions).body();
     }
 
     public void withContentType(WithContentTypeRequest request) {
-        withContentType(request, null);
+        return this.rawClient.withContentType(request).body();
     }
 
     public void withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("with-content-type")
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
-            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
-            if (request.getFooBar().isPresent()) {
-                body.addFormDataPart(
-                        "foo_bar",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getFooBar().get()));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.withContentType(request, requestOptions).body();
     }
 
     public void withFormEncoding(WithFormEncodingRequest request) {
-        withFormEncoding(request, null);
+        return this.rawClient.withFormEncoding(request).body();
     }
 
     public void withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("with-form-encoding")
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
-            QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.withFormEncoding(request, requestOptions).body();
     }
 
     public void withFormEncodedContainers(MyOtherRequest request) {
-        withFormEncodedContainers(request, null);
+        return this.rawClient.withFormEncodedContainers(request).body();
     }
 
     public void withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            if (request.getMaybeString().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body, "maybe_string", request.getMaybeString().get(), false);
-            }
-            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
-            String fileMimeType = Files.probeContentType(request.getFile().toPath());
-            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
-                    "file", request.getFile().getName(), RequestBody.create(fileMimeTypeMediaType, request.getFile()));
-            String fileListMimeType =
-                    Files.probeContentType(request.getFileList().toPath());
-            MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
-            body.addFormDataPart(
-                    "file_list",
-                    request.getFileList().getName(),
-                    RequestBody.create(fileListMimeTypeMediaType, request.getFileList()));
-            if (request.getMaybeFile().isPresent()) {
-                String maybeFileMimeType =
-                        Files.probeContentType(request.getMaybeFile().get().toPath());
-                MediaType maybeFileMimeTypeMediaType =
-                        maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
-                body.addFormDataPart(
-                        "maybe_file",
-                        request.getMaybeFile().get().getName(),
-                        RequestBody.create(
-                                maybeFileMimeTypeMediaType,
-                                request.getMaybeFile().get()));
-            }
-            if (request.getMaybeFileList().isPresent()) {
-                String maybeFileListMimeType =
-                        Files.probeContentType(request.getMaybeFileList().get().toPath());
-                MediaType maybeFileListMimeTypeMediaType =
-                        maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
-                body.addFormDataPart(
-                        "maybe_file_list",
-                        request.getMaybeFileList().get().getName(),
-                        RequestBody.create(
-                                maybeFileListMimeTypeMediaType,
-                                request.getMaybeFileList().get()));
-            }
-            if (request.getMaybeInteger().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body, "maybe_integer", request.getMaybeInteger().get(), false);
-            }
-            if (request.getOptionalListOfStrings().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body,
-                        "optional_list_of_strings",
-                        request.getOptionalListOfStrings().get(),
-                        false);
-            }
-            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects(), false);
-            if (request.getOptionalMetadata().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body, "optional_metadata", request.getOptionalMetadata().get(), false);
-            }
-            if (request.getOptionalObjectType().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body,
-                        "optional_object_type",
-                        request.getOptionalObjectType().get(),
-                        false);
-            }
-            if (request.getOptionalId().isPresent()) {
-                QueryStringMapper.addFormDataPart(
-                        body, "optional_id", request.getOptionalId().get(), false);
-            }
-            QueryStringMapper.addFormDataPart(
-                    body, "list_of_objects_with_optionals", request.getListOfObjectsWithOptionals(), false);
-            QueryStringMapper.addFormDataPart(body, "alias_object", request.getAliasObject(), false);
-            QueryStringMapper.addFormDataPart(body, "list_of_alias_object", request.getListOfAliasObject(), false);
-            QueryStringMapper.addFormDataPart(body, "alias_list_of_object", request.getAliasListOfObject(), false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.withFormEncodedContainers(request, requestOptions).body();
     }
 
     public String optionalArgs() {
-        return optionalArgs(OptionalArgsRequest.builder().build());
+        return this.rawClient.optionalArgs().body();
     }
 
     public String optionalArgs(OptionalArgsRequest request) {
-        return optionalArgs(request, null);
+        return this.rawClient.optionalArgs(request).body();
     }
 
     public String optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("optional-args")
-                .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        try {
-            if (request.getImageFile().isPresent()) {
-                String imageFileMimeType =
-                        Files.probeContentType(request.getImageFile().get().toPath());
-                MediaType imageFileMimeTypeMediaType =
-                        imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
-                body.addFormDataPart(
-                        "image_file",
-                        request.getImageFile().get().getName(),
-                        RequestBody.create(
-                                imageFileMimeTypeMediaType,
-                                request.getImageFile().get()));
-            }
-            if (request.getRequest().isPresent()) {
-                body.addFormDataPart(
-                        "request",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getRequest().get()));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileUploadApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedFileUploadException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.optionalArgs(request, requestOptions).body();
     }
 }

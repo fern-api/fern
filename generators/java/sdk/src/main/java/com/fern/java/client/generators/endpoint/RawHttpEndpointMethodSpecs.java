@@ -68,6 +68,7 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
         }
 
         return ParameterizedTypeName.get(
-                rawHttpResponseClassName, rawTypeName.isPrimitive() ? rawTypeName.box() : rawTypeName);
+                rawHttpResponseClassName,
+                rawTypeName.isPrimitive() || rawTypeName.equals(TypeName.VOID) ? rawTypeName.box() : rawTypeName);
     }
 }

@@ -4,104 +4,34 @@
 
 package com.fern.sdk.resources.noauth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
-import com.fern.sdk.core.MediaTypes;
-import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
-import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
-import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncNoAuthClient {
   protected final ClientOptions clientOptions;
 
+  private final RawAsyncNoAuthClient rawClient;
+
   public AsyncNoAuthClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
+    this.rawClient = new RawAsyncNoAuthClient(clientOptions);
   }
 
   /**
-   * POST request with no auth
+   * Get responses with HTTP metadata like headers
    */
+  public RawAsyncNoAuthClient withRawResponses() {
+    return this.rawClient;
+  }
+
   public CompletableFuture<Boolean> postWithNoAuth(Object request) {
-    return postWithNoAuth(request,null);
+    return this.rawClient.postWithNoAuth(request).thenApply(response -> response.body());
   }
 
-  /**
-   * POST request with no auth
-   */
   public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
-    HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("no-auth")
-
-      .build();
-    RequestBody body;
-    try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-    }
-    catch(JsonProcessingException e) {
-      throw new SeedExhaustiveException("Failed to serialize request", e);
-    }
-    Request okhttpRequest = new Request.Builder()
-      .url(httpUrl)
-      .method("POST", body)
-      .headers(Headers.of(clientOptions.headers(requestOptions)))
-      .addHeader("Content-Type", "application/json")
-      .addHeader("Accept", "application/json")
-      .build();
-    OkHttpClient client = clientOptions.httpClient();
-    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-      client = clientOptions.httpClientWithTimeout(requestOptions);
-    }
-    CompletableFuture<Boolean> future = new CompletableFuture<>();
-    client.newCall(okhttpRequest).enqueue(new Callback() {
-      @Override
-      public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        try (ResponseBody responseBody = response.body()) {
-          if (response.isSuccessful()) {
-            future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
-            return;
-          }
-          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          try {
-            if (response.code() == 400) {
-              future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class)));
-              return;
-            }
-          }
-          catch (JsonProcessingException ignored) {
-            // unable to map error response, throwing generic error
-          }
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-          return;
-        }
-        catch (IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-        }
-      }
-
-      @Override
-      public void onFailure(@NotNull Call call, @NotNull IOException e) {
-        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-      }
-    });
-    return future;
+    return this.rawClient.postWithNoAuth(request, requestOptions).thenApply(response -> response.body());
   }
 }
