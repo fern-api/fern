@@ -1,0 +1,27 @@
+name: Pydantic Compatibility
+
+on: [push]
+jobs:
+  compat:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        pydantic-version: ['1.10.20', '2.10.6']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: |
+          poetry install
+          poetry add pydantic==${{ matrix.pydantic-version }}
+      - name: Run tests
+        run: |
+          poetry run pytest -rP .
