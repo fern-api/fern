@@ -160,7 +160,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             kind: StructureKind.TypeAlias,
             name: GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME,
             isExported: true,
-            type: getTextOfTsNode(this.getUnionedSubscribeMessageNode(context))
+            type: getTextOfTsNode(this.getUnionedNodeForOrigin(context, "server"))
         };
     }
 
@@ -286,7 +286,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private generateSendHelperMethods(context: SdkContext): MethodDeclarationStructure[] {
-        return this.getPublishMessages().map((message) => {
+        return this.getMessagesForOrigin("client").map((message) => {
             const node = this.getNodeForMessage(context, message);
             return this.generateSendMessage(context, message, node);
         });
@@ -403,7 +403,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private generateSendJson(context: SdkContext): MethodDeclarationStructure {
-        const publishMessageNode = this.getUnionedPublishMessageNode(context);
+        const publishMessageNode = this.getUnionedNodeForOrigin(context, "client");
         return {
             kind: StructureKind.Method,
             name: "sendJson",
@@ -446,7 +446,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
         if (this.includeSerdeLayer) {
             bodyLines.push("let parsedResponse;");
-            const subscribeMessages = this.getSubscribeMessages();
+            const subscribeMessages = this.getMessagesForOrigin("server");
             for (const message of subscribeMessages) {
                 bodyLines.push(
                     `parsedResponse = ${getTextOfTsNode(this.getParsedExpression(message.body, context))};`,
@@ -558,35 +558,16 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         }
     }
 
-    private getPublishMessage(): WebSocketMessage {
-        return this.channel.messages.filter((message) => message.origin === "client")[1] as WebSocketMessage;
-    }
-
-    private getSubscribeMessage(): WebSocketMessage {
-        return this.channel.messages.filter((message) => message.origin === "server")[0] as WebSocketMessage;
-    }
-
-    private getPublishMessages(): WebSocketMessage[] {
-        return this.channel.messages.filter((message) => message.origin === "client");
-    }
-
-    private getSubscribeMessages(): WebSocketMessage[] {
-        return this.channel.messages.filter((message) => message.origin === "server");
+    private getMessagesForOrigin(origin: "client" | "server"): WebSocketMessage[] {
+        return this.channel.messages.filter((message) => message.origin === origin);
     }
 
     private getAllMessageNodesForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode[] {
-        return this.channel.messages
-            .filter((message) => message.origin === origin)
-            .map((message) => this.getNodeForMessage(context, message));
+        return this.getMessagesForOrigin(origin).map((message) => this.getNodeForMessage(context, message));
     }
 
-    private getUnionedPublishMessageNode(context: SdkContext): ts.TypeNode {
-        const allReturnTypes = this.getAllMessageNodesForOrigin(context, "client");
-        return ts.factory.createUnionTypeNode(allReturnTypes);
-    }
-
-    private getUnionedSubscribeMessageNode(context: SdkContext): ts.TypeNode {
-        const allReturnTypes = this.getAllMessageNodesForOrigin(context, "server");
+    private getUnionedNodeForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode {
+        const allReturnTypes = this.getAllMessageNodesForOrigin(context, origin);
         return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
