@@ -25,10 +25,10 @@ public class PackageClient {
     }
 
     public void test(TestRequest request) {
-        return this.rawClient.test(request).body();
+        this.rawClient.test(request).body();
     }
 
     public void test(TestRequest request, RequestOptions requestOptions) {
-        return this.rawClient.test(request, requestOptions).body();
+        this.rawClient.test(request, requestOptions).body();
     }
 }

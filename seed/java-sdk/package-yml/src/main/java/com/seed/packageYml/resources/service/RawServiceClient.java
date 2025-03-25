@@ -25,7 +25,7 @@ public class RawServiceClient {
     }
 
     public SeedPackageYmlHttpResponse<Void> nop(String nestedId) {
-        nop(nestedId, null);
+        return nop(nestedId, null);
     }
 
     public SeedPackageYmlHttpResponse<Void> nop(String nestedId, RequestOptions requestOptions) {

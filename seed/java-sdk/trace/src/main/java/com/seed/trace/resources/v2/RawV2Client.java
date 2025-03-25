@@ -25,7 +25,7 @@ public class RawV2Client {
     }
 
     public SeedTraceHttpResponse<Void> test() {
-        test(null);
+        return test(null);
     }
 
     public SeedTraceHttpResponse<Void> test(RequestOptions requestOptions) {

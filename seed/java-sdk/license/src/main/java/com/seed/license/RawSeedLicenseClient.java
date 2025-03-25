@@ -25,7 +25,7 @@ public class RawSeedLicenseClient {
     }
 
     public SeedLicenseHttpResponse<Void> get() {
-        get(null);
+        return get(null);
     }
 
     public SeedLicenseHttpResponse<Void> get(RequestOptions requestOptions) {

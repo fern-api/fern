@@ -34,7 +34,7 @@ public class RawUserClient {
      * This endpoint is used to retrieve a user.
      */
     public SeedMultiLineDocsHttpResponse<Void> getUser(String userId) {
-        getUser(userId, null);
+        return getUser(userId, null);
     }
 
     /**

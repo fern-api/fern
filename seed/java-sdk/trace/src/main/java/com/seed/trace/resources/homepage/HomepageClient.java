@@ -33,10 +33,10 @@ public class HomepageClient {
     }
 
     public void setHomepageProblems(List<String> request) {
-        return this.rawClient.setHomepageProblems(request).body();
+        this.rawClient.setHomepageProblems(request).body();
     }
 
     public void setHomepageProblems(List<String> request, RequestOptions requestOptions) {
-        return this.rawClient.setHomepageProblems(request, requestOptions).body();
+        this.rawClient.setHomepageProblems(request, requestOptions).body();
     }
 }

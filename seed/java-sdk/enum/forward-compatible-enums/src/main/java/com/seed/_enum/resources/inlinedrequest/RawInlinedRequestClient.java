@@ -29,7 +29,7 @@ public class RawInlinedRequestClient {
     }
 
     public SeedEnumHttpResponse<Void> send(SendEnumInlinedRequest request) {
-        send(request, null);
+        return send(request, null);
     }
 
     public SeedEnumHttpResponse<Void> send(SendEnumInlinedRequest request, RequestOptions requestOptions) {

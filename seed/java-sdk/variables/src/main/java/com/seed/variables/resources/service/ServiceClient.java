@@ -24,10 +24,10 @@ public class ServiceClient {
     }
 
     public void post() {
-        return this.rawClient.post().body();
+        this.rawClient.post().body();
     }
 
     public void post(RequestOptions requestOptions) {
-        return this.rawClient.post(requestOptions).body();
+        this.rawClient.post(requestOptions).body();
     }
 }

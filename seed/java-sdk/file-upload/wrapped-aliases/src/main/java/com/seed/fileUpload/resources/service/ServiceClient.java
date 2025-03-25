@@ -34,9 +34,7 @@ public class ServiceClient {
 
     public void post(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
-        return this.rawClient
-                .post(file, fileList, maybeFile, maybeFileList, request)
-                .body();
+        this.rawClient.post(file, fileList, maybeFile, maybeFileList, request).body();
     }
 
     public void post(
@@ -46,49 +44,47 @@ public class ServiceClient {
             Optional<File> maybeFileList,
             MyRequest request,
             RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .post(file, fileList, maybeFile, maybeFileList, request, requestOptions)
                 .body();
     }
 
     public void justFile(File file, JustFileRequest request) {
-        return this.rawClient.justFile(file, request).body();
+        this.rawClient.justFile(file, request).body();
     }
 
     public void justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
-        return this.rawClient.justFile(file, request, requestOptions).body();
+        this.rawClient.justFile(file, request, requestOptions).body();
     }
 
     public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
-        return this.rawClient.justFileWithQueryParams(file, request).body();
+        this.rawClient.justFileWithQueryParams(file, request).body();
     }
 
     public void justFileWithQueryParams(
             File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFileWithQueryParams(file, request, requestOptions)
-                .body();
+        this.rawClient.justFileWithQueryParams(file, request, requestOptions).body();
     }
 
     public void withContentType(File file, WithContentTypeRequest request) {
-        return this.rawClient.withContentType(file, request).body();
+        this.rawClient.withContentType(file, request).body();
     }
 
     public void withContentType(File file, WithContentTypeRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withContentType(file, request, requestOptions).body();
+        this.rawClient.withContentType(file, request, requestOptions).body();
     }
 
     public void withFormEncoding(File file, WithFormEncodingRequest request) {
-        return this.rawClient.withFormEncoding(file, request).body();
+        this.rawClient.withFormEncoding(file, request).body();
     }
 
     public void withFormEncoding(File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withFormEncoding(file, request, requestOptions).body();
+        this.rawClient.withFormEncoding(file, request, requestOptions).body();
     }
 
     public void withFormEncodedContainers(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
-        return this.rawClient
+        this.rawClient
                 .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request)
                 .body();
     }
@@ -100,7 +96,7 @@ public class ServiceClient {
             Optional<File> maybeFileList,
             MyOtherRequest request,
             RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, requestOptions)
                 .body();
     }

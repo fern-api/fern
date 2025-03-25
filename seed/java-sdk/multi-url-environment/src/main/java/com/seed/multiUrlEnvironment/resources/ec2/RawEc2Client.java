@@ -29,7 +29,7 @@ public class RawEc2Client {
     }
 
     public SeedMultiUrlEnvironmentHttpResponse<Void> bootInstance(BootInstanceRequest request) {
-        bootInstance(request, null);
+        return bootInstance(request, null);
     }
 
     public SeedMultiUrlEnvironmentHttpResponse<Void> bootInstance(

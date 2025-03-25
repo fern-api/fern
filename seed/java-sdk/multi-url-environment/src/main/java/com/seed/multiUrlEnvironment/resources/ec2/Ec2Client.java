@@ -25,10 +25,10 @@ public class Ec2Client {
     }
 
     public void bootInstance(BootInstanceRequest request) {
-        return this.rawClient.bootInstance(request).body();
+        this.rawClient.bootInstance(request).body();
     }
 
     public void bootInstance(BootInstanceRequest request, RequestOptions requestOptions) {
-        return this.rawClient.bootInstance(request, requestOptions).body();
+        this.rawClient.bootInstance(request, requestOptions).body();
     }
 }

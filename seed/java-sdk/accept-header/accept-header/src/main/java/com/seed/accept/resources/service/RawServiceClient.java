@@ -27,7 +27,7 @@ public class RawServiceClient {
     }
 
     public SeedAcceptHttpResponse<Void> endpoint() {
-        endpoint(null);
+        return endpoint(null);
     }
 
     public SeedAcceptHttpResponse<Void> endpoint(RequestOptions requestOptions) {

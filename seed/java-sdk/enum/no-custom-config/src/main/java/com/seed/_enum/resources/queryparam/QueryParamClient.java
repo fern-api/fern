@@ -26,18 +26,18 @@ public class QueryParamClient {
     }
 
     public void send(SendEnumAsQueryParamRequest request) {
-        return this.rawClient.send(request).body();
+        this.rawClient.send(request).body();
     }
 
     public void send(SendEnumAsQueryParamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).body();
+        this.rawClient.send(request, requestOptions).body();
     }
 
     public void sendList(SendEnumListAsQueryParamRequest request) {
-        return this.rawClient.sendList(request).body();
+        this.rawClient.sendList(request).body();
     }
 
     public void sendList(SendEnumListAsQueryParamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.sendList(request, requestOptions).body();
+        this.rawClient.sendList(request, requestOptions).body();
     }
 }

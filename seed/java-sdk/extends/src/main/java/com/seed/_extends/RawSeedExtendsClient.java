@@ -29,7 +29,7 @@ public class RawSeedExtendsClient {
     }
 
     public SeedExtendsHttpResponse<Void> extendedInlineRequestBody(Inlined request) {
-        extendedInlineRequestBody(request, null);
+        return extendedInlineRequestBody(request, null);
     }
 
     public SeedExtendsHttpResponse<Void> extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {

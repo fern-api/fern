@@ -141,7 +141,7 @@ public class RawProblemClient {
      * Soft deletes a problem
      */
     public SeedTraceHttpResponse<Void> deleteProblem(String problemId) {
-        deleteProblem(problemId, null);
+        return deleteProblem(problemId, null);
     }
 
     /**

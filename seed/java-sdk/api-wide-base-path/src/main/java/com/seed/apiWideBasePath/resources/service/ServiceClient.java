@@ -24,11 +24,11 @@ public class ServiceClient {
     }
 
     public void post(String serviceParam, String resourceParam, int endpointParam) {
-        return this.rawClient.post(serviceParam, resourceParam, endpointParam).body();
+        this.rawClient.post(serviceParam, resourceParam, endpointParam).body();
     }
 
     public void post(String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .post(serviceParam, resourceParam, endpointParam, requestOptions)
                 .body();
     }

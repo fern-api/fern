@@ -29,7 +29,7 @@ public class RawServiceClient {
     }
 
     public SeedApiHttpResponse<Void> endpoint() {
-        endpoint(null);
+        return endpoint(null);
     }
 
     public SeedApiHttpResponse<Void> endpoint(RequestOptions requestOptions) {
@@ -62,7 +62,7 @@ public class RawServiceClient {
     }
 
     public SeedApiHttpResponse<Void> unknownRequest(Object request) {
-        unknownRequest(request, null);
+        return unknownRequest(request, null);
     }
 
     public SeedApiHttpResponse<Void> unknownRequest(Object request, RequestOptions requestOptions) {

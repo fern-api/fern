@@ -26,7 +26,7 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<Void> foo() {
-        foo(null);
+        return foo(null);
     }
 
     public SeedApiHttpResponse<Void> foo(RequestOptions requestOptions) {

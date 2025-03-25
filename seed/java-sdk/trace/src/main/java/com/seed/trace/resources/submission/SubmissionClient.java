@@ -44,11 +44,11 @@ public class SubmissionClient {
     }
 
     public void stopExecutionSession(String sessionId) {
-        return this.rawClient.stopExecutionSession(sessionId).body();
+        this.rawClient.stopExecutionSession(sessionId).body();
     }
 
     public void stopExecutionSession(String sessionId, RequestOptions requestOptions) {
-        return this.rawClient.stopExecutionSession(sessionId, requestOptions).body();
+        this.rawClient.stopExecutionSession(sessionId, requestOptions).body();
     }
 
     public GetExecutionSessionStateResponse getExecutionSessionsState() {

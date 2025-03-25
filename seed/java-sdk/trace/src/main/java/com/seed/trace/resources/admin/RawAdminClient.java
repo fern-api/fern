@@ -37,7 +37,7 @@ public class RawAdminClient {
     }
 
     public SeedTraceHttpResponse<Void> updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
-        updateTestSubmissionStatus(submissionId, request, null);
+        return updateTestSubmissionStatus(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> updateTestSubmissionStatus(
@@ -81,7 +81,7 @@ public class RawAdminClient {
     }
 
     public SeedTraceHttpResponse<Void> sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
-        sendTestSubmissionUpdate(submissionId, request, null);
+        return sendTestSubmissionUpdate(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> sendTestSubmissionUpdate(
@@ -126,7 +126,7 @@ public class RawAdminClient {
 
     public SeedTraceHttpResponse<Void> updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request) {
-        updateWorkspaceSubmissionStatus(submissionId, request, null);
+        return updateWorkspaceSubmissionStatus(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> updateWorkspaceSubmissionStatus(
@@ -171,7 +171,7 @@ public class RawAdminClient {
 
     public SeedTraceHttpResponse<Void> sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request) {
-        sendWorkspaceSubmissionUpdate(submissionId, request, null);
+        return sendWorkspaceSubmissionUpdate(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> sendWorkspaceSubmissionUpdate(
@@ -216,7 +216,7 @@ public class RawAdminClient {
 
     public SeedTraceHttpResponse<Void> storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
-        storeTracedTestCase(submissionId, testCaseId, request, null);
+        return storeTracedTestCase(submissionId, testCaseId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> storeTracedTestCase(
@@ -263,7 +263,7 @@ public class RawAdminClient {
 
     public SeedTraceHttpResponse<Void> storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
-        storeTracedTestCaseV2(submissionId, testCaseId, request, null);
+        return storeTracedTestCaseV2(submissionId, testCaseId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> storeTracedTestCaseV2(
@@ -309,7 +309,7 @@ public class RawAdminClient {
     }
 
     public SeedTraceHttpResponse<Void> storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
-        storeTracedWorkspace(submissionId, request, null);
+        return storeTracedWorkspace(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> storeTracedWorkspace(
@@ -353,7 +353,7 @@ public class RawAdminClient {
     }
 
     public SeedTraceHttpResponse<Void> storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
-        storeTracedWorkspaceV2(submissionId, request, null);
+        return storeTracedWorkspaceV2(submissionId, request, null);
     }
 
     public SeedTraceHttpResponse<Void> storeTracedWorkspaceV2(

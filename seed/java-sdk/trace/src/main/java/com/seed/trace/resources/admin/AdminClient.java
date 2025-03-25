@@ -33,97 +33,89 @@ public class AdminClient {
     }
 
     public void updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
-        return this.rawClient.updateTestSubmissionStatus(submissionId, request).body();
+        this.rawClient.updateTestSubmissionStatus(submissionId, request).body();
     }
 
     public void updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .updateTestSubmissionStatus(submissionId, request, requestOptions)
                 .body();
     }
 
     public void sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
-        return this.rawClient.sendTestSubmissionUpdate(submissionId, request).body();
+        this.rawClient.sendTestSubmissionUpdate(submissionId, request).body();
     }
 
     public void sendTestSubmissionUpdate(
             UUID submissionId, TestSubmissionUpdate request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .sendTestSubmissionUpdate(submissionId, request, requestOptions)
                 .body();
     }
 
     public void updateWorkspaceSubmissionStatus(UUID submissionId, WorkspaceSubmissionStatus request) {
-        return this.rawClient
-                .updateWorkspaceSubmissionStatus(submissionId, request)
-                .body();
+        this.rawClient.updateWorkspaceSubmissionStatus(submissionId, request).body();
     }
 
     public void updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .updateWorkspaceSubmissionStatus(submissionId, request, requestOptions)
                 .body();
     }
 
     public void sendWorkspaceSubmissionUpdate(UUID submissionId, WorkspaceSubmissionUpdate request) {
-        return this.rawClient
-                .sendWorkspaceSubmissionUpdate(submissionId, request)
-                .body();
+        this.rawClient.sendWorkspaceSubmissionUpdate(submissionId, request).body();
     }
 
     public void sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions)
                 .body();
     }
 
     public void storeTracedTestCase(UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
-        return this.rawClient
-                .storeTracedTestCase(submissionId, testCaseId, request)
-                .body();
+        this.rawClient.storeTracedTestCase(submissionId, testCaseId, request).body();
     }
 
     public void storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .storeTracedTestCase(submissionId, testCaseId, request, requestOptions)
                 .body();
     }
 
     public void storeTracedTestCaseV2(UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
-        return this.rawClient
-                .storeTracedTestCaseV2(submissionId, testCaseId, request)
-                .body();
+        this.rawClient.storeTracedTestCaseV2(submissionId, testCaseId, request).body();
     }
 
     public void storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions)
                 .body();
     }
 
     public void storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
-        return this.rawClient.storeTracedWorkspace(submissionId, request).body();
+        this.rawClient.storeTracedWorkspace(submissionId, request).body();
     }
 
     public void storeTracedWorkspace(
             UUID submissionId, StoreTracedWorkspaceRequest request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .storeTracedWorkspace(submissionId, request, requestOptions)
                 .body();
     }
 
     public void storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
-        return this.rawClient.storeTracedWorkspaceV2(submissionId, request).body();
+        this.rawClient.storeTracedWorkspaceV2(submissionId, request).body();
     }
 
     public void storeTracedWorkspaceV2(
             UUID submissionId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .storeTracedWorkspaceV2(submissionId, request, requestOptions)
                 .body();
     }

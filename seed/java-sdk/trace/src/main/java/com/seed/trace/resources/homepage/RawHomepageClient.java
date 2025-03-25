@@ -68,7 +68,7 @@ public class RawHomepageClient {
     }
 
     public SeedTraceHttpResponse<Void> setHomepageProblems(List<String> request) {
-        setHomepageProblems(request, null);
+        return setHomepageProblems(request, null);
     }
 
     public SeedTraceHttpResponse<Void> setHomepageProblems(List<String> request, RequestOptions requestOptions) {

@@ -272,7 +272,7 @@ public class RawPlaylistClient {
      * Deletes a playlist
      */
     public SeedTraceHttpResponse<Void> deletePlaylist(int serviceParam, String playlistId) {
-        deletePlaylist(serviceParam, playlistId, null);
+        return deletePlaylist(serviceParam, playlistId, null);
     }
 
     /**

@@ -29,7 +29,7 @@ public class RawSyspropClient {
     }
 
     public SeedTraceHttpResponse<Void> setNumWarmInstances(Language language, int numWarmInstances) {
-        setNumWarmInstances(language, numWarmInstances, null);
+        return setNumWarmInstances(language, numWarmInstances, null);
     }
 
     public SeedTraceHttpResponse<Void> setNumWarmInstances(

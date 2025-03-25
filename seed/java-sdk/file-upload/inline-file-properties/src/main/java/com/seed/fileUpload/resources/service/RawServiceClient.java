@@ -38,7 +38,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> post(MyRequest request) {
-        post(request, null);
+        return post(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> post(MyRequest request, RequestOptions requestOptions) {
@@ -174,7 +174,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> justFile(JustFileRequest request) {
-        justFile(request, null);
+        return justFile(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> justFile(JustFileRequest request, RequestOptions requestOptions) {
@@ -216,7 +216,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
-        justFileWithQueryParams(request, null);
+        return justFileWithQueryParams(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(
@@ -275,7 +275,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> withContentType(WithContentTypeRequest request) {
-        withContentType(request, null);
+        return withContentType(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withContentType(
@@ -326,7 +326,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncoding(WithFormEncodingRequest request) {
-        withFormEncoding(request, null);
+        return withFormEncoding(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncoding(
@@ -371,7 +371,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(MyOtherRequest request) {
-        withFormEncodedContainers(request, null);
+        return withFormEncodedContainers(request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(

@@ -26,11 +26,11 @@ public class UserClient {
     }
 
     public void getUser(String userId) {
-        return this.rawClient.getUser(userId).body();
+        this.rawClient.getUser(userId).body();
     }
 
     public void getUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUser(userId, requestOptions).body();
+        this.rawClient.getUser(userId, requestOptions).body();
     }
 
     public User createUser(CreateUserRequest request) {

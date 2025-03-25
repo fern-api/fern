@@ -26,11 +26,11 @@ public class SyspropClient {
     }
 
     public void setNumWarmInstances(Language language, int numWarmInstances) {
-        return this.rawClient.setNumWarmInstances(language, numWarmInstances).body();
+        this.rawClient.setNumWarmInstances(language, numWarmInstances).body();
     }
 
     public void setNumWarmInstances(Language language, int numWarmInstances, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .setNumWarmInstances(language, numWarmInstances, requestOptions)
                 .body();
     }

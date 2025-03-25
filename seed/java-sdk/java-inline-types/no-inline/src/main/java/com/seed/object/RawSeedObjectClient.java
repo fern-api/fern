@@ -76,7 +76,7 @@ public class RawSeedObjectClient {
     }
 
     public SeedObjectHttpResponse<Void> getDiscriminatedUnion(GetDiscriminatedUnionRequest request) {
-        getDiscriminatedUnion(request, null);
+        return getDiscriminatedUnion(request, null);
     }
 
     public SeedObjectHttpResponse<Void> getDiscriminatedUnion(
@@ -119,7 +119,7 @@ public class RawSeedObjectClient {
     }
 
     public SeedObjectHttpResponse<Void> getUndiscriminatedUnion(GetUndiscriminatedUnionRequest request) {
-        getUndiscriminatedUnion(request, null);
+        return getUndiscriminatedUnion(request, null);
     }
 
     public SeedObjectHttpResponse<Void> getUndiscriminatedUnion(

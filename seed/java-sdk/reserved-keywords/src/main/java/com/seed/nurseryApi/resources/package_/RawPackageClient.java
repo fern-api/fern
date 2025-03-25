@@ -28,7 +28,7 @@ public class RawPackageClient {
     }
 
     public SeedNurseryApiHttpResponse<Void> test(TestRequest request) {
-        test(request, null);
+        return test(request, null);
     }
 
     public SeedNurseryApiHttpResponse<Void> test(TestRequest request, RequestOptions requestOptions) {

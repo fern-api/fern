@@ -25,7 +25,7 @@ public class RawSeedAliasClient {
     }
 
     public SeedAliasHttpResponse<Void> get(String typeId) {
-        get(typeId, null);
+        return get(typeId, null);
     }
 
     public SeedAliasHttpResponse<Void> get(String typeId, RequestOptions requestOptions) {

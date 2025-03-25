@@ -28,7 +28,7 @@ public class RawServiceClient {
      * This endpoint checks the health of a resource.
      */
     public SeedExamplesHttpResponse<Void> check(String id) {
-        check(id, null);
+        return check(id, null);
     }
 
     /**

@@ -26,10 +26,10 @@ public class PathParamClient {
     }
 
     public void send(Operand operand, ColorOrOperand operandOrColor) {
-        return this.rawClient.send(operand, operandOrColor).body();
+        this.rawClient.send(operand, operandOrColor).body();
     }
 
     public void send(Operand operand, ColorOrOperand operandOrColor, RequestOptions requestOptions) {
-        return this.rawClient.send(operand, operandOrColor, requestOptions).body();
+        this.rawClient.send(operand, operandOrColor, requestOptions).body();
     }
 }

@@ -79,12 +79,10 @@ public class PlaylistClient {
     }
 
     public void deletePlaylist(int serviceParam, String playlistId) {
-        return this.rawClient.deletePlaylist(serviceParam, playlistId).body();
+        this.rawClient.deletePlaylist(serviceParam, playlistId).body();
     }
 
     public void deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
-        return this.rawClient
-                .deletePlaylist(serviceParam, playlistId, requestOptions)
-                .body();
+        this.rawClient.deletePlaylist(serviceParam, playlistId, requestOptions).body();
     }
 }

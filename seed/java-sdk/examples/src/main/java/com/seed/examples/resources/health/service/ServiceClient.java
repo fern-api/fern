@@ -24,11 +24,11 @@ public class ServiceClient {
     }
 
     public void check(String id) {
-        return this.rawClient.check(id).body();
+        this.rawClient.check(id).body();
     }
 
     public void check(String id, RequestOptions requestOptions) {
-        return this.rawClient.check(id, requestOptions).body();
+        this.rawClient.check(id, requestOptions).body();
     }
 
     public boolean ping() {

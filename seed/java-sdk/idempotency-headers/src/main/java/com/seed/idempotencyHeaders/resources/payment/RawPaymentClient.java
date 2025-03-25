@@ -75,7 +75,7 @@ public class RawPaymentClient {
     }
 
     public SeedIdempotencyHeadersHttpResponse<Void> delete(String paymentId) {
-        delete(paymentId, null);
+        return delete(paymentId, null);
     }
 
     public SeedIdempotencyHeadersHttpResponse<Void> delete(String paymentId, RequestOptions requestOptions) {

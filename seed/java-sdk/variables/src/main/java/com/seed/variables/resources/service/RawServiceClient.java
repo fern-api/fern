@@ -26,7 +26,7 @@ public class RawServiceClient {
     }
 
     public SeedVariablesHttpResponse<Void> post() {
-        post(null);
+        return post(null);
     }
 
     public SeedVariablesHttpResponse<Void> post(RequestOptions requestOptions) {

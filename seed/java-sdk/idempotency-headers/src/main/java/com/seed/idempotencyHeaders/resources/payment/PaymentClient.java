@@ -35,10 +35,10 @@ public class PaymentClient {
     }
 
     public void delete(String paymentId) {
-        return this.rawClient.delete(paymentId).body();
+        this.rawClient.delete(paymentId).body();
     }
 
     public void delete(String paymentId, RequestOptions requestOptions) {
-        return this.rawClient.delete(paymentId, requestOptions).body();
+        this.rawClient.delete(paymentId, requestOptions).body();
     }
 }

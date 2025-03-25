@@ -24,11 +24,11 @@ public class SeedLicenseClient {
     }
 
     public void get() {
-        return this.rawClient.get().body();
+        this.rawClient.get().body();
     }
 
     public void get(RequestOptions requestOptions) {
-        return this.rawClient.get(requestOptions).body();
+        this.rawClient.get(requestOptions).body();
     }
 
     public static SeedLicenseClientBuilder builder() {

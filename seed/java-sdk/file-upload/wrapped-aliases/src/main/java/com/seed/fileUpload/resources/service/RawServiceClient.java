@@ -41,7 +41,7 @@ public class RawServiceClient {
 
     public SeedFileUploadHttpResponse<Void> post(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
-        post(file, fileList, maybeFile, maybeFileList, request, null);
+        return post(file, fileList, maybeFile, maybeFileList, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> post(
@@ -175,7 +175,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> justFile(File file, JustFileRequest request) {
-        justFile(file, request, null);
+        return justFile(file, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> justFile(
@@ -217,7 +217,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
-        justFileWithQueryParams(file, request, null);
+        return justFileWithQueryParams(file, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(
@@ -275,7 +275,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> withContentType(File file, WithContentTypeRequest request) {
-        withContentType(file, request, null);
+        return withContentType(file, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withContentType(
@@ -325,7 +325,7 @@ public class RawServiceClient {
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
-        withFormEncoding(file, request, null);
+        return withFormEncoding(file, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncoding(
@@ -370,7 +370,7 @@ public class RawServiceClient {
 
     public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
-        withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
+        return withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
     }
 
     public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(

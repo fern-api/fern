@@ -34,11 +34,11 @@ public class SeedApiClient {
     }
 
     public void foo() {
-        return this.rawClient.foo().body();
+        this.rawClient.foo().body();
     }
 
     public void foo(RequestOptions requestOptions) {
-        return this.rawClient.foo(requestOptions).body();
+        this.rawClient.foo(requestOptions).body();
     }
 
     public AClient a() {

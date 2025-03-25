@@ -36,19 +36,19 @@ public class SeedObjectClient {
     }
 
     public void getDiscriminatedUnion(GetDiscriminatedUnionRequest request) {
-        return this.rawClient.getDiscriminatedUnion(request).body();
+        this.rawClient.getDiscriminatedUnion(request).body();
     }
 
     public void getDiscriminatedUnion(GetDiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getDiscriminatedUnion(request, requestOptions).body();
+        this.rawClient.getDiscriminatedUnion(request, requestOptions).body();
     }
 
     public void getUndiscriminatedUnion(GetUndiscriminatedUnionRequest request) {
-        return this.rawClient.getUndiscriminatedUnion(request).body();
+        this.rawClient.getUndiscriminatedUnion(request).body();
     }
 
     public void getUndiscriminatedUnion(GetUndiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUndiscriminatedUnion(request, requestOptions).body();
+        this.rawClient.getUndiscriminatedUnion(request, requestOptions).body();
     }
 
     public static SeedObjectClientBuilder builder() {

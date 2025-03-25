@@ -34,11 +34,11 @@ public class V2Client {
     }
 
     public void test() {
-        return this.rawClient.test().body();
+        this.rawClient.test().body();
     }
 
     public void test(RequestOptions requestOptions) {
-        return this.rawClient.test(requestOptions).body();
+        this.rawClient.test(requestOptions).body();
     }
 
     public ProblemClient problem() {

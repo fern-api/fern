@@ -26,7 +26,7 @@ public class RawServiceClient {
     }
 
     public SeedApiWideBasePathHttpResponse<Void> post(String serviceParam, String resourceParam, int endpointParam) {
-        post(serviceParam, resourceParam, endpointParam, null);
+        return post(serviceParam, resourceParam, endpointParam, null);
     }
 
     public SeedApiWideBasePathHttpResponse<Void> post(

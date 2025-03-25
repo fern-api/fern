@@ -25,11 +25,11 @@ public class SeedExtendsClient {
     }
 
     public void extendedInlineRequestBody(Inlined request) {
-        return this.rawClient.extendedInlineRequestBody(request).body();
+        this.rawClient.extendedInlineRequestBody(request).body();
     }
 
     public void extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {
-        return this.rawClient.extendedInlineRequestBody(request, requestOptions).body();
+        this.rawClient.extendedInlineRequestBody(request, requestOptions).body();
     }
 
     public static SeedExtendsClientBuilder builder() {

@@ -24,11 +24,11 @@ public class SeedAliasClient {
     }
 
     public void get(String typeId) {
-        return this.rawClient.get(typeId).body();
+        this.rawClient.get(typeId).body();
     }
 
     public void get(String typeId, RequestOptions requestOptions) {
-        return this.rawClient.get(typeId, requestOptions).body();
+        this.rawClient.get(typeId, requestOptions).body();
     }
 
     public static SeedAliasClientBuilder builder() {

@@ -28,7 +28,7 @@ public class RawPathParamClient {
     }
 
     public SeedEnumHttpResponse<Void> send(Operand operand, ColorOrOperand operandOrColor) {
-        send(operand, operandOrColor, null);
+        return send(operand, operandOrColor, null);
     }
 
     public SeedEnumHttpResponse<Void> send(

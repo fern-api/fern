@@ -29,7 +29,7 @@ public class RawQueryParamClient {
     }
 
     public SeedEnumHttpResponse<Void> send(SendEnumAsQueryParamRequest request) {
-        send(request, null);
+        return send(request, null);
     }
 
     public SeedEnumHttpResponse<Void> send(SendEnumAsQueryParamRequest request, RequestOptions requestOptions) {
@@ -76,7 +76,7 @@ public class RawQueryParamClient {
     }
 
     public SeedEnumHttpResponse<Void> sendList(SendEnumListAsQueryParamRequest request) {
-        sendList(request, null);
+        return sendList(request, null);
     }
 
     public SeedEnumHttpResponse<Void> sendList(SendEnumListAsQueryParamRequest request, RequestOptions requestOptions) {

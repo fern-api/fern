@@ -126,7 +126,7 @@ public class RawSubmissionClient {
      * Stops execution session.
      */
     public SeedTraceHttpResponse<Void> stopExecutionSession(String sessionId) {
-        stopExecutionSession(sessionId, null);
+        return stopExecutionSession(sessionId, null);
     }
 
     /**

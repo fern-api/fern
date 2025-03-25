@@ -31,51 +31,51 @@ public class ServiceClient {
     }
 
     public void post(MyRequest request) {
-        return this.rawClient.post(request).body();
+        this.rawClient.post(request).body();
     }
 
     public void post(MyRequest request, RequestOptions requestOptions) {
-        return this.rawClient.post(request, requestOptions).body();
+        this.rawClient.post(request, requestOptions).body();
     }
 
     public void justFile(JustFileRequest request) {
-        return this.rawClient.justFile(request).body();
+        this.rawClient.justFile(request).body();
     }
 
     public void justFile(JustFileRequest request, RequestOptions requestOptions) {
-        return this.rawClient.justFile(request, requestOptions).body();
+        this.rawClient.justFile(request, requestOptions).body();
     }
 
     public void justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
-        return this.rawClient.justFileWithQueryParams(request).body();
+        this.rawClient.justFileWithQueryParams(request).body();
     }
 
     public void justFileWithQueryParams(JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.justFileWithQueryParams(request, requestOptions).body();
+        this.rawClient.justFileWithQueryParams(request, requestOptions).body();
     }
 
     public void withContentType(WithContentTypeRequest request) {
-        return this.rawClient.withContentType(request).body();
+        this.rawClient.withContentType(request).body();
     }
 
     public void withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withContentType(request, requestOptions).body();
+        this.rawClient.withContentType(request, requestOptions).body();
     }
 
     public void withFormEncoding(WithFormEncodingRequest request) {
-        return this.rawClient.withFormEncoding(request).body();
+        this.rawClient.withFormEncoding(request).body();
     }
 
     public void withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withFormEncoding(request, requestOptions).body();
+        this.rawClient.withFormEncoding(request, requestOptions).body();
     }
 
     public void withFormEncodedContainers(MyOtherRequest request) {
-        return this.rawClient.withFormEncodedContainers(request).body();
+        this.rawClient.withFormEncodedContainers(request).body();
     }
 
     public void withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withFormEncodedContainers(request, requestOptions).body();
+        this.rawClient.withFormEncodedContainers(request, requestOptions).body();
     }
 
     public String optionalArgs() {

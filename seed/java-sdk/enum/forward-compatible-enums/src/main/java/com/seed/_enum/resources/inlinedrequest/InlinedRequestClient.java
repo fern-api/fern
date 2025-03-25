@@ -25,10 +25,10 @@ public class InlinedRequestClient {
     }
 
     public void send(SendEnumInlinedRequest request) {
-        return this.rawClient.send(request).body();
+        this.rawClient.send(request).body();
     }
 
     public void send(SendEnumInlinedRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).body();
+        this.rawClient.send(request, requestOptions).body();
     }
 }

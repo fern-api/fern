@@ -46,11 +46,11 @@ public class ProblemClient {
     }
 
     public void deleteProblem(String problemId) {
-        return this.rawClient.deleteProblem(problemId).body();
+        this.rawClient.deleteProblem(problemId).body();
     }
 
     public void deleteProblem(String problemId, RequestOptions requestOptions) {
-        return this.rawClient.deleteProblem(problemId, requestOptions).body();
+        this.rawClient.deleteProblem(problemId, requestOptions).body();
     }
 
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {

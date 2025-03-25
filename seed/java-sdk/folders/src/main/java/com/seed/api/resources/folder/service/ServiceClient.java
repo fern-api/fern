@@ -24,18 +24,18 @@ public class ServiceClient {
     }
 
     public void endpoint() {
-        return this.rawClient.endpoint().body();
+        this.rawClient.endpoint().body();
     }
 
     public void endpoint(RequestOptions requestOptions) {
-        return this.rawClient.endpoint(requestOptions).body();
+        this.rawClient.endpoint(requestOptions).body();
     }
 
     public void unknownRequest(Object request) {
-        return this.rawClient.unknownRequest(request).body();
+        this.rawClient.unknownRequest(request).body();
     }
 
     public void unknownRequest(Object request, RequestOptions requestOptions) {
-        return this.rawClient.unknownRequest(request, requestOptions).body();
+        this.rawClient.unknownRequest(request, requestOptions).body();
     }
 }

@@ -24,10 +24,10 @@ public class ServiceClient {
     }
 
     public void nop(String nestedId) {
-        return this.rawClient.nop(nestedId).body();
+        this.rawClient.nop(nestedId).body();
     }
 
     public void nop(String nestedId, RequestOptions requestOptions) {
-        return this.rawClient.nop(nestedId, requestOptions).body();
+        this.rawClient.nop(nestedId, requestOptions).body();
     }
 }
