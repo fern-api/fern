@@ -8,12 +8,14 @@ import * as core from "../../../../core";
 import { FileResponse } from "./FileResponse";
 import { JsonResponse } from "./JsonResponse";
 import { TextResponse } from "./TextResponse";
+import { BytesResponse } from "./BytesResponse";
 
 export const Response: core.serialization.Schema<serializers.Response.Raw, FernOpenapiIr.Response> = core.serialization
     .union("type", {
         file: FileResponse,
         json: JsonResponse,
         text: TextResponse,
+        bytes: BytesResponse,
         streamingSse: JsonResponse,
         streamingText: TextResponse,
         streamingJson: JsonResponse,
@@ -27,6 +29,8 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
                     return FernOpenapiIr.Response.json(value);
                 case "text":
                     return FernOpenapiIr.Response.text(value);
+                case "bytes":
+                    return FernOpenapiIr.Response.bytes(value);
                 case "streamingSse":
                     return FernOpenapiIr.Response.streamingSse(value);
                 case "streamingText":
@@ -45,6 +49,7 @@ export declare namespace Response {
         | Response.File
         | Response.Json
         | Response.Text
+        | Response.Bytes
         | Response.StreamingSse
         | Response.StreamingText
         | Response.StreamingJson;
@@ -59,6 +64,10 @@ export declare namespace Response {
 
     export interface Text extends TextResponse.Raw {
         type: "text";
+    }
+
+    export interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
     }
 
     export interface StreamingSse extends JsonResponse.Raw {

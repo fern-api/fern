@@ -8,6 +8,7 @@ export type ResponseWithExample =
     | FernOpenapiIr.ResponseWithExample.File_
     | FernOpenapiIr.ResponseWithExample.Json
     | FernOpenapiIr.ResponseWithExample.Text
+    | FernOpenapiIr.ResponseWithExample.Bytes
     | FernOpenapiIr.ResponseWithExample.StreamingSse
     | FernOpenapiIr.ResponseWithExample.StreamingText
     /**
@@ -25,6 +26,10 @@ export namespace ResponseWithExample {
 
     export interface Text extends FernOpenapiIr.TextResponse, _Utils {
         type: "text";
+    }
+
+    export interface Bytes extends FernOpenapiIr.BytesResponse, _Utils {
+        type: "bytes";
     }
 
     export interface StreamingSse extends FernOpenapiIr.JsonResponseWithExample, _Utils {
@@ -47,6 +52,7 @@ export namespace ResponseWithExample {
         file: (value: FernOpenapiIr.FileResponse) => _Result;
         json: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         text: (value: FernOpenapiIr.TextResponse) => _Result;
+        bytes: (value: FernOpenapiIr.BytesResponse) => _Result;
         streamingSse: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
@@ -87,6 +93,19 @@ export const ResponseWithExample = {
             type: "text",
             _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.Text,
+                visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
+            },
+        };
+    },
+
+    bytes: (value: FernOpenapiIr.BytesResponse): FernOpenapiIr.ResponseWithExample.Bytes => {
+        return {
+            ...value,
+            type: "bytes",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.ResponseWithExample.Bytes,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
@@ -144,6 +163,8 @@ export const ResponseWithExample = {
                 return visitor.json(value);
             case "text":
                 return visitor.text(value);
+            case "bytes":
+                return visitor.bytes(value);
             case "streamingSse":
                 return visitor.streamingSse(value);
             case "streamingText":

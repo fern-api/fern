@@ -45,6 +45,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
+            useBytesForBinaryResponse: specs.every((spec) => spec.settings?.useBytesForBinaryResponse),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -77,7 +78,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
                 objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
-                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration
+                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
+                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse
             }
         });
     }

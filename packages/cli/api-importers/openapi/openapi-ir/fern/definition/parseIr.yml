@@ -112,6 +112,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
+      bytes: finalIr.BytesResponse
       streamingSse: JsonResponseWithExample
       streamingText: finalIr.TextResponse
       streamingJson:
