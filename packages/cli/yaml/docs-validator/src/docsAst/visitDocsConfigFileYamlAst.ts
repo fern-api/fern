@@ -176,6 +176,7 @@ export async function visitDocsConfigFileYamlAst({
                 context
             });
         },
+        products: noop,
         redirects: noop,
         tabs: noop,
         title: noop,
