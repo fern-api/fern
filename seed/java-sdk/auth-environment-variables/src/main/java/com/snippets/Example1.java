@@ -4,7 +4,7 @@ import com.seed.authEnvironmentVariables.SeedAuthEnvironmentVariablesClient;
 import com.seed.authEnvironmentVariables.resources.service.requests.HeaderAuthRequest;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
             .builder()
             .apiKey("<value>")

@@ -3,7 +3,7 @@ package com.snippets;
 import com.seed.examples.SeedExamplesClient;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExamplesClient client = SeedExamplesClient
             .builder()
             .token("<token>")

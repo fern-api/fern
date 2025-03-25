@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Example17 {
-    public static void run() {
+    public static void main(String[] args) {
         Best client = Best
             .builder()
             .token("<token>")

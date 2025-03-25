@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class Example6 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedEnumClient client = SeedEnumClient
             .builder()
             .url("https://api.fern.com")

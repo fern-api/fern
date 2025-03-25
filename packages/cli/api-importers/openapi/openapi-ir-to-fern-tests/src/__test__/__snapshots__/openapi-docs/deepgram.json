@@ -6018,13 +6018,13 @@ errors:
                     "agent": {},
                     "type": "SettingsConfiguration",
                   },
-                  "type": "publish",
+                  "type": "settingsConfiguration",
                 },
                 {
                   "body": {
                     "type": "InjectionRefused",
                   },
-                  "type": "subscribe",
+                  "type": "injectionRefused",
                 },
               ],
             },
@@ -6814,11 +6814,11 @@ errors:
         docs: Send messages ensuring uninterrupted communication for your agent
   examples:
     - messages:
-        - type: publish
+        - type: settingsConfiguration
           body:
             type: SettingsConfiguration
             agent: {}
-        - type: subscribe
+        - type: injectionRefused
           body:
             type: InjectionRefused
 types:
@@ -7209,11 +7209,11 @@ types:
               "messages": [
                 {
                   "body": "string",
-                  "type": "publish",
+                  "type": "transcriptionRequest",
                 },
                 {
                   "body": {},
-                  "type": "subscribe",
+                  "type": "transcriptionResponse",
                 },
               ],
             },
@@ -8766,9 +8766,9 @@ channel:
       body: ListenControlMessagesRequest
   examples:
     - messages:
-        - type: publish
+        - type: transcriptionRequest
           body: string
-        - type: subscribe
+        - type: transcriptionResponse
           body: {}
 ",
     },
@@ -14013,11 +14013,11 @@ docs: Manage your projects
                     "text": "text",
                     "type": "Speak",
                   },
-                  "type": "publish",
+                  "type": "textToSpeechRequest",
                 },
                 {
                   "body": "string",
-                  "type": "subscribe",
+                  "type": "textToSpeechResponse",
                 },
               ],
             },
@@ -14516,11 +14516,11 @@ channel:
       body: SpeakControlMessagesRequest
   examples:
     - messages:
-        - type: publish
+        - type: textToSpeechRequest
           body:
             type: Speak
             text: text
-        - type: subscribe
+        - type: textToSpeechResponse
           body: string
 ",
     },

@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { DeclaredTypeName, Type, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
-import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector, Extensions } from "../..";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
@@ -23,7 +22,7 @@ export declare namespace SchemaConverter {
     }
 }
 
-export class SchemaConverter extends AbstractConverter<AsyncAPIConverterContext, SchemaConverter.Output> {
+export class SchemaConverter extends AbstractConverter<AbstractConverterContext<object>, SchemaConverter.Output> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
     private readonly inlined: boolean;
@@ -39,7 +38,7 @@ export class SchemaConverter extends AbstractConverter<AsyncAPIConverterContext,
         context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
@@ -153,7 +152,7 @@ export class SchemaConverter extends AbstractConverter<AsyncAPIConverterContext,
         errorCollector
     }: {
         shape: Type;
-        context: AsyncAPIConverterContext;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<TypeDeclaration> {
         return {
@@ -174,7 +173,7 @@ export class SchemaConverter extends AbstractConverter<AsyncAPIConverterContext,
         };
     }
 
-    public convertDeclaredTypeName({ context }: { context: AsyncAPIConverterContext }): DeclaredTypeName {
+    public convertDeclaredTypeName({ context }: { context: AbstractConverterContext<object> }): DeclaredTypeName {
         return {
             typeId: this.id,
             fernFilepath: {

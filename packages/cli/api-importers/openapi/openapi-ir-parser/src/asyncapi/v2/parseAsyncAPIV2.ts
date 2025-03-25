@@ -22,7 +22,7 @@ import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../s
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
@@ -212,19 +212,29 @@ export function parseAsyncAPIV2({
                         headers,
                         queryParameters
                     },
-                    publish: publishSchema,
-                    subscribe: subscribeSchema,
                     source,
                     namespace: context.namespace
                 });
             } else {
+                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                if (publishSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "publish",
+                        payload: publishSchema
+                    });
+                }
+                if (subscribeSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "subscribe",
+                        payload: subscribeSchema
+                    });
+                }
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
                     handshake: {
                         headers,
                         queryParameters
                     },
-                    publish: publishSchema,
-                    subscribe: subscribeSchema
+                    messages: exampleBuilderInputs
                 });
                 if (autogenExample != null) {
                     examples.push(autogenExample);

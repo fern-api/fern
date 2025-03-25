@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.license.SeedLicenseClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedLicenseClient client = SeedLicenseClient
             .builder()
             .build();

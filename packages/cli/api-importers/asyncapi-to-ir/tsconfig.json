@@ -9,9 +9,6 @@
     "exclude": ["./src/**/__test__/**/generated"],
     "references": [
       {
-        "path": "../../../commons/core-utils"
-      },
-      {
         "path": "../../fern-definition/schema"
       },
       {

@@ -9,12 +9,11 @@ import {
     WebSocketChannel,
     WebSocketMessage
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { ParameterConverter } from "../../core/channel/ParameterConverter";
-import { SchemaOrReferenceConverter } from "../../core/schema/SchemaOrReferenceConverter";
+import { ParameterConverter } from "../../core/ParameterConverter";
 
 export declare namespace ChannelConverter2_X {
     export interface Args extends AbstractConverter.Args {
@@ -165,7 +164,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         }
 
         if ("oneOf" in operation.message) {
-            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                 schemaOrReference: operation.message,
                 schemaIdOverride: operation.operationId ?? defaultId
@@ -192,7 +191,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 payloadSchema = operation.message.payload;
             }
             if (payloadSchema != null) {
-                const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+                const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                     breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                     schemaOrReference: payloadSchema,
                     schemaIdOverride: operation.operationId ?? defaultId

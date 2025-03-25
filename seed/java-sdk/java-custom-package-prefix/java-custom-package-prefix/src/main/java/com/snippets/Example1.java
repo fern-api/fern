@@ -3,7 +3,7 @@ package com.snippets;
 import com.customprefix.SeedApiClient;
 
 public class Example1 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")

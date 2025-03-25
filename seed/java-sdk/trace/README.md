@@ -16,7 +16,7 @@ import com.seed.trace.resources.submission.types.TestSubmissionStatus;
 import java.util.UUID;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedTraceClient client = SeedTraceClient
             .builder()
             .token("<token>")

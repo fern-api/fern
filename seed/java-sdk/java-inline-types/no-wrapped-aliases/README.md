@@ -16,7 +16,7 @@ import com.seed.object.requests.PostRootRequest;
 import com.seed.object.types.RequestTypeInlineType1;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedObjectClient client = SeedObjectClient
             .builder()
             .build();

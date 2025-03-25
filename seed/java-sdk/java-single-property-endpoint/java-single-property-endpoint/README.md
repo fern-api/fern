@@ -15,7 +15,7 @@ import com.seed.singleProperty.SeedSinglePropertyClient;
 import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedSinglePropertyClient client = SeedSinglePropertyClient
             .builder()
             .build();

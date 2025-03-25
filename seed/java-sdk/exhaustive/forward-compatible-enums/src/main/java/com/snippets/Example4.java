@@ -4,7 +4,7 @@ import com.seed.exhaustive.SeedExhaustiveClient;
 import java.util.HashMap;
 
 public class Example4 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

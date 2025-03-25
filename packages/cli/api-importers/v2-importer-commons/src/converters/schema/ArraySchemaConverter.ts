@@ -1,9 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ArraySchemaConverter {
@@ -17,7 +16,10 @@ export declare namespace ArraySchemaConverter {
     }
 }
 
-export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, ArraySchemaConverter.Output> {
+export class ArraySchemaConverter extends AbstractConverter<
+    AbstractConverterContext<object>,
+    ArraySchemaConverter.Output
+> {
     private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
@@ -31,7 +33,7 @@ export class ArraySchemaConverter extends AbstractConverter<OpenAPIConverterCont
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ArraySchemaConverter.Output | undefined> {
         if (this.schema.items == null) {

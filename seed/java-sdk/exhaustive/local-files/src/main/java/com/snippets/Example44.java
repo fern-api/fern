@@ -4,7 +4,7 @@ import com.fern.sdk.SeedExhaustiveClient;
 import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 
 public class Example44 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")

@@ -15,7 +15,7 @@ import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
 import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
             .builder()
             .build();

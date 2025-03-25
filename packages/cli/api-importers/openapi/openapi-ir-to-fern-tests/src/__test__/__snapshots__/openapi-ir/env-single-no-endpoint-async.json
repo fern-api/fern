@@ -116,7 +116,7 @@
           "headers": [],
           "messages": [
             {
-              "messageType": "publish",
+              "messageType": "testChannel_sendMessage",
               "payload": {
                 "value": {
                   "value": "string",
@@ -170,7 +170,7 @@
           "headers": [],
           "messages": [
             {
-              "messageType": "publish",
+              "messageType": "testChannel2_sendMessage",
               "payload": {
                 "value": {
                   "value": "string",

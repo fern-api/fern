@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.accept.SeedAcceptClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedAcceptClient client = SeedAcceptClient
             .builder()
             .token("<token>")

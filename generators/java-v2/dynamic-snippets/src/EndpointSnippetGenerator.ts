@@ -16,7 +16,8 @@ import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "com.example.usage";
 const SNIPPET_CLASS_NAME = "Example";
-const SNIPPET_METHOD_NAME = "run";
+const SNIPPET_METHOD_NAME = "main";
+const SNIPPET_METHOD_ARG = "args";
 const CLIENT_VAR_NAME = "client";
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     type: "primitive",
@@ -118,12 +119,16 @@ export class EndpointSnippetGenerator {
             name: config.fullStyleClassName ?? SNIPPET_CLASS_NAME,
             access: java.Access.Public
         });
+        const stringArgs = java.parameter({
+            name: SNIPPET_METHOD_ARG,
+            type: java.Type.array(java.Type.string())
+        });
         class_.addMethod(
             java.method({
                 name: SNIPPET_METHOD_NAME,
                 access: java.Access.Public,
                 static_: true,
-                parameters: [],
+                parameters: [stringArgs],
                 body
             })
         );

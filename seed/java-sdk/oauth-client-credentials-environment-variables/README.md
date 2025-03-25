@@ -15,7 +15,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCreden
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.requests.GetTokenRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
             .builder()
             .build();

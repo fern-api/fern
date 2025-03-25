@@ -3,7 +3,7 @@ channel:
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string

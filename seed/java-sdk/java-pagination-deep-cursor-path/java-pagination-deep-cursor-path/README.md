@@ -18,7 +18,7 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.D;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedDeepCursorPathClient client = SeedDeepCursorPathClient
             .builder()
             .build();

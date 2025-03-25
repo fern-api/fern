@@ -5,6 +5,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 type InternalType =
+    | Array
     | BigInteger
     | Boolean_
     | Bytes
@@ -12,20 +13,25 @@ type InternalType =
     | DateTime
     | Double
     | Float
+    | Generic
+    | InputStream
     | Integer
+    | Iterable
     | List
     | Long
     | Map
     | Object_
     | Optional
     | Reference
-    | Generic
     | Set
     | String_
     | UUID
-    | Void
-    | Iterable
-    | InputStream;
+    | Void;
+
+interface Array {
+    type: "array";
+    value: Type;
+}
 
 interface BigInteger {
     type: "bigInteger";
@@ -37,10 +43,6 @@ interface Boolean_ {
 
 interface Bytes {
     type: "bytes";
-}
-
-interface Float {
-    type: "float";
 }
 
 interface Date {
@@ -55,8 +57,27 @@ interface Double {
     type: "double";
 }
 
+interface Float {
+    type: "float";
+}
+
+interface Generic {
+    type: "generic";
+    value: ClassReference;
+    parameters: Type[];
+}
+
+interface InputStream {
+    type: "inputStream";
+}
+
 interface Integer {
     type: "integer";
+}
+
+interface Iterable {
+    type: "iterable";
+    value: Type;
 }
 
 interface List {
@@ -88,12 +109,6 @@ interface Reference {
     value: ClassReference;
 }
 
-interface Generic {
-    type: "generic";
-    value: ClassReference;
-    parameters: Type[];
-}
-
 interface Set {
     type: "set";
     value: Type;
@@ -111,15 +126,6 @@ interface Void {
     type: "void";
 }
 
-interface Iterable {
-    type: "iterable";
-    value: Type;
-}
-
-interface InputStream {
-    type: "inputStream";
-}
-
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType) {
         super();
@@ -128,6 +134,10 @@ export class Type extends AstNode {
     // TODO: Add unboxed variants for primitive types
     public write(writer: Writer): void {
         switch (this.internalType.type) {
+            case "array":
+                writer.writeNode(this.internalType.value);
+                writer.write("[]");
+                break;
             case "bigInteger":
                 writer.writeNode(BigIntegerClassReference);
                 break;
@@ -136,9 +146,6 @@ export class Type extends AstNode {
                 break;
             case "bytes":
                 writer.write("byte[]");
-                break;
-            case "float":
-                writer.write("Float");
                 break;
             case "date":
                 writer.write("String");
@@ -149,8 +156,28 @@ export class Type extends AstNode {
             case "double":
                 writer.write("Double");
                 break;
+            case "float":
+                writer.write("Float");
+                break;
+            case "generic":
+                writer.writeNode(this.internalType.value);
+                writer.write("<");
+                for (const [index, parameter] of this.internalType.parameters.entries()) {
+                    writer.writeNode(parameter);
+                    if (index < this.internalType.parameters.length - 1) {
+                        writer.write(", ");
+                    }
+                }
+                writer.write(">");
+                break;
+            case "inputStream":
+                writer.writeNode(InputStreamClassReference);
+                break;
             case "integer":
                 writer.write("Integer");
+                break;
+            case "iterable":
+                this.writeIterable({ writer, iterable: this.internalType });
                 break;
             case "list": {
                 this.writeList({ writer, list: this.internalType });
@@ -175,17 +202,6 @@ export class Type extends AstNode {
             case "reference":
                 writer.writeNode(this.internalType.value);
                 break;
-            case "generic":
-                writer.writeNode(this.internalType.value);
-                writer.write("<");
-                for (const [index, parameter] of this.internalType.parameters.entries()) {
-                    writer.writeNode(parameter);
-                    if (index < this.internalType.parameters.length - 1) {
-                        writer.write(", ");
-                    }
-                }
-                writer.write(">");
-                break;
             case "set": {
                 this.writeSet({ writer, set: this.internalType });
                 break;
@@ -199,12 +215,6 @@ export class Type extends AstNode {
             case "void":
                 writer.write("Void");
                 break;
-            case "iterable":
-                this.writeIterable({ writer, iterable: this.internalType });
-                break;
-            case "inputStream":
-                writer.writeNode(InputStreamClassReference);
-                break;
             default:
                 assertNever(this.internalType);
         }
@@ -215,6 +225,13 @@ export class Type extends AstNode {
     }
 
     /* Static factory methods for creating a Type */
+    public static array(value: Type): Type {
+        return new this({
+            type: "array",
+            value
+        });
+    }
+
     public static bigInteger(): Type {
         return new this({
             type: "bigInteger"

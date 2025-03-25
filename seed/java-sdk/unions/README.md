@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.unions.SeedUnionsClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedUnionsClient client = SeedUnionsClient
             .builder()
             .build();

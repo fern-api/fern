@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Example18 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedExamplesClient client = SeedExamplesClient
             .builder()
             .token("<token>")

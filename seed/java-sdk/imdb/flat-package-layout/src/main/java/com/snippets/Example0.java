@@ -4,7 +4,7 @@ import com.seed.api.SeedApiClient;
 import com.seed.api.types.CreateMovieRequest;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")

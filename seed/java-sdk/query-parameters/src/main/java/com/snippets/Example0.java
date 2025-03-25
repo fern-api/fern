@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Example0 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedQueryParametersClient client = SeedQueryParametersClient
             .builder()
             .url("https://api.fern.com")

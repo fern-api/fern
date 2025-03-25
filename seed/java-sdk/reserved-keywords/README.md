@@ -15,7 +15,7 @@ import com.seed.nurseryApi.SeedNurseryApiClient;
 import com.seed.nurseryApi.resources.package_.requests.TestRequest;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedNurseryApiClient client = SeedNurseryApiClient
             .builder()
             .build();

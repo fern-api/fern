@@ -2,9 +2,8 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { isNonNullish } from "@fern-api/core-utils";
 import { ObjectProperty, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ObjectSchemaConverter {
@@ -19,7 +18,10 @@ export declare namespace ObjectSchemaConverter {
     }
 }
 
-export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterContext3_1, ObjectSchemaConverter.Output> {
+export class ObjectSchemaConverter extends AbstractConverter<
+    AbstractConverterContext<object>,
+    ObjectSchemaConverter.Output
+> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ breadcrumbs, schema }: ObjectSchemaConverter.Args) {
@@ -31,7 +33,7 @@ export class ObjectSchemaConverter extends AbstractConverter<OpenAPIConverterCon
         context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ObjectSchemaConverter.Output | undefined> {
         // TODO (eden): Refine this logic to handle more complex cases

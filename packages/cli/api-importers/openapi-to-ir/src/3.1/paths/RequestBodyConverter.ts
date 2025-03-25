@@ -7,10 +7,9 @@ import {
     ObjectProperty,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { SchemaOrReferenceConverter } from "../schema/SchemaOrReferenceConverter";
 
 export declare namespace RequestBodyConverter {
     export interface Args extends AbstractConverter.Args {
@@ -26,7 +25,7 @@ export declare namespace RequestBodyConverter {
     }
 }
 
-interface ConvertedRequestSchema extends SchemaOrReferenceConverter.Output {
+interface ConvertedRequestSchema extends Converters.SchemaConverters.SchemaOrReferenceConverter.Output {
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -127,7 +126,7 @@ export class RequestBodyConverter extends AbstractConverter<
             return undefined;
         }
 
-        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+        const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
             breadcrumbs: [...this.breadcrumbs, "schema"],
             schemaOrReference: mediaTypeObject.schema,
             schemaIdOverride: schemaId

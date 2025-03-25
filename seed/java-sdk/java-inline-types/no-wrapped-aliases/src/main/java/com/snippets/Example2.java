@@ -8,7 +8,7 @@ import com.seed.object.types.UndiscriminatedUnion1InlineType1;
 import com.seed.object.types.UndiscriminatedUnion1InlineType1InlineType1;
 
 public class Example2 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedObjectClient client = SeedObjectClient
             .builder()
             .url("https://api.fern.com")

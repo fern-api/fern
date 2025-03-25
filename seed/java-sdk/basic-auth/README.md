@@ -15,7 +15,7 @@ import com.seed.basicAuth.SeedBasicAuthClient;
 import java.util.HashMap;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedBasicAuthClient client = SeedBasicAuthClient
             .builder()
             .credentials("<username>", "<password>")

@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Change method to `public static void main(String[] args)` in snippet generation
+      type: fix
+  createdAt: '2025-03-24'
+  irVersion: 55
+  version: 2.27.1
+- changelogEntry:
+    - summary: |
         Support automatic README.md generation
       type: feat
   createdAt: '2025-03-21'

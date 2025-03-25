@@ -14,7 +14,7 @@ package com.example.usage;
 import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;
 
 public class Example {
-    public static void run() {
+    public static void main(String[] args) {
         SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
             .builder()
             .apiKey("<token>")

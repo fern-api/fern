@@ -312,7 +312,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel_sendMessage
   messages:
     testChannel_sendMessage:
       body: string
@@ -329,7 +329,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string
@@ -450,7 +450,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel_sendMessage
   messages:
     testChannel_sendMessage:
       body: string
@@ -467,7 +467,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string
@@ -2802,7 +2802,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel_sendMessage
   messages:
     testChannel_sendMessage:
       body: string
@@ -2819,7 +2819,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string
@@ -2927,7 +2927,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel_sendMessage
   messages:
     testChannel_sendMessage:
       body: string
@@ -2944,7 +2944,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string
@@ -3055,7 +3055,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel_sendMessage
   messages:
     testChannel_sendMessage:
       body: string
@@ -3072,7 +3072,7 @@ name: api
   examples:
     - messages:
         - body: string
-          type: publish
+          type: testChannel2_sendMessage
   messages:
     testChannel2_sendMessage:
       body: string

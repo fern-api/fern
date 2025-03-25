@@ -4,7 +4,7 @@ import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 
 public class Example11 {
-    public static void run() {
+    public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
             .token("<token>")
