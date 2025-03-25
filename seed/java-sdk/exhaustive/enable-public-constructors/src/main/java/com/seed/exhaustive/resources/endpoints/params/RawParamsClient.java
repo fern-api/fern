@@ -127,7 +127,7 @@ public class RawParamsClient {
      * GET with query param
      */
     public SeedExhaustiveHttpResponse<Void> getWithQuery(GetWithQuery request) {
-        getWithQuery(request, null);
+        return getWithQuery(request, null);
     }
 
     /**
@@ -167,7 +167,7 @@ public class RawParamsClient {
      * GET with multiple of same query param
      */
     public SeedExhaustiveHttpResponse<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-        getWithAllowMultipleQuery(request, null);
+        return getWithAllowMultipleQuery(request, null);
     }
 
     /**
@@ -208,7 +208,7 @@ public class RawParamsClient {
      * GET with path and query params
      */
     public SeedExhaustiveHttpResponse<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
-        getWithPathAndQuery(param, request, null);
+        return getWithPathAndQuery(param, request, null);
     }
 
     /**
@@ -250,7 +250,7 @@ public class RawParamsClient {
      * GET with path and query params
      */
     public SeedExhaustiveHttpResponse<Void> getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
-        getWithInlinePathAndQuery(request, null);
+        return getWithInlinePathAndQuery(request, null);
     }
 
     /**

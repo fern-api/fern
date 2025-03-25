@@ -1,6 +1,7 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import java.util.Optional;
 
 public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegatingHttpEndpointMethodSpecs {
@@ -17,7 +18,7 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
                 .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".$L()",
+                        returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
                         rawClientName,
                         methodSpec.name,
                         bodyGetterName)
@@ -32,7 +33,7 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
                 .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".$L()",
+                        returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
                         rawClientName,
                         methodSpec.name,
                         bodyGetterName)
@@ -47,7 +48,7 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
                 .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".$L()",
+                        returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
                         rawClientName,
                         methodSpec.name,
                         bodyGetterName)
@@ -62,7 +63,7 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
                 .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".$L()",
+                        returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
                         rawClientName,
                         methodSpec.name,
                         bodyGetterName)
@@ -78,10 +79,14 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
                         .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".$L()",
+                                returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
                                 rawClientName,
                                 methodSpec.name,
                                 bodyGetterName)
                         .build());
+    }
+
+    private String returnString(TypeName returnType, String valueString) {
+        return returnType.equals(TypeName.VOID) ? valueString : "return " + valueString;
     }
 }

@@ -28,7 +28,7 @@ public class RawReqWithHeadersClient {
     }
 
     public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request) {
-        getWithCustomHeader(request, null);
+        return getWithCustomHeader(request, null);
     }
 
     public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {

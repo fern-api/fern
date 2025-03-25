@@ -28,11 +28,11 @@ public class RawContentTypeClient {
     }
 
     public CustomException<Void> postJsonPatchContentType() {
-        postJsonPatchContentType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
     public CustomException<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
-        postJsonPatchContentType(request, null);
+        return postJsonPatchContentType(request, null);
     }
 
     public CustomException<Void> postJsonPatchContentType(
@@ -75,11 +75,12 @@ public class RawContentTypeClient {
     }
 
     public CustomException<Void> postJsonPatchContentWithCharsetType() {
-        postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentWithCharsetType(
+                ObjectWithOptionalField.builder().build());
     }
 
     public CustomException<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
-        postJsonPatchContentWithCharsetType(request, null);
+        return postJsonPatchContentWithCharsetType(request, null);
     }
 
     public CustomException<Void> postJsonPatchContentWithCharsetType(

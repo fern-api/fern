@@ -28,7 +28,7 @@ public class RawReqWithHeadersClient {
     }
 
     public BestHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request) {
-        getWithCustomHeader(request, null);
+        return getWithCustomHeader(request, null);
     }
 
     public BestHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {

@@ -50,9 +50,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec endpointWithRequestOptions,
             List<String> paramNames) {
         endpointWithoutRequestOptionsBuilder.addStatement(
-                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
-                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")",
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")",
                 endpointWithRequestOptions.name);
     }
 
@@ -63,9 +61,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec) {
         endpointWithoutRequestBuilder.addStatement(
-                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
-                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
                 bodyParameterSpec.type);
     }
 

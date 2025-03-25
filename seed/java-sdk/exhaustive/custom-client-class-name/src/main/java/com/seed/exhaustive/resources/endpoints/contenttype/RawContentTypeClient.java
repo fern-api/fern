@@ -29,11 +29,11 @@ public class RawContentTypeClient {
     }
 
     public BestHttpResponse<Void> postJsonPatchContentType() {
-        postJsonPatchContentType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
     public BestHttpResponse<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
-        postJsonPatchContentType(request, null);
+        return postJsonPatchContentType(request, null);
     }
 
     public BestHttpResponse<Void> postJsonPatchContentType(
@@ -76,11 +76,12 @@ public class RawContentTypeClient {
     }
 
     public BestHttpResponse<Void> postJsonPatchContentWithCharsetType() {
-        postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentWithCharsetType(
+                ObjectWithOptionalField.builder().build());
     }
 
     public BestHttpResponse<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
-        postJsonPatchContentWithCharsetType(request, null);
+        return postJsonPatchContentWithCharsetType(request, null);
     }
 
     public BestHttpResponse<Void> postJsonPatchContentWithCharsetType(

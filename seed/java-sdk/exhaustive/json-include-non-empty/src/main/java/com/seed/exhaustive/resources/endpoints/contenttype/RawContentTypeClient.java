@@ -29,11 +29,11 @@ public class RawContentTypeClient {
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType() {
-        postJsonPatchContentType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
-        postJsonPatchContentType(request, null);
+        return postJsonPatchContentType(request, null);
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(
@@ -76,11 +76,12 @@ public class RawContentTypeClient {
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType() {
-        postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+        return postJsonPatchContentWithCharsetType(
+                ObjectWithOptionalField.builder().build());
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
-        postJsonPatchContentWithCharsetType(request, null);
+        return postJsonPatchContentWithCharsetType(request, null);
     }
 
     public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(

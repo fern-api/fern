@@ -26,10 +26,10 @@ public class ReqWithHeadersClient {
   }
 
   public void getWithCustomHeader(ReqWithHeaders request) {
-    return this.rawClient.getWithCustomHeader(request).body();
+    this.rawClient.getWithCustomHeader(request).body();
   }
 
   public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
-    return this.rawClient.getWithCustomHeader(request, requestOptions).body();
+    this.rawClient.getWithCustomHeader(request, requestOptions).body();
   }
 }

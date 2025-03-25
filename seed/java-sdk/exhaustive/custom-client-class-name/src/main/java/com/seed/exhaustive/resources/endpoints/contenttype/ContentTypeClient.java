@@ -25,27 +25,27 @@ public class ContentTypeClient {
     }
 
     public void postJsonPatchContentType() {
-        return this.rawClient.postJsonPatchContentType().body();
+        this.rawClient.postJsonPatchContentType().body();
     }
 
     public void postJsonPatchContentType(ObjectWithOptionalField request) {
-        return this.rawClient.postJsonPatchContentType(request).body();
+        this.rawClient.postJsonPatchContentType(request).body();
     }
 
     public void postJsonPatchContentType(ObjectWithOptionalField request, RequestOptions requestOptions) {
-        return this.rawClient.postJsonPatchContentType(request, requestOptions).body();
+        this.rawClient.postJsonPatchContentType(request, requestOptions).body();
     }
 
     public void postJsonPatchContentWithCharsetType() {
-        return this.rawClient.postJsonPatchContentWithCharsetType().body();
+        this.rawClient.postJsonPatchContentWithCharsetType().body();
     }
 
     public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
-        return this.rawClient.postJsonPatchContentWithCharsetType(request).body();
+        this.rawClient.postJsonPatchContentWithCharsetType(request).body();
     }
 
     public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request, RequestOptions requestOptions) {
-        return this.rawClient
+        this.rawClient
                 .postJsonPatchContentWithCharsetType(request, requestOptions)
                 .body();
     }

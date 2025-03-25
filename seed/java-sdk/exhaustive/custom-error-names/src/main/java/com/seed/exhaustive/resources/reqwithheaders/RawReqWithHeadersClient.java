@@ -27,7 +27,7 @@ public class RawReqWithHeadersClient {
     }
 
     public CustomException<Void> getWithCustomHeader(ReqWithHeaders request) {
-        getWithCustomHeader(request, null);
+        return getWithCustomHeader(request, null);
     }
 
     public CustomException<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {

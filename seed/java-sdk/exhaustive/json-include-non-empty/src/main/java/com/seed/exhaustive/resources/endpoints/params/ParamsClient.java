@@ -46,37 +46,35 @@ public class ParamsClient {
     }
 
     public void getWithQuery(GetWithQuery request) {
-        return this.rawClient.getWithQuery(request).body();
+        this.rawClient.getWithQuery(request).body();
     }
 
     public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
-        return this.rawClient.getWithQuery(request, requestOptions).body();
+        this.rawClient.getWithQuery(request, requestOptions).body();
     }
 
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-        return this.rawClient.getWithAllowMultipleQuery(request).body();
+        this.rawClient.getWithAllowMultipleQuery(request).body();
     }
 
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request, RequestOptions requestOptions) {
-        return this.rawClient.getWithAllowMultipleQuery(request, requestOptions).body();
+        this.rawClient.getWithAllowMultipleQuery(request, requestOptions).body();
     }
 
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
-        return this.rawClient.getWithPathAndQuery(param, request).body();
+        this.rawClient.getWithPathAndQuery(param, request).body();
     }
 
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getWithPathAndQuery(param, request, requestOptions)
-                .body();
+        this.rawClient.getWithPathAndQuery(param, request, requestOptions).body();
     }
 
     public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
-        return this.rawClient.getWithInlinePathAndQuery(request).body();
+        this.rawClient.getWithInlinePathAndQuery(request).body();
     }
 
     public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
-        return this.rawClient.getWithInlinePathAndQuery(request, requestOptions).body();
+        this.rawClient.getWithInlinePathAndQuery(request, requestOptions).body();
     }
 
     public String modifyWithPath(String param, String request) {
