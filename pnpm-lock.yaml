@@ -3870,9 +3870,6 @@ importers:
 
   generators/typescript/sdk/websocket-type-schema-generator:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
@@ -3885,12 +3882,6 @@ importers:
       '@fern-typescript/contexts':
         specifier: workspace:*
         version: link:../../utils/contexts
-      '@fern-typescript/resolvers':
-        specifier: workspace:*
-        version: link:../../utils/resolvers
-      '@fern-typescript/union-schema-generator':
-        specifier: workspace:*
-        version: link:../../model/union-schema-generator
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
