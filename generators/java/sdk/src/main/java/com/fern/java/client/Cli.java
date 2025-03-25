@@ -30,6 +30,7 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
+import com.fern.java.client.generators.HttpResponseGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
@@ -295,6 +296,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
+
+        HttpResponseGenerator httpResponseGenerator = new HttpResponseGenerator(context);
+        this.addGeneratedFile(httpResponseGenerator.generateFile());
 
         BaseErrorGenerator baseErrorGenerator = new BaseErrorGenerator(context);
         GeneratedJavaFile generatedBaseErrorFile = baseErrorGenerator.generateFile();
