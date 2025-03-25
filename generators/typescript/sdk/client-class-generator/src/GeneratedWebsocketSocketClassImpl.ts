@@ -440,12 +440,12 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private generateHandleMessage(context: SdkContext): PropertyDeclarationStructure {
         const bodyLines: string[] = [
-            "let parsedResponse;",
             `const data = ${getTextOfTsNode(context.jsonContext.getReferenceToFromJson().getTypeNode())}(event.data);`,
             ""
         ];
 
         if (this.includeSerdeLayer) {
+            bodyLines.push("let parsedResponse;");
             const subscribeMessages = this.getSubscribeMessages();
             for (const message of subscribeMessages) {
                 bodyLines.push(
