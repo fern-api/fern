@@ -278,7 +278,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 {
                     description:
                         "@param event - The event to attach to.\n" +
-                        "@param callback - The callback to run when the event is triggered."
+                        "@param callback - The callback to run when the event is triggered.\n" +
+                        "Usage:\n" +
+                        "```typescript\n" +
+                        "this.on('open', () => {\n" +
+                        "    console.log('The websocket is open');\n" +
+                        "});\n" +
+                        "```"
                 }
             ],
             statements: [
@@ -340,6 +346,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", this.handleError);`,
                 "",
                 "return this;"
+            ],
+            docs: [
+                {
+                    description: "Connect to the websocket and register event handlers."
+                }
             ]
         };
     }
@@ -359,6 +370,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("close", this.handleClose);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("error", this.handleError);`
+            ],
+            docs: [
+                {
+                    description: "Close the websocket and unregister event handlers."
+                }
             ]
         };
     }
@@ -383,6 +399,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 "        reject(event);",
                 "    });",
                 "});"
+            ],
+            docs: [
+                {
+                    description: "Returns a promise that resolves when the websocket is open."
+                }
             ]
         };
     }
@@ -401,6 +422,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
                 '    throw new Error("Socket is not open.");',
                 "}"
+            ],
+            docs: [
+                {
+                    description: "Asserts that the websocket is open."
+                }
             ]
         };
     }
@@ -421,6 +447,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: [
                 `const jsonPayload = ${getTextOfTsNode(context.jsonContext.getReferenceToToJson().getTypeNode())}(payload);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.send(jsonPayload);`
+            ],
+            docs: [
+                {
+                    description: "Send a JSON payload to the websocket."
+                }
             ]
         };
     }
@@ -437,7 +468,12 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     type: "ArrayBufferLike | Blob | ArrayBufferView"
                 }
             ],
-            statements: [`this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.send(payload);`]
+            statements: [`this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.send(payload);`],
+            docs: [
+                {
+                    description: "Send a binary payload to the websocket."
+                }
+            ]
         };
     }
 
