@@ -55,6 +55,12 @@ export class RealtimeSocket {
     /**
      * @param event - The event to attach to.
      * @param callback - The callback to run when the event is triggered.
+     * Usage:
+     * ```typescript
+     * this.on('open', () => {
+     *     console.log('The websocket is open');
+     * });
+     * ```
      */
     public on<T extends keyof RealtimeSocket.EventHandlers>(event: T, callback: RealtimeSocket.EventHandlers[T]) {
         this.eventHandlers[event] = callback;
@@ -70,6 +76,7 @@ export class RealtimeSocket {
         this.sendJson(message);
     }
 
+    /** Connect to the websocket and register event handlers. */
     public connect(): RealtimeSocket {
         this.socket.reconnect();
 
@@ -81,6 +88,7 @@ export class RealtimeSocket {
         return this;
     }
 
+    /** Close the websocket and unregister event handlers. */
     public close(): void {
         this.socket.close();
 
@@ -92,6 +100,7 @@ export class RealtimeSocket {
         this.socket.removeEventListener("error", this.handleError);
     }
 
+    /** Returns a promise that resolves when the websocket is open. */
     public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
         if (this.socket.readyState === core.ReconnectingWebSocket.OPEN) {
             return this.socket;
@@ -108,6 +117,7 @@ export class RealtimeSocket {
         });
     }
 
+    /** Asserts that the websocket is open. */
     private assertSocketIsOpen(): void {
         if (!this.socket) {
             throw new Error("Socket is not connected.");
@@ -118,10 +128,12 @@ export class RealtimeSocket {
         }
     }
 
+    /** Send a binary payload to the websocket. */
     private sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 
+    /** Send a JSON payload to the websocket. */
     private sendJson(payload: SeedWebsocket.SendEvent | SeedWebsocket.SendEvent2): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);
