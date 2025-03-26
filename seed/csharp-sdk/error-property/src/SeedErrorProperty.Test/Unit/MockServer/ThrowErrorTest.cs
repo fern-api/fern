@@ -28,7 +28,7 @@ public class ThrowErrorTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.PropertyBasedError.ThrowErrorAsync(RequestOptions);
+        var response = await Client.PropertyBasedError.ThrowErrorAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

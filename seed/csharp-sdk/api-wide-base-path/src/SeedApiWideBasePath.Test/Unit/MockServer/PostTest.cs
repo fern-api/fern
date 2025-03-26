@@ -19,13 +19,7 @@ public class PostTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(
             async () =>
-                await Client.Service.PostAsync(
-                    "pathParam",
-                    "serviceParam",
-                    "resourceParam",
-                    1,
-                    RequestOptions
-                )
+                await Client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1)
         );
     }
 }

@@ -49,8 +49,7 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
                     "string",
                     new ObjectWithRequiredField { String = "string" }
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

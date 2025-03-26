@@ -97,8 +97,7 @@ public class GetUsersTest : BaseMockServerTest
                 Activated = [true],
                 Tags = ["tags"],
                 Extra = true,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

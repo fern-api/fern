@@ -34,8 +34,7 @@ public class GetAndReturnUuidTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnUuidAsync(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            RequestOptions
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

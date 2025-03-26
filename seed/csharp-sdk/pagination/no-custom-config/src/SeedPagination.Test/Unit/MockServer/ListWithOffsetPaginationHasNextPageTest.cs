@@ -59,8 +59,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
                 Page = 1,
                 Limit = 1,
                 Order = Order.Asc,
-            },
-            RequestOptions
+            }
         );
         await foreach (var item in pager)
         {

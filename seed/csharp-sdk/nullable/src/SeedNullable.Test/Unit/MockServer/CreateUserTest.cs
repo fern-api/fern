@@ -100,8 +100,7 @@ public class CreateUserTest : BaseMockServerTest
                     Status = "no-properties-union",
                 },
                 Avatar = "avatar",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

@@ -36,8 +36,7 @@ public class PostWithCustomAuthTest : BaseMockServerTest
             );
 
         var response = await Client.CustomAuth.PostWithCustomAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" } },
-            RequestOptions
+            new Dictionary<object, object?>() { { "key", "value" } }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }

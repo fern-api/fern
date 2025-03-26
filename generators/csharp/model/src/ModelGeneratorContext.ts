@@ -46,15 +46,20 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [
-            AsIsFiles.Constants,
-            AsIsFiles.Json.CollectionItemSerializer,
-            AsIsFiles.Json.DateOnlyConverter,
-            AsIsFiles.Json.DateTimeSerializer,
-            AsIsFiles.Json.JsonAccessAttribute,
-            AsIsFiles.Json.JsonConfiguration,
-            AsIsFiles.Json.OneOfSerializer
-        ];
+        const files = [AsIsFiles.Constants];
+
+        // JSON stuff
+        files.push(
+            ...[
+                AsIsFiles.Json.CollectionItemSerializer,
+                AsIsFiles.Json.DateOnlyConverter,
+                AsIsFiles.Json.DateTimeSerializer,
+                AsIsFiles.Json.JsonAccessAttribute,
+                AsIsFiles.Json.JsonConfiguration,
+                AsIsFiles.Json.OneOfSerializer
+            ]
+        );
+
         if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);

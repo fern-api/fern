@@ -12,6 +12,6 @@ public class GetTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/typeId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.GetAsync("typeId", RequestOptions));
+        Assert.DoesNotThrowAsync(async () => await Client.GetAsync("typeId"));
     }
 }

@@ -44,8 +44,7 @@ public class SendOptionalBodyTest : BaseMockServerTest
                     "string",
                     new Dictionary<object, object?>() { { "key", "value" } }
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

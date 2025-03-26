@@ -31,10 +31,7 @@ public class GetExecutionSessionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.GetExecutionSessionAsync(
-            "sessionId",
-            RequestOptions
-        );
+        var response = await Client.Submission.GetExecutionSessionAsync("sessionId");
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse?>(mockResponse))
