@@ -1,6 +1,14 @@
 - changelogEntry:
   - summary: |
-      Add AI chat config block to docs.yml for model/system prompt customization
+      Add AI chat config block to docs.yml for model/system prompt customization. Example:
+
+      ai-chat:
+        model: Claude 3.5
+        system prompt: |
+        You are an AI assistant.
+        Only respond to questions using information from the documents.
+        Include markdown footnotes to the sources of your information.
+        
     type: feat
   irVersion: 57
   version: docs@0.12.5
