@@ -26,10 +26,16 @@ public class AsyncImdbClient {
         return this.rawClient;
     }
 
+    /**
+     * Add a movie to the database
+     */
     public CompletableFuture<String> createMovie(CreateMovieRequest request) {
         return this.rawClient.createMovie(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Add a movie to the database
+     */
     public CompletableFuture<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         return this.rawClient.createMovie(request, requestOptions).thenApply(response -> response.body());
     }

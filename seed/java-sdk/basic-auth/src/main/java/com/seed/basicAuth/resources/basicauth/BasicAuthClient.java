@@ -23,18 +23,30 @@ public class BasicAuthClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public boolean getWithBasicAuth() {
         return this.rawClient.getWithBasicAuth().body();
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public boolean getWithBasicAuth(RequestOptions requestOptions) {
         return this.rawClient.getWithBasicAuth(requestOptions).body();
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public boolean postWithBasicAuth(Object request) {
         return this.rawClient.postWithBasicAuth(request).body();
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public boolean postWithBasicAuth(Object request, RequestOptions requestOptions) {
         return this.rawClient.postWithBasicAuth(request, requestOptions).body();
     }

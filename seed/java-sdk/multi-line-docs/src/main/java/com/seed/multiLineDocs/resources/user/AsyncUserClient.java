@@ -26,18 +26,34 @@ public class AsyncUserClient {
         return this.rawClient;
     }
 
+    /**
+     * Retrieve a user.
+     * This endpoint is used to retrieve a user.
+     */
     public CompletableFuture<Void> getUser(String userId) {
         return this.rawClient.getUser(userId).thenApply(response -> response.body());
     }
 
+    /**
+     * Retrieve a user.
+     * This endpoint is used to retrieve a user.
+     */
     public CompletableFuture<Void> getUser(String userId, RequestOptions requestOptions) {
         return this.rawClient.getUser(userId, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Create a new user.
+     * This endpoint is used to create a new user.
+     */
     public CompletableFuture<User> createUser(CreateUserRequest request) {
         return this.rawClient.createUser(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Create a new user.
+     * This endpoint is used to create a new user.
+     */
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
     }

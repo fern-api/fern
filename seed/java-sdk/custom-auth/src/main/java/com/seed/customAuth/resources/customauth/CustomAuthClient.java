@@ -23,18 +23,30 @@ public class CustomAuthClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public boolean getWithCustomAuth() {
         return this.rawClient.getWithCustomAuth().body();
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public boolean getWithCustomAuth(RequestOptions requestOptions) {
         return this.rawClient.getWithCustomAuth(requestOptions).body();
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public boolean postWithCustomAuth(Object request) {
         return this.rawClient.postWithCustomAuth(request).body();
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public boolean postWithCustomAuth(Object request, RequestOptions requestOptions) {
         return this.rawClient.postWithCustomAuth(request, requestOptions).body();
     }

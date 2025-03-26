@@ -26,10 +26,16 @@ public class AsyncMetadataClient {
         return this.rawClient;
     }
 
+    /**
+     * Get event metadata.
+     */
     public CompletableFuture<Metadata> getMetadata(GetEventMetadataRequest request) {
         return this.rawClient.getMetadata(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Get event metadata.
+     */
     public CompletableFuture<Metadata> getMetadata(GetEventMetadataRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMetadata(request, requestOptions).thenApply(response -> response.body());
     }

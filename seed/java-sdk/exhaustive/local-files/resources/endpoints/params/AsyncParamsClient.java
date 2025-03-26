@@ -33,77 +33,128 @@ public class AsyncParamsClient {
     return this.rawClient;
   }
 
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithPath(String param) {
     return this.rawClient.getWithPath(param).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithPath(String param, RequestOptions requestOptions) {
     return this.rawClient.getWithPath(param, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithInlinePath(String param) {
     return this.rawClient.getWithInlinePath(param).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request) {
     return this.rawClient.getWithInlinePath(param, request).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request,
       RequestOptions requestOptions) {
     return this.rawClient.getWithInlinePath(param, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with query param
+   */
   public CompletableFuture<Void> getWithQuery(GetWithQuery request) {
     return this.rawClient.getWithQuery(request).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with query param
+   */
   public CompletableFuture<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
     return this.rawClient.getWithQuery(request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with multiple of same query param
+   */
   public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
     return this.rawClient.getWithAllowMultipleQuery(request).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with multiple of same query param
+   */
   public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request,
       RequestOptions requestOptions) {
     return this.rawClient.getWithAllowMultipleQuery(request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path and query params
+   */
   public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
     return this.rawClient.getWithPathAndQuery(param, request).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path and query params
+   */
   public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request,
       RequestOptions requestOptions) {
     return this.rawClient.getWithPathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path and query params
+   */
   public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
       GetWithInlinePathAndQuery request) {
     return this.rawClient.getWithInlinePathAndQuery(param, request).thenApply(response -> response.body());
   }
 
+  /**
+   * GET with path and query params
+   */
   public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
       GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
     return this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * PUT to update with path param
+   */
   public CompletableFuture<String> modifyWithPath(String param, String request) {
     return this.rawClient.modifyWithPath(param, request).thenApply(response -> response.body());
   }
 
+  /**
+   * PUT to update with path param
+   */
   public CompletableFuture<String> modifyWithPath(String param, String request,
       RequestOptions requestOptions) {
     return this.rawClient.modifyWithPath(param, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * PUT to update with path param
+   */
   public CompletableFuture<String> modifyWithInlinePath(String param,
       ModifyResourceAtInlinedPath request) {
     return this.rawClient.modifyWithInlinePath(param, request).thenApply(response -> response.body());
   }
 
+  /**
+   * PUT to update with path param
+   */
   public CompletableFuture<String> modifyWithInlinePath(String param,
       ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
     return this.rawClient.modifyWithInlinePath(param, request, requestOptions).thenApply(response -> response.body());

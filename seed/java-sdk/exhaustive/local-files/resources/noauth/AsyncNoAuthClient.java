@@ -27,10 +27,16 @@ public class AsyncNoAuthClient {
     return this.rawClient;
   }
 
+  /**
+   * POST request with no auth
+   */
   public CompletableFuture<Boolean> postWithNoAuth(Object request) {
     return this.rawClient.postWithNoAuth(request).thenApply(response -> response.body());
   }
 
+  /**
+   * POST request with no auth
+   */
   public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
     return this.rawClient.postWithNoAuth(request, requestOptions).thenApply(response -> response.body());
   }

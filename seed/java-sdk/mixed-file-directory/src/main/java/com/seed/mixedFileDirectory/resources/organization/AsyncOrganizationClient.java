@@ -26,10 +26,16 @@ public class AsyncOrganizationClient {
         return this.rawClient;
     }
 
+    /**
+     * Create a new organization.
+     */
     public CompletableFuture<Organization> create(CreateOrganizationRequest request) {
         return this.rawClient.create(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Create a new organization.
+     */
     public CompletableFuture<Organization> create(CreateOrganizationRequest request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
     }

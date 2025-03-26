@@ -25,18 +25,34 @@ public class UserClient {
         return this.rawClient;
     }
 
+    /**
+     * Retrieve a user.
+     * This endpoint is used to retrieve a user.
+     */
     public void getUser(String userId) {
         this.rawClient.getUser(userId).body();
     }
 
+    /**
+     * Retrieve a user.
+     * This endpoint is used to retrieve a user.
+     */
     public void getUser(String userId, RequestOptions requestOptions) {
         this.rawClient.getUser(userId, requestOptions).body();
     }
 
+    /**
+     * Create a new user.
+     * This endpoint is used to create a new user.
+     */
     public User createUser(CreateUserRequest request) {
         return this.rawClient.createUser(request).body();
     }
 
+    /**
+     * Create a new user.
+     * This endpoint is used to create a new user.
+     */
     public User createUser(CreateUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.createUser(request, requestOptions).body();
     }

@@ -25,10 +25,16 @@ public class MetadataClient {
         return this.rawClient;
     }
 
+    /**
+     * Get event metadata.
+     */
     public Metadata getMetadata(GetEventMetadataRequest request) {
         return this.rawClient.getMetadata(request).body();
     }
 
+    /**
+     * Get event metadata.
+     */
     public Metadata getMetadata(GetEventMetadataRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMetadata(request, requestOptions).body();
     }

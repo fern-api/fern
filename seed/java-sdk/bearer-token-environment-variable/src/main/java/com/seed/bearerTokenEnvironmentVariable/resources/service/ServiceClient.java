@@ -23,10 +23,16 @@ public class ServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithBearerToken() {
         return this.rawClient.getWithBearerToken().body();
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithBearerToken(RequestOptions requestOptions) {
         return this.rawClient.getWithBearerToken(requestOptions).body();
     }

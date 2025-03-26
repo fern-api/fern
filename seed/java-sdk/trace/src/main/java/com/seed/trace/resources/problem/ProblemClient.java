@@ -28,35 +28,59 @@ public class ProblemClient {
         return this.rawClient;
     }
 
+    /**
+     * Creates a problem
+     */
     public CreateProblemResponse createProblem(CreateProblemRequest request) {
         return this.rawClient.createProblem(request).body();
     }
 
+    /**
+     * Creates a problem
+     */
     public CreateProblemResponse createProblem(CreateProblemRequest request, RequestOptions requestOptions) {
         return this.rawClient.createProblem(request, requestOptions).body();
     }
 
+    /**
+     * Updates a problem
+     */
     public UpdateProblemResponse updateProblem(String problemId, CreateProblemRequest request) {
         return this.rawClient.updateProblem(problemId, request).body();
     }
 
+    /**
+     * Updates a problem
+     */
     public UpdateProblemResponse updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
         return this.rawClient.updateProblem(problemId, request, requestOptions).body();
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public void deleteProblem(String problemId) {
         this.rawClient.deleteProblem(problemId).body();
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public void deleteProblem(String problemId, RequestOptions requestOptions) {
         this.rawClient.deleteProblem(problemId, requestOptions).body();
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {
         return this.rawClient.getDefaultStarterFiles(request).body();
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getDefaultStarterFiles(request, requestOptions).body();

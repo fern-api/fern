@@ -26,34 +26,58 @@ public class ProblemClient {
         return this.rawClient;
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public List<LightweightProblemInfoV2> getLightweightProblems() {
         return this.rawClient.getLightweightProblems().body();
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public List<LightweightProblemInfoV2> getLightweightProblems(RequestOptions requestOptions) {
         return this.rawClient.getLightweightProblems(requestOptions).body();
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public List<ProblemInfoV2> getProblems() {
         return this.rawClient.getProblems().body();
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public List<ProblemInfoV2> getProblems(RequestOptions requestOptions) {
         return this.rawClient.getProblems(requestOptions).body();
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public ProblemInfoV2 getLatestProblem(String problemId) {
         return this.rawClient.getLatestProblem(problemId).body();
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public ProblemInfoV2 getLatestProblem(String problemId, RequestOptions requestOptions) {
         return this.rawClient.getLatestProblem(problemId, requestOptions).body();
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion) {
         return this.rawClient.getProblemVersion(problemId, problemVersion).body();
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion, RequestOptions requestOptions) {
         return this.rawClient
                 .getProblemVersion(problemId, problemVersion, requestOptions)

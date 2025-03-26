@@ -24,18 +24,30 @@ public class ServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithApiKey() {
         return this.rawClient.getWithApiKey().body();
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithApiKey(RequestOptions requestOptions) {
         return this.rawClient.getWithApiKey(requestOptions).body();
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithHeader(HeaderAuthRequest request) {
         return this.rawClient.getWithHeader(request).body();
     }
 
+    /**
+     * GET request with custom api key
+     */
     public String getWithHeader(HeaderAuthRequest request, RequestOptions requestOptions) {
         return this.rawClient.getWithHeader(request, requestOptions).body();
     }

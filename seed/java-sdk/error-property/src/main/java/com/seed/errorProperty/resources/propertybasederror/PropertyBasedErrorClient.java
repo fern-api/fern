@@ -23,10 +23,16 @@ public class PropertyBasedErrorClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request that always throws an error
+     */
     public String throwError() {
         return this.rawClient.throwError().body();
     }
 
+    /**
+     * GET request that always throws an error
+     */
     public String throwError(RequestOptions requestOptions) {
         return this.rawClient.throwError(requestOptions).body();
     }

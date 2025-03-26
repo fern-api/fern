@@ -24,18 +24,30 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * This endpoint checks the health of a resource.
+     */
     public CompletableFuture<Void> check(String id) {
         return this.rawClient.check(id).thenApply(response -> response.body());
     }
 
+    /**
+     * This endpoint checks the health of a resource.
+     */
     public CompletableFuture<Void> check(String id, RequestOptions requestOptions) {
         return this.rawClient.check(id, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * This endpoint checks the health of the service.
+     */
     public CompletableFuture<Boolean> ping() {
         return this.rawClient.ping().thenApply(response -> response.body());
     }
 
+    /**
+     * This endpoint checks the health of the service.
+     */
     public CompletableFuture<Boolean> ping(RequestOptions requestOptions) {
         return this.rawClient.ping(requestOptions).thenApply(response -> response.body());
     }

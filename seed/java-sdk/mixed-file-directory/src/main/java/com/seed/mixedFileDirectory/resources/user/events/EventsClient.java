@@ -32,14 +32,23 @@ public class EventsClient {
         return this.rawClient;
     }
 
+    /**
+     * List all user events.
+     */
     public List<Event> listEvents() {
         return this.rawClient.listEvents().body();
     }
 
+    /**
+     * List all user events.
+     */
     public List<Event> listEvents(ListUserEventsRequest request) {
         return this.rawClient.listEvents(request).body();
     }
 
+    /**
+     * List all user events.
+     */
     public List<Event> listEvents(ListUserEventsRequest request, RequestOptions requestOptions) {
         return this.rawClient.listEvents(request, requestOptions).body();
     }

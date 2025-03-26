@@ -24,18 +24,30 @@ public class AsyncBasicAuthClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public CompletableFuture<Boolean> getWithBasicAuth() {
         return this.rawClient.getWithBasicAuth().thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public CompletableFuture<Boolean> getWithBasicAuth(RequestOptions requestOptions) {
         return this.rawClient.getWithBasicAuth(requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public CompletableFuture<Boolean> postWithBasicAuth(Object request) {
         return this.rawClient.postWithBasicAuth(request).thenApply(response -> response.body());
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public CompletableFuture<Boolean> postWithBasicAuth(Object request, RequestOptions requestOptions) {
         return this.rawClient.postWithBasicAuth(request, requestOptions).thenApply(response -> response.body());
     }

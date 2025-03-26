@@ -28,28 +28,46 @@ public class AsyncSubmissionClient {
         return this.rawClient;
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public CompletableFuture<ExecutionSessionResponse> createExecutionSession(Language language) {
         return this.rawClient.createExecutionSession(language).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public CompletableFuture<ExecutionSessionResponse> createExecutionSession(
             Language language, RequestOptions requestOptions) {
         return this.rawClient.createExecutionSession(language, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public CompletableFuture<Optional<ExecutionSessionResponse>> getExecutionSession(String sessionId) {
         return this.rawClient.getExecutionSession(sessionId).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public CompletableFuture<Optional<ExecutionSessionResponse>> getExecutionSession(
             String sessionId, RequestOptions requestOptions) {
         return this.rawClient.getExecutionSession(sessionId, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Stops execution session.
+     */
     public CompletableFuture<Void> stopExecutionSession(String sessionId) {
         return this.rawClient.stopExecutionSession(sessionId).thenApply(response -> response.body());
     }
 
+    /**
+     * Stops execution session.
+     */
     public CompletableFuture<Void> stopExecutionSession(String sessionId, RequestOptions requestOptions) {
         return this.rawClient.stopExecutionSession(sessionId, requestOptions).thenApply(response -> response.body());
     }

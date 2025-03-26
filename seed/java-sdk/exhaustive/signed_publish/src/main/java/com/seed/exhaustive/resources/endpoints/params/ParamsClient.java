@@ -29,71 +29,122 @@ public class ParamsClient {
         return this.rawClient;
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithPath(String param) {
         return this.rawClient.getWithPath(param).body();
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithPath(String param, RequestOptions requestOptions) {
         return this.rawClient.getWithPath(param, requestOptions).body();
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithInlinePath(String param) {
         return this.rawClient.getWithInlinePath(param).body();
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithInlinePath(String param, GetWithInlinePath request) {
         return this.rawClient.getWithInlinePath(param, request).body();
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithInlinePath(String param, GetWithInlinePath request, RequestOptions requestOptions) {
         return this.rawClient.getWithInlinePath(param, request, requestOptions).body();
     }
 
+    /**
+     * GET with query param
+     */
     public void getWithQuery(GetWithQuery request) {
         this.rawClient.getWithQuery(request).body();
     }
 
+    /**
+     * GET with query param
+     */
     public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
         this.rawClient.getWithQuery(request, requestOptions).body();
     }
 
+    /**
+     * GET with multiple of same query param
+     */
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
         this.rawClient.getWithAllowMultipleQuery(request).body();
     }
 
+    /**
+     * GET with multiple of same query param
+     */
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request, RequestOptions requestOptions) {
         this.rawClient.getWithAllowMultipleQuery(request, requestOptions).body();
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
         this.rawClient.getWithPathAndQuery(param, request).body();
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
         this.rawClient.getWithPathAndQuery(param, request, requestOptions).body();
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request) {
         this.rawClient.getWithInlinePathAndQuery(param, request).body();
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithInlinePathAndQuery(
             String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
         this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions).body();
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithPath(String param, String request) {
         return this.rawClient.modifyWithPath(param, request).body();
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
         return this.rawClient.modifyWithPath(param, request, requestOptions).body();
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
         return this.rawClient.modifyWithInlinePath(param, request).body();
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithInlinePath(
             String param, ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         return this.rawClient

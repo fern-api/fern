@@ -25,14 +25,23 @@ public class ServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename) {
         return this.rawClient.getFile(filename).body();
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request) {
         return this.rawClient.getFile(filename, request).body();
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
         return this.rawClient.getFile(filename, request, requestOptions).body();
     }

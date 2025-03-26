@@ -13,6 +13,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
     public MethodSpec getNonRequestOptionsMethodSpec() {
         MethodSpec methodSpec = httpEndpointMethodSpecs.getNonRequestOptionsMethodSpec();
         return MethodSpec.methodBuilder(methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
@@ -28,6 +29,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
     public MethodSpec getRequestOptionsMethodSpec() {
         MethodSpec methodSpec = httpEndpointMethodSpecs.getRequestOptionsMethodSpec();
         return MethodSpec.methodBuilder(methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
@@ -43,6 +45,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
     public Optional<MethodSpec> getNoRequestBodyMethodSpec() {
         return httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
                         methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
@@ -58,6 +61,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
     public Optional<MethodSpec> getByteArrayMethodSpec() {
         return httpEndpointMethodSpecs.getByteArrayMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
                         methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
@@ -74,6 +78,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
         return httpEndpointMethodSpecs
                 .getNonRequestOptionsByteArrayMethodSpec()
                 .map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+                        .addJavadoc(methodSpec.javadoc)
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)

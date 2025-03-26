@@ -29,45 +29,72 @@ public class PlaylistClient {
         return this.rawClient;
     }
 
+    /**
+     * Create a new playlist
+     */
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request) {
         return this.rawClient.createPlaylist(serviceParam, request).body();
     }
 
+    /**
+     * Create a new playlist
+     */
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .createPlaylist(serviceParam, request, requestOptions)
                 .body();
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
         return this.rawClient.getPlaylists(serviceParam, request).body();
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getPlaylists(serviceParam, request, requestOptions)
                 .body();
     }
 
+    /**
+     * Returns a playlist
+     */
     public Playlist getPlaylist(int serviceParam, String playlistId) {
         return this.rawClient.getPlaylist(serviceParam, playlistId).body();
     }
 
+    /**
+     * Returns a playlist
+     */
     public Playlist getPlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         return this.rawClient
                 .getPlaylist(serviceParam, playlistId, requestOptions)
                 .body();
     }
 
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(int serviceParam, String playlistId) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId).body();
     }
 
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId, request).body();
     }
 
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(
             int serviceParam,
             String playlistId,
@@ -78,10 +105,16 @@ public class PlaylistClient {
                 .body();
     }
 
+    /**
+     * Deletes a playlist
+     */
     public void deletePlaylist(int serviceParam, String playlistId) {
         this.rawClient.deletePlaylist(serviceParam, playlistId).body();
     }
 
+    /**
+     * Deletes a playlist
+     */
     public void deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         this.rawClient.deletePlaylist(serviceParam, playlistId, requestOptions).body();
     }

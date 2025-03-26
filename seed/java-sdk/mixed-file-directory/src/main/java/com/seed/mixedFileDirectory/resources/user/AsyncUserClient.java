@@ -33,14 +33,23 @@ public class AsyncUserClient {
         return this.rawClient;
     }
 
+    /**
+     * List all users.
+     */
     public CompletableFuture<List<User>> list() {
         return this.rawClient.list().thenApply(response -> response.body());
     }
 
+    /**
+     * List all users.
+     */
     public CompletableFuture<List<User>> list(ListUsersRequest request) {
         return this.rawClient.list(request).thenApply(response -> response.body());
     }
 
+    /**
+     * List all users.
+     */
     public CompletableFuture<List<User>> list(ListUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.list(request, requestOptions).thenApply(response -> response.body());
     }

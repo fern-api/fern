@@ -24,10 +24,16 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithBearerToken() {
         return this.rawClient.getWithBearerToken().thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithBearerToken(RequestOptions requestOptions) {
         return this.rawClient.getWithBearerToken(requestOptions).thenApply(response -> response.body());
     }

@@ -25,18 +25,30 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithApiKey() {
         return this.rawClient.getWithApiKey().thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithApiKey(RequestOptions requestOptions) {
         return this.rawClient.getWithApiKey(requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithHeader(HeaderAuthRequest request) {
         return this.rawClient.getWithHeader(request).thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with custom api key
+     */
     public CompletableFuture<String> getWithHeader(HeaderAuthRequest request, RequestOptions requestOptions) {
         return this.rawClient.getWithHeader(request, requestOptions).thenApply(response -> response.body());
     }

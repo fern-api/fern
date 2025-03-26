@@ -23,10 +23,16 @@ public class NoAuthClient {
         return this.rawClient;
     }
 
+    /**
+     * POST request with no auth
+     */
     public boolean postWithNoAuth(Object request) {
         return this.rawClient.postWithNoAuth(request).body();
     }
 
+    /**
+     * POST request with no auth
+     */
     public boolean postWithNoAuth(Object request, RequestOptions requestOptions) {
         return this.rawClient.postWithNoAuth(request, requestOptions).body();
     }

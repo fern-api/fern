@@ -30,10 +30,16 @@ public class AsyncPlaylistClient {
         return this.rawClient;
     }
 
+    /**
+     * Create a new playlist
+     */
     public CompletableFuture<Playlist> createPlaylist(int serviceParam, CreatePlaylistRequest request) {
         return this.rawClient.createPlaylist(serviceParam, request).thenApply(response -> response.body());
     }
 
+    /**
+     * Create a new playlist
+     */
     public CompletableFuture<Playlist> createPlaylist(
             int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
         return this.rawClient
@@ -41,10 +47,16 @@ public class AsyncPlaylistClient {
                 .thenApply(response -> response.body());
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public CompletableFuture<List<Playlist>> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
         return this.rawClient.getPlaylists(serviceParam, request).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public CompletableFuture<List<Playlist>> getPlaylists(
             int serviceParam, GetPlaylistsRequest request, RequestOptions requestOptions) {
         return this.rawClient
@@ -52,25 +64,40 @@ public class AsyncPlaylistClient {
                 .thenApply(response -> response.body());
     }
 
+    /**
+     * Returns a playlist
+     */
     public CompletableFuture<Playlist> getPlaylist(int serviceParam, String playlistId) {
         return this.rawClient.getPlaylist(serviceParam, playlistId).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns a playlist
+     */
     public CompletableFuture<Playlist> getPlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         return this.rawClient
                 .getPlaylist(serviceParam, playlistId, requestOptions)
                 .thenApply(response -> response.body());
     }
 
+    /**
+     * Updates a playlist
+     */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(int serviceParam, String playlistId) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId).thenApply(response -> response.body());
     }
 
+    /**
+     * Updates a playlist
+     */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId, request).thenApply(response -> response.body());
     }
 
+    /**
+     * Updates a playlist
+     */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(
             int serviceParam,
             String playlistId,
@@ -81,10 +108,16 @@ public class AsyncPlaylistClient {
                 .thenApply(response -> response.body());
     }
 
+    /**
+     * Deletes a playlist
+     */
     public CompletableFuture<Void> deletePlaylist(int serviceParam, String playlistId) {
         return this.rawClient.deletePlaylist(serviceParam, playlistId).thenApply(response -> response.body());
     }
 
+    /**
+     * Deletes a playlist
+     */
     public CompletableFuture<Void> deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         return this.rawClient
                 .deletePlaylist(serviceParam, playlistId, requestOptions)

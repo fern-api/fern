@@ -25,10 +25,16 @@ public class ImdbClient {
         return this.rawClient;
     }
 
+    /**
+     * Add a movie to the database
+     */
     public String createMovie(CreateMovieRequest request) {
         return this.rawClient.createMovie(request).body();
     }
 
+    /**
+     * Add a movie to the database
+     */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         return this.rawClient.createMovie(request, requestOptions).body();
     }

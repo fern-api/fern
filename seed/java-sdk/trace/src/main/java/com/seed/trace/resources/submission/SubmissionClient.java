@@ -27,26 +27,44 @@ public class SubmissionClient {
         return this.rawClient;
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public ExecutionSessionResponse createExecutionSession(Language language) {
         return this.rawClient.createExecutionSession(language).body();
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public ExecutionSessionResponse createExecutionSession(Language language, RequestOptions requestOptions) {
         return this.rawClient.createExecutionSession(language, requestOptions).body();
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId) {
         return this.rawClient.getExecutionSession(sessionId).body();
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId, RequestOptions requestOptions) {
         return this.rawClient.getExecutionSession(sessionId, requestOptions).body();
     }
 
+    /**
+     * Stops execution session.
+     */
     public void stopExecutionSession(String sessionId) {
         this.rawClient.stopExecutionSession(sessionId).body();
     }
 
+    /**
+     * Stops execution session.
+     */
     public void stopExecutionSession(String sessionId, RequestOptions requestOptions) {
         this.rawClient.stopExecutionSession(sessionId, requestOptions).body();
     }

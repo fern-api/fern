@@ -24,18 +24,30 @@ public class AsyncCustomAuthClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public CompletableFuture<Boolean> getWithCustomAuth() {
         return this.rawClient.getWithCustomAuth().thenApply(response -> response.body());
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public CompletableFuture<Boolean> getWithCustomAuth(RequestOptions requestOptions) {
         return this.rawClient.getWithCustomAuth(requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public CompletableFuture<Boolean> postWithCustomAuth(Object request) {
         return this.rawClient.postWithCustomAuth(request).thenApply(response -> response.body());
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public CompletableFuture<Boolean> postWithCustomAuth(Object request, RequestOptions requestOptions) {
         return this.rawClient.postWithCustomAuth(request, requestOptions).thenApply(response -> response.body());
     }

@@ -25,10 +25,16 @@ public class OrganizationClient {
         return this.rawClient;
     }
 
+    /**
+     * Create a new organization.
+     */
     public Organization create(CreateOrganizationRequest request) {
         return this.rawClient.create(request).body();
     }
 
+    /**
+     * Create a new organization.
+     */
     public Organization create(CreateOrganizationRequest request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).body();
     }

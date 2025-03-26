@@ -26,10 +26,16 @@ public class InlinedRequestsClient {
     return this.rawClient;
   }
 
+  /**
+   * POST with custom object in request body, response is an object
+   */
   public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
     return this.rawClient.postWithObjectBodyandResponse(request).body();
   }
 
+  /**
+   * POST with custom object in request body, response is an object
+   */
   public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request,
       RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).body();

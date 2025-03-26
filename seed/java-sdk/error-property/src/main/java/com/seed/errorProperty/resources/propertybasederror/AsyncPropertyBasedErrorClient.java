@@ -24,10 +24,16 @@ public class AsyncPropertyBasedErrorClient {
         return this.rawClient;
     }
 
+    /**
+     * GET request that always throws an error
+     */
     public CompletableFuture<String> throwError() {
         return this.rawClient.throwError().thenApply(response -> response.body());
     }
 
+    /**
+     * GET request that always throws an error
+     */
     public CompletableFuture<String> throwError(RequestOptions requestOptions) {
         return this.rawClient.throwError(requestOptions).thenApply(response -> response.body());
     }

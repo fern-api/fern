@@ -29,37 +29,61 @@ public class AsyncProblemClient {
         return this.rawClient;
     }
 
+    /**
+     * Creates a problem
+     */
     public CompletableFuture<CreateProblemResponse> createProblem(CreateProblemRequest request) {
         return this.rawClient.createProblem(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Creates a problem
+     */
     public CompletableFuture<CreateProblemResponse> createProblem(
             CreateProblemRequest request, RequestOptions requestOptions) {
         return this.rawClient.createProblem(request, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Updates a problem
+     */
     public CompletableFuture<UpdateProblemResponse> updateProblem(String problemId, CreateProblemRequest request) {
         return this.rawClient.updateProblem(problemId, request).thenApply(response -> response.body());
     }
 
+    /**
+     * Updates a problem
+     */
     public CompletableFuture<UpdateProblemResponse> updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
         return this.rawClient.updateProblem(problemId, request, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public CompletableFuture<Void> deleteProblem(String problemId) {
         return this.rawClient.deleteProblem(problemId).thenApply(response -> response.body());
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public CompletableFuture<Void> deleteProblem(String problemId, RequestOptions requestOptions) {
         return this.rawClient.deleteProblem(problemId, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request) {
         return this.rawClient.getDefaultStarterFiles(request).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getDefaultStarterFiles(request, requestOptions).thenApply(response -> response.body());

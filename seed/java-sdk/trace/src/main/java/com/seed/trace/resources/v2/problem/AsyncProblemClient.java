@@ -27,34 +27,58 @@ public class AsyncProblemClient {
         return this.rawClient;
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public CompletableFuture<List<LightweightProblemInfoV2>> getLightweightProblems() {
         return this.rawClient.getLightweightProblems().thenApply(response -> response.body());
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public CompletableFuture<List<LightweightProblemInfoV2>> getLightweightProblems(RequestOptions requestOptions) {
         return this.rawClient.getLightweightProblems(requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public CompletableFuture<List<ProblemInfoV2>> getProblems() {
         return this.rawClient.getProblems().thenApply(response -> response.body());
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public CompletableFuture<List<ProblemInfoV2>> getProblems(RequestOptions requestOptions) {
         return this.rawClient.getProblems(requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public CompletableFuture<ProblemInfoV2> getLatestProblem(String problemId) {
         return this.rawClient.getLatestProblem(problemId).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public CompletableFuture<ProblemInfoV2> getLatestProblem(String problemId, RequestOptions requestOptions) {
         return this.rawClient.getLatestProblem(problemId, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public CompletableFuture<ProblemInfoV2> getProblemVersion(String problemId, int problemVersion) {
         return this.rawClient.getProblemVersion(problemId, problemVersion).thenApply(response -> response.body());
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public CompletableFuture<ProblemInfoV2> getProblemVersion(
             String problemId, int problemVersion, RequestOptions requestOptions) {
         return this.rawClient

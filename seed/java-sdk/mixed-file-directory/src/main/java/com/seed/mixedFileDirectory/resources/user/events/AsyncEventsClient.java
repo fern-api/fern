@@ -33,14 +33,23 @@ public class AsyncEventsClient {
         return this.rawClient;
     }
 
+    /**
+     * List all user events.
+     */
     public CompletableFuture<List<Event>> listEvents() {
         return this.rawClient.listEvents().thenApply(response -> response.body());
     }
 
+    /**
+     * List all user events.
+     */
     public CompletableFuture<List<Event>> listEvents(ListUserEventsRequest request) {
         return this.rawClient.listEvents(request).thenApply(response -> response.body());
     }
 
+    /**
+     * List all user events.
+     */
     public CompletableFuture<List<Event>> listEvents(ListUserEventsRequest request, RequestOptions requestOptions) {
         return this.rawClient.listEvents(request, requestOptions).thenApply(response -> response.body());
     }

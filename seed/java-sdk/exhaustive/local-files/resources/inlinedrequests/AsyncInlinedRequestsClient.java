@@ -27,11 +27,17 @@ public class AsyncInlinedRequestsClient {
     return this.rawClient;
   }
 
+  /**
+   * POST with custom object in request body, response is an object
+   */
   public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
       PostWithObjectBody request) {
     return this.rawClient.postWithObjectBodyandResponse(request).thenApply(response -> response.body());
   }
 
+  /**
+   * POST with custom object in request body, response is an object
+   */
   public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
       PostWithObjectBody request, RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).thenApply(response -> response.body());

@@ -26,14 +26,23 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public CompletableFuture<File> getFile(String filename) {
         return this.rawClient.getFile(filename).thenApply(response -> response.body());
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public CompletableFuture<File> getFile(String filename, GetFileRequest request) {
         return this.rawClient.getFile(filename, request).thenApply(response -> response.body());
     }
 
+    /**
+     * This endpoint returns a file by its name.
+     */
     public CompletableFuture<File> getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
         return this.rawClient.getFile(filename, request, requestOptions).thenApply(response -> response.body());
     }
