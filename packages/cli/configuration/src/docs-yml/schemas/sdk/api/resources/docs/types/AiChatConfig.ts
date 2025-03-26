@@ -6,6 +6,6 @@ import * as FernDocsConfig from "../../../index";
 
 export interface AiChatConfig {
     model?: FernDocsConfig.AiChatModel;
-    /** This is a system prompt to control your AI Chat in the documentation site. */
+    /** This is a system prompt that acts as context given to the LLM for AI chat. */
     systemPrompt?: string;
 }

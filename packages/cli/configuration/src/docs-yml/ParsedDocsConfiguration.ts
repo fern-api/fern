@@ -45,7 +45,7 @@ export interface ParsedDocsConfiguration {
     css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 
-    aiChat: AiChatConfig | undefined;
+    aiChatConfig: AiChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 }

@@ -364,6 +364,13 @@ export class DocsDefinitionResolver {
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const root = await this.toRootNode();
         const config: DocsV1Write.DocsConfig = {
+            aiChatConfig:
+                this.parsedDocsConfig.aiChatConfig != null
+                    ? {
+                          model: this.parsedDocsConfig.aiChatConfig.model,
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                      }
+                    : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
