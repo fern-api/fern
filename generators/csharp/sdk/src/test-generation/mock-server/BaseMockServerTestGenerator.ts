@@ -4,6 +4,7 @@ import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -116,7 +117,27 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                             clientOptionsArgument: csharp.instantiateClass({
                                 classReference: this.context.getClientOptionsClassReference(),
                                 arguments_: [
-                                    { name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") },
+                                    this.context.ir.environments?.environments._visit({
+                                        singleBaseUrl: () => ({
+                                            name: "BaseUrl",
+                                            assignment: csharp.codeblock("Server.Urls[0]")
+                                        }),
+                                        multipleBaseUrls: (value) => {
+                                            const environments = new MultiUrlEnvironmentGenerator({
+                                                context: this.context,
+                                                multiUrlEnvironments: value
+                                            });
+                                            return {
+                                                name: "Environment",
+                                                assignment: environments.generateSnippet(
+                                                    csharp.codeblock("Server.Urls[0]")
+                                                )
+                                            };
+                                        },
+                                        _other: () => {
+                                            throw new Error("Internal error; Unexpected environment type");
+                                        }
+                                    }) ?? { name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") },
                                     { name: "MaxRetries", assignment: csharp.codeblock("0") }
                                 ]
                             })

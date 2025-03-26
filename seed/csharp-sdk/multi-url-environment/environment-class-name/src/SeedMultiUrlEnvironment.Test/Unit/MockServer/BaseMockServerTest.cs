@@ -26,7 +26,11 @@ public class BaseMockServerTest
         // Initialize the Client
         Client = new SeedMultiUrlEnvironmentClient(
             "TOKEN",
-            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+            clientOptions: new ClientOptions
+            {
+                Environment = new CustomEnvironment { Ec2 = Server.Urls[0], S3 = Server.Urls[0] },
+                MaxRetries = 0,
+            }
         );
     }
 

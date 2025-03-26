@@ -88,7 +88,7 @@ public class AdditionalParametersTests
     }
 
     [Test]
-    public async Task SendRequestAsync_AdditionalQueryParameters_Merge()
+    public async SystemTask SendRequestAsync_AdditionalQueryParameters_Merge()
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
@@ -195,7 +195,7 @@ public class AdditionalParametersTests
     }
 
     [Test]
-    public async Task SendRequestAsync_AdditionalBodyProperties_DeepMerge()
+    public async SystemTask SendRequestAsync_AdditionalBodyProperties_DeepMerge()
     {
         const string expectedBody = """
             {

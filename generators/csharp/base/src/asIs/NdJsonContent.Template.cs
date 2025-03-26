@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
 
@@ -56,18 +57,18 @@ internal class NdJsonContent : HttpContent, IIsRetryableContent
         return false;
     }
 
-    protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context) =>
+    protected override SystemTask SerializeToStreamAsync(Stream stream, TransportContext? context) =>
         SerializeToStreamAsyncInternal(stream, CancellationToken.None);
 
 #if NET6_0_OR_GREATER
-    protected override Task SerializeToStreamAsync(
+    protected override SystemTask SerializeToStreamAsync(
         Stream stream,
         TransportContext? context,
         CancellationToken cancellationToken
     ) => SerializeToStreamAsyncInternal(stream, cancellationToken);
 #endif
 
-    private async Task SerializeToStreamAsyncInternal(
+    private async SystemTask SerializeToStreamAsyncInternal(
         Stream stream,
         CancellationToken cancellationToken
     )
