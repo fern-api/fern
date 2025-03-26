@@ -51,7 +51,7 @@ public abstract class AbstractClientGeneratorUtils {
 
     protected static final String RAW_CLIENT_NAME = "rawClient";
     protected static final String BODY_GETTER_NAME = "body";
-    private static final String WITH_RAW_RESPONSES = "withRawResponses";
+    private static final String WITH_RAW_RESPONSES = "withRawResponse";
 
     protected final ClientGeneratorContext generatorContext;
     private final TypeSpec.Builder implBuilder;
