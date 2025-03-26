@@ -3,70 +3,33 @@
  */
 package com.seed._extends;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed._extends.core.ClientOptions;
-import com.seed._extends.core.MediaTypes;
-import com.seed._extends.core.ObjectMappers;
 import com.seed._extends.core.RequestOptions;
-import com.seed._extends.core.SeedExtendsApiException;
-import com.seed._extends.core.SeedExtendsException;
 import com.seed._extends.requests.Inlined;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SeedExtendsClient {
     protected final ClientOptions clientOptions;
 
+    private final RawSeedExtendsClient rawClient;
+
     public SeedExtendsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawSeedExtendsClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawSeedExtendsClient withRawResponse() {
+        return this.rawClient;
     }
 
     public void extendedInlineRequestBody(Inlined request) {
-        extendedInlineRequestBody(request, null);
+        this.rawClient.extendedInlineRequestBody(request).body();
     }
 
     public void extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("extends")
-                .addPathSegments("extended-inline-request-body")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedExtendsException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExtendsApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedExtendsException("Network error executing HTTP request", e);
-        }
+        this.rawClient.extendedInlineRequestBody(request, requestOptions).body();
     }
 
     public static SeedExtendsClientBuilder builder() {

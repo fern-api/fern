@@ -459,6 +459,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty())));
     }
 
+    protected ClassName rawHttpResponseClassName() {
+        return clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getHttpResponseClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
+                        clientGeneratorContext.getCustomConfig());
+    }
+
     private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;

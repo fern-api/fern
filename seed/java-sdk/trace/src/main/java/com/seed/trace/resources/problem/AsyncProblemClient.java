@@ -3,43 +3,37 @@
  */
 package com.seed.trace.resources.problem;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.MediaTypes;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiException;
-import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
 import com.seed.trace.resources.problem.types.CreateProblemRequest;
 import com.seed.trace.resources.problem.types.CreateProblemResponse;
 import com.seed.trace.resources.problem.types.GetDefaultStarterFilesResponse;
 import com.seed.trace.resources.problem.types.UpdateProblemResponse;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncProblemClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawProblemClient rawClient;
+
     public AsyncProblemClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawProblemClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawProblemClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * Creates a problem
      */
     public CompletableFuture<CreateProblemResponse> createProblem(CreateProblemRequest request) {
-        return createProblem(request, null);
+        return this.rawClient.createProblem(request).thenApply(response -> response.body());
     }
 
     /**
@@ -47,63 +41,14 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<CreateProblemResponse> createProblem(
             CreateProblemRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("create")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<CreateProblemResponse> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), CreateProblemResponse.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.createProblem(request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Updates a problem
      */
     public CompletableFuture<UpdateProblemResponse> updateProblem(String problemId, CreateProblemRequest request) {
-        return updateProblem(problemId, request, null);
+        return this.rawClient.updateProblem(problemId, request).thenApply(response -> response.body());
     }
 
     /**
@@ -111,111 +56,21 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<UpdateProblemResponse> updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("update")
-                .addPathSegment(problemId)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<UpdateProblemResponse> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), UpdateProblemResponse.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.updateProblem(problemId, request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Soft deletes a problem
      */
     public CompletableFuture<Void> deleteProblem(String problemId) {
-        return deleteProblem(problemId, null);
+        return this.rawClient.deleteProblem(problemId).thenApply(response -> response.body());
     }
 
     /**
      * Soft deletes a problem
      */
     public CompletableFuture<Void> deleteProblem(String problemId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("delete")
-                .addPathSegment(problemId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.deleteProblem(problemId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -223,7 +78,7 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request) {
-        return getDefaultStarterFiles(request, null);
+        return this.rawClient.getDefaultStarterFiles(request).thenApply(response -> response.body());
     }
 
     /**
@@ -231,55 +86,6 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<GetDefaultStarterFilesResponse> getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problem-crud")
-                .addPathSegments("default-starter-files")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedTraceException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<GetDefaultStarterFilesResponse> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), GetDefaultStarterFilesResponse.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedTraceApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getDefaultStarterFiles(request, requestOptions).thenApply(response -> response.body());
     }
 }

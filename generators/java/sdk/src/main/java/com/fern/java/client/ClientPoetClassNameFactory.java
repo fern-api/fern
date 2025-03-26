@@ -100,6 +100,13 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return getCoreClassName(name);
     }
 
+    public ClassName getHttpResponseClassName(
+            String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
+        String name = customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                + "HttpResponse";
+        return getCoreClassName(name);
+    }
+
     public static String getBaseNamePrefix(String organization, String workspaceName) {
         return CasingUtils.convertKebabCaseToUpperCamelCase(organization)
                 + CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName);

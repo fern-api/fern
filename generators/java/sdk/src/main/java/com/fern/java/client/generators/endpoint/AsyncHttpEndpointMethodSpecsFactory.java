@@ -11,7 +11,7 @@ public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSp
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec) {
-        return new HttpEndpointMethodSpecs(
+        return new DefaultHttpEndpointMethodSpecs(
                 wrapReturnTypeInCompletableFuture(requestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(nonRequestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(noRequestBodyMethodSpec),

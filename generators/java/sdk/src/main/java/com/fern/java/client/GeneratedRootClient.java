@@ -18,7 +18,9 @@ package com.fern.java.client;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaFile;
 import java.util.List;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -26,6 +28,10 @@ import org.immutables.value.Value;
 public abstract class GeneratedRootClient extends AbstractGeneratedJavaFile {
 
     public abstract AbstractGeneratedJavaFile builderClass();
+
+    public abstract Optional<GeneratedJavaFile> rawClient();
+
+    public abstract Optional<AbstractGeneratedJavaFile> rawClientClass();
 
     public abstract List<GeneratedWrappedRequest> wrappedRequests();
 
