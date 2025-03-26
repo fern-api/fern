@@ -20,7 +20,7 @@ public class Ec2Client {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawEc2Client withRawResponses() {
+    public RawEc2Client withRawResponse() {
         return this.rawClient;
     }
 

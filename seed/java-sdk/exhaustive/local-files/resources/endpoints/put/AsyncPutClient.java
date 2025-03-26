@@ -14,17 +14,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncPutClient {
   protected final ClientOptions clientOptions;
 
-  private final RawAsyncPutClient rawClient;
+  private final AsyncRawPutClient rawClient;
 
   public AsyncPutClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawAsyncPutClient(clientOptions);
+    this.rawClient = new AsyncRawPutClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawAsyncPutClient withRawResponses() {
+  public AsyncRawPutClient withRawResponse() {
     return this.rawClient;
   }
 

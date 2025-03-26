@@ -29,7 +29,7 @@ public class V2Client {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawV2Client withRawResponses() {
+    public RawV2Client withRawResponse() {
         return this.rawClient;
     }
 

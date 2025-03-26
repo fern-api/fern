@@ -20,7 +20,7 @@ public class ContentTypeClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawContentTypeClient withRawResponses() {
+    public RawContentTypeClient withRawResponse() {
         return this.rawClient;
     }
 

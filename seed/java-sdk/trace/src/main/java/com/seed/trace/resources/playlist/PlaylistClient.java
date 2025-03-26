@@ -25,7 +25,7 @@ public class PlaylistClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPlaylistClient withRawResponses() {
+    public RawPlaylistClient withRawResponse() {
         return this.rawClient;
     }
 

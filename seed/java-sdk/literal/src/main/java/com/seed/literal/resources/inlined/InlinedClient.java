@@ -21,7 +21,7 @@ public class InlinedClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawInlinedClient withRawResponses() {
+    public RawInlinedClient withRawResponse() {
         return this.rawClient;
     }
 

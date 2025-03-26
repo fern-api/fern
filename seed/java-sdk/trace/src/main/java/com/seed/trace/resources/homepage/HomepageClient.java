@@ -20,7 +20,7 @@ public class HomepageClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawHomepageClient withRawResponses() {
+    public RawHomepageClient withRawResponse() {
         return this.rawClient;
     }
 

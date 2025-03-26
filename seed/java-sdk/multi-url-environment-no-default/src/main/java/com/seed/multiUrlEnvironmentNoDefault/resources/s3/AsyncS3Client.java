@@ -11,17 +11,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncS3Client {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncS3Client rawClient;
+    private final AsyncRawS3Client rawClient;
 
     public AsyncS3Client(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncS3Client(clientOptions);
+        this.rawClient = new AsyncRawS3Client(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncS3Client withRawResponses() {
+    public AsyncRawS3Client withRawResponse() {
         return this.rawClient;
     }
 

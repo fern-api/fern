@@ -16,20 +16,20 @@ import java.util.function.Supplier;
 public class AsyncEventsClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncEventsClient rawClient;
+    private final AsyncRawEventsClient rawClient;
 
     protected final Supplier<AsyncMetadataClient> metadataClient;
 
     public AsyncEventsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncEventsClient(clientOptions);
+        this.rawClient = new AsyncRawEventsClient(clientOptions);
         this.metadataClient = Suppliers.memoize(() -> new AsyncMetadataClient(clientOptions));
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncEventsClient withRawResponses() {
+    public AsyncRawEventsClient withRawResponse() {
         return this.rawClient;
     }
 

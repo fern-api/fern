@@ -26,7 +26,7 @@ public class SeedPackageYmlClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedPackageYmlClient withRawResponses() {
+    public RawSeedPackageYmlClient withRawResponse() {
         return this.rawClient;
     }
 

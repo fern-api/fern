@@ -11,17 +11,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncSinglePropertyClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSinglePropertyClient rawClient;
+    private final AsyncRawSinglePropertyClient rawClient;
 
     public AsyncSinglePropertyClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSinglePropertyClient(clientOptions);
+        this.rawClient = new AsyncRawSinglePropertyClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSinglePropertyClient withRawResponses() {
+    public AsyncRawSinglePropertyClient withRawResponse() {
         return this.rawClient;
     }
 

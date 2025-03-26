@@ -21,7 +21,7 @@ public class ReferenceClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawReferenceClient withRawResponses() {
+    public RawReferenceClient withRawResponse() {
         return this.rawClient;
     }
 

@@ -25,7 +25,7 @@ public class FolderClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawFolderClient withRawResponses() {
+    public RawFolderClient withRawResponse() {
         return this.rawClient;
     }
 

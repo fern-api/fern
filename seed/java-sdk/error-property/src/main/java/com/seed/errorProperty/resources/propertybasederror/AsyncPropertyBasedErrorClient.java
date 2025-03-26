@@ -10,17 +10,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncPropertyBasedErrorClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncPropertyBasedErrorClient rawClient;
+    private final AsyncRawPropertyBasedErrorClient rawClient;
 
     public AsyncPropertyBasedErrorClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncPropertyBasedErrorClient(clientOptions);
+        this.rawClient = new AsyncRawPropertyBasedErrorClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncPropertyBasedErrorClient withRawResponses() {
+    public AsyncRawPropertyBasedErrorClient withRawResponse() {
         return this.rawClient;
     }
 

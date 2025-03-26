@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncBigunionClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncBigunionClient rawClient;
+    private final AsyncRawBigunionClient rawClient;
 
     public AsyncBigunionClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncBigunionClient(clientOptions);
+        this.rawClient = new AsyncRawBigunionClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncBigunionClient withRawResponses() {
+    public AsyncRawBigunionClient withRawResponse() {
         return this.rawClient;
     }
 

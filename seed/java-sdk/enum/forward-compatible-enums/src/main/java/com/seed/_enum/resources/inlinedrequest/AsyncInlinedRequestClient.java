@@ -11,17 +11,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncInlinedRequestClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncInlinedRequestClient rawClient;
+    private final AsyncRawInlinedRequestClient rawClient;
 
     public AsyncInlinedRequestClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncInlinedRequestClient(clientOptions);
+        this.rawClient = new AsyncRawInlinedRequestClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncInlinedRequestClient withRawResponses() {
+    public AsyncRawInlinedRequestClient withRawResponse() {
         return this.rawClient;
     }
 

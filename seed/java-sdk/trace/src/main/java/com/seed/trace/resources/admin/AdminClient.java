@@ -28,7 +28,7 @@ public class AdminClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAdminClient withRawResponses() {
+    public RawAdminClient withRawResponse() {
         return this.rawClient;
     }
 

@@ -20,7 +20,7 @@ public class S3Client {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawS3Client withRawResponses() {
+    public RawS3Client withRawResponse() {
         return this.rawClient;
     }
 

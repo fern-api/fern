@@ -14,17 +14,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncDeepCursorPathClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncDeepCursorPathClient rawClient;
+    private final AsyncRawDeepCursorPathClient rawClient;
 
     public AsyncDeepCursorPathClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncDeepCursorPathClient(clientOptions);
+        this.rawClient = new AsyncRawDeepCursorPathClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncDeepCursorPathClient withRawResponses() {
+    public AsyncRawDeepCursorPathClient withRawResponse() {
         return this.rawClient;
     }
 

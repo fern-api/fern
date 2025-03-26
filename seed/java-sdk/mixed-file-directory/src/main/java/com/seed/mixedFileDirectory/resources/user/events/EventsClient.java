@@ -28,7 +28,7 @@ public class EventsClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawEventsClient withRawResponses() {
+    public RawEventsClient withRawResponse() {
         return this.rawClient;
     }
 

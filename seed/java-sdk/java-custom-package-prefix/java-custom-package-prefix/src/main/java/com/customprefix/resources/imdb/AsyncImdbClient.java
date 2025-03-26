@@ -12,17 +12,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncImdbClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncImdbClient rawClient;
+    private final AsyncRawImdbClient rawClient;
 
     public AsyncImdbClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncImdbClient(clientOptions);
+        this.rawClient = new AsyncRawImdbClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncImdbClient withRawResponses() {
+    public AsyncRawImdbClient withRawResponse() {
         return this.rawClient;
     }
 

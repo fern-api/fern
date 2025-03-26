@@ -22,7 +22,7 @@ public class SeedValidationClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedValidationClient withRawResponses() {
+    public RawSeedValidationClient withRawResponse() {
         return this.rawClient;
     }
 

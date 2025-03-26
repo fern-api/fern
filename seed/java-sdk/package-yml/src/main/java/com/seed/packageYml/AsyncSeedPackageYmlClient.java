@@ -14,20 +14,20 @@ import java.util.function.Supplier;
 public class AsyncSeedPackageYmlClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSeedPackageYmlClient rawClient;
+    private final AsyncRawSeedPackageYmlClient rawClient;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
 
     public AsyncSeedPackageYmlClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSeedPackageYmlClient(clientOptions);
+        this.rawClient = new AsyncRawSeedPackageYmlClient(clientOptions);
         this.serviceClient = Suppliers.memoize(() -> new AsyncServiceClient(clientOptions));
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSeedPackageYmlClient withRawResponses() {
+    public AsyncRawSeedPackageYmlClient withRawResponse() {
         return this.rawClient;
     }
 

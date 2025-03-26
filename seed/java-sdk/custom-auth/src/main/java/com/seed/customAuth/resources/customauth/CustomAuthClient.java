@@ -19,7 +19,7 @@ public class CustomAuthClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawCustomAuthClient withRawResponses() {
+    public RawCustomAuthClient withRawResponse() {
         return this.rawClient;
     }
 

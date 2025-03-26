@@ -21,7 +21,7 @@ public class OptionalClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawOptionalClient withRawResponses() {
+    public RawOptionalClient withRawResponse() {
         return this.rawClient;
     }
 

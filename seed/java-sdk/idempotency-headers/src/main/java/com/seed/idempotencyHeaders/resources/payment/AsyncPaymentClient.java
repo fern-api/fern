@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncPaymentClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncPaymentClient rawClient;
+    private final AsyncRawPaymentClient rawClient;
 
     public AsyncPaymentClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncPaymentClient(clientOptions);
+        this.rawClient = new AsyncRawPaymentClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncPaymentClient withRawResponses() {
+    public AsyncRawPaymentClient withRawResponse() {
         return this.rawClient;
     }
 

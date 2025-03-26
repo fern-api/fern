@@ -22,7 +22,7 @@ public class MigrationClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawMigrationClient withRawResponses() {
+    public RawMigrationClient withRawResponse() {
         return this.rawClient;
     }
 

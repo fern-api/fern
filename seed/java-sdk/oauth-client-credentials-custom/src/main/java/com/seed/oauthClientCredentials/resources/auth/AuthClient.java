@@ -22,7 +22,7 @@ public class AuthClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAuthClient withRawResponses() {
+    public RawAuthClient withRawResponse() {
         return this.rawClient;
     }
 

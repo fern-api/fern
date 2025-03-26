@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncComplexClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncComplexClient rawClient;
+    private final AsyncRawComplexClient rawClient;
 
     public AsyncComplexClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncComplexClient(clientOptions);
+        this.rawClient = new AsyncRawComplexClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncComplexClient withRawResponses() {
+    public AsyncRawComplexClient withRawResponse() {
         return this.rawClient;
     }
 

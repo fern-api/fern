@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncNoAuthClient {
   protected final ClientOptions clientOptions;
 
-  private final RawAsyncNoAuthClient rawClient;
+  private final AsyncRawNoAuthClient rawClient;
 
   public AsyncNoAuthClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawAsyncNoAuthClient(clientOptions);
+    this.rawClient = new AsyncRawNoAuthClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawAsyncNoAuthClient withRawResponses() {
+  public AsyncRawNoAuthClient withRawResponse() {
     return this.rawClient;
   }
 

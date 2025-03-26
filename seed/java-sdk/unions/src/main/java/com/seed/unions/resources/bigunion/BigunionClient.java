@@ -22,7 +22,7 @@ public class BigunionClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawBigunionClient withRawResponses() {
+    public RawBigunionClient withRawResponse() {
         return this.rawClient;
     }
 

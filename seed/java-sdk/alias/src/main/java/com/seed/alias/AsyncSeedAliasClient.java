@@ -10,17 +10,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncSeedAliasClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSeedAliasClient rawClient;
+    private final AsyncRawSeedAliasClient rawClient;
 
     public AsyncSeedAliasClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSeedAliasClient(clientOptions);
+        this.rawClient = new AsyncRawSeedAliasClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSeedAliasClient withRawResponses() {
+    public AsyncRawSeedAliasClient withRawResponse() {
         return this.rawClient;
     }
 

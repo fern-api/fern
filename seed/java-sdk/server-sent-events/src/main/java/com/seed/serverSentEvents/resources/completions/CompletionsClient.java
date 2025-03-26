@@ -21,7 +21,7 @@ public class CompletionsClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawCompletionsClient withRawResponses() {
+    public RawCompletionsClient withRawResponse() {
         return this.rawClient;
     }
 

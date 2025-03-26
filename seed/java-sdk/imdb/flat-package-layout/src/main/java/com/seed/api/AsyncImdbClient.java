@@ -22,7 +22,7 @@ public class AsyncImdbClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public AsyncRawImdbClient withRawResponses() {
+    public AsyncRawImdbClient withRawResponse() {
         return this.rawClient;
     }
 

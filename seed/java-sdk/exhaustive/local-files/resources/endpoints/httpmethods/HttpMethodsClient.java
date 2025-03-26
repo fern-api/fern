@@ -23,7 +23,7 @@ public class HttpMethodsClient {
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawHttpMethodsClient withRawResponses() {
+  public RawHttpMethodsClient withRawResponse() {
     return this.rawClient;
   }
 

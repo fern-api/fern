@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public class AsyncSeedExamplesClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSeedExamplesClient rawClient;
+    private final AsyncRawSeedExamplesClient rawClient;
 
     protected final Supplier<AsyncFileClient> fileClient;
 
@@ -27,7 +27,7 @@ public class AsyncSeedExamplesClient {
 
     public AsyncSeedExamplesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSeedExamplesClient(clientOptions);
+        this.rawClient = new AsyncRawSeedExamplesClient(clientOptions);
         this.fileClient = Suppliers.memoize(() -> new AsyncFileClient(clientOptions));
         this.healthClient = Suppliers.memoize(() -> new AsyncHealthClient(clientOptions));
         this.serviceClient = Suppliers.memoize(() -> new AsyncServiceClient(clientOptions));
@@ -36,7 +36,7 @@ public class AsyncSeedExamplesClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSeedExamplesClient withRawResponses() {
+    public AsyncRawSeedExamplesClient withRawResponse() {
         return this.rawClient;
     }
 

@@ -21,7 +21,7 @@ public class QueryClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawQueryClient withRawResponses() {
+    public RawQueryClient withRawResponse() {
         return this.rawClient;
     }
 

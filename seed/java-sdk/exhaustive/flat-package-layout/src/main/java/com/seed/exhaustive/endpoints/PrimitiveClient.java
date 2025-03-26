@@ -21,7 +21,7 @@ public class PrimitiveClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPrimitiveClient withRawResponses() {
+    public RawPrimitiveClient withRawResponse() {
         return this.rawClient;
     }
 

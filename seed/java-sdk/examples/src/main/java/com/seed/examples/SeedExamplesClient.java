@@ -35,7 +35,7 @@ public class SeedExamplesClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedExamplesClient withRawResponses() {
+    public RawSeedExamplesClient withRawResponse() {
         return this.rawClient;
     }
 

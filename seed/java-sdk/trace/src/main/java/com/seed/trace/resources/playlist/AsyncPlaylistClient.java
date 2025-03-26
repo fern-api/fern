@@ -16,17 +16,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncPlaylistClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncPlaylistClient rawClient;
+    private final AsyncRawPlaylistClient rawClient;
 
     public AsyncPlaylistClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncPlaylistClient(clientOptions);
+        this.rawClient = new AsyncRawPlaylistClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncPlaylistClient withRawResponses() {
+    public AsyncRawPlaylistClient withRawResponse() {
         return this.rawClient;
     }
 

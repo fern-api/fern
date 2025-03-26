@@ -13,20 +13,20 @@ import java.util.function.Supplier;
 public class AsyncFolderClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncFolderClient rawClient;
+    private final AsyncRawFolderClient rawClient;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
 
     public AsyncFolderClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncFolderClient(clientOptions);
+        this.rawClient = new AsyncRawFolderClient(clientOptions);
         this.serviceClient = Suppliers.memoize(() -> new AsyncServiceClient(clientOptions));
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncFolderClient withRawResponses() {
+    public AsyncRawFolderClient withRawResponse() {
         return this.rawClient;
     }
 

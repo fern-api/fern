@@ -19,7 +19,7 @@ public class NoAuthClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawNoAuthClient withRawResponses() {
+    public RawNoAuthClient withRawResponse() {
         return this.rawClient;
     }
 

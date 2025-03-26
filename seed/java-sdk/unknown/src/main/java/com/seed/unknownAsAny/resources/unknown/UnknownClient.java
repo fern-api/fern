@@ -21,7 +21,7 @@ public class UnknownClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawUnknownClient withRawResponses() {
+    public RawUnknownClient withRawResponse() {
         return this.rawClient;
     }
 

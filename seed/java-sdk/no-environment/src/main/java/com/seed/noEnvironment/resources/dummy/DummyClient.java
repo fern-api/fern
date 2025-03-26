@@ -19,7 +19,7 @@ public class DummyClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawDummyClient withRawResponses() {
+    public RawDummyClient withRawResponse() {
         return this.rawClient;
     }
 

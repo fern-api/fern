@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public class AsyncV2Client {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncV2Client rawClient;
+    private final AsyncRawV2Client rawClient;
 
     protected final Supplier<AsyncProblemClient> problemClient;
 
@@ -22,7 +22,7 @@ public class AsyncV2Client {
 
     public AsyncV2Client(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncV2Client(clientOptions);
+        this.rawClient = new AsyncRawV2Client(clientOptions);
         this.problemClient = Suppliers.memoize(() -> new AsyncProblemClient(clientOptions));
         this.v3Client = Suppliers.memoize(() -> new AsyncV3Client(clientOptions));
     }
@@ -30,7 +30,7 @@ public class AsyncV2Client {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncV2Client withRawResponses() {
+    public AsyncRawV2Client withRawResponse() {
         return this.rawClient;
     }
 

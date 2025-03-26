@@ -20,7 +20,7 @@ public class ReqWithHeadersClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawReqWithHeadersClient withRawResponses() {
+    public RawReqWithHeadersClient withRawResponse() {
         return this.rawClient;
     }
 

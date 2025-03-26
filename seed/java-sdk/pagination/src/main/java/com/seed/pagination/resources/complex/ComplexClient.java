@@ -22,7 +22,7 @@ public class ComplexClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawComplexClient withRawResponses() {
+    public RawComplexClient withRawResponse() {
         return this.rawClient;
     }
 

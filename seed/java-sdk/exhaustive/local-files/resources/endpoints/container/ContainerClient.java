@@ -26,7 +26,7 @@ public class ContainerClient {
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawContainerClient withRawResponses() {
+  public RawContainerClient withRawResponse() {
     return this.rawClient;
   }
 

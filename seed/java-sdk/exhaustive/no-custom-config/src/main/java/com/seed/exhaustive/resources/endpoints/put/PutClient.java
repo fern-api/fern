@@ -21,7 +21,7 @@ public class PutClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPutClient withRawResponses() {
+    public RawPutClient withRawResponse() {
         return this.rawClient;
     }
 

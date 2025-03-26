@@ -21,7 +21,7 @@ public class PathParamClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPathParamClient withRawResponses() {
+    public RawPathParamClient withRawResponse() {
         return this.rawClient;
     }
 

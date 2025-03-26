@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncSeedValidationClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSeedValidationClient rawClient;
+    private final AsyncRawSeedValidationClient rawClient;
 
     public AsyncSeedValidationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSeedValidationClient(clientOptions);
+        this.rawClient = new AsyncRawSeedValidationClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSeedValidationClient withRawResponses() {
+    public AsyncRawSeedValidationClient withRawResponse() {
         return this.rawClient;
     }
 

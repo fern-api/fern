@@ -14,17 +14,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncSubmissionClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSubmissionClient rawClient;
+    private final AsyncRawSubmissionClient rawClient;
 
     public AsyncSubmissionClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSubmissionClient(clientOptions);
+        this.rawClient = new AsyncRawSubmissionClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSubmissionClient withRawResponses() {
+    public AsyncRawSubmissionClient withRawResponse() {
         return this.rawClient;
     }
 

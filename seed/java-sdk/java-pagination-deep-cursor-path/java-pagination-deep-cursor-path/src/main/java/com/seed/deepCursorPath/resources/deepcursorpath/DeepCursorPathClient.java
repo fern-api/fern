@@ -23,7 +23,7 @@ public class DeepCursorPathClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawDeepCursorPathClient withRawResponses() {
+    public RawDeepCursorPathClient withRawResponse() {
         return this.rawClient;
     }
 

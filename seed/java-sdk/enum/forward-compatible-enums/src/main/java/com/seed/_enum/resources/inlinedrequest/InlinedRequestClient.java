@@ -20,7 +20,7 @@ public class InlinedRequestClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawInlinedRequestClient withRawResponses() {
+    public RawInlinedRequestClient withRawResponse() {
         return this.rawClient;
     }
 

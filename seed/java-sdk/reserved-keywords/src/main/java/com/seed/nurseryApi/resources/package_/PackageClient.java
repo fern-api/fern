@@ -20,7 +20,7 @@ public class PackageClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPackageClient withRawResponses() {
+    public RawPackageClient withRawResponse() {
         return this.rawClient;
     }
 

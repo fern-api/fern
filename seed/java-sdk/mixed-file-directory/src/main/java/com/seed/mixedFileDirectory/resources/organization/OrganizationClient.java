@@ -21,7 +21,7 @@ public class OrganizationClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawOrganizationClient withRawResponses() {
+    public RawOrganizationClient withRawResponse() {
         return this.rawClient;
     }
 

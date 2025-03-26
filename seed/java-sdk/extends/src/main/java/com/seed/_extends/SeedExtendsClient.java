@@ -20,7 +20,7 @@ public class SeedExtendsClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedExtendsClient withRawResponses() {
+    public RawSeedExtendsClient withRawResponse() {
         return this.rawClient;
     }
 

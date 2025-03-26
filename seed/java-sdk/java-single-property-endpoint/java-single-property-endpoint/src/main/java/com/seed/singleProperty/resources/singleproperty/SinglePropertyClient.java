@@ -20,7 +20,7 @@ public class SinglePropertyClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSinglePropertyClient withRawResponses() {
+    public RawSinglePropertyClient withRawResponse() {
         return this.rawClient;
     }
 

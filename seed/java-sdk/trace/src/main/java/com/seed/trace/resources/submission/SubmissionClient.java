@@ -23,7 +23,7 @@ public class SubmissionClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSubmissionClient withRawResponses() {
+    public RawSubmissionClient withRawResponse() {
         return this.rawClient;
     }
 

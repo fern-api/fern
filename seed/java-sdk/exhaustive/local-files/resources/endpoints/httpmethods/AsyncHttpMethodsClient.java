@@ -15,17 +15,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncHttpMethodsClient {
   protected final ClientOptions clientOptions;
 
-  private final RawAsyncHttpMethodsClient rawClient;
+  private final AsyncRawHttpMethodsClient rawClient;
 
   public AsyncHttpMethodsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawAsyncHttpMethodsClient(clientOptions);
+    this.rawClient = new AsyncRawHttpMethodsClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawAsyncHttpMethodsClient withRawResponses() {
+  public AsyncRawHttpMethodsClient withRawResponse() {
     return this.rawClient;
   }
 

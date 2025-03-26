@@ -20,7 +20,7 @@ public class PathClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPathClient withRawResponses() {
+    public RawPathClient withRawResponse() {
         return this.rawClient;
     }
 

@@ -19,17 +19,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncAdminClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncAdminClient rawClient;
+    private final AsyncRawAdminClient rawClient;
 
     public AsyncAdminClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncAdminClient(clientOptions);
+        this.rawClient = new AsyncRawAdminClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncAdminClient withRawResponses() {
+    public AsyncRawAdminClient withRawResponse() {
         return this.rawClient;
     }
 

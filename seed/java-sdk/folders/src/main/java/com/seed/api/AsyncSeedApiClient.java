@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public class AsyncSeedApiClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncSeedApiClient rawClient;
+    private final AsyncRawSeedApiClient rawClient;
 
     protected final Supplier<AsyncAClient> aClient;
 
@@ -22,7 +22,7 @@ public class AsyncSeedApiClient {
 
     public AsyncSeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncSeedApiClient(clientOptions);
+        this.rawClient = new AsyncRawSeedApiClient(clientOptions);
         this.aClient = Suppliers.memoize(() -> new AsyncAClient(clientOptions));
         this.folderClient = Suppliers.memoize(() -> new AsyncFolderClient(clientOptions));
     }
@@ -30,7 +30,7 @@ public class AsyncSeedApiClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncSeedApiClient withRawResponses() {
+    public AsyncRawSeedApiClient withRawResponse() {
         return this.rawClient;
     }
 

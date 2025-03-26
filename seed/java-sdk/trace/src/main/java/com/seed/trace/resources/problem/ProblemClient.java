@@ -24,7 +24,7 @@ public class ProblemClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawProblemClient withRawResponses() {
+    public RawProblemClient withRawResponse() {
         return this.rawClient;
     }
 

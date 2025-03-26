@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncMigrationClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncMigrationClient rawClient;
+    private final AsyncRawMigrationClient rawClient;
 
     public AsyncMigrationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncMigrationClient(clientOptions);
+        this.rawClient = new AsyncRawMigrationClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncMigrationClient withRawResponses() {
+    public AsyncRawMigrationClient withRawResponse() {
         return this.rawClient;
     }
 

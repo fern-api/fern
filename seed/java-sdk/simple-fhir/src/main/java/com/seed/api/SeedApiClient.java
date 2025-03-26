@@ -20,7 +20,7 @@ public class SeedApiClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedApiClient withRawResponses() {
+    public RawSeedApiClient withRawResponse() {
         return this.rawClient;
     }
 

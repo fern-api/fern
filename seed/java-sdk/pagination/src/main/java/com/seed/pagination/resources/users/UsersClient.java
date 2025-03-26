@@ -35,7 +35,7 @@ public class UsersClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawUsersClient withRawResponses() {
+    public RawUsersClient withRawResponse() {
         return this.rawClient;
     }
 

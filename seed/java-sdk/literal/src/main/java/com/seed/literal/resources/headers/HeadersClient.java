@@ -21,7 +21,7 @@ public class HeadersClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawHeadersClient withRawResponses() {
+    public RawHeadersClient withRawResponse() {
         return this.rawClient;
     }
 

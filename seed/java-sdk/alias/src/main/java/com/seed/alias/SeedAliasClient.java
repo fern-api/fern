@@ -19,7 +19,7 @@ public class SeedAliasClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedAliasClient withRawResponses() {
+    public RawSeedAliasClient withRawResponse() {
         return this.rawClient;
     }
 

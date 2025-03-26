@@ -12,17 +12,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncEnumClient {
   protected final ClientOptions clientOptions;
 
-  private final RawAsyncEnumClient rawClient;
+  private final AsyncRawEnumClient rawClient;
 
   public AsyncEnumClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawAsyncEnumClient(clientOptions);
+    this.rawClient = new AsyncRawEnumClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawAsyncEnumClient withRawResponses() {
+  public AsyncRawEnumClient withRawResponse() {
     return this.rawClient;
   }
 

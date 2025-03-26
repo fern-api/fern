@@ -20,7 +20,7 @@ public class NoReqBodyClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawNoReqBodyClient withRawResponses() {
+    public RawNoReqBodyClient withRawResponse() {
         return this.rawClient;
     }
 

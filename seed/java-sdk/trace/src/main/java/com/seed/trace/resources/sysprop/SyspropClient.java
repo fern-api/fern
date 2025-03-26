@@ -21,7 +21,7 @@ public class SyspropClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSyspropClient withRawResponses() {
+    public RawSyspropClient withRawResponse() {
         return this.rawClient;
     }
 

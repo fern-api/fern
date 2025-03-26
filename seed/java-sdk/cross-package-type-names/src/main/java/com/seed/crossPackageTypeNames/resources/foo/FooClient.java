@@ -21,7 +21,7 @@ public class FooClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawFooClient withRawResponses() {
+    public RawFooClient withRawResponse() {
         return this.rawClient;
     }
 

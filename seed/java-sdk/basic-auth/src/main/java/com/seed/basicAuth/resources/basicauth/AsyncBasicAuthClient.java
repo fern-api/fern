@@ -10,17 +10,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncBasicAuthClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncBasicAuthClient rawClient;
+    private final AsyncRawBasicAuthClient rawClient;
 
     public AsyncBasicAuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncBasicAuthClient(clientOptions);
+        this.rawClient = new AsyncRawBasicAuthClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncBasicAuthClient withRawResponses() {
+    public AsyncRawBasicAuthClient withRawResponse() {
         return this.rawClient;
     }
 

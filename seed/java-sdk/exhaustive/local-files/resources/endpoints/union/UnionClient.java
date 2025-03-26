@@ -21,7 +21,7 @@ public class UnionClient {
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawUnionClient withRawResponses() {
+  public RawUnionClient withRawResponse() {
     return this.rawClient;
   }
 

@@ -22,7 +22,7 @@ public class PaymentClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPaymentClient withRawResponses() {
+    public RawPaymentClient withRawResponse() {
         return this.rawClient;
     }
 

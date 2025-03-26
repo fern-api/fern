@@ -21,7 +21,7 @@ public class ImdbClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawImdbClient withRawResponses() {
+    public RawImdbClient withRawResponse() {
         return this.rawClient;
     }
 

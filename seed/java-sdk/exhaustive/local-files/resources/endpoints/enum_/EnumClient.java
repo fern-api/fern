@@ -21,7 +21,7 @@ public class EnumClient {
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawEnumClient withRawResponses() {
+  public RawEnumClient withRawResponse() {
     return this.rawClient;
   }
 

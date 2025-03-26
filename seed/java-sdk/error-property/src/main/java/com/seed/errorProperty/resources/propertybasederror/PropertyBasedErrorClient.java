@@ -19,7 +19,7 @@ public class PropertyBasedErrorClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawPropertyBasedErrorClient withRawResponses() {
+    public RawPropertyBasedErrorClient withRawResponse() {
         return this.rawClient;
     }
 

@@ -19,7 +19,7 @@ public class SeedLicenseClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedLicenseClient withRawResponses() {
+    public RawSeedLicenseClient withRawResponse() {
         return this.rawClient;
     }
 

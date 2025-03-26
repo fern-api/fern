@@ -23,7 +23,7 @@ public class SeedObjectClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawSeedObjectClient withRawResponses() {
+    public RawSeedObjectClient withRawResponse() {
         return this.rawClient;
     }
 

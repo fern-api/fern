@@ -19,17 +19,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncParamsClient {
   protected final ClientOptions clientOptions;
 
-  private final RawAsyncParamsClient rawClient;
+  private final AsyncRawParamsClient rawClient;
 
   public AsyncParamsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawAsyncParamsClient(clientOptions);
+    this.rawClient = new AsyncRawParamsClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawAsyncParamsClient withRawResponses() {
+  public AsyncRawParamsClient withRawResponse() {
     return this.rawClient;
   }
 

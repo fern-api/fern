@@ -15,17 +15,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncNullableClient {
     protected final ClientOptions clientOptions;
 
-    private final RawAsyncNullableClient rawClient;
+    private final AsyncRawNullableClient rawClient;
 
     public AsyncNullableClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.rawClient = new RawAsyncNullableClient(clientOptions);
+        this.rawClient = new AsyncRawNullableClient(clientOptions);
     }
 
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawAsyncNullableClient withRawResponses() {
+    public AsyncRawNullableClient withRawResponse() {
         return this.rawClient;
     }
 

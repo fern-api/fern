@@ -24,7 +24,7 @@ public class NullableClient {
     /**
      * Get responses with HTTP metadata like headers
      */
-    public RawNullableClient withRawResponses() {
+    public RawNullableClient withRawResponse() {
         return this.rawClient;
     }
 
