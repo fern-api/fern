@@ -31,8 +31,7 @@ public class GetWithHeaderTest : BaseMockServerTest
             );
 
         var response = await Client.Service.GetWithHeaderAsync(
-            new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" },
-            RequestOptions
+            new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

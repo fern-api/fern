@@ -262,6 +262,9 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      use-bytes-for-binary-response:
+        type: optional<boolean>
+        docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.
       default-form-parameter-encoding:
         type: optional<FormParameterEncoding>
         docs: The default encoding of form parameters. Defaults to JSON.

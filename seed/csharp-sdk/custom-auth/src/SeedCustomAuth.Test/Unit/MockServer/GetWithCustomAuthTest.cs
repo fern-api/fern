@@ -23,7 +23,7 @@ public class GetWithCustomAuthTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.CustomAuth.GetWithCustomAuthAsync(RequestOptions);
+        var response = await Client.CustomAuth.GetWithCustomAuthAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

@@ -23,7 +23,7 @@ public class PostWithNoRequestBodyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.NoReqBody.PostWithNoRequestBodyAsync(RequestOptions);
+        var response = await Client.NoReqBody.PostWithNoRequestBodyAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

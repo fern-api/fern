@@ -50,6 +50,7 @@ export * from "./FileSchema";
 export * from "./MultipartSchema";
 export * from "./Response";
 export * from "./FileResponse";
+export * from "./BytesResponse";
 export * from "./TextResponse";
 export * from "./JsonResponse";
 export * from "./Schema";

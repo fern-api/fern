@@ -38,8 +38,7 @@ public class GetAndReturnSetOfPrimitivesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
-            new HashSet<string>() { "string" },
-            RequestOptions
+            new HashSet<string>() { "string" }
         );
         Assert.That(
             response,

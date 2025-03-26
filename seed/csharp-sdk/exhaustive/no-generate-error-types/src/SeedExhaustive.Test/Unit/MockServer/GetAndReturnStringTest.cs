@@ -33,10 +33,7 @@ public class GetAndReturnStringTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string",
-            RequestOptions
-        );
+        var response = await Client.Endpoints.Primitive.GetAndReturnStringAsync("string");
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

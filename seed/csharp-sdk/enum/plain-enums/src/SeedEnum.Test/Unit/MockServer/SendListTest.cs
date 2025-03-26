@@ -31,8 +31,7 @@ public class SendListTest : BaseMockServerTest
                         MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
                         MaybeOperandOrColor = [Color.Red],
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

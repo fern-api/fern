@@ -31,8 +31,7 @@ public class SendTest : BaseMockServerTest
                         MaybeOperand = Operand.GreaterThan,
                         OperandOrColor = Color.Red,
                         MaybeOperandOrColor = Color.Red,
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }
@@ -58,8 +57,7 @@ public class SendTest : BaseMockServerTest
                     {
                         Operand = Operand.GreaterThan,
                         OperandOrColor = Color.Red,
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

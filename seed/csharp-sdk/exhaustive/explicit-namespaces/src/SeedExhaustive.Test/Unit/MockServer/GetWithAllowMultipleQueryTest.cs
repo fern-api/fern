@@ -23,8 +23,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-                    new GetWithMultipleQuery { Query = ["query"], Number = [1] },
-                    RequestOptions
+                    new GetWithMultipleQuery { Query = ["query"], Number = [1] }
                 )
         );
     }

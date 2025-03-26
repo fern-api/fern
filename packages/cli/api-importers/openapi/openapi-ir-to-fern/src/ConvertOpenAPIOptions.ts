@@ -35,6 +35,11 @@ export interface ConvertOpenAPIOptions {
      * If true, the converter will include path parameters in the in-lined request.
      */
     inlinePathParameters: boolean;
+
+    /**
+     * If true, the converter will use the `bytes` type for binary responses.
+     */
+    useBytesForBinaryResponse: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -44,7 +49,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectReadonlySchemas: false,
     respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: false
+    inlinePathParameters: false,
+    useBytesForBinaryResponse: false
 };
 
 export function getConvertOptions({
@@ -82,6 +88,10 @@ export function getConvertOptions({
         inlinePathParameters:
             overrides?.inlinePathParameters ??
             options?.inlinePathParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters,
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse
     };
 }

@@ -12,6 +12,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
@@ -217,13 +218,15 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         errorCollector,
         breadcrumbs,
         group,
-        method
+        method,
+        streamingExtension
     }: {
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
+        streamingExtension: FernStreamingExtension.Output | undefined;
     }): Promise<ConvertedResponseBody | undefined> {
         if (this.operation.responses == null) {
             return undefined;
@@ -254,7 +257,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 responseBody: resolvedResponse,
                 group: group ?? [],
                 method,
-                statusCode
+                statusCode,
+                streamingExtension
             });
             const convertedResponseBody = await responseBodyConverter.convert({ context, errorCollector });
             if (convertedResponseBody != null) {

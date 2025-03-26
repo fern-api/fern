@@ -36,8 +36,7 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
-            new GetEventMetadataRequest { Id = "id" },
-            RequestOptions
+            new GetEventMetadataRequest { Id = "id" }
         );
         Assert.That(
             response,

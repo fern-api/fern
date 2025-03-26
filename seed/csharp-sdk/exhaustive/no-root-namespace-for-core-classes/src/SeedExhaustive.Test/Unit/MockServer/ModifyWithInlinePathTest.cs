@@ -36,8 +36,7 @@ public class ModifyWithInlinePathTest : BaseMockServerTest
 
         var response = await Client.Endpoints.Params.ModifyWithInlinePathAsync(
             "param",
-            new ModifyResourceAtInlinedPath { Body = "string" },
-            RequestOptions
+            new ModifyResourceAtInlinedPath { Body = "string" }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

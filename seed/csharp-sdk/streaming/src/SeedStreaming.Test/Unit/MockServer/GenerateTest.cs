@@ -41,8 +41,7 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 1 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 1 }
         );
         Assert.That(
             response,
@@ -83,8 +82,7 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 5 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 5 }
         );
         Assert.That(
             response,

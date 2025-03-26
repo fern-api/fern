@@ -219,8 +219,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                                 Stdout = "stdout",
                             },
                         },
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

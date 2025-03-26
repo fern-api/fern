@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add `use-bytes-for-binary-response` configuration option to specify whether to use the `bytes` type for binary responses.
+    type: feat
+  irVersion: 57
+  version: 0.57.0
+
+- changelogEntry:
+  - summary: |
       Parse inlined websocket message properties during Fern Definition -> IR.
     type: fix
   irVersion: 57

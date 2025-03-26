@@ -478,6 +478,7 @@ types:
       file: FileResponse
       json: JsonResponse
       text: TextResponse
+      bytes: BytesResponse
       streamingSse: JsonResponse
       streamingText: TextResponse
       streamingJson:
@@ -485,6 +486,12 @@ types:
         docs: Checks if `x-fern-streaming` is present and is true.
 
   FileResponse:
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+      - commons.WithStatusCode
+
+  BytesResponse:
     extends:
       - commons.WithDescription
       - commons.WithSource

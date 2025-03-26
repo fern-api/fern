@@ -17,8 +17,6 @@ public class DeleteTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Payment.DeleteAsync("paymentId", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Payment.DeleteAsync("paymentId"));
     }
 }

@@ -41,10 +41,7 @@ public class ListTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.ListAsync(
-            new ListUsersRequest { Limit = 1 },
-            RequestOptions
-        );
+        var response = await Client.User.ListAsync(new ListUsersRequest { Limit = 1 });
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()

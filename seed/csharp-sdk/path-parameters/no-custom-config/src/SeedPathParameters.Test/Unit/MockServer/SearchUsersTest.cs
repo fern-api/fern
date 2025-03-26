@@ -48,8 +48,7 @@ public class SearchUsersTest : BaseMockServerTest
         var response = await Client.User.SearchUsersAsync(
             "tenant_id",
             "user_id",
-            new SearchUsersRequest { Limit = 1 },
-            RequestOptions
+            new SearchUsersRequest { Limit = 1 }
         );
         Assert.That(
             response,

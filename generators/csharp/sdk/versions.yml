@@ -7,6 +7,12 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.11
+  createdAt: "2025-03-25"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: Restructure internal HTTP classes to allow for more granular Fern ignoring.
 
 - version: 1.15.10
   createdAt: "2025-03-22"
