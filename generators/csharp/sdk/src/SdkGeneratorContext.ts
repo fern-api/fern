@@ -178,23 +178,39 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [
-            AsIsFiles.Constants,
-            AsIsFiles.Extensions,
-            AsIsFiles.FormUrlEncoder,
-            AsIsFiles.Headers,
-            AsIsFiles.HeaderValue,
-            AsIsFiles.HttpMethodExtensions,
-            AsIsFiles.Json.CollectionItemSerializer,
-            AsIsFiles.Json.DateOnlyConverter,
-            AsIsFiles.Json.DateTimeSerializer,
-            AsIsFiles.Json.JsonAccessAttribute,
-            AsIsFiles.Json.JsonConfiguration,
-            AsIsFiles.Json.OneOfSerializer,
-            AsIsFiles.QueryStringConverter,
-            AsIsFiles.RawClient,
-            AsIsFiles.ValueConvert
-        ];
+        const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
+        // JSON stuff
+        files.push(
+            ...[
+                AsIsFiles.Json.CollectionItemSerializer,
+                AsIsFiles.Json.DateOnlyConverter,
+                AsIsFiles.Json.DateTimeSerializer,
+                AsIsFiles.Json.JsonAccessAttribute,
+                AsIsFiles.Json.JsonConfiguration,
+                AsIsFiles.Json.OneOfSerializer
+            ]
+        );
+        // HTTP stuff
+        files.push(
+            ...[
+                AsIsFiles.ApiResponse,
+                AsIsFiles.BaseRequest,
+                AsIsFiles.EmptyRequest,
+                AsIsFiles.EncodingCache,
+                AsIsFiles.FormUrlEncoder,
+                AsIsFiles.Headers,
+                AsIsFiles.HeaderValue,
+                AsIsFiles.HttpMethodExtensions,
+                AsIsFiles.IIsRetryableContent,
+                AsIsFiles.JsonRequest,
+                AsIsFiles.MultipartFormRequest,
+                // AsIsFiles.NdJsonContent,
+                // AsIsFiles.NdJsonRequest,
+                AsIsFiles.QueryStringConverter,
+                AsIsFiles.RawClient,
+                AsIsFiles.StreamRequest
+            ]
+        );
         if (this.includeExceptionHandler()) {
             files.push(AsIsFiles.ExceptionHandler);
         }

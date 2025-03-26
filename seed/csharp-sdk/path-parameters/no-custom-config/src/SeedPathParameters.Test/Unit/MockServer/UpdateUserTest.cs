@@ -56,8 +56,7 @@ public class UpdateUserTest : BaseMockServerTest
                     Name = "name",
                     Tags = new List<string>() { "tags", "tags" },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

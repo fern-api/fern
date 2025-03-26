@@ -33,10 +33,7 @@ public class GetAndReturnLongTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000,
-            RequestOptions
-        );
+        var response = await Client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<long>(mockResponse)));
     }
 }

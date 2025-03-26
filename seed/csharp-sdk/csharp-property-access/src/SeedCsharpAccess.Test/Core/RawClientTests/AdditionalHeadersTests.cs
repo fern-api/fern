@@ -60,7 +60,7 @@ public class AdditionalHeadersTests
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest
+        var request = new JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,

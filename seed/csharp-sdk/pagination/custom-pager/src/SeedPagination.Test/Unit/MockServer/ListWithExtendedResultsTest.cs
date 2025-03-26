@@ -45,8 +45,7 @@ public class ListWithExtendedResultsTest : BaseMockServerTest
             );
 
         var pager = await Client.Users.ListWithExtendedResultsAsync(
-            new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
-            RequestOptions
+            new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
         );
         await foreach (var item in pager)
         {

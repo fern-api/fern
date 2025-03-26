@@ -25,7 +25,7 @@ public partial class Ec2Client
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Ec2,
                     Method = HttpMethod.Post,

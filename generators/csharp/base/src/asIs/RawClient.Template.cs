@@ -8,7 +8,7 @@ namespace <%= namespace%>;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-internal class RawClient(ClientOptions clientOptions)
+internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     internal int BaseRetryDelay { get; set; } = 1000;
@@ -27,16 +27,16 @@ internal class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<ApiResponse> MakeRequestAsync(
-        BaseApiRequest request,
+    internal Task<<%= namespace%>.ApiResponse> MakeRequestAsync(
+        <%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<ApiResponse> SendRequestAsync(
-        BaseApiRequest request,
+    internal async Task<<%= namespace%>.ApiResponse> SendRequestAsync(
+        <%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -51,7 +51,7 @@ internal class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<ApiResponse> SendRequestAsync(
+    internal async Task<<%= namespace%>.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -94,14 +94,17 @@ internal class RawClient(ClientOptions clientOptions)
                     {
                         newPart.Headers.TryAddWithoutValidation(header.Key, header.Value);
                     }
+
                     newMultipartContent.Add(newPart);
                 }
+
                 clonedRequest.Content = newMultipartContent;
                 break;
             default:
                 clonedRequest.Content = request.Content;
                 break;
         }
+
         foreach (var header in request.Headers)
         {
             clonedRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
@@ -110,393 +113,11 @@ internal class RawClient(ClientOptions clientOptions)
         return clonedRequest;
     }
 
-    internal abstract record BaseApiRequest
-    {
-        internal required string BaseUrl { get; init; }
-
-        internal required HttpMethod Method { get; init; }
-
-        internal required string Path { get; init; }
-
-        internal string? ContentType { get; init; }
-
-        internal Dictionary<string, object> Query { get; init; } = new();
-
-        internal Headers Headers { get; init; } = new();
-
-        internal IRequestOptions? Options { get; init; }
-
-        internal abstract HttpContent? CreateContent();
-    }
-
-    /// <summary>
-    /// The request object to send without a request body.
-    /// </summary>
-    internal record EmptyApiRequest : BaseApiRequest
-    {
-        internal override HttpContent? CreateContent() => null;
-    }
-
-    /// <summary>
-    /// The request object to be sent for streaming uploads.
-    /// </summary>
-    internal record StreamApiRequest : BaseApiRequest
-    {
-        internal Stream? Body { get; init; }
-
-        internal override HttpContent? CreateContent()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            var content = new StreamContent(Body)
-            {
-                Headers =
-                {
-                    ContentType = MediaTypeHeaderValue.Parse(
-                        ContentType ?? "application/octet-stream"
-                    ),
-                },
-            };
-            return content;
-        }
-    }
-
-    /// <summary>
-    /// The request object to be sent for multipart form data.
-    /// </summary>
-    internal record MultipartFormRequest : BaseApiRequest
-    {
-        private readonly List<Action<MultipartFormDataContent>> _partAdders = [];
-
-        internal void AddJsonPart(string name, object? value) => AddJsonPart(name, value, null);
-
-        internal void AddJsonPart(string name, object? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            _partAdders.Add(form =>
-            {
-                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
-                    contentType,
-                    Encoding.UTF8,
-                    "application/json"
-                );
-                var content = new StringContent(JsonUtils.Serialize(value), encoding, mediaType);
-                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
-                {
-                    content.Headers.ContentType.CharSet = "";
-                }
-                form.Add(content, name);
-            });
-        }
-
-        internal void AddJsonParts(string name, IEnumerable<object?>? value) =>
-            AddJsonParts(name, value, null);
-
-        internal void AddJsonParts(string name, IEnumerable<object?>? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            foreach (var item in value)
-            {
-                AddJsonPart(name, item, contentType);
-            }
-        }
-
-        internal void AddStringPart(string name, object? value) => AddStringPart(name, value, null);
-
-        internal void AddStringPart(string name, object? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            AddStringPart(name, ValueConvert.ToString(value), contentType);
-        }
-
-        internal void AddStringPart(string name, string? value) => AddStringPart(name, value, null);
-
-        internal void AddStringPart(string name, string? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            _partAdders.Add(form =>
-            {
-                var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
-                    contentType,
-                    Encoding.UTF8,
-                    "text/plain"
-                );
-                var content = new StringContent(value, encoding, mediaType);
-                if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
-                {
-                    content.Headers.ContentType.CharSet = "";
-                }
-                form.Add(content, name);
-            });
-        }
-
-        internal void AddStringParts(string name, IEnumerable<object?>? value) =>
-            AddStringParts(name, value, null);
-
-        internal void AddStringParts(string name, IEnumerable<object?>? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            AddStringPart(name, ValueConvert.ToString(value), contentType);
-        }
-
-        internal void AddStringParts(string name, IEnumerable<string?>? value) =>
-            AddStringParts(name, value, null);
-
-        internal void AddStringParts(string name, IEnumerable<string?>? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            foreach (var item in value)
-            {
-                AddStringPart(name, item, contentType);
-            }
-        }
-
-        internal void AddStreamPart(string name, Stream? stream, string? fileName) =>
-            AddStreamPart(name, stream, fileName, null);
-
-        internal void AddStreamPart(
-            string name,
-            Stream? stream,
-            string? fileName,
-            string? contentType
-        )
-        {
-            if (stream is null)
-            {
-                return;
-            }
-
-            _partAdders.Add(form =>
-            {
-                var content = new StreamContent(stream)
-                {
-                    Headers =
-                    {
-                        ContentType = MediaTypeHeaderValue.Parse(
-                            contentType ?? "application/octet-stream"
-                        ),
-                    },
-                };
-
-                if (fileName is not null)
-                {
-                    form.Add(content, name, fileName);
-                }
-                else
-                {
-                    form.Add(content, name);
-                }
-            });
-        }
-
-        internal void AddFileParameterPart(string name, FileParameter? file) =>
-            AddFileParameterPart(name, file, null);
-
-        internal void AddFileParameterPart(
-            string name,
-            FileParameter? file,
-            string? fallbackContentType
-        ) =>
-            AddStreamPart(
-                name,
-                file?.Stream,
-                file?.FileName,
-                file?.ContentType ?? fallbackContentType
-            );
-
-        internal void AddFileParameterParts(string name, IEnumerable<FileParameter?>? files) =>
-            AddFileParameterParts(name, files, null);
-
-        internal void AddFileParameterParts(
-            string name,
-            IEnumerable<FileParameter?>? files,
-            string? fallbackContentType
-        )
-        {
-            if (files is null)
-            {
-                return;
-            }
-
-            foreach (var file in files)
-            {
-                AddFileParameterPart(name, file, fallbackContentType);
-            }
-        }
-
-        internal void AddFormEncodedPart(string name, object? value) =>
-            AddFormEncodedPart(name, value, null);
-
-        internal void AddFormEncodedPart(string name, object? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            _partAdders.Add(form =>
-            {
-                var content = FormUrlEncoder.EncodeAsForm(value);
-                if (!string.IsNullOrEmpty(contentType))
-                {
-                    content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-                }
-
-                form.Add(content, name);
-            });
-        }
-
-        internal void AddFormEncodedParts(string name, IEnumerable<object?>? value) =>
-            AddFormEncodedParts(name, value, null);
-
-        internal void AddFormEncodedParts(
-            string name,
-            IEnumerable<object?>? value,
-            string? contentType
-        )
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            foreach (var item in value)
-            {
-                AddFormEncodedPart(name, item, contentType);
-            }
-        }
-
-        internal void AddExplodedFormEncodedPart(string name, object? value) =>
-            AddExplodedFormEncodedPart(name, value, null);
-
-        internal void AddExplodedFormEncodedPart(string name, object? value, string? contentType)
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            _partAdders.Add(form =>
-            {
-                var content = FormUrlEncoder.EncodeAsExplodedForm(value);
-                if (!string.IsNullOrEmpty(contentType))
-                {
-                    content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-                }
-
-                form.Add(content, name);
-            });
-        }
-
-        internal void AddExplodedFormEncodedParts(string name, IEnumerable<object?>? value) =>
-            AddExplodedFormEncodedParts(name, value, null);
-
-        internal void AddExplodedFormEncodedParts(
-            string name,
-            IEnumerable<object?>? value,
-            string? contentType
-        )
-        {
-            if (value is null)
-            {
-                return;
-            }
-
-            foreach (var item in value)
-            {
-                AddExplodedFormEncodedPart(name, item, contentType);
-            }
-        }
-
-        internal override HttpContent CreateContent()
-        {
-            var form = new MultipartFormDataContent();
-            foreach (var adder in _partAdders)
-            {
-                adder(form);
-            }
-
-            return form;
-        }
-    }
-
-    /// <summary>
-    /// The request object to be sent for JSON APIs.
-    /// </summary>
-    internal record JsonApiRequest : BaseApiRequest
-    {
-        internal object? Body { get; init; }
-
-        internal override HttpContent? CreateContent()
-        {
-            if (Body is null && Options?.AdditionalBodyProperties is null)
-            {
-                return null;
-            }
-
-            var (encoding, charset, mediaType) = ParseContentTypeOrDefault(
-                ContentType,
-                Encoding.UTF8,
-                "application/json"
-            );
-            var content = new StringContent(
-                JsonUtils.SerializeWithAdditionalProperties(
-                    Body,
-                    Options?.AdditionalBodyProperties
-                ),
-                encoding,
-                mediaType
-            );
-            if (string.IsNullOrEmpty(charset) && content.Headers.ContentType is not null)
-            {
-                content.Headers.ContentType.CharSet = "";
-            }
-            return content;
-        }
-    }
-
-    /// <summary>
-    /// The response object returned from the API.
-    /// </summary>
-    internal record ApiResponse
-    {
-        internal required int StatusCode { get; init; }
-
-        internal required HttpResponseMessage Raw { get; init; }
-    }
-
     /// <summary>
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<ApiResponse> SendWithRetriesAsync(
+    private async Task<<%= namespace%>.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -509,7 +130,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+            return new <%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
         for (var i = 0; i < maxRetries; i++)
@@ -527,7 +148,7 @@ internal class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        return new <%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
@@ -540,13 +161,14 @@ internal class RawClient(ClientOptions clientOptions)
     {
         return request.Content switch
         {
+            IIsRetryableContent c => c.IsRetryable,
             StreamContent => false,
             MultipartContent content => !content.Any(c => c is StreamContent),
             _ => true,
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
+    internal HttpRequestMessage CreateHttpRequest(<%= namespace%>.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -556,19 +178,13 @@ internal class RawClient(ClientOptions clientOptions)
         MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
         MergeHeaders(mergedHeaders, request.Headers);
         MergeHeaders(mergedHeaders, request.Options?.Headers);
-<% if (idempotencyHeaders) { %>
-        if (request.Options is IIdempotentRequestOptions idempotentRequest)
-        {
-            MergeHeaders(mergedHeaders, idempotentRequest.GetIdempotencyHeaders());
-        }
-<% } %>
 
         MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
         SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;
     }
 
-    private static string BuildUrl(BaseApiRequest request)
+    private static string BuildUrl(<%= namespace%>.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -611,7 +227,7 @@ internal class RawClient(ClientOptions clientOptions)
         return url;
     }
 
-    private static List<KeyValuePair<string, string>> GetQueryParameters(BaseApiRequest request)
+    private static List<KeyValuePair<string, string>> GetQueryParameters(<%= namespace%>.BaseRequest request)
     {
         var result = TransformToKeyValuePairs(request.Query);
         if (
@@ -621,6 +237,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             return result;
         }
+
         var additionalKeys = request
             .Options.AdditionalQueryParameters.Select(p => p.Key)
             .Distinct();
@@ -628,6 +245,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             result.RemoveAll(kv => kv.Key == key);
         }
+
         result.AddRange(request.Options.AdditionalQueryParameters);
         return result;
     }
@@ -650,10 +268,12 @@ internal class RawClient(ClientOptions clientOptions)
                     {
                         result.Add(new KeyValuePair<string, string>(kvp.Key, value));
                     }
+
                     break;
                 }
             }
         }
+
         return result;
     }
 
@@ -666,6 +286,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             return;
         }
+
         foreach (var header in headers)
         {
             var value = header.Value?.Match(str => str, func => func.Invoke());
@@ -685,6 +306,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             return;
         }
+
         var usedKeys = new HashSet<string>();
         foreach (var header in headers)
         {
@@ -694,6 +316,7 @@ internal class RawClient(ClientOptions clientOptions)
                 usedKeys.Remove(header.Key);
                 continue;
             }
+
             if (usedKeys.Contains(header.Key))
             {
                 mergedHeaders[header.Key].Add(header.Value);
@@ -719,6 +342,7 @@ internal class RawClient(ClientOptions clientOptions)
                 {
                     continue;
                 }
+
                 httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
             }
         }
@@ -756,4 +380,28 @@ internal class RawClient(ClientOptions clientOptions)
 
         return (encoding, charset, mediaType);
     }
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.ApiResponse instead.")]
+    internal record ApiResponse : <%= namespace%>.ApiResponse;
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : <%= namespace%>.BaseRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : <%= namespace%>.EmptyRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : <%= namespace%>.JsonRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : <%= namespace%>.MultipartFormRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use <%= namespace%>.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : <%= namespace%>.StreamRequest;
 }

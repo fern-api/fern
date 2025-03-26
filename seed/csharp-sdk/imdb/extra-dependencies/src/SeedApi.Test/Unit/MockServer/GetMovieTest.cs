@@ -28,7 +28,7 @@ public class GetMovieTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Imdb.GetMovieAsync("movieId", RequestOptions);
+        var response = await Client.Imdb.GetMovieAsync("movieId");
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Movie>(mockResponse)).UsingDefaults()

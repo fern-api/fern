@@ -47,8 +47,7 @@ public class GetTokenTest : BaseMockServerTest
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 GrantType = "client_credentials",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

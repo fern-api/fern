@@ -60,8 +60,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
             );
 
         var pager = await Client.Users.ListWithBodyOffsetPaginationAsync(
-            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } },
-            RequestOptions
+            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
         );
         await foreach (var item in pager)
         {

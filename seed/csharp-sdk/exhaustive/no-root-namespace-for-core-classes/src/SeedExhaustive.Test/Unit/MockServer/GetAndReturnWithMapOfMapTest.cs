@@ -56,8 +56,7 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
                         new Dictionary<string, string>() { { "map", "map" } }
                     },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

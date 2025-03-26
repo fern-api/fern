@@ -12,6 +12,6 @@ public class HelloTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/hello").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.Tasktest.HelloAsync(RequestOptions));
+        Assert.DoesNotThrowAsync(async () => await Client.Tasktest.HelloAsync());
     }
 }

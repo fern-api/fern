@@ -43,8 +43,7 @@ public class GetTest : BaseMockServerTest
                 Decimal = 2.2,
                 Even = 100,
                 Name = "foo",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

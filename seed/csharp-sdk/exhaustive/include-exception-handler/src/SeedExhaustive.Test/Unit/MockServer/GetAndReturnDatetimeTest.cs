@@ -35,8 +35,7 @@ public class GetAndReturnDatetimeTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal),
-            RequestOptions
+            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal)
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateTime>(mockResponse)));
     }

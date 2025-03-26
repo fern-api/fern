@@ -46,8 +46,7 @@ public class FindTest : BaseMockServerTest
                 OptionalString = "optionalString",
                 PublicProperty = "publicProperty",
                 PrivateProperty = 1,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

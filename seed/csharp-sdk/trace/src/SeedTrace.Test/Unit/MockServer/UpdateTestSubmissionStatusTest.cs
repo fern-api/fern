@@ -30,8 +30,7 @@ public class UpdateTestSubmissionStatusTest : BaseMockServerTest
             async () =>
                 await Client.Admin.UpdateTestSubmissionStatusAsync(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "no-properties-union",
-                    RequestOptions
+                    "no-properties-union"
                 )
         );
     }

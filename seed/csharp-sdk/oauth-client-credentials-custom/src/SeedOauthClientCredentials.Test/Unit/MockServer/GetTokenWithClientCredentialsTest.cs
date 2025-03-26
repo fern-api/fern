@@ -56,8 +56,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
                 Scope = "scope",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

@@ -62,8 +62,7 @@ public class GetPlaylistsTest : BaseMockServerTest
                 MultiLineDocs = "multiLineDocs",
                 OptionalMultipleField = ["optionalMultipleField"],
                 MultipleField = ["multipleField"],
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
