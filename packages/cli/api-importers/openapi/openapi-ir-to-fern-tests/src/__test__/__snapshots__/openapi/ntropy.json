@@ -4048,6 +4048,7 @@ ah = sdk.account_holders.create(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.AccountHolderExternal",
               },
               "source": {
@@ -4154,6 +4155,7 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.AccountHolderExternal",
               },
               "source": {
@@ -4240,6 +4242,7 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseAccountHolderExternal",
               },
               "source": {
@@ -4270,6 +4273,7 @@ service:
       response:
         docs: Successful Response
         type: root.AccountHolderExternal
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -4365,6 +4369,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseAccountHolderExternal
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4420,6 +4425,7 @@ service:
       response:
         docs: Successful Response
         type: root.AccountHolderExternal
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnprocessableEntityError
@@ -4600,6 +4606,7 @@ bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") ",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BankStatement",
               },
               "source": {
@@ -4681,6 +4688,7 @@ results = sdk.bank_statements.wait_for_results(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BankStatementResults",
               },
               "source": {
@@ -4763,6 +4771,7 @@ overview = sdk.bank_statements.overview(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.StatementInfo",
               },
               "source": {
@@ -4862,6 +4871,7 @@ for bs in sdk.bank_statements.list().auto_paginate():
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseBankStatement",
               },
               "source": {
@@ -4939,6 +4949,7 @@ with open('bank_statement.pdf', 'rb') as fh:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BankStatement",
               },
               "source": {
@@ -4992,6 +5003,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseBankStatement
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5042,6 +5054,7 @@ service:
       response:
         docs: Successful Response
         type: root.BankStatement
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5089,6 +5102,7 @@ service:
       response:
         docs: Successful Response
         type: root.BankStatement
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -5159,6 +5173,7 @@ service:
       response:
         docs: Successful Response
         type: root.StatementInfo
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -5218,6 +5233,7 @@ service:
       response:
         docs: Successful Response
         type: root.BankStatementResults
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -5424,6 +5440,7 @@ results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
               },
               "response": {
                 "docs": "Returned batch of transaction enrichment results.",
+                "status-code": 200,
                 "type": "root.BatchResult",
               },
               "source": {
@@ -5516,6 +5533,7 @@ for batch in sdk.batches.list().auto_paginate():
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseBatch",
               },
               "source": {
@@ -5577,6 +5595,7 @@ batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") ",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Batch",
               },
               "source": {
@@ -5695,6 +5714,7 @@ batch = sdk.batches.create([
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Batch",
               },
               "source": {
@@ -5746,6 +5766,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseBatch
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5808,6 +5829,7 @@ service:
       response:
         docs: Successful Response
         type: root.Batch
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5884,6 +5906,7 @@ service:
       response:
         docs: Successful Response
         type: root.Batch
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -5932,6 +5955,7 @@ service:
       response:
         docs: Returned batch of transaction enrichment results.
         type: root.BatchResult
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -6134,6 +6158,7 @@ sdk.categories.set("consumer", {
               },
               "response": {
                 "docs": "Custom categories successfully set.",
+                "status-code": 200,
                 "type": "root.CustomCategorySet",
               },
               "source": {
@@ -6216,6 +6241,7 @@ sdk.categories.reset("consumer")
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CategorySet",
               },
               "source": {
@@ -6298,6 +6324,7 @@ sdk.categories.get("consumer")
               },
               "response": {
                 "docs": "Category set for the selected type of account holder",
+                "status-code": 200,
                 "type": "root.CategorySet",
               },
               "source": {
@@ -6331,6 +6358,7 @@ service:
       response:
         docs: Category set for the selected type of account holder
         type: root.CategorySet
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6398,6 +6426,7 @@ service:
       response:
         docs: Custom categories successfully set.
         type: root.CustomCategorySet
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6497,6 +6526,7 @@ service:
       response:
         docs: Successful Response
         type: root.CategorySet
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6618,6 +6648,7 @@ sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") ",
               },
               "response": {
                 "docs": "Entity",
+                "status-code": 200,
                 "type": "root.Entity",
               },
               "source": {
@@ -6694,6 +6725,7 @@ sdk.entities.lookup(name="Starbucks") ",
               },
               "response": {
                 "docs": "Entity",
+                "status-code": 200,
                 "type": "root.Entity",
               },
               "source": {
@@ -6739,6 +6771,7 @@ service:
       response:
         docs: Entity
         type: root.Entity
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnprocessableEntityError
@@ -6782,6 +6815,7 @@ service:
       response:
         docs: Entity
         type: root.Entity
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -6890,6 +6924,7 @@ sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -6947,6 +6982,7 @@ sdk.rules.delete(0)
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7001,6 +7037,7 @@ rules = sdk.rules.get()
               "path": "/v3/rules",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Filter",
               },
               "source": {
@@ -7070,6 +7107,7 @@ sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7164,6 +7202,7 @@ sdk.rules.set([{
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7193,6 +7232,7 @@ service:
       response:
         docs: Successful Response
         type: root.Filter
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7230,6 +7270,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ContentTooLargeError
@@ -7299,6 +7340,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ContentTooLargeError
@@ -7342,6 +7384,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnprocessableEntityError
@@ -7383,6 +7426,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnprocessableEntityError
@@ -7526,6 +7570,7 @@ recurring_groups = sdk.account_holders.recurring_groups(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.RecurrenceGroup>",
               },
               "source": {
@@ -7560,6 +7605,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.RecurrenceGroup>
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -7735,6 +7781,7 @@ report = sdk.reports.get("a652285d-de1b-4a6f-b6ce-45efa9be7952")
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Report",
               },
               "source": {
@@ -7831,6 +7878,7 @@ reports = sdk.reports.list()
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseReport",
               },
               "source": {
@@ -7938,6 +7986,7 @@ report = sdk.reports.create(
               },
               "response": {
                 "docs": "The newly created report",
+                "status-code": 200,
                 "type": "root.Report",
               },
               "source": {
@@ -7989,6 +8038,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseReport
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8047,6 +8097,7 @@ service:
       response:
         docs: The newly created report
         type: root.Report
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8106,6 +8157,7 @@ service:
       response:
         docs: Successful Response
         type: root.Report
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -8336,6 +8388,7 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Transaction",
               },
               "source": {
@@ -8480,6 +8533,7 @@ for tx in sdk.transactions.list().auto_paginate():
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseTransaction",
               },
               "source": {
@@ -8639,6 +8693,7 @@ enriched = sdk.transactions.create([
               },
               "response": {
                 "docs": "Enriched transactions.",
+                "status-code": 200,
                 "type": "root.SyncEnrichmentOutput",
               },
               "source": {
@@ -8776,6 +8831,7 @@ sdk.transactions.assign(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Transaction",
               },
               "source": {
@@ -8806,6 +8862,7 @@ service:
       response:
         docs: Successful Response
         type: root.Transaction
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -8945,6 +9002,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseTransaction
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9045,6 +9103,7 @@ service:
       response:
         docs: Enriched transactions.
         type: root.SyncEnrichmentOutput
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9160,6 +9219,7 @@ service:
       response:
         docs: Successful Response
         type: root.Transaction
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -9380,6 +9440,7 @@ webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Webhook",
               },
               "source": {
@@ -9443,6 +9504,7 @@ for webhook in sdk.webhooks.list().auto_paginate():
               "path": "/v3/webhooks",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PagedResponseWebhook",
               },
               "source": {
@@ -9560,6 +9622,7 @@ wh = sdk.webhooks.patch(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Webhook",
               },
               "source": {
@@ -9672,6 +9735,7 @@ sdk.webhooks.create(
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Webhook",
               },
               "source": {
@@ -9775,6 +9839,7 @@ service:
       response:
         docs: Successful Response
         type: root.PagedResponseWebhook
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9840,6 +9905,7 @@ service:
       response:
         docs: Successful Response
         type: root.Webhook
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9899,6 +9965,7 @@ service:
       response:
         docs: Successful Response
         type: root.Webhook
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10004,6 +10071,7 @@ service:
       response:
         docs: Successful Response
         type: root.Webhook
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:

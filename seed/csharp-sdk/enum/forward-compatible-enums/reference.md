@@ -153,7 +153,7 @@ await client.QueryParam.SendListAsync(
         Operand = [Operand.GreaterThan],
         MaybeOperand = [Operand.GreaterThan],
         OperandOrColor = [Color.Red],
-        MaybeOperandOrColor = [null],
+        MaybeOperandOrColor = [Color.Red],
     }
 );
 ```

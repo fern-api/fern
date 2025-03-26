@@ -1,6 +1,7 @@
 {
   "title": "Test content-type parsing.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -108,7 +109,8 @@
               "type": "file"
             },
             "description": "Binary file contents. The file name of the file will be used as the document ID.",
-            "contentType": "application/octet-stream, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, application/epub+zip, application/rtf, text/html, text/plain, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, text/markdown"
+            "contentType": "application/octet-stream, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, application/epub+zip, application/rtf, text/html, text/plain, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, text/markdown",
+            "exploded": false
           }
         ],
         "source": {
@@ -132,10 +134,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Test multipart request with different content types.\n",
       "authed": false,
       "method": "POST",
@@ -178,10 +181,151 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "summary": "Test with dual Content-Type request types",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "The unique key",
+          "name": "corpus_key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PostExampleRequestCorpusKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostExampleRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postExampleRequestMetadata",
+              "key": "metadata",
+              "schema": {
+                "generatedName": "postExampleRequestMetadata",
+                "value": {
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "PostExampleRequestMetadataKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "PostExampleRequestMetadataValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "PostExampleRequestMetadata",
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostExampleRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "The sample response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "PostExampleResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test request with dual content types.\n",
+      "authed": false,
+      "method": "POST",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "corpus_key",
+              "value": {
+                "value": {
+                  "value": "corpus_key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

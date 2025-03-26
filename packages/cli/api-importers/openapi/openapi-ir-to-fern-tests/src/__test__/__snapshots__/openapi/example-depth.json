@@ -27,6 +27,7 @@
               "path": "/tree",
               "response": {
                 "docs": "Successfully retrieved tree",
+                "status-code": 200,
                 "type": "TreeNode",
               },
               "source": {
@@ -76,6 +77,7 @@
       response:
         docs: Successfully retrieved tree
         type: TreeNode
+        status-code: 200
       examples:
         - response:
             body:

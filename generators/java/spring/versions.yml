@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.5.0
+- changelogEntry:
+    - summary: |
         Fix inlining unwrapped alias types.
       type: fix
   createdAt: '2025-01-17'
@@ -60,7 +67,7 @@
       ```
     type: break
   - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+      Generated builder methods now enforce non-null checks for required fields, ensuring that all required
       fields are properly validated during object construction:
         ```java
         @java.lang.Override
@@ -163,7 +170,7 @@
   version: 0.7.1
 
 - changelogEntry:
-  - summary: Intialize this changelog
+  - summary: Initialize this changelog
     type: fix
   createdAt: '2024-02-03'
   version: 0.6.1

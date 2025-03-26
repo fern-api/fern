@@ -23,6 +23,6 @@ export async function visitFilepath({
             value: rawUnresolvedFilepath,
             willBeUploaded
         },
-        nodePath
+        [absoluteFilepath] // node path
     );
 }

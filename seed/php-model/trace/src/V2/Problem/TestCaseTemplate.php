@@ -39,4 +39,12 @@ class TestCaseTemplate extends JsonSerializableType
         $this->name = $values['name'];
         $this->implementation = $values['implementation'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

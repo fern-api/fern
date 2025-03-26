@@ -29,9 +29,4 @@ from .patient import Patient  # noqa: E402
 from .practitioner import Practitioner  # noqa: E402
 from .script import Script  # noqa: E402
 
-update_forward_refs(BaseResource, Account=Account)
-update_forward_refs(Memo, Account=Account)
-update_forward_refs(Patient, Account=Account)
-update_forward_refs(Practitioner, Account=Account)
-update_forward_refs(Script, Account=Account)
 update_forward_refs(Account)

@@ -39,4 +39,12 @@ class SubmissionFileInfo extends JsonSerializableType
         $this->filename = $values['filename'];
         $this->contents = $values['contents'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

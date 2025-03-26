@@ -1,3 +1,4 @@
+import type { Node as EstreeNode } from "estree";
 import { walk } from "estree-walker";
 import type { Root as HastRoot } from "hast";
 import { toHast } from "mdast-util-to-hast";
@@ -5,7 +6,12 @@ import { readFileSync } from "node:fs";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
 
-import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import {
+    extractAttributeValueLiteral,
+    parseMarkdownToTree,
+    walkEstreeJsxAttributes
+} from "@fern-api/docs-markdown-utils";
+import { extractSingleLiteral, isMdxJsxAttribute } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 const MDX_NODE_TYPES = [
@@ -73,8 +79,7 @@ export function collectLinksAndSources({
             visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
 
-        const format = absoluteFilepath ? getMarkdownFormat(absoluteFilepath) : "mdx";
-        const mdast = parseMarkdownToTree(content, format);
+        const mdast = parseMarkdownToTree(content);
 
         const hast = toHast(mdast, {
             allowDangerousHtml: true,
@@ -122,20 +127,37 @@ export function collectLinksAndSources({
                 }
             }
 
+            function walkJsx(estree: EstreeNode, position: Position | undefined) {
+                walkEstreeJsxAttributes(estree, {
+                    src: (attr) => {
+                        const src = extractSingleLiteral(attr.value);
+                        if (typeof src === "string") {
+                            sources.push({ src, sourceFilepath: absoluteFilepath, position });
+                        }
+                    },
+                    href: (attr) => {
+                        const href = extractSingleLiteral(attr.value);
+                        if (typeof href === "string") {
+                            links.push({ href, sourceFilepath: absoluteFilepath, position });
+                        }
+                    }
+                });
+            }
+
             if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-                const hrefAttribute = node.attributes.find(
-                    (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "href"
+                const href = extractAttributeValueLiteral(
+                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "href")?.value
                 );
 
-                const srcAttribute = node.attributes.find(
-                    (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "src"
+                const src = extractAttributeValueLiteral(
+                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "src")?.value
                 );
 
                 // this is a special case for the <Markdown> component
                 // which is our legacy support for markdown snippets. This should be deprecated soon.
                 if (node.name === "Markdown") {
-                    if (absoluteFilepath && srcAttribute != null && typeof srcAttribute.value === "string") {
-                        const resolvedImportPath = resolve(dirname(absoluteFilepath), srcAttribute.value);
+                    if (absoluteFilepath && typeof src === "string") {
+                        const resolvedImportPath = resolve(dirname(absoluteFilepath), src);
                         contentQueue.push({
                             content: readFile(resolvedImportPath),
                             absoluteFilepath: resolvedImportPath
@@ -148,20 +170,39 @@ export function collectLinksAndSources({
 
                 // NOTE: this collects links if they are in the form of <a href="...">
                 // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
-                if (hrefAttribute != null && typeof hrefAttribute.value === "string") {
+                if (typeof href === "string") {
                     links.push({
-                        href: hrefAttribute.value,
+                        href,
                         sourceFilepath: absoluteFilepath,
                         position: node.position
                     });
                 }
 
-                if (srcAttribute != null && typeof srcAttribute.value === "string") {
+                if (typeof src === "string") {
                     sources.push({
-                        src: srcAttribute.value,
+                        src,
                         sourceFilepath: absoluteFilepath,
                         position: node.position
                     });
+                }
+
+                node.attributes.forEach((attr) => {
+                    if (
+                        attr.type === "mdxJsxAttribute" &&
+                        typeof attr.value !== "string" &&
+                        attr.value != null &&
+                        attr.value.data?.estree
+                    ) {
+                        walkJsx(attr.value.data.estree, attr.position);
+                    } else if (attr.type === "mdxJsxExpressionAttribute" && attr.data?.estree) {
+                        walkJsx(attr.data.estree, attr.position);
+                    }
+                });
+            }
+
+            if (node.type === "mdxFlowExpression" || node.type === "mdxTextExpression") {
+                if (node.data?.estree) {
+                    walkJsx(node.data.estree, node.position);
                 }
             }
             return;

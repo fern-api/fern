@@ -8,11 +8,14 @@ export const BaseGoCustomConfigSchema = z.object({
     importPath: z.string().optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),
+    clientConstructorName: z.string().optional(),
+    clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
     exportedClientName: z.string().optional(),
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
+    packageLayout: z.enum(["flat", "nested"]).optional(),
     union: z.string().optional()
 });
 

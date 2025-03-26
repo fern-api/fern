@@ -7,7 +7,7 @@ auth-schemes:
       name: username
       env: USERNAME
     password:
-      name: password
+      name: accessToken
       env: PASSWORD
 error-discrimination:
   strategy: status-code

@@ -1,7 +1,5 @@
 using System;
 
-#nullable enable
-
 namespace SeedSingleUrlEnvironmentNoDefault;
 
 /// <summary>
@@ -10,4 +8,4 @@ namespace SeedSingleUrlEnvironmentNoDefault;
 public class SeedSingleUrlEnvironmentNoDefaultException(
     string message,
     Exception? innerException = null
-) : Exception(message, innerException) { }
+) : Exception(message, innerException);

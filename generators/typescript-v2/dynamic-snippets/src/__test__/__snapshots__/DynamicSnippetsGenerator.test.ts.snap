@@ -72,7 +72,7 @@ async function main() {
                     imdb: 7.6,
                 },
             },
-            revenue: BigInt(1000000),
+            revenue: BigInt("1000000"),
         },
     });
 }
@@ -120,7 +120,7 @@ async function main() {
                 imdb: 7.6,
             },
         },
-        revenue: BigInt(1000000),
+        revenue: BigInt("1000000"),
     });
 }
 main();
@@ -137,7 +137,7 @@ async function main() {
     await client.endpoints.object.getAndReturnWithOptionalField({
         string: "string",
         integer: 1,
-        long: BigInt(1000000),
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: new Date("2024-01-15T09:30:00Z"),
@@ -154,7 +154,7 @@ async function main() {
         map: {
             1: "map",
         },
-        bigint: BigInt(1000000),
+        bigint: BigInt("1000000"),
     });
 }
 main();
@@ -334,11 +334,11 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Production,
+        environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
     await client.s3.getPresignedURL({
@@ -350,11 +350,11 @@ main();
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Staging,
+        environment: AcmeEnvironment.Staging,
         token: "<YOUR_API_KEY>",
     });
     await client.s3.getPresignedURL({
@@ -375,12 +375,71 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 ]"
 `;
 
-exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+exports[`snippets > nullable > 'Body properties' 1`] = `
+"import { AcmeClient } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Production,
+        environment: "https://api.example.com",
+    });
+    await client.nullable.createUser({
+        username: "john.doe",
+        tags: [
+            "admin",
+        ],
+        metadata: {
+            createdAt: new Date("1980-01-01T00:00:00Z"),
+            updatedAt: new Date("1980-01-01T00:00:00Z"),
+            avatar: null,
+            activated: null,
+        },
+        avatar: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Query parameters' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.getUsers({
+        usernames: [
+            "john.doe",
+            "jane.doe",
+        ],
+        tags: [
+            null,
+        ],
+        extra: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
+"import { AcmeClient, AcmeEnvironment } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
     await client.dummy.getDummy();
@@ -390,11 +449,11 @@ main();
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironments } from "acme";
+"import { AcmeClient, AcmeEnvironment } from "acme";
 
 async function main() {
     const client = new AcmeClient({
-        environment: AcmeEnvironments.Staging,
+        environment: AcmeEnvironment.Staging,
         token: "<YOUR_API_KEY>",
     });
     await client.dummy.getDummy();

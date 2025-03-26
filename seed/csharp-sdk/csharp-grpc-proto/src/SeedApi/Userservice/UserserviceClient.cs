@@ -3,8 +3,6 @@ using Grpc.Core;
 using SeedApi.Core;
 using User.V1;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class UserserviceClient
@@ -22,11 +20,9 @@ public partial class UserserviceClient
         _userService = new UserService.UserServiceClient(_grpc.Channel);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Userservice.CreateAsync(new CreateRequest());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<CreateResponse> CreateAsync(
         CreateRequest request,
         GrpcRequestOptions? options = null,

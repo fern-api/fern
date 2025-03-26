@@ -1,12 +1,23 @@
 {
   "search.exclude": {
-    "**/.pnp.*": true,
-    "**/.yarn": true,
-    "**/node_modules": true,
-    "**/.git": true,
+    ".vscode": true,
     "**/.next": true,
-    ".turbo": true,
-    ".husky/_": true,
+    "**/.pnp.*": true,
+    "**/.turbo": true,
+    "**/.yarn": true,
+    "**/__snapshots__/**": true,
+    "**/__test__/**/fixtures": true,
+    "**/__test__/**/output": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/generated": true,
+    "**/lib": true,
+    "**/node_modules": true,
+    "**/out": true,
+    "**/storybook-static": true,
+    "**/*.tsbuildinfo": true,
+    "pnpm-lock.yaml": true,
+    "tests": true
   },
   "files.readonlyInclude": {
     ".husky/_": true,
@@ -20,7 +31,7 @@
     "./packages",
     "./generators"
   ],
-  "prettier.prettierPath": "node_modules/prettier/index.js",
+  "prettier.prettierPath": "node_modules/prettier/index.cjs",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": false,
@@ -31,5 +42,8 @@
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
-  "dotnet.testWindow.disableAutoDiscovery": true
+  "dotnet.testWindow.disableAutoDiscovery": true,
+  "cSpell.import": [
+    "cspell.json"
+  ]
 }

@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public partial class PropertyBasedErrorClient
@@ -19,29 +17,29 @@ public partial class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.PropertyBasedError.ThrowErrorAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> ThrowErrorAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "property-based-error",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "property-based-error",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -52,10 +50,13 @@ public partial class PropertyBasedErrorClient
             }
         }
 
-        throw new SeedErrorPropertyApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedErrorPropertyApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

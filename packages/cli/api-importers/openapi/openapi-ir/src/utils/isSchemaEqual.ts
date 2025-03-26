@@ -41,8 +41,8 @@ function isOneOfEqual(a: OneOfSchema, b: OneOfSchema): boolean {
         return (
             a.discriminantProperty === b.discriminantProperty &&
             Object.keys(a.schemas).length === Object.keys(b.schemas).length &&
-            Object.entries(a.schemas).every(([discrminant, aSchema]) => {
-                const bSchema = b.schemas[discrminant];
+            Object.entries(a.schemas).every(([discriminant, aSchema]) => {
+                const bSchema = b.schemas[discriminant];
                 if (bSchema == null) {
                     return false;
                 }
@@ -50,7 +50,7 @@ function isOneOfEqual(a: OneOfSchema, b: OneOfSchema): boolean {
             })
         );
     }
-    if (a.type === "undisciminated" && b.type === "undisciminated") {
+    if (a.type === "undiscriminated" && b.type === "undiscriminated") {
         return (
             a.schemas.length === b.schemas.length &&
             a.schemas.every((aSchema, index) => {

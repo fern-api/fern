@@ -1,11 +1,90 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.4.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for raw bytes responses.
+
+- version: 4.3.21
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the default `timeout` was not being respected when a custom `httpx_client` was provided.
+
+- version: 4.3.20
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
+- version: 4.3.19
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 4.3.18
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        original parameter name internally, causing errors.
+
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
+- version: 4.3.16
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where GeneratorExit was unintentionally being swallowed by code blocks within the HttpClient.stream() contextmanager.
+
+- version: 4.3.15
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where extraneous NameError-causing update_forward_refs invocations were being emitted.
+
+- version: 4.3.14
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Set the default number of retries to 2 (was 0) to align with the generated README.
+
+- version: 4.3.13
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now supports conditioning dependencies on the Python version.
+
+- version: 4.3.12
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        The Python generator now autogenerates a requirements.txt file.
 
 - version: 4.3.11
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: |
-        pyproject.toml now has a `[project]` block making it Poetry v2 compatible. 
+        pyproject.toml now has a `[project]` block making it Poetry v2 compatible.
 
 - version: 4.3.10
   irVersion: 53
@@ -62,14 +141,14 @@
     - type: fix
       summary: |
         The generator now writes the reference.md configuration correctly, using `.dict()` instead of `.json()`.
-        
+
 - version: 4.3.2
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: |
         The generator will now correctly default to the configured global `default_bytes_stream_chunk_size` when the `request_options` parameter is not provided.
-        
+
 - version: 4.3.1
   irVersion: 53
   changelogEntry:
@@ -169,7 +248,7 @@
     - type: fix
       summary: |
         Datetime examples are generated correctly once again.
-        The `pydantic_utilites` file is python 3.8 compatible.
+        The `pydantic_utilities` file is python 3.8 compatible.
 
 - version: 4.2.3
   irVersion: 53
@@ -285,7 +364,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Pydantic models now call update forward refs on non-uion circular references. This
+        Pydantic models now call update forward refs on non-union circular references. This
         prevents runtime errors in certain cases where types self reference itself through
         a union.
 
@@ -294,7 +373,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Pydantic models now call update forward refs on non-uion circular references. This
+        Pydantic models now call update forward refs on non-union circular references. This
         prevents runtime errors in certain cases where types self reference itself through
         a union.
 
@@ -303,7 +382,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Pydantic models now call update forward refs on non-uion circular references. This
+        Pydantic models now call update forward refs on non-union circular references. This
         prevents runtime errors in certain cases where types self reference itself through
         a union.
 
@@ -312,7 +391,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Pydantic models now call update forward refs on non-uion circular references. This
+        Pydantic models now call update forward refs on non-union circular references. This
         prevents runtime errors in certain cases where types self reference itself through
         a union.
 
@@ -777,10 +856,10 @@
   createdAt: "2024-06-27"
   changelogEntry:
     - type: fix
-      summary: The fix from 2.5.2 is now case-insentitive
+      summary: The fix from 2.5.2 is now case-insensitive
       fixed:
         - >-
-          the fix from 2.5.2 is now case-insentitive Recap of 2.5.2: `Fix: Support
+          the fix from 2.5.2 is now case-insensitive Recap of 2.5.2: `Fix: Support
           `list`SDK method names instead of defaulting to`list\_`.`
   irVersion: 49
 
@@ -928,7 +1007,7 @@
   createdAt: "2024-06-06"
   changelogEntry:
     - type: fix
-      summary: Snippet templates for discrminated unions now specify the `template_input` property which is required to actually see snippets of instantiating discrminated unions.
+      summary: Snippet templates for discriminated unions now specify the `template_input` property which is required to actually see snippets of instantiating discriminated unions.
   irVersion: 39
 
 - version: 2.9.2
@@ -1178,7 +1257,7 @@
           Inline request parameters now deconflict in naming with the unnamed path
           parameter arguments. Previously, when inlining request parameters into
           the method signature, we would not deconflict naming with the unnamed
-          args preceeding them. Now, conflicting unnamed parameters are post-fixed
+          args preceding them. Now, conflicting unnamed parameters are post-fixed
           with an "_".
   irVersion: 39
 
@@ -1349,7 +1428,7 @@
       summary: pin mypy dependency to 1.9.0 to prevent introducing upstream bugs
       fixed:
         - >-
-          Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`. This
+          Set `mypy` dev dependency in generated `pyproject.toml` to `1.9.0`. This
           prevents upstream `mypy` bugs from affecting user builds. Note that this
           is only a dev dependency, so it does not affect the behavior of the SDK.
         - Temporarily disable unit test generation.
@@ -1465,7 +1544,7 @@
           option to skip pydantic validation. This ensures that Pydantic does not
           immediately fail if the model being returned from an API does not
           exactly match the Pydantic model. This is meant to add flexibility,
-          should your SDK fall behind your API, but should be used sparringly, as
+          should your SDK fall behind your API, but should be used sparingly, as
           the type-hinting for users will still reflect the Pydantic model
           exactly.
   irVersion: 37

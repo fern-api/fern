@@ -150,7 +150,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnLong(1000000)
+     *     await client.endpoints.primitive.getAndReturnLong(BigInt("1000000"))
      */
     public async getAndReturnLong(
         request: number | bigint,

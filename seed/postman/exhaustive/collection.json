@@ -2024,7 +2024,7 @@
               "request": {
                 "description": "GET with multiple of same query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params?query=query&numer=1",
+                  "raw": "{{baseUrl}}/params?query=query&number=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -2038,7 +2038,7 @@
                       "value": "query"
                     },
                     {
-                      "key": "numer",
+                      "key": "number",
                       "description": null,
                       "value": "1"
                     }
@@ -2064,7 +2064,7 @@
                   "originalRequest": {
                     "description": "GET with multiple of same query param",
                     "url": {
-                      "raw": "{{baseUrl}}/params?query=query&numer=1",
+                      "raw": "{{baseUrl}}/params?query=query&number=1",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -2078,7 +2078,7 @@
                           "value": "query"
                         },
                         {
-                          "key": "numer",
+                          "key": "number",
                           "description": null,
                           "value": "1"
                         }
@@ -3193,6 +3193,87 @@
                   },
                   "description": null,
                   "body": "\"SGVsbG8gd29ybGQh\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Put",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Put",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "id"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"errors\": [\n        {\n            \"category\": \"API_ERROR\",\n            \"code\": \"INTERNAL_SERVER_ERROR\",\n            \"detail\": \"detail\",\n            \"field\": \"field\"\n        },\n        {\n            \"category\": \"API_ERROR\",\n            \"code\": \"INTERNAL_SERVER_ERROR\",\n            \"detail\": \"detail\",\n            \"field\": \"field\"\n        }\n    ]\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]

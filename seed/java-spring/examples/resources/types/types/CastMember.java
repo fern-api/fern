@@ -93,7 +93,7 @@ public final class CastMember {
     }
 
     @java.lang.Override
-    public CastMember deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public CastMember deserialize(JsonParser p, DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, Actor.class));

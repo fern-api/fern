@@ -122,7 +122,7 @@ export class ApiDefinitionHolder {
                 });
 
                 locators.forEach((locator) => {
-                    this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                    this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
                     this.#endpointsByLocator.set(locator, endpoint);
                 });
             });
@@ -164,7 +164,7 @@ export class ApiDefinitionHolder {
                 });
 
                 locators.forEach((locator) => {
-                    this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                    this.context?.logger.trace(`Registering websocket locator: ${locator}`);
                     this.#webSocketsByLocator.set(locator, webSocket);
                 });
             });
@@ -199,7 +199,7 @@ export class ApiDefinitionHolder {
         const path = packageList.length === 0 ? [ROOT_PACKAGE_ID] : packageList;
         const locators = [path.join("."), path.join("/"), `${path.join(".")}.yml`];
         locators.forEach((locator) => {
-            this.context?.logger.debug(`Registering subpackage locator: ${locator}`);
+            this.context?.logger.trace(`Registering subpackage locator: ${locator}`);
             this.#subpackagesByLocator.set(locator, pkg);
         });
 
@@ -211,7 +211,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, endpoint.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
                 this.#endpointsByLocator.set(locator, endpoint);
             });
         });
@@ -220,7 +220,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, webSocket.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                this.context?.logger.trace(`Registering websocket locator: ${locator}`);
                 this.#webSocketsByLocator.set(locator, webSocket);
             });
         });
@@ -229,7 +229,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, webhook.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering webhook locator: ${locator}`);
+                this.context?.logger.trace(`Registering webhook locator: ${locator}`);
                 this.#webhooksByLocator.set(locator, webhook);
             });
         });
@@ -309,7 +309,7 @@ export class ApiDefinitionHolder {
     }
 }
 
-function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
+export function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
     if (environment == null) {
         return undefined;
     }

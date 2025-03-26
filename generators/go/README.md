@@ -3,7 +3,7 @@
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=logo">
     <img src="../../fern/images/logo-primary.svg" height="50" align="center" alt="header" />
   </a>
-  
+
   <br/>
 
 # Go Generator
@@ -63,7 +63,7 @@ to do so.
 
 ### Package name
 
-You can customzie the name of the package generated with the following `generators.yml` configuration:
+You can customize the name of the package generated with the following `generators.yml` configuration:
 
 ```yaml
 default-group: local

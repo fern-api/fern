@@ -1,35 +1,58 @@
 ---
 title: "Global Configuration"
 subtitle: "Customize your documentation using the docs.yml file"
+description: "Learn how to configure your Fern documentation site with the docs.yml file. Customize colors, typography, layout, analytics and more."
 ---
 
-<Note>
-  Not all of the properties in `docs.yml` are documented here. If you'd like to see all properties, please check out the 
-  the  raw [schema](https://github.com/fern-api/fern/blob/69e74d9c27dc031ec2e84e70b878c40e9e9678a5/packages/cli/configuration/fern/definition/docs.yml#L110-L153)
-</Note>
+### YAML Schema Validation
 
-## Top-level properties
-
-Every Fern documentation website needs a `docs.yml` file with the core configuration settings. 
+To enable intelligent YAML validation and autocompletion in your editor, add this line at the top of your `docs.yml` file:
 
 ```yaml docs.yml
-
-title: My Docs
-
-logo: 
-  href: mydomain.com
-  dark: path/to/logo.png
-  light: path/to/logo.png
-
-favicon: path/to/favicon.ico
-
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 ```
+
+This enables real-time schema validation and autocompletion based on our [complete schema](https://github.com/fern-api/fern/blob/09555d587294fd3dc77ceb35f21e8976a5a2b7a2/fern/apis/docs-yml/definition/docs.yml#L110).
+
+## Core configuration
+
+Every Fern documentation website requires a `docs.yml` file that contains the core configuration settings. Here are the essential top-level properties you can configure:
+
+```yaml docs.yml
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+title: Stripe API Documentation        
+favicon: assets/stripe-favicon.ico     
+default-language: typescript          # Default code sample language
+
+logo:                                
+  href: https://stripe.com
+  dark: assets/stripe-logo-dark.svg
+  light: assets/stripe-logo-light.svg
+
+colors:                              
+  accent-primary:
+    light: "#635BFF"                 # Stripe's primary purple
+    dark: "#9B90FF"                  # Lighter purple for dark mode
+  background:
+    light: "#FFFFFF" 
+    dark: "#0A2540"                  
+
+navbar-links:                       
+  - type: filled
+    text: "Dashboard"
+    href: "https://dashboard.stripe.com"
+  - type: minimal 
+    text: "Support"
+    href: "https://support.stripe.com"
+```
+
 <ParamField path="title" type="string" required={false}>
   A string that is used as the tab bar title.
 </ParamField>
 
 <ParamField path="logo" type="object" required={false}>
-  Learn more about the `logo` configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
+  Learn more about the [`logo` configuration](/learn/docs/getting-started/global-configuration#logo-configuration). 
 </ParamField>
 
 <ParamField path="favicon" type="string" required={false}>
@@ -37,44 +60,47 @@ favicon: path/to/favicon.ico
 </ParamField>
 
 <ParamField path="colors" type="objects" required={true}>
-  Configure the `primaryAccent` and `background` colors. Learn more about the `colors` configuration 
-  [here](/learn/docs/getting-started/global-configuration#colors-configuration). 
+  Configure the `primaryAccent` and `background` colors. Learn more about the [`colors` configuration](/learn/docs/getting-started/global-configuration#colors-configuration). 
 </ParamField>
 
 <ParamField path="redirects" type="list of objects" required={false}>
   An array of paths you want to configure to permanently redirect to another path. Learn more about the 
-  `redirects` configuration [here](/learn/docs/getting-started/global-configuration#redirects-configuration).
+  [`redirects` configuration](/learn/docs/getting-started/global-configuration#redirects-configuration).
 </ParamField>
 
 <ParamField path="navbar-links" type="list of objects" required={false}>
   Array of names and urls of links you want to include as a call to action. Learn more about the 
-  `navbar-links` configuration [here](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
+  [`navbar-links` configuration](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
 </ParamField>
 
 <ParamField path="background-image" type="object" required={false}>
   Set a custom background image to be displayed behind every page. Learn more about the 
-  `background-image` configuration [here](/learn/docs/getting-started/global-configuration#background-image-configuration).
+  [`background-image` configuration](/learn/docs/getting-started/global-configuration#background-image-configuration).
 </ParamField>
 
 <ParamField path="typography" type="object" required={false}>
-  Customize the fonts used in your documentation website. Learn more about the 
-  `typography` configuration [here](/learn/docs/getting-started/global-configuration#typography-configuration).
+  Customize the fonts used in your documentation website. Learn more about the [`typography` configuration](/learn/docs/getting-started/global-configuration#typography-configuration).
 </ParamField>
 
 <ParamField path="layout" type="object" required={false}>
   Customize the layout of your documentation website. Learn more about the 
-  `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
+  [`layout` configuration](/learn/docs/getting-started/global-configuration#layout-configuration).
 </ParamField>
 
 <ParamField path="landing-page" type="object" required={false}>
   Creates a landing page for your documentation website. Learn more about the 
-  `landing-page` configuration [here](/learn/docs/getting-started/global-configuration#landing-page-configuration).
+  [`landing-page` configuration](/learn/docs/getting-started/global-configuration#landing-page-configuration).
 </ParamField>
 
 <ParamField path="default-language" type="string" required={false}>
   Sets the default language displayed by code snippets in the API Reference. 
   
   Options include: `typescript`, `python`, `java`, `go`, `ruby`, `csharp`, `curl`
+</ParamField>
+
+<ParamField path="metadata" type="object" required={false}>
+  Configure SEO metadata for your documentation website. Learn more about the 
+  [`metadata` configuration](/learn/docs/getting-started/global-configuration#metadata-configuration).
 </ParamField>
 
 ## Instances configuration
@@ -85,86 +111,102 @@ An `instance` is the backend of a distinct docs website. Each instance is publis
 instances: 
   - url: plantstore.docs.buildwithfern.com
     custom-domain: docs.plantstore.com
-    edit-this-page: 
-      github: 
-        owner: fern
-        repo: plant-store-docs
-        branch: main
 ```
 
+<ParamField path="instances" type="list of objects" required={false}>
+  Configure one or more documentation websites.
+</ParamField>
+
 <ParamField path="instances.url" type="string" required={true}>
-  The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`
+  The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`.
 </ParamField>
 
 <ParamField path="instances.custom-domain" type="string or list of strings" required={false}>
-  The custom domain where your documentation is hosted. Learn more about setting up a custom domain [here](/learn/docs/building-your-docs/custom-domain). 
+  The custom domain where your documentation is hosted. Learn more about [setting up a custom domain](/learn/docs/building-your-docs/custom-domain). 
 </ParamField>
 
 <ParamField path="instances.edit-this-page" type="object" required={false}>
-  If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. 
-  
-  Learn more about the `edit-this-page` object [here](#github-configuration). 
+  If specified, adds an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. Learn more about the [`edit-this-page` configuration](#github-configuration).
 </ParamField>
 
 ## Colors configuration 
 
 ```yaml docs.yml
-colors: 
-  accent-primary: 
-    light: "#418326"
-    dark: "#ADFF8C"
-  background: 
+colors:
+  accent-primary:
+    light: "#418326"  # Primary brand color for light mode
+    dark: "#ADFF8C"   # Primary brand color for dark mode
+  
+  background:
     light: "#ffffff"
-    dark: "#0d0e11"   
+    dark: "#0d0e11"
+  
+  border:
+    light: "#e5e7eb"
+    dark: "#1f2937"
+  
+  sidebar-background:
+    light: "#f9fafb"
+    dark: "#111827"
+  
+  header-background:
+    light: "#ffffff"
+    dark: "#0d0e11"
+  
+  card-background:
+    light: "#f3f4f6"
+    dark: "#1f2937"
 ```
 
 <ParamField path="accent-primary" type="object" required={true}>
-  The configured accent primary color for light and dark mode. 
+  The primary brand color used for interactive elements like links, buttons, and highlighted text. 
+  Configure separate colors for light and dark modes to ensure proper contrast and visibility.
 </ParamField>
 
 <ParamField path="background" type="object" required={false}>
-  The configured background colors for light and dark mode. 
+  The main background color for all documentation pages. Choose colors that provide good contrast with text 
+  and complement your brand colors. Dark mode colors should reduce eye strain.
 </ParamField>
 
 <ParamField path="border" type="object" required={false}>
-  The border color is used for the borders of cards and other elements.
+  Used for dividing lines, borders around elements, and visual separators. Choose subtle colors that create 
+  clear boundaries without being too prominent.
 </ParamField>
 
 <ParamField path="sidebar-background" type="object" required={false}>
-  If `sidebarBackground` is set, the sidebar will also render a 1px border on the right side.
-
-  By default, the sidebar will render with a transparent background without a border.
+  Background color for the navigation sidebar. When specified, includes a 1px border on the right side. 
+  If omitted, the sidebar uses a transparent background without a border.
 </ParamField>
 
 <ParamField path="header-background" type="object" required={false}>
-  If `headerBackground` is set, the header will render with a solid background, with a 1px solid border on the bottom.
-
-  By default, the header will render with a transparent background, with a 1px faded border on the bottom.
+  Background color for the top navigation header. When specified, includes a 1px solid border on the bottom. 
+  If omitted, the header uses a transparent background with a subtle gradient border.
 </ParamField>
 
 <ParamField path="card-background" type="object" required={false}>
-  The background color of cards and code blocks.
+  Background color for cards, code blocks, and other contained elements. Should be slightly different from the 
+  main background to create visual hierarchy while maintaining readability.
 </ParamField>
 
 ## Logo configuration
 
 ```yaml docs.yml
 logo: 
-  href: mydomain.com
-  dark: path/to/logo.png
-  light: path/to/logo.png
+  href: https://example.com
+  dark: assets/images/logo-dark.svg
+  light: assets/images/logo-light.svg
 ```
 
 <ParamField path="logo.href" type="string" required={false}>
-  Where clicking on the logo links you to.
+  The URL that users will be directed to when clicking the logo. Typically your company's homepage or app.
 </ParamField>
 
 <ParamField path="logo.dark" type="string" required={false}>
-  Path to the image for the dark mode logo. You can exclude this if you don't have dark mode enabled. SVG format is recommended.
+  Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality. Example: `assets/images/logo-dark.svg`
 </ParamField>
 
 <ParamField path="logo.light" type="string" required={false}>
-  Path to the image for the light mode logo. You can exclude this if you don't have light mode enabled. SVG format is recommended.
+  Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality. Example: `assets/images/logo-light.svg`
 </ParamField>
 
 ## Redirects configuration
@@ -247,75 +289,102 @@ background-image:
 
 ## Typography configuration 
 
-```yaml docs.yml {2-16}
+```yaml docs.yml
 typography:
-  bodyFont:
-    name: Inter-Regular
-    path: ./fonts/Inter-Regular.woff2
+  # Font for headings and titles
   headingsFont:
     name: Inter-Bold
     paths: 
       - path: ./fonts/Inter-Bold.woff2
-        weight: "400"
+        weight: 700
         style: normal
-      - path: ./fonts/Inter-Bold.woff2
-        weight: 500 900 # <-- indicates a range of weights
-        style: normal    
-  codeFont: 
-    name: Roboto-Mono-Regular
-    path: ./fonts/Roboto-Mono-Regular.woff2
-```
-<ParamField path="typography.bodyFont" type="object" required={false}>
-  Customize page and section titles. If not supplied, defaults to the body font. 
   
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration).
+  # Font for body text
+  bodyFont:
+    name: Inter-Regular
+    path: fonts/Inter-Regular.woff2
+    style: normal
+  
+  # Font for code snippets
+  codeFont: 
+    name: JetBrains-Mono
+    path: ./fonts/JetBrains-Mono-Regular.woff2
+```
+
+<ParamField path="typography.bodyFont" type="object" required={false}>
+  The font used for all body text including paragraphs, lists, and general content. 
+  For optimal performance, use WOFF2 format.
 </ParamField>
 
 <ParamField path="typography.headingsFont" type="object" required={false}>
-  Customize paragraph text and other body text. 
-  
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+  The font used for headings, titles, and other prominent text elements. Can be the same as your body font 
+  if you prefer a unified look. Supports multiple weights for different heading levels.
 </ParamField>
 
 <ParamField path="typography.codeFont" type="object" required={false}>
-  Customize code blocks and inline code snippets. 
-  
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+  The font used for code blocks and inline code. Monospace fonts are recommended for better code readability. 
+  Popular choices include JetBrains Mono, Fira Code, and Source Code Pro.
 </ParamField>
 
 ### Font configuration
 
-<CodeGroup>
-```yaml title="Basic" {3-4}
+<Tabs>
+<Tab title="Single Weight">
+```yaml
 typography:
   bodyFont:
     name: Inter-Regular
-    path: ./fonts/Inter-Regular.woff2
+    path: fonts/Inter-Regular.woff2
+    style: normal
 ```
-```yaml title="Variable Font" {3-10}
+</Tab>
+
+<Tab title="Variable Font">
+```yaml
 typography:
-  bodyFont:
-    name: Inter-Regular
+  headingsFont:
+    name: Inter-Variable
     paths: 
-      - path: ./fonts/Inter-Bold.woff2
-        weight: "400"
-        style: normal
-      - path: ./fonts/Inter-Bold.woff2
-        weight: 500 900 # <-- indicates a range of weights
-        style: normal    
+      - path: ./fonts/Inter-Variable.woff2
+      weight: 400 700  # Supports range of weights
+      style: normal
 ```
-</CodeGroup>
+</Tab>
+
+<Tab title="Multiple Files">
+```yaml
+typography:
+  headingsFont:
+    name: Inter
+    paths: 
+      - path: ./fonts/Inter-Regular.woff2
+      weight: 400
+      style: normal
+    - path: ./fonts/Inter-Bold.woff2
+      weight: 700
+      style: normal
+    - path: ./fonts/Inter-Italic.woff2
+      weight: 400
+      style: italic
+```
+</Tab>
+</Tabs>
 
 <ParamField path="name" type="string" required={false}>
   The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS. 
 </ParamField>
 
 <ParamField path="path" type="string" required={false}>
-  Relative filepath to a variable font file. If the font file is not variable, use `paths` instead. 
+  The path to your font file, relative to your docs folder. Use this when you have a single font file. For multiple font files (like separate files for bold, italic etc), use `paths` instead.
+</ParamField>
 
-  <Note>
-    Supported font file types are `.woff` and `woff2`.
-  </Note>
+<ParamField path="weight" type="string | number" required={false}>
+  The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700). 
+  Common values: 400 (normal), 700 (bold).
+</ParamField>
+
+<ParamField path="style" type="string" required={false}>
+  The font style, either "normal" or "italic". Defaults to "normal" if not specified.
 </ParamField>
 
 <ParamField path="paths" type="object" required={false}>
@@ -378,24 +447,51 @@ layout:
 </ParamField>
 
 ## GitHub configuration
-```yaml docs.yml
-edit-this-page: 
-  github: 
-    owner: fern
-    repo: plant-store-docs
-    branch: main
+
+<Tabs>
+<Tab title="Single Instance">
+```yaml
+instances:
+  - url: plantstore.docs.buildwithfern.com
+    edit-this-page:
+      github: 
+        owner: fern
+        repo: plant-store-docs
+        branch: main
 ```
+</Tab>
+
+<Tab title="Multiple Instances">
+```yaml
+# Configure edit-this-page per instance
+instances:
+  - url: plantstore.docs.buildwithfern.com
+    custom-domain: docs.plantstore.com
+    edit-this-page:
+      github:
+        owner: fern
+        repo: plant-store-docs
+        branch: production
+  - url: plantstore-staging.docs.buildwithfern.com
+    edit-this-page:
+      github:
+        owner: fern
+        repo: plant-store-docs
+        branch: staging
+```
+</Tab>
+</Tabs>
 
 <Warning>
-Be sure the repository is set to **public** visibility. 
+The GitHub repository must be **public** for the "Edit this page" feature to work correctly.
 </Warning>
 
 <ParamField path="github.owner" type="string" required={true}>
-  The owner of the GitHub repository where you host your documentation.  
+  The GitHub organization that owns the documentation repository.
 </ParamField>
 
 <ParamField path="github.repo" type="string" required={true}>
-  The name of the GitHub repository where you host your documentation.  
+  The name of the GitHub repository containing your fern folder.
 </ParamField>
 
 <ParamField path="github.branch" type="string" required={true}>
@@ -403,6 +499,7 @@ Be sure the repository is set to **public** visibility.
 </ParamField>
 
 ## Landing page configuration
+
 ```yaml docs.yml
 landing-page: 
   page: Page Title
@@ -417,5 +514,118 @@ landing-page:
   Relative filepath to the desired landing page Markdown file. 
 </ParamField>
 
-See [VapiAI's landing page live](https://docs.vapi.ai/welcome) and the associated [Markdown file](https://github.com/VapiAI/docs/blob/main/fern/welcome.mdx?plain=1).
+See [Vapi's landing page live](https://docs.vapi.ai/) and the associated [Markdown file](https://github.com/VapiAI/docs/blob/main/fern/welcome.mdx?plain=1).
 
+## Metadata configuration
+
+```yaml docs.yml
+metadata:
+  # Core platform identity
+  og:site_name: "Square Developer Documentation"
+  og:title: "Square Developer Platform | Payments, Commerce & Banking APIs"
+  og:description: "Build with Square's suite of APIs and SDKs. Accept payments, manage inventory, create loyalty programs, and access financial services. Complete documentation for developers building the future of commerce."
+  og:url: "https://developer.squareup.com/docs"
+
+  # Social sharing assets
+  og:image: "https://developer.squareup.com/images/docs-social-card.png"
+  og:image:width: 1200
+  og:image:height: 630
+  og:locale: "en_US"
+  og:logo: "https://developer.squareup.com/images/square-logo.png"
+
+  # Twitter (I mean X) optimization
+  twitter:title: "Square Developer Platform Documentation"
+  twitter:description: "Integrate payments, point-of-sale, inventory, and financial services into your applications with Square's developer platform. Get started with our APIs, SDKs, and comprehensive guides."
+  twitter:handle: "@SquareDev"
+  twitter:image: "https://developer.squareup.com/images/twitter-card.png"
+  twitter:site: "@Square"
+  twitter:card: "summary_large_image"
+```
+
+<ParamField path="metadata.og:site_name" type="string" required={false}>
+  The name of your website for Open Graph tags.
+</ParamField>
+
+<ParamField path="metadata.og:title" type="string" required={false}>
+  The title shown in social media previews.
+</ParamField>
+
+<ParamField path="metadata.og:description" type="string" required={false}>
+  The description shown in social media previews.
+</ParamField>
+
+<ParamField path="metadata.og:url" type="string" required={false}>
+  The canonical URL of your documentation.
+</ParamField>
+
+<ParamField path="metadata.og:image" type="string" required={false}>
+  The image shown in social media previews. Recommended size is 1200x630 pixels.
+</ParamField>
+
+<ParamField path="metadata.og:image:width" type="number" required={false}>
+  The width of your Open Graph image in pixels.
+</ParamField>
+
+<ParamField path="metadata.og:image:height" type="number" required={false}>
+  The height of your Open Graph image in pixels.
+</ParamField>
+
+<ParamField path="metadata.og:locale" type="string" required={false}>
+  The locale of your content (e.g., "en_US").
+</ParamField>
+
+<ParamField path="metadata.og:logo" type="string" required={false}>
+  URL to your company logo.
+</ParamField>
+
+<ParamField path="metadata.twitter:title" type="string" required={false}>
+  The title shown in Twitter Card previews.
+</ParamField>
+
+<ParamField path="metadata.twitter:description" type="string" required={false}>
+  The description shown in Twitter Card previews.
+</ParamField>
+
+<ParamField path="metadata.twitter:handle" type="string" required={false}>
+  Your company's Twitter handle.
+</ParamField>
+
+<ParamField path="metadata.twitter:image" type="string" required={false}>
+  The image shown in Twitter Card previews.
+</ParamField>
+
+<ParamField path="metadata.twitter:site" type="string" required={false}>
+  The Twitter handle for your website.
+</ParamField>
+
+<ParamField path="metadata.twitter:card" type="string" required={false}>
+  The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`.
+</ParamField>
+
+## Analytics configuration
+
+```yaml docs.yml
+analytics:
+  ga4:
+    measurement-id: "G-XXXXXXXXXX"
+  gtm:
+    container-id: "GTM-XXXXXX"
+  posthog:
+    api-key: "phc_xxxxxxxxxxxx"
+```
+
+<ParamField path="analytics.ga4.measurement-id" type="string" required={false}>
+  Your Google Analytics 4 measurement ID. Must start with "G-".
+</ParamField>
+
+<ParamField path="analytics.gtm.container-id" type="string" required={false}>
+  Your Google Tag Manager container ID. Must start with "GTM-".
+</ParamField>
+
+<ParamField path="analytics.posthog" type="object" required={false}>
+  Configuration for PostHog Analytics integration.
+</ParamField>
+
+<ParamField path="analytics.posthog.api-key" type="string" required={false}>
+  Your PostHog project API key. Defaults to the api-host of "https://us.i.posthog.com".
+</ParamField> 

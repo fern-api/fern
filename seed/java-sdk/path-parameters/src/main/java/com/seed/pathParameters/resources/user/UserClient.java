@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.MediaTypes;
 import com.seed.pathParameters.core.ObjectMappers;
+import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
@@ -32,6 +33,10 @@ public class UserClient {
         this.clientOptions = clientOptions;
     }
 
+    public User getUser(String userId) {
+        return getUser(userId, GetUsersRequest.builder().build());
+    }
+
     public User getUser(String userId, GetUsersRequest request) {
         return getUser(userId, request, null);
     }
@@ -46,7 +51,8 @@ public class UserClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -88,6 +94,7 @@ public class UserClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -130,6 +137,7 @@ public class UserClient {
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -150,6 +158,10 @@ public class UserClient {
         }
     }
 
+    public List<User> searchUsers(String userId) {
+        return searchUsers(userId, SearchUsersRequest.builder().build());
+    }
+
     public List<User> searchUsers(String userId, SearchUsersRequest request) {
         return searchUsers(userId, request, null);
     }
@@ -161,13 +173,15 @@ public class UserClient {
                 .addPathSegment(userId)
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

@@ -1,7 +1,5 @@
 using SeedExamples.Core;
 
-#nullable enable
-
 namespace SeedExamples.Health;
 
 public partial class HealthClient

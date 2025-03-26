@@ -93,7 +93,7 @@ export class ExampleEndpointFactory {
             }
 
             if (required && requestExamples.length === 0) {
-                this.logger.warn(
+                this.logger.trace(
                     `Failed to generate required request example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 return [];
@@ -104,7 +104,16 @@ export class ExampleEndpointFactory {
         if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
 
-            if (responseSchemaIdResponse.examples.length === 0) {
+            if (endpoint.response?.type === "json" && endpoint.response.statusCode === 204) {
+                responseExamples.push([
+                    undefined,
+                    EndpointResponseExample.withoutStreaming(
+                        FullExample.object({
+                            properties: {}
+                        })
+                    )
+                ]);
+            } else if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
                     skipReadonly: false,
                     schema: responseSchemaIdResponse.schema,
@@ -165,7 +174,7 @@ export class ExampleEndpointFactory {
             }
 
             if (required && responseExamples.length === 0) {
-                this.logger.warn(
+                this.logger.trace(
                     `Failed to generate required response example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 return [];
@@ -541,7 +550,7 @@ export function isExamplePrimitive(example: FullExample): boolean {
             switch (example.value.type) {
                 case "discriminated":
                     return false;
-                case "undisciminated":
+                case "undiscriminated":
                     return isExamplePrimitive(example.value.value);
                 default:
                     return false;
@@ -569,7 +578,7 @@ export function getNameFromSchemaWithExample(schema: SchemaWithExample): string 
             switch (schema.value.type) {
                 case "discriminated":
                     return undefined;
-                case "undisciminated":
+                case "undiscriminated":
                     return undefined;
                 default:
                     return undefined;
@@ -598,6 +607,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     nameOverride: undefined,
                     availability: undefined,
                     readonly: undefined,
+                    writeonly: undefined,
                     inline: undefined
                 };
             })

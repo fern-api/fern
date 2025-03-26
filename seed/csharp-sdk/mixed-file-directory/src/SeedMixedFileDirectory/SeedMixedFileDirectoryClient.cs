@@ -1,12 +1,10 @@
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory;
 
 public partial class SeedMixedFileDirectoryClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedMixedFileDirectoryClient(ClientOptions? clientOptions = null)
     {

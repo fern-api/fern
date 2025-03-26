@@ -7,6 +7,7 @@ import com.seed.oauthClientCredentials.core.ClientOptions;
 import com.seed.oauthClientCredentials.core.Environment;
 import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
 import com.seed.oauthClientCredentials.resources.auth.AuthClient;
+import okhttp3.OkHttpClient;
 
 public final class SeedOauthClientCredentialsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -39,10 +40,26 @@ public final class SeedOauthClientCredentialsClientBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedOauthClientCredentialsClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedOauthClientCredentialsClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedOauthClientCredentialsClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

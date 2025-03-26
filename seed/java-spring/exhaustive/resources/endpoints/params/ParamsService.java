@@ -47,7 +47,7 @@ public interface ParamsService {
   )
   void getWithAllowMultipleQuery(@RequestHeader("Authorization") BearerAuth auth,
       Principal principal, @RequestParam("query") String query,
-      @RequestParam("numer") Integer numer);
+      @RequestParam("number") Integer number);
 
   @GetMapping(
       value = "/path-query/{param}",

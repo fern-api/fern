@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -11,7 +11,7 @@ buildScripts:
     commands:
       - poetry run mypy .
   testScript:
-    # TODO: we need to acttually run the mock server tests as well
+    # TODO: we need to actually run the mock server tests as well
     # Note: not all versions of the generator have this test directory which brings in the unit tests we write
     # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
     commands:
@@ -21,17 +21,18 @@ buildScripts:
 publish:
   workingDirectory: generators/python
   preBuildCommands:
+    - pnpm --filter @fern-api/python-sdk dist:cli
     - pip install poetry
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
     file: ./generators/python/sdk/Dockerfile
     image: fernapi/fern-python-sdk
-    context: ./generators/python
+    context: .
 test:
   docker:
     image: fernapi/fern-python-sdk:latest
-    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+    command: pnpm --filter @fern-api/python-sdk dist:cli && docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
   local:
     workingDirectory: generators/python
     buildCommand:

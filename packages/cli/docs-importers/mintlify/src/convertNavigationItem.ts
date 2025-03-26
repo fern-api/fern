@@ -37,10 +37,8 @@ export async function convertNavigationItem({
                             relativeFilepathFromRoot
                         );
 
-                        // Ensure the file exists before we convert it
                         const fileExists = await doesPathExist(absoluteFilepathToMarkdown);
 
-                        // If we return undefined then we will filter out the page from the section below
                         if (!fileExists) {
                             return undefined;
                         }
@@ -63,6 +61,7 @@ export async function convertNavigationItem({
                         });
                         return {
                             page: convertedMarkdown.sidebarTitle ?? "",
+                            icon: convertedMarkdown.mintlifyFrontmatter.icon,
                             path: relativeFilepathFromRoot
                         };
                     } else {

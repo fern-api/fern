@@ -198,7 +198,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RequestTypeInlineType1": {
             "type": "object",
@@ -257,7 +258,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1": {
             "type": "object",
@@ -469,7 +471,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1FooMapValue": {
             "type": "object",
@@ -556,7 +559,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1FooListItem": {
             "type": "object",
@@ -643,7 +647,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1FooSetItem": {
             "type": "object",
@@ -730,7 +735,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1InlineType1": {
             "type": "object",
@@ -845,7 +851,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType1InlineType1NestedInlineType1": {
             "type": "object",
@@ -988,7 +995,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:DiscriminatedUnion1": {
             "type": "discriminatedUnion",
@@ -1237,7 +1245,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1324,7 +1333,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1411,7 +1421,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1": {
             "type": "undiscriminatedUnion",
@@ -1606,7 +1617,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1693,7 +1705,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1780,7 +1793,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:InlineEnum1": {
             "type": "enum",
@@ -2148,7 +2162,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -2235,7 +2250,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -2322,7 +2338,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineEnum1": {
             "type": "enum",
@@ -2561,7 +2578,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineSetItem1": {
             "type": "object",
@@ -2648,7 +2666,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineMapItem1": {
             "type": "object",
@@ -2735,7 +2754,8 @@
                         "value": "type_:ReferenceType"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ReferenceType": {
             "type": "object",
@@ -2794,7 +2814,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UnionTypeWithAliasVariant": {
             "type": "discriminatedUnion",
@@ -3524,7 +3545,8 @@
                         "value": "type_:AliasProperty"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ObjectTypeWithMapAliasTypeValue": {
             "type": "object",
@@ -3590,7 +3612,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ObjectTypeWithMapAliasTypeKey": {
             "type": "object",
@@ -3656,7 +3679,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ObjectTypeWithMapAliasTypeBoth": {
             "type": "object",
@@ -3722,7 +3746,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ObjectTypeWithListAliasType": {
             "type": "object",
@@ -3784,7 +3809,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ObjectTypeWithSetAliasType": {
             "type": "object",
@@ -3846,7 +3872,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:AliasVariant": {
             "type": "alias",
@@ -4037,7 +4064,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:OtherAliasVariantType": {
             "type": "object",
@@ -4096,7 +4124,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:AliasPropertyType": {
             "type": "object",
@@ -4155,7 +4184,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:OtherAliasPropertyType": {
             "type": "object",
@@ -4214,7 +4244,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:NonAliasVariant": {
             "type": "object",
@@ -4273,7 +4304,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -4409,7 +4441,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_.getDiscriminatedUnion": {
             "auth": null,
@@ -4542,7 +4575,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_.getUndiscriminatedUnion": {
             "auth": null,
@@ -4675,8 +4709,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

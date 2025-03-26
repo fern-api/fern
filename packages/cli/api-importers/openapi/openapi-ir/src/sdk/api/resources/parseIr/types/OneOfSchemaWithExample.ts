@@ -6,15 +6,15 @@ import * as FernOpenapiIr from "../../../index";
 
 export type OneOfSchemaWithExample =
     | FernOpenapiIr.OneOfSchemaWithExample.Discriminated
-    | FernOpenapiIr.OneOfSchemaWithExample.Undisciminated;
+    | FernOpenapiIr.OneOfSchemaWithExample.Undiscriminated;
 
 export namespace OneOfSchemaWithExample {
     export interface Discriminated extends FernOpenapiIr.DiscriminatedOneOfSchemaWithExample, _Utils {
         type: "discriminated";
     }
 
-    export interface Undisciminated extends FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample, _Utils {
-        type: "undisciminated";
+    export interface Undiscriminated extends FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample, _Utils {
+        type: "undiscriminated";
     }
 
     export interface _Utils {
@@ -23,7 +23,7 @@ export namespace OneOfSchemaWithExample {
 
     export interface _Visitor<_Result> {
         discriminated: (value: FernOpenapiIr.DiscriminatedOneOfSchemaWithExample) => _Result;
-        undisciminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample) => _Result;
+        undiscriminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -44,14 +44,14 @@ export const OneOfSchemaWithExample = {
         };
     },
 
-    undisciminated: (
+    undiscriminated: (
         value: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample,
-    ): FernOpenapiIr.OneOfSchemaWithExample.Undisciminated => {
+    ): FernOpenapiIr.OneOfSchemaWithExample.Undiscriminated => {
         return {
             ...value,
-            type: "undisciminated",
+            type: "undiscriminated",
             _visit: function <_Result>(
-                this: FernOpenapiIr.OneOfSchemaWithExample.Undisciminated,
+                this: FernOpenapiIr.OneOfSchemaWithExample.Undiscriminated,
                 visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.OneOfSchemaWithExample._visit(this, visitor);
@@ -66,8 +66,8 @@ export const OneOfSchemaWithExample = {
         switch (value.type) {
             case "discriminated":
                 return visitor.discriminated(value);
-            case "undisciminated":
-                return visitor.undisciminated(value);
+            case "undiscriminated":
+                return visitor.undiscriminated(value);
             default:
                 return visitor._other(value as any);
         }

@@ -1,11 +1,7 @@
-using System;
-using System.Net.Http;
 using Grpc.Core;
 using SeedApi.Core;
 
 namespace SeedApi;
-
-#nullable enable
 
 public partial class GrpcRequestOptions
 {

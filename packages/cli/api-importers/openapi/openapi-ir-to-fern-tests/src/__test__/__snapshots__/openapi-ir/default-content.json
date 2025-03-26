@@ -5,6 +5,7 @@
       "url": "https://ai.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -55,7 +56,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/generateContent",
@@ -101,7 +102,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "GenerateContentResponse": {

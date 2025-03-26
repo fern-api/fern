@@ -156,7 +156,7 @@ func invalidComponentsFromGraph(
 		if len(component) == 1 {
 			continue
 		}
-		// Sort for determinisitc results.
+		// Sort for deterministic results.
 		sort.Slice(component, func(i, j int) bool { return component[i].Label() < component[j].Label() })
 		invalidComponents = append(invalidComponents, component)
 	}

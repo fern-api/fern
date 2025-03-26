@@ -75,6 +75,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "TransactionRecord",
               },
               "source": {
@@ -575,6 +576,7 @@
                 "type": "optional<string>",
               },
               "rfc23_state": {
+                "access": "read-only",
                 "docs": "State per RFC 23",
                 "type": "optional<string>",
               },
@@ -698,6 +700,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1342,6 +1345,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1387,6 +1391,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1768,6 +1773,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1789,6 +1795,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3693,6 +3700,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3742,6 +3750,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3961,6 +3970,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3984,6 +3994,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4071,6 +4082,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4369,6 +4381,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4393,6 +4406,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4444,6 +4458,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4464,6 +4479,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6321,6 +6337,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6354,6 +6371,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6404,6 +6422,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6440,6 +6459,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6565,6 +6585,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6826,6 +6847,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6877,6 +6899,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -7221,6 +7244,7 @@
       response:
         docs: ''
         type: TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -7599,6 +7623,7 @@ types:
       rfc23_state:
         type: optional<string>
         docs: State per RFC 23
+        access: read-only
       routing_state:
         type: optional<ConnRecordRoutingState>
         docs: Routing state of connection
@@ -7637,6 +7662,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       did:
         type: optional<string>
         docs: DID for connection invitation
@@ -8023,6 +8049,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -8048,6 +8075,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -8307,6 +8335,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       protocols:
         docs: List of protocol descriptors
         type: list<ProtocolDescriptor>
@@ -8320,6 +8349,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       disclosures:
         docs: List of protocol or goal_code descriptors
         type: list<map<string, unknown>>
@@ -9455,6 +9485,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       filter:
         type: optional<KeylistQueryFilter>
         docs: Query dictionary object
@@ -9480,6 +9511,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       updates:
         type: optional<list<KeylistUpdateRule>>
         docs: List of update rules
@@ -9623,6 +9655,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       mediator_terms:
         type: optional<list<string>>
       recipient_terms:
@@ -9637,6 +9670,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       endpoint:
         type: optional<string>
         docs: endpoint on which messages destined for the recipient are received.
@@ -9692,6 +9726,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       description:
         type: optional<string>
         docs: Introductory text for the menu
@@ -9890,6 +9925,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -9905,6 +9941,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -9935,6 +9972,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       queries:
         type: optional<list<QueryItem>>
     source:
@@ -9947,6 +9985,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
       query: string
@@ -11036,6 +11075,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11058,6 +11098,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11090,6 +11131,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11111,6 +11153,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11180,6 +11223,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11346,6 +11390,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11372,6 +11417,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11747,6 +11793,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ActionMenuModulesResult",
               },
               "source": {
@@ -11778,6 +11825,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ActionMenuFetchResult",
               },
               "source": {
@@ -11836,6 +11884,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ActionMenuModulesResult",
               },
               "source": {
@@ -11869,6 +11918,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ActionMenuModulesResult",
               },
               "source": {
@@ -11924,6 +11974,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ActionMenuModulesResult",
               },
               "source": {
@@ -11956,6 +12007,7 @@ service:
       response:
         docs: ''
         type: root.ActionMenuModulesResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -11976,6 +12028,7 @@ service:
       response:
         docs: ''
         type: root.ActionMenuFetchResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -12006,6 +12059,7 @@ service:
       response:
         docs: ''
         type: root.ActionMenuModulesResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -12030,6 +12084,7 @@ service:
       response:
         docs: ''
         type: root.ActionMenuModulesResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -12056,6 +12111,7 @@ service:
       response:
         docs: ''
         type: root.ActionMenuModulesResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -12130,6 +12186,7 @@ docs: Menu interaction over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.BasicMessageModuleResponse",
               },
               "source": {
@@ -12170,6 +12227,7 @@ service:
       response:
         docs: ''
         type: root.BasicMessageModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -12271,6 +12329,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -12338,6 +12397,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -12450,6 +12510,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.InvitationResult",
               },
               "source": {
@@ -12571,6 +12632,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionStaticResult",
               },
               "source": {
@@ -12604,6 +12666,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionModuleResponse",
               },
               "source": {
@@ -12638,6 +12701,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.EndpointsResult",
               },
               "source": {
@@ -12678,6 +12742,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionMetadata",
               },
               "source": {
@@ -12730,6 +12795,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -12870,6 +12936,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionList",
               },
               "source": {
@@ -12992,6 +13059,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -13041,6 +13109,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionMetadata",
               },
               "source": {
@@ -13079,6 +13148,7 @@ docs: Simple messaging
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnectionModuleResponse",
               },
               "source": {
@@ -13256,6 +13326,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionList
+        status-code: 200
       examples:
         - response:
             body:
@@ -13351,6 +13422,7 @@ service:
       response:
         docs: ''
         type: root.InvitationResult
+        status-code: 200
       examples:
         - request:
             mediation_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -13427,6 +13499,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionStaticResult
+        status-code: 200
       examples:
         - request:
             alias: alias
@@ -13517,6 +13590,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -13566,6 +13640,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13605,6 +13680,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13643,6 +13719,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13691,6 +13768,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13730,6 +13808,7 @@ service:
       response:
         docs: ''
         type: root.EndpointsResult
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13754,6 +13833,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13781,6 +13861,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionMetadata
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13808,6 +13889,7 @@ service:
       response:
         docs: ''
         type: root.ConnectionMetadata
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -13913,6 +13995,7 @@ docs: Connection management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredentialDefinitionsCreatedResult",
               },
               "source": {
@@ -13954,6 +14037,7 @@ docs: Connection management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredentialDefinitionGetResult",
               },
               "source": {
@@ -14035,6 +14119,7 @@ docs: Connection management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TxnOrCredentialDefinitionSendResult",
               },
               "source": {
@@ -14076,6 +14161,7 @@ docs: Connection management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredentialDefinitionGetResult",
               },
               "source": {
@@ -14134,6 +14220,7 @@ service:
       response:
         docs: ''
         type: root.TxnOrCredentialDefinitionSendResult
+        status-code: 200
       examples:
         - request:
             revocation_registry_size: 1000
@@ -14189,6 +14276,7 @@ service:
       response:
         docs: ''
         type: root.CredentialDefinitionsCreatedResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -14209,6 +14297,7 @@ service:
       response:
         docs: ''
         type: root.CredentialDefinitionGetResult
+        status-code: 200
       examples:
         - path-parameters:
             cred_def_id: cred_def_id
@@ -14235,6 +14324,7 @@ service:
       response:
         docs: ''
         type: root.CredentialDefinitionGetResult
+        status-code: 200
       examples:
         - path-parameters:
             cred_def_id: cred_def_id
@@ -14292,6 +14382,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.HolderModuleResponse",
               },
               "source": {
@@ -14325,6 +14416,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.HolderModuleResponse",
               },
               "source": {
@@ -14360,6 +14452,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AttributeMimeTypesResult",
               },
               "source": {
@@ -14400,6 +14493,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.IndyCredInfo",
               },
               "source": {
@@ -14480,6 +14574,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredInfoList",
               },
               "source": {
@@ -14538,6 +14633,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredRevokedResult",
               },
               "source": {
@@ -14596,6 +14692,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.VCRecord",
               },
               "source": {
@@ -14780,6 +14877,7 @@ docs: Credential definition operations
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.VCRecordList",
               },
               "source": {
@@ -14812,6 +14910,7 @@ service:
       response:
         docs: ''
         type: root.AttributeMimeTypesResult
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14846,6 +14945,7 @@ service:
       response:
         docs: ''
         type: root.CredRevokedResult
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14866,6 +14966,7 @@ service:
       response:
         docs: ''
         type: root.VCRecord
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14905,6 +15006,7 @@ service:
       response:
         docs: ''
         type: root.HolderModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14925,6 +15027,7 @@ service:
       response:
         docs: ''
         type: root.IndyCredInfo
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14952,6 +15055,7 @@ service:
       response:
         docs: ''
         type: root.HolderModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             credential_id: credential_id
@@ -14986,6 +15090,7 @@ service:
       response:
         docs: ''
         type: root.CredInfoList
+        status-code: 200
       examples:
         - response:
             body:
@@ -15061,6 +15166,7 @@ service:
       response:
         docs: ''
         type: root.VCRecordList
+        status-code: 200
       examples:
         - request:
             contexts:
@@ -15209,6 +15315,7 @@ docs: Holder credential management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -15286,6 +15393,7 @@ docs: Holder credential management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -15379,6 +15487,7 @@ docs: Holder credential management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -15488,6 +15597,7 @@ docs: Holder credential management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ConnRecord",
               },
               "source": {
@@ -15546,6 +15656,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - query-parameters:
             their_public_did: their_public_did
@@ -15619,6 +15730,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -15672,6 +15784,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -15726,6 +15839,7 @@ service:
       response:
         docs: ''
         type: root.ConnRecord
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -15815,6 +15929,7 @@ docs: Connection management via DID exchange
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10DiscoveryExchangeListResult",
               },
               "source": {
@@ -15862,6 +15977,7 @@ docs: Connection management via DID exchange
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10DiscoveryRecord",
               },
               "source": {
@@ -15904,6 +16020,7 @@ service:
       response:
         docs: ''
         type: root.V10DiscoveryRecord
+        status-code: 200
       examples:
         - response:
             body:
@@ -15930,6 +16047,7 @@ service:
       response:
         docs: ''
         type: root.V10DiscoveryExchangeListResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -16038,6 +16156,7 @@ docs: Feature discovery
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20DiscoveryExchangeListResult",
               },
               "source": {
@@ -16077,6 +16196,7 @@ docs: Feature discovery
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20DiscoveryExchangeResult",
               },
               "source": {
@@ -16119,6 +16239,7 @@ service:
       response:
         docs: ''
         type: root.V20DiscoveryExchangeResult
+        status-code: 200
       examples:
         - response:
             body: {}
@@ -16138,6 +16259,7 @@ service:
       response:
         docs: ''
         type: root.V20DiscoveryExchangeListResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -16247,6 +16369,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16331,6 +16454,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16422,6 +16546,7 @@ docs: Feature discovery v2
               "path": "/transactions",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionList",
               },
               "source": {
@@ -16485,6 +16610,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16548,6 +16674,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16611,6 +16738,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16674,6 +16802,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionRecord",
               },
               "source": {
@@ -16724,6 +16853,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.EndorserInfo",
               },
               "source": {
@@ -16767,6 +16897,7 @@ docs: Feature discovery v2
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TransactionJobs",
               },
               "source": {
@@ -16812,6 +16943,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -16850,6 +16982,7 @@ service:
       response:
         docs: ''
         type: root.TransactionList
+        status-code: 200
       examples:
         - response:
             body:
@@ -16925,6 +17058,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - query-parameters:
             tran_id: tran_id
@@ -16978,6 +17112,7 @@ service:
       response:
         docs: ''
         type: root.EndorserInfo
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -17007,6 +17142,7 @@ service:
       response:
         docs: ''
         type: root.TransactionJobs
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -17028,6 +17164,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -17070,6 +17207,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -17112,6 +17250,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -17154,6 +17293,7 @@ service:
       response:
         docs: ''
         type: root.TransactionRecord
+        status-code: 200
       examples:
         - path-parameters:
             tran_id: tran_id
@@ -17251,6 +17391,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.IntroModuleResponse",
               },
               "source": {
@@ -17292,6 +17433,7 @@ service:
       response:
         docs: ''
         type: root.IntroModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -17460,6 +17602,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -17564,6 +17707,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -17597,6 +17741,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.IssueCredentialModuleResponse",
               },
               "source": {
@@ -17648,6 +17793,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -17748,6 +17894,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchangeListResult",
               },
               "source": {
@@ -17817,6 +17964,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -17865,6 +18013,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.IssueCredentialModuleResponse",
               },
               "source": {
@@ -17931,6 +18080,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -17982,6 +18132,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -18141,6 +18292,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -18256,6 +18408,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -18415,6 +18568,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -18483,6 +18637,7 @@ docs: Introduction of known parties
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10CredentialExchange",
               },
               "source": {
@@ -18594,6 +18749,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -18674,6 +18830,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - request:
             auto_issue: true
@@ -18740,6 +18897,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchangeListResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -18796,6 +18954,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -18834,6 +18993,7 @@ service:
       response:
         docs: ''
         type: root.IssueCredentialModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -18862,6 +19022,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -18908,6 +19069,7 @@ service:
       response:
         docs: ''
         type: root.IssueCredentialModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -18937,6 +19099,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -18976,6 +19139,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -19021,6 +19185,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -19112,6 +19277,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -19198,6 +19364,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - request:
             auto_issue: true
@@ -19301,6 +19468,7 @@ service:
       response:
         docs: ''
         type: root.V10CredentialExchange
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -19462,6 +19630,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -19552,6 +19721,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -19585,6 +19755,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20IssueCredentialModuleResponse",
               },
               "source": {
@@ -19635,6 +19806,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecordDetail",
               },
               "source": {
@@ -19733,6 +19905,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecordListResult",
               },
               "source": {
@@ -19801,6 +19974,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecordDetail",
               },
               "source": {
@@ -19849,6 +20023,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20IssueCredentialModuleResponse",
               },
               "source": {
@@ -19913,6 +20088,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -19977,6 +20153,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -20043,6 +20220,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -20144,6 +20322,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -20210,6 +20389,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -20320,6 +20500,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecord",
               },
               "source": {
@@ -20387,6 +20568,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20CredExRecordDetail",
               },
               "source": {
@@ -20494,6 +20676,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -20559,6 +20742,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_issue: true
@@ -20620,6 +20804,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecordListResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -20672,6 +20857,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecordDetail
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20708,6 +20894,7 @@ service:
       response:
         docs: ''
         type: root.V20IssueCredentialModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20736,6 +20923,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecordDetail
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20780,6 +20968,7 @@ service:
       response:
         docs: ''
         type: root.V20IssueCredentialModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20811,6 +21000,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20853,6 +21043,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20895,6 +21086,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecordDetail
+        status-code: 200
       examples:
         - path-parameters:
             cred_ex_id: cred_ex_id
@@ -20933,6 +21125,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -21005,6 +21198,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_issue: true
@@ -21052,6 +21246,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -21122,6 +21317,7 @@ service:
       response:
         docs: ''
         type: root.V20CredExRecord
+        status-code: 200
       examples:
         - request:
             auto_remove: true
@@ -21256,6 +21452,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.SignResponse",
               },
               "source": {
@@ -21306,6 +21503,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.VerifyResponse",
               },
               "source": {
@@ -21344,6 +21542,7 @@ service:
       response:
         docs: ''
         type: root.SignResponse
+        status-code: 200
       examples:
         - request:
             doc:
@@ -21374,6 +21573,7 @@ service:
       response:
         docs: ''
         type: root.VerifyResponse
+        status-code: 200
       examples:
         - request:
             doc:
@@ -21446,6 +21646,7 @@ docs: Sign and verify json-ld data
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.LedgerModulesResult",
               },
               "source": {
@@ -21488,6 +21689,7 @@ docs: Sign and verify json-ld data
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.GetNymRoleResponse",
               },
               "source": {
@@ -21530,6 +21732,7 @@ docs: Sign and verify json-ld data
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.GetDIDVerkeyResponse",
               },
               "source": {
@@ -21569,6 +21772,7 @@ docs: Sign and verify json-ld data
               "path": "/ledger/multiple/config",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.LedgerConfigList",
               },
               "source": {
@@ -21615,6 +21819,7 @@ docs: Sign and verify json-ld data
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.GetDIDEndpointResponse",
               },
               "source": {
@@ -21657,6 +21862,7 @@ docs: Sign and verify json-ld data
               "path": "/ledger/taa",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TAAResult",
               },
               "source": {
@@ -21681,6 +21887,7 @@ docs: Sign and verify json-ld data
               "path": "/ledger/multiple/get-write-ledger",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WriteLedgerRequest",
               },
               "source": {
@@ -21750,6 +21957,7 @@ docs: Sign and verify json-ld data
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TxnOrRegisterLedgerNymResponse",
               },
               "source": {
@@ -21774,6 +21982,7 @@ docs: Sign and verify json-ld data
               "path": "/ledger/rotate-public-did-keypair",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.LedgerModulesResult",
               },
               "source": {
@@ -21857,6 +22066,7 @@ service:
       response:
         docs: ''
         type: root.GetDIDEndpointResponse
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -21882,6 +22092,7 @@ service:
       response:
         docs: ''
         type: root.GetDIDVerkeyResponse
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -21907,6 +22118,7 @@ service:
       response:
         docs: ''
         type: root.GetNymRoleResponse
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -21923,6 +22135,7 @@ service:
       response:
         docs: ''
         type: root.LedgerConfigList
+        status-code: 200
       examples:
         - response:
             body:
@@ -21947,6 +22160,7 @@ service:
       response:
         docs: ''
         type: root.WriteLedgerRequest
+        status-code: 200
       examples:
         - response:
             body:
@@ -21988,6 +22202,7 @@ service:
       response:
         docs: ''
         type: root.TxnOrRegisterLedgerNymResponse
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -22005,6 +22220,7 @@ service:
       response:
         docs: ''
         type: root.LedgerModulesResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -22019,6 +22235,7 @@ service:
       response:
         docs: ''
         type: root.TAAResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -22057,6 +22274,7 @@ service:
       response:
         docs: ''
         type: root.LedgerModulesResult
+        status-code: 200
       examples:
         - request:
             mechanism: mechanism
@@ -22119,6 +22337,7 @@ docs: Interaction with ledger
               "path": "/mediation/default-mediator",
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22170,6 +22389,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22241,6 +22461,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.MediationDeny",
               },
               "source": {
@@ -22283,6 +22504,7 @@ docs: Interaction with ledger
               "path": "/mediation/default-mediator",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22348,6 +22570,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Keylist",
               },
               "source": {
@@ -22444,6 +22667,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MediationList",
               },
               "source": {
@@ -22495,6 +22719,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22534,6 +22759,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.MediationGrant",
               },
               "source": {
@@ -22614,6 +22840,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22675,6 +22902,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.KeylistQuery",
               },
               "source": {
@@ -22745,6 +22973,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.KeylistUpdate",
               },
               "source": {
@@ -22796,6 +23025,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.MediationRecord",
               },
               "source": {
@@ -22864,6 +23094,7 @@ docs: Interaction with ledger
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.KeylistUpdate",
               },
               "source": {
@@ -22924,6 +23155,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 200
       examples:
         - response:
             body:
@@ -22953,6 +23185,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 201
       examples:
         - response:
             body:
@@ -22996,6 +23229,7 @@ service:
       response:
         docs: ''
         type: root.Keylist
+        status-code: 200
       examples:
         - response:
             body:
@@ -23047,6 +23281,7 @@ service:
       response:
         docs: ''
         type: root.KeylistQuery
+        status-code: 201
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23076,6 +23311,7 @@ service:
       response:
         docs: ''
         type: root.KeylistUpdate
+        status-code: 201
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23119,6 +23355,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 201
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -23176,6 +23413,7 @@ service:
       response:
         docs: ''
         type: root.MediationList
+        status-code: 200
       examples:
         - response:
             body:
@@ -23226,6 +23464,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 200
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23261,6 +23500,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 200
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23307,6 +23547,7 @@ service:
       response:
         docs: ''
         type: root.MediationDeny
+        status-code: 201
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23341,6 +23582,7 @@ service:
       response:
         docs: ''
         type: root.MediationGrant
+        status-code: 201
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23376,6 +23618,7 @@ service:
       response:
         docs: ''
         type: root.KeylistUpdate
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -23404,6 +23647,7 @@ service:
       response:
         docs: ''
         type: root.MediationRecord
+        status-code: 201
       examples:
         - path-parameters:
             mediation_id: mediation_id
@@ -23548,6 +23792,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CreateWalletResponse",
               },
               "source": {
@@ -23599,6 +23844,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MultitenantModuleResponse",
               },
               "source": {
@@ -23647,6 +23893,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CreateWalletTokenResponse",
               },
               "source": {
@@ -23695,6 +23942,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WalletList",
               },
               "source": {
@@ -23732,6 +23980,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WalletRecord",
               },
               "source": {
@@ -23805,6 +24054,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WalletRecord",
               },
               "source": {
@@ -23970,6 +24220,7 @@ service:
       response:
         docs: ''
         type: root.CreateWalletResponse
+        status-code: 200
       examples:
         - request:
             image_url: https://aries.ca/images/sample.png
@@ -24006,6 +24257,7 @@ service:
       response:
         docs: ''
         type: root.WalletRecord
+        status-code: 200
       examples:
         - path-parameters:
             wallet_id: wallet_id
@@ -24057,6 +24309,7 @@ service:
       response:
         docs: ''
         type: root.WalletRecord
+        status-code: 200
       examples:
         - path-parameters:
             wallet_id: wallet_id
@@ -24098,6 +24351,7 @@ service:
       response:
         docs: ''
         type: root.MultitenantModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             wallet_id: wallet_id
@@ -24128,6 +24382,7 @@ service:
       response:
         docs: ''
         type: root.CreateWalletTokenResponse
+        status-code: 200
       examples:
         - path-parameters:
             wallet_id: wallet_id
@@ -24153,6 +24408,7 @@ service:
       response:
         docs: ''
         type: root.WalletList
+        status-code: 200
       examples:
         - response:
             body:
@@ -24296,6 +24552,7 @@ docs: Multitenant wallet management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.InvitationRecord",
               },
               "source": {
@@ -24513,6 +24770,7 @@ docs: Multitenant wallet management
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.OobRecord",
               },
               "source": {
@@ -24603,6 +24861,7 @@ service:
       response:
         docs: ''
         type: root.InvitationRecord
+        status-code: 200
       examples:
         - request:
             accept:
@@ -24663,6 +24922,7 @@ service:
       response:
         docs: ''
         type: root.OobRecord
+        status-code: 200
       examples:
         - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -24907,6 +25167,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -24940,6 +25201,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentProofModuleResponse",
               },
               "source": {
@@ -25036,6 +25298,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchangeList",
               },
               "source": {
@@ -25113,6 +25376,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.IndyCredPrecis>",
               },
               "source": {
@@ -25162,6 +25426,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25210,6 +25475,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentProofModuleResponse",
               },
               "source": {
@@ -25328,6 +25594,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25443,6 +25710,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25516,6 +25784,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25588,6 +25857,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25637,6 +25907,7 @@ docs: Out-of-band connections
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V10PresentationExchange",
               },
               "source": {
@@ -25709,6 +25980,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - request:
             auto_verify: false
@@ -25782,6 +26054,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchangeList
+        status-code: 200
       examples:
         - response:
             body:
@@ -25832,6 +26105,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -25867,6 +26141,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentProofModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -25908,6 +26183,7 @@ service:
       response:
         docs: ''
         type: list<root.IndyCredPrecis>
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -25936,6 +26212,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentProofModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -25962,6 +26239,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -26020,6 +26298,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -26058,6 +26337,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -26112,6 +26392,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - request:
             auto_present: true
@@ -26189,6 +26470,7 @@ service:
       response:
         docs: ''
         type: root.V10PresentationExchange
+        status-code: 200
       examples:
         - request:
             auto_verify: false
@@ -26337,6 +26619,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26370,6 +26653,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresentProofModuleResponse",
               },
               "source": {
@@ -26466,6 +26750,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecordList",
               },
               "source": {
@@ -26543,6 +26828,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.IndyCredPrecis>",
               },
               "source": {
@@ -26592,6 +26878,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26640,6 +26927,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresentProofModuleResponse",
               },
               "source": {
@@ -26722,6 +27010,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26805,6 +27094,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26878,6 +27168,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26950,6 +27241,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -26999,6 +27291,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.V20PresExRecord",
               },
               "source": {
@@ -27088,6 +27381,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - request:
             auto_verify: false
@@ -27141,6 +27435,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecordList
+        status-code: 200
       examples:
         - response:
             body:
@@ -27191,6 +27486,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27226,6 +27522,7 @@ service:
       response:
         docs: ''
         type: root.V20PresentProofModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27267,6 +27564,7 @@ service:
       response:
         docs: ''
         type: list<root.IndyCredPrecis>
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27295,6 +27593,7 @@ service:
       response:
         docs: ''
         type: root.V20PresentProofModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27329,6 +27628,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27377,6 +27677,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27415,6 +27716,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
@@ -27469,6 +27771,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - request:
             auto_present: true
@@ -27524,6 +27827,7 @@ service:
       response:
         docs: ''
         type: root.V20PresExRecord
+        status-code: 200
       examples:
         - request:
             auto_verify: false
@@ -27620,6 +27924,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.ResolutionResult",
               },
               "source": {
@@ -27652,6 +27957,7 @@ service:
       response:
         docs: ''
         type: root.ResolutionResult
+        status-code: 200
       examples:
         - path-parameters:
             did: did
@@ -27723,6 +28029,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PublishRevocations",
               },
               "source": {
@@ -27802,6 +28109,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -27851,6 +28159,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TailsDeleteResponse",
               },
               "source": {
@@ -27872,6 +28181,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "tails file",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -27893,6 +28203,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "tails file",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -27945,6 +28256,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -27991,6 +28303,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegsCreated",
               },
               "source": {
@@ -28060,6 +28373,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredRevRecordResult",
               },
               "source": {
@@ -28116,6 +28430,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredRevRecordDetailsResult",
               },
               "source": {
@@ -28149,6 +28464,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegIssuedResult",
               },
               "source": {
@@ -28180,6 +28496,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.CredRevIndyRecordsResult",
               },
               "source": {
@@ -28232,6 +28549,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -28299,6 +28617,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TxnOrRevRegResult",
               },
               "source": {
@@ -28364,6 +28683,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -28409,6 +28729,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TxnOrPublishRevocationsResult",
               },
               "source": {
@@ -28515,6 +28836,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevocationModuleResponse",
               },
               "source": {
@@ -28579,6 +28901,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -28622,6 +28945,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegWalletUpdatedResult",
               },
               "source": {
@@ -28692,6 +29016,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevRegResult",
               },
               "source": {
@@ -28725,6 +29050,7 @@ docs: did resolver interface.
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RevocationModuleResponse",
               },
               "source": {
@@ -28796,6 +29122,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             cred_def_id: cred_def_id
@@ -28841,6 +29168,7 @@ service:
       response:
         docs: ''
         type: root.PublishRevocations
+        status-code: 200
       examples:
         - request:
             purge:
@@ -28880,6 +29208,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - request:
             credential_definition_id: WgWxqztrNooG92RXvxSTWv:3:CL:20:tag
@@ -28935,6 +29264,7 @@ service:
       response:
         docs: ''
         type: root.CredRevRecordResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -28963,6 +29293,7 @@ service:
       response:
         docs: ''
         type: root.TxnOrPublishRevocationsResult
+        status-code: 200
       examples:
         - request:
             rrid2crid:
@@ -28998,6 +29329,7 @@ service:
       response:
         docs: ''
         type: root.RevRegsCreated
+        status-code: 200
       examples:
         - response:
             body:
@@ -29031,6 +29363,7 @@ service:
       response:
         docs: ''
         type: root.TailsDeleteResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -29049,6 +29382,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29095,6 +29429,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29145,6 +29480,7 @@ service:
       response:
         docs: ''
         type: root.TxnOrRevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29193,6 +29529,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29237,6 +29574,7 @@ service:
       response:
         docs: ''
         type: root.RevRegWalletUpdatedResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29258,6 +29596,7 @@ service:
       response:
         docs: ''
         type: root.RevRegIssuedResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29278,6 +29617,7 @@ service:
       response:
         docs: ''
         type: root.CredRevRecordDetailsResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29318,6 +29658,7 @@ service:
       response:
         docs: ''
         type: root.CredRevIndyRecordsResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29343,6 +29684,7 @@ service:
       response:
         docs: ''
         type: root.RevRegResult
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29383,6 +29725,7 @@ service:
       response:
         docs: tails file
         type: file
+        status-code: 200
     download_tails_file:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: GET
@@ -29397,6 +29740,7 @@ service:
       response:
         docs: tails file
         type: file
+        status-code: 200
     upload_tails_file:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: PUT
@@ -29411,6 +29755,7 @@ service:
       response:
         docs: ''
         type: root.RevocationModuleResponse
+        status-code: 200
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
@@ -29478,6 +29823,7 @@ service:
       response:
         docs: ''
         type: root.RevocationModuleResponse
+        status-code: 200
       examples:
         - request:
             comment: comment
@@ -29598,6 +29944,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.SchemasCreatedResult",
               },
               "source": {
@@ -29641,6 +29988,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.SchemaGetResult",
               },
               "source": {
@@ -29709,6 +30057,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TxnOrSchemaSendResult",
               },
               "source": {
@@ -29752,6 +30101,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.SchemaGetResult",
               },
               "source": {
@@ -29803,6 +30153,7 @@ service:
       response:
         docs: ''
         type: root.TxnOrSchemaSendResult
+        status-code: 200
       examples:
         - request:
             attributes:
@@ -29845,6 +30196,7 @@ service:
       response:
         docs: ''
         type: root.SchemasCreatedResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -29865,6 +30217,7 @@ service:
       response:
         docs: ''
         type: root.SchemaGetResult
+        status-code: 200
       examples:
         - path-parameters:
             schema_id: schema_id
@@ -29893,6 +30246,7 @@ service:
       response:
         docs: ''
         type: root.SchemaGetResult
+        status-code: 200
       examples:
         - path-parameters:
             schema_id: schema_id
@@ -29939,6 +30293,7 @@ docs: Schema operations
               "path": "/status/config",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminConfig",
               },
               "source": {
@@ -29963,6 +30318,7 @@ docs: Schema operations
               "path": "/status/live",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminStatusLiveliness",
               },
               "source": {
@@ -29990,6 +30346,7 @@ docs: Schema operations
               "path": "/plugins",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminModules",
               },
               "source": {
@@ -30014,6 +30371,7 @@ docs: Schema operations
               "path": "/status/ready",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminStatusReadiness",
               },
               "source": {
@@ -30039,6 +30397,7 @@ docs: Schema operations
               "path": "/status",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminStatus",
               },
               "source": {
@@ -30063,6 +30422,7 @@ docs: Schema operations
               "path": "/status/reset",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminReset",
               },
               "source": {
@@ -30087,6 +30447,7 @@ docs: Schema operations
               "path": "/shutdown",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AdminShutdown",
               },
               "source": {
@@ -30115,6 +30476,7 @@ service:
       response:
         docs: ''
         type: root.AdminModules
+        status-code: 200
       examples:
         - response:
             body:
@@ -30131,6 +30493,7 @@ service:
       response:
         docs: ''
         type: root.AdminShutdown
+        status-code: 200
       examples:
         - response:
             body:
@@ -30145,6 +30508,7 @@ service:
       response:
         docs: ''
         type: root.AdminStatus
+        status-code: 200
       examples:
         - response:
             body:
@@ -30160,6 +30524,7 @@ service:
       response:
         docs: ''
         type: root.AdminConfig
+        status-code: 200
       examples:
         - response:
             body: {}
@@ -30173,6 +30538,7 @@ service:
       response:
         docs: ''
         type: root.AdminStatusLiveliness
+        status-code: 200
       examples:
         - response:
             body:
@@ -30187,6 +30553,7 @@ service:
       response:
         docs: ''
         type: root.AdminStatusReadiness
+        status-code: 200
       examples:
         - response:
             body:
@@ -30201,6 +30568,7 @@ service:
       response:
         docs: ''
         type: root.AdminReset
+        status-code: 200
       examples:
         - response:
             body:
@@ -30266,6 +30634,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PingRequestResponse",
               },
               "source": {
@@ -30306,6 +30675,7 @@ service:
       response:
         docs: ''
         type: root.PingRequestResponse
+        status-code: 200
       examples:
         - path-parameters:
             conn_id: conn_id
@@ -30382,6 +30752,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DIDResult",
               },
               "source": {
@@ -30425,6 +30796,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DIDEndpoint",
               },
               "source": {
@@ -30501,6 +30873,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DIDList",
               },
               "source": {
@@ -30531,6 +30904,7 @@ docs: Trust-ping over connection
               "path": "/wallet/did/public",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DIDResult",
               },
               "source": {
@@ -30573,6 +30947,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WalletModuleResponse",
               },
               "source": {
@@ -30646,6 +31021,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.WalletModuleResponse",
               },
               "source": {
@@ -30706,6 +31082,7 @@ docs: Trust-ping over connection
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.DIDResult",
               },
               "source": {
@@ -30836,6 +31213,7 @@ service:
       response:
         docs: ''
         type: root.DIDList
+        status-code: 200
       examples:
         - response:
             body:
@@ -30877,6 +31255,7 @@ service:
       response:
         docs: ''
         type: root.DIDResult
+        status-code: 200
       examples:
         - request:
             method: sov
@@ -30908,6 +31287,7 @@ service:
       response:
         docs: ''
         type: root.WalletModuleResponse
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -30924,6 +31304,7 @@ service:
       response:
         docs: ''
         type: root.DIDResult
+        status-code: 200
       examples:
         - response:
             body:
@@ -30961,6 +31342,7 @@ service:
       response:
         docs: ''
         type: root.DIDResult
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -30991,6 +31373,7 @@ service:
       response:
         docs: ''
         type: root.DIDEndpoint
+        status-code: 200
       examples:
         - query-parameters:
             did: did
@@ -31037,6 +31420,7 @@ service:
       response:
         docs: ''
         type: root.WalletModuleResponse
+        status-code: 200
       examples:
         - request:
             did: WgWxqztrNooG92RXvxSTWv

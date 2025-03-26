@@ -12,15 +12,15 @@ export const OneOfSchemaWithExample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         discriminated: core.serialization.lazyObject(() => serializers.DiscriminatedOneOfSchemaWithExample),
-        undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchemaWithExample),
+        undiscriminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchemaWithExample),
     })
     .transform<FernOpenapiIr.OneOfSchemaWithExample>({
         transform: (value) => {
             switch (value.type) {
                 case "discriminated":
                     return FernOpenapiIr.OneOfSchemaWithExample.discriminated(value);
-                case "undisciminated":
-                    return FernOpenapiIr.OneOfSchemaWithExample.undisciminated(value);
+                case "undiscriminated":
+                    return FernOpenapiIr.OneOfSchemaWithExample.undiscriminated(value);
                 default:
                     return value as FernOpenapiIr.OneOfSchemaWithExample;
             }
@@ -29,13 +29,13 @@ export const OneOfSchemaWithExample: core.serialization.Schema<
     });
 
 export declare namespace OneOfSchemaWithExample {
-    export type Raw = OneOfSchemaWithExample.Discriminated | OneOfSchemaWithExample.Undisciminated;
+    export type Raw = OneOfSchemaWithExample.Discriminated | OneOfSchemaWithExample.Undiscriminated;
 
     export interface Discriminated extends serializers.DiscriminatedOneOfSchemaWithExample.Raw {
         type: "discriminated";
     }
 
-    export interface Undisciminated extends serializers.UnDiscriminatedOneOfSchemaWithExample.Raw {
-        type: "undisciminated";
+    export interface Undiscriminated extends serializers.UnDiscriminatedOneOfSchemaWithExample.Raw {
+        type: "undiscriminated";
     }
 }

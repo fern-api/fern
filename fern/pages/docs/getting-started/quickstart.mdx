@@ -110,12 +110,12 @@ In this guide, we'll show you how to get started with Fern in under 5 minutes.
 
       ```yml
       navigation:
-        - page: "Hello World"
-          path: "pages/hello-world.mdx"
+        - page: Hello World
+          path: docs/pages/hello-world.mdx
         - section: Overview
           content:
             - page: QuickStart
-              path: pages/hello-world.mdx
+              path: docs/pages/hello-world.mdx
       ```
     </Accordion>
     <Accordion title='Add an API Reference' >
@@ -142,17 +142,17 @@ In this guide, we'll show you how to get started with Fern in under 5 minutes.
       <CodeBlock title="docs.yml">
       ```yml
       colors:
-        accentPrimary:
+        accent-primary:
           dark: "#f0c193"
           light: "#af5f1b"
 
       logo:
-        dark: ./docs/assets/logo-dark.svg
-        light: ./docs/assets/logo-light.svg
+        dark: docs/assets/logo-dark.svg
+        light: docs/assets/logo-light.svg
         height: 40
         href: https://buildwithfern.com/
 
-      favicon: ./docs/assets/favicon.png
+      favicon: docs/assets/favicon.svg
       ```
       </CodeBlock>
 
@@ -243,3 +243,4 @@ Below are some examples of documentation websites that have been published using
     }
   />
 </CardGroup>
+

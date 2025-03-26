@@ -5,6 +5,7 @@ package com.seed.mixedFileDirectory.resources.user.events.metadata;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.ObjectMappers;
+import com.seed.mixedFileDirectory.core.QueryStringMapper;
 import com.seed.mixedFileDirectory.core.RequestOptions;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryException;
@@ -39,12 +40,13 @@ public class MetadataClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users/events/metadata");
-        httpUrl.addQueryParameter("id", request.getId());
+        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

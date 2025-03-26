@@ -1,7 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
-
-#nullable enable
 
 namespace SeedExtraProperties.Core;
 
@@ -23,6 +22,12 @@ internal interface IRequestOptions
     internal Headers Headers { get; init; }
 
     /// <summary>
+    /// Additional headers to be sent with the request.
+    /// Headers previously set with matching keys will be overwritten.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get; init; }
+
+    /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public int? MaxRetries { get; init; }
@@ -31,4 +36,15 @@ internal interface IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
+
+    /// <summary>
+    /// Additional query parameters sent with the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get; init; }
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is only applied to JSON requests.
+    /// </summary>
+    public object? AdditionalBodyProperties { get; init; }
 }

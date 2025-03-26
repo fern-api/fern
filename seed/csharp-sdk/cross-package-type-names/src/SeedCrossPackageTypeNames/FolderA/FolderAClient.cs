@@ -1,7 +1,5 @@
 using SeedCrossPackageTypeNames.Core;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames.FolderA;
 
 public partial class FolderAClient

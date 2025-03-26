@@ -205,6 +205,7 @@ function visitEndpoint({
                                                     validation: property.validation
                                                 });
                                             },
+                                            style: noop,
                                             "content-type": noop,
                                             audiences: noop,
                                             encoding: noop,
@@ -254,9 +255,11 @@ function visitEndpoint({
                 visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
                     type: (type) => {
-                        visitTypeReference(type, [...nodePathForResponse, "type"], {
-                            location: TypeReferenceLocation.Response
-                        });
+                        if (type != null) {
+                            visitTypeReference(type, [...nodePathForResponse, "type"], {
+                                location: TypeReferenceLocation.Response
+                            });
+                        }
                     },
                     property: noop,
                     "status-code": noop
@@ -318,7 +321,7 @@ function visitExampleEndpointCall({
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
 }): void {
-    // if an example is entirely empty and has code samples, dont validate against the
+    // if an example is entirely empty and has code samples, don't validate against the
     // request or response schemas
     if (
         example.headers == null &&

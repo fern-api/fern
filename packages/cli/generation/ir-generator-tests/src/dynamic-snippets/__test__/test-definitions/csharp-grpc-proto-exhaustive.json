@@ -1,6 +1,141 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_dataservice:IndexType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "IndexType",
+                    "camelCase": {
+                        "unsafeName": "indexType",
+                        "safeName": "indexType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "index_type",
+                        "safeName": "index_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INDEX_TYPE",
+                        "safeName": "INDEX_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IndexType",
+                        "safeName": "IndexType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "dataservice",
+                            "camelCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATASERVICE",
+                                "safeName": "DATASERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dataservice",
+                                "safeName": "Dataservice"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_INVALID",
+                        "camelCase": {
+                            "unsafeName": "indexTypeInvalid",
+                            "safeName": "indexTypeInvalid"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_invalid",
+                            "safeName": "index_type_invalid"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_INVALID",
+                            "safeName": "INDEX_TYPE_INVALID"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeInvalid",
+                            "safeName": "IndexTypeInvalid"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_INVALID"
+                },
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_DEFAULT",
+                        "camelCase": {
+                            "unsafeName": "indexTypeDefault",
+                            "safeName": "indexTypeDefault"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_default",
+                            "safeName": "index_type_default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_DEFAULT",
+                            "safeName": "INDEX_TYPE_DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeDefault",
+                            "safeName": "IndexTypeDefault"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_DEFAULT"
+                },
+                {
+                    "name": {
+                        "originalName": "INDEX_TYPE_STRICT",
+                        "camelCase": {
+                            "unsafeName": "indexTypeStrict",
+                            "safeName": "indexTypeStrict"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "index_type_strict",
+                            "safeName": "index_type_strict"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INDEX_TYPE_STRICT",
+                            "safeName": "INDEX_TYPE_STRICT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IndexTypeStrict",
+                            "safeName": "IndexTypeStrict"
+                        }
+                    },
+                    "wireValue": "INDEX_TYPE_STRICT"
+                }
+            ]
+        },
         "type_:Column": {
             "type": "object",
             "declaration": {
@@ -151,7 +286,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:DeleteResponse": {
             "type": "object",
@@ -181,7 +317,8 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_:DescribeResponse": {
             "type": "object",
@@ -343,7 +480,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:FetchResponse": {
             "type": "object",
@@ -474,6 +612,236 @@
                         }
                     }
                 }
+            ],
+            "additionalProperties": false
+        },
+        "type_:FieldBehavior": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "FieldBehavior",
+                    "camelCase": {
+                        "unsafeName": "fieldBehavior",
+                        "safeName": "fieldBehavior"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "field_behavior",
+                        "safeName": "field_behavior"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FIELD_BEHAVIOR",
+                        "safeName": "FIELD_BEHAVIOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FieldBehavior",
+                        "safeName": "FieldBehavior"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "FIELD_BEHAVIOR_UNSPECIFIED",
+                        "camelCase": {
+                            "unsafeName": "fieldBehaviorUnspecified",
+                            "safeName": "fieldBehaviorUnspecified"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "field_behavior_unspecified",
+                            "safeName": "field_behavior_unspecified"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FIELD_BEHAVIOR_UNSPECIFIED",
+                            "safeName": "FIELD_BEHAVIOR_UNSPECIFIED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FieldBehaviorUnspecified",
+                            "safeName": "FieldBehaviorUnspecified"
+                        }
+                    },
+                    "wireValue": "FIELD_BEHAVIOR_UNSPECIFIED"
+                },
+                {
+                    "name": {
+                        "originalName": "OPTIONAL",
+                        "camelCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTIONAL",
+                            "safeName": "OPTIONAL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Optional",
+                            "safeName": "Optional"
+                        }
+                    },
+                    "wireValue": "OPTIONAL"
+                },
+                {
+                    "name": {
+                        "originalName": "REQUIRED",
+                        "camelCase": {
+                            "unsafeName": "required",
+                            "safeName": "required"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "required",
+                            "safeName": "required"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REQUIRED",
+                            "safeName": "REQUIRED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Required",
+                            "safeName": "Required"
+                        }
+                    },
+                    "wireValue": "REQUIRED"
+                },
+                {
+                    "name": {
+                        "originalName": "OUTPUT_ONLY",
+                        "camelCase": {
+                            "unsafeName": "outputOnly",
+                            "safeName": "outputOnly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "output_only",
+                            "safeName": "output_only"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OUTPUT_ONLY",
+                            "safeName": "OUTPUT_ONLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "OutputOnly",
+                            "safeName": "OutputOnly"
+                        }
+                    },
+                    "wireValue": "OUTPUT_ONLY"
+                },
+                {
+                    "name": {
+                        "originalName": "INPUT_ONLY",
+                        "camelCase": {
+                            "unsafeName": "inputOnly",
+                            "safeName": "inputOnly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "input_only",
+                            "safeName": "input_only"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INPUT_ONLY",
+                            "safeName": "INPUT_ONLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "InputOnly",
+                            "safeName": "InputOnly"
+                        }
+                    },
+                    "wireValue": "INPUT_ONLY"
+                },
+                {
+                    "name": {
+                        "originalName": "IMMUTABLE",
+                        "camelCase": {
+                            "unsafeName": "immutable",
+                            "safeName": "immutable"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "immutable",
+                            "safeName": "immutable"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMMUTABLE",
+                            "safeName": "IMMUTABLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Immutable",
+                            "safeName": "Immutable"
+                        }
+                    },
+                    "wireValue": "IMMUTABLE"
+                },
+                {
+                    "name": {
+                        "originalName": "UNORDERED_LIST",
+                        "camelCase": {
+                            "unsafeName": "unorderedList",
+                            "safeName": "unorderedList"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unordered_list",
+                            "safeName": "unordered_list"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNORDERED_LIST",
+                            "safeName": "UNORDERED_LIST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnorderedList",
+                            "safeName": "UnorderedList"
+                        }
+                    },
+                    "wireValue": "UNORDERED_LIST"
+                },
+                {
+                    "name": {
+                        "originalName": "NON_EMPTY_DEFAULT",
+                        "camelCase": {
+                            "unsafeName": "nonEmptyDefault",
+                            "safeName": "nonEmptyDefault"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "non_empty_default",
+                            "safeName": "non_empty_default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NON_EMPTY_DEFAULT",
+                            "safeName": "NON_EMPTY_DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NonEmptyDefault",
+                            "safeName": "NonEmptyDefault"
+                        }
+                    },
+                    "wireValue": "NON_EMPTY_DEFAULT"
+                },
+                {
+                    "name": {
+                        "originalName": "IDENTIFIER",
+                        "camelCase": {
+                            "unsafeName": "identifier",
+                            "safeName": "identifier"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "identifier",
+                            "safeName": "identifier"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IDENTIFIER",
+                            "safeName": "IDENTIFIER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Identifier",
+                            "safeName": "Identifier"
+                        }
+                    },
+                    "wireValue": "IDENTIFIER"
+                }
             ]
         },
         "type_:IndexedData": {
@@ -567,7 +935,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ListElement": {
             "type": "object",
@@ -629,7 +998,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ListResponse": {
             "type": "object",
@@ -787,7 +1157,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:NamespaceSummary": {
             "type": "object",
@@ -849,7 +1220,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Pagination": {
             "type": "object",
@@ -911,7 +1283,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryColumn": {
             "type": "object",
@@ -1097,7 +1470,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryResponse": {
             "type": "object",
@@ -1258,7 +1632,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryResult": {
             "type": "object",
@@ -1354,7 +1729,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ScoredColumn": {
             "type": "object",
@@ -1540,7 +1916,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UpdateResponse": {
             "type": "object",
@@ -1570,7 +1947,136 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updatedAt",
+                            "camelCase": {
+                                "unsafeName": "updatedAt",
+                                "safeName": "updatedAt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_at",
+                                "safeName": "updated_at"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_AT",
+                                "safeName": "UPDATED_AT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedAt",
+                                "safeName": "UpdatedAt"
+                            }
+                        },
+                        "wireValue": "updatedAt"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "indexType",
+                            "camelCase": {
+                                "unsafeName": "indexType",
+                                "safeName": "indexType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "index_type",
+                                "safeName": "index_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INDEX_TYPE",
+                                "safeName": "INDEX_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IndexType",
+                                "safeName": "IndexType"
+                            }
+                        },
+                        "wireValue": "indexType"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_dataservice:IndexType"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "details",
+                            "camelCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "details",
+                                "safeName": "details"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DETAILS",
+                                "safeName": "DETAILS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Details",
+                                "safeName": "Details"
+                            }
+                        },
+                        "wireValue": "details"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:Any"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "indexTypes",
+                            "camelCase": {
+                                "unsafeName": "indexTypes",
+                                "safeName": "indexTypes"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "index_types",
+                                "safeName": "index_types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INDEX_TYPES",
+                                "safeName": "INDEX_TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IndexTypes",
+                                "safeName": "IndexTypes"
+                            }
+                        },
+                        "wireValue": "indexTypes"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "named",
+                                "value": "type_dataservice:IndexType"
+                            }
+                        }
+                    }
+                }
+            ],
+            "additionalProperties": false
         },
         "type_:UploadResponse": {
             "type": "object",
@@ -1632,7 +2138,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Usage": {
             "type": "object",
@@ -1694,7 +2201,47 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
+        },
+        "type_:Any": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Any",
+                    "camelCase": {
+                        "unsafeName": "any",
+                        "safeName": "any"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "any",
+                        "safeName": "any"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ANY",
+                        "safeName": "ANY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Any",
+                        "safeName": "Any"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "map",
+                "key": {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                "value": {
+                    "type": "unknown"
+                }
+            }
         },
         "type_:Metadata": {
             "type": "undiscriminatedUnion",
@@ -1871,7 +2418,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.upload": {
             "auth": null,
@@ -2086,7 +2634,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.delete": {
             "auth": null,
@@ -2366,7 +2915,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.describe": {
             "auth": null,
@@ -2540,6 +3090,37 @@
                                     "value": "type_:Metadata"
                                 }
                             }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "after",
+                                    "camelCase": {
+                                        "unsafeName": "after",
+                                        "safeName": "after"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "after",
+                                        "safeName": "after"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AFTER",
+                                        "safeName": "AFTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "After",
+                                        "safeName": "After"
+                                    }
+                                },
+                                "wireValue": "after"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
+                                }
+                            }
                         }
                     ]
                 },
@@ -2550,7 +3131,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.fetch": {
             "auth": null,
@@ -2765,7 +3347,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.list": {
             "auth": null,
@@ -3039,7 +3622,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.query": {
             "auth": null,
@@ -3474,7 +4058,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dataservice.update": {
             "auth": null,
@@ -3772,6 +4357,102 @@
                                     "value": "type_:IndexedData"
                                 }
                             }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "indexType",
+                                    "camelCase": {
+                                        "unsafeName": "indexType",
+                                        "safeName": "indexType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "index_type",
+                                        "safeName": "index_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INDEX_TYPE",
+                                        "safeName": "INDEX_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IndexType",
+                                        "safeName": "IndexType"
+                                    }
+                                },
+                                "wireValue": "indexType"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_dataservice:IndexType"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "details",
+                                    "camelCase": {
+                                        "unsafeName": "details",
+                                        "safeName": "details"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "details",
+                                        "safeName": "details"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DETAILS",
+                                        "safeName": "DETAILS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Details",
+                                        "safeName": "Details"
+                                    }
+                                },
+                                "wireValue": "details"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:Any"
+                                }
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "indexTypes",
+                                    "camelCase": {
+                                        "unsafeName": "indexTypes",
+                                        "safeName": "indexTypes"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "index_types",
+                                        "safeName": "index_types"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INDEX_TYPES",
+                                        "safeName": "INDEX_TYPES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IndexTypes",
+                                        "safeName": "IndexTypes"
+                                    }
+                                },
+                                "wireValue": "indexTypes"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "list",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_dataservice:IndexType"
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
@@ -3782,9 +4463,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": "Default",
         "environments": {
@@ -3816,5 +4499,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

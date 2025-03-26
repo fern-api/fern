@@ -1263,7 +1263,7 @@ GET with multiple of same query param
 
 ```csharp
 await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    new GetWithMultipleQuery { Query = ["query"], Numer = [1] }
+    new GetWithMultipleQuery { Query = ["query"], Number = [1] }
 );
 ```
 </dd>
@@ -1900,6 +1900,55 @@ await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
 <dd>
 
 **request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Put
+<details><summary><code>client.Endpoints.Put.<a href="/src/SeedExhaustive/Endpoints/Put/PutClient.cs">AddAsync</a>(id, PutRequest { ... }) -> PutResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Put.AddAsync("id", new PutRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PutRequest` 
     
 </dd>
 </dl>

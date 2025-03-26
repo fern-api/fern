@@ -1,12 +1,10 @@
 using SeedOauthClientCredentialsDefault.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsDefault;
 
 public partial class SeedOauthClientCredentialsDefaultClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedOauthClientCredentialsDefaultClient(
         string clientId,

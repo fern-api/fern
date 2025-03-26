@@ -30,6 +30,13 @@ public class ServiceClient {
     /**
      * This endpoint returns a file by its name.
      */
+    public File getFile(String filename) {
+        return getFile(filename, GetFileRequest.builder().build());
+    }
+
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request) {
         return getFile(filename, request, null);
     }
@@ -47,7 +54,8 @@ public class ServiceClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-File-API-Version", request.getXFileApiVersion());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

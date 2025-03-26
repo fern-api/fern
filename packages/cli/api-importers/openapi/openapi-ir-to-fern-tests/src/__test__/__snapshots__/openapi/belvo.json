@@ -8423,6 +8423,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                 "type": "optional<float>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Belvo's unique ID for the current receivable transaction.",
                 "type": "string",
                 "validation": {
@@ -16922,6 +16923,7 @@ types:
         docs: Belvo's unique ID for the current receivable transaction.
         validation:
           format: uuid
+        access: read-only
       account: ReceivablesTransactionAccount
       created_at:
         type: datetime
@@ -22456,6 +22458,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "optional<root.Account>",
               },
               "source": {
@@ -22829,6 +22832,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.AccountsPaginatedResponse",
               },
               "source": {
@@ -23822,6 +23826,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<optional<root.Account>>",
               },
               "source": {
@@ -24770,6 +24775,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<optional<root.Account>>",
               },
               "source": {
@@ -25005,6 +25011,7 @@ service:
       response:
         docs: Ok
         type: root.AccountsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -25205,6 +25212,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<optional<root.Account>>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -25988,6 +25996,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<optional<root.Account>>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -26817,6 +26826,7 @@ service:
       response:
         docs: Ok
         type: optional<root.Account>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -28140,6 +28150,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Balance",
               },
               "source": {
@@ -28460,6 +28471,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.BalancesPaginatedResponse",
               },
               "source": {
@@ -28662,6 +28674,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Balance>",
               },
               "source": {
@@ -28925,6 +28938,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Balance>",
               },
               "source": {
@@ -29097,6 +29111,7 @@ service:
       response:
         docs: Ok
         type: root.BalancesPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -29314,6 +29329,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Balance>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -29490,6 +29506,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Balance>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -29664,6 +29681,7 @@ service:
       response:
         docs: Ok
         type: root.Balance
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -30194,6 +30212,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 201,
                 "type": "CreateBankAccountResponse",
               },
               "source": {
@@ -30305,6 +30324,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "DetailBankAccountResponse",
               },
               "source": {
@@ -30534,6 +30554,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.BankAccountPaginatedResponse",
               },
               "source": {
@@ -30666,6 +30687,7 @@ service:
       response:
         docs: OK
         type: root.BankAccountPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -30796,6 +30818,7 @@ service:
       response:
         docs: OK (Created)
         type: CreateBankAccountResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -30906,6 +30929,7 @@ service:
       response:
         docs: OK
         type: DetailBankAccountResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -31130,6 +31154,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Categorization",
               },
               "source": {
@@ -31187,6 +31212,7 @@ service:
       response:
         docs: Ok
         type: root.Categorization
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -31376,6 +31402,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 201,
                 "type": "CreateCustomerResponse",
               },
               "source": {
@@ -31466,6 +31493,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "DetailCustomerResponse",
               },
               "source": {
@@ -31684,6 +31712,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.CustomerPaginatedResponse",
               },
               "source": {
@@ -31818,6 +31847,7 @@ service:
       response:
         docs: OK
         type: root.CustomerPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -31955,6 +31985,7 @@ service:
       response:
         docs: OK (Created)
         type: CreateCustomerResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -32040,6 +32071,7 @@ service:
       response:
         docs: OK
         type: DetailCustomerResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -32276,6 +32308,7 @@ At the moment, the employment records resource is available for:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.EmploymentRecord",
               },
               "source": {
@@ -32372,6 +32405,7 @@ At the moment, the employment records resource is available for:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.EmploymentRecordsPaginatedResponse",
               },
               "source": {
@@ -32497,6 +32531,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.EmploymentRecord>",
               },
               "source": {
@@ -32562,6 +32597,7 @@ service:
       response:
         docs: Ok
         type: root.EmploymentRecordsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -32648,6 +32684,7 @@ service:
       response:
         docs: Ok
         type: list<root.EmploymentRecord>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -32730,6 +32767,7 @@ service:
       response:
         docs: Ok
         type: root.EmploymentRecord
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -32974,6 +33012,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Income>",
               },
               "source": {
@@ -33056,6 +33095,7 @@ service:
       response:
         docs: Ok
         type: list<root.Income>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -33466,6 +33506,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Income>",
               },
               "source": {
@@ -33664,6 +33705,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.IncomesPaginatedResponse",
               },
               "source": {
@@ -33829,6 +33871,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Income>",
               },
               "source": {
@@ -34060,6 +34103,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "root.Income",
               },
               "source": {
@@ -34149,6 +34193,7 @@ service:
       response:
         docs: Ok
         type: root.IncomesPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -34339,6 +34384,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: root.Income
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -34493,6 +34539,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Income>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -34638,6 +34685,7 @@ service:
       response:
         docs: Ok
         type: list<root.Income>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -35106,6 +35154,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Institution",
               },
               "source": {
@@ -35342,6 +35391,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.InstitutionsPaginatedResponse",
               },
               "source": {
@@ -35448,6 +35498,7 @@ service:
       response:
         docs: Ok
         type: root.InstitutionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -35605,6 +35656,7 @@ service:
       response:
         docs: Ok
         type: root.Institution
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -36053,6 +36105,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.InvestmentsPortfolio",
               },
               "source": {
@@ -36240,6 +36293,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.InvestmentsPortfoliosPaginatedResponse",
               },
               "source": {
@@ -36414,6 +36468,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "root.InvestmentsPortfolio",
               },
               "source": {
@@ -36581,6 +36636,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "root.InvestmentsPortfolio",
               },
               "source": {
@@ -36663,6 +36719,7 @@ service:
       response:
         docs: Ok
         type: root.InvestmentsPortfoliosPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -36793,6 +36850,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: root.InvestmentsPortfolio
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -36933,6 +36991,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: root.InvestmentsPortfolio
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -37080,6 +37139,7 @@ service:
       response:
         docs: Ok
         type: root.InvestmentsPortfolio
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -38518,6 +38578,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "DetailInvoiceResponse",
               },
               "source": {
@@ -39772,6 +39833,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.InvoicesResponsePaginatedResponse",
               },
               "source": {
@@ -40006,6 +40068,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<PatchInvoicesResponseItem>",
               },
               "source": {
@@ -41125,6 +41188,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<RetrieveInvoicesResponseItem>",
               },
               "source": {
@@ -41359,6 +41423,7 @@ service:
       response:
         docs: Ok
         type: root.InvoicesResponsePaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -42387,6 +42452,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<RetrieveInvoicesResponseItem>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -43289,6 +43355,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<PatchInvoicesResponseItem>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -43496,6 +43563,7 @@ service:
       response:
         docs: Ok
         type: DetailInvoiceResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -44622,6 +44690,7 @@ For single links, you have to perform POST calls to an institution **every time*
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Link",
               },
               "source": {
@@ -44868,6 +44937,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Link",
               },
               "source": {
@@ -45119,6 +45189,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.PaginatedResponseLink",
               },
               "source": {
@@ -45271,6 +45342,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Link",
               },
               "source": {
@@ -45569,6 +45641,7 @@ For a list of standards codes, see the table below.
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.Link",
               },
               "source": {
@@ -45801,6 +45874,7 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Link",
               },
               "source": {
@@ -45948,6 +46022,7 @@ service:
       response:
         docs: Ok
         type: root.PaginatedResponseLink
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -46310,6 +46385,7 @@ service:
       response:
         docs: Created
         type: root.Link
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -46445,6 +46521,7 @@ service:
       response:
         docs: Ok
         type: root.Link
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -46580,6 +46657,7 @@ service:
       response:
         docs: Ok
         type: root.Link
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -46794,6 +46872,7 @@ service:
       response:
         docs: Ok
         type: root.Link
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -47022,6 +47101,7 @@ service:
       response:
         docs: Ok
         type: root.Link
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -47414,6 +47494,7 @@ Cancun, COL 10447",
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Owner",
               },
               "source": {
@@ -47629,6 +47710,7 @@ Cancun, COL 10447",
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.OwnersPaginatedResponse",
               },
               "source": {
@@ -47789,6 +47871,7 @@ Cancun, COL 10447",
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Owner>",
               },
               "source": {
@@ -47940,6 +48023,7 @@ Cancun, COL 10447",
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Owner>",
               },
               "source": {
@@ -48051,6 +48135,7 @@ service:
       response:
         docs: Ok
         type: root.OwnersPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -48187,6 +48272,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Owner>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -48319,6 +48405,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Owner>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -48460,6 +48547,7 @@ service:
       response:
         docs: Ok
         type: root.Owner
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -48791,6 +48879,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentInstitution",
               },
               "source": {
@@ -48899,6 +48988,7 @@ docs: >-
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentsInstitutionsPaginatedResponse",
               },
               "source": {
@@ -48962,6 +49052,7 @@ service:
       response:
         docs: OK
         type: root.PaymentsInstitutionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -49021,6 +49112,7 @@ service:
       response:
         docs: OK
         type: root.PaymentInstitution
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -49173,21 +49265,30 @@ A payment intent captures all payment information (such as the amount to be char
                         "internal_reference_id": "GGq73487w2",
                       },
                       "next_step": {
-                        "pse_display_confirmation_required": {
-                          "payer_institution": {
-                            "active": true,
-                            "display_name": "Wakanda National Bank",
-                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
-                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
-                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
-                            "name": "wakanda_national",
-                            "primary_color": "#fdbc24",
-                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
-                            "website": "https://www.wakandanational.com",
-                          },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
                         },
-                        "ready_to_confirm": true,
-                        "type": "pse_display_confirmation_required",
+                        "ready_to_confirm": false,
+                        "type": "pse_display_payment_method_information",
                       },
                       "payment_method_details": {
                         "pse": {
@@ -49269,6 +49370,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 201,
                 "type": "root.PaymentIntentPse",
               },
               "source": {
@@ -49351,21 +49453,30 @@ A payment intent captures all payment information (such as the amount to be char
                         "internal_reference_id": "GGq73487w2",
                       },
                       "next_step": {
-                        "pse_display_confirmation_required": {
-                          "payer_institution": {
-                            "active": true,
-                            "display_name": "Wakanda National Bank",
-                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
-                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
-                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
-                            "name": "wakanda_national",
-                            "primary_color": "#fdbc24",
-                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
-                            "website": "https://www.wakandanational.com",
-                          },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
                         },
-                        "ready_to_confirm": true,
-                        "type": "pse_display_confirmation_required",
+                        "ready_to_confirm": false,
+                        "type": "pse_display_payment_method_information",
                       },
                       "payment_method_details": {
                         "pse": {
@@ -49405,6 +49516,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentIntentPse",
               },
               "source": {
@@ -49505,8 +49617,8 @@ A payment intent captures all payment information (such as the amount to be char
                             "internal_reference_id": "GGq73487w2",
                           },
                           "next_step": {
-                            "ready_to_confirm": true,
-                            "type": "pse_display_confirmation_required",
+                            "ready_to_confirm": false,
+                            "type": "pse_display_payment_method_information",
                           },
                           "payment_method_details": {
                             "pse": {
@@ -49616,6 +49728,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentIntentPaginatedResponse",
               },
               "source": {
@@ -49703,21 +49816,30 @@ During the payment intent flow, you need to fill in the payment intent with requ
                         "internal_reference_id": "GGq73487w2",
                       },
                       "next_step": {
-                        "pse_display_confirmation_required": {
-                          "payer_institution": {
-                            "active": true,
-                            "display_name": "Wakanda National Bank",
-                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
-                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
-                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
-                            "name": "wakanda_national",
-                            "primary_color": "#fdbc24",
-                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
-                            "website": "https://www.wakandanational.com",
-                          },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
                         },
-                        "ready_to_confirm": true,
-                        "type": "pse_display_confirmation_required",
+                        "ready_to_confirm": false,
+                        "type": "pse_display_payment_method_information",
                       },
                       "payment_method_details": {
                         "pse": {
@@ -49777,6 +49899,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 200,
                 "type": "root.PaymentIntentPse",
               },
               "source": {
@@ -49900,6 +50023,7 @@ service:
       response:
         docs: OK
         type: root.PaymentIntentPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -49945,8 +50069,8 @@ service:
                   metadata:
                     internal_reference_id: GGq73487w2
                   next_step:
-                    type: pse_display_confirmation_required
-                    ready_to_confirm: true
+                    ready_to_confirm: false
+                    type: pse_display_payment_method_information
                   last_error:
                     error_code: invalid_credentials
                     error_message: The credentials sent are incorrect, please try again.
@@ -50050,6 +50174,7 @@ service:
       response:
         docs: OK (Created)
         type: root.PaymentIntentPse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -50083,22 +50208,26 @@ service:
               metadata:
                 internal_reference_id: GGq73487w2
               next_step:
-                type: pse_display_confirmation_required
-                pse_display_confirmation_required:
-                  payer_institution:
-                    id: bbaceead-7b96-46d8-9354-38dec9707004
-                    active: true
-                    name: wakanda_national
-                    display_name: Wakanda National Bank
-                    website: https://www.wakandanational.com
-                    logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
-                    icon_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
-                    text_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
-                    primary_color: '#fdbc24'
-                ready_to_confirm: true
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: false
+                type: pse_display_payment_method_information
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -50169,6 +50298,7 @@ service:
       response:
         docs: OK
         type: root.PaymentIntentPse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -50191,22 +50321,26 @@ service:
               metadata:
                 internal_reference_id: GGq73487w2
               next_step:
-                type: pse_display_confirmation_required
-                pse_display_confirmation_required:
-                  payer_institution:
-                    id: bbaceead-7b96-46d8-9354-38dec9707004
-                    active: true
-                    name: wakanda_national
-                    display_name: Wakanda National Bank
-                    website: https://www.wakandanational.com
-                    logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
-                    icon_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
-                    text_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
-                    primary_color: '#fdbc24'
-                ready_to_confirm: true
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: false
+                type: pse_display_payment_method_information
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -50305,6 +50439,7 @@ service:
       response:
         docs: OK (Created)
         type: root.PaymentIntentPse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -50329,22 +50464,26 @@ service:
               metadata:
                 internal_reference_id: GGq73487w2
               next_step:
-                type: pse_display_confirmation_required
-                pse_display_confirmation_required:
-                  payer_institution:
-                    id: bbaceead-7b96-46d8-9354-38dec9707004
-                    active: true
-                    name: wakanda_national
-                    display_name: Wakanda National Bank
-                    website: https://www.wakandanational.com
-                    logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
-                    icon_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
-                    text_logo: >-
-                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
-                    primary_color: '#fdbc24'
-                ready_to_confirm: true
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: false
+                type: pse_display_payment_method_information
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -50544,7 +50683,7 @@ types:
                         },
                         "next_step": {
                           "ready_to_confirm": false,
-                          "type": "open_finance_display_payment_failed",
+                          "type": "open_finance_display_payment_method_information",
                         },
                         "payment_method_details": {
                           "open_finance": {
@@ -50575,6 +50714,7 @@ types:
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 201,
                 "type": "CreatePaymentlinkResponse",
               },
               "source": {
@@ -50665,7 +50805,7 @@ types:
                         },
                         "next_step": {
                           "ready_to_confirm": false,
-                          "type": "open_finance_display_payment_failed",
+                          "type": "open_finance_display_payment_method_information",
                         },
                         "payment_method_details": {
                           "open_finance": {
@@ -50700,6 +50840,7 @@ types:
               },
               "response": {
                 "docs": "OK (Created)",
+                "status-code": 200,
                 "type": "DetailCreatePaymentlinkResponse",
               },
               "source": {
@@ -50826,6 +50967,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentLinkPaginatedResponse",
               },
               "source": {
@@ -51039,6 +51181,7 @@ service:
       response:
         docs: OK
         type: root.PaymentLinkPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -51086,6 +51229,7 @@ service:
       response:
         docs: OK (Created)
         type: CreatePaymentlinkResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -51127,8 +51271,8 @@ service:
                 metadata:
                   internal_reference_id: GGq73487w2
                 next_step:
-                  type: open_finance_display_payment_failed
                   ready_to_confirm: false
+                  type: open_finance_display_payment_method_information
                 last_error:
                   error_code: payment_error
                   error_message: Unexpected error to confirm the payment
@@ -51198,6 +51342,7 @@ service:
       response:
         docs: OK (Created)
         type: DetailCreatePaymentlinkResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -51229,8 +51374,8 @@ service:
                 metadata:
                   internal_reference_id: GGq73487w2
                 next_step:
-                  type: open_finance_display_payment_failed
                   ready_to_confirm: false
+                  type: open_finance_display_payment_method_information
                 last_error:
                   error_code: payment_error
                   error_message: Unexpected error to confirm the payment
@@ -51342,6 +51487,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentTransaction",
               },
               "source": {
@@ -51510,6 +51656,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentsTransactionsPaginatedResponse",
               },
               "source": {
@@ -51623,6 +51770,7 @@ service:
       response:
         docs: OK
         type: root.PaymentsTransactionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -51687,6 +51835,7 @@ service:
       response:
         docs: OK
         type: root.PaymentTransaction
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -51801,6 +51950,7 @@ docs: >
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentWebhook",
               },
               "source": {
@@ -51843,6 +51993,7 @@ docs: >
               "path": "/payments/webhooks/",
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.PaymentsWebhooksPaginatedResponse",
               },
               "source": {
@@ -51919,6 +52070,7 @@ docs: >
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 201,
                 "type": "list<root.PaymentWebhook>",
               },
               "source": {
@@ -51948,6 +52100,7 @@ service:
       response:
         docs: OK
         type: root.PaymentsWebhooksPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -52002,6 +52155,7 @@ service:
       response:
         docs: Ok
         type: list<root.PaymentWebhook>
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -52036,6 +52190,7 @@ service:
       response:
         docs: OK
         type: root.PaymentWebhook
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -52202,6 +52357,7 @@ docs: >+
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.ReceivablesTransaction",
               },
               "source": {
@@ -52392,6 +52548,7 @@ docs: >+
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.ReceivablesTransactionsPaginatedResponse",
               },
               "source": {
@@ -52522,6 +52679,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "root.ReceivablesTransaction",
               },
               "source": {
@@ -52673,6 +52831,7 @@ service:
       response:
         docs: Ok
         type: root.ReceivablesTransactionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -52794,6 +52953,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: root.ReceivablesTransaction
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -52863,6 +53023,7 @@ service:
       response:
         docs: Ok
         type: root.ReceivablesTransaction
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -53258,6 +53419,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.RecurringExpenses>",
               },
               "source": {
@@ -53483,6 +53645,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.RecurringExpensesPaginatedResponse",
               },
               "source": {
@@ -53677,6 +53840,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when save_data=false)",
+                "status-code": 200,
                 "type": "list<root.RecurringExpenses>",
               },
               "source": {
@@ -53917,6 +54081,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when save_data=false)",
+                "status-code": 200,
                 "type": "list<root.RecurringExpenses>",
               },
               "source": {
@@ -54014,6 +54179,7 @@ service:
       response:
         docs: Ok
         type: root.RecurringExpensesPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -54212,6 +54378,7 @@ service:
       response:
         docs: Ok (when save_data=false)
         type: list<root.RecurringExpenses>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -54373,6 +54540,7 @@ service:
       response:
         docs: Ok (when save_data=false)
         type: list<root.RecurringExpenses>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -54543,6 +54711,7 @@ service:
       response:
         docs: Ok
         type: list<root.RecurringExpenses>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -55176,6 +55345,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.RiskInsights>",
               },
               "source": {
@@ -55428,6 +55598,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.RiskInsightsPaginatedResponse",
               },
               "source": {
@@ -55650,6 +55821,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when save_data=false)",
+                "status-code": 200,
                 "type": "list<root.RiskInsights>",
               },
               "source": {
@@ -55865,6 +56037,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when save_data=false)",
+                "status-code": 200,
                 "type": "list<root.RiskInsights>",
               },
               "source": {
@@ -55949,6 +56122,7 @@ service:
       response:
         docs: Ok
         type: root.RiskInsightsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -56143,6 +56317,7 @@ service:
       response:
         docs: Ok (when save_data=false)
         type: list<root.RiskInsights>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -56332,6 +56507,7 @@ service:
       response:
         docs: Ok (when save_data=false)
         type: list<root.RiskInsights>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -56530,6 +56706,7 @@ service:
       response:
         docs: Ok
         type: list<root.RiskInsights>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -56916,6 +57093,7 @@ For example:
               "path": "/payments/secret-keys/",
               "response": {
                 "docs": "Ok",
+                "status-code": 201,
                 "type": "list<root.SecretKeys>",
               },
               "source": {
@@ -56956,6 +57134,7 @@ For example:
               "path": "/payments/secret-keys/",
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SecretKeysPaginatedResponse",
               },
               "source": {
@@ -56990,6 +57169,7 @@ service:
       response:
         docs: OK
         type: root.SecretKeysPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -57027,6 +57207,7 @@ service:
       response:
         docs: Ok
         type: list<root.SecretKeys>
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.RequestTimeoutError
@@ -57380,6 +57561,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TaxComplianceStatus",
               },
               "source": {
@@ -57585,6 +57767,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TaxComplianceStatusPaginatedResponse",
               },
               "source": {
@@ -57752,6 +57935,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "root.TaxComplianceStatus",
               },
               "source": {
@@ -57866,6 +58050,7 @@ service:
       response:
         docs: Ok
         type: root.TaxComplianceStatusPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -58014,6 +58199,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: root.TaxComplianceStatus
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -58140,6 +58326,7 @@ service:
       response:
         docs: Ok
         type: root.TaxComplianceStatus
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -58717,6 +58904,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "DetailTaxDeclarationResponse",
               },
               "source": {
@@ -59020,6 +59208,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "ListTaxDeclarationsResponse",
               },
               "source": {
@@ -59267,6 +59456,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<RetrieveTaxDeclarationsResponseItem>",
               },
               "source": {
@@ -59470,6 +59660,7 @@ service:
       response:
         docs: Ok
         type: ListTaxDeclarationsResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -59695,6 +59886,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<RetrieveTaxDeclarationsResponseItem>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -59886,6 +60078,7 @@ service:
       response:
         docs: Ok
         type: DetailTaxDeclarationResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -60295,6 +60488,7 @@ client.tax_retentions.list(params: {
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TaxRetentions",
               },
               "source": {
@@ -60437,6 +60631,7 @@ client.tax_retentions.list(params: {
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TaxRetentionsPaginatedResponse",
               },
               "source": {
@@ -60574,6 +60769,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.TaxRetentions>",
               },
               "source": {
@@ -60678,6 +60874,7 @@ service:
       response:
         docs: Ok
         type: root.TaxRetentionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -60801,6 +60998,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.TaxRetentions>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -60873,6 +61071,7 @@ service:
       response:
         docs: Ok
         type: root.TaxRetentions
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -62623,6 +62822,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "DetailTaxReturnResponse",
               },
               "source": {
@@ -63920,6 +64120,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "ListTaxReturnsResponse",
               },
               "source": {
@@ -65693,6 +65894,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<RetrieveTaxReturnsResponseItem>",
               },
               "source": {
@@ -65951,6 +66153,7 @@ service:
       response:
         docs: Ok
         type: ListTaxReturnsResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -66949,6 +67152,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<RetrieveTaxReturnsResponseItem>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -68415,6 +68619,7 @@ service:
       response:
         docs: Ok
         type: DetailTaxReturnResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -70161,6 +70366,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "DetailTaxStatusResponse",
               },
               "source": {
@@ -70586,6 +70792,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TaxStatusPaginatedResponse",
               },
               "source": {
@@ -70972,6 +71179,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "RetrieveTaxStatusResponse",
               },
               "source": {
@@ -71118,6 +71326,7 @@ service:
       response:
         docs: Ok
         type: root.TaxStatusPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -71447,6 +71656,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: RetrieveTaxStatusResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -71753,6 +71963,7 @@ service:
       response:
         docs: Ok
         type: DetailTaxStatusResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -72981,6 +73192,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Transaction",
               },
               "source": {
@@ -73881,6 +74093,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.TransactionsPaginatedResponse",
               },
               "source": {
@@ -74473,6 +74686,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Transaction>",
               },
               "source": {
@@ -75083,6 +75297,7 @@ client.connect()
               },
               "response": {
                 "docs": "Ok (when `save_data=false`)",
+                "status-code": 200,
                 "type": "list<root.Transaction>",
               },
               "source": {
@@ -75244,6 +75459,7 @@ client.connect()
               },
               "response": {
                 "docs": "Accepted (when `X-Belvo-Request-Mode` is `async`)",
+                "status-code": 202,
                 "type": "root.AsynchronousAccepted202",
               },
               "source": {
@@ -75571,6 +75787,7 @@ service:
       response:
         docs: Ok
         type: root.TransactionsPaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -76163,6 +76380,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Transaction>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -76698,6 +76916,7 @@ service:
       response:
         docs: Accepted (when `X-Belvo-Request-Mode` is `async`)
         type: root.AsynchronousAccepted202
+        status-code: 202
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -76832,6 +77051,7 @@ service:
       response:
         docs: Ok (when `save_data=false`)
         type: list<root.Transaction>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -77337,6 +77557,7 @@ service:
       response:
         docs: Ok
         type: root.Transaction
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -78062,11 +78283,11 @@ docs: >-
 error-discrimination:
   strategy: status-code
 display-name: Belvo API Docs
-default-environment: Production
 environments:
   Production: https://api.belvo.com
   Sandbox: https://sandbox.belvo.com
   Development: https://development.belvo.com
+default-environment: Production
 auth-schemes:
   BasicAuthScheme:
     scheme: basic

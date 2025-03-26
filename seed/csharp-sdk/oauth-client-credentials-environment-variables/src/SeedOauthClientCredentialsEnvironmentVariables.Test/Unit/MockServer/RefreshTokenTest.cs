@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
-
-#nullable enable
 
 namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 public class RefreshTokenTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -61,9 +57,9 @@ public class RefreshTokenTest : BaseMockServerTest
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

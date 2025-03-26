@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedLiteral;
 using SeedLiteral.Core;
-
-#nullable enable
 
 namespace SeedLiteral.Test.Unit.MockServer;
 
@@ -13,13 +9,14 @@ namespace SeedLiteral.Test.Unit.MockServer;
 public class SendTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
               "prompt": "You are a helpful assistant",
               "query": "query",
               "stream": false,
+              "ending": "$ending",
               "context": "You're super wise",
               "maybeContext": "You're super wise",
               "containerObject": {
@@ -68,6 +65,7 @@ public class SendTest : BaseMockServerTest
                 Prompt = "You are a helpful assistant",
                 Query = "query",
                 Stream = false,
+                Ending = "$ending",
                 Context = "You're super wise",
                 MaybeContext = "You're super wise",
                 ContainerObject = new ContainerObject
@@ -91,14 +89,14 @@ public class SendTest : BaseMockServerTest
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
+        );
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {
@@ -163,9 +161,9 @@ public class SendTest : BaseMockServerTest
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

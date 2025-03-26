@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -23,7 +21,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
     /// <returns>Created object.</returns>
     public override IEnumerable<TDatatype>? Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -75,7 +73,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
             return;
         }
 
-        JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions(options);
+        var jsonSerializerOptions = new JsonSerializerOptions(options);
         jsonSerializerOptions.Converters.Clear();
         jsonSerializerOptions.Converters.Add(Activator.CreateInstance<TConverterType>());
 

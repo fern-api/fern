@@ -15,13 +15,14 @@ export interface OpenApiIntermediateRepresentation {
     description: string | undefined;
     basePath: string | undefined;
     servers: FernOpenapiIr.Server[];
+    websocketServers: FernOpenapiIr.Server[];
     /** Top level group information populated through `x-fern-groups`. */
     groups: Record<string, FernOpenapiIr.SdkGroupInfo>;
     tags: FernOpenapiIr.Tags;
     hasEndpointsMarkedInternal: boolean;
     endpoints: FernOpenapiIr.Endpoint[];
     webhooks: FernOpenapiIr.Webhook[];
-    channel: FernOpenapiIr.WebsocketChannel[];
+    channels: Record<string, FernOpenapiIr.WebsocketChannel>;
     groupedSchemas: FernOpenapiIr.Schemas;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */

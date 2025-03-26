@@ -1,11 +1,10 @@
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints;
 
 public record GetWithInlinePath
 {
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

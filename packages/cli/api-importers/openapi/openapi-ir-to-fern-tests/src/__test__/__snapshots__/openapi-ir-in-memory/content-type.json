@@ -73,6 +73,74 @@
                   "schema": {
                     "type": "string"
                   }
+                },
+                "application/x-www-form-urlencoded": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/example": {
+        "post": {
+          "summary": "Test with dual Content-Type request types",
+          "description": "Test request with dual content types.\n",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "corpus_key",
+              "description": "The unique key",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Test request body\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metadata": {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metadata": {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "The sample response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/x-www-form-urlencoded": {
+                  "schema": {
+                    "type": "string"
+                  }
                 }
               }
             }

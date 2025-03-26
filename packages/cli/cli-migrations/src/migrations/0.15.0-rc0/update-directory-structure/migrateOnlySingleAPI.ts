@@ -13,7 +13,7 @@ import {
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
  *    definition/...
- *    generatiors.yml
+ *    generators.yml
  *
  * This function moves everything from the workspace directory into the fern directory.
  */

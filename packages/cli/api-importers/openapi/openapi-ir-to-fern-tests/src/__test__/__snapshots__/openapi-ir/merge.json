@@ -13,6 +13,7 @@
       "name": "Sandbox"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -61,10 +62,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get details for a linked account.",
       "authed": true,
       "method": "GET",
@@ -211,10 +213,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns the account token for the end user with the provided public token.",
       "authed": true,
       "method": "GET",
@@ -379,10 +382,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of models and actions available for an account.",
       "authed": true,
       "method": "GET",
@@ -996,10 +1000,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `BankInfo` objects.",
       "authed": true,
       "method": "GET",
@@ -1373,10 +1378,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `BankInfo` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -1865,10 +1871,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Benefit` objects.",
       "authed": true,
       "method": "GET",
@@ -2208,10 +2215,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `Benefit` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -2667,10 +2675,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Company` objects.",
       "authed": true,
       "method": "GET",
@@ -2979,10 +2988,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `Company` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -3224,7 +3234,7 @@
       ],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Delete a linked account.",
       "authed": true,
       "method": "POST",
@@ -3652,10 +3662,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `EmployeePayrollRun` objects.",
       "authed": true,
       "method": "GET",
@@ -4195,10 +4206,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns an `EmployeePayrollRun` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -7092,10 +7104,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Employee` objects.",
       "authed": true,
       "method": "GET",
@@ -7570,13 +7583,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -7595,10 +7608,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Creates an `Employee` object with the given values.",
       "authed": true,
       "method": "POST",
@@ -9719,10 +9733,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns an `Employee` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -10158,17 +10173,17 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.",
       "authed": true,
       "method": "POST",
@@ -10261,10 +10276,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns metadata for `Employee` POSTs.",
       "authed": true,
       "method": "GET",
@@ -10904,10 +10920,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Employment` objects.",
       "authed": true,
       "method": "GET",
@@ -11468,10 +11485,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns an `Employment` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -11720,13 +11738,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -11745,10 +11763,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Create a remote key.",
       "authed": true,
       "method": "POST",
@@ -12099,10 +12118,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Group` objects.",
       "authed": true,
       "method": "GET",
@@ -12433,10 +12453,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `Group` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -12938,10 +12959,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Gets issues.",
       "authed": true,
       "method": "GET",
@@ -13114,10 +13136,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a specific issue.",
       "authed": true,
       "method": "GET",
@@ -13254,13 +13277,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -13279,10 +13302,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Creates a link token to be used when linking a new end user.",
       "authed": true,
       "method": "POST",
@@ -13703,10 +13727,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List linked accounts for your organization.",
       "authed": true,
       "method": "GET",
@@ -14214,10 +14239,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Location` objects.",
       "authed": true,
       "method": "GET",
@@ -14587,10 +14613,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `Location` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -14858,13 +14885,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -14883,10 +14910,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "authed": true,
       "method": "POST",
@@ -15274,10 +15302,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `PayGroup` objects.",
       "authed": true,
       "method": "GET",
@@ -15553,10 +15582,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `PayGroup` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -16181,10 +16211,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `PayrollRun` objects.",
       "authed": true,
       "method": "GET",
@@ -16560,10 +16591,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `PayrollRun` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -16786,13 +16818,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -16811,10 +16843,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Exchange remote keys.",
       "authed": true,
       "method": "POST",
@@ -16933,10 +16966,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a linked account's selective syncs.",
       "authed": true,
       "method": "GET",
@@ -17133,10 +17167,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Replace a linked account's selective syncs.",
       "authed": true,
       "method": "PUT",
@@ -17388,10 +17423,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get metadata for the conditions available to a linked account.",
       "authed": true,
       "method": "GET",
@@ -17622,10 +17658,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
       "authed": true,
       "method": "GET",
@@ -17778,10 +17815,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "authed": true,
       "method": "POST",
@@ -18143,10 +18181,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `Team` objects.",
       "authed": true,
       "method": "GET",
@@ -18451,10 +18490,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `Team` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -19177,10 +19217,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `TimeOff` objects.",
       "authed": true,
       "method": "GET",
@@ -19501,13 +19542,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -19526,10 +19567,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Creates a `TimeOff` object with the given values.",
       "authed": true,
       "method": "POST",
@@ -20270,10 +20312,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `TimeOffBalance` objects.",
       "authed": true,
       "method": "GET",
@@ -20633,10 +20676,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `TimeOffBalance` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -21074,10 +21118,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a `TimeOff` object with the given `id`.",
       "authed": true,
       "method": "GET",
@@ -21348,10 +21393,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns metadata for `TimeOff` POSTs.",
       "authed": true,
       "method": "GET",
@@ -21512,10 +21558,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns a list of `WebhookReceiver` objects.",
       "authed": true,
       "method": "GET",
@@ -21616,13 +21663,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -21641,10 +21688,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Creates a `WebhookReceiver` object with the given values.",
       "authed": true,
       "method": "POST",
@@ -21724,7 +21772,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "AccountDetails": {
@@ -22150,7 +22198,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -22576,7 +22625,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -22628,7 +22678,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -25510,7 +25561,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -27106,7 +27158,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -28308,7 +28361,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "writeonly": true
           },
           {
             "conflict": {},
@@ -28341,7 +28395,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "writeonly": true
           }
         ],
         "allOfPropertyConflicts": [],
@@ -28372,7 +28427,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -29216,7 +29272,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -30931,7 +30988,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35617,7 +35675,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -36879,7 +36938,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37166,7 +37226,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "writeonly": true
           },
           {
             "conflict": {},
@@ -37199,7 +37260,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "writeonly": true
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37230,7 +37292,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37417,7 +37480,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

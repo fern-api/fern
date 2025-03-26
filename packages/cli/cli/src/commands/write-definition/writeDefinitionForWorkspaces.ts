@@ -124,7 +124,7 @@ async function writeFernDefinition({
         yaml.dump(definition.rootApiFile.contents, { sortKeys })
     );
 
-    // write __package__.ymls
+    // write __package__.yml
     for (const [relativePath, packageMarker] of Object.entries(definition.packageMarkers)) {
         const absoluteFilepath = join(absolutePathToOutputDirectory, RelativeFilePath.of(relativePath));
         await mkdir(dirname(absoluteFilepath), { recursive: true });

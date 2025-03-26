@@ -147,10 +147,10 @@ You can also specify multiple custom JS files stored locally and remote:
 <CodeBlock title="docs.yml">
 ```yaml
 js:
-    - path/to/js/file.js
-    - path: path/to/another/js/file.js
-        strategy: beforeInteractive
-    - url: https://example.com/path/to/js/file.js
+  - path/to/js/file.js
+  - path: path/to/another/js/file.js
+    strategy: beforeInteractive
+  - url: https://example.com/path/to/js/file.js
 ```
 </CodeBlock>
 
@@ -161,8 +161,8 @@ Optionally, specify the strategy for each custom JavaScript file. Choose from `b
 <CodeBlock title="docs.yml">
 ```yaml
 js:
-    - path: path/to/another/js/file.js
-        strategy: beforeInteractive
+  - path: path/to/another/js/file.js
+    strategy: beforeInteractive
 ```
 </CodeBlock>
 

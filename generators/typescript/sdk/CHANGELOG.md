@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.49.3] - 2025-03-19
+
+- Fix: Increase the timeout used in the generated `webpack.test.ts` file.
+
+## [0.49.2] - 2025-03-18
+
+- Fix: Fix issue where IdempotentRequestOptions is not generated in the client namespace.
+
+## [0.49.1] - 2025-03-10
+
+- Fix: This PR includes several fixes to the generated `Socket.ts` file when websocket client code generation is enabled.
+
+## [0.49.0] - 2025-03-06
+
+- Feat: This PR enables the Typescript generator to produce Websocket SDK endpoints. This can be enabled by adding the option `shouldGenerateWebsocketClients: true` to the Typescript generator config.
+
+## [0.48.7] - 2025-01-28
+
+- Fix: Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair,
+  rather than trying to encode the entire object as a single value. This ensures proper handling of complex data structures in multipart form requests.
+
+## [0.48.6] - 2025-01-28
+
+- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and
+  object values with the `repeat` array format.
+
+## [0.48.5] - 2025-01-28
+
+- Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.
+  Otherwise file's content-type is lost in Deno.
+
+## [0.48.4] - 2025-01-21
+
+- Fix: When custom config `useBigInt` is `true`, generate examples and snippets with `BigInt("123")`.
+
+## [0.48.3] - 2025-01-16
+
+- Fix: The SDK now supports reading the basic auth username and password values from
+  environment variables.
+
 ## [0.48.2] - 2025-01-16
 
 - Fix: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an
@@ -316,7 +356,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.42.5] - 2024-11-23
 
-- Fix: Remove extraenous import in pagination snippets.
+- Fix: Remove extraneous import in pagination snippets.
 
 ## [0.42.4] - 2024-11-21
 
@@ -778,7 +818,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.27.2] - 2024-07-08
 
-- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatiblity` and
+- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatibility` and
   `Custom Fetcher` under the Advanced section in the generated README.
 
 ## [0.27.1] - 2024-07-08
@@ -810,7 +850,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.26.0-rc3] - 2024-06-30
 
-- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+- Fix: The typescript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
 
 ## [0.26.0-rc2] - 2024-06-27
 
@@ -854,12 +894,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.25.2] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.1] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.0] - 2024-06-19
@@ -909,7 +949,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.24.0-rc0] - 2024-06-18
 
 - Feature: Dynamic client instantiation snippets are now generated. Note this only affects
-  enteprise users that are using Fern's Snippets API.
+  enterprise users that are using Fern's Snippets API.
 
 ## [0.23.3] - 2024-06-17
 
@@ -1517,7 +1557,7 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.11.2] - 2024-02-13
 
-- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were eroniously ignored.
+- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were erroneously ignored.
 
 ## [0.11.1] - 2024-02-13
 
@@ -1539,4 +1579,4 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.9.7] - 2024-02-11
 
-- Chore: Intialize this changelog
+- Chore: Initialize this changelog

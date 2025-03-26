@@ -6,6 +6,7 @@ package com.seed.mixedFileDirectory.resources.user.events;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.ObjectMappers;
+import com.seed.mixedFileDirectory.core.QueryStringMapper;
 import com.seed.mixedFileDirectory.core.RequestOptions;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryException;
@@ -55,13 +56,15 @@ public class EventsClient {
                 .newBuilder()
                 .addPathSegments("users/events");
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

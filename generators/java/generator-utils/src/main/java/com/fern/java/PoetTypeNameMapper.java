@@ -161,9 +161,9 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitUint() {
             if (primitiveAllowed) {
-                return TypeName.LONG;
+                return TypeName.INT;
             }
-            return ClassName.get(Long.class);
+            return ClassName.get(Integer.class);
         }
 
         @Override
@@ -267,6 +267,11 @@ public final class PoetTypeNameMapper {
                     throw new RuntimeException("Unsupported literal type: " + unknownType);
                 }
             });
+        }
+
+        @Override
+        public TypeName visitNullable(TypeReference typeReference) {
+            return visitOptional(typeReference);
         }
 
         @Override

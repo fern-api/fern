@@ -51,7 +51,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
                 return;
             }
             if (remainingServices.length > 0) {
-                return context.failAndThrow("Tthere are multiple services defined");
+                return context.failAndThrow("There are multiple services defined");
             }
 
             pair.key.value = "service";

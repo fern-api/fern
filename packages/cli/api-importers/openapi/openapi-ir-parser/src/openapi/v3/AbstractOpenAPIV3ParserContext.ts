@@ -238,13 +238,13 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         times: number
     ): void;
 
     public abstract markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void;
 

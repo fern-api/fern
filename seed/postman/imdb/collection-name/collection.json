@@ -36,7 +36,7 @@
           "_type": "endpoint",
           "name": "Create Movie",
           "request": {
-            "description": "Add a movie to the database",
+            "description": "Add a movie to the database using the movies/* /... path.",
             "url": {
               "raw": "{{baseUrl}}/movies/create-movie",
               "host": [
@@ -74,7 +74,7 @@
               "status": "OK",
               "code": 200,
               "originalRequest": {
-                "description": "Add a movie to the database",
+                "description": "Add a movie to the database using the movies/* /... path.",
                 "url": {
                   "raw": "{{baseUrl}}/movies/create-movie",
                   "host": [

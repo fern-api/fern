@@ -64,7 +64,7 @@ it.skip("converts to api reference node", async () => {
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false,
-        disableExamples: false,
+        exampleGeneration: { disabled: false },
         readme: undefined,
         version: undefined,
         packageName: undefined,
@@ -78,11 +78,12 @@ it.skip("converts to api reference node", async () => {
         apiSection,
         apiDefinition,
         slug,
-        apiWorkspace,
         docsWorkspace,
         context,
         new Map(),
-        NodeIdGenerator.init()
+        new Map(),
+        NodeIdGenerator.init(),
+        apiWorkspace
     ).get();
 
     expect(node).toMatchSnapshot();

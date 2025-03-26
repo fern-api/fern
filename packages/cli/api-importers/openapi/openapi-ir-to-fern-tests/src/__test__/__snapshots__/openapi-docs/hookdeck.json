@@ -8088,6 +8088,7 @@ types:
               },
               "response": {
                 "docs": "A single attempt",
+                "status-code": 200,
                 "type": "optional<root.EventAttempt>",
               },
               "source": {
@@ -8159,14 +8160,40 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetAttemptsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "List of attempts",
+                "status-code": 200,
                 "type": "root.EventAttemptPaginatedResult",
               },
               "source": {
@@ -8224,12 +8251,23 @@ service:
               maxLength: 255
           order_by: optional<GetAttemptsRequestOrderBy>
           dir: optional<GetAttemptsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of attempts
         type: root.EventAttemptPaginatedResult
+        status-code: 200
       errors:
         - root.GetAttemptsRequestBadRequestError
         - root.GetAttemptsRequestUnprocessableEntityError
@@ -8277,6 +8315,7 @@ service:
       response:
         docs: A single attempt
         type: optional<root.EventAttempt>
+        status-code: 200
       errors:
         - root.GetAttemptRequestNotFoundError
       examples:
@@ -8416,6 +8455,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8449,6 +8489,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "An object with deleted bookmark's id",
+                "status-code": 200,
                 "type": "root.DeletedBookmarkResponse",
               },
               "source": {
@@ -8498,6 +8539,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8582,7 +8624,16 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                     },
                   },
                   "last_used_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "name": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8593,9 +8644,25 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                       "pattern": "^[A-z0-9-_]+$",
                     },
                   },
-                  "next": "optional<string>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetBookmarksRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -8610,6 +8677,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "List of bookmarks",
+                "status-code": 200,
                 "type": "root.BookmarkPaginatedResult",
               },
               "source": {
@@ -8688,6 +8756,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "Array of created events",
+                "status-code": 200,
                 "type": "root.EventArray",
               },
               "source": {
@@ -8791,6 +8860,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8889,12 +8959,23 @@ service:
           last_used_at: optional<datetime>
           order_by: optional<GetBookmarksRequestOrderBy>
           dir: optional<GetBookmarksRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of bookmarks
         type: root.BookmarkPaginatedResult
+        status-code: 200
       errors:
         - root.GetBookmarksRequestBadRequestError
         - root.GetBookmarksRequestUnprocessableEntityError
@@ -8957,6 +9038,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.CreateBookmarkRequestBadRequestError
         - root.CreateBookmarkRequestUnprocessableEntityError
@@ -8996,6 +9078,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.GetBookmarkRequestNotFoundError
       examples:
@@ -9058,6 +9141,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.UpdateBookmarkRequestBadRequestError
         - root.UpdateBookmarkRequestNotFoundError
@@ -9097,6 +9181,7 @@ service:
       response:
         docs: An object with deleted bookmark's id
         type: root.DeletedBookmarkResponse
+        status-code: 200
       errors:
         - root.DeleteBookmarkRequestNotFoundError
       examples:
@@ -9126,6 +9211,7 @@ service:
       response:
         docs: Array of created events
         type: root.EventArray
+        status-code: 200
       errors:
         - root.TriggerBookmarkRequestBadRequestError
         - root.TriggerBookmarkRequestNotFoundError
@@ -9222,6 +9308,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -9282,6 +9369,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -9312,6 +9400,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "path": "/bulk/events/retry/plan",
               "response": {
                 "docs": "Events bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -9384,15 +9473,41 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetEventBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
               "response": {
                 "docs": "List of events bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -9442,6 +9557,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10470,12 +10586,23 @@ service:
           in_progress: optional<boolean>
           order_by: optional<GetEventBulkRetriesRequestOrderBy>
           dir: optional<GetEventBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetEventBulkRetriesRequestBadRequestError
         - root.GetEventBulkRetriesRequestUnprocessableEntityError
@@ -10527,6 +10654,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateEventBulkRetryRequestBadRequestError
         - root.CreateEventBulkRetryRequestUnprocessableEntityError
@@ -10561,6 +10689,7 @@ service:
       response:
         docs: Events bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateEventBulkRetryPlanRequestBadRequestError
         - root.GenerateEventBulkRetryPlanRequestUnprocessableEntityError
@@ -10583,6 +10712,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetEventBulkRetryRequestNotFoundError
       examples:
@@ -10619,6 +10749,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelEventBulkRetryRequestNotFoundError
       examples:
@@ -10703,6 +10834,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10763,6 +10895,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10793,6 +10926,7 @@ docs: ''
               "path": "/bulk/ignored-events/retry/plan",
               "response": {
                 "docs": "Ignored events bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -10865,15 +10999,41 @@ docs: ''
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
               "response": {
                 "docs": "List of ignored events bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -10923,6 +11083,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11095,12 +11256,23 @@ service:
           in_progress: optional<boolean>
           order_by: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
           dir: optional<GetIgnoredEventBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of ignored events bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetIgnoredEventBulkRetriesRequestBadRequestError
         - root.GetIgnoredEventBulkRetriesRequestUnprocessableEntityError
@@ -11150,6 +11322,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateIgnoredEventBulkRetryRequestBadRequestError
         - root.CreateIgnoredEventBulkRetryRequestUnprocessableEntityError
@@ -11184,6 +11357,7 @@ service:
       response:
         docs: Ignored events bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateIgnoredEventBulkRetryPlanRequestBadRequestError
         - root.GenerateIgnoredEventBulkRetryPlanRequestUnprocessableEntityError
@@ -11206,6 +11380,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetIgnoredEventBulkRetryRequestNotFoundError
       examples:
@@ -11242,6 +11417,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelIgnoredEventBulkRetryRequestNotFoundError
       examples:
@@ -11326,6 +11502,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11386,6 +11563,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11416,6 +11594,7 @@ docs: ''
               "path": "/bulk/requests/retry/plan",
               "response": {
                 "docs": "Requests bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -11488,15 +11667,41 @@ docs: ''
                     },
                   },
                   "in_progress": "optional<boolean>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetRequestBulkRetriesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "query_partial_match": "optional<boolean>",
                 },
               },
               "response": {
                 "docs": "List of request bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -11546,6 +11751,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -12298,12 +12504,23 @@ service:
           query_partial_match: optional<boolean>
           order_by: optional<GetRequestBulkRetriesRequestOrderBy>
           dir: optional<GetRequestBulkRetriesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of request bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestBulkRetriesRequestBadRequestError
         - root.GetRequestBulkRetriesRequestUnprocessableEntityError
@@ -12355,6 +12572,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateRequestBulkRetryRequestBadRequestError
         - root.CreateRequestBulkRetryRequestUnprocessableEntityError
@@ -12389,6 +12607,7 @@ service:
       response:
         docs: Requests bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateRequestBulkRetryPlanRequestBadRequestError
         - root.GenerateRequestBulkRetryPlanRequestUnprocessableEntityError
@@ -12411,6 +12630,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetRequestBulkRetryRequestNotFoundError
       examples:
@@ -12447,6 +12667,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelRequestBulkRetryRequestNotFoundError
       examples:
@@ -12522,14 +12743,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -12540,8 +12765,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -12579,6 +12804,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12620,14 +12846,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -12638,8 +12868,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -12741,6 +12971,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12781,14 +13012,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -12799,8 +13034,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -12838,6 +13073,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12873,14 +13109,14 @@ docs: ''
                           "paused_at": "2024-01-15T09:30:00Z",
                           "resolved_rules": [
                             {
-                              "delay": 1,
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "rules": [
                             {
-                              "delay": 1,
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "ruleset": {
@@ -12890,8 +13126,8 @@ docs: ''
                             "name": "name",
                             "rules": [
                               {
-                                "delay": 1,
-                                "type": "delay",
+                                "strategy": "linear",
+                                "type": "retry",
                               },
                             ],
                             "team_id": "team_id",
@@ -12939,7 +13175,15 @@ docs: ''
                     },
                   },
                   "dir": "optional<GetConnectionsRequestDir>",
-                  "full_name": "optional<string>",
+                  "full_name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[a-z0-9-_>\s]+$",
+                    },
+                  },
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -12950,12 +13194,45 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetConnectionsRequestOrderBy>",
                   "paused_at": "optional<datetime>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -12970,6 +13247,7 @@ docs: ''
               },
               "response": {
                 "docs": "List of connections",
+                "status-code": 200,
                 "type": "root.ConnectionPaginatedResult",
               },
               "source": {
@@ -13010,14 +13288,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -13028,8 +13310,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -13067,6 +13349,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13107,14 +13390,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -13125,8 +13412,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -13164,6 +13451,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13204,14 +13492,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -13222,8 +13514,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -13261,6 +13553,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13304,14 +13597,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -13322,8 +13619,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -13400,6 +13697,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13441,14 +13739,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -13459,8 +13761,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -13562,6 +13864,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13963,7 +14266,11 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           destination_id:
             type: optional<string>
             allow-multiple: true
@@ -13976,16 +14283,31 @@ service:
               maxLength: 255
           archived: optional<boolean>
           archived_at: optional<datetime>
-          full_name: optional<string>
+          full_name:
+            type: optional<string>
+            validation:
+              pattern: ^[a-z0-9-_>\s]+$
+              maxLength: 155
           paused_at: optional<datetime>
           order_by: optional<GetConnectionsRequestOrderBy>
           dir: optional<GetConnectionsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of connections
         type: root.ConnectionPaginatedResult
+        status-code: 200
       errors:
         - root.GetConnectionsRequestBadRequestError
         - root.GetConnectionsRequestUnprocessableEntityError
@@ -14021,17 +14343,17 @@ service:
                     name: name
                     team_id: team_id
                     rules:
-                      - type: delay
-                        delay: 1
+                      - strategy: linear
+                        type: retry
                     is_team_default: true
                     updated_at: '2024-01-15T09:30:00Z'
                     created_at: '2024-01-15T09:30:00Z'
                   resolved_rules:
-                    - type: delay
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   rules:
-                    - type: delay
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   archived_at: '2024-01-15T09:30:00Z'
                   paused_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
@@ -14087,6 +14409,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.CreateConnectionRequestBadRequestError
         - root.CreateConnectionRequestUnprocessableEntityError
@@ -14130,18 +14453,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14197,6 +14524,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UpsertConnectionRequestBadRequestError
         - root.UpsertConnectionRequestUnprocessableEntityError
@@ -14240,18 +14568,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14269,6 +14601,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.GetConnectionRequestNotFoundError
       examples:
@@ -14311,18 +14644,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14364,6 +14701,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UpdateConnectionRequestBadRequestError
         - root.UpdateConnectionRequestNotFoundError
@@ -14409,18 +14747,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14438,6 +14780,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.ArchiveConnectionRequestNotFoundError
       examples:
@@ -14480,18 +14823,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14509,6 +14856,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UnarchiveConnectionRequestNotFoundError
       examples:
@@ -14551,18 +14899,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14580,6 +14932,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.PauseConnectionRequestNotFoundError
       examples:
@@ -14622,18 +14975,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14651,6 +15008,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UnpauseConnectionRequestNotFoundError
       examples:
@@ -14693,18 +15051,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14766,6 +15128,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14845,6 +15208,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14888,6 +15252,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14941,7 +15306,15 @@ docs: >-
                 "query-parameters": {
                   "archived": "optional<boolean>",
                   "archived_at": "optional<datetime>",
-                  "cli_path": "optional<string>",
+                  "cli_path": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "dir": "optional<GetDestinationsRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -14953,11 +15326,44 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetDestinationsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "url": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -14966,6 +15372,7 @@ docs: >-
               },
               "response": {
                 "docs": "List of destinations",
+                "status-code": 200,
                 "type": "root.DestinationPaginatedResult",
               },
               "source": {
@@ -15009,6 +15416,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15099,6 +15507,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15178,6 +15587,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15296,21 +15706,39 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
           archived_at: optional<datetime>
           url:
             type: optional<string>
             allow-multiple: true
-          cli_path: optional<string>
+          cli_path:
+            type: optional<string>
+            validation:
+              maxLength: 255
           order_by: optional<GetDestinationsRequestOrderBy>
           dir: optional<GetDestinationsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of destinations
         type: root.DestinationPaginatedResult
+        status-code: 200
       errors:
         - root.GetDestinationsRequestBadRequestError
         - root.GetDestinationsRequestUnprocessableEntityError
@@ -15371,6 +15799,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.CreateDestinationRequestBadRequestError
         - root.CreateDestinationRequestUnprocessableEntityError
@@ -15425,6 +15854,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UpsertDestinationRequestBadRequestError
         - root.UpsertDestinationRequestUnprocessableEntityError
@@ -15457,6 +15887,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.GetDestinationRequestNotFoundError
       examples:
@@ -15515,6 +15946,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UpdateDestinationRequestBadRequestError
         - root.UpdateDestinationRequestNotFoundError
@@ -15550,6 +15982,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.ArchiveDestinationRequestNotFoundError
       examples:
@@ -15581,6 +16014,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UnarchiveDestinationRequestNotFoundError
       examples:
@@ -15669,6 +16103,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A single event",
+                "status-code": 200,
                 "type": "root.Event",
               },
               "source": {
@@ -15730,7 +16165,16 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "request": {
                 "name": "GetEventsRequest",
                 "query-parameters": {
-                  "attempts": "optional<integer>",
+                  "attempts": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "body": "optional<string>",
                   "bulk_retry_id": {
                     "allow-multiple": true,
@@ -15802,13 +16246,47 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                     },
                   },
                   "last_attempt_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetEventsRequestOrderBy>",
                   "parsed_query": "optional<string>",
                   "path": "optional<string>",
-                  "prev": "optional<string>",
-                  "response_status": "optional<integer>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "response_status": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 600,
+                      "min": 200,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -15835,6 +16313,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "List of events",
+                "status-code": 200,
                 "type": "root.EventPaginatedResult",
               },
               "source": {
@@ -15868,6 +16347,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A request raw body data",
+                "status-code": 200,
                 "type": "root.RawBody",
               },
               "source": {
@@ -15926,6 +16406,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A single event",
+                "status-code": 200,
                 "type": "root.Event",
               },
               "source": {
@@ -16008,6 +16489,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "Retried event with event attempt",
+                "status-code": 200,
                 "type": "root.RetriedEvent",
               },
               "source": {
@@ -16088,8 +16570,15 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          attempts: optional<integer>
-          response_status: optional<integer>
+          attempts:
+            type: optional<integer>
+            validation:
+              min: 0
+          response_status:
+            type: optional<integer>
+            validation:
+              min: 200
+              max: 600
           successful_at: optional<datetime>
           created_at: optional<datetime>
           error_code:
@@ -16119,12 +16608,23 @@ service:
           include: optional<literal<"data">>
           order_by: optional<GetEventsRequestOrderBy>
           dir: optional<GetEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events
         type: root.EventPaginatedResult
+        status-code: 200
       errors:
         - root.GetEventsRequestBadRequestError
         - root.GetEventsRequestUnprocessableEntityError
@@ -16172,6 +16672,7 @@ service:
       response:
         docs: A single event
         type: root.Event
+        status-code: 200
       errors:
         - root.GetEventRequestNotFoundError
       examples:
@@ -16217,6 +16718,7 @@ service:
       response:
         docs: A request raw body data
         type: root.RawBody
+        status-code: 200
       errors:
         - root.GetRequestRawBodyRequestNotFoundError
       examples:
@@ -16238,6 +16740,7 @@ service:
       response:
         docs: Retried event with event attempt
         type: root.RetriedEvent
+        status-code: 200
       errors:
         - root.RetryEventRequestNotFoundError
       examples:
@@ -16305,6 +16808,7 @@ service:
       response:
         docs: A single event
         type: root.Event
+        status-code: 200
       errors:
         - root.MuteEventRequestNotFoundError
       examples:
@@ -16385,6 +16889,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "Attach operation success status",
+                "status-code": 200,
                 "type": "root.AttachedIntegrationToSource",
               },
               "source": {
@@ -16467,6 +16972,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16500,6 +17006,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "An object with deleted integration id",
+                "status-code": 200,
                 "type": "root.DeletedIntegration",
               },
               "source": {
@@ -16534,6 +17041,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "Detach operation success status",
+                "status-code": 200,
                 "type": "root.DetachedIntegrationFromSource",
               },
               "source": {
@@ -16584,6 +17092,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16648,6 +17157,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "List of integrations",
+                "status-code": 200,
                 "type": "root.IntegrationPaginatedResult",
               },
               "source": {
@@ -16725,6 +17235,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16793,6 +17304,7 @@ service:
       response:
         docs: List of integrations
         type: root.IntegrationPaginatedResult
+        status-code: 200
       errors:
         - root.GetIntegrationsRequestBadRequestError
         - root.GetIntegrationsRequestUnprocessableEntityError
@@ -16850,6 +17362,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.CreateIntegrationRequestBadRequestError
         - root.CreateIntegrationRequestUnprocessableEntityError
@@ -16894,6 +17407,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.GetIntegrationRequestNotFoundError
       examples:
@@ -16946,6 +17460,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.UpdateIntegrationRequestBadRequestError
         - root.UpdateIntegrationRequestNotFoundError
@@ -16984,6 +17499,7 @@ service:
       response:
         docs: An object with deleted integration id
         type: root.DeletedIntegration
+        status-code: 200
       errors:
         - root.DeleteIntegrationRequestNotFoundError
       examples:
@@ -17006,6 +17522,7 @@ service:
       response:
         docs: Attach operation success status
         type: root.AttachedIntegrationToSource
+        status-code: 200
       errors:
         - root.AttachIntegrationToSourceRequestBadRequestError
         - root.AttachIntegrationToSourceRequestNotFoundError
@@ -17030,6 +17547,7 @@ service:
       response:
         docs: Detach operation success status
         type: root.DetachedIntegrationFromSource
+        status-code: 200
       errors:
         - root.DetachIntegrationToSourceRequestBadRequestError
         - root.DetachIntegrationToSourceRequestNotFoundError
@@ -17156,6 +17674,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17189,6 +17708,7 @@ types:
               },
               "response": {
                 "docs": "An object with deleted issue trigger's id",
+                "status-code": 200,
                 "type": "root.DeletedIssueTriggerResponse",
               },
               "source": {
@@ -17238,6 +17758,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17287,6 +17808,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17336,6 +17858,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17390,16 +17913,50 @@ types:
                 "query-parameters": {
                   "dir": "optional<GetIssueTriggersRequestDir>",
                   "disabled_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetIssueTriggersRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "type": "optional<root.IssueType>",
                 },
               },
               "response": {
                 "docs": "List of issue triggers",
+                "status-code": 200,
                 "type": "root.IssueTriggerPaginatedResult",
               },
               "source": {
@@ -17481,6 +18038,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17556,6 +18114,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17680,17 +18239,31 @@ service:
       request:
         name: GetIssueTriggersRequest
         query-parameters:
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              maxLength: 255
           type: optional<root.IssueType>
           disabled_at: optional<datetime>
           order_by: optional<GetIssueTriggersRequestOrderBy>
           dir: optional<GetIssueTriggersRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of issue triggers
         type: root.IssueTriggerPaginatedResult
+        status-code: 200
       errors:
         - root.GetIssueTriggersRequestBadRequestError
         - root.GetIssueTriggersRequestUnprocessableEntityError
@@ -17742,6 +18315,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.CreateIssueTriggerRequestBadRequestError
         - root.CreateIssueTriggerRequestUnprocessableEntityError
@@ -17790,6 +18364,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.UpsertIssueTriggerRequestBadRequestError
         - root.UpsertIssueTriggerRequestUnprocessableEntityError
@@ -17826,6 +18401,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.GetIssueTriggerRequestNotFoundError
       examples:
@@ -17877,6 +18453,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.UpdateIssueTriggerRequestBadRequestError
         - root.UpdateIssueTriggerRequestUnprocessableEntityError
@@ -17913,6 +18490,7 @@ service:
       response:
         docs: An object with deleted issue trigger's id
         type: root.DeletedIssueTriggerResponse
+        status-code: 200
       errors:
         - root.DeleteIssueTriggerRequestNotFoundError
       examples:
@@ -17934,6 +18512,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.DisableIssueTriggerRequestNotFoundError
       examples:
@@ -17968,6 +18547,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.EnableIssueTriggerRequestNotFoundError
       examples:
@@ -18024,28 +18604,33 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
-                      "type": "transformation",
-                      "updated_at": "string",
+                      "team_id": "team_id",
+                      "type": "delivery",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18058,6 +18643,7 @@ docs: >-
               },
               "response": {
                 "docs": "Dismissed issue",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -18079,38 +18665,19 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "data": {
-                        "transformation_execution": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "issue_id": "issue_id",
-                          "log_level": "debug",
-                          "logs": [
-                            {
-                              "message": "message",
-                              "type": "error",
-                            },
-                          ],
-                          "original_event_data": {
-                            "path": "path",
-                          },
-                          "original_event_data_id": "original_event_data_id",
-                          "team_id": "team_id",
-                          "transformation_id": "transformation_id",
-                          "transformed_event_data": {
-                            "path": "path",
-                          },
-                          "transformed_event_data_id": "transformed_event_data_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
                         "trigger_attempt": {
                           "archived_at": "archived_at",
                           "attempt_number": 1,
@@ -18133,22 +18700,45 @@ docs: >-
                           "trigger": "INITIAL",
                           "updated_at": "2024-01-15T09:30:00Z",
                         },
+                        "trigger_event": {
+                          "attempts": 1,
+                          "cli_id": "cli_id",
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "created_at_id": "created_at_id",
+                          "data": {
+                            "path": "path",
+                          },
+                          "destination_id": "destination_id",
+                          "event_data_id": "event_data_id",
+                          "id": "id",
+                          "last_attempt_at": "2024-01-15T09:30:00Z",
+                          "last_attempt_at_id": "last_attempt_at_id",
+                          "next_attempt_at": "2024-01-15T09:30:00Z",
+                          "request_id": "request_id",
+                          "response_status": 1,
+                          "source_id": "source_id",
+                          "status": "SCHEDULED",
+                          "successful_at": "2024-01-15T09:30:00Z",
+                          "team_id": "team_id",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "webhook_id": "webhook_id",
+                        },
                       },
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
-                      "type": "transformation",
-                      "updated_at": "string",
+                      "team_id": "team_id",
+                      "type": "delivery",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18161,6 +18751,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single issue",
+                "status-code": 200,
                 "type": "root.IssueWithData",
               },
               "source": {
@@ -18219,20 +18810,46 @@ docs: >-
                     },
                   },
                   "last_seen_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "merged_with": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "next": "optional<string>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetIssueCountRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "status": "optional<GetIssueCountRequestStatus>",
                   "type": "optional<GetIssueCountRequestType>",
                 },
               },
               "response": {
                 "docs": "Issue count",
+                "status-code": 200,
                 "type": "root.IssueCount",
               },
               "source": {
@@ -18260,46 +18877,33 @@ docs: >-
                       "models": [
                         {
                           "aggregation_keys": {
-                            "log_level": "debug",
-                            "transformation_id": [
-                              "transformation_id",
+                            "error_code": [
+                              "TIMEOUT",
+                            ],
+                            "response_status": [
+                              1.1,
+                            ],
+                            "webhook_id": [
+                              "webhook_id",
                             ],
                           },
                           "auto_resolved_at": "2024-01-15T09:30:00Z",
-                          "created_at": "models",
-                          "data": {
-                            "transformation_execution": {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "log_level": "debug",
-                              "logs": [
-                                {
-                                  "message": "message",
-                                  "type": "error",
-                                },
-                              ],
-                              "original_event_data_id": "original_event_data_id",
-                              "team_id": "team_id",
-                              "transformation_id": "transformation_id",
-                              "transformed_event_data_id": "transformed_event_data_id",
-                              "updated_at": "2024-01-15T09:30:00Z",
-                              "webhook_id": "webhook_id",
-                            },
-                          },
+                          "created_at": "created_at",
                           "dismissed_at": "2024-01-15T09:30:00Z",
                           "first_seen_at": "2024-01-15T09:30:00Z",
                           "id": "iss_YXKv5OdJXCiVwkPhGy",
                           "last_seen_at": "2024-01-15T09:30:00Z",
-                          "last_updated_by": "models",
-                          "merged_with": "models",
+                          "last_updated_by": "last_updated_by",
+                          "merged_with": "merged_with",
                           "opened_at": "2024-01-15T09:30:00Z",
                           "reference": {
-                            "transformation_execution_id": "transformation_execution_id",
+                            "attempt_id": "attempt_id",
+                            "event_id": "event_id",
                           },
                           "status": "OPENED",
-                          "team_id": "models",
-                          "type": "transformation",
-                          "updated_at": "models",
+                          "team_id": "team_id",
+                          "type": "delivery",
+                          "updated_at": "updated_at",
                         },
                       ],
                       "pagination": {
@@ -18344,20 +18948,46 @@ docs: >-
                     },
                   },
                   "last_seen_at": "optional<datetime>",
-                  "limit": "optional<integer>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "merged_with": {
                     "allow-multiple": true,
                     "type": "optional<string>",
                   },
-                  "next": "optional<string>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetIssuesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "status": "optional<GetIssuesRequestStatus>",
                   "type": "optional<GetIssuesRequestType>",
                 },
               },
               "response": {
                 "docs": "List of issues",
+                "status-code": 200,
                 "type": "root.IssueWithDataPaginatedResult",
               },
               "source": {
@@ -18383,28 +19013,33 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
-                      "type": "transformation",
-                      "updated_at": "string",
+                      "team_id": "team_id",
+                      "type": "delivery",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18432,6 +19067,7 @@ docs: >-
               },
               "response": {
                 "docs": "Updated issue",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -18612,12 +19248,23 @@ service:
           dismissed_at: optional<datetime>
           order_by: optional<GetIssuesRequestOrderBy>
           dir: optional<GetIssuesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of issues
         type: root.IssueWithDataPaginatedResult
+        status-code: 200
       errors:
         - root.GetIssuesRequestBadRequestError
         - root.GetIssuesRequestUnprocessableEntityError
@@ -18636,39 +19283,29 @@ service:
                 next: next
               count: 1
               models:
-                - type: transformation
-                  id: iss_YXKv5OdJXCiVwkPhGy
-                  team_id: models
+                - id: iss_YXKv5OdJXCiVwkPhGy
+                  team_id: team_id
                   status: OPENED
                   opened_at: '2024-01-15T09:30:00Z'
                   first_seen_at: '2024-01-15T09:30:00Z'
                   last_seen_at: '2024-01-15T09:30:00Z'
-                  last_updated_by: models
+                  last_updated_by: last_updated_by
                   dismissed_at: '2024-01-15T09:30:00Z'
                   auto_resolved_at: '2024-01-15T09:30:00Z'
-                  merged_with: models
-                  updated_at: models
-                  created_at: models
+                  merged_with: merged_with
+                  updated_at: updated_at
+                  created_at: created_at
                   aggregation_keys:
-                    transformation_id:
-                      - transformation_id
-                    log_level: debug
+                    webhook_id:
+                      - webhook_id
+                    response_status:
+                      - 1.1
+                    error_code:
+                      - TIMEOUT
                   reference:
-                    transformation_execution_id: transformation_execution_id
-                  data:
-                    transformation_execution:
-                      id: id
-                      transformed_event_data_id: transformed_event_data_id
-                      original_event_data_id: original_event_data_id
-                      transformation_id: transformation_id
-                      team_id: team_id
-                      webhook_id: webhook_id
-                      log_level: debug
-                      logs:
-                        - type: error
-                          message: message
-                      updated_at: '2024-01-15T09:30:00Z'
-                      created_at: '2024-01-15T09:30:00Z'
+                    event_id: event_id
+                    attempt_id: attempt_id
+                  type: delivery
     getIssueCount:
       path: /issues/count
       method: GET
@@ -18701,12 +19338,23 @@ service:
           dismissed_at: optional<datetime>
           order_by: optional<GetIssueCountRequestOrderBy>
           dir: optional<GetIssueCountRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: Issue count
         type: root.IssueCount
+        status-code: 200
       errors:
         - root.GetIssueCountRequestUnprocessableEntityError
       examples:
@@ -18730,6 +19378,7 @@ service:
       response:
         docs: A single issue
         type: root.IssueWithData
+        status-code: 200
       errors:
         - root.GetIssueRequestNotFoundError
       examples:
@@ -18737,45 +19386,50 @@ service:
             id: id
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
               data:
-                transformation_execution:
+                trigger_event:
                   id: id
-                  transformed_event_data_id: transformed_event_data_id
-                  original_event_data_id: original_event_data_id
-                  transformation_id: transformation_id
                   team_id: team_id
                   webhook_id: webhook_id
-                  log_level: debug
-                  logs:
-                    - type: error
-                      message: message
+                  source_id: source_id
+                  destination_id: destination_id
+                  event_data_id: event_data_id
+                  request_id: request_id
+                  attempts: 1
+                  data:
+                    path: path
+                  last_attempt_at: '2024-01-15T09:30:00Z'
+                  next_attempt_at: '2024-01-15T09:30:00Z'
+                  response_status: 1
+                  status: SCHEDULED
+                  successful_at: '2024-01-15T09:30:00Z'
+                  cli_id: cli_id
                   updated_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
-                  original_event_data:
-                    path: path
-                  transformed_event_data:
-                    path: path
-                  issue_id: issue_id
+                  created_at_id: created_at_id
+                  last_attempt_at_id: last_attempt_at_id
                 trigger_attempt:
                   id: id
                   team_id: team_id
@@ -18797,6 +19451,7 @@ service:
                   state: DELIVERING
                   archived_at: archived_at
                   destination_id: destination_id
+              type: delivery
     updateIssue:
       path: /issues/{id}
       method: PUT
@@ -18818,6 +19473,7 @@ service:
       response:
         docs: Updated issue
         type: root.Issue
+        status-code: 200
       errors:
         - root.UpdateIssueRequestBadRequestError
         - root.UpdateIssueRequestUnprocessableEntityError
@@ -18828,26 +19484,29 @@ service:
             status: OPENED
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
+              type: delivery
     dismissIssue:
       path: /issues/{id}
       method: DELETE
@@ -18861,6 +19520,7 @@ service:
       response:
         docs: Dismissed issue
         type: root.Issue
+        status-code: 200
       errors:
         - root.DismissIssueRequestNotFoundError
       examples:
@@ -18868,26 +19528,29 @@ service:
             id: id
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
+              type: delivery
   source:
     openapi: ../openapi.yml
   display-name: Issues
@@ -18954,6 +19617,7 @@ docs: >-
               },
               "response": {
                 "docs": "Toggle operation status response",
+                "status-code": 200,
                 "type": "root.ToggleWebhookNotifications",
               },
               "source": {
@@ -18997,6 +19661,7 @@ service:
       response:
         docs: Toggle operation status response
         type: root.ToggleWebhookNotifications
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -19073,6 +19738,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "A single request",
+                "status-code": 200,
                 "type": "root.Request",
               },
               "source": {
@@ -19141,7 +19807,16 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "request": {
                 "name": "GetRequestEventsRequest",
                 "query-parameters": {
-                  "attempts": "optional<integer>",
+                  "attempts": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "body": "optional<string>",
                   "bulk_retry_id": {
                     "allow-multiple": true,
@@ -19213,13 +19888,47 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     },
                   },
                   "last_attempt_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetRequestEventsRequestOrderBy>",
                   "parsed_query": "optional<string>",
                   "path": "optional<string>",
-                  "prev": "optional<string>",
-                  "response_status": "optional<integer>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "response_status": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 600,
+                      "min": 200,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "source_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19246,6 +19955,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "List of events",
+                "status-code": 200,
                 "type": "root.EventPaginatedResult",
               },
               "source": {
@@ -19312,14 +20022,40 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetRequestIgnoredEventsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "List of ignored events",
+                "status-code": 200,
                 "type": "root.IgnoredEventPaginatedResult",
               },
               "source": {
@@ -19353,6 +20089,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "A request raw body data",
+                "status-code": 200,
                 "type": "root.RawBody",
               },
               "source": {
@@ -19425,7 +20162,16 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "created_at": "optional<datetime>",
                   "dir": "optional<GetRequestsRequestDir>",
-                  "events_count": "optional<integer>",
+                  "events_count": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "headers": "optional<string>",
                   "id": {
                     "allow-multiple": true,
@@ -19437,15 +20183,49 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "ignored_count": "optional<integer>",
+                  "ignored_count": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "include": "optional<literal<"data">>",
                   "ingested_at": "optional<datetime>",
-                  "limit": "optional<integer>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetRequestsRequestOrderBy>",
                   "parsed_query": "optional<string>",
                   "path": "optional<string>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "rejection_cause": "optional<root.RequestRejectionCause>",
                   "source_id": {
                     "allow-multiple": true,
@@ -19463,6 +20243,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "List of requests",
+                "status-code": 200,
                 "type": "root.RequestPaginatedResult",
               },
               "source": {
@@ -19568,6 +20349,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "Retry request operation result",
+                "status-code": 200,
                 "type": "root.RetryRequest",
               },
               "source": {
@@ -19683,8 +20465,14 @@ service:
               maxLength: 255
           status: optional<GetRequestsRequestStatus>
           rejection_cause: optional<root.RequestRejectionCause>
-          ignored_count: optional<integer>
-          events_count: optional<integer>
+          ignored_count:
+            type: optional<integer>
+            validation:
+              min: 0
+          events_count:
+            type: optional<integer>
+            validation:
+              min: 0
           source_id:
             type: optional<string>
             allow-multiple: true
@@ -19705,12 +20493,23 @@ service:
           include: optional<literal<"data">>
           order_by: optional<GetRequestsRequestOrderBy>
           dir: optional<GetRequestsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of requests
         type: root.RequestPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestsRequestBadRequestError
         - root.GetRequestsRequestUnprocessableEntityError
@@ -19756,6 +20555,7 @@ service:
       response:
         docs: A single request
         type: root.Request
+        status-code: 200
       errors:
         - root.GetRequestRequestNotFoundError
       examples:
@@ -19799,6 +20599,7 @@ service:
       response:
         docs: A request raw body data
         type: root.RawBody
+        status-code: 200
       errors:
         - root.GetRequestRawBodyRequestNotFoundError
       examples:
@@ -19830,6 +20631,7 @@ service:
       response:
         docs: Retry request operation result
         type: root.RetryRequest
+        status-code: 200
       errors:
         - root.RetryRequestRequestBadRequestError
         - root.RetryRequestRequestNotFoundError
@@ -19926,8 +20728,15 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          attempts: optional<integer>
-          response_status: optional<integer>
+          attempts:
+            type: optional<integer>
+            validation:
+              min: 0
+          response_status:
+            type: optional<integer>
+            validation:
+              min: 200
+              max: 600
           successful_at: optional<datetime>
           created_at: optional<datetime>
           error_code:
@@ -19957,12 +20766,23 @@ service:
           include: optional<literal<"data">>
           order_by: optional<GetRequestEventsRequestOrderBy>
           dir: optional<GetRequestEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of events
         type: root.EventPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestEventsRequestBadRequestError
         - root.GetRequestEventsRequestNotFoundError
@@ -20020,12 +20840,23 @@ service:
               maxLength: 255
           order_by: optional<GetRequestIgnoredEventsRequestOrderBy>
           dir: optional<GetRequestIgnoredEventsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of ignored events
         type: root.IgnoredEventPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestIgnoredEventsRequestBadRequestError
         - root.GetRequestIgnoredEventsRequestNotFoundError
@@ -20090,8 +20921,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20108,6 +20941,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20136,8 +20970,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20177,6 +21013,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20204,8 +21041,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20222,6 +21061,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20250,8 +21090,8 @@ docs: A request represent a webhook received by Hookdeck.
                           "name": "name",
                           "rules": [
                             {
-                              "delay": 1,
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "team_id": "team_id",
@@ -20288,15 +21128,49 @@ docs: A request represent a webhook received by Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetRulesetsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "List of rulesets",
+                "status-code": 200,
                 "type": "root.RulesetPaginatedResult",
               },
               "source": {
@@ -20324,8 +21198,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20342,6 +21218,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20372,8 +21249,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20420,6 +21299,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20448,8 +21328,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "delay": 1,
-                          "type": "delay",
+                          "count": 1,
+                          "interval": 1,
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -20489,6 +21371,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20544,17 +21427,32 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
           archived_at: optional<datetime>
           order_by: optional<GetRulesetsRequestOrderBy>
           dir: optional<GetRulesetsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of rulesets
         type: root.RulesetPaginatedResult
+        status-code: 200
       errors:
         - root.GetRulesetsRequestBadRequestError
         - root.GetRulesetsRequestUnprocessableEntityError
@@ -20573,8 +21471,8 @@ service:
                   name: name
                   team_id: team_id
                   rules:
-                    - type: delay
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   is_team_default: true
                   archived_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
@@ -20605,6 +21503,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.CreateRulesetRequestBadRequestError
         - root.CreateRulesetRequestUnprocessableEntityError
@@ -20617,8 +21516,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20649,6 +21550,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UpsertRulesetRequestBadRequestError
         - root.UpsertRulesetRequestUnprocessableEntityError
@@ -20661,8 +21563,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20680,6 +21584,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.GetRulesetRequestNotFoundError
       examples:
@@ -20691,8 +21596,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20728,6 +21635,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UpdateRulesetRequestBadRequestError
         - root.UpdateRulesetRequestNotFoundError
@@ -20742,8 +21650,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20761,6 +21671,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.ArchiveRulesetRequestNotFoundError
       examples:
@@ -20772,8 +21683,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20791,6 +21704,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UnarchiveRulesetRequestNotFoundError
       examples:
@@ -20802,8 +21716,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  delay: 1
+                - strategy: linear
+                  interval: 1
+                  count: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -20868,6 +21784,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -20935,6 +21852,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -20983,6 +21901,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21053,15 +21972,49 @@ docs: A ruleset defines a group of rules that can be used across many connection
                     },
                   },
                   "integration_id": "optional<string>",
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetSourcesRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "List of sources",
+                "status-code": 200,
                 "type": "root.SourcePaginatedResult",
               },
               "source": {
@@ -21110,6 +22063,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21186,6 +22140,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21253,6 +22208,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21308,18 +22264,33 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           archived: optional<boolean>
           archived_at: optional<datetime>
           integration_id: optional<string>
           order_by: optional<GetSourcesRequestOrderBy>
           dir: optional<GetSourcesRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of sources
         type: root.SourcePaginatedResult
+        status-code: 200
       errors:
         - root.GetSourcesRequestBadRequestError
         - root.GetSourcesRequestUnprocessableEntityError
@@ -21370,6 +22341,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.CreateSourceRequestBadRequestError
         - root.CreateSourceRequestUnprocessableEntityError
@@ -21414,6 +22386,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UpsertSourceRequestBadRequestError
         - root.UpsertSourceRequestUnprocessableEntityError
@@ -21449,6 +22422,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.GetSourceRequestNotFoundError
       examples:
@@ -21497,6 +22471,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UpdateSourceRequestBadRequestError
         - root.UpdateSourceRequestNotFoundError
@@ -21534,6 +22509,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.ArchiveSourceRequestNotFoundError
       examples:
@@ -21568,6 +22544,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UnarchiveSourceRequestNotFoundError
       examples:
@@ -21672,6 +22649,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -21715,6 +22693,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -21781,6 +22760,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation execution",
+                "status-code": 200,
                 "type": "root.TransformationExecution",
               },
               "source": {
@@ -21861,11 +22841,36 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
                   "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
-                  "next": "optional<string>",
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetTransformationExecutionsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "webhook_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -21880,6 +22885,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "List of transformation executions",
+                "status-code": 200,
                 "type": "root.TransformationExecutionPaginatedResult",
               },
               "source": {
@@ -21939,15 +22945,49 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                       "pattern": undefined,
                     },
                   },
-                  "limit": "optional<integer>",
-                  "name": "optional<string>",
-                  "next": "optional<string>",
+                  "limit": {
+                    "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 255,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
+                  },
+                  "name": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 155,
+                      "minLength": undefined,
+                      "pattern": "^[A-z0-9-_]+$",
+                    },
+                  },
+                  "next": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "order_by": "optional<GetTransformationsRequestOrderBy>",
-                  "prev": "optional<string>",
+                  "prev": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 255,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "List of transformations",
+                "status-code": 200,
                 "type": "root.TransformationPaginatedResult",
               },
               "source": {
@@ -22024,6 +23064,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "Transformation run output",
+                "status-code": 200,
                 "type": "root.TransformationExecutorOutput",
               },
               "source": {
@@ -22099,6 +23140,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -22170,6 +23212,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -22435,15 +23478,30 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          name: optional<string>
+          name:
+            type: optional<string>
+            validation:
+              pattern: ^[A-z0-9-_]+$
+              maxLength: 155
           order_by: optional<GetTransformationsRequestOrderBy>
           dir: optional<GetTransformationsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of transformations
         type: root.TransformationPaginatedResult
+        status-code: 200
       errors:
         - root.GetTransformationsRequestBadRequestError
         - root.GetTransformationsRequestUnprocessableEntityError
@@ -22496,6 +23554,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.CreateTransformationRequestBadRequestError
         - root.CreateTransformationRequestUnprocessableEntityError
@@ -22545,6 +23604,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.UpsertTransformationRequestBadRequestError
         - root.UpsertTransformationRequestUnprocessableEntityError
@@ -22577,6 +23637,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.GetTransformationRequestNotFoundError
       examples:
@@ -22626,6 +23687,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.UpdateTransformationRequestBadRequestError
         - root.UpdateTransformationRequestNotFoundError
@@ -22680,6 +23742,7 @@ service:
       response:
         docs: Transformation run output
         type: root.TransformationExecutorOutput
+        status-code: 200
       errors:
         - root.TestTransformationRequestBadRequestError
         - root.TestTransformationRequestUnprocessableEntityError
@@ -22726,12 +23789,23 @@ service:
           created_at: optional<datetime>
           order_by: optional<GetTransformationExecutionsRequestOrderBy>
           dir: optional<GetTransformationExecutionsRequestDir>
-          limit: optional<integer>
-          next: optional<string>
-          prev: optional<string>
+          limit:
+            type: optional<integer>
+            validation:
+              min: 0
+              max: 255
+          next:
+            type: optional<string>
+            validation:
+              maxLength: 255
+          prev:
+            type: optional<string>
+            validation:
+              maxLength: 255
       response:
         docs: List of transformation executions
         type: root.TransformationExecutionPaginatedResult
+        status-code: 200
       errors:
         - root.GetTransformationExecutionsRequestBadRequestError
         - root.GetTransformationExecutionsRequestUnprocessableEntityError
@@ -22779,6 +23853,7 @@ service:
       response:
         docs: A single transformation execution
         type: root.TransformationExecution
+        status-code: 200
       errors:
         - root.GetTransformationExecutionRequestNotFoundError
       examples:

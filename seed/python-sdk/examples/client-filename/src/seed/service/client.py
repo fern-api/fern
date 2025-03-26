@@ -14,7 +14,9 @@ from ..types.types.metadata import Metadata as types_types_metadata_Metadata
 from ..types.types.cast_member import CastMember
 from ..types.types.extended_movie import ExtendedMovie
 from ..types.types.entity import Entity
-from ..commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
+from ..commons.types.types.metadata import (
+    Metadata as commons_types_types_metadata_Metadata,
+)
 from ..commons.types.types.event_info import EventInfo
 from ..commons.types.types.data import Data
 from ..types.types.migration import Migration
@@ -35,7 +37,12 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    def get_movie(
+        self,
+        movie_id: MovieId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Movie:
         """
         Parameters
         ----------
@@ -331,6 +338,15 @@ class ServiceClient:
                 id="id",
             ),
             extended_movie=ExtendedMovie(
+                id="id",
+                prequel="prequel",
+                title="title",
+                from_="from",
+                rating=1.1,
+                tag="tag",
+                book="book",
+                metadata={"metadata": {"key": "value"}},
+                revenue=1000000,
                 cast=["cast", "cast"],
             ),
             entity=Entity(
@@ -530,10 +546,14 @@ class ServiceClient:
                 ),
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                    object_=metadata,
+                    annotation=types_types_metadata_Metadata,
+                    direction="write",
                 ),
                 "commonMetadata": convert_and_respect_annotation_metadata(
-                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                    object_=common_metadata,
+                    annotation=commons_types_types_metadata_Metadata,
+                    direction="write",
                 ),
                 "eventInfo": convert_and_respect_annotation_metadata(
                     object_=event_info, annotation=EventInfo, direction="write"
@@ -574,7 +594,12 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    async def get_movie(
+        self,
+        movie_id: MovieId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Movie:
         """
         Parameters
         ----------
@@ -898,6 +923,15 @@ class AsyncServiceClient:
                     id="id",
                 ),
                 extended_movie=ExtendedMovie(
+                    id="id",
+                    prequel="prequel",
+                    title="title",
+                    from_="from",
+                    rating=1.1,
+                    tag="tag",
+                    book="book",
+                    metadata={"metadata": {"key": "value"}},
+                    revenue=1000000,
                     cast=["cast", "cast"],
                 ),
                 entity=Entity(
@@ -1100,10 +1134,14 @@ class AsyncServiceClient:
                 ),
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                    object_=metadata,
+                    annotation=types_types_metadata_Metadata,
+                    direction="write",
                 ),
                 "commonMetadata": convert_and_respect_annotation_metadata(
-                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                    object_=common_metadata,
+                    annotation=commons_types_types_metadata_Metadata,
+                    direction="write",
                 ),
                 "eventInfo": convert_and_respect_annotation_metadata(
                     object_=event_info, annotation=EventInfo, direction="write"

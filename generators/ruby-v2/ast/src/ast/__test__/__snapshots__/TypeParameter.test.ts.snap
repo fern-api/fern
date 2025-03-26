@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TypeParameter > writeTypeDefinition > write type parameter with default type 1`] = `"K = String"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes basic type parameter 1`] = `"K"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes bound type parameters 1`] = `"K < String"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes contravariant type parameters 1`] = `"in K"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes covariant type parameters 1`] = `"out K"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes type parameter with mixture of options 1`] = `"unchecked in K < Object = String"`;
+
+exports[`TypeParameter > writeTypeDefinition > writes unchecked type parameter 1`] = `"unchecked K"`;

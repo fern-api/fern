@@ -450,6 +450,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "GetAccountResponse",
               },
               "source": {
@@ -649,6 +650,7 @@ service:
       response:
         docs: ''
         type: GetAccountResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -726,6 +728,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "GetCarrierResponse",
               },
               "source": {
@@ -762,6 +765,7 @@ service:
               "path": "/carriers",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "GetCarriersResponse",
               },
               "source": {
@@ -836,6 +840,7 @@ service:
       response:
         docs: ''
         type: GetCarrierResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -868,6 +873,7 @@ service:
       response:
         docs: ''
         type: GetCarriersResponse
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -946,6 +952,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "StartIgnitionResponse",
               },
               "source": {
@@ -1051,6 +1058,7 @@ service:
       response:
         docs: ''
         type: StartIgnitionResponse
+        status-code: 200
       examples:
         - headers: {}
           request:
@@ -1179,6 +1187,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "GetPolicyResponse",
               },
               "source": {
@@ -1247,6 +1256,7 @@ service:
       response:
         docs: ''
         type: GetPolicyResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1365,6 +1375,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ExchangeTokenResponse",
               },
               "source": {
@@ -1476,6 +1487,7 @@ service:
       response:
         docs: ''
         type: ExchangeTokenResponse
+        status-code: 200
       examples:
         - headers: {}
           request:
@@ -1532,10 +1544,10 @@ service:
 error-discrimination:
   strategy: status-code
 display-name: Axle API
-default-environment: Production
 environments:
   Production: https://api.axle.insure
   Sandbox: https://sandbox.axle.insure
+default-environment: Production
 headers:
   x-client-id:
     type: string

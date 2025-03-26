@@ -1,0 +1,81 @@
+name: "🐛 Bug Report"
+description: "Uh-oh! Something not working?"
+type: "bug"
+body:
+
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Which Fern component?"
+      options:
+        - "SDK Generator"
+        - "Fern CLI"
+        - "Fern Docs"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "How urgent is this?"
+      options:
+        - "P0 - Critical (Blocking work)"
+        - "P1 - High (Strongly needed)"
+        - "P2 - Medium (Would be helpful)"
+        - "P3 - Low (Nice to have)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: "What's the issue?"
+      description: "Please provide: \n1. Steps to reproduce\n2. Expected behavior\n3. Actual behavior\n4. Environment details (OS, versions, etc.)"
+      placeholder: |
+        Steps to reproduce:
+        1. First step (e.g., "Initialize Fern project")
+        2. Second step (e.g., "Edit fern.config.json")
+        3. Third step (e.g., "Run specific command")
+        4. ...
+
+        Expected: [Describe what should happen]
+        Actual: [Describe what actually happened]
+
+        Environment:
+        - OS: [e.g., macOS 13.5, Windows 11, Ubuntu 22.04]
+        - Node.js version: [e.g., 18.19.0]
+        - Browser (if applicable): [e.g., Chrome 132]
+    validations:
+      required: true
+
+  - type: textarea
+    id: versions
+    attributes:
+      label: "Fern CLI & Generator Versions"
+      description: "Report your Fern CLI version (from `fern.config.json`) and, if applicable, your SDK Generator versions (from `generators.yml`)."
+      placeholder: |
+        Fern CLI version: [e.g., v0.55.1]
+        SDK Generator versions: 
+          - [e.g., fernapi/fern-node-typescript-sdk v0.48.7]
+          - [e.g., fernapi/fern-java-sdk v2.20.1]
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: "Workaround"
+      description: "Have you found any temporary workaround? This might help others facing the same issue"
+      placeholder: "Describe any workarounds you've discovered..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: "Are you interested in contributing a fix?"
+      description: "If this is a confirmed bug, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true

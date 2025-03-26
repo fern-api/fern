@@ -10,14 +10,20 @@ async def test_create(client: SeedMixedFileDirectory, async_client: AsyncSeedMix
     expected_response: typing.Any = {
         "id": "id",
         "name": "name",
-        "users": [{"id": "id", "name": "name", "age": 1}, {"id": "id", "name": "name", "age": 1}],
+        "users": [
+            {"id": "id", "name": "name", "age": 1},
+            {"id": "id", "name": "name", "age": 1},
+        ],
     }
     expected_types: typing.Any = {
         "id": None,
         "name": None,
         "users": (
             "list",
-            {0: {"id": None, "name": None, "age": "integer"}, 1: {"id": None, "name": None, "age": "integer"}},
+            {
+                0: {"id": None, "name": None, "age": "integer"},
+                1: {"id": None, "name": None, "age": "integer"},
+            },
         ),
     }
     response = client.organization.create(name="name")

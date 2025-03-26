@@ -12,6 +12,7 @@ class SendRequest(UniversalBaseModel):
     prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant"
     query: str
     stream: typing.Literal[False] = False
+    ending: typing.Literal["$ending"] = "$ending"
     context: SomeLiteral = "You're super wise"
     maybe_context: typing.Optional[SomeLiteral] = pydantic.Field(alias="maybeContext", default=None)
     container_object: ContainerObject = pydantic.Field(alias="containerObject")

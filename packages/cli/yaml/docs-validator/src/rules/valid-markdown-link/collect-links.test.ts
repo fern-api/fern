@@ -19,7 +19,7 @@ describe("collectLinksAndSources", () => {
         expect(links[1]?.href).toEqual("./file2.mdx");
     });
 
-    it("should not match on non-markdown files", () => {
+    it("should match on non-markdown files", () => {
         const content = `
         [Link to a non-markdown file](./file1.txt)
         [Link to a non-markdown file](./file2.js)
@@ -30,10 +30,45 @@ describe("collectLinksAndSources", () => {
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.md")
         });
 
-        expect(links).toEqual([]);
+        expect(links).toMatchInlineSnapshot(`
+          [
+            {
+              "href": "./file1.txt",
+              "position": {
+                "end": {
+                  "column": 51,
+                  "line": 2,
+                  "offset": 51,
+                },
+                "start": {
+                  "column": 9,
+                  "line": 2,
+                  "offset": 9,
+                },
+              },
+              "sourceFilepath": "/path/to/fern/file0.md",
+            },
+            {
+              "href": "./file2.js",
+              "position": {
+                "end": {
+                  "column": 50,
+                  "line": 3,
+                  "offset": 101,
+                },
+                "start": {
+                  "column": 9,
+                  "line": 3,
+                  "offset": 60,
+                },
+              },
+              "sourceFilepath": "/path/to/fern/file0.md",
+            },
+          ]
+        `);
     });
 
-    it("should not match on http or https links", () => {
+    it("should match on http or https links", () => {
         const content = `
         [Link to a http file](http://example.com/file1.md)
         [Link to a https file](https://example.com/file2.md)
@@ -44,7 +79,42 @@ describe("collectLinksAndSources", () => {
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.md")
         });
 
-        expect(links).toEqual([]);
+        expect(links).toMatchInlineSnapshot(`
+          [
+            {
+              "href": "http://example.com/file1.md",
+              "position": {
+                "end": {
+                  "column": 59,
+                  "line": 2,
+                  "offset": 59,
+                },
+                "start": {
+                  "column": 9,
+                  "line": 2,
+                  "offset": 9,
+                },
+              },
+              "sourceFilepath": "/path/to/fern/file0.md",
+            },
+            {
+              "href": "https://example.com/file2.md",
+              "position": {
+                "end": {
+                  "column": 61,
+                  "line": 3,
+                  "offset": 120,
+                },
+                "start": {
+                  "column": 9,
+                  "line": 3,
+                  "offset": 68,
+                },
+              },
+              "sourceFilepath": "/path/to/fern/file0.md",
+            },
+          ]
+        `);
     });
 
     it("should trace imports to other markdown files", () => {
@@ -99,5 +169,35 @@ describe("collectLinksAndSources", () => {
         expect(hrefs).toContain("./page-2");
         expect(hrefs).toContain("./page-3");
         expect(hrefs).toContain("./page-4");
+    });
+
+    it("should match on mdx jsx attributes", () => {
+        const content = `
+        {<Component href={"file1.mdx"} />}
+        `;
+
+        const { links } = collectLinksAndSources({
+            content,
+            absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.mdx")
+        });
+
+        expect(links.length).toEqual(1);
+        expect(links[0]?.href).toEqual("file1.mdx");
+    });
+
+    it("should match on mdx jsx attributes with expressions", () => {
+        const content = `
+        <Card icon={<a href="file1.mdx">Icon</a>}>
+            Card content
+        </Card>
+        `;
+
+        const { links } = collectLinksAndSources({
+            content,
+            absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.mdx")
+        });
+
+        expect(links.length).toEqual(1);
+        expect(links[0]?.href).toEqual("file1.mdx");
     });
 });

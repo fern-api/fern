@@ -98,6 +98,7 @@ service:
               format: uuid
       response:
         docs: A list of available train trips
+        status-code: 200
         type: GetTripsResponse
       source:
         openapi: openapi/trains/openapi.yml

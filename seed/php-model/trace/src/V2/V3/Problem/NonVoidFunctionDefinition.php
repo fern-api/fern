@@ -31,4 +31,12 @@ class NonVoidFunctionDefinition extends JsonSerializableType
         $this->signature = $values['signature'];
         $this->code = $values['code'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

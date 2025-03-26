@@ -21,7 +21,7 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
-/** All errrors are currently declared in __package__.yml */
+/** All errors are currently declared in __package__.yml */
 export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 function addSchemas({
@@ -89,7 +89,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     // Add Channels
     context.setInState(State.Channel);
-    for (const channel of context.ir.channel) {
+    for (const channel of Object.values(context.ir.channels)) {
         const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
     }

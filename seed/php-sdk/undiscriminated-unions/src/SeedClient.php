@@ -14,13 +14,15 @@ class SeedClient
     public UnionClient $union;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -31,6 +33,8 @@ class SeedClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
@@ -41,6 +45,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -53,6 +58,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->union = new UnionClient($this->client);
+        $this->union = new UnionClient($this->client, $this->options);
     }
 }

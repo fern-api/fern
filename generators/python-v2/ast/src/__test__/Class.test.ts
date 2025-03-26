@@ -174,4 +174,22 @@ describe("class", () => {
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("Renders docs correctly", async () => {
+        const clazz = python.class_({
+            name: "MyClass",
+            docs: "This is a class"
+        });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Renders docs with multi-line strings correctly", async () => {
+        const clazz = python.class_({
+            name: "MyClass",
+            docs: "This is a class.\nI'm on a new line.\nSo am I."
+        });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });

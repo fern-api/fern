@@ -232,14 +232,14 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
      *         query: "query",
-     *         numer: 1
+     *         number: 1
      *     })
      */
     public async getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
     ): Promise<void> {
-        const { query, numer } = request;
+        const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
             _queryParams["query"] = query.map((item) => item);
@@ -247,10 +247,10 @@ export class Params {
             _queryParams["query"] = query;
         }
 
-        if (Array.isArray(numer)) {
-            _queryParams["numer"] = numer.map((item) => item.toString());
+        if (Array.isArray(number_)) {
+            _queryParams["number"] = number_.map((item) => item.toString());
         } else {
-            _queryParams["numer"] = numer.toString();
+            _queryParams["number"] = number_.toString();
         }
 
         const _response = await core.fetcher({

@@ -1,3 +1,4 @@
+import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
@@ -13,22 +14,27 @@ import {
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb
 } from "@fern-api/fdr-sdk";
-import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { parseDocsConfiguration } from "../../configuration-loader/src/docs-yml/parseDocsConfiguration";
+import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
     domain,
     project,
-    context
+    context,
+    previousDocsDefinition,
+    editedAbsoluteFilepaths
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
+    previousDocsDefinition?: DocsV1Read.DocsDefinition;
+    editedAbsoluteFilepaths?: AbsoluteFilePath[];
 }): Promise<DocsV1Read.DocsDefinition> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
@@ -36,15 +42,67 @@ export async function getPreviewDocsDefinition({
         throw new Error("No docs workspace found in project");
     }
 
-    const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map(
-            async (workspace) =>
-                await workspace.toFernWorkspace(
-                    { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                )
-        )
-    );
+    if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
+        const allMarkdownFiles = editedAbsoluteFilepaths.every(
+            (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
+        );
+        for (const absoluteFilePath of editedAbsoluteFilepaths) {
+            const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
+            const markdown = (await readFile(absoluteFilePath)).toString();
+            const processedMarkdown = await replaceReferencedMarkdown({
+                markdown,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
+
+            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
+            if (previousValue == null) {
+                continue;
+            }
+
+            const fileIdsMap = new Map(
+                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                    const path = "/" + file.url.replace("/_local/", "");
+                    return [AbsoluteFilePath.of(path), id];
+                })
+            );
+
+            // Then replace image paths with file IDs
+            const finalMarkdown = replaceImagePathsAndUrls(
+                processedMarkdown,
+                fileIdsMap,
+                {}, // markdownFilesToPathName - empty object since we don't need it for images
+                {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                },
+                context
+            );
+
+            previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
+                markdown: finalMarkdown,
+                editThisPageUrl: previousValue.editThisPageUrl
+            };
+        }
+
+        if (allMarkdownFiles) {
+            return previousDocsDefinition;
+        }
+    }
+
+    let fernWorkspaces: FernWorkspace[] = [];
+    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
+        fernWorkspaces = await Promise.all(
+            apiWorkspaces.map(
+                async (workspace) =>
+                    await workspace.toFernWorkspace(
+                        { context },
+                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
+                    )
+            )
+        );
+    }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
@@ -52,13 +110,6 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
-
-    const parsedDocsConfig = await parseDocsConfiguration({
-        rawDocsConfiguration: docsWorkspace.config,
-        context,
-        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
-    });
 
     const resolver = new DocsDefinitionResolver(
         domain,
@@ -147,7 +198,7 @@ class ReferencedAPICollector {
             const err = e as Error;
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
             this.context.logger.error(
-                "An error occured while trying to read an API definition. Please reach out to support."
+                "An error occurred while trying to read an API definition. Please reach out to support."
             );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
@@ -166,8 +217,15 @@ class ReferencedAPICollectorV2 {
 
     constructor(private readonly context: TaskContext) {}
 
-    public addReferencedAPI({ api }: { api: FdrAPI.api.latest.ApiDefinition }): APIDefinitionID {
+    public addReferencedAPI({
+        api,
+        snippetsConfig
+    }: {
+        api: FdrAPI.api.latest.ApiDefinition;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+    }): APIDefinitionID {
         try {
+            api.snippetsConfiguration = snippetsConfig;
             this.apis[api.id] = api;
             return api.id;
         } catch (e) {
@@ -175,7 +233,7 @@ class ReferencedAPICollectorV2 {
             const err = e as Error;
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
             this.context.logger.error(
-                "An error occured while trying to read an API definition. Please reach out to support."
+                "An error occurred while trying to read an API definition. Please reach out to support."
             );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);

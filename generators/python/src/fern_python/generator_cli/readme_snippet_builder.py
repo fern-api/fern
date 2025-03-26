@@ -108,7 +108,7 @@ class ReadmeSnippetBuilder:
     ) -> str:
         snippet = self._source_file_factory.create_snippet()
         snippet.add_expression(expr)
-        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        # For some reason we're appending newlines to snippets, so we need to strip them for templates
         return snippet.to_str()
 
     def _build_timeout_snippets(self) -> List[str]:

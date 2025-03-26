@@ -24,7 +24,7 @@ from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
     username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    access_token="YOUR_ACCESS_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 client.basic_auth.post_with_basic_auth(
@@ -43,7 +43,7 @@ from seed import AsyncSeedBasicAuthEnvironmentVariables
 
 client = AsyncSeedBasicAuthEnvironmentVariables(
     username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    access_token="YOUR_ACCESS_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -77,10 +77,10 @@ except ApiError as e:
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)

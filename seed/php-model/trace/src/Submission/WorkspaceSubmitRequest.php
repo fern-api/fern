@@ -49,4 +49,12 @@ class WorkspaceSubmitRequest extends JsonSerializableType
         $this->submissionFiles = $values['submissionFiles'];
         $this->userId = $values['userId'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

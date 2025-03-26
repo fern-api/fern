@@ -1,12 +1,30 @@
-name: seed
+name: Seed Snapshot Tests
 
 on:
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/seed.yml'
+      - 'packages/seed/**'
+      - 'packages/ir-sdk/fern/apis/**'
+      - 'packages/cli/generation/ir-generator/**'
+      - 'test-definitions/**'
+      - 'test-definitions-openapi/**'
+      - 'generators/**'
+      - 'seed/**'
   pull_request:
     branches:
       - main
+    paths:
+      - '.github/workflows/seed.yml'
+      - 'packages/seed/**'
+      - 'packages/ir-sdk/fern/apis/**'
+      - 'packages/cli/generation/ir-generator/**'
+      - 'test-definitions/**'
+      - 'test-definitions-openapi/**'
+      - 'generators/**'
+      - 'seed/**'
   workflow_call:
 
 # Cancel previous workflows on previous push
@@ -29,53 +47,55 @@ jobs:
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
-            seed: 
+            seed:
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'packages/ir-sdk/fern/apis/**'
               - 'packages/cli/generation/ir-generator/**'
-            ruby: 
+              - 'test-definitions/**'
+              - 'test-definitions-openapi/**'
+            ruby:
               - 'generators/ruby/**'
-              - seed/ruby-sdk/seed.yml
-              - seed/ruby-model/seed.yml
-            openapi: 
+              - 'seed/ruby-sdk/**'
+              - 'seed/ruby-model/**'
+            openapi:
               - 'generators/openapi/**'
-              - seed/openapi/seed.yml
-            python: 
+              - 'seed/openapi/**'
+            python:
               - 'generators/python/**'
-              - seed/pydantic/seed.yml
-              - seed/python-sdk/seed.yml
-              - seed/fastapi/seed.yml
-            postman: 
+              - 'seed/pydantic/**'
+              - 'seed/python-sdk/**'
+              - 'seed/fastapi/**'
+            postman:
               - 'generators/postman/**'
-              - seed/postman/seed.yml
-            java: 
+              - 'seed/postman/**'
+            java:
               - 'generators/java/**'
-              - seed/java-sdk/seed.yml
-              - seed/java-model/seed.yml
-              - seed/java-spring/seed.yml
-            typescript: 
+              - 'seed/java-sdk/**'
+              - 'seed/java-model/**'
+              - 'seed/java-spring/**'
+            typescript:
               - 'generators/typescript/**'
-              - seed/ts-sdk/seed.yml
-              - seed/ts-express/seed.yml
-            go: 
+              - 'seed/ts-sdk/**'
+              - 'seed/ts-express/**'
+            go:
               - 'generators/go/**'
-              - seed/go-sdk/seed.yml
-              - seed/go-model/seed.yml
-              - seed/go-fiber/seed.yml
-            csharp: 
+              - 'seed/go-sdk/**'
+              - 'seed/go-model/**'
+              - 'seed/go-fiber/**'
+            csharp:
               - 'generators/csharp/**'
-              - seed/csharp-sdk/seed.yml
-              - seed/csharp-model/seed.yml
+              - 'seed/csharp-sdk/**'
+              - 'seed/csharp-model/**'
             php:
               - 'generators/php/**'
-              - seed/php-sdk/seed.yml
-              - seed/php-model/seed.yml
+              - 'seed/php-sdk/**'
+              - 'seed/php-model/**'
   ruby-model:
     runs-on: ubuntu-latest
     needs: changes
@@ -186,7 +206,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-sdk
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
 
   java-model:
     runs-on: Seed
@@ -219,7 +239,7 @@ jobs:
   typescript-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') && github.repository == 'fern-api/fern' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -293,7 +313,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Run seed
         uses: ./.github/actions/cached-seed
         with:
@@ -335,7 +355,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Run seed
         uses: ./.github/actions/cached-seed
         with:

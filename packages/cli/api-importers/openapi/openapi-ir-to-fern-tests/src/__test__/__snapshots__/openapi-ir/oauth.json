@@ -6,6 +6,7 @@
       "url": "https://api.example.com/v1"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -273,6 +274,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -301,7 +303,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Exchange credentials or refresh token for an access token",
       "authed": false,
       "method": "POST",
@@ -381,7 +383,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

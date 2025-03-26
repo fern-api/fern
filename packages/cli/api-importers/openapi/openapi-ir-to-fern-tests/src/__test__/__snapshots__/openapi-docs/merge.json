@@ -12,6 +12,7 @@
             "properties": {
               "category": "optional<CategoryEnum>",
               "end_user_email_address": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "email",
@@ -20,9 +21,16 @@
                   "pattern": undefined,
                 },
               },
-              "end_user_organization_name": "optional<string>",
-              "end_user_origin_id": "optional<string>",
+              "end_user_organization_name": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "end_user_origin_id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -31,14 +39,25 @@
                   "pattern": undefined,
                 },
               },
-              "integration": "optional<string>",
-              "integration_slug": "optional<string>",
+              "integration": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "integration_slug": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "is_duplicate": {
+                "access": "read-only",
                 "docs": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
                 "type": "optional<boolean>",
               },
-              "status": "optional<string>",
+              "status": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "webhook_listener_url": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uri",
@@ -150,7 +169,10 @@ View a list of your organization's `LinkedAccount` objects.",
                 "docs": "Company name.",
                 "type": "string",
               },
-              "slug": "optional<string>",
+              "slug": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "square_image": {
                 "docs": "Company logo in square shape. <b>Upload an image with a white background.</b>",
                 "type": "optional<string>",
@@ -246,8 +268,12 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -257,6 +283,7 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -264,12 +291,16 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                 "docs": "When the matching bank object was created in the third party system.",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -317,8 +348,12 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 "docs": "The day and time the benefit ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -328,6 +363,7 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -335,12 +371,16 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 "docs": "The name of the benefit provider.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -434,8 +474,12 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
                 "docs": "The company's Employer Identification Numbers.",
                 "type": "optional<list<optional<string>>>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -449,15 +493,20 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -471,6 +520,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
             "inline": undefined,
             "properties": {
               "common_model": {
+                "access": "read-only",
                 "docs": "The common model for which a condition schema is defined.",
                 "type": "optional<string>",
               },
@@ -1045,61 +1095,6 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               "openapi": "../openapi.yml",
             },
           },
-          "DataPassthroughRequest": {
-            "docs": "# The DataPassthrough Object
-### Description
-The `DataPassthrough` object is used to send information to an otherwise-unsupported third-party endpoint.
-
-### Usage Example
-Create a `DataPassthrough` to get team hierarchies from your Rippling integration.",
-            "inline": undefined,
-            "properties": {
-              "base_url_override": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "data": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "headers": {
-                "docs": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
-                "type": "optional<map<string, unknown>>",
-              },
-              "method": "MethodEnum",
-              "multipart_form_data": {
-                "docs": "Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.",
-                "type": "optional<list<MultipartFormFieldRequest>>",
-              },
-              "normalize_response": {
-                "docs": "Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.",
-                "type": "optional<boolean>",
-              },
-              "path": {
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "request_format": "optional<RequestFormatEnum>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "DebugModeLog": {
             "docs": undefined,
             "inline": undefined,
@@ -1150,8 +1145,12 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1161,6 +1160,7 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1168,7 +1168,10 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                 "docs": "The deduction's name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -1204,8 +1207,12 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1215,10 +1222,14 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -1327,7 +1338,10 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<EthnicityEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "first_name": {
                 "docs": "The employee's first name.",
                 "type": "optional<string>",
@@ -1359,6 +1373,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 },
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1396,6 +1411,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1423,12 +1439,18 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 "docs": "When the third party's employee was created.",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
-              "remote_was_deleted": "optional<boolean>",
+              "remote_was_deleted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "ssn": {
                 "docs": "The employee's social security number.",
                 "type": "optional<string>",
@@ -1486,16 +1508,6 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               "openapi": "../openapi.yml",
             },
           },
-          "EmployeeEndpointRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "model": "EmployeeRequest",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "EmployeePayrollRun": {
             "docs": "# The EmployeePayrollRun Object
 ### Description
@@ -1509,8 +1521,14 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run was checked.",
                 "type": "optional<datetime>",
               },
-              "deductions": "optional<list<Deduction>>",
-              "earnings": "optional<list<Earning>>",
+              "deductions": {
+                "access": "read-only",
+                "type": "optional<list<Deduction>>",
+              },
+              "earnings": {
+                "access": "read-only",
+                "type": "optional<list<Earning>>",
+              },
               "employee": {
                 "docs": "The employee whose payroll is being run.",
                 "type": "optional<string>",
@@ -1525,12 +1543,16 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "gross_pay": {
                 "docs": "The total earnings throughout a given period for an employee before any deductions are made.",
                 "type": "optional<double>",
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1540,6 +1562,7 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1557,12 +1580,16 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -1570,7 +1597,10 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run started.",
                 "type": "optional<datetime>",
               },
-              "taxes": "optional<list<Tax>>",
+              "taxes": {
+                "access": "read-only",
+                "type": "optional<list<Tax>>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1672,12 +1702,18 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                   "pattern": undefined,
                 },
               },
-              "integration_params": "optional<map<string, unknown>>",
+              "integration_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "last_name": {
                 "docs": "The employee's last name.",
                 "type": "optional<string>",
               },
-              "linked_account_params": "optional<map<string, unknown>>",
+              "linked_account_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "manager": {
                 "docs": "The employee ID of the employee's manager.",
                 "type": "optional<string>",
@@ -1827,7 +1863,10 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
 * `FREELANCE` - FREELANCE",
                 "type": "optional<EmploymentTypeEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "flsa_status": {
                 "docs": "The position's FLSA status.
 
@@ -1838,6 +1877,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "type": "optional<FlsaStatusEnum>",
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1851,6 +1891,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -2207,12 +2248,16 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "docs": "The position's pay rate in dollars.",
                 "type": "optional<double>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -2275,80 +2320,6 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "GZIP_BASE64",
             ],
             "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EndUserDetailsRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "categories": {
-                "docs": "The integration categories to show in Merge Link.",
-                "type": "list<CategoriesEnum>",
-              },
-              "common_models": {
-                "docs": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
-                "type": "optional<list<CommonModelScopesBodyRequest>>",
-              },
-              "end_user_email_address": {
-                "docs": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 100,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "end_user_organization_name": {
-                "docs": "Your end user's organization.",
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 100,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "end_user_origin_id": {
-                "docs": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 100,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "integration": {
-                "docs": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "link_expiry_mins": {
-                "default": 30,
-                "docs": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
-                "type": "optional<integer>",
-                "validation": {
-                  "exclusiveMax": undefined,
-                  "exclusiveMin": undefined,
-                  "max": 10080,
-                  "min": 30,
-                  "multipleOf": undefined,
-                },
-              },
-              "should_create_magic_link_url": {
-                "default": false,
-                "docs": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
-                "type": "optional<boolean>",
-              },
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2427,29 +2398,6 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "openapi": "../openapi.yml",
             },
           },
-          "GenerateRemoteKeyRequest": {
-            "docs": "# The GenerateRemoteKey Object
-### Description
-The `GenerateRemoteKey` object is used to represent a request for a new remote key.
-
-### Usage Example
-Post a `GenerateRemoteKey` to create a new remote key.",
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Group": {
             "docs": "# The Group Object
 ### Description
@@ -2459,8 +2407,12 @@ The `Group` object is used to represent any subset of employees, such as `PayGro
 Fetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2470,6 +2422,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -2487,12 +2440,16 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -2529,34 +2486,22 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "openapi": "../openapi.yml",
             },
           },
-          "IgnoreCommonModelRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "message": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 256,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "reason": "ReasonEnum",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Issue": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "end_user": "optional<map<string, unknown>>",
+              "end_user": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "error_description": "string",
-              "error_details": "optional<list<string>>",
+              "error_details": {
+                "access": "read-only",
+                "type": "optional<list<string>>",
+              },
               "first_incident_time": "optional<datetime>",
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2565,7 +2510,10 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                   "pattern": undefined,
                 },
               },
-              "is_muted": "optional<boolean>",
+              "is_muted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "last_incident_time": "optional<datetime>",
               "status": {
                 "docs": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
@@ -2608,6 +2556,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
             "inline": undefined,
             "properties": {
               "common_model": {
+                "access": "read-only",
                 "docs": "The common model for a specific condition.",
                 "type": "optional<string>",
               },
@@ -2633,7 +2582,10 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                 "docs": "The operator for a specific condition.",
                 "type": "string",
               },
-              "value": "optional<unknown>",
+              "value": {
+                "access": "read-only",
+                "type": "optional<unknown>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2674,6 +2626,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
             "inline": undefined,
             "properties": {
               "linked_account_conditions": {
+                "access": "read-only",
                 "docs": "The conditions belonging to a selective sync.",
                 "type": "optional<list<LinkedAccountCondition>>",
               },
@@ -2973,8 +2926,12 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
 * `ZW` - Zimbabwe",
                 "type": "optional<CountryEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2991,6 +2948,7 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
                 "type": "optional<LocationTypeEnum>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -3002,12 +2960,16 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
                 "docs": "The location's phone number.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -3183,10 +3145,12 @@ Create a `MultipartFormField` to define a multipart form entry.",
             "inline": undefined,
             "properties": {
               "is_unique": {
+                "access": "read-only",
                 "docs": "Whether the operator can be repeated multiple times.",
                 "type": "optional<boolean>",
               },
               "operator": {
+                "access": "read-only",
                 "docs": "The operator for which an operator schema is defined.",
                 "type": "optional<string>",
               },
@@ -4057,8 +4021,12 @@ The `PayGroup` object is used to represent a subset of employees that are put to
 Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4068,6 +4036,7 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4075,12 +4044,16 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
                 "docs": "The pay group name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4132,8 +4105,12 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
                 "docs": "The day and time the payroll run ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4143,15 +4120,20 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4240,29 +4222,6 @@ Post a `GenerateRemoteKey` to receive a new `RemoteKey`.",
             "properties": {
               "key": "string",
               "name": "string",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "RemoteKeyForRegenerationRequest": {
-            "docs": "# The RemoteKeyForRegeneration Object
-### Description
-The `RemoteKeyForRegeneration` object is used to exchange an old remote key for a new one
-
-### Usage Example
-Post a `RemoteKeyForRegeneration` to swap out an old remote key for a new one",
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4450,8 +4409,12 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 "docs": "Whether or not the employer is responsible for paying the tax.",
                 "type": "optional<boolean>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4461,6 +4424,7 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4468,7 +4432,10 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 "docs": "The tax's name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -4491,8 +4458,12 @@ The `Team` object is used to represent a subdivision of the company, usually a d
 If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint to fetch the `Teams`, and then use the `ID` of the team your user selects to filter the `GET Employees` endpoint.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4502,6 +4473,7 @@ If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4519,12 +4491,16 @@ If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4574,8 +4550,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 "docs": "The day and time of the end of the time requested off.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4585,15 +4565,22 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
-              "remote_was_deleted": "optional<boolean>",
+              "remote_was_deleted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "request_type": {
                 "docs": "The type of time off request.
 
@@ -4654,8 +4641,12 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4665,6 +4656,7 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4679,12 +4671,16 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
 * `BEREAVEMENT` - BEREAVEMENT",
                 "type": "optional<PolicyTypeEnum>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4692,16 +4688,6 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
                 "docs": "The amount of PTO used in terms of hours.",
                 "type": "optional<double>",
               },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TimeOffEndpointRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "model": "TimeOffRequest",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4748,8 +4734,14 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 "docs": "The day and time of the end of the time requested off.",
                 "type": "optional<datetime>",
               },
-              "integration_params": "optional<map<string, unknown>>",
-              "linked_account_params": "optional<map<string, unknown>>",
+              "integration_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
+              "linked_account_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "request_type": {
                 "docs": "The type of time off request.
 
@@ -4865,34 +4857,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "openapi": "../openapi.yml",
             },
           },
-          "WebhookReceiverRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "event": {
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "is_active": "boolean",
-              "key": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
       "rawContents": "types:
@@ -4902,20 +4866,33 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
-      integration: optional<string>
-      integration_slug: optional<string>
+        access: read-only
+      integration:
+        type: optional<string>
+        access: read-only
+      integration_slug:
+        type: optional<string>
+        access: read-only
       category: optional<CategoryEnum>
-      end_user_origin_id: optional<string>
-      end_user_organization_name: optional<string>
+      end_user_origin_id:
+        type: optional<string>
+        access: read-only
+      end_user_organization_name:
+        type: optional<string>
+        access: read-only
       end_user_email_address:
         type: optional<string>
         validation:
           format: email
-      status: optional<string>
+        access: read-only
+      status:
+        type: optional<string>
+        access: read-only
       webhook_listener_url:
         type: optional<string>
         validation:
           format: uri
+        access: read-only
       is_duplicate:
         type: optional<boolean>
         docs: >-
@@ -4923,6 +4900,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           existing Production Linked Account. This field is `null` for Test
           Linked Accounts, incomplete Production Linked Accounts, and ignored
           duplicate Production Linked Account sets.
+        access: read-only
     source:
       openapi: ../openapi.yml
   AccountDetailsAndActions:
@@ -5012,7 +4990,9 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         validation:
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
           maxLength: 18
-      slug: optional<string>
+      slug:
+        type: optional<string>
+        access: read-only
       is_in_beta:
         type: optional<boolean>
         docs: >-
@@ -5081,6 +5061,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5115,11 +5096,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Benefit:
@@ -5141,6 +5128,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5172,11 +5160,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   CategoriesEnum:
@@ -5246,6 +5240,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5263,11 +5258,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   ConditionSchema:
@@ -5282,6 +5283,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       common_model:
         type: optional<string>
         docs: The common model for which a condition schema is defined.
+        access: read-only
       native_name:
         type: optional<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
@@ -5834,55 +5836,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `ZW` - Zimbabwe
     source:
       openapi: ../openapi.yml
-  DataPassthroughRequest:
-    docs: >-
-      # The DataPassthrough Object
-
-      ### Description
-
-      The `DataPassthrough` object is used to send information to an
-      otherwise-unsupported third-party endpoint.
-
-
-      ### Usage Example
-
-      Create a `DataPassthrough` to get team hierarchies from your Rippling
-      integration.
-    properties:
-      method: MethodEnum
-      path:
-        type: string
-        validation:
-          minLength: 1
-      base_url_override:
-        type: optional<string>
-        validation:
-          minLength: 1
-      data:
-        type: optional<string>
-        validation:
-          minLength: 1
-      multipart_form_data:
-        type: optional<list<MultipartFormFieldRequest>>
-        docs: >-
-          Pass an array of `MultipartFormField` objects in here instead of using
-          the `data` param if `request_format` is set to `MULTIPART`.
-      headers:
-        type: optional<map<string, unknown>>
-        docs: >-
-          The headers to use for the request (Merge will handle the account's
-          authorization headers). `Content-Type` header is required for
-          passthrough. Choose content type corresponding to expected format of
-          receiving server.
-      request_format: optional<RequestFormatEnum>
-      normalize_response:
-        type: optional<boolean>
-        docs: >-
-          Optional. If true, the response will always be an object of the form
-          `{"type": T, "value": ...}` where `T` will be one of `string, boolean,
-          number, null, array, object`.
-    source:
-      openapi: ../openapi.yml
   DebugModeLog:
     properties:
       log_id: string
@@ -5916,6 +5869,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5944,8 +5898,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Earning:
@@ -5967,6 +5926,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5994,8 +5954,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EarningTypeEnum:
@@ -6030,6 +5995,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -6196,17 +6162,19 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       custom_fields:
         type: optional<map<string, unknown>>
         docs: Custom fields configured for a given model.
-      remote_was_deleted: optional<boolean>
+      remote_was_deleted:
+        type: optional<boolean>
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
-    source:
-      openapi: ../openapi.yml
-  EmployeeEndpointRequest:
-    properties:
-      model: EmployeeRequest
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmployeePayrollRun:
@@ -6228,6 +6196,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -6260,19 +6229,31 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       check_date:
         type: optional<datetime>
         docs: The day and time the payroll run was checked.
-      earnings: optional<list<Earning>>
-      deductions: optional<list<Deduction>>
-      taxes: optional<list<Tax>>
+      earnings:
+        type: optional<list<Earning>>
+        access: read-only
+      deductions:
+        type: optional<list<Deduction>>
+        access: read-only
+      taxes:
+        type: optional<list<Tax>>
+        access: read-only
       remote_was_deleted:
         type: optional<boolean>
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmployeeRequest:
@@ -6447,8 +6428,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         validation:
           format: uri
           maxLength: 2000
-      integration_params: optional<map<string, unknown>>
-      linked_account_params: optional<map<string, unknown>>
+      integration_params:
+        type: optional<map<string, unknown>>
+        access: write-only
+      linked_account_params:
+        type: optional<map<string, unknown>>
+        access: write-only
     source:
       openapi: ../openapi.yml
   EmployeeResponse:
@@ -6482,6 +6467,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -7174,11 +7160,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmploymentStatusEnum:
@@ -7225,67 +7217,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `RAW` - RAW
       * `BASE64` - BASE64
       * `GZIP_BASE64` - GZIP_BASE64
-    source:
-      openapi: ../openapi.yml
-  EndUserDetailsRequest:
-    properties:
-      end_user_email_address:
-        type: string
-        docs: >-
-          Your end user's email address. This is purely for identification
-          purposes - setting this value will not cause any emails to be sent.
-        validation:
-          minLength: 1
-          maxLength: 100
-      end_user_organization_name:
-        type: string
-        docs: Your end user's organization.
-        validation:
-          minLength: 1
-          maxLength: 100
-      end_user_origin_id:
-        type: string
-        docs: >-
-          This unique identifier typically represents the ID for your end user
-          in your product's database. This value must be distinct from other
-          Linked Accounts' unique identifiers.
-        validation:
-          minLength: 1
-          maxLength: 100
-      categories:
-        docs: The integration categories to show in Merge Link.
-        type: list<CategoriesEnum>
-      integration:
-        type: optional<string>
-        docs: >-
-          The slug of a specific pre-selected integration for this linking flow
-          token. For examples of slugs, see
-          https://www.merge.dev/docs/basics/integration-metadata/.
-        validation:
-          minLength: 1
-      link_expiry_mins:
-        type: optional<integer>
-        docs: >-
-          An integer number of minutes between [30, 720 or 10080 if for a Magic
-          Link URL] for how long this token is valid. Defaults to 30.
-        default: 30
-        validation:
-          min: 30
-          max: 10080
-      should_create_magic_link_url:
-        type: optional<boolean>
-        docs: >-
-          Whether to generate a Magic Link URL. Defaults to false. For more
-          information on Magic Link, see
-          https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
-        default: false
-      common_models:
-        type: optional<list<CommonModelScopesBodyRequest>>
-        docs: >-
-          An array of objects to specify the models and fields that will be
-          disabled for a given Linked Account. Each object uses model_id,
-          enabled_actions, and disabled_fields to specify the model, method, and
-          fields that are scoped for a given Linked Account.
     source:
       openapi: ../openapi.yml
   ErrorValidationProblem:
@@ -7354,26 +7285,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     source:
       openapi: ../openapi.yml
-  GenerateRemoteKeyRequest:
-    docs: >-
-      # The GenerateRemoteKey Object
-
-      ### Description
-
-      The `GenerateRemoteKey` object is used to represent a request for a new
-      remote key.
-
-
-      ### Usage Example
-
-      Post a `GenerateRemoteKey` to create a new remote key.
-    properties:
-      name:
-        type: string
-        validation:
-          minLength: 1
-    source:
-      openapi: ../openapi.yml
   Group:
     docs: >-
       # The Group Object
@@ -7393,6 +7304,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -7419,11 +7331,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   GroupTypeEnum:
@@ -7441,22 +7359,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `GROUP` - GROUP
     source:
       openapi: ../openapi.yml
-  IgnoreCommonModelRequest:
-    properties:
-      reason: ReasonEnum
-      message:
-        type: optional<string>
-        validation:
-          minLength: 1
-          maxLength: 256
-    source:
-      openapi: ../openapi.yml
   Issue:
     properties:
       id:
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       status:
         type: optional<IssueStatusEnum>
         docs: |-
@@ -7465,11 +7374,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           * `ONGOING` - ONGOING
           * `RESOLVED` - RESOLVED
       error_description: string
-      end_user: optional<map<string, unknown>>
+      end_user:
+        type: optional<map<string, unknown>>
+        access: read-only
       first_incident_time: optional<datetime>
       last_incident_time: optional<datetime>
-      is_muted: optional<boolean>
-      error_details: optional<list<string>>
+      is_muted:
+        type: optional<boolean>
+        access: read-only
+      error_details:
+        type: optional<list<string>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   IssueStatusEnum:
@@ -7500,13 +7415,16 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       common_model:
         type: optional<string>
         docs: The common model for a specific condition.
+        access: read-only
       native_name:
         type: optional<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
       operator:
         type: string
         docs: The operator for a specific condition.
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        access: read-only
       field_name:
         type: optional<string>
         docs: >-
@@ -7536,6 +7454,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       linked_account_conditions:
         type: optional<list<LinkedAccountCondition>>
         docs: The conditions belonging to a selective sync.
+        access: read-only
     source:
       openapi: ../openapi.yml
   LinkedAccountSelectiveSyncConfigurationRequest:
@@ -7570,6 +7489,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -7860,11 +7780,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   LocationTypeEnum:
@@ -7993,9 +7919,11 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       operator:
         type: optional<string>
         docs: The operator for which an operator schema is defined.
+        access: read-only
       is_unique:
         type: optional<boolean>
         docs: Whether the operator can be repeated multiple times.
+        access: read-only
     source:
       openapi: ../openapi.yml
   PaginatedAccountDetailsAndActionsList:
@@ -9083,6 +9011,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9094,11 +9023,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PayPeriodEnum:
@@ -9143,6 +9078,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9180,11 +9116,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PolicyTypeEnum:
@@ -9237,27 +9179,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
     properties:
       name: string
       key: string
-    source:
-      openapi: ../openapi.yml
-  RemoteKeyForRegenerationRequest:
-    docs: >-
-      # The RemoteKeyForRegeneration Object
-
-      ### Description
-
-      The `RemoteKeyForRegeneration` object is used to exchange an old remote
-      key for a new one
-
-
-      ### Usage Example
-
-      Post a `RemoteKeyForRegeneration` to swap out an old remote key for a new
-      one
-    properties:
-      name:
-        type: string
-        validation:
-          minLength: 1
     source:
       openapi: ../openapi.yml
   RemoteResponse:
@@ -9418,6 +9339,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9442,8 +9364,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Team:
@@ -9467,6 +9394,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9483,11 +9411,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOff:
@@ -9508,6 +9442,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9566,12 +9501,19 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       end_time:
         type: optional<datetime>
         docs: The day and time of the end of the time requested off.
-      remote_was_deleted: optional<boolean>
+      remote_was_deleted:
+        type: optional<boolean>
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOffBalance:
@@ -9593,6 +9535,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9623,16 +9566,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
-    source:
-      openapi: ../openapi.yml
-  TimeOffEndpointRequest:
-    properties:
-      model: TimeOffRequest
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOffRequest:
@@ -9704,8 +9648,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       end_time:
         type: optional<datetime>
         docs: The day and time of the end of the time requested off.
-      integration_params: optional<map<string, unknown>>
-      linked_account_params: optional<map<string, unknown>>
+      integration_params:
+        type: optional<map<string, unknown>>
+        access: write-only
+      linked_account_params:
+        type: optional<map<string, unknown>>
+        access: write-only
     source:
       openapi: ../openapi.yml
   TimeOffResponse:
@@ -9760,19 +9708,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       key: optional<string>
     source:
       openapi: ../openapi.yml
-  WebhookReceiverRequest:
-    properties:
-      event:
-        type: string
-        validation:
-          minLength: 1
-      is_active: boolean
-      key:
-        type: optional<string>
-        validation:
-          minLength: 1
-    source:
-      openapi: ../openapi.yml
 ",
     },
     "accountDetails.yml": {
@@ -9812,6 +9747,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "path": "/account-details",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AccountDetails",
               },
               "source": {
@@ -9840,6 +9776,7 @@ service:
       response:
         docs: ''
         type: root.AccountDetails
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -9906,6 +9843,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AccountToken",
               },
               "source": {
@@ -9938,6 +9876,7 @@ service:
       response:
         docs: ''
         type: root.AccountToken
+        status-code: 200
       examples:
         - path-parameters:
             public_token: public_token
@@ -10019,6 +9958,7 @@ service:
               "path": "/available-actions",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AvailableActions",
               },
               "source": {
@@ -10047,6 +9987,7 @@ service:
       response:
         docs: ''
         type: root.AvailableActions
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10210,6 +10151,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedBankInfoList",
               },
               "source": {
@@ -10286,6 +10228,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.BankInfo",
               },
               "source": {
@@ -10427,6 +10370,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedBankInfoList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10484,6 +10428,7 @@ service:
       response:
         docs: ''
         type: root.BankInfo
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -10622,6 +10567,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedBenefitList",
               },
               "source": {
@@ -10691,6 +10637,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Benefit",
               },
               "source": {
@@ -10769,6 +10716,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedBenefitList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10821,6 +10769,7 @@ service:
       response:
         docs: ''
         type: root.Benefit
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -10952,6 +10901,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedCompanyList",
               },
               "source": {
@@ -11017,6 +10967,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Company",
               },
               "source": {
@@ -11085,6 +11036,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedCompanyList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -11131,6 +11083,7 @@ service:
       response:
         docs: ''
         type: root.Company
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -11370,6 +11323,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmployeePayrollRunList",
               },
               "source": {
@@ -11538,6 +11492,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.EmployeePayrollRun",
               },
               "source": {
@@ -11688,6 +11643,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmployeePayrollRunList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -11765,6 +11721,7 @@ service:
       response:
         docs: ''
         type: root.EmployeePayrollRun
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -11974,9 +11931,15 @@ service:
               "pagination": undefined,
               "path": "/employees",
               "request": {
-                "body": "root.EmployeeEndpointRequest",
-                "content-type": "application/x-www-form-urlencoded",
-                "name": "EmployeesCreateRequest",
+                "body": {
+                  "properties": {
+                    "model": "root.EmployeeRequest",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "EmployeeEndpointRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
@@ -11990,6 +11953,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.EmployeeResponse",
               },
               "source": {
@@ -12017,8 +11981,25 @@ service:
                 "model_id": "string",
               },
               "request": {
-                "body": "root.IgnoreCommonModelRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "message": {
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 256,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "reason": "root.ReasonEnum",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "IgnoreCommonModelRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -12238,6 +12219,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmployeeList",
               },
               "source": {
@@ -12273,6 +12255,7 @@ service:
               "path": "/employees/meta/post",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MetaResponse",
               },
               "source": {
@@ -12381,6 +12364,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Employee",
               },
               "source": {
@@ -15925,6 +15909,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmployeeList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -15984,7 +15969,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.EmployeeEndpointRequest
+        name: EmployeeEndpointRequest
         query-parameters:
           is_debug_mode:
             type: optional<boolean>
@@ -15994,11 +15979,14 @@ service:
           run_async:
             type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
-        name: EmployeesCreateRequest
-        content-type: application/x-www-form-urlencoded
+        body:
+          properties:
+            model: root.EmployeeRequest
+        content-type: application/json
       response:
         docs: ''
         type: root.EmployeeResponse
+        status-code: 201
       examples:
         - headers: {}
           request:
@@ -16106,6 +16094,7 @@ service:
       response:
         docs: ''
         type: root.Employee
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -16170,8 +16159,16 @@ service:
       path-parameters:
         model_id: string
       request:
-        body: root.IgnoreCommonModelRequest
-        content-type: application/x-www-form-urlencoded
+        name: IgnoreCommonModelRequest
+        body:
+          properties:
+            reason: root.ReasonEnum
+            message:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 256
+        content-type: application/json
       examples:
         - path-parameters:
             model_id: model_id
@@ -16188,6 +16185,7 @@ service:
       response:
         docs: ''
         type: root.MetaResponse
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -16329,6 +16327,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmploymentList",
               },
               "source": {
@@ -16409,6 +16408,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Employment",
               },
               "source": {
@@ -16909,6 +16909,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmploymentList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -16970,6 +16971,7 @@ service:
       response:
         docs: ''
         type: root.Employment
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -17039,6 +17041,7 @@ service:
               "path": "/sync-status/resync",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.SyncStatus>",
               },
               "source": {
@@ -17072,6 +17075,7 @@ service:
       response:
         docs: ''
         type: list<root.SyncStatus>
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -17117,11 +17121,28 @@ service:
               "pagination": undefined,
               "path": "/generate-key",
               "request": {
-                "body": "root.GenerateRemoteKeyRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "GenerateRemoteKeyRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteKey",
               },
               "source": {
@@ -17148,11 +17169,18 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.GenerateRemoteKeyRequest
-        content-type: application/x-www-form-urlencoded
+        name: GenerateRemoteKeyRequest
+        body:
+          properties:
+            name:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
       response:
         docs: ''
         type: root.RemoteKey
+        status-code: 200
       examples:
         - request:
             name: Remote Deployment Key 1
@@ -17273,6 +17301,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedGroupList",
               },
               "source": {
@@ -17342,6 +17371,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Group",
               },
               "source": {
@@ -17421,6 +17451,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedGroupList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -17470,6 +17501,7 @@ service:
       response:
         docs: ''
         type: root.Group
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -17592,6 +17624,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedIssueList",
               },
               "source": {
@@ -17633,6 +17666,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -17732,6 +17766,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedIssueList
+        status-code: 200
       examples:
         - response:
             body:
@@ -17761,6 +17796,7 @@ service:
       response:
         docs: ''
         type: root.Issue
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -17817,11 +17853,84 @@ service:
               "pagination": undefined,
               "path": "/link-token",
               "request": {
-                "body": "root.EndUserDetailsRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "categories": {
+                      "docs": "The integration categories to show in Merge Link.",
+                      "type": "list<root.CategoriesEnum>",
+                    },
+                    "common_models": {
+                      "docs": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
+                      "type": "optional<list<root.CommonModelScopesBodyRequest>>",
+                    },
+                    "end_user_email_address": {
+                      "docs": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "end_user_organization_name": {
+                      "docs": "Your end user's organization.",
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "end_user_origin_id": {
+                      "docs": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "integration": {
+                      "docs": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "link_expiry_mins": {
+                      "default": 30,
+                      "docs": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
+                      "type": "optional<integer>",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": 10080,
+                        "min": 30,
+                        "multipleOf": undefined,
+                      },
+                    },
+                    "should_create_magic_link_url": {
+                      "default": false,
+                      "docs": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
+                      "type": "optional<boolean>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "EndUserDetailsRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.LinkToken",
               },
               "source": {
@@ -17848,11 +17957,74 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.EndUserDetailsRequest
-        content-type: application/x-www-form-urlencoded
+        name: EndUserDetailsRequest
+        body:
+          properties:
+            end_user_email_address:
+              type: string
+              docs: >-
+                Your end user's email address. This is purely for identification
+                purposes - setting this value will not cause any emails to be
+                sent.
+              validation:
+                minLength: 1
+                maxLength: 100
+            end_user_organization_name:
+              type: string
+              docs: Your end user's organization.
+              validation:
+                minLength: 1
+                maxLength: 100
+            end_user_origin_id:
+              type: string
+              docs: >-
+                This unique identifier typically represents the ID for your end
+                user in your product's database. This value must be distinct
+                from other Linked Accounts' unique identifiers.
+              validation:
+                minLength: 1
+                maxLength: 100
+            categories:
+              docs: The integration categories to show in Merge Link.
+              type: list<root.CategoriesEnum>
+            integration:
+              type: optional<string>
+              docs: >-
+                The slug of a specific pre-selected integration for this linking
+                flow token. For examples of slugs, see
+                https://www.merge.dev/docs/basics/integration-metadata/.
+              validation:
+                minLength: 1
+            link_expiry_mins:
+              type: optional<integer>
+              docs: >-
+                An integer number of minutes between [30, 720 or 10080 if for a
+                Magic Link URL] for how long this token is valid. Defaults to
+                30.
+              default: 30
+              validation:
+                min: 30
+                max: 10080
+            should_create_magic_link_url:
+              type: optional<boolean>
+              docs: >-
+                Whether to generate a Magic Link URL. Defaults to false. For
+                more information on Magic Link, see
+                https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
+              default: false
+            common_models:
+              type: optional<list<root.CommonModelScopesBodyRequest>>
+              docs: >-
+                An array of objects to specify the models and fields that will
+                be disabled for a given Linked Account. Each object uses
+                model_id, enabled_actions, and disabled_fields to specify the
+                model, method, and fields that are scoped for a given Linked
+                Account.
+        content-type: application/json
       response:
         docs: ''
         type: root.LinkToken
+        status-code: 200
       examples:
         - request:
             end_user_email_address: end_user_email_address
@@ -17970,7 +18142,15 @@ service:
                     "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
                     "type": "optional<string>",
                   },
-                  "id": "optional<string>",
+                  "id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "ids": {
                     "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
                     "type": "optional<string>",
@@ -17999,6 +18179,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedAccountDetailsAndActionsList",
               },
               "source": {
@@ -18099,7 +18280,10 @@ service:
             docs: >-
               Comma-separated list of EndUser origin IDs, making it possible to
               specify multiple EndUsers at once.
-          id: optional<string>
+          id:
+            type: optional<string>
+            validation:
+              format: uuid
           ids:
             type: optional<string>
             docs: >-
@@ -18132,6 +18316,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedAccountDetailsAndActionsList
+        status-code: 200
       examples:
         - response:
             body:
@@ -18282,6 +18467,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedLocationList",
               },
               "source": {
@@ -18357,6 +18543,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Location",
               },
               "source": {
@@ -18431,6 +18618,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedLocationList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -18486,6 +18674,7 @@ service:
       response:
         docs: ''
         type: root.Location
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -18562,11 +18751,60 @@ service:
               "pagination": undefined,
               "path": "/passthrough",
               "request": {
-                "body": "root.DataPassthroughRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "base_url_override": {
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "data": {
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "headers": {
+                      "docs": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                      "type": "optional<map<string, unknown>>",
+                    },
+                    "method": "root.MethodEnum",
+                    "multipart_form_data": {
+                      "docs": "Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.",
+                      "type": "optional<list<root.MultipartFormFieldRequest>>",
+                    },
+                    "normalize_response": {
+                      "docs": "Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.",
+                      "type": "optional<boolean>",
+                    },
+                    "path": {
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "request_format": "optional<root.RequestFormatEnum>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "DataPassthroughRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteResponse",
               },
               "source": {
@@ -18593,11 +18831,47 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.DataPassthroughRequest
-        content-type: application/x-www-form-urlencoded
+        name: DataPassthroughRequest
+        body:
+          properties:
+            method: root.MethodEnum
+            path:
+              type: string
+              validation:
+                minLength: 1
+            base_url_override:
+              type: optional<string>
+              validation:
+                minLength: 1
+            data:
+              type: optional<string>
+              validation:
+                minLength: 1
+            multipart_form_data:
+              type: optional<list<root.MultipartFormFieldRequest>>
+              docs: >-
+                Pass an array of `MultipartFormField` objects in here instead of
+                using the `data` param if `request_format` is set to
+                `MULTIPART`.
+            headers:
+              type: optional<map<string, unknown>>
+              docs: >-
+                The headers to use for the request (Merge will handle the
+                account's authorization headers). `Content-Type` header is
+                required for passthrough. Choose content type corresponding to
+                expected format of receiving server.
+            request_format: optional<root.RequestFormatEnum>
+            normalize_response:
+              type: optional<boolean>
+              docs: >-
+                Optional. If true, the response will always be an object of the
+                form `{"type": T, "value": ...}` where `T` will be one of
+                `string, boolean, number, null, array, object`.
+        content-type: application/json
       response:
         docs: ''
         type: root.RemoteResponse
+        status-code: 200
       examples:
         - headers: {}
           request:
@@ -18715,6 +18989,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedPayGroupList",
               },
               "source": {
@@ -18774,6 +19049,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PayGroup",
               },
               "source": {
@@ -18842,6 +19118,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedPayGroupList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -18883,6 +19160,7 @@ service:
       response:
         docs: ''
         type: root.PayGroup
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -19040,6 +19318,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedPayrollRunList",
               },
               "source": {
@@ -19111,6 +19390,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PayrollRun",
               },
               "source": {
@@ -19335,6 +19615,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedPayrollRunList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -19386,6 +19667,7 @@ service:
       response:
         docs: ''
         type: root.PayrollRun
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -19444,11 +19726,28 @@ service:
               "pagination": undefined,
               "path": "/regenerate-key",
               "request": {
-                "body": "root.RemoteKeyForRegenerationRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "RemoteKeyForRegenerationRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteKey",
               },
               "source": {
@@ -19475,11 +19774,18 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.RemoteKeyForRegenerationRequest
-        content-type: application/x-www-form-urlencoded
+        name: RemoteKeyForRegenerationRequest
+        body:
+          properties:
+            name:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
       response:
         docs: ''
         type: root.RemoteKey
+        status-code: 200
       examples:
         - request:
             name: Remote Deployment Key 1
@@ -19531,6 +19837,7 @@ service:
               "path": "/selective-sync/configurations",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
               },
               "source": {
@@ -19589,6 +19896,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
               },
               "source": {
@@ -19649,6 +19957,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedConditionSchemaList",
               },
               "source": {
@@ -19677,6 +19986,7 @@ service:
       response:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19707,6 +20017,7 @@ service:
       response:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19742,6 +20053,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedConditionSchemaList
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19818,6 +20130,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedSyncStatusList",
               },
               "source": {
@@ -19857,6 +20170,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedSyncStatusList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -19979,6 +20293,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTeamList",
               },
               "source": {
@@ -20043,6 +20358,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Team",
               },
               "source": {
@@ -20119,6 +20435,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTeamList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -20166,6 +20483,7 @@ service:
       response:
         docs: ''
         type: root.Team
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -20282,9 +20600,15 @@ service:
               "pagination": undefined,
               "path": "/time-off",
               "request": {
-                "body": "root.TimeOffEndpointRequest",
-                "content-type": "application/x-www-form-urlencoded",
-                "name": "TimeOffCreateRequest",
+                "body": {
+                  "properties": {
+                    "model": "root.TimeOffRequest",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimeOffEndpointRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
@@ -20298,6 +20622,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.TimeOffResponse",
               },
               "source": {
@@ -20438,6 +20763,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTimeOffList",
               },
               "source": {
@@ -20473,6 +20799,7 @@ service:
               "path": "/time-off/meta/post",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MetaResponse",
               },
               "source": {
@@ -20552,6 +20879,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TimeOff",
               },
               "source": {
@@ -20933,6 +21261,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTimeOffList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -20970,7 +21299,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.TimeOffEndpointRequest
+        name: TimeOffEndpointRequest
         query-parameters:
           is_debug_mode:
             type: optional<boolean>
@@ -20980,11 +21309,14 @@ service:
           run_async:
             type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
-        name: TimeOffCreateRequest
-        content-type: application/x-www-form-urlencoded
+        body:
+          properties:
+            model: root.TimeOffRequest
+        content-type: application/json
       response:
         docs: ''
         type: root.TimeOffResponse
+        status-code: 201
       examples:
         - headers: {}
           request:
@@ -21065,6 +21397,7 @@ service:
       response:
         docs: ''
         type: root.TimeOff
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -21103,6 +21436,7 @@ service:
       response:
         docs: ''
         type: root.MetaResponse
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21245,6 +21579,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTimeOffBalanceList",
               },
               "source": {
@@ -21319,6 +21654,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TimeOffBalance",
               },
               "source": {
@@ -21447,6 +21783,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTimeOffBalanceList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21502,6 +21839,7 @@ service:
       response:
         docs: ''
         type: root.TimeOffBalance
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -21562,11 +21900,38 @@ service:
               "pagination": undefined,
               "path": "/webhook-receivers",
               "request": {
-                "body": "root.WebhookReceiverRequest",
-                "content-type": "application/x-www-form-urlencoded",
+                "body": {
+                  "properties": {
+                    "event": {
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "is_active": "boolean",
+                    "key": {
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "WebhookReceiverRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.WebhookReceiver",
               },
               "source": {
@@ -21595,6 +21960,7 @@ service:
               "path": "/webhook-receivers",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.WebhookReceiver>",
               },
               "source": {
@@ -21623,6 +21989,7 @@ service:
       response:
         docs: ''
         type: list<root.WebhookReceiver>
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21638,11 +22005,23 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        body: root.WebhookReceiverRequest
-        content-type: application/x-www-form-urlencoded
+        name: WebhookReceiverRequest
+        body:
+          properties:
+            event:
+              type: string
+              validation:
+                minLength: 1
+            is_active: boolean
+            key:
+              type: optional<string>
+              validation:
+                minLength: 1
+        content-type: application/json
       response:
         docs: ''
         type: root.WebhookReceiver
+        status-code: 201
       examples:
         - headers: {}
           request:
@@ -21692,10 +22071,10 @@ service:
 error-discrimination:
   strategy: status-code
 display-name: Merge HRIS API
-default-environment: Production
 environments:
   Production: https://api.merge.dev/api/hris/v1
   Sandbox: https://api-sandbox.merge.dev/api/hris/v1
+default-environment: Production
 headers:
   X-Account-Token:
     type: optional<string>

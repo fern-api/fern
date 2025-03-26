@@ -3,10 +3,10 @@
  */
 
 export interface ProtobufDefinitionSchema {
-    /** The path to the `.proto` directory root (e.g. `proto`). */
-    root: string;
     /** The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`). */
     target: string;
+    /** The path to the `.proto` directory root (e.g. `proto`). */
+    root: string;
     /** Path to the overrides configuration */
     overrides?: string;
     /** Whether to compile the `.proto` files locally. By default, we generate remotely. */

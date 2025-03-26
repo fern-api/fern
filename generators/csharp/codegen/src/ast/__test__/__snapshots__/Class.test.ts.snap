@@ -3,8 +3,5 @@
 exports[`class > basic 1`] = `
 "namespace Automotive;
 
-public class Car(string make,string model)
-{
-}
-"
+public class Car(string make,string model);"
 `;

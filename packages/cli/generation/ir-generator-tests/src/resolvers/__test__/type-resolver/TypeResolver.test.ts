@@ -1,5 +1,6 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { TypeResolverImpl, constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 

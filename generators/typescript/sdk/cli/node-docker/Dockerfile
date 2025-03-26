@@ -1,8 +1,7 @@
 FROM node:20.18-alpine3.20
 
-RUN apk --no-cache add git zip \
-  && git config --global user.name "fern" \
-  && git config --global user.email "hey@buildwithfern.com"
+RUN apk --no-cache add git zip
+RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 RUN yarn init --yes
 

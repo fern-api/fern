@@ -1,8 +1,7 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.V2.V3;
 
@@ -39,6 +38,14 @@ public record ProblemInfoV2
     [JsonPropertyName("isPublic")]
     public required bool IsPublic { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

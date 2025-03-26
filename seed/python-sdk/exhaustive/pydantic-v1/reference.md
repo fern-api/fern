@@ -2097,7 +2097,7 @@ client = SeedExhaustive(
 )
 client.endpoints.params.get_with_allow_multiple_query(
     query="query",
-    numer=1,
+    number=1,
 )
 
 ```
@@ -2122,7 +2122,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 <dl>
 <dd>
 
-**numer:** `typing.Union[int, typing.Sequence[int]]` 
+**number:** `typing.Union[int, typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -2969,6 +2969,64 @@ client.endpoints.primitive.get_and_return_base_64(
 <dd>
 
 **request:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Put
+<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.put.add(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>

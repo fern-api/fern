@@ -1,12 +1,10 @@
 using SeedVersion.Core;
 
-#nullable enable
-
 namespace SeedVersion;
 
 public partial class SeedVersionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedVersionClient(ClientOptions? clientOptions = null)
     {

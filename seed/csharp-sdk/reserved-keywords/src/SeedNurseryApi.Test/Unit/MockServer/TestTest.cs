@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedNurseryApi;
 
-#nullable enable
-
 namespace SeedNurseryApi.Test.Unit.MockServer;
 
 [TestFixture]

@@ -10,18 +10,18 @@ description: Use Fern to publish a public-facing SDK
 This guide will walk you through how to publish public-facing SDKs through Fern. 
 
 <Steps>
-  ### Navigate to your `generators.yml` 
-
+  <Step title="Navigate to your `generators.yml`">
   This guide assumes that you already have an initialized fern folder. If you don't 
   please run `fern init`! 
 
   Your `generators.yml` lives inside of the fern folder and contains all 
   the configuration for your Fern generators. 
+  </Step>
 
-  ### Run `fern add <generator>`
-
+  <Step title="Run `fern add <generator>">
   In order to generate the SDK, we'll need to add the generator to your 
-  `generators.yml`. You can use the `fern <add>` command to do this. 
+  `generators.yml`. You can use the `fern <add>` command to do this.
+  </Step>
 
   <CodeBlocks>
     ```bash TypeScript
@@ -36,6 +36,15 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
     ```bash Go
     fern add fern-go-sdk --group go-sdk
     ```
+    ```bash Ruby
+    fern add fern-ruby-sdk --group ruby-sdk
+    ```
+    ```bash .NET
+    fern add fern-csharp-sdk --group csharp-sdk
+    ```
+    ```bash PHP
+    fern add fern-php-sdk --group php-sdk
+    ```
   </CodeBlocks>
 
   Once the command completes, you'll see a new group created in your `generators.yml`. 
@@ -46,7 +55,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.45.2
+            version: 0.48.4
             output:
               location: local-file-system
               path: ../sdks/typescript
@@ -56,7 +65,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 4.3.10
+            version: 4.3.11
             output:
               location: local-file-system
               path: ../sdks/python
@@ -66,21 +75,21 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 2.8.1
+            version: 2.10.7
     ```
     ```yaml Go 
     groups:
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.35.1
+            version: 0.36.2
     ```
     ```yaml .NET 
     groups: 
-      java-sdk:
+      csharp-sdk:
         generators:
           - name: fernapi/fern-csharp-sdk
-            version: 1.9.11
+            version: 1.9.12
     ```
     ```yaml Ruby 
     groups: 
@@ -89,12 +98,18 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
           - name: fernapi/fern-ruby-sdk
             version: 0.9.0
     ```
+    ```yaml PHP 
+    groups: 
+      php-sdk:
+        generators:
+          - name: fernapi/fern-php-sdk
+            version: 0.2.2
+    ```
   </CodeBlocks>
 
   Here are the [latest versions of each generator](https://github.com/fern-api/fern?tab=readme-ov-file#-generators).
 
-  ### Configure `output` location
-
+  <Step title="Configure `output` location">
   In order to setup publishing your SDK, you'll need to configure 
   an output location in your `generators.yml`.
 
@@ -104,7 +119,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.45.2
+            version: 0.48.4
             output:
               location: npm
               package-name: imdb
@@ -115,7 +130,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 4.3.10
+            version: 4.3.11
             output:
               location: pypi
               package-name: imdb
@@ -126,7 +141,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 2.8.1
+            version: 2.10.7
             output:
               location: maven
               artifact: com.imdb:imdb-java
@@ -142,7 +157,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.35.1
+            version: 0.36.2
             github: 
               repository: imdb/imdb-go
     ```
@@ -151,7 +166,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       csharp-sdk:
         generators:
           - name: fernapi/fern-csharp-sdk
-            version: 1.9.11
+            version: 1.9.12
             output:
               location: nuget
               package-name: Imdb.Net
@@ -162,22 +177,32 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ruby-sdk:
         generators:
           - name: fernapi/fern-ruby-sdk
-            version: 0.9.0
+            version: 0.9.0-rc2
             output:
               location: rubygems
               package-name: imdb
               api-key: ${RUBYGEMS_API_KEY}
     ```
+    ```yaml title="PHP"
+    groups: 
+      php-sdk:
+        generators:
+          - name: fernapi/fern-php-sdk
+            version: 0.2.2
+    ```
   </CodeBlocks>
+  
+  </Step>
 
+  <Step title="Install GitHub app">
 
-  ### Install GitHub app
+  To configure the GitHub integration, you must (1) **create a GitHub repository** and (2) **install the [Fern GitHub App](https://github.com/apps/fern-api)**. 
+  
+  </Step>
 
-  To configure the Github integration you must (1) **create a Github repository** and (2) **install the [Fern GitHub App](https://github.com/apps/fern-api)**. 
+  <Step title="Configure `GitHub` location">
 
-  ### Configure `GitHub` location
-
-  Once you've created the Github repository you must add it to your `generators.yml`: 
+  Once you've created the GitHub repository, you must add it to your `generators.yml`: 
 
   ```yaml title="TypeScript" {10-11}
   groups: 
@@ -193,26 +218,30 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
             repository: your-org/your-repository
   ```
 
-  ### Run `fern generate`
+  </Step>
+
+  <Step title="Run `fern generate`">
 
   At this point, you are ready to go and can run `fern generate --version <version>`. 
   
   <Warning> Make sure that any environment variables like `NPM_TOKEN` are present! </Warning>
+  
+  </Step>
 
-  ### Setup a GitHub Action
+  <Step title="Setup a GitHub Action">
 
   We strongly advise adding a GitHub Action to trigger SDK releases for each language. Below is 
   an example of how you might setup a workflow_dispatch 
   
   <CodeBlocks>
     ```yaml title="Python" maxLines=0
-    name: python-sdk
+    name: Publish Python SDK
 
     on:
       workflow_dispatch:
         inputs:
           version:
-            description: "The version of the python SDK that you would like to release"
+            description: "The version of the Python SDK that you would like to release"
             required: true
             type: string
 
@@ -223,7 +252,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
           - name: Checkout repository
             uses: actions/checkout@v4
 
-          - name: Install Fern
+          - name: Install Fern CLI
             run: npm install -g fern-api
 
           - name: Release Python SDK
@@ -234,13 +263,13 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               fern generate --group python-sdk --version ${{ inputs.version }} --log-level debug
     ```
     ```yaml title="TypeScript" maxLines=0
-    name: ts-sdk
+    name: Publish TypeScript SDK
 
     on:
       workflow_dispatch:
         inputs:
           version:
-            description: "The version of the TS SDK that you would like to release"
+            description: "The version of the TypeScript SDK that you would like to release"
             required: true
             type: string
 
@@ -249,15 +278,12 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
         runs-on: ubuntu-latest
         steps:
           - name: Checkout repo
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
 
-          - name: Setup node
-            uses: actions/setup-node@v3
-
-          - name: Download Fern
+          - name: Install Fern CLI
             run: npm install -g fern-api
 
-          - name: Release Node SDK
+          - name: Release TypeScript SDK
             env:
               FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
               NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -268,7 +294,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
 
   Once these actions are merged in, you can simply release your SDK by navigating to the actions tab: 
 
-  <img alt="GitHub Page" src="assets/sdk-release-action.png" width="250" height="300"/>
-
+  <img alt="GitHub Page" src="assets/sdk-release-action.png" />
+  </Step>
 
 </Steps>

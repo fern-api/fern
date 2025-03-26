@@ -135,6 +135,7 @@
                                 }
                             }
                         },
+                        "propertyAccess": null,
                         "availability": null,
                         "docs": null
                     }
@@ -864,7 +865,8 @@
                             "value": "STRING"
                         }
                     }
-                ]
+                ],
+                "additionalProperties": false
             }
         },
         "headers": [],
@@ -1048,10 +1050,13 @@
                 },
                 "response": {
                     "type": "json"
-                }
+                },
+                "examples": null
             }
         },
-        "environments": null
+        "pathParameters": [],
+        "environments": null,
+        "generatorConfig": null
     },
     "subpackages": {
         "subpackage_service": {

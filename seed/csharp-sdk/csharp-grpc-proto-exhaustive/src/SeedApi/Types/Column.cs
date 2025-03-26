@@ -1,8 +1,7 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -28,9 +27,9 @@ public record Column
     /// <summary>
     /// Maps the Column type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.Column ToProto()
+    internal ProtoDataV1Grpc.Column ToProto()
     {
-        var result = new Proto.Column();
+        var result = new ProtoDataV1Grpc.Column();
         result.Id = Id;
         if (Values.Any())
         {
@@ -50,12 +49,12 @@ public record Column
     /// <summary>
     /// Returns a new Column type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static Column FromProto(Proto.Column value)
+    internal static Column FromProto(ProtoDataV1Grpc.Column value)
     {
         return new Column
         {
             Id = value.Id,
-            Values = value.Values?.ToList() ?? new List<float>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
                 value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,

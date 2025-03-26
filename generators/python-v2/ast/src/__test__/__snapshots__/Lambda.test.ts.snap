@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Lambda > toString > should generate a basic function with no args and a simple body 1`] = `
+"lambda: True
+"
+`;
+
+exports[`Lambda > toString > should generate a function with two args 1`] = `
+"lambda a, b: a + b
+"
+`;
+
+exports[`Lambda > toString > should generate a function with two args and initializers 1`] = `
+"lambda a=1, b=2: a + b
+"
+`;

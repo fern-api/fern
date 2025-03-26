@@ -6,6 +6,7 @@
       "url": "https://sandbox.api.flagright.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {},
     "orderedTagIds": []
@@ -212,6 +213,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -252,7 +254,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Transactions\n\n`/transactions` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)\n\nIn order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. \n\n\n### Payload\n\nHere are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):\n\n* `type`: Type of transaction (Ex: `WITHDRAWAL`, `DEPOSIT`, `TRANSFER` etc). \n* `transactionId` - Unique Identifier for the transaction. Flagright API will generate a `transactionId` if this field is left empty\n* `timestamp` - UNIX timestamp in *milliseconds* of when the transaction took place\n* `transactionState` - The state of the transaction, set to `CREATED` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)\n* `originUserId` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `destinationUserId` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint\n* `originAmountDetails` - Details of the amount being sent from the origin\n* `destinationAmountDetails` - Details of the amount being received at the destination\n* `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.\n* `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
       "authed": true,
       "method": "POST",
@@ -308,84 +310,37 @@
               "originPaymentDetails": {
                 "value": {
                   "value": {
-                    "method": {
+                    "cardFingerprint": {
                       "value": {
-                        "value": "CHECK",
+                        "value": "20ac00fed8ef913aefb17cfae1097cce",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
-                    "shippingAddress": {
-                      "properties": {
-                        "addressLines": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": {
-                                  "value": "Klara-Franke Str 20",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "postcode": {
-                          "value": {
-                            "value": "10557",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "city": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "Germany",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tags": {
-                          "value": [
-                            {
-                              "properties": {
-                                "key": {
-                                  "value": {
-                                    "value": "customKey",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "value": {
-                                  "value": {
-                                    "value": "customValue",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
+                    "cardIssuedCountry": {
+                      "value": "TR",
+                      "type": "enum"
+                    },
+                    "transactionReferenceField": {
+                      "value": {
+                        "value": "Deposit",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
+                    },
+                    "3dsDone": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "method": {
+                      "value": {
+                        "value": "CARD",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -395,84 +350,37 @@
               "destinationPaymentDetails": {
                 "value": {
                   "value": {
-                    "method": {
+                    "cardFingerprint": {
                       "value": {
-                        "value": "CHECK",
+                        "value": "20ac00fed8ef913aefb17cfae1097cce",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
-                    "shippingAddress": {
-                      "properties": {
-                        "addressLines": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": {
-                                  "value": "Klara-Franke Str 20",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "postcode": {
-                          "value": {
-                            "value": "10557",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "city": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "Germany",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tags": {
-                          "value": [
-                            {
-                              "properties": {
-                                "key": {
-                                  "value": {
-                                    "value": "customKey",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "value": {
-                                  "value": {
-                                    "value": "customValue",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
+                    "cardIssuedCountry": {
+                      "value": "TR",
+                      "type": "enum"
+                    },
+                    "transactionReferenceField": {
+                      "value": {
+                        "value": "Deposit",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
+                    },
+                    "3dsDone": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "method": {
+                      "value": {
+                        "value": "CARD",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -892,6 +800,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -920,7 +829,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "### GET Transactions\n\n`/transactions` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).\n\nCalling `GET /transactions/{transactionId}` will return the entire transaction payload and rule execution results for the transaction with the corresponding `transactionId`",
       "authed": true,
       "method": "GET",
@@ -992,116 +901,169 @@
                 "originPaymentDetails": {
                   "value": {
                     "value": {
-                      "method": {
+                      "cardFingerprint": {
                         "value": {
-                          "value": "CHECK",
+                          "value": "20ac00fed8ef913aefb17cfae1097cce",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "checkNumber": {
-                        "value": {
-                          "value": "originPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "checkIdentifier": {
-                        "value": {
-                          "value": "originPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "originPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "deliveryStatus": {
-                        "value": "COMPLETED",
+                      "cardIssuedCountry": {
+                        "value": "TR",
                         "type": "enum"
                       },
-                      "etaTimestamp": {
+                      "transactionReferenceField": {
                         "value": {
-                          "value": 1.1,
-                          "type": "double"
+                          "value": "Deposit",
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "shippingAddress": {
+                      "3dsDone": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "nameOnCard": {
                         "properties": {
-                          "addressLines": {
-                            "value": [
-                              {
-                                "value": {
-                                  "value": {
-                                    "value": "Klara-Franke Str 20",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            ],
-                            "type": "array"
-                          },
-                          "postcode": {
+                          "firstName": {
                             "value": {
-                              "value": "10557",
+                              "value": "Baran",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "middleName": {
+                            "value": {
+                              "value": "Realblood",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "lastName": {
+                            "value": {
+                              "value": "Ozkan",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardExpiry": {
+                        "properties": {
+                          "month": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "year": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardLast4Digits": {
+                        "value": {
+                          "value": "cardLast4Digits",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardBrand": {
+                        "value": "VISA",
+                        "type": "enum"
+                      },
+                      "cardFunding": {
+                        "value": "CREDIT",
+                        "type": "enum"
+                      },
+                      "cardAuthenticated": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "paymentChannel": {
+                        "value": {
+                          "value": "paymentChannel",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardType": {
+                        "value": "VIRTUAL",
+                        "type": "enum"
+                      },
+                      "merchantDetails": {
+                        "properties": {
+                          "id": {
+                            "value": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "category": {
+                            "value": {
+                              "value": "category",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "MCC": {
+                            "value": {
+                              "value": "MCC",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "city": {
                             "value": {
-                              "value": "Berlin",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "state": {
-                            "value": {
-                              "value": "Berlin",
+                              "value": "city",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "country": {
                             "value": {
-                              "value": "Germany",
+                              "value": "country",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "tags": {
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "value": {
-                                      "value": "customKey",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "value": {
-                                    "value": {
-                                      "value": "customValue",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
-                            ],
-                            "type": "array"
+                          "state": {
+                            "value": {
+                              "value": "state",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "postCode": {
+                            "value": {
+                              "value": "postCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "object"
+                      },
+                      "method": {
+                        "value": {
+                          "value": "CARD",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -1111,116 +1073,169 @@
                 "destinationPaymentDetails": {
                   "value": {
                     "value": {
-                      "method": {
+                      "cardFingerprint": {
                         "value": {
-                          "value": "CHECK",
+                          "value": "20ac00fed8ef913aefb17cfae1097cce",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "checkNumber": {
-                        "value": {
-                          "value": "destinationPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "checkIdentifier": {
-                        "value": {
-                          "value": "destinationPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "destinationPaymentDetails",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "deliveryStatus": {
-                        "value": "COMPLETED",
+                      "cardIssuedCountry": {
+                        "value": "TR",
                         "type": "enum"
                       },
-                      "etaTimestamp": {
+                      "transactionReferenceField": {
                         "value": {
-                          "value": 1.1,
-                          "type": "double"
+                          "value": "Deposit",
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "shippingAddress": {
+                      "3dsDone": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "nameOnCard": {
                         "properties": {
-                          "addressLines": {
-                            "value": [
-                              {
-                                "value": {
-                                  "value": {
-                                    "value": "Klara-Franke Str 20",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "unknown"
-                              }
-                            ],
-                            "type": "array"
-                          },
-                          "postcode": {
+                          "firstName": {
                             "value": {
-                              "value": "10557",
+                              "value": "Baran",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "middleName": {
+                            "value": {
+                              "value": "Realblood",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "lastName": {
+                            "value": {
+                              "value": "Ozkan",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardExpiry": {
+                        "properties": {
+                          "month": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "year": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardLast4Digits": {
+                        "value": {
+                          "value": "cardLast4Digits",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardBrand": {
+                        "value": "VISA",
+                        "type": "enum"
+                      },
+                      "cardFunding": {
+                        "value": "CREDIT",
+                        "type": "enum"
+                      },
+                      "cardAuthenticated": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "paymentChannel": {
+                        "value": {
+                          "value": "paymentChannel",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardType": {
+                        "value": "VIRTUAL",
+                        "type": "enum"
+                      },
+                      "merchantDetails": {
+                        "properties": {
+                          "id": {
+                            "value": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "category": {
+                            "value": {
+                              "value": "category",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "MCC": {
+                            "value": {
+                              "value": "MCC",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "city": {
                             "value": {
-                              "value": "Berlin",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "state": {
-                            "value": {
-                              "value": "Berlin",
+                              "value": "city",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "country": {
                             "value": {
-                              "value": "Germany",
+                              "value": "country",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "tags": {
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "value": {
-                                      "value": "customKey",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "value": {
-                                    "value": {
-                                      "value": "customValue",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
-                            ],
-                            "type": "array"
+                          "state": {
+                            "value": {
+                              "value": "state",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "postCode": {
+                            "value": {
+                              "value": "postCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "object"
+                      },
+                      "method": {
+                        "value": {
+                          "value": "CARD",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -1667,6 +1682,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -1707,7 +1723,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Transaction Events\n\n`/events/transaction` endpoint allows you to operate on the [Transaction Events entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-event)\n\nTransaction events are created after the initial `POST /transactions` call (which creates a transaction) and are used to:\n\n* Update the STATE of the transaction, using the `transactionState` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)\n* Update the transaction details, using the `updatedTransactionAttributes` field.\n\n> If you have neither of the above two use cases, you do not need to use transaction events. \n\n### Payload\n\nEach transaction event needs three mandatory fields:\n\n* `transactionState` - STATE of the transaction -> value is set to `CREATED` after `POST /transactions` call\n* `timestamp`- the timestamp of when the event was created or occured in your system\n* `transactionId` - The ID of the transaction for which this event is generated. \n\nIn order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.\n",
       "authed": true,
       "method": "POST",
@@ -1971,116 +1987,96 @@
                     "originPaymentDetails": {
                       "value": {
                         "value": {
-                          "method": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "CHECK",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
-                            "value": {
-                              "value": "originPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "checkIdentifier": {
-                            "value": {
-                              "value": "originPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "name": {
-                            "value": {
-                              "value": "originPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "deliveryStatus": {
-                            "value": "COMPLETED",
+                          "cardIssuedCountry": {
+                            "value": "TR",
                             "type": "enum"
                           },
-                          "etaTimestamp": {
+                          "transactionReferenceField": {
                             "value": {
-                              "value": 1.1,
-                              "type": "double"
+                              "value": "Deposit",
+                              "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "shippingAddress": {
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
                             "properties": {
-                              "addressLines": {
-                                "value": [
-                                  {
-                                    "value": {
-                                      "value": {
-                                        "value": "Klara-Franke Str 20",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "type": "unknown"
-                                  }
-                                ],
-                                "type": "array"
-                              },
-                              "postcode": {
+                              "firstName": {
                                 "value": {
-                                  "value": "10557",
+                                  "value": "Baran",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "city": {
+                              "middleName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Realblood",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "state": {
+                              "lastName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Ozkan",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "country": {
-                                "value": {
-                                  "value": "Germany",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "tags": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "customKey",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "value": {
-                                        "value": {
-                                          "value": "customValue",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
                               }
                             },
                             "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "method": {
+                            "value": {
+                              "value": "CARD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -2090,116 +2086,96 @@
                     "destinationPaymentDetails": {
                       "value": {
                         "value": {
-                          "method": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "CHECK",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
-                            "value": {
-                              "value": "destinationPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "checkIdentifier": {
-                            "value": {
-                              "value": "destinationPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "name": {
-                            "value": {
-                              "value": "destinationPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "deliveryStatus": {
-                            "value": "COMPLETED",
+                          "cardIssuedCountry": {
+                            "value": "TR",
                             "type": "enum"
                           },
-                          "etaTimestamp": {
+                          "transactionReferenceField": {
                             "value": {
-                              "value": 1.1,
-                              "type": "double"
+                              "value": "Deposit",
+                              "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "shippingAddress": {
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
                             "properties": {
-                              "addressLines": {
-                                "value": [
-                                  {
-                                    "value": {
-                                      "value": {
-                                        "value": "Klara-Franke Str 20",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "type": "unknown"
-                                  }
-                                ],
-                                "type": "array"
-                              },
-                              "postcode": {
+                              "firstName": {
                                 "value": {
-                                  "value": "10557",
+                                  "value": "Baran",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "city": {
+                              "middleName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Realblood",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "state": {
+                              "lastName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Ozkan",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "country": {
-                                "value": {
-                                  "value": "Germany",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "tags": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "customKey",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "value": {
-                                        "value": {
-                                          "value": "customValue",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
                               }
                             },
                             "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "method": {
+                            "value": {
+                              "value": "CARD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -2564,6 +2540,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -2604,7 +2581,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Consumer User\n\n`/consumer/user` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\nEach consumer User entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system\n",
       "authed": true,
       "method": "POST",
@@ -3145,6 +3122,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3173,7 +3151,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "### GET Consumer User\n\n`/consumer/user` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).\n\nCalling `GET /consumer/user/{userId}` will return the entire user payload and rule execution results for the user with the corresponding `userId`",
       "authed": true,
       "method": "GET",
@@ -3813,6 +3791,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -3853,7 +3832,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Business User\n\n`/business/user` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)\n\nIn order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.\n\n### Payload\n\n\nEach consumer Business entity needs three mandatory fields:\n\n* `userId` - Unique identifier for the user\n* `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory\n* `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system",
       "authed": true,
       "method": "POST",
@@ -4260,6 +4239,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4288,7 +4268,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "### GET Business User\n\n`/business/user` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).\n\nCalling `GET /business/user/{userId}` will return the entire User payload and rule execution results for the User with the corresponding `userId`",
       "authed": true,
       "method": "GET",
@@ -5450,116 +5430,96 @@
                     {
                       "value": {
                         "value": {
-                          "method": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "CHECK",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "checkIdentifier": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "name": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "deliveryStatus": {
-                            "value": "COMPLETED",
+                          "cardIssuedCountry": {
+                            "value": "TR",
                             "type": "enum"
                           },
-                          "etaTimestamp": {
+                          "transactionReferenceField": {
                             "value": {
-                              "value": 1.1,
-                              "type": "double"
+                              "value": "Deposit",
+                              "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "shippingAddress": {
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
                             "properties": {
-                              "addressLines": {
-                                "value": [
-                                  {
-                                    "value": {
-                                      "value": {
-                                        "value": "Klara-Franke Str 20",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "type": "unknown"
-                                  }
-                                ],
-                                "type": "array"
-                              },
-                              "postcode": {
+                              "firstName": {
                                 "value": {
-                                  "value": "10557",
+                                  "value": "Baran",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "city": {
+                              "middleName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Realblood",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "state": {
+                              "lastName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Ozkan",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "country": {
-                                "value": {
-                                  "value": "Germany",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "tags": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "customKey",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "value": {
-                                        "value": {
-                                          "value": "customValue",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
                               }
                             },
                             "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "method": {
+                            "value": {
+                              "value": "CARD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -5685,6 +5645,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -5725,7 +5686,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Consumer User Events\n\n`/events/consumer/user` endpoint allows you to operate on the Consumer User Events entity.\n\nUser events are created after the initial `POST /consumer/users` call (which creates a user) and are used to:\n\n* Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field\n* Update the user details, using the `updatedConsumerUserAttributes` field.\n\n> If you have neither of the above two use cases, you do not need to use user events. \n\n### Payload\n\nEach user event needs three mandatory fields:\n\n* `timestamp`- the timestamp of when the event was created or occured in your system\n* `userId` - The ID of the transaction for which this event is generated. \n\nIn order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.\n",
       "authed": true,
       "method": "POST",
@@ -6431,6 +6392,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -6471,7 +6433,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "## POST Business User Events\n\n`/events/business/user` endpoint allows you to operate on the Business User Events entity.\n\nUser events are created after the initial `POST /business/users` call (which creates a user) and are used to:\n\n* Update the STATE and KYC Status of the user, using the `userStateDetails` or `kycStatusDetails` field\n* Update the user details, using the `updatedBusinessUserAttributes` field.\n\n> If you have neither of the above two use cases, you do not need to use user events. \n\n### Payload\n\nEach user event needs three mandatory fields:\n\n* `timestamp`- the timestamp of when the event was created or occured in your system\n* `userId` - The ID of the transaction for which this event is generated. \n\nIn order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.\n",
       "authed": true,
       "method": "POST",
@@ -7640,116 +7602,96 @@
                     {
                       "value": {
                         "value": {
-                          "method": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "CHECK",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "checkIdentifier": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "name": {
-                            "value": {
-                              "value": "savedPaymentDetails",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "deliveryStatus": {
-                            "value": "COMPLETED",
+                          "cardIssuedCountry": {
+                            "value": "TR",
                             "type": "enum"
                           },
-                          "etaTimestamp": {
+                          "transactionReferenceField": {
                             "value": {
-                              "value": 1.1,
-                              "type": "double"
+                              "value": "Deposit",
+                              "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "shippingAddress": {
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
                             "properties": {
-                              "addressLines": {
-                                "value": [
-                                  {
-                                    "value": {
-                                      "value": {
-                                        "value": "Klara-Franke Str 20",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "type": "unknown"
-                                  }
-                                ],
-                                "type": "array"
-                              },
-                              "postcode": {
+                              "firstName": {
                                 "value": {
-                                  "value": "10557",
+                                  "value": "Baran",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "city": {
+                              "middleName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Realblood",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "state": {
+                              "lastName": {
                                 "value": {
-                                  "value": "Berlin",
+                                  "value": "Ozkan",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "country": {
-                                "value": {
-                                  "value": "Germany",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "tags": {
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "value": {
-                                          "value": "customKey",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "value": {
-                                        "value": {
-                                          "value": "customValue",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      }
-                                    },
-                                    "type": "object"
-                                  }
-                                ],
-                                "type": "array"
                               }
                             },
                             "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "method": {
+                            "value": {
+                              "value": "CARD",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -7949,7 +7891,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Address": {
@@ -8124,7 +8066,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8181,7 +8124,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8204,7 +8148,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8255,7 +8200,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8278,7 +8224,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8301,7 +8248,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8324,7 +8272,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8507,7 +8456,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8558,7 +8508,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8722,7 +8673,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8773,7 +8725,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -8894,7 +8847,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8917,7 +8871,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8940,7 +8895,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9279,7 +9235,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9347,7 +9304,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9853,7 +9811,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10043,7 +10002,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10080,7 +10040,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10130,7 +10091,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10225,7 +10187,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10248,7 +10211,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10298,7 +10262,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10379,7 +10344,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10623,7 +10589,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10646,7 +10613,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10694,7 +10662,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10727,7 +10696,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10750,7 +10720,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10773,7 +10744,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10823,7 +10795,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11016,7 +10989,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11039,7 +11013,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11100,7 +11075,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11146,7 +11122,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11169,7 +11146,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11397,7 +11375,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11474,7 +11453,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11690,7 +11670,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11713,7 +11694,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11736,7 +11718,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11815,7 +11798,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11838,7 +11822,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11888,7 +11873,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11911,7 +11897,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12049,7 +12036,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12206,7 +12194,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12274,7 +12263,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12297,7 +12287,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12521,7 +12512,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12607,7 +12599,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12630,7 +12623,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12697,7 +12691,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12862,7 +12857,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13015,7 +13011,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13190,7 +13187,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13455,7 +13453,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13639,7 +13638,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13662,7 +13662,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13685,7 +13686,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13708,7 +13710,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13731,7 +13734,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13754,7 +13758,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13786,7 +13791,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13807,7 +13813,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13828,7 +13835,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13849,7 +13857,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13870,7 +13879,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13891,7 +13901,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13912,7 +13923,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13933,7 +13945,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -13954,7 +13967,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -14067,7 +14081,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -14251,7 +14266,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -14365,7 +14381,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -14386,7 +14403,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -14523,7 +14541,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -14662,7 +14681,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -15333,7 +15353,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -15407,7 +15428,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -16032,7 +16054,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -16241,7 +16264,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -16323,7 +16347,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -16471,7 +16496,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -16539,7 +16565,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -16555,7 +16582,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -16578,7 +16606,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -17007,7 +17036,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -19825,7 +19855,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19848,7 +19879,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19871,7 +19903,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19894,7 +19927,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -19933,7 +19967,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19956,7 +19991,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19979,7 +20015,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -20090,7 +20127,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

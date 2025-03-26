@@ -6,6 +6,7 @@
       "url": "https://a.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -35,6 +36,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -63,7 +65,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List information about all users",
       "authed": false,
       "method": "GET",
@@ -158,6 +160,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -186,7 +189,7 @@
           }
         }
       },
-      "server": [
+      "servers": [
         {
           "name": "user"
         }
@@ -280,6 +283,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -296,7 +300,7 @@
           }
         }
       },
-      "server": [
+      "servers": [
         {
           "name": "auth"
         }
@@ -350,7 +354,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

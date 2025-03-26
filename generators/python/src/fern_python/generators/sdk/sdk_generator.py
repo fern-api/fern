@@ -37,8 +37,8 @@ from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import (
-    BaseDependencyCusomConfig,
-    DependencyCusomConfig,
+    BaseDependencyCustomConfig,
+    DependencyCustomConfig,
     SDKCustomConfig,
 )
 from .environment_generators import (
@@ -47,6 +47,7 @@ from .environment_generators import (
     SingleBaseUrlEnvironmentGenerator,
 )
 from .error_generator.error_generator import ErrorGenerator
+from .v2.generator import PythonV2Generator
 
 
 class SdkGenerator(AbstractGenerator):
@@ -103,9 +104,11 @@ class SdkGenerator(AbstractGenerator):
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
                 project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
-            elif isinstance(value, DependencyCusomConfig):
+            elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
-                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                    dependency=AST.Dependency(
+                        name=dep, version=value.version, optional=value.optional, python=value.python
+                    )
                 )
 
         project.add_extra(custom_config.extras)
@@ -113,7 +116,7 @@ class SdkGenerator(AbstractGenerator):
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
                 project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
-            elif isinstance(bas_dep_value, BaseDependencyCusomConfig):
+            elif isinstance(bas_dep_value, BaseDependencyCustomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,
@@ -350,6 +353,12 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 ir=ir,
             )
+
+        # Finally, run the python-v2 generator.
+        pythonv2 = PythonV2Generator(
+            coordinator=generator_exec_wrapper,
+        )
+        pythonv2.run()
 
     def _generate_environments_base(
         self,

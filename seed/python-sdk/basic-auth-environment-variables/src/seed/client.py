@@ -20,7 +20,7 @@ class SeedBasicAuthEnvironmentVariables:
         The base url to use for requests from the client.
 
     username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    password : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -36,7 +36,7 @@ class SeedBasicAuthEnvironmentVariables:
 
     client = SeedBasicAuthEnvironmentVariables(
         username="YOUR_USERNAME",
-        password="YOUR_PASSWORD",
+        access_token="YOUR_ACCESS_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -46,20 +46,22 @@ class SeedBasicAuthEnvironmentVariables:
         *,
         base_url: str,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if username is None:
             raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
-        if password is None:
-            raise ApiError(body="The client must be instantiated be either passing in password or setting PASSWORD")
+        if access_token is None:
+            raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             username=username,
-            password=password,
+            access_token=access_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -80,7 +82,7 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         The base url to use for requests from the client.
 
     username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    password : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -96,7 +98,7 @@ class AsyncSeedBasicAuthEnvironmentVariables:
 
     client = AsyncSeedBasicAuthEnvironmentVariables(
         username="YOUR_USERNAME",
-        password="YOUR_PASSWORD",
+        access_token="YOUR_ACCESS_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -106,20 +108,22 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         *,
         base_url: str,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if username is None:
             raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
-        if password is None:
-            raise ApiError(body="The client must be instantiated be either passing in password or setting PASSWORD")
+        if access_token is None:
+            raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             username=username,
-            password=password,
+            access_token=access_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

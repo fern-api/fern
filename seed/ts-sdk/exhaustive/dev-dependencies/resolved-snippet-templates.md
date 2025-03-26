@@ -480,7 +480,7 @@ const client = new FiddleClient({
 });
 await client.endpoints.params.getWithAllowMultipleQuery({
   query: "query",
-  numer: 1,
+  number: 1,
 });
 
 ```
@@ -655,6 +655,18 @@ await client.endpoints.primitive.getAndReturnBase64(
 		"SGVsbG8gd29ybGQh"
 	}
 )
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.put.add("id");
 
 ```
 

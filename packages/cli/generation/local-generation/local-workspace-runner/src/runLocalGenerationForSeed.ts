@@ -59,7 +59,7 @@ export async function runLocalGenerationForSeed({
                               )
                           )
                         : undefined;
-                    const absolutePathToResolvedSnipppetTemplates = generatorInvocation.absolutePathToLocalOutput
+                    const absolutePathToResolvedSnippetTemplates = generatorInvocation.absolutePathToLocalOutput
                         ? AbsoluteFilePath.of(
                               join(
                                   generatorInvocation.absolutePathToLocalOutput,
@@ -95,11 +95,11 @@ export async function runLocalGenerationForSeed({
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
-                        absolutePathToResolvedSnipppetTemplates != null
+                        absolutePathToResolvedSnippetTemplates != null
                     ) {
                         await writeResolvedSnippetsJson({
                             absolutePathToLocalSnippetTemplateJSON,
-                            absolutePathToResolvedSnipppetTemplates,
+                            absolutePathToResolvedSnippetTemplates,
                             ir,
                             generatorInvocation
                         });
@@ -135,12 +135,12 @@ export async function runLocalGenerationForSeed({
 }
 
 export async function writeResolvedSnippetsJson({
-    absolutePathToResolvedSnipppetTemplates,
+    absolutePathToResolvedSnippetTemplates,
     absolutePathToLocalSnippetTemplateJSON,
     ir,
     generatorInvocation
 }: {
-    absolutePathToResolvedSnipppetTemplates: AbsoluteFilePath;
+    absolutePathToResolvedSnippetTemplates: AbsoluteFilePath;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath;
     ir: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -220,15 +220,15 @@ export async function writeResolvedSnippetsJson({
             } catch (err) {}
         }
     }
-    let resovledMd = "";
+    let resolvedMd = "";
     for (const snippet of snippets) {
-        resovledMd += `\`\`\`${generatorInvocation.language}
+        resolvedMd += `\`\`\`${generatorInvocation.language}
 ${snippet}
 \`\`\`
 \n\n`;
     }
-    if (resovledMd.length > 0) {
-        await writeFile(absolutePathToResolvedSnipppetTemplates, resovledMd);
+    if (resolvedMd.length > 0) {
+        await writeFile(absolutePathToResolvedSnippetTemplates, resolvedMd);
     }
 }
 

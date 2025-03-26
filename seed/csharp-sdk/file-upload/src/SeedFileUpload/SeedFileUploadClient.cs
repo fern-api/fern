@@ -1,12 +1,10 @@
 using SeedFileUpload.Core;
 
-#nullable enable
-
 namespace SeedFileUpload;
 
 public partial class SeedFileUploadClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedFileUploadClient(ClientOptions? clientOptions = null)
     {

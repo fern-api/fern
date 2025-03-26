@@ -5,6 +5,7 @@
       "url": "https://api.streamingtest.io"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -142,10 +143,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
       "authed": false,
       "method": "POST",
@@ -333,10 +335,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
       "authed": false,
       "method": "POST",
@@ -405,7 +408,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ChatFullResponse": {

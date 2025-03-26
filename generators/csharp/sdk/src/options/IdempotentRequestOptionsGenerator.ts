@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -28,7 +29,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
-        class_.addFields(this.baseOptionsGenerator.getIdepotentRequestOptionFields());
+        class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
         class_.addMethod(
             csharp.method({
                 name: "GetIdempotencyHeaders",

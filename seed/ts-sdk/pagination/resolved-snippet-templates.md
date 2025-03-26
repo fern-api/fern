@@ -5,10 +5,41 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.complex.search({
+  pagination: {
+    perPage: 1,
+    startingAfter: "starting_after",
+  },
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.users.listWithCursorPagination({
   page: 1,
   perPage: 1,
   startingAfter: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.users.listWithMixedTypeCursorPagination({
+  cursor: "cursor",
 });
 
 ```
@@ -40,6 +71,22 @@ const client = new SeedPaginationClient({
 await client.users.listWithOffsetPagination({
   page: 1,
   perPage: 1,
+  startingAfter: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.users.listWithDoubleOffsetPagination({
+  page: 1.1,
+  perPage: 1.1,
   startingAfter: "starting_after",
 });
 
@@ -128,6 +175,20 @@ const client = new SeedPaginationClient({
   token: "YOUR_TOKEN",
 });
 await client.users.listUsernames({
+  startingAfter: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.users.listUsernamesCustom({
   startingAfter: "starting_after",
 });
 

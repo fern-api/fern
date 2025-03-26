@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-sdk-group-name` alongside `x-fern-streaming`.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -91,10 +92,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/user/{userId}",
@@ -245,10 +247,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/user/{userId}",
@@ -313,7 +316,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

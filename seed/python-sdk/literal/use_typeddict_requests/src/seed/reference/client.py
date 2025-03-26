@@ -71,10 +71,13 @@ class ReferenceClient:
                 "query": query,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObjectParams, direction="write"
+                    object_=container_object,
+                    annotation=ContainerObjectParams,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
+                "ending": "$ending",
                 "context": "You're super wise",
             },
             request_options=request_options,
@@ -158,10 +161,13 @@ class AsyncReferenceClient:
                 "query": query,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObjectParams, direction="write"
+                    object_=container_object,
+                    annotation=ContainerObjectParams,
+                    direction="write",
                 ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
+                "ending": "$ending",
                 "context": "You're super wise",
             },
             request_options=request_options,

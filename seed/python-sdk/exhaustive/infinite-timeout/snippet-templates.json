@@ -6632,11 +6632,11 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "numer=$FERN_INPUT",
+                            "templateString": "number=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "numer",
+                                    "path": "number",
                                     "type": "payload"
                                 }
                             ],
@@ -6704,11 +6704,11 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "numer=$FERN_INPUT",
+                                "templateString": "number=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "QUERY",
-                                        "path": "numer",
+                                        "path": "number",
                                         "type": "payload"
                                     }
                                 ],
@@ -8449,6 +8449,130 @@
                                     {
                                         "location": "BODY",
                                         "path": null,
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{id}",
+            "method": "PUT",
+            "identifierOverride": "endpoint_endpoints/put.add"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedExhaustive"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.endpoints.put.add(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedExhaustive"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.endpoints.put.add(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "id=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "id",
                                         "type": "payload"
                                     }
                                 ],

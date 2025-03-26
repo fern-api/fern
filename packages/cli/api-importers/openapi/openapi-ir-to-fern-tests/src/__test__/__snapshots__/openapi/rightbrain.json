@@ -13,9 +13,34 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "message": "string",
-                  "reason": "INVALID_MEMBER",
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "INVALID_SUBJECT_TYPE",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "organizationInviteAlreadyExistsError": {
+                    "email_address": "email_address",
+                    "organization_id": "organization_id",
+                  },
+                  "reason": "ORGANIZATION_INVITE_ALREADY_EXISTS",
                 },
               },
             ],
@@ -29,11 +54,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "message": "message",
+                  "missingAuthenticationError": {},
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -90,6 +113,7 @@
               "path": "/ping",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -117,6 +141,7 @@
               "path": "/whoami",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2661,6 +2686,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -2675,6 +2701,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - UnprocessableEntityError
       examples:
@@ -2690,19 +2717,30 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
-          message: string
-          invalidMemberError: {}
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
+      - value:
+          message: message
+          invalidSubjectTypeError: {}
+          reason: INVALID_SUBJECT_TYPE
+      - value:
+          message: message
+          organizationInviteAlreadyExistsError:
+            organization_id: organization_id
+            email_address: email_address
+          reason: ORGANIZATION_INVITE_ALREADY_EXISTS
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
-          message: string
-          permissionCheckFailedError:
-            permission: permission
+          message: message
+          missingAuthenticationError: {}
+          reason: MISSING_AUTHENTICATION
   UnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -4273,6 +4311,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -4316,6 +4355,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -4369,6 +4409,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatConfig",
               },
               "source": {
@@ -4412,6 +4453,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -4450,11 +4492,20 @@ types:
               "request": {
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
-                  "project_id": "optional<string>",
+                  "project_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.Chat>",
               },
               "source": {
@@ -4511,6 +4562,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -4573,6 +4625,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -4645,6 +4698,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -4693,6 +4747,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocumentQueryResult>",
               },
               "source": {
@@ -4789,6 +4844,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatConfig",
               },
               "source": {
@@ -4847,6 +4903,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -4985,10 +5042,14 @@ service:
       request:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
-          project_id: optional<string>
+          project_id:
+            type: optional<string>
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: list<root.Chat>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5015,6 +5076,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5051,6 +5113,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5083,6 +5146,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatConfig
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5147,6 +5211,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatConfig
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5193,6 +5258,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5227,6 +5293,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5258,6 +5325,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5294,6 +5362,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5349,6 +5418,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5392,6 +5462,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -5550,6 +5621,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -5619,6 +5691,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -5684,6 +5757,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -5729,6 +5803,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CollectionStatsResponse",
               },
               "source": {
@@ -5799,6 +5874,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -5853,6 +5929,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -5900,6 +5977,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -5960,6 +6038,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -6026,6 +6105,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -6102,6 +6182,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -6159,13 +6240,25 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "show": "optional<root.CollectionChatShow>",
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChat",
               },
               "source": {
@@ -6225,13 +6318,25 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "title": "optional<string>",
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetCollection",
               },
               "source": {
@@ -6286,6 +6391,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -6328,6 +6434,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.AsyncJobResult",
               },
               "source": {
@@ -6417,11 +6524,17 @@ service:
         name: ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest
         query-parameters:
           title: optional<string>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetCollection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6468,6 +6581,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6506,6 +6620,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6550,6 +6665,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6589,6 +6705,7 @@ service:
       response:
         docs: Successful Response
         type: root.CollectionStatsResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6619,11 +6736,17 @@ service:
         name: ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest
         query-parameters:
           show: optional<root.CollectionChatShow>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChat
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6669,6 +6792,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6699,6 +6823,7 @@ service:
       response:
         docs: Successful Response
         type: root.AsyncJobResult
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6732,6 +6857,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6777,6 +6903,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6825,6 +6952,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6866,6 +6994,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6926,6 +7055,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -6973,6 +7103,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7109,6 +7240,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7155,6 +7287,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7223,6 +7356,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7279,6 +7413,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7351,6 +7486,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7386,6 +7522,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7421,6 +7558,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7463,6 +7601,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7509,6 +7648,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7549,6 +7689,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -7639,6 +7780,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7705,6 +7847,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -7744,6 +7887,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -7810,6 +7954,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -7851,6 +7996,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -7901,11 +8047,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -7966,11 +8116,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -8020,6 +8174,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -8054,10 +8209,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8096,6 +8254,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8163,6 +8322,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8191,10 +8351,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8239,6 +8402,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8282,6 +8446,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8314,6 +8479,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8344,6 +8510,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8427,6 +8594,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -8493,6 +8661,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -8532,6 +8701,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -8598,6 +8768,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -8639,6 +8810,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -8689,11 +8861,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -8754,11 +8930,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -8808,6 +8988,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -8842,10 +9023,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8885,6 +9069,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8952,6 +9137,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -8981,10 +9167,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9030,6 +9219,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9074,6 +9264,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9107,6 +9298,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9137,6 +9329,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9220,6 +9413,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -9286,6 +9480,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -9325,6 +9520,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -9391,6 +9587,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -9432,6 +9629,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -9482,11 +9680,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -9547,11 +9749,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -9601,6 +9807,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -9635,10 +9842,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9678,6 +9888,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9745,6 +9956,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9774,10 +9986,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9823,6 +10038,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9867,6 +10083,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9900,6 +10117,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9930,6 +10148,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10013,6 +10232,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10079,6 +10299,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -10118,6 +10339,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10184,6 +10406,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -10225,6 +10448,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -10275,11 +10499,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -10340,11 +10568,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -10394,6 +10626,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10428,10 +10661,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10471,6 +10707,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10538,6 +10775,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10567,10 +10805,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10615,6 +10856,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10659,6 +10901,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10692,6 +10935,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10722,6 +10966,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10805,6 +11050,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10871,6 +11117,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -10910,6 +11157,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10976,6 +11224,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -11017,6 +11266,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -11067,11 +11317,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -11132,11 +11386,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -11186,6 +11444,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -11220,10 +11479,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11263,6 +11525,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11330,6 +11593,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11359,10 +11623,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11407,6 +11674,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11451,6 +11719,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11484,6 +11753,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11514,6 +11784,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11597,6 +11868,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -11663,6 +11935,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -11702,6 +11975,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -11768,6 +12042,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -11809,6 +12084,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -11859,11 +12135,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -11924,11 +12204,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -11978,6 +12262,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -12012,10 +12297,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12055,6 +12343,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12122,6 +12411,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12151,10 +12441,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12200,6 +12493,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12244,6 +12538,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12277,6 +12572,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12307,6 +12603,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12390,6 +12687,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -12456,6 +12754,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -12495,6 +12794,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -12561,6 +12861,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -12602,6 +12903,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -12652,11 +12954,15 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -12717,11 +13023,15 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -12771,6 +13081,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -12805,10 +13116,13 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12848,6 +13162,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12915,6 +13230,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12944,10 +13260,13 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12993,6 +13312,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -13037,6 +13357,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -13070,6 +13391,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -13100,6 +13422,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13177,6 +13500,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DocumentStatusResponse",
               },
               "source": {
@@ -13216,6 +13540,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -13256,6 +13581,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocumentEmbeddingRecord",
               },
               "source": {
@@ -13306,12 +13632,24 @@ service:
               "request": {
                 "name": "DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChatDocumentEmbeddingRecord",
               },
               "source": {
@@ -13372,6 +13710,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocument",
               },
               "source": {
@@ -13437,10 +13776,37 @@ service:
               "request": {
                 "name": "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest",
                 "query-parameters": {
-                  "collection_id": "optional<string>",
-                  "connection_id": "optional<string>",
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "collection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "connection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                   "source": "optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
                   "strategy": "optional<string>",
                   "title": "optional<string>",
@@ -13448,6 +13814,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChatDocument",
               },
               "source": {
@@ -13500,6 +13867,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocumentQueryResult>",
               },
               "source": {
@@ -13578,6 +13946,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocument",
               },
               "source": {
@@ -13652,6 +14021,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocument>",
               },
               "source": {
@@ -13699,6 +14069,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -13759,6 +14130,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -13825,6 +14197,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -13901,6 +14274,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -13950,6 +14324,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DocumentStatusResponse",
               },
               "source": {
@@ -14103,17 +14478,29 @@ service:
       request:
         name: DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest
         query-parameters:
-          connection_id: optional<string>
+          connection_id:
+            type: optional<string>
+            validation:
+              format: uuid
           title: optional<string>
-          cursor: optional<string>
-          collection_id: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          collection_id:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 25
           source: >-
             optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
           strategy: optional<string>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocument
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14164,6 +14551,7 @@ service:
       response:
         docs: Successful Response
         type: root.DocumentStatusResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14204,6 +14592,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocument>
+        status-code: 200
       availability: deprecated
       errors:
         - root.BadRequestError
@@ -14246,6 +14635,7 @@ service:
       response:
         docs: Successful Response
         type: root.DocumentStatusResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14282,6 +14672,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14312,6 +14703,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocument
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14362,6 +14754,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocument
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14406,6 +14799,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14433,11 +14827,17 @@ service:
         name: >-
           DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest
         query-parameters:
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocumentEmbeddingRecord
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14475,6 +14875,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocumentEmbeddingRecord
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14506,6 +14907,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14547,6 +14949,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14607,6 +15010,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14654,6 +15058,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14748,6 +15153,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.OAuthClientCreateResponse",
               },
               "source": {
@@ -14799,6 +15205,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -14849,6 +15256,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.KratosWebhookResponse",
               },
               "source": {
@@ -14899,6 +15307,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.KratosWebhookResponse",
               },
               "source": {
@@ -14934,6 +15343,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14972,6 +15382,7 @@ service:
       response:
         docs: Successful Response
         type: root.OAuthClientCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -15002,6 +15413,7 @@ service:
       response:
         docs: Successful Response
         type: root.KratosWebhookResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15031,6 +15443,7 @@ service:
       response:
         docs: Successful Response
         type: root.KratosWebhookResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15178,6 +15591,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatModel>",
               },
               "source": {
@@ -15218,6 +15632,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatGuardrail>",
               },
               "source": {
@@ -15256,6 +15671,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatModel>
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -15365,6 +15781,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatGuardrail>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15440,6 +15857,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -15479,6 +15897,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationDomain",
               },
               "source": {
@@ -15525,6 +15944,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetOrganizationDomain",
               },
               "source": {
@@ -15577,6 +15997,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationDomain",
               },
               "source": {
@@ -15615,6 +16036,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -15680,6 +16102,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationInvite",
               },
               "source": {
@@ -15757,13 +16180,25 @@ service:
               "request": {
                 "name": "OrgInvitesListOrgOrgIdInviteGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "show": "optional<root.OrgInviteShow>",
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetOrganizationInvite",
               },
               "source": {
@@ -15805,6 +16240,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -15833,13 +16269,25 @@ service:
               "request": {
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "membership": "optional<root.OrgMembership>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -15899,6 +16347,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -15950,6 +16399,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -15993,6 +16443,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -16049,6 +16500,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -16111,6 +16563,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -16183,6 +16636,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -16312,6 +16766,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16348,6 +16803,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16403,6 +16859,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16446,6 +16903,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16473,11 +16931,17 @@ service:
         name: OrgListOrgGetRequest
         query-parameters:
           membership: optional<root.OrgMembership>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16504,6 +16968,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16528,6 +16993,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16562,6 +17028,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16588,6 +17055,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16616,11 +17084,17 @@ service:
         name: OrgInvitesListOrgOrgIdInviteGetRequest
         query-parameters:
           show: optional<root.OrgInviteShow>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetOrganizationInvite
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16662,6 +17136,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationInvite
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16707,6 +17182,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetOrganizationDomain
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16742,6 +17218,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationDomain
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16769,6 +17246,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationDomain
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16800,6 +17278,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -16876,6 +17355,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -16921,6 +17401,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -16980,6 +17461,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectWithDatasources",
               },
               "source": {
@@ -17033,6 +17515,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectConfig",
               },
               "source": {
@@ -17091,6 +17574,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -17155,6 +17639,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -17229,6 +17714,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -17279,11 +17765,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "name": "ListProjectOrgOrgIdProjectGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetProject",
               },
               "source": {
@@ -17338,6 +17828,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -17435,6 +17926,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectConfig",
               },
               "source": {
@@ -17491,6 +17983,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -17658,10 +18151,13 @@ service:
         name: ListProjectOrgOrgIdProjectGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetProject
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17699,6 +18195,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17728,6 +18225,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectWithDatasources
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17776,6 +18274,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17805,6 +18304,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectConfig
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17865,6 +18365,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectConfig
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17907,6 +18408,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17941,6 +18443,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -17979,6 +18482,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -18036,6 +18540,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -18081,6 +18586,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -18256,6 +18762,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -18291,6 +18798,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -18374,6 +18882,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -18430,11 +18939,15 @@ types:
                 "name": "ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -18466,6 +18979,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18500,6 +19014,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18541,6 +19056,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18580,10 +19096,13 @@ service:
         name: ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18710,6 +19229,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -18804,6 +19324,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTaskForwarder",
               },
               "source": {
@@ -18868,6 +19389,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -18960,6 +19482,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -19013,6 +19536,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -19088,6 +19612,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -19143,6 +19668,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -19213,6 +19739,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -19401,6 +19928,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -19547,6 +20075,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -19657,6 +20186,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTask",
               },
               "source": {
@@ -19739,6 +20269,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -19814,6 +20345,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskRun",
               },
               "source": {
@@ -19929,6 +20461,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTaskRun",
               },
               "source": {
@@ -20005,7 +20538,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "task_file": "optional<file>",
+                    "task_file": {
+                      "docs": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
+                      "type": "optional<file>",
+                    },
                     "task_input": {
                       "docs": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
                       "type": "map<string, unknown>",
@@ -20020,6 +20556,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskRun",
               },
               "source": {
@@ -20067,6 +20604,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -20127,6 +20665,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -20193,6 +20732,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -20269,6 +20809,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -20521,6 +21062,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTask
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -20653,6 +21195,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -20754,6 +21297,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -20887,6 +21431,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -20987,6 +21532,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -21060,11 +21606,16 @@ service:
                 `user_prompt` and cover any dynamic `{...}` parameters that are
                 referenced in the prompt. Not required if `image_required` is
                 set to `true` and there are no dynamic parameters in the prompt.
-            task_file: optional<file>
+            task_file:
+              type: optional<file>
+              docs: >-
+                Image file to be provided to the LLM, only required when
+                `image_required` is set to `true`.
         content-type: multipart/form-data
       response:
         docs: Successful Response
         type: root.TaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -21123,6 +21674,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -21163,6 +21715,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -21222,6 +21775,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -21269,6 +21823,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -21311,6 +21866,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.BadRequestError
@@ -21509,6 +22065,7 @@ types:
               "path": "/user",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -21558,6 +22115,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -21602,6 +22160,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -21631,6 +22190,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -21661,6 +22221,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -21688,6 +22249,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:

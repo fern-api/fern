@@ -29,6 +29,7 @@ import { PromiseUtilsImpl } from "./promise/PromiseUtilsImpl";
 import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
+import { WebsocketImpl } from "./websocket/WebsocketImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
 export declare namespace CoreUtilitiesManager {
@@ -57,7 +58,8 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport })
+            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport }),
+            websocket: new WebsocketImpl({ getReferenceToExport })
         };
     }
 

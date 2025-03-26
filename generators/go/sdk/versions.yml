@@ -1,3 +1,100 @@
+- version: 0.37.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the `go-v2` generator call prevented the `go` generator from succeeding
+        in remote code generation environments.
+  irVersion: 57
+- version: 0.37.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the primary Go files were not being written due to README.md generation.
+  irVersion: 57
+- version: 0.37.0
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv57.
+    - type: feat
+      summary: >-
+        Add support for automatic `README.md` generation.
+  irVersion: 57
+- version: 0.36.5
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where `map` values were not correctly serialized as deep object query parameters.
+  irVersion: 53
+- version: 0.36.4
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the `go-v2` generator call prevented the `go` generator from succeeding
+        in remote code generation environments.
+  irVersion: 53
+- version: 0.36.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the version header specified by the user wasn't being used.
+  irVersion: 53
+- version: 0.36.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix cursor pagination stopping condition when the cursor types do not
+        match (e.g. a `*string` cursor type with a `string` next cursor type).
+  irVersion: 53
+- version: 0.36.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix offset pagination method generation for non-integer offset parameters (e.g. `float64`).
+  irVersion: 53
+- version: 0.36.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Adds support for a few new configuration options, all of which are shown below:
+
+        ```yaml
+        - name: fern-api/fern-go-sdk
+          version: 0.36.0
+          config:
+            packageLayout: flat
+            clientName: Acme
+            clientConstructorName: New
+        ```
+
+        With this, the generated SDK will all be deposited at the root of the module, and
+        the client can be constructed like so:
+
+        ```go
+        package main
+
+        import (
+          "context"
+          "fmt"
+          "log"
+          acme "github.com/acme/acme-go"
+        )
+
+        func main() {
+          client := acme.New()
+          response, err := client.GetUser(
+            context.Background(),
+            &acme.GetUserRequest{
+              ID: "85307b0b-094b-41b5-b61d-347ca15e5da2",
+            },
+          )
+          if err != nil {
+            log.Fatal(err)
+          }
+          fmt.Println(response)
+        }
+        ```
+  irVersion: 53
 - version: 0.35.2
   changelogEntry:
     - type: fix
@@ -272,7 +369,7 @@
       summary: Fix literal value deserialization.
       changed:
         - >-
-          Updates object and undisriminated union deserialization to return an
+          Updates object and undiscriminated union deserialization to return an
           error whenever any literal values do not exist or are mismatched.
   irVersion: 40
 - version: 0.23.0
@@ -535,7 +632,7 @@
     - type: fix
       summary: Support boolean literals.
     - type: fix
-      summary: Union subt-ypes with no properties are now go 1.13 compatible.
+      summary: Union subtypes with no properties are now go 1.13 compatible.
   irVersion: 28
 - version: 0.9.0
   createdAt: '2023-10-31'

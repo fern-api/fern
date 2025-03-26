@@ -40,7 +40,7 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummmy: "dummy"
+          dummy: "dummy"
       outputFolder: noScripts
     - customConfig:
         useBrandedStringAliases: true
@@ -62,76 +62,76 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
-    # - customConfig: null
-    #   outputFolder: no-custom-config
-    # - customConfig: null
-    #   audiences:
-    #     - audience1
-    #     - audience2
-    #   outputFolder: with-audiences
-    # - customConfig:
-    #     noSerdeLayer: true
-    #   outputFolder: no-serde-layer
-    # - customConfig:
-    #     useBrandedStringAliases: true
-    #     neverThrowErrors: true
-    #     namespaceExport: "Fiddle"
-    #     bundle: true
-    #     includeUtilsOnUnionMembers: true
-    #     includeOtherInUnionTypes: true
-    #     extraDependencies:
-    #       lodash-es: "^4.17.21"
-    #   outputFolder: bundle
-    # - customConfig:
-    #     useBrandedStringAliases: true
-    #     neverThrowErrors: true
-    #     namespaceExport: "Fiddle"
-    #     bundle: true
-    #     includeUtilsOnUnionMembers: true
-    #     includeOtherInUnionTypes: true
-    #     extraDependencies:
-    #       lodash-es: "^4.17.21"
-    #     packageJson:
-    #       version: "0.0.2"
-    #       dependencies:
-    #         stream: "^0.0.2"
-    #         qs: "^6.11.2"
-    #       files:
-    #         - exampleFile
-    #         - dist
-    #       browser:
-    #         command-exists: false
-    #         execa: false
-    #   outputFolder: custom-package-json
-    # - customConfig:
-    #     retainOriginalCasing: true
-    #   outputFolder: retain-original-casing
-    # - customConfig:
-    #     allowExtraFields: true
-    #   outputFolder: allow-extra-fields
-    # - customConfig:
-    #     useBrandedStringAliases: true
-    #     neverThrowErrors: true
-    #     namespaceExport: "Fiddle"
-    #     bundle: true
-    #     includeUtilsOnUnionMembers: true
-    #     includeOtherInUnionTypes: true
-    #     extraDependencies:
-    #       lodash-es: "^4.17.21"
-    #     extraDevDependencies:
-    #       jest: "^29.7.0"
-    #     extraPeerDependencies:
-    #       "openai": "^4.47.1"
-    #     extraPeerDependenciesMeta:
-    #       "openai":
-    #         optional: true
-    #   outputFolder: dev-dependencies
-    # - outputFolder: jsr
-    #   customConfig:
-    #     publishToJsr: true
-    # - outputFolder: bigint
-    #   customConfig:
-    #     useBigInt: true
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - audience1
+        - audience2
+      outputFolder: with-audiences
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
+    - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+          lodash-es: "^4.17.21"
+      outputFolder: bundle
+    - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+          lodash-es: "^4.17.21"
+        packageJson:
+          version: "0.0.2"
+          dependencies:
+            stream: "^0.0.2"
+            qs: "^6.11.2"
+          files:
+            - exampleFile
+            - dist
+          browser:
+            command-exists: false
+            execa: false
+      outputFolder: custom-package-json
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+          lodash-es: "^4.17.21"
+        extraDevDependencies:
+          jest: "^29.7.0"
+        extraPeerDependencies:
+          "openai": "^4.47.1"
+        extraPeerDependenciesMeta:
+          "openai":
+            optional: true
+      outputFolder: dev-dependencies
+    - outputFolder: jsr
+      customConfig:
+        publishToJsr: true
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true
     - outputFolder: bigint-no-serde-layer
       customConfig:
         useBigInt: true
@@ -153,7 +153,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
-      outputFolder: file-download-reponse-headers
+      outputFolder: file-download-response-headers
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -260,8 +260,6 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - cross-package-type-names
-  - auth-environment-variables
-  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences:no-custom-config

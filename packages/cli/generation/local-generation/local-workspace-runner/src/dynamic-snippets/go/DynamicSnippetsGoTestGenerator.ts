@@ -8,7 +8,8 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertIr } from "../utils/convertIr";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
@@ -19,8 +20,7 @@ export class DynamicSnippetsGoTestGenerator {
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // TODO: Remove the any cast once the dynamic IR is updated w/ nullable support.
-            ir: this.ir as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            ir: convertIr(this.ir),
             config: this.generatorConfig
         });
     }

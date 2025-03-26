@@ -13,13 +13,17 @@ export function toPageNode({
     page,
     parentSlug,
     idgen,
-    markdownFilesToFullSlugs
+    markdownFilesToFullSlugs,
+    markdownFilesToNoIndex,
+    hideChildren
 }: {
     docsWorkspace: DocsWorkspace;
     page: docsYml.DocsNavigationItem.Page;
     parentSlug: FernNavigation.V1.SlugGenerator;
     idgen: NodeIdGenerator;
     markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>;
+    markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>;
+    hideChildren?: boolean;
 }): FernNavigation.V1.PageNode {
     const pageId = FernNavigation.V1.PageId(toRelativeFilepath(docsWorkspace, page.absolutePath));
     const pageSlug = parentSlug.apply({
@@ -33,8 +37,8 @@ export function toPageNode({
         title: page.title,
         slug: pageSlug.get(),
         icon: page.icon,
-        hidden: page.hidden,
-        noindex: page.noindex,
+        hidden: hideChildren || page.hidden,
+        noindex: page.noindex || markdownFilesToNoIndex.get(page.absolutePath),
         authed: undefined,
         viewers: page.viewers,
         orphaned: page.orphaned,

@@ -1,12 +1,10 @@
 using SeedServerSentEvents.Core;
 
-#nullable enable
-
 namespace SeedServerSentEvents;
 
 public partial class SeedServerSentEventsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedServerSentEventsClient(ClientOptions? clientOptions = null)
     {

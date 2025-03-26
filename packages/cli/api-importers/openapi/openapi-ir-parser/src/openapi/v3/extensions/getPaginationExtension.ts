@@ -20,6 +20,11 @@ declare namespace Raw {
         step: string | undefined;
         "has-next-page": string | undefined;
     }
+
+    export interface CustomPaginationExtensionSchema {
+        type: "custom";
+        results: string;
+    }
 }
 
 export function convertPaginationExtension(
@@ -33,14 +38,22 @@ export function convertPaginationExtension(
             results: maybeCursorPagination.results
         });
     }
-
-    const maybeOffsetPagination = pagination as Raw.OffsetPaginationExtensionSchema;
-    return Pagination.offset({
-        offset: maybeOffsetPagination.offset,
-        results: maybeOffsetPagination.results,
-        step: maybeOffsetPagination.step,
-        hasNextPage: maybeOffsetPagination["has-next-page"]
-    });
+    if ("offset" in pagination) {
+        const offsetPagination = pagination as Raw.OffsetPaginationExtensionSchema;
+        return Pagination.offset({
+            offset: offsetPagination.offset,
+            results: offsetPagination.results,
+            step: offsetPagination.step,
+            hasNextPage: offsetPagination["has-next-page"]
+        });
+    }
+    if ("type" in pagination && pagination.type === "custom") {
+        const customPagination = pagination as Raw.CustomPaginationExtensionSchema;
+        return Pagination.custom({
+            results: customPagination.results
+        });
+    }
+    throw new Error("Invalid pagination extension");
 }
 
 export function getFernPaginationExtension(
@@ -52,7 +65,7 @@ export function getFernPaginationExtension(
         return undefined;
     }
     if (typeof pagination === "boolean") {
-        // The endpoint is tryning to leverage the gloabl config, grab extension from global
+        // The endpoint is trying to leverage the global config, grab extension from global
         const topLevelPagination = getExtension<Raw.PaginationExtensionSchema>(
             document,
             FernOpenAPIExtension.PAGINATION

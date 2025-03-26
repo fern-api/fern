@@ -9,8 +9,10 @@ use Seed\Core\Types\ArrayType;
 class TraceResponsesPageV2 extends JsonSerializableType
 {
     /**
-     * @var ?int $offset If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
+     * If present, use this to load subsequent pages.
+     * The offset is the id of the next trace response to load.
+     *
+     * @var ?int $offset
      */
     #[JsonProperty('offset')]
     public ?int $offset;
@@ -23,8 +25,8 @@ class TraceResponsesPageV2 extends JsonSerializableType
 
     /**
      * @param array{
-     *   offset?: ?int,
      *   traceResponses: array<TraceResponseV2>,
+     *   offset?: ?int,
      * } $values
      */
     public function __construct(
@@ -32,5 +34,13 @@ class TraceResponsesPageV2 extends JsonSerializableType
     ) {
         $this->offset = $values['offset'] ?? null;
         $this->traceResponses = $values['traceResponses'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

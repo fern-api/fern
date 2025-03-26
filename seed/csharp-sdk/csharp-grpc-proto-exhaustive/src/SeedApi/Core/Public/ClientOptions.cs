@@ -3,8 +3,6 @@ using System.Net.Http;
 using Grpc.Net.Client;
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class ClientOptions

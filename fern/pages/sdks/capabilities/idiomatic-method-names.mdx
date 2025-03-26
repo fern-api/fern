@@ -3,8 +3,8 @@ title: Idiomatic Method Names
 description: Fine-tune SDK resources and method names
 ---
 
-Fern allows you to fine-tune your SDK method and group names so that 
-your SDK reads exactly how you want it to. For example, instead of 
+Fern allows you to fine-tune your SDK method and group names so that
+your SDK reads exactly how you want it to. For example, instead of
 `client.postUsers` you can configure the SDK to read `client.users.create()`.
 
 <CodeBlocks>
@@ -16,7 +16,7 @@ your SDK reads exactly how you want it to. For example, instead of
   <CodeBlock title="Python">
     ```python
     response = client.users.create()
-    # or async 
+    # or async
     response = await async_client.users.create()
     ```
   </CodeBlock>
@@ -32,8 +32,8 @@ your SDK reads exactly how you want it to. For example, instead of
   </CodeBlock>
 </CodeBlocks>
 
-Groups can also be arbitrarily nested. For example, if you want to nest the `users` 
-endpoints under an `admin` group, the SDK would then read: 
+Groups can also be arbitrarily nested. For example, if you want to nest the `users`
+endpoints under an `admin` group, the SDK would then read:
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">
@@ -44,8 +44,8 @@ endpoints under an `admin` group, the SDK would then read:
   <CodeBlock title="Python">
     ```python
     response = client.admin.users.create()
-    # or async 
-    response = await async_client.amdin.users.create()
+    # or async
+    response = await async_client.admin.users.create()
     ```
   </CodeBlock>
   <CodeBlock title="Java">
@@ -61,13 +61,13 @@ endpoints under an `admin` group, the SDK would then read:
 </CodeBlocks>
 
 <Note>
-See how merge.dev uses nested groups [here](https://github.com/merge-api/merge-node-client?tab=readme-ov-file#create-link-token). 
+See how merge.dev uses nested groups [here](https://github.com/merge-api/merge-node-client?tab=readme-ov-file#create-link-token).
 </Note>
 
 If you're using an OpenAPI Specification, you'll need to leverage the [`x-fern-sdk-method-name`](/learn/api-definition/openapi/extensions#sdk-method-names)
-extension. If you're using the fern definition, then the method name comes from the endpoint directly. 
+extension. If you're using the fern definition, then the method name comes from the endpoint directly.
 
 ## Casing
 
-Additionally, Fern handles choosing the appropriate casing for each SDK 
-language: `snake_case` in python, `camelCase` in TypeScript and `PascalCase` in Go, etc. 
+Additionally, Fern handles choosing the appropriate casing for each SDK
+language: `snake_case` in python, `camelCase` in TypeScript and `PascalCase` in Go, etc.

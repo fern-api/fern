@@ -5,6 +5,7 @@
       "url": "https://api.airtop.ai/v1"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -70,7 +71,7 @@
       ],
       "generatedRequestName": "AuthAndRedirectRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Auth and redirect sessions by ID",
       "authed": false,
       "method": "GET",
@@ -144,10 +145,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get extensions, searching by name",
       "authed": false,
       "method": "GET",
@@ -374,10 +376,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/extensions",
@@ -589,7 +592,7 @@
       "headers": [],
       "generatedRequestName": "ExtensionsDeleteRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Delete an extension by ID",
       "authed": false,
       "method": "DELETE",
@@ -669,6 +672,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -727,7 +731,7 @@
           "examples": []
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get an extension by ID",
       "authed": false,
       "method": "GET",
@@ -982,10 +986,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get profiles, searching by name or tags",
       "authed": false,
       "method": "GET",
@@ -1225,10 +1230,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/profiles",
@@ -1480,7 +1486,7 @@
       "headers": [],
       "generatedRequestName": "ProfilesDeleteRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Delete profiles matching query",
       "authed": false,
       "method": "DELETE",
@@ -1559,6 +1565,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1617,7 +1624,7 @@
           "examples": []
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a profile by ID",
       "authed": false,
       "method": "GET",
@@ -1957,6 +1964,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2015,7 +2023,7 @@
           "examples": []
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a list of sessions by ID",
       "authed": false,
       "method": "GET",
@@ -2338,10 +2346,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/sessions",
@@ -2655,6 +2664,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2713,7 +2723,7 @@
           "examples": []
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a session by ID",
       "authed": false,
       "method": "GET",
@@ -3018,7 +3028,7 @@
       "headers": [],
       "generatedRequestName": "SessionsTerminateRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
       "authed": false,
       "method": "DELETE",
@@ -3106,7 +3116,8 @@
                     "audiences": [],
                     "conflict": {},
                     "generatedName": "sessionsEventsResponseStatusData",
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "key": "id",
@@ -3180,7 +3191,8 @@
                     "audiences": [],
                     "conflict": {},
                     "generatedName": "sessionsEventsResponseErrorData",
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "key": "id",
@@ -3253,6 +3265,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingSse"
       },
       "errors": {
@@ -3311,7 +3324,7 @@
           "examples": []
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a session event stream for a given session ID",
       "authed": false,
       "method": "GET",
@@ -3338,22 +3351,8 @@
               {
                 "value": {
                   "value": {
-                    "event": {
-                      "value": {
-                        "value": "error",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "event": {
                           "value": {
                             "value": "event",
@@ -3361,12 +3360,23 @@
                           },
                           "type": "primitive"
                         },
-                        "message": {
+                        "eventTimeMillis": {
                           "value": {
-                            "value": "message",
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
                             "type": "string"
                           },
                           "type": "primitive"
+                        },
+                        "status": {
+                          "value": "awaiting_capacity",
+                          "type": "enum"
                         }
                       },
                       "type": "object"
@@ -3382,6 +3392,13 @@
                       "value": {
                         "value": 1,
                         "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "event": {
+                      "value": {
+                        "value": "status",
+                        "type": "string"
                       },
                       "type": "primitive"
                     }
@@ -3541,10 +3558,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/sessions/{sessionId}/windows/{windowId}/get-window-info",
@@ -3817,10 +3835,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/sessions/{sessionId}/windows/{windowId}/prompt-content",
@@ -4103,10 +4122,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/sessions/{sessionId}/windows/{windowId}/scrape-content",
@@ -4427,10 +4447,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/sessions/{sessionId}/windows/{windowId}/summarize-content",
@@ -4639,7 +4660,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ClientProvidedResponseMetadata": {
@@ -4997,7 +5018,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5038,7 +5060,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5128,7 +5151,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5195,7 +5219,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -5409,7 +5434,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5514,7 +5540,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5646,7 +5673,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5687,7 +5715,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6030,7 +6059,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6071,7 +6101,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6235,7 +6266,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6265,7 +6297,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6306,7 +6339,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6406,7 +6440,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6741,7 +6776,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6832,7 +6868,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6931,7 +6968,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6997,7 +7035,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7038,7 +7077,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7094,7 +7134,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7151,7 +7192,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7192,7 +7234,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7495,7 +7538,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7536,7 +7580,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

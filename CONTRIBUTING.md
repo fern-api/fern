@@ -105,7 +105,7 @@ To build a CLI that communicates with Fern's development cloud environment, run 
 Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
 ```sh
-FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjsn <args>
+FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjs <args>
 ```
 
 <br>
@@ -121,7 +121,7 @@ in the generator.
 
 ### Generator Testing
 
-**Note**: Please make sure that the docker daemon is running before running commands below. 
+**Note**: Please make sure that the docker daemon is running before running commands below.
 
 To test our generators we have built a CLI called seed.
 

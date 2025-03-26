@@ -1,13 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using SeedIdempotencyHeaders.Core;
-
-#nullable enable
 
 namespace SeedIdempotencyHeaders;
 
 public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 {
+    /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    Headers IRequestOptions.Headers { get; init; } = new();
+
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
@@ -19,6 +24,12 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     public HttpClient? HttpClient { get; init; }
 
     /// <summary>
+    /// Additional headers to be sent with the request.
+    /// Headers previously set with matching keys will be overwritten.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get; init; } = [];
+
+    /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public int? MaxRetries { get; init; }
@@ -28,14 +39,21 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     /// </summary>
     public TimeSpan? Timeout { get; init; }
 
+    /// <summary>
+    /// Additional query parameters sent with the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get; init; } =
+        Enumerable.Empty<KeyValuePair<string, string>>();
+
+    /// <summary>
+    /// Additional body properties sent with the request.
+    /// This is only applied to JSON requests.
+    /// </summary>
+    public object? AdditionalBodyProperties { get; init; }
+
     public string IdempotencyKey { get; init; }
 
     public int IdempotencyExpiration { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
 
     Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
     {

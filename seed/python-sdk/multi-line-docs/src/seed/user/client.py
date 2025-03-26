@@ -61,7 +61,11 @@ class UserClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_user(
-        self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        age: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Create a new user.
@@ -73,11 +77,9 @@ class UserClient:
             The name of the user to create.
             This name is unique to each user.
 
-
         age : typing.Optional[int]
             The age of the user.
-            This propery is not required.
-
+            This property is not required.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,7 +180,11 @@ class AsyncUserClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_user(
-        self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        age: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Create a new user.
@@ -190,11 +196,9 @@ class AsyncUserClient:
             The name of the user to create.
             This name is unique to each user.
 
-
         age : typing.Optional[int]
             The age of the user.
-            This propery is not required.
-
+            This property is not required.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

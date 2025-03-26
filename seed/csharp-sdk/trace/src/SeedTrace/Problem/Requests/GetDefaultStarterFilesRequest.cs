@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public record GetDefaultStarterFilesRequest
@@ -25,6 +23,7 @@ public record GetDefaultStarterFilesRequest
     [JsonPropertyName("methodName")]
     public required string MethodName { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

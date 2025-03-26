@@ -1,43 +1,63 @@
-imports: 
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/fern.json
+
+imports:
   commons: commons.yml
   types: types.yml
 
-types:  
-  ConjureService: 
-    extends: 
+types:
+  ConjureService:
+    extends:
       - commons.WithDocs
-    properties: 
+    properties:
       name: optional<string>
       package: optional<string>
       base-path: optional<string>
-      endpoints: optional<map<string, ConjureEndpoint>>
-  
-  ConjureEndpoint: 
-    extends: 
+      default-auth: optional<ConjureAuthDefinition>
+      endpoints: optional<map<string, ConjureEndpointDefinition>>
+
+  # https://github.com/palantir/conjure/blob/master/conjure.schema.json#L414C6-L414C24
+  ConjureEndpointDefinition:
+    extends:
       - commons.WithDocs
-    properties: 
-      http: 
+    properties:
+      http:
         type: string
         docs: The method and path (e.g. GET /users)
-      args: 
+        validation:
+          pattern: "^(GET|DELETE|POST|PUT) .*$"
+      auth: optional<ConjureAuthDefinition>
+      args:
         type: optional<map<string, ConjureArgument>>
       returns: optional<types.ConjureTypeReference>
-  
-  ConjureArgument: 
+
+  ConjureAuthDefinition:
     discriminated: false
-    union: 
+    union:
+      - ConjureAuthDefinitionType
+      - type: string
+        validation:
+          pattern: "^cookie:[a-zA-Z0-9]+$"
+
+  ConjureAuthDefinitionType:
+    enum:
+      - none
+      - header
+
+  ConjureArgument:
+    discriminated: false
+    union:
       - string
       - ConjureArgumentWithParamType
-  
-  ConjureArgumentWithParamType: 
-    extends: 
+
+  ConjureArgumentWithParamType:
+    extends:
       - commons.WithDocs
-    properties: 
+    properties:
       param-type: ConjureParamType
       type: string
-  
-  ConjureParamType: 
-    enum: 
+
+  ConjureParamType:
+    enum:
       - path
       - query
       - body

@@ -83,8 +83,8 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 
 
 def _should_retry(response: httpx.Response) -> bool:
-    retriable_400s = [429, 408, 409]
-    return response.status_code >= 500 or response.status_code in retriable_400s
+    retryable_400s = [429, 408, 409]
+    return response.status_code >= 500 or response.status_code in retryable_400s
 
 
 def remove_omit_from_dict(
@@ -181,7 +181,7 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -267,7 +267,7 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
@@ -357,7 +357,7 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
@@ -443,7 +443,7 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)

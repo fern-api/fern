@@ -4,6 +4,7 @@
 
 package resources.users;
 
+import java.lang.Double;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
+import resources.users.types.ListUsersMixedTypePaginationResponse;
 import resources.users.types.ListUsersPaginationResponse;
 import resources.users.types.Order;
 import resources.users.types.UsernameContainer;
@@ -37,6 +39,13 @@ public interface UsersService {
 
   @PostMapping(
       value = "",
+      produces = "application/json"
+  )
+  ListUsersMixedTypePaginationResponse listWithMixedTypeCursorPagination(
+      @RequestParam("cursor") Optional<String> cursor);
+
+  @PostMapping(
+      value = "",
       produces = "application/json",
       consumes = "application/json"
   )
@@ -49,6 +58,16 @@ public interface UsersService {
   )
   ListUsersPaginationResponse listWithOffsetPagination(@RequestParam("page") Optional<Integer> page,
       @RequestParam("per_page") Optional<Integer> perPage,
+      @RequestParam("order") Optional<Order> order,
+      @RequestParam("starting_after") Optional<String> startingAfter);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  ListUsersPaginationResponse listWithDoubleOffsetPagination(
+      @RequestParam("page") Optional<Double> page,
+      @RequestParam("per_page") Optional<Double> perPage,
       @RequestParam("order") Optional<Order> order,
       @RequestParam("starting_after") Optional<String> startingAfter);
 
@@ -94,6 +113,13 @@ public interface UsersService {
       produces = "application/json"
   )
   UsernameCursor listUsernames(@RequestParam("starting_after") Optional<String> startingAfter);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  UsernameCursor listUsernamesCustom(
+      @RequestParam("starting_after") Optional<String> startingAfter);
 
   @GetMapping(
       value = "",

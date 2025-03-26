@@ -3,10 +3,7 @@ title: WebSockets
 description: Send and receive messages over WebSockets
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
-  or [email us](mailto:support@buildwithfern.com) to get started. 
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
 Fern's SDKs support sending and receiving messages over WebSockets. You can specify 
 your WebSocket API Definition by using [AsyncAPI](https://www.asyncapi.com/en) or 
@@ -22,81 +19,111 @@ the Fern Definition.
       See below for how to specify the contract for your WebSocket channel 
       using AsyncAPI.
 
-      ```yaml maxLines={0}
-          asyncapi: 2.6.0
-          info:
-            title: Chat API
-            version: 1.1.2
-          servers:
-            production:
-              host: wss.chat.com
-          channels:
-            /:
-              bindings:
-                ws:
-                  query:
-                    type: object
-                    properties:
-                      channel_id:
-                        type: string
-                        description: Unique identifier assigned to the channel
-              publish:
-                description: Send messages to the WebSocket
-                operationId: sendMessage
-                message:
-                  oneOf:
-                    - $ref: "#/components/messages/SendChat"
-              subscribe:
-                description: Receive messages from the WebSocket
-                operationId: receiveMessage
-                message:
-                  oneOf:
-                    - $ref: "#/components/messages/ReceiveChat"
-          components:
-            messages:
-              SendChat:
-                summary: Action triggered when the channel receives a new reaction-added event
-                payload:
-                  $ref: '#/components/schemas/SendChat'
-              ReceiveChat:
-                summary: Action triggered when a successful WebSocket connection is established
-                payload:
-                  $ref: '#/components/schemas/ReceiveChat'
-          schemas:
-            SendChat:
-              type: object
-              properties:
-                message:
-                  type: string
-            ReceiveChat:
-              type: object
-              properties:
-                message:
-                  type: string
-          ```
+```yaml maxLines={0}
+asyncapi: 2.6.0
+info:
+  title: Chat API
+  version: 1.1.2
+servers:
+  production:
+    host: wss.chat.com
+channels:
+  /:
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            channel_id:
+              type: string
+              description: Unique identifier assigned to the channel
+    publish:
+      description: Send messages to the WebSocket
+      operationId: sendMessage
+      message:
+        oneOf:
+          - $ref: "#/components/messages/SendChat"
+    subscribe:
+      description: Receive messages from the WebSocket
+      operationId: receiveMessage
+      message:
+        oneOf:
+          - $ref: "#/components/messages/ReceiveChat"
+components:
+  messages:
+    SendChat:
+      summary: Action triggered when the channel receives a new reaction-added event
+      payload:
+        $ref: '#/components/schemas/SendChat'
+    ReceiveChat:
+      summary: Action triggered when a successful WebSocket connection is established
+      payload:
+        $ref: '#/components/schemas/ReceiveChat'
+  schemas:
+    SendChat:
+      type: object
+      properties:
+        message:
+          type: string
+    ReceiveChat:
+      type: object
+      properties:
+        message:
+          type: string
+```
     </Accordion>
 
     <Accordion title="Fern Definition">
-      If you have a Fern Definition, you can specify your websocket in 
-      a yaml file. See the example in `chat.yml` below:
+      If you have a Fern Definition, you can specify your WebSocket in 
+      a YML file. See the example in `chat.yml` below:
 
       <CodeBlocks>
         <CodeBlock title="chat.yml">
           ```yaml maxLines={0}
-          channel: 
-            query-parameters: 
-              channel_id: 
-                type: string
-                docs: Unique identifier assigned to the channel
-            messages: 
-              send: 
-                payload: 
-                  message: 
-                    type: string
-                    docs: The message to send over the WebSocket
-              receive: 
-                payload: 
-                  message: string
+          channel:
+            path: /chat
+            auth: false
+            query-parameters:
+              model_id:
+                type: optional<string>
+                docs: The unique identifier of the model.
+              model_version:
+                type: optional<integer>
+                docs: The version number of the model.
+            messages:
+              publish:
+                origin: client
+                body: PublishEvent
+              subscribe:
+                origin: server
+                body: SubscribeEvent
+            examples: 
+              - query-parameters: 
+                  model_id: "123"
+                messages: 
+                  - type: publish
+                    body:
+                      text: "Hello, world."
+                  - type: subscribe
+                    body: 
+                      id: "23823049"
+                      message: "Hello there, how are you?"
+          types:
+            PublishEvent:
+              docs: The input from the user to send through the WebSocket. 
+              properties: 
+                text: 
+                  type: string
+                  docs: The user text to send into the conversation. 
+            SubscribeEvent:
+              docs: The response from the server sent through the WebSocket.
+              properties: 
+                id: 
+                  type: string
+                  docs: The id of the message. 
+                message:
+                  type: string
+                  docs: The message sent through the socket. 
           ```
         </CodeBlock>
       </CodeBlocks>

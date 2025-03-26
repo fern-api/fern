@@ -61,6 +61,7 @@ export class Class extends AstNode {
         writer.write(":");
         writer.newLine();
 
+        writer.indent();
         if (this.docs != null) {
             writer.write('"""');
             writer.write(this.docs);
@@ -68,7 +69,6 @@ export class Class extends AstNode {
         }
         writer.writeNewLineIfLastLineNot();
 
-        writer.indent();
         this.fields.forEach((field) => {
             field.write(writer);
             writer.writeNewLineIfLastLineNot();

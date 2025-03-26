@@ -1,12 +1,10 @@
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public partial class SeedEnumClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedEnumClient(ClientOptions? clientOptions = null)
     {
@@ -31,6 +29,7 @@ public partial class SeedEnumClient
         InlinedRequest = new InlinedRequestClient(_client);
         PathParam = new PathParamClient(_client);
         QueryParam = new QueryParamClient(_client);
+        Unknown = new UnknownClient(_client);
     }
 
     public InlinedRequestClient InlinedRequest { get; init; }
@@ -38,4 +37,6 @@ public partial class SeedEnumClient
     public PathParamClient PathParam { get; init; }
 
     public QueryParamClient QueryParam { get; init; }
+
+    public UnknownClient Unknown { get; init; }
 }

@@ -26,7 +26,7 @@ service:
       path: /just-file
       method: POST
       request:
-        name: JustFileRequet
+        name: JustFileRequest
         body:
           properties:
             file: file
@@ -35,7 +35,7 @@ service:
       path: /just-file-with-query-params
       method: POST
       request:
-        name: JustFileWithQueryParamsRequet
+        name: JustFileWithQueryParamsRequest
         query-parameters:
           maybeString: optional<string>
           integer: integer
@@ -67,6 +67,23 @@ service:
             foo_bar:
               type: optional<MyObject>
               content-type: application/json
+
+    withFormEncoding:
+      path: "/with-form-encoding"
+      method: POST
+      request:
+        name: WithFormEncodingRequest
+        body:
+          properties:
+            file:
+              type: file
+              content-type: application/octet-stream
+            foo: 
+              type: string
+              style: form
+            bar:
+              type: MyObject
+              style: form            
 
 types:
   Id: string

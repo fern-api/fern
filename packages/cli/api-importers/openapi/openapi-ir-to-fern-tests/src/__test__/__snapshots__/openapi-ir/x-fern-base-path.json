@@ -10,6 +10,7 @@
       "url": "https://api.acme.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -24,7 +25,7 @@
       "headers": [],
       "generatedRequestName": "GetExampleRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/example",
@@ -44,7 +45,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

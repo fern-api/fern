@@ -1,10 +1,7 @@
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "..";
-import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import { AstNode } from "./AstNode";
-import { DocXmlWriter } from "./DocXmlWriter";
 
 type Alias = string;
 type Namespace = string;
@@ -68,8 +65,13 @@ export class Writer extends AbstractWriter {
         }
     }
 
-    public addNamespaceAlias(alias: string, namespace: string): void {
+    public addNamespaceAlias(alias: string, namespace: string): string {
+        const set = new Set<Alias>(Object.values(this.namespaceAliases));
+        while (set.has(alias)) {
+            alias = "_" + alias;
+        }
         this.namespaceAliases[alias] = namespace;
+        return alias;
     }
 
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
@@ -101,9 +103,7 @@ export class Writer extends AbstractWriter {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
-    #nullable enable
-
-    ${this.buffer}`;
+${this.buffer}`;
             }
         }
         return this.buffer;

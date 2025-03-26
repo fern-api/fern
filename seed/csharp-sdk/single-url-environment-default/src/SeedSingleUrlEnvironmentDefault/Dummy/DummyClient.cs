@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedSingleUrlEnvironmentDefault.Core;
 
-#nullable enable
-
 namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class DummyClient
@@ -16,29 +14,29 @@ public partial class DummyClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Dummy.GetDummyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetDummyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "dummy",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "dummy",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -52,10 +50,13 @@ public partial class DummyClient
             }
         }
 
-        throw new SeedSingleUrlEnvironmentDefaultApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedSingleUrlEnvironmentDefaultApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

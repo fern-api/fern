@@ -1002,6 +1002,7 @@ API endpoints",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -1059,6 +1060,7 @@ API endpoints",
               },
               "response": {
                 "docs": "A Val",
+                "status-code": 200,
                 "type": "AliasValResponse",
               },
               "source": {
@@ -1270,6 +1272,7 @@ service:
       response:
         docs: Default Response
         type: root.User
+        status-code: 200
       examples:
         - path-parameters:
             username: username
@@ -1299,6 +1302,7 @@ service:
       response:
         docs: A Val
         type: AliasValResponse
+        status-code: 200
       examples:
         - path-parameters:
             username: username
@@ -1497,6 +1501,7 @@ types:
               },
               "response": {
                 "docs": "Binary contents of the returned file",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -1533,6 +1538,7 @@ types:
               },
               "response": {
                 "docs": "List of blobs that you’ve stored",
+                "status-code": 200,
                 "type": "list<BlobListingItem>",
               },
               "source": {
@@ -1634,6 +1640,7 @@ service:
       response:
         docs: List of blobs that you’ve stored
         type: list<BlobListingItem>
+        status-code: 200
       examples:
         - response:
             body:
@@ -1654,6 +1661,7 @@ service:
       response:
         docs: Binary contents of the returned file
         type: file
+        status-code: 200
     store:
       path: /v1/blob/{key}
       method: POST
@@ -1777,6 +1785,7 @@ docs: Blobs
               },
               "response": {
                 "docs": "Successfully sent email",
+                "status-code": 200,
                 "type": "EmailsSendResponse",
               },
               "source": {
@@ -1992,6 +2001,7 @@ service:
       response:
         docs: Successfully sent email
         type: EmailsSendResponse
+        status-code: 200
       errors:
         - root.InternalServerError
       examples:
@@ -2105,6 +2115,7 @@ give access to details and data from the requesting user.",
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "MeCommentsResponse",
               },
               "source": {
@@ -2137,6 +2148,7 @@ give access to details and data from the requesting user.",
               "path": "/v1/me",
               "response": {
                 "docs": "Your user information, with tier and email included",
+                "status-code": 200,
                 "type": "MeGetResponse",
               },
               "source": {
@@ -2219,6 +2231,7 @@ give access to details and data from the requesting user.",
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "MeLikesResponse",
               },
               "source": {
@@ -2300,6 +2313,7 @@ give access to details and data from the requesting user.",
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "MeReferencesResponse",
               },
               "source": {
@@ -2881,6 +2895,7 @@ service:
       response:
         docs: Your user information, with tier and email included
         type: MeGetResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -2919,6 +2934,7 @@ service:
       response:
         docs: A paginated result set
         type: MeLikesResponse
+        status-code: 200
       examples:
         - query-parameters:
             offset: 1
@@ -2982,6 +2998,7 @@ service:
       response:
         docs: A paginated result set
         type: MeCommentsResponse
+        status-code: 200
       examples:
         - query-parameters:
             offset: 1
@@ -3036,6 +3053,7 @@ service:
       response:
         docs: A paginated result set
         type: MeReferencesResponse
+        status-code: 200
       examples:
         - query-parameters:
             offset: 1
@@ -3163,6 +3181,7 @@ imports:
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "SearchValsResponse",
               },
               "source": {
@@ -3234,6 +3253,7 @@ service:
       response:
         docs: A paginated result set
         type: SearchValsResponse
+        status-code: 200
       examples:
         - query-parameters:
             offset: 1
@@ -3329,6 +3349,7 @@ docs: Search
               },
               "response": {
                 "docs": "Array of results from the statements executed",
+                "status-code": 200,
                 "type": "list<root.ResultSet>",
               },
               "source": {
@@ -3412,6 +3433,7 @@ docs: Search
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.ResultSet",
               },
               "source": {
@@ -3611,6 +3633,7 @@ service:
       response:
         docs: Default Response
         type: root.ResultSet
+        status-code: 200
       examples:
         - name: example1
           request:
@@ -3658,6 +3681,7 @@ service:
       response:
         docs: Array of results from the statements executed
         type: list<root.ResultSet>
+        status-code: 200
       examples:
         - request:
             statements:
@@ -3723,6 +3747,7 @@ docs: SQLite
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -3814,6 +3839,7 @@ docs: SQLite
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "UsersValsResponse",
               },
               "source": {
@@ -3859,6 +3885,7 @@ service:
       response:
         docs: Default Response
         type: root.User
+        status-code: 200
       examples:
         - path-parameters:
             user_id: user_id
@@ -3901,6 +3928,7 @@ service:
       response:
         docs: A paginated result set
         type: UsersValsResponse
+        status-code: 200
       examples:
         - path-parameters:
             user_id: user_id
@@ -3991,6 +4019,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
+                "status-code": 200,
                 "type": "ValsCancelResponse",
               },
               "source": {
@@ -4091,6 +4120,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.ExtendedVal",
               },
               "source": {
@@ -4200,6 +4230,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 201,
                 "type": "root.ExtendedVal",
               },
               "source": {
@@ -4296,6 +4327,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "optional<EvalGetResponse>",
               },
               "source": {
@@ -4361,6 +4393,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "optional<EvalPostResponse>",
               },
               "source": {
@@ -4413,6 +4446,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.ExtendedVal",
               },
               "source": {
@@ -4503,6 +4537,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "Default Response",
+                "status-code": 200,
                 "type": "root.ExtendedVal",
               },
               "source": {
@@ -4579,6 +4614,7 @@ let you get, create, and run vals.",
               },
               "response": {
                 "docs": "A paginated result set",
+                "status-code": 200,
                 "type": "ValsListResponse",
               },
               "source": {
@@ -5110,6 +5146,7 @@ service:
       response:
         docs: Default Response
         type: optional<EvalPostResponse>
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:
@@ -5143,6 +5180,7 @@ service:
       response:
         docs: Default Response
         type: optional<EvalGetResponse>
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:
@@ -5241,6 +5279,7 @@ service:
       response:
         docs: Default Response
         type: root.ExtendedVal
+        status-code: 200
       examples:
         - request:
             code: console.log(1);
@@ -5311,6 +5350,7 @@ service:
       response:
         docs: Default Response
         type: root.ExtendedVal
+        status-code: 200
       examples:
         - path-parameters:
             val_id: val_id
@@ -5431,6 +5471,7 @@ service:
       response:
         docs: A paginated result set
         type: ValsListResponse
+        status-code: 200
       examples:
         - path-parameters:
             val_id: val_id
@@ -5495,6 +5536,7 @@ service:
       response:
         docs: Default Response
         type: root.ExtendedVal
+        status-code: 201
       examples:
         - path-parameters:
             val_id: val_id
@@ -5558,6 +5600,7 @@ service:
       response:
         docs: Default Response
         type: root.ExtendedVal
+        status-code: 200
       examples:
         - path-parameters:
             val_id: val_id
@@ -5627,6 +5670,7 @@ service:
           The evaluation_id was successfully searched for and the evaluation was
           either already done or now has been cancelled
         type: ValsCancelResponse
+        status-code: 200
       errors:
         - root.NotFoundError
       examples:
@@ -5669,9 +5713,9 @@ docs: |-
 error-discrimination:
   strategy: status-code
 display-name: Val Town API
-default-environment: Production
 environments:
   Production: https://api.val.town
+default-environment: Production
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

@@ -39,6 +39,7 @@ type PageRequest[Cursor comparable] struct {
 type PageResponse[Cursor comparable, Result any] struct {
 	Results []Result
 	Next    Cursor
+	Done    bool
 }
 
 // PageRequestFunc prepares the *CallParams from the given page request.
@@ -117,8 +118,7 @@ func (p *Pager[
 	return &core.Page[Results]{
 		Results: pageResponse.Results,
 		NextPageFunc: func(ctx context.Context) (*core.Page[Results], error) {
-			var next Cursor
-			if pageResponse.Next == next {
+			if pageResponse.Done {
 				return nil, core.ErrNoPages
 			}
 			return p.GetPage(ctx, pageResponse.Next)

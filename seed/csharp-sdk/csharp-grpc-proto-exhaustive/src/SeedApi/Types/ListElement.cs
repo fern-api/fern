@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -19,9 +17,9 @@ public record ListElement
     /// <summary>
     /// Maps the ListElement type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.ListElement ToProto()
+    internal ProtoDataV1Grpc.ListElement ToProto()
     {
-        var result = new Proto.ListElement();
+        var result = new ProtoDataV1Grpc.ListElement();
         if (Id != null)
         {
             result.Id = Id ?? "";
@@ -32,7 +30,7 @@ public record ListElement
     /// <summary>
     /// Returns a new ListElement type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static ListElement FromProto(Proto.ListElement value)
+    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
     {
         return new ListElement { Id = value.Id };
     }

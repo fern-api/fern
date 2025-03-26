@@ -142,16 +142,24 @@ types:
     extends: InlinedRequestBodyProperty
     properties:
       contentType: optional<string>
+      style: optional<FileUploadBodyPropertyEncoding>
+  FileUploadBodyPropertyEncoding:
+    enum:
+      - exploded
+      - json
+      - form
   FileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
   FilePropertySingle:
+    extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
   FilePropertyArray:
+    extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
@@ -237,7 +245,7 @@ types:
 
   TextResponse:
     extends: commons.WithDocs
-  
+
   BytesResponse:
     extends: commons.WithDocs
 
@@ -280,6 +288,7 @@ types:
     union:
       cursor: CursorPagination
       offset: OffsetPagination
+      custom: CustomPagination
 
   CursorPagination:
     docs: |
@@ -309,6 +318,17 @@ types:
         docs: |
           The step size used to increment the page offset between every new page.
         type: optional<RequestProperty>
+
+  CustomPagination:
+    docs: |
+      Pagination where the SDK author is responsible for implementing the pagination
+      logic in the SDK.
+    properties:
+      results:
+        docs: |
+          The response property is used to determine the results response type
+          generated in the endpoint.
+        type: ResponseProperty
 
   # shared properties
   RequestPropertyValue:

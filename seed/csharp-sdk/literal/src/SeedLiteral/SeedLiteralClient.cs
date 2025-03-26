@@ -1,12 +1,10 @@
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public partial class SeedLiteralClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
@@ -14,7 +12,7 @@ public partial class SeedLiteralClient
             new Dictionary<string, string>()
             {
                 { "X-API-Version", "02-02-2024" },
-                { "X-API-Enable-Audit-Logging", true.ToString() },
+                { "X-API-Enable-Audit-Logging", "true" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLiteral" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -22,6 +20,14 @@ public partial class SeedLiteralClient
             }
         );
         clientOptions ??= new ClientOptions();
+        if (clientOptions.Version != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.Version;
+        }
+        if (clientOptions.AuditLogging != null)
+        {
+            defaultHeaders["X-API-Enable-Audit-Logging"] = clientOptions.AuditLogging.ToString();
+        }
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))

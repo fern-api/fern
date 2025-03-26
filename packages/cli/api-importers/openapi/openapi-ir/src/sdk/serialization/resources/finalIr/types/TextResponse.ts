@@ -7,10 +7,15 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithStatusCode } from "../../commons/types/WithStatusCode";
 
 export const TextResponse: core.serialization.ObjectSchema<serializers.TextResponse.Raw, FernOpenapiIr.TextResponse> =
-    core.serialization.objectWithoutOptionalProperties({}).extend(WithDescription).extend(WithSource);
+    core.serialization
+        .objectWithoutOptionalProperties({})
+        .extend(WithDescription)
+        .extend(WithSource)
+        .extend(WithStatusCode);
 
 export declare namespace TextResponse {
-    export interface Raw extends WithDescription.Raw, WithSource.Raw {}
+    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {}
 }

@@ -18,8 +18,13 @@ public final class SpringGeneratorContext
                 ir,
                 generatorConfig,
                 customConfig,
-                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix()),
+                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix(), customConfig.packageLayout()),
                 resolvedAuthSchemes);
+    }
+
+    @Override
+    public GeneratorType getType() {
+        return GeneratorType.SPRING;
     }
 
     @Override

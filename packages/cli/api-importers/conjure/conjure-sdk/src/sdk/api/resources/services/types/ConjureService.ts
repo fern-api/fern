@@ -8,5 +8,6 @@ export interface ConjureService extends FernConjure.WithDocs {
     name: string | undefined;
     package: string | undefined;
     basePath: string | undefined;
-    endpoints: Record<string, FernConjure.ConjureEndpoint> | undefined;
+    defaultAuth: FernConjure.ConjureAuthDefinition | undefined;
+    endpoints: Record<string, FernConjure.ConjureEndpointDefinition> | undefined;
 }

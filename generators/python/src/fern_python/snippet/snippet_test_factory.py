@@ -92,7 +92,7 @@ class SnippetTestFactory:
 
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
-    def _enviroment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
+    def _environment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
         args = [AST.Expression(f'"{self.TEST_URL_ENVVAR}"'), AST.Expression('"base_url"')]
         os_get = AST.Expression(
             AST.FunctionInvocation(
@@ -149,7 +149,7 @@ class SnippetTestFactory:
             _kwargs.append(
                 (
                     "environment",
-                    AST.Expression(self._enviroment(self._generated_environment)),
+                    AST.Expression(self._environment(self._generated_environment)),
                 )
             )
 
@@ -277,6 +277,9 @@ class SnippetTestFactory:
                 ),
                 optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
                 if item_type.optional is not None
+                else None,
+                nullable=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.nullable)
+                if item_type.nullable is not None
                 else None,
                 map_=lambda map_type: (
                     "dict",

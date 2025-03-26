@@ -37,7 +37,7 @@ import {
     ErrorNode,
     InlinedRequestPropertiesNode,
     InlinedRequestQueryParametersNode,
-    InlinedWebhookPayloadProperiesNode,
+    InlinedWebhookPayloadPropertiesNode,
     ServiceId,
     SubpackageId,
     TypeId,
@@ -52,7 +52,7 @@ export class IrGraph {
     private properties: Record<TypeId, TypePropertiesNode> = {};
     private queryParameters: Record<EndpointId, InlinedRequestQueryParametersNode> = {};
     private requestProperties: Record<EndpointId, InlinedRequestPropertiesNode> = {};
-    private webhookProperties: Record<WebhookId, InlinedWebhookPayloadProperiesNode> = {};
+    private webhookProperties: Record<WebhookId, InlinedWebhookPayloadPropertiesNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private webhooks: Record<WebhookId, WebhookNode> = {};

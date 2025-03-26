@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public partial class QueryClient
@@ -16,8 +14,7 @@ public partial class QueryClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Query.SendAsync(
     ///     new SendLiteralsInQueryRequest
     ///     {
@@ -32,8 +29,7 @@ public partial class QueryClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
         RequestOptions? options = null,
@@ -44,8 +40,8 @@ public partial class QueryClient
         _query["prompt"] = request.Prompt.ToString();
         _query["alias_prompt"] = request.AliasPrompt.ToString();
         _query["query"] = request.Query;
-        _query["stream"] = request.Stream.ToString();
-        _query["alias_stream"] = request.AliasStream.ToString();
+        _query["stream"] = JsonUtils.Serialize(request.Stream);
+        _query["alias_stream"] = JsonUtils.Serialize(request.AliasStream);
         if (request.OptionalPrompt != null)
         {
             _query["optional_prompt"] = request.OptionalPrompt.ToString();
@@ -56,26 +52,30 @@ public partial class QueryClient
         }
         if (request.OptionalStream != null)
         {
-            _query["optional_stream"] = request.OptionalStream.ToString();
+            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream.Value);
         }
         if (request.AliasOptionalStream != null)
         {
-            _query["alias_optional_stream"] = request.AliasOptionalStream.ToString();
+            _query["alias_optional_stream"] = JsonUtils.Serialize(
+                request.AliasOptionalStream.Value
+            );
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "query",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "query",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -86,10 +86,13 @@ public partial class QueryClient
             }
         }
 
-        throw new SeedLiteralApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedLiteralApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

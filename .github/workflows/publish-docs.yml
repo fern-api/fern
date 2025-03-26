@@ -1,7 +1,6 @@
-name: publish-docs
+name: Publish Docs
 
 on:
-  workflow_dispatch:  # Added manual trigger
   push:
     paths:
       - "fern/**"
@@ -11,12 +10,10 @@ on:
 
 jobs:
   run:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install

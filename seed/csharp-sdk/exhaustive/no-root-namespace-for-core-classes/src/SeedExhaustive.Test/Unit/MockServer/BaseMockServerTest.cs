@@ -5,8 +5,6 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [SetUpFixture]

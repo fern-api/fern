@@ -45,7 +45,7 @@ export async function convertMarkdown({
     return {
         mintlifyFrontmatter: data,
         relativeFilepathFromRoot,
-        sidebarTitle: data.sidebarTitle ?? data.title,
+        sidebarTitle: data.sidebarTitle ?? data.title ?? "Introduction",
         frontmatter: {
             title: data.title,
             subtitle: data.description,

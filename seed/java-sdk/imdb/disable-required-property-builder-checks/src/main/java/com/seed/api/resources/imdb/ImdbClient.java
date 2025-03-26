@@ -30,14 +30,14 @@ public class ImdbClient {
     }
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      */
     public String createMovie(CreateMovieRequest request) {
         return createMovie(request, null);
     }
 
     /**
-     * Add a movie to the database
+     * Add a movie to the database using the movies/* /... path.
      */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -57,6 +57,7 @@ public class ImdbClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -92,6 +93,7 @@ public class ImdbClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

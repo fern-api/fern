@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.InlinedRequest.SendAsync(\n    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);\n"
             }
         },
@@ -33,7 +33,7 @@
                 "identifier_override": "endpoint_query-param.send"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendAsync(\n    new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
             }
         },
@@ -45,8 +45,8 @@
                 "identifier_override": "endpoint_query-param.sendList"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [null],\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [Color.Red],\n    }\n);\n"
             }
         }
     ]

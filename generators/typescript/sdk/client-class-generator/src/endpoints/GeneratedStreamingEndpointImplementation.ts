@@ -105,7 +105,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         context: SdkContext;
     }): ts.Node[] {
         const responseVariableName = "response";
-        const itemVaribaleName = "item";
+        const itemVariableName = "item";
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -126,7 +126,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(itemVaribaleName),
+                            ts.factory.createIdentifier(itemVariableName),
                             undefined,
                             undefined,
                             undefined
@@ -144,7 +144,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                     ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
-                                [ts.factory.createIdentifier(itemVaribaleName)]
+                                [ts.factory.createIdentifier(itemVariableName)]
                             )
                         )
                     ],

@@ -14274,7 +14274,7 @@
                             },
                             "allowMultiple": false,
                             "availability": null,
-                            "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                            "docs": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                         },
                         {
                             "name": {
@@ -16795,7 +16795,7 @@
                                 },
                                 "allowMultiple": false,
                                 "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                                "docs": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                             },
                             "propertyPath": null
                         },
@@ -16929,7 +16929,7 @@
                             },
                             "allowMultiple": false,
                             "availability": null,
-                            "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                            "docs": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                         },
                         {
                             "name": {
@@ -19450,7 +19450,7 @@
                                 },
                                 "allowMultiple": false,
                                 "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                                "docs": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                             },
                             "propertyPath": null
                         },

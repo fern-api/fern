@@ -4,13 +4,11 @@ using SeedCrossPackageTypeNames.FolderB;
 using SeedCrossPackageTypeNames.FolderC;
 using SeedCrossPackageTypeNames.FolderD;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames;
 
 public partial class SeedCrossPackageTypeNamesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedCrossPackageTypeNamesClient(ClientOptions? clientOptions = null)
     {

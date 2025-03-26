@@ -13,6 +13,7 @@ export * from "./EnumTypeDeclaration";
 export * from "./EnumValue";
 export * from "./ObjectTypeDeclaration";
 export * from "./ObjectProperty";
+export * from "./ObjectPropertyAccess";
 export * from "./UnionTypeDeclaration";
 export * from "./SingleUnionType";
 export * from "./SingleUnionTypeProperties";

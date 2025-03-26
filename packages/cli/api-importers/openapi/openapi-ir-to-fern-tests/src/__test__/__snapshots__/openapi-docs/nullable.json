@@ -55,6 +55,7 @@
               },
               "response": {
                 "docs": "User created successfully",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -108,6 +109,7 @@
               },
               "response": {
                 "docs": "User retrieved successfully",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -160,6 +162,7 @@
               },
               "response": {
                 "docs": "User updated successfully",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -246,6 +249,7 @@
       response:
         docs: User created successfully
         type: User
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -280,6 +284,7 @@
       response:
         docs: User updated successfully
         type: User
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -313,6 +318,7 @@
       response:
         docs: User retrieved successfully
         type: User
+        status-code: 200
       examples:
         - path-parameters:
             userId: userId

@@ -49,7 +49,7 @@ module SeedMultiLineDocsClient
     # @param name [String] The name of the user to create.
     #  This name is unique to each user.
     # @param age [Integer] The age of the user.
-    #  This propery is not required.
+    #  This property is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [SeedMultiLineDocsClient::User::User]
     # @example
@@ -119,7 +119,7 @@ module SeedMultiLineDocsClient
     # @param name [String] The name of the user to create.
     #  This name is unique to each user.
     # @param age [Integer] The age of the user.
-    #  This propery is not required.
+    #  This property is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [SeedMultiLineDocsClient::User::User]
     # @example

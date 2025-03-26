@@ -2,6 +2,7 @@ export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./core/Writer";
 export { Enum } from "./Enum";
 export { Field } from "./Field";
+export { File } from "././File";
 export { Func } from "./Func";
 export { FuncInvocation } from "./FuncInvocation";
 export { GoTypeReference } from "./GoTypeReference";

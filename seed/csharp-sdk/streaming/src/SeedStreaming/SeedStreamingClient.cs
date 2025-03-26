@@ -1,12 +1,10 @@
 using SeedStreaming.Core;
 
-#nullable enable
-
 namespace SeedStreaming;
 
 public partial class SeedStreamingClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedStreamingClient(ClientOptions? clientOptions = null)
     {

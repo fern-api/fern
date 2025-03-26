@@ -5,6 +5,7 @@ package com.seed.literal.resources.query;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
+import com.seed.literal.core.QueryStringMapper;
 import com.seed.literal.core.RequestOptions;
 import com.seed.literal.core.SeedLiteralApiException;
 import com.seed.literal.core.SeedLiteralException;
@@ -34,33 +35,44 @@ public class QueryClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("query");
-        httpUrl.addQueryParameter("prompt", request.getPrompt());
+        QueryStringMapper.addQueryParameter(httpUrl, "prompt", request.getPrompt(), false);
         if (request.getOptionalPrompt().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optional_prompt", request.getOptionalPrompt().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optional_prompt", request.getOptionalPrompt().get(), false);
         }
-        httpUrl.addQueryParameter("alias_prompt", request.getAliasPrompt());
+        QueryStringMapper.addQueryParameter(httpUrl, "alias_prompt", request.getAliasPrompt(), false);
         if (request.getAliasOptionalPrompt().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "alias_optional_prompt", request.getAliasOptionalPrompt().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "alias_optional_prompt",
+                    request.getAliasOptionalPrompt().get(),
+                    false);
         }
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("stream", request.getStream().toString());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "stream", request.getStream().toString(), false);
         if (request.getOptionalStream().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optional_stream", request.getOptionalStream().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "optional_stream",
+                    request.getOptionalStream().get().toString(),
+                    false);
         }
-        httpUrl.addQueryParameter("alias_stream", request.getAliasStream().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "alias_stream", request.getAliasStream().toString(), false);
         if (request.getAliasOptionalStream().isPresent()) {
-            httpUrl.addQueryParameter(
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
                     "alias_optional_stream",
-                    request.getAliasOptionalStream().get().toString());
+                    request.getAliasOptionalStream().get().toString(),
+                    false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

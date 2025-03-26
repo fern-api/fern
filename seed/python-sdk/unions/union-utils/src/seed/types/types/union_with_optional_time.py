@@ -20,31 +20,49 @@ class _Factory:
         else:
             return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))  # type: ignore
 
-    def dateimte(self, value: typing.Optional[dt.datetime]) -> UnionWithOptionalTime:
+    def datetime(self, value: typing.Optional[dt.datetime]) -> UnionWithOptionalTime:
         if IS_PYDANTIC_V2:
-            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Datetime(type="datetime", value=value))  # type: ignore
         else:
-            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Datetime(type="datetime", value=value))  # type: ignore
 
 
 class UnionWithOptionalTime(UniversalRootModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from seed.types import UnionWithOptionalTime_Date
+
+    UnionWithOptionalTime_Date(
+        value=datetime.date.fromisoformat(
+            "1994-01-01",
+        )
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte],
+            typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Datetime]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte],
+            typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Datetime]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -56,13 +74,13 @@ class UnionWithOptionalTime(UniversalRootModel):
     def visit(
         self,
         date: typing.Callable[[typing.Optional[dt.date]], T_Result],
-        dateimte: typing.Callable[[typing.Optional[dt.datetime]], T_Result],
+        datetime: typing.Callable[[typing.Optional[dt.datetime]], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "date":
             return date(unioned_value.value)
-        if unioned_value.type == "dateimte":
-            return dateimte(unioned_value.value)
+        if unioned_value.type == "datetime":
+            return datetime(unioned_value.value)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -86,8 +104,8 @@ class _UnionWithOptionalTime:
                 frozen = True
                 smart_union = True
 
-    class Dateimte(UniversalBaseModel):
-        type: typing.Literal["dateimte"] = "dateimte"
+    class Datetime(UniversalBaseModel):
+        type: typing.Literal["datetime"] = "datetime"
         value: typing.Optional[dt.datetime] = None
 
         if IS_PYDANTIC_V2:

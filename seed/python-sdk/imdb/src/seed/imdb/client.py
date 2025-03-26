@@ -21,10 +21,14 @@ class ImdbClient:
         self._client_wrapper = client_wrapper
 
     def create_movie(
-        self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        title: str,
+        rating: float,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MovieId:
         """
-        Add a movie to the database
+        Add a movie to the database using the movies/* /... path.
 
         Parameters
         ----------
@@ -76,7 +80,12 @@ class ImdbClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    def get_movie(
+        self,
+        movie_id: MovieId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Movie:
         """
         Parameters
         ----------
@@ -136,10 +145,14 @@ class AsyncImdbClient:
         self._client_wrapper = client_wrapper
 
     async def create_movie(
-        self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        title: str,
+        rating: float,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MovieId:
         """
-        Add a movie to the database
+        Add a movie to the database using the movies/* /... path.
 
         Parameters
         ----------
@@ -199,7 +212,12 @@ class AsyncImdbClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    async def get_movie(
+        self,
+        movie_id: MovieId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Movie:
         """
         Parameters
         ----------

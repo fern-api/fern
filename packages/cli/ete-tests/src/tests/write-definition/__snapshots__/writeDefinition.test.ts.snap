@@ -71,6 +71,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: root.Pets
       source:
         openapi: openapi/openapi.yml
@@ -93,6 +94,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: root.Pet
       source:
         openapi: openapi/openapi.yml
@@ -178,6 +180,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: root.Pets
       source:
         openapi: openapi/openapi.yml
@@ -200,6 +203,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: root.Pet
       source:
         openapi: openapi/openapi.yml
@@ -207,6 +211,271 @@ service:
     openapi: openapi/openapi.yml
 ",
     "name": "pets.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate multi no endpoint > multiple-no-endpoint 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+display-name: Test API
+environments:
+  Dev: http://dev.api.com
+  Prod: http://prod.api.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate multi no endpoint asyncapi > multiple-no-endpoint-async 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Dev:
+    urls:
+      Base: http://dev.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+    "name": "testChannel.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+    "name": "testChannel2.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate multi with endpoint > multiple-with-endpoint 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+      url: Debug
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Dev:
+    urls:
+      Base: http://dev.api.com
+      Debug: http://debug.api.com
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate multi with endpoint async > multiple-with-endpoint-async 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+      url: Debug
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Dev:
+    urls:
+      Base: http://dev.api.com
+      Debug: http://debug.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+    "name": "testChannel.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+    "name": "testChannel2.yml",
     "type": "file",
   },
 ]
@@ -234,9 +503,13 @@ auth-schemes:
   BearerAuthScheme:
     scheme: bearer
 default-environment: Production
+default-url: Base
 display-name: Train Travel API
 environments:
-  Production: https://api.example.com
+  Production:
+    urls:
+      Base: https://api.example.com
+      public: wss://api.gemini.com
 error-discrimination:
   strategy: status-code
 name: api
@@ -316,6 +589,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: neopetsRoot.Pets
       source:
         openapi: openapi/petstore/openapi.yml
@@ -340,6 +614,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: neopetsRoot.Pet
       source:
         openapi: openapi/petstore/openapi.yml
@@ -462,59 +737,114 @@ service:
       timestamp:
         docs: >-
           The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
+          compatibility reasons). We recommend using the timestamps field
           instead.
         type: double
-      timestampms:
+      timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
       type: literal<"update">
+    source:
+      openapi: asyncapi/sample.yml
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  streamRoot: __package__.yml
+types:
+  MarketDataV1Symbol:
+    docs: >
+      Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
+      are in CCY1. To read more click
+      [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
+    enum:
+      - btcusd
+      - ethbtc
+      - ethusd
+      - zecusd
+      - zecbtc
+      - zeceth
+      - zecbch
+      - zecltc
+      - bchusd
+      - bchbtc
+      - bcheth
+      - ltcusd
+      - ltcbtc
+      - ltceth
+      - ltcbch
+      - batusd
+      - daiusd
+      - linkusd
+      - oxtusd
+      - batbtc
+      - linkbtc
+      - oxtbtc
+      - bateth
+      - linketh
+      - oxteth
+      - ampusd
+      - compusd
+      - paxgusd
+      - mkrusd
+      - zrxusd
+      - kncusd
+      - manausd
+      - storjusd
+      - snxusd
+      - crvusd
+      - balusd
+      - uniusd
+      - renusd
+      - umausd
+      - yfiusd
+      - btcdai
+      - ethdai
+      - aaveusd
+      - filusd
+      - btceur
+      - btcgbp
+      - etheur
+      - ethgbp
+      - btcsgd
+      - ethsgd
+      - sklusd
+      - grtusd
+      - bntusd
+      - name: OneInchusd
+        value: 1inchusd
+      - enjusd
+      - lrcusd
+      - sandusd
+      - cubeusd
+      - lptusd
+      - bondusd
+      - maticusd
+      - injusd
+      - sushiusd
     source:
       openapi: asyncapi/sample.yml
 channel:
   auth: false
   examples:
     - messages: []
-  messages: {}
-  path: marketDataV1
-  path-parameters:
+  messages:
+    marketData:
+      body: streamRoot.Market
+      origin: client
+  path: /v1/marketdata/{symbol}
+  query-parameters:
     symbol:
       docs: >
         Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-      type: string
-  query-parameters:
-    auctions:
-      default: true
-      docs: Include auction events
-      type: optional<boolean>
-    bids:
-      default: true
-      docs: Include bids in change events
-      type: optional<boolean>
-    heartbeat:
-      default: false
-      docs: >-
-        Optionally add this parameter and set to true to receive a heartbeat
-        every 5 seconds
-      type: optional<boolean>
-    offers:
-      default: true
-      docs: Include asks in change events
-      type: optional<boolean>
-    top_of_book:
-      default: false
-      docs: >-
-        If absent or false, receive full order book depth; if present and true,
-        receive top of book only. Only applies to bids and offers.
-      type: optional<boolean>
-    trades:
-      default: true
-      docs: Include trade events
-      type: optional<boolean>
+      type: MarketDataV1Symbol
+  url: public
 ",
-        "name": "__package__.yml",
+        "name": "marketDataV1.yml",
         "type": "file",
       },
     ],
@@ -534,6 +864,7 @@ channel:
         docs: Indicates whether the passenger has a dog.
         type: optional<boolean>
       id:
+        access: read-only
         docs: Unique identifier for the booking
         type: optional<string>
         validation:
@@ -561,6 +892,7 @@ channel:
           code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
         type: optional<BookingPaymentCurrency>
       id:
+        access: read-only
         docs: >-
           Unique identifier for the payment. This will be a unique identifier
           for the payment, and is used to reference the payment in other
@@ -575,6 +907,7 @@ channel:
           protect PII leaking.
         type: optional<BookingPaymentSource>
       status:
+        access: read-only
         docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
         type: optional<BookingPaymentStatus>
     source:
@@ -670,12 +1003,15 @@ channel:
         type: optional<string>
       address_country: string
       address_line1:
+        access: write-only
         type: optional<string>
       address_line2:
+        access: write-only
         type: optional<string>
       address_post_code:
         type: optional<string>
       cvc:
+        access: write-only
         docs: >-
           Card security code, 3 or 4 digits usually found on the back of the
           card.
@@ -828,6 +1164,7 @@ channel:
         docs: The wrapper for a collection is an array of objects.
         type: optional<list<map<string, unknown>>>
       links:
+        access: read-only
         docs: A set of hypermedia links which serve as controls for the client.
         type: optional<map<string, unknown>>
     source:
@@ -979,6 +1316,7 @@ service:
         content-type: application/json
       response:
         docs: Booking successful
+        status-code: 201
         type: CreateBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1036,6 +1374,7 @@ service:
           type: string
       response:
         docs: The booking details
+        status-code: 200
         type: GetBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1071,6 +1410,7 @@ service:
       path: /bookings
       response:
         docs: A list of bookings
+        status-code: 200
         type: GetBookingsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1275,6 +1615,7 @@ service:
         content-type: application/json
       response:
         docs: Payment successful
+        status-code: 200
         type: CreateBookingPaymentResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1348,6 +1689,7 @@ service:
       path: /stations
       response:
         docs: A list of train stations
+        status-code: 200
         type: GetStationsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1500,6 +1842,7 @@ service:
               format: uuid
       response:
         docs: A list of available train trips
+        status-code: 200
         type: GetTripsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1710,7 +2053,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -1992,6 +2335,7 @@ service:
         name: ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere.yaml
@@ -2109,7 +2453,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -2315,6 +2659,7 @@ service:
         name: V2ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere-v2.yaml
@@ -2327,6 +2672,416 @@ service:
     ],
     "name": "v2",
     "type": "directory",
+  },
+]
+`;
+
+exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 1`] = `
+[
+  {
+    "contents": "{}
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: alpha_one.yml
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: alpha_one.yml
+  Pets: list<Pet>
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  alphaRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPets:
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+      method: POST
+      path: /pets
+      source:
+        openapi: alpha_one.yml
+    listPets:
+      auth: false
+      display-name: List all pets
+      examples:
+        - response:
+            body: []
+      method: GET
+      path: /list-all
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            docs: How many items to return at one time (max 100)
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: A paged array of pets
+        status-code: 200
+        type: alphaRoot.Pets
+      source:
+        openapi: alpha_two.yml
+    showPetById:
+      auth: false
+      display-name: Info for a specific pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+      method: GET
+      path: /pets/{petId}
+      path-parameters:
+        petId:
+          docs: The id of the pet to retrieve
+          type: string
+      response:
+        docs: Expected response to a valid request
+        status-code: 200
+        type: alphaRoot.Pet
+      source:
+        openapi: alpha_one.yml
+  source:
+    openapi: alpha_two.yml
+",
+        "name": "pets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "alpha",
+    "type": "directory",
+  },
+  {
+    "contents": "default-environment: Default
+default-url: Base
+display-name: Alpha One
+environments:
+  Default:
+    urls:
+      Base: http://petstore.swagger.io/v1
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+        "name": "betaOne.yml",
+        "type": "file",
+      },
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+        "name": "betaTwo.yml",
+        "type": "file",
+      },
+    ],
+    "name": "beta",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`validate single no endpoint > single-no-endpoint 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+display-name: Test API
+environments:
+  Prod: http://prod.api.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate single no endpoint async > single-no-endpoint-async 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+    "name": "testChannel.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+    "name": "testChannel2.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate single with endpoint > single-with-endpoint 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+      url: Debug
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`validate single with endpoint async > single-with-endpoint-async 1`] = `
+[
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      auth: false
+      examples:
+        - response:
+            body: string
+      method: GET
+      path: /pets
+      response:
+        docs: A response
+        status-code: 200
+        type: string
+      source:
+        openapi: openapi.yml
+      url: Debug
+  source:
+    openapi: openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Prod
+default-url: Base
+display-name: Test API
+environments:
+  Prod:
+    urls:
+      Base: http://prod.api.com
+      Debug: http://debug.api.com
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+    "name": "testChannel.yml",
+    "type": "file",
+  },
+  {
+    "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+    "name": "testChannel2.yml",
+    "type": "file",
   },
 ]
 `;

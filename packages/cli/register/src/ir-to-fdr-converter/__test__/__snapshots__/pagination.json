@@ -49,6 +49,365 @@
         ]
       }
     },
+    "type_complex:SearchRequestQuery": {
+      "name": "SearchRequestQuery",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "SingleFilterSearchRequest",
+            "type": {
+              "type": "id",
+              "value": "type_complex:SingleFilterSearchRequest"
+            }
+          },
+          {
+            "typeName": "MultipleFilterSearchRequest",
+            "type": {
+              "type": "id",
+              "value": "type_complex:MultipleFilterSearchRequest"
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:MultipleFilterSearchRequest": {
+      "name": "MultipleFilterSearchRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "operator",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:MultipleFilterSearchRequestOperator"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:MultipleFilterSearchRequestValue"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:MultipleFilterSearchRequestOperator": {
+      "name": "MultipleFilterSearchRequestOperator",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "AND"
+          },
+          {
+            "value": "OR"
+          }
+        ]
+      }
+    },
+    "type_complex:MultipleFilterSearchRequestValue": {
+      "name": "MultipleFilterSearchRequestValue",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:MultipleFilterSearchRequest"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:SingleFilterSearchRequest"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:SingleFilterSearchRequest": {
+      "name": "SingleFilterSearchRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "field",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "operator",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:SingleFilterSearchRequestOperator"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:SingleFilterSearchRequestOperator": {
+      "name": "SingleFilterSearchRequestOperator",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "="
+          },
+          {
+            "value": "!="
+          },
+          {
+            "value": "IN"
+          },
+          {
+            "value": "NIN"
+          },
+          {
+            "value": "<"
+          },
+          {
+            "value": ">"
+          },
+          {
+            "value": "~"
+          },
+          {
+            "value": "!~"
+          },
+          {
+            "value": "^"
+          },
+          {
+            "value": "$"
+          }
+        ]
+      }
+    },
+    "type_complex:SearchRequest": {
+      "name": "SearchRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pagination",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:StartingAfterPaging"
+              }
+            }
+          },
+          {
+            "key": "query",
+            "valueType": {
+              "type": "id",
+              "value": "type_complex:SearchRequestQuery"
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:PaginatedConversationResponse": {
+      "name": "PaginatedConversationResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "conversations",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:Conversation"
+              }
+            }
+          },
+          {
+            "key": "pages",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:CursorPages"
+              }
+            }
+          },
+          {
+            "key": "total_count",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "conversation.list"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:CursorPages": {
+      "name": "CursorPages",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_complex:StartingAfterPaging"
+              }
+            }
+          },
+          {
+            "key": "page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "per_page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "total_pages",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "pages"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:StartingAfterPaging": {
+      "name": "StartingAfterPaging",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "per_page",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "starting_after",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_complex:Conversation": {
+      "name": "Conversation",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_users:Order": {
       "name": "Order",
       "shape": {
@@ -316,6 +675,34 @@
         ]
       }
     },
+    "type_users:ListUsersMixedTypePaginationResponse": {
+      "name": "ListUsersMixedTypePaginationResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "next",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_users:User"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_users:Page": {
       "name": "Page",
       "shape": {
@@ -419,6 +806,140 @@
     }
   },
   "subpackages": {
+    "subpackage_complex": {
+      "subpackageId": "subpackage_complex",
+      "displayName": "Conversations",
+      "name": "complex",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "search",
+          "originalEndpointId": "endpoint_complex.search",
+          "name": "Search conversations",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/conversations/search"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_complex:SearchRequest"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_complex:PaginatedConversationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/conversations/search",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "query": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "query": {}
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "conversations": [
+                  {
+                    "foo": "foo"
+                  },
+                  {
+                    "foo": "foo"
+                  }
+                ],
+                "pages": {
+                  "next": {
+                    "per_page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "page": 1,
+                  "per_page": 1,
+                  "total_pages": 1,
+                  "type": "pages"
+                },
+                "total_count": 1,
+                "type": "conversation.list"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "conversations": [
+                    {
+                      "foo": "foo"
+                    },
+                    {
+                      "foo": "foo"
+                    }
+                  ],
+                  "pages": {
+                    "next": {
+                      "per_page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "page": 1,
+                    "per_page": 1,
+                    "total_pages": 1,
+                    "type": "pages"
+                  },
+                  "total_count": 1,
+                  "type": "conversation.list"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_complex:SearchRequestQuery",
+        "type_complex:MultipleFilterSearchRequest",
+        "type_complex:MultipleFilterSearchRequestOperator",
+        "type_complex:MultipleFilterSearchRequestValue",
+        "type_complex:SingleFilterSearchRequest",
+        "type_complex:SingleFilterSearchRequestOperator",
+        "type_complex:SearchRequest",
+        "type_complex:PaginatedConversationResponse",
+        "type_complex:CursorPages",
+        "type_complex:StartingAfterPaging",
+        "type_complex:Conversation"
+      ],
+      "subpackages": []
+    },
     "subpackage_users": {
       "subpackageId": "subpackage_users",
       "name": "users",
@@ -567,6 +1088,90 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "listWithMixedTypeCursorPagination",
+          "originalEndpointId": "endpoint_users.listWithMixedTypeCursorPagination",
+          "name": "List With Mixed Type Cursor Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersMixedTypePaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "next": "next",
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "next": "next",
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "listWithBodyCursorPagination",
           "originalEndpointId": "endpoint_users.listWithBodyCursorPagination",
           "name": "List With Body Cursor Pagination",
@@ -594,7 +1199,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",
@@ -827,6 +1432,148 @@
         },
         {
           "auth": false,
+          "method": "GET",
+          "id": "listWithDoubleOffsetPagination",
+          "originalEndpointId": "endpoint_users.listWithDoubleOffsetPagination",
+          "name": "List With Double Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "default": 0
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
           "method": "POST",
           "id": "listWithBodyOffsetPagination",
           "originalEndpointId": "endpoint_users.listWithBodyOffsetPagination",
@@ -855,7 +1602,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",
@@ -978,7 +1725,7 @@
               }
             },
             {
-              "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
               "key": "limit",
               "type": {
                 "type": "optional",
@@ -1106,7 +1853,7 @@
               }
             },
             {
-              "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
               "key": "limit",
               "type": {
                 "type": "optional",
@@ -1252,11 +1999,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                },
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "total_count": 1
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  },
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   "total_count": 1
                 }
               },
@@ -1316,11 +2089,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                },
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "total_count": 1
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  },
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                   "total_count": 1
                 }
               },
@@ -1334,6 +2133,83 @@
           "id": "listUsernames",
           "originalEndpointId": "endpoint_users.listUsernames",
           "name": "List Usernames",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:UsernameCursor"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "cursor": {
+                  "after": "after",
+                  "data": [
+                    "data",
+                    "data"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "cursor": {
+                    "after": "after",
+                    "data": [
+                      "data",
+                      "data"
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listUsernamesCustom",
+          "originalEndpointId": "endpoint_users.listUsernamesCustom",
+          "name": "List Usernames Custom",
           "path": {
             "pathParameters": [],
             "parts": [
@@ -1490,6 +2366,7 @@
         "type_users:ListUsersExtendedResponse",
         "type_users:ListUsersExtendedOptionalListResponse",
         "type_users:ListUsersPaginationResponse",
+        "type_users:ListUsersMixedTypePaginationResponse",
         "type_users:Page",
         "type_users:NextPage",
         "type_users:User"
@@ -1506,6 +2383,7 @@
       "type_:UsernamePage"
     ],
     "subpackages": [
+      "subpackage_complex",
       "subpackage_users"
     ]
   },

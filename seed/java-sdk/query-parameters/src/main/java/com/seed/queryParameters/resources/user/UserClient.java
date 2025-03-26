@@ -5,6 +5,7 @@ package com.seed.queryParameters.resources.user;
 
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
+import com.seed.queryParameters.core.QueryStringMapper;
 import com.seed.queryParameters.core.RequestOptions;
 import com.seed.queryParameters.core.SeedQueryParametersApiException;
 import com.seed.queryParameters.core.SeedQueryParametersException;
@@ -33,34 +34,42 @@ public class UserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("user");
-        httpUrl.addQueryParameter("limit", Integer.toString(request.getLimit()));
-        httpUrl.addQueryParameter("id", request.getId().toString());
-        httpUrl.addQueryParameter("date", request.getDate());
-        httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
-        httpUrl.addQueryParameter("bytes", request.getBytes().toString());
-        httpUrl.addQueryParameter("user", request.getUser().toString());
-        httpUrl.addQueryParameter("userList", request.getUserList().toString());
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", Integer.toString(request.getLimit()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "date", request.getDate(), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "deadline", request.getDeadline().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString(), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "userList", request.getUserList().toString(), false);
         if (request.getOptionalDeadline().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalDeadline", request.getOptionalDeadline().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "optionalDeadline",
+                    request.getOptionalDeadline().get().toString(),
+                    false);
         }
-        httpUrl.addQueryParameter("keyValue", request.getKeyValue());
+        QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue(), false);
         if (request.getOptionalString().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalString", request.getOptionalString().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
-        httpUrl.addQueryParameter("nestedUser", request.getNestedUser().toString());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "nestedUser", request.getNestedUser().toString(), false);
         if (request.getOptionalUser().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalUser", request.getOptionalUser().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optionalUser", request.getOptionalUser().get().toString(), false);
         }
-        httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().toString());
-        httpUrl.addQueryParameter("filter", request.getFilter());
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

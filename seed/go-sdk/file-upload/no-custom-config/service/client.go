@@ -110,6 +110,19 @@ func (c *Client) Post(
 			return err
 		}
 	}
+	if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
+		return err
+	}
+	for _, part := range request.ListOfAliasObject {
+		if err := writer.WriteJSON("list_of_alias_object", part); err != nil {
+			return err
+		}
+	}
+	for _, part := range request.AliasListOfObject {
+		if err := writer.WriteJSON("alias_list_of_object", part); err != nil {
+			return err
+		}
+	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
@@ -179,7 +192,7 @@ func (c *Client) JustFile(
 func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.JustFileWithQueryParamsRequet,
+	request *fern.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
@@ -280,4 +293,225 @@ func (c *Client) WithContentType(
 		return err
 	}
 	return nil
+}
+
+func (c *Client) WithFormEncoding(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithFormEncodingRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/with-form-encoding"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+		return err
+	}
+	if err := writer.WriteField("foo", fmt.Sprintf("%v", request.Foo)); err != nil {
+		return err
+	}
+	if err := writer.WriteJSON("bar", request.Bar); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) WithFormEncodedContainers(
+	ctx context.Context,
+	file io.Reader,
+	fileList []io.Reader,
+	maybeFile io.Reader,
+	maybeFileList []io.Reader,
+	request *fern.MyOtherRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
+		return err
+	}
+	for _, f := range fileList {
+		if err := writer.WriteFile("file_list", f); err != nil {
+			return err
+		}
+	}
+	if maybeFile != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+			return err
+		}
+	}
+	for _, f := range maybeFileList {
+		if err := writer.WriteFile("maybe_file_list", f); err != nil {
+			return err
+		}
+	}
+	if request.MaybeString != nil {
+		if err := writer.WriteField("maybe_string", fmt.Sprintf("%v", *request.MaybeString)); err != nil {
+			return err
+		}
+	}
+	if err := writer.WriteField("integer", fmt.Sprintf("%v", request.Integer)); err != nil {
+		return err
+	}
+	if request.MaybeInteger != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
+			return err
+		}
+	}
+	for _, part := range request.OptionalListOfStrings {
+		if err := writer.WriteField("optional_list_of_strings", fmt.Sprintf("%v", part)); err != nil {
+			return err
+		}
+	}
+	for _, part := range request.ListOfObjects {
+		if err := writer.WriteJSON("list_of_objects", part); err != nil {
+			return err
+		}
+	}
+	if request.OptionalMetadata != nil {
+		if err := writer.WriteJSON("optional_metadata", request.OptionalMetadata); err != nil {
+			return err
+		}
+	}
+	if request.OptionalObjectType != nil {
+		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
+			return err
+		}
+	}
+	if request.OptionalId != nil {
+		if err := writer.WriteJSON("optional_id", *request.OptionalId); err != nil {
+			return err
+		}
+	}
+	for _, part := range request.ListOfObjectsWithOptionals {
+		if err := writer.WriteJSON("list_of_objects_with_optionals", part); err != nil {
+			return err
+		}
+	}
+	if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
+		return err
+	}
+	for _, part := range request.ListOfAliasObject {
+		if err := writer.WriteJSON("list_of_alias_object", part); err != nil {
+			return err
+		}
+	}
+	for _, part := range request.AliasListOfObject {
+		if err := writer.WriteJSON("alias_list_of_object", part); err != nil {
+			return err
+		}
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) OptionalArgs(
+	ctx context.Context,
+	imageFile io.Reader,
+	request *fern.OptionalArgsRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/optional-args"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if imageFile != nil {
+		if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+			return "", err
+		}
+	}
+	if request.Request != nil {
+		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
+			return "", err
+		}
+	}
+	if err := writer.Close(); err != nil {
+		return "", err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response, nil
 }

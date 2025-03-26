@@ -5,6 +5,7 @@
       "url": "https://connect.getseam.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "/access_codes": {
@@ -491,7 +492,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -507,7 +509,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -540,6 +543,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -568,7 +572,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/create",
@@ -1273,6 +1277,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1301,7 +1306,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/create_multiple",
@@ -1639,7 +1644,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1671,6 +1677,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1699,7 +1706,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/delete",
@@ -1859,7 +1866,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1892,6 +1900,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1920,7 +1929,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/generate_code",
@@ -2252,7 +2261,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -2285,6 +2295,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2313,7 +2324,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/get",
@@ -2679,6 +2690,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2707,7 +2719,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/list",
@@ -2992,7 +3004,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -3025,6 +3038,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3053,7 +3067,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/pull_backup_access_code",
@@ -3711,7 +3725,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -3743,6 +3758,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3771,7 +3787,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/update",
@@ -3931,7 +3947,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -3964,6 +3981,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3992,7 +4010,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action_attempts/get",
@@ -4194,6 +4212,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4222,7 +4241,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action_attempts/list",
@@ -4493,7 +4512,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -4526,6 +4546,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4554,7 +4575,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/client_sessions/create",
@@ -4765,6 +4786,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4793,7 +4815,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/delete",
@@ -4936,7 +4958,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -4969,6 +4992,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4997,7 +5021,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/get",
@@ -5293,7 +5317,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -5326,6 +5351,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5354,7 +5380,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/client_sessions/get_or_create",
@@ -5644,7 +5670,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -5676,6 +5703,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5704,7 +5732,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/grant_access",
@@ -6016,6 +6044,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6044,7 +6073,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/list",
@@ -6260,6 +6289,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6288,7 +6318,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/client_sessions/revoke",
@@ -6767,7 +6797,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -6863,7 +6893,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -6896,6 +6927,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6924,7 +6956,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/create",
@@ -7205,6 +7237,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7233,7 +7266,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/delete",
@@ -7353,7 +7386,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -7386,6 +7420,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7414,7 +7449,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/get",
@@ -7695,7 +7730,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -7809,6 +7844,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7837,7 +7873,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connect_webviews/list",
@@ -8143,6 +8179,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8171,7 +8208,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/delete",
@@ -8302,7 +8339,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -8334,7 +8371,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -8367,6 +8405,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8395,7 +8434,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/get",
@@ -8638,7 +8677,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -8727,6 +8766,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8755,7 +8795,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/list",
@@ -9005,7 +9045,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -9061,7 +9101,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -9094,6 +9135,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9122,7 +9164,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connected_accounts/update",
@@ -9392,6 +9434,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9420,7 +9463,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/delete",
@@ -9564,7 +9607,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -9597,6 +9641,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9625,7 +9670,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/get",
@@ -11731,7 +11776,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -11944,6 +11989,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11972,7 +12018,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/list",
@@ -12390,6 +12436,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12418,7 +12465,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/list_device_providers",
@@ -12680,7 +12727,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -12752,6 +12799,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12780,7 +12828,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/update",
@@ -12949,7 +12997,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -13001,6 +13050,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13029,7 +13079,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/events/get",
@@ -13235,7 +13285,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -14088,6 +14138,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14116,7 +14167,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/events/list",
@@ -14346,7 +14397,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -14362,7 +14414,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -14395,6 +14448,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14423,7 +14477,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/get",
@@ -17805,7 +17859,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -18038,6 +18092,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18066,7 +18121,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/list",
@@ -18672,7 +18727,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -18705,6 +18761,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18733,7 +18790,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/lock_door",
@@ -18913,7 +18970,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -18946,6 +19004,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18974,7 +19033,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/locks/unlock_door",
@@ -19134,7 +19193,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -19167,6 +19227,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19195,7 +19256,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/networks/get",
@@ -19369,6 +19430,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19397,7 +19459,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/networks/list",
@@ -19562,6 +19624,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19590,7 +19653,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/deactivate",
@@ -19752,6 +19815,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19780,7 +19844,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/list",
@@ -20134,7 +20198,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -20167,6 +20232,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20195,7 +20261,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/cool",
@@ -20379,7 +20445,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -20412,6 +20479,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20440,7 +20508,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/get",
@@ -21886,7 +21954,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -21919,6 +21988,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21947,7 +22017,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/heat",
@@ -22203,7 +22273,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -22236,6 +22307,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22264,7 +22336,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/heat_cool",
@@ -23142,7 +23214,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -23355,6 +23427,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23383,7 +23456,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/list",
@@ -23752,7 +23825,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -23785,6 +23859,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23813,7 +23888,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/off",
@@ -24057,7 +24132,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -24090,6 +24166,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24118,7 +24195,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/set_fan_mode",
@@ -24489,6 +24566,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24517,7 +24595,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/update",
@@ -24672,6 +24750,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24700,7 +24779,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/add_acs_user",
@@ -24911,7 +24990,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -24944,6 +25024,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24972,7 +25053,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/create",
@@ -25161,6 +25242,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25189,7 +25271,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/delete",
@@ -25319,7 +25401,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -25351,7 +25433,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -25384,6 +25467,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25412,7 +25496,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/get",
@@ -25624,6 +25708,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25652,7 +25737,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/grant_access_to_device",
@@ -25821,6 +25906,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25849,7 +25935,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list",
@@ -26085,6 +26171,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26113,7 +26200,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_accessible_devices",
@@ -26744,6 +26831,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26772,7 +26860,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_acs_systems",
@@ -26881,13 +26969,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -26897,7 +26978,14 @@
                                   },
                                   "message": {
                                     "value": {
-                                      "value": "errors",
+                                      "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -27086,6 +27174,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27114,7 +27203,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/list_acs_users",
@@ -27410,6 +27499,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27438,7 +27528,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/remove_acs_user",
@@ -27596,6 +27686,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27624,7 +27715,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/revoke_access_to_device",
@@ -27866,6 +27957,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27894,7 +27986,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/update",
@@ -28038,7 +28130,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -28071,6 +28164,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28099,7 +28193,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/create",
@@ -28272,6 +28366,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28300,7 +28395,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/delete",
@@ -28419,7 +28514,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -28452,6 +28548,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28480,7 +28577,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/get",
@@ -28636,6 +28733,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28664,7 +28762,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/list",
@@ -28849,6 +28947,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28877,7 +28976,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/webhooks/update",
@@ -29124,7 +29223,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -29157,6 +29257,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29185,7 +29286,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/create",
@@ -29306,7 +29407,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -29339,6 +29441,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29367,7 +29470,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/get",
@@ -29513,6 +29616,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29541,7 +29645,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/list",
@@ -29655,7 +29759,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -29688,6 +29793,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29716,7 +29822,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/workspaces/reset_sandbox",
@@ -29896,7 +30002,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -29929,6 +30036,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29957,7 +30065,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/simulate/create_unmanaged_access_code",
@@ -30293,6 +30401,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30321,7 +30430,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/convert_to_managed",
@@ -30462,7 +30571,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -30494,6 +30604,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30522,7 +30633,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/delete",
@@ -30727,7 +30838,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -30760,6 +30872,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30788,7 +30901,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/get",
@@ -31065,6 +31178,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31093,7 +31207,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/list",
@@ -31414,6 +31528,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31442,7 +31557,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/access_codes/unmanaged/update",
@@ -31601,6 +31716,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31629,7 +31745,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/add_user",
@@ -31757,7 +31873,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -31790,6 +31907,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31818,7 +31936,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/get",
@@ -32070,6 +32188,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32098,7 +32217,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/list",
@@ -32322,6 +32441,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32350,7 +32470,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/list_users",
@@ -32647,6 +32767,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32675,7 +32796,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/access_groups/remove_user",
@@ -32840,6 +32961,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32868,7 +32990,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credential_pools/list",
@@ -33122,7 +33244,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -33155,6 +33278,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33183,7 +33307,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credential_provisioning_automations/launch",
@@ -33366,7 +33490,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -33398,6 +33523,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33426,7 +33552,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/assign",
@@ -34098,7 +34224,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -34131,6 +34258,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34159,7 +34287,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/create",
@@ -34511,6 +34639,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34539,7 +34668,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/delete",
@@ -34660,7 +34789,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -34693,6 +34823,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34721,7 +34852,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/get",
@@ -35094,6 +35225,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35122,7 +35254,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/list",
@@ -35452,6 +35584,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35480,7 +35613,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/list_accessible_entrances",
@@ -35727,7 +35860,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35759,6 +35893,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35787,7 +35922,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/unassign",
@@ -36164,7 +36299,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -36196,6 +36332,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36224,7 +36361,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/credentials/update",
@@ -36556,7 +36693,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -36589,6 +36727,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36617,7 +36756,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/get",
@@ -36896,6 +37035,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36924,7 +37064,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/grant_access",
@@ -37114,6 +37254,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37142,7 +37283,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/list",
@@ -37428,6 +37569,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37456,7 +37598,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/entrances/list_credentials_with_access",
@@ -37757,7 +37899,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -37790,6 +37933,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37818,7 +37962,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/get",
@@ -37925,13 +38069,6 @@
                         {
                           "value": {
                             "value": {
-                              "error_code": {
-                                "value": {
-                                  "value": "visionline_instance_unreachable",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "created_at": {
                                 "value": {
                                   "value": "2024-01-15T09:30:00Z",
@@ -37941,7 +38078,14 @@
                               },
                               "message": {
                                 "value": {
-                                  "value": "errors",
+                                  "value": "message",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "error_code": {
+                                "value": {
+                                  "value": "seam_bridge_disconnected",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -38133,6 +38277,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38161,7 +38306,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/list",
@@ -38262,13 +38407,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -38278,7 +38416,14 @@
                                   },
                                   "message": {
                                     "value": {
-                                      "value": "errors",
+                                      "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -38468,6 +38613,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38496,7 +38642,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/systems/list_compatible_credential_manager_acs_systems",
@@ -38605,13 +38751,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -38621,7 +38760,14 @@
                                   },
                                   "message": {
                                     "value": {
-                                      "value": "errors",
+                                      "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -38805,6 +38951,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38833,7 +38980,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/add_to_access_group",
@@ -39143,7 +39290,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -39176,6 +39324,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -39204,7 +39353,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/create",
@@ -39481,6 +39630,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -39509,7 +39659,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/delete",
@@ -39630,7 +39780,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -39663,6 +39814,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -39691,7 +39843,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/get",
@@ -40057,6 +40209,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40085,7 +40238,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/list",
@@ -40380,6 +40533,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40408,7 +40562,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/list_accessible_entrances",
@@ -40671,6 +40825,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40699,7 +40854,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/remove_from_access_group",
@@ -40843,6 +40998,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40871,7 +41027,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/revoke_access_to_all_entrances",
@@ -41008,6 +41164,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41036,7 +41193,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/suspend",
@@ -41173,6 +41330,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41201,7 +41359,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/unsuspend",
@@ -41495,6 +41653,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41523,7 +41682,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/acs/users/update",
@@ -41660,6 +41819,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41688,7 +41848,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/connect",
@@ -41825,6 +41985,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41853,7 +42014,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/disconnect",
@@ -41990,6 +42151,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42018,7 +42180,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/simulate/remove",
@@ -42163,7 +42325,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -42196,6 +42359,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42224,7 +42388,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/get",
@@ -43313,7 +43477,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -43526,6 +43690,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -43554,7 +43719,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/list",
@@ -43890,6 +44055,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -43918,7 +44084,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/devices/unmanaged/update",
@@ -44151,7 +44317,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -44167,7 +44334,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -44200,6 +44368,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44228,7 +44397,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/create",
@@ -44492,7 +44661,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -44524,6 +44694,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44552,7 +44723,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/delete",
@@ -44720,7 +44891,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -44753,6 +44925,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44781,7 +44954,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/get",
@@ -45012,6 +45185,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45040,7 +45214,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/list",
@@ -45350,7 +45524,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -45382,6 +45557,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45410,7 +45586,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/update",
@@ -45594,6 +45770,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45622,7 +45799,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/noise_sensors/simulate/trigger_noise_threshold",
@@ -46029,7 +46206,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -46062,6 +46240,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -46090,7 +46269,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/phones/simulate/create_sandbox_phone",
@@ -46687,7 +46866,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -46720,6 +46900,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -46748,7 +46929,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/create",
@@ -47024,6 +47205,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47052,7 +47234,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/delete",
@@ -47198,7 +47380,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -47231,6 +47414,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47259,7 +47443,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/get",
@@ -47553,6 +47737,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47581,7 +47766,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/list",
@@ -48084,7 +48269,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -48116,6 +48302,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48144,7 +48331,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/update",
@@ -48406,6 +48593,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48434,7 +48622,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/delete",
@@ -48555,7 +48743,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -48588,6 +48777,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48616,7 +48806,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/get",
@@ -48977,6 +49167,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49005,7 +49196,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/launch",
@@ -49217,6 +49408,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49245,7 +49437,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user_identities/enrollment_automations/list",
@@ -49337,7 +49529,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "access_code": {
@@ -54932,7 +55124,7 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -55719,7 +55911,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -56071,7 +56263,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -59980,7 +60172,7 @@
                             "file": "../openapi.json",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -60442,7 +60634,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -65407,7 +65599,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },

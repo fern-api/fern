@@ -2,8 +2,6 @@ using System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive.Types.Object;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]

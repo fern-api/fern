@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public record PostWithObjectBody
@@ -17,6 +15,7 @@ public record PostWithObjectBody
     [JsonPropertyName("NestedObject")]
     public required ObjectWithOptionalField NestedObject { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

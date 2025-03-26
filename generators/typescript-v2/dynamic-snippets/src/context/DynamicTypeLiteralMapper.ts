@@ -27,7 +27,18 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
-        if (args.value == null) {
+        // eslint-disable-next-line eqeqeq
+        if (args.value === null) {
+            if (this.context.isNullable(args.typeReference)) {
+                return ts.TypeLiteral.null();
+            }
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but got null"
+            });
+            return ts.TypeLiteral.nop();
+        }
+        if (args.value === undefined) {
             return ts.TypeLiteral.nop();
         }
         switch (args.typeReference.type) {
@@ -45,6 +56,8 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "optional":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "nullable":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
@@ -188,7 +201,7 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
-                return this.convertUndicriminatedUnion({ undicriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
         }
@@ -414,15 +427,15 @@ export class DynamicTypeLiteralMapper {
         return value;
     }
 
-    private convertUndicriminatedUnion({
-        undicriminatedUnion,
+    private convertUndiscriminatedUnion({
+        undiscriminatedUnion,
         value
     }: {
-        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): ts.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
-            undicriminatedUnion,
+            undiscriminatedUnion,
             value
         });
         if (result == null) {
@@ -432,13 +445,13 @@ export class DynamicTypeLiteralMapper {
     }
 
     private findMatchingUndiscriminatedUnionType({
-        undicriminatedUnion,
+        undiscriminatedUnion,
         value
     }: {
-        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): ts.TypeLiteral | undefined {
-        for (const typeReference of undicriminatedUnion.types) {
+        for (const typeReference of undiscriminatedUnion.types) {
             try {
                 return this.convert({ typeReference, value });
             } catch (e) {
@@ -447,7 +460,7 @@ export class DynamicTypeLiteralMapper {
         }
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undicriminated union matched the given "${typeof value}" value`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
         return undefined;
     }

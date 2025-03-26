@@ -4,13 +4,11 @@ using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
 using SeedAudiences.FolderD;
 
-#nullable enable
-
 namespace SeedAudiences;
 
 public partial class SeedAudiencesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {

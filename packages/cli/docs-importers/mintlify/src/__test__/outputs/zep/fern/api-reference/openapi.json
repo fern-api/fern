@@ -1,0 +1,1592 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "Zep Cloud API", "contact": {}, "version": "0.x" },
+  "servers": [{ "url": "https://app.getzep.com/api/v2" }],
+  "paths": {
+    "/api/v2/collections/{collectionName}/documents/uuid/{documentUUID}": {
+      "patch": {
+        "tags": ["document"],
+        "summary": "Updates a Document in a DocumentCollection by UUID",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "documentUUID",
+            "in": "path",
+            "description": "UUID of the Document to be updated",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Document to be updated",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.UpdateDocumentRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "document"
+      }
+    },
+    "/collection/{collectionName}/documents/uuid/{documentUUID}": {
+      "get": {
+        "tags": ["document"],
+        "summary": "Gets a Document from a DocumentCollection by UUID",
+        "description": "Returns specified Document from a DocumentCollection.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "documentUUID",
+            "in": "path",
+            "description": "UUID of the Document to be updated",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.DocumentResponse" } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/collections": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "Gets a list of DocumentCollections",
+        "description": "Returns a list of all DocumentCollections.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/models.DocumentCollectionResponse" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/collections/{collectionName}": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "Gets a DocumentCollection",
+        "description": "Returns a DocumentCollection if it exists.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/models.DocumentCollectionResponse" } }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "post": {
+        "tags": ["collection"],
+        "summary": "Creates a new DocumentCollection",
+        "description": "If a collection with the same name already exists, an error will be returned.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Document Collection",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.CreateDocumentCollectionRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "collection"
+      },
+      "delete": {
+        "tags": ["collection"],
+        "summary": "Deletes a DocumentCollection",
+        "description": "If a collection with the same name already exists, it will be overwritten.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "patch": {
+        "tags": ["collection"],
+        "summary": "Updates a DocumentCollection",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Document Collection",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.UpdateDocumentCollectionRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "collection"
+      }
+    },
+    "/collections/{collectionName}/document": {
+      "post": {
+        "tags": ["document"],
+        "summary": "Creates Multiple Documents in a DocumentCollection",
+        "description": "Creates Documents in a specified DocumentCollection and returns their UUIDs.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Array of Documents to be created",
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.CreateDocumentRequest" } }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "type": "string" } } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "documents"
+      }
+    },
+    "/collections/{collectionName}/documents/batchDelete": {
+      "post": {
+        "tags": ["document"],
+        "summary": "Batch Deletes Documents from a DocumentCollection by UUID",
+        "description": "Deletes specified Documents from a DocumentCollection.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "UUIDs of the Documents to be deleted",
+          "content": { "application/json": { "schema": { "type": "array", "items": { "type": "string" } } } },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "documentUUIDs"
+      }
+    },
+    "/collections/{collectionName}/documents/batchGet": {
+      "post": {
+        "tags": ["document"],
+        "summary": "Batch Gets Documents from a DocumentCollection",
+        "description": "Returns Documents from a DocumentCollection specified by UUID or ID.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "UUIDs and IDs of the Documents to be fetched",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.GetDocumentListRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "array", "items": { "$ref": "#/components/schemas/models.DocumentResponse" } }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "documentRequest"
+      }
+    },
+    "/collections/{collectionName}/documents/batchUpdate": {
+      "patch": {
+        "tags": ["document"],
+        "summary": "Batch Updates Documents in a DocumentCollection",
+        "description": "Updates Documents in a specified DocumentCollection.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Array of Documents to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/models.UpdateDocumentListRequest" }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "documents"
+      }
+    },
+    "/collections/{collectionName}/documents/uuid/{documentUUID}": {
+      "delete": {
+        "tags": ["document"],
+        "summary": "Delete Document from a DocumentCollection by UUID",
+        "description": "Delete specified Document from a DocumentCollection.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "documentUUID",
+            "in": "path",
+            "description": "UUID of the Document to be deleted",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Document Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/collections/{collectionName}/index/create": {
+      "post": {
+        "tags": ["collection"],
+        "summary": "Creates an index for a DocumentCollection",
+        "description": "Creates an index for the specified DocumentCollection to improve query performance.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "description": "Force index creation, even if there are too few documents to index",
+            "schema": { "type": "boolean" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/collections/{collectionName}/search": {
+      "post": {
+        "tags": ["document"],
+        "summary": "Searches Documents in a DocumentCollection",
+        "description": "Searches Documents in a DocumentCollection based on provided search criteria.",
+        "parameters": [
+          {
+            "name": "collectionName",
+            "in": "path",
+            "description": "Name of the Document Collection",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit the number of returned documents",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "description": "Search criteria",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.DocumentSearchPayload" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/models.DocumentSearchResultPage" } }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "searchPayload"
+      }
+    },
+    "/sessions": {
+      "get": {
+        "tags": ["session"],
+        "summary": "Returns all sessions",
+        "description": "Get all sessions with optional limit and cursor for pagination.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit the number of results returned",
+            "schema": { "type": "integer" }
+          },
+          { "name": "cursor", "in": "query", "description": "Cursor for pagination", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of sessions",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.Session" } }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "post": {
+        "tags": ["session"],
+        "summary": "Add a session",
+        "description": "add session by id",
+        "requestBody": {
+          "description": "Session",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.CreateSessionRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Session" } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "session"
+      }
+    },
+    "/sessions/{sessionId}": {
+      "get": {
+        "tags": ["session"],
+        "summary": "Returns a session by ID",
+        "description": "get session by id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Session" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "patch": {
+        "tags": ["session"],
+        "summary": "Add a session",
+        "description": "add session by id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Session",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.UpdateSessionRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Session" } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "session"
+      }
+    },
+    "/sessions/{sessionId}/classify": {
+      "post": {
+        "tags": ["session"],
+        "summary": "Classify a session",
+        "description": "classify a session by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Classify request",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.ClassifySessionRequest" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/models.ClassifySessionResponse" } }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "classifyRequest"
+      }
+    },
+    "/sessions/{sessionId}/memory": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Returns a memory (latest summary and list of messages) for a given session",
+        "description": "get memory by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "memoryType",
+            "in": "query",
+            "description": "memoryType: perpetual or message_window",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "lastn",
+            "in": "query",
+            "description": "Last N messages. Overrides memory_window configuration",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.Memory" } }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "post": {
+        "tags": ["memory"],
+        "summary": "Add memory messages to a given session",
+        "description": "add memory messages by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Memory messages",
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Memory" } } },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "memoryMessages"
+      },
+      "delete": {
+        "tags": ["memory"],
+        "summary": "Delete memory messages for a given session",
+        "description": "delete memory messages by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/sessions/{sessionId}/messages": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Retrieves all messages for a specific session",
+        "description": "get messages by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.Message" } }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        }
+      }
+    },
+    "/sessions/{sessionId}/messages/{messageId}": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Retrieves a specific message",
+        "description": "get message by session id and message id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Message" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["messages"],
+        "summary": "Updates the metadata of a specific message",
+        "description": "update message metadata by session id and message id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "New Metadata",
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Message" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Message" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/sessions/{sessionId}/search": {
+      "post": {
+        "tags": ["search"],
+        "summary": "Search memory messages for a given session",
+        "description": "search memory messages by session id and query",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit the number of results returned",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "description": "Search query",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/models.MemorySearchPayload" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.MemorySearchResult" } }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "searchPayload"
+      }
+    },
+    "/sessions/{sessionId}/summaries": {
+      "get": {
+        "tags": ["session"],
+        "summary": "Returns a session's summaries by ID",
+        "description": "Get session summaries by ID",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/models.SummaryListResponse" } }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/sessions/{sessionId}/synthesize_question": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Synthesize a question for a given session",
+        "description": "synthesize a question by session id",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Session ID",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          { "name": "lastNMessages", "in": "query", "description": "Last N messages", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.Question" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["user"],
+        "summary": "List all users",
+        "description": "List all users with pagination.",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number for pagination, starting from 1",
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Number of users to retrieve per page",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.User" } }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "post": {
+        "tags": ["user"],
+        "summary": "Add a user",
+        "description": "add user by id",
+        "requestBody": {
+          "description": "User",
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.CreateUserRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.User" } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "user"
+      }
+    },
+    "/users-ordered": {
+      "get": {
+        "tags": ["user"],
+        "summary": "List all users",
+        "description": "list all users",
+        "parameters": [
+          { "name": "limit", "in": "query", "description": "Limit", "schema": { "type": "integer" } },
+          { "name": "cursor", "in": "query", "description": "Cursor", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "array", "items": { "$ref": "#/components/schemas/models.User" } }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Returns a user by ID",
+        "description": "get user by id",
+        "parameters": [
+          { "name": "userId", "in": "path", "description": "User ID", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.User" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "delete": {
+        "tags": ["user"],
+        "summary": "Delete a user",
+        "description": "delete user by id",
+        "parameters": [
+          { "name": "userId", "in": "path", "description": "User ID", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      },
+      "patch": {
+        "tags": ["user"],
+        "summary": "Update a user",
+        "description": "update user by id",
+        "parameters": [
+          { "name": "userId", "in": "path", "description": "User ID", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "description": "User",
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.UpdateUserRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/models.User" } } }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "x-codegen-request-body-name": "user"
+      }
+    },
+    "/users/{userId}/sessions": {
+      "get": {
+        "tags": ["user"],
+        "summary": "List all sessions for a user",
+        "description": "list all sessions for a user by user id",
+        "parameters": [
+          { "name": "userId", "in": "path", "description": "User ID", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/models.Session" } }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/apihandlers.APIError" } } }
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "apihandlers.APIError": { "type": "object", "properties": { "message": { "type": "string" } } },
+      "models.ClassifySessionRequest": {
+        "type": "object",
+        "properties": {
+          "classes": { "type": "array", "items": { "type": "string" } },
+          "last_n": { "type": "integer" },
+          "name": { "type": "string" },
+          "persist": { "type": "boolean" },
+          "session_id": { "type": "string" }
+        }
+      },
+      "models.ClassifySessionResponse": {
+        "type": "object",
+        "properties": { "class": { "type": "string" }, "name": { "type": "string" } }
+      },
+      "models.CreateDocumentCollectionRequest": {
+        "required": ["embedding_dimensions", "is_auto_embedded", "name"],
+        "type": "object",
+        "properties": {
+          "description": { "maxLength": 1000, "type": "string" },
+          "embedding_dimensions": { "maximum": 2000, "minimum": 8, "type": "integer" },
+          "is_auto_embedded": {
+            "type": "boolean",
+            "description": "these needs to be pointers so that we can distinguish between false and unset when validating"
+          },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "name": { "maxLength": 40, "minLength": 3, "type": "string" }
+        }
+      },
+      "models.CreateDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "document_id": { "maxLength": 100, "type": "string" },
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } }
+        }
+      },
+      "models.CreateSessionRequest": {
+        "type": "object",
+        "properties": {
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "session_id": { "type": "string" },
+          "user_id": { "type": "string", "description": "Must be a pointer to allow for null values" }
+        }
+      },
+      "models.CreateUserRequest": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "user_id": { "type": "string" }
+        }
+      },
+      "models.DocumentCollectionResponse": {
+        "type": "object",
+        "properties": {
+          "created_at": { "type": "string" },
+          "description": { "type": "string" },
+          "document_count": { "type": "integer", "description": "Number of documents in the collection" },
+          "document_embedded_count": { "type": "integer", "description": "Number of documents with embeddings" },
+          "embedding_dimensions": { "type": "integer" },
+          "embedding_model_name": { "type": "string" },
+          "is_auto_embedded": { "type": "boolean" },
+          "is_indexed": { "type": "boolean" },
+          "is_normalized": { "type": "boolean" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "name": { "type": "string" },
+          "updated_at": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.DocumentResponse": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "created_at": { "type": "string" },
+          "document_id": { "type": "string" },
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "is_embedded": { "type": "boolean" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "updated_at": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.DocumentSearchPayload": {
+        "type": "object",
+        "properties": {
+          "collection_name": { "type": "string" },
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "min_score": { "type": "number", "description": "TODO: implement for documents" },
+          "mmr_lambda": { "type": "number" },
+          "search_type": { "$ref": "#/components/schemas/models.SearchType" },
+          "text": { "type": "string" }
+        }
+      },
+      "models.DocumentSearchResult": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "created_at": { "type": "string" },
+          "document_id": { "type": "string" },
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "is_embedded": { "type": "boolean" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "score": { "type": "number" },
+          "updated_at": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.DocumentSearchResultPage": {
+        "type": "object",
+        "properties": {
+          "current_page": { "type": "integer" },
+          "query_vector": { "type": "array", "items": { "type": "number" } },
+          "result_count": { "type": "integer" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/models.DocumentSearchResult" } },
+          "total_pages": { "type": "integer" }
+        }
+      },
+      "models.GetDocumentListRequest": {
+        "type": "object",
+        "properties": {
+          "document_ids": { "type": "array", "items": { "type": "string" } },
+          "uuids": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "models.Memory": {
+        "type": "object",
+        "properties": {
+          "messages": { "type": "array", "items": { "$ref": "#/components/schemas/models.Message" } },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "summary": { "$ref": "#/components/schemas/models.Summary" }
+        }
+      },
+      "models.MemorySearchPayload": {
+        "type": "object",
+        "properties": {
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "min_score": { "type": "number" },
+          "mmr_lambda": { "type": "number" },
+          "search_scope": { "$ref": "#/components/schemas/models.SearchScope" },
+          "search_type": { "$ref": "#/components/schemas/models.SearchType" },
+          "text": { "type": "string" }
+        }
+      },
+      "models.MemorySearchResult": {
+        "type": "object",
+        "properties": {
+          "embedding": { "type": "array", "items": { "type": "number" } },
+          "message": { "$ref": "#/components/schemas/models.Message" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "score": { "type": "number" },
+          "summary": { "$ref": "#/components/schemas/models.Summary" }
+        }
+      },
+      "models.Message": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "created_at": { "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "role": { "type": "string" },
+          "role_type": { "type": "string" },
+          "token_count": { "type": "integer" },
+          "updated_at": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.Question": { "type": "object", "properties": { "question": { "type": "string" } } },
+      "models.SearchScope": {
+        "type": "string",
+        "enum": ["messages", "summary"],
+        "x-enum-varnames": ["SearchScopeMessages", "SearchScopeSummary"]
+      },
+      "models.SearchType": {
+        "type": "string",
+        "enum": ["similarity", "mmr"],
+        "x-enum-varnames": ["SearchTypeSimilarity", "SearchTypeMMR"]
+      },
+      "models.Session": {
+        "type": "object",
+        "properties": {
+          "created_at": { "type": "string" },
+          "deleted_at": { "type": "string" },
+          "id": { "type": "integer" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "project_uuid": { "type": "string" },
+          "session_id": { "type": "string" },
+          "updated_at": { "type": "string" },
+          "user_id": { "type": "string", "description": "Must be a pointer to allow for null values" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.Summary": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "created_at": { "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "related_message_uuids": { "type": "array", "items": { "type": "string" } },
+          "token_count": { "type": "integer" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.SummaryListResponse": {
+        "type": "object",
+        "properties": {
+          "row_count": { "type": "integer" },
+          "summaries": { "type": "array", "items": { "$ref": "#/components/schemas/models.Summary" } },
+          "total_count": { "type": "integer" }
+        }
+      },
+      "models.UpdateDocumentCollectionRequest": {
+        "type": "object",
+        "properties": {
+          "description": { "maxLength": 1000, "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } }
+        }
+      },
+      "models.UpdateDocumentListRequest": {
+        "required": ["uuid"],
+        "type": "object",
+        "properties": {
+          "document_id": { "maxLength": 40, "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.UpdateDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "document_id": { "maxLength": 40, "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } }
+        }
+      },
+      "models.UpdateSessionRequest": {
+        "type": "object",
+        "properties": {
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "session_id": { "type": "string" }
+        }
+      },
+      "models.UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "user_id": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      },
+      "models.User": {
+        "type": "object",
+        "properties": {
+          "created_at": { "type": "string" },
+          "deleted_at": { "type": "string" },
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "id": { "type": "integer" },
+          "last_name": { "type": "string" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "object" } },
+          "project_uuid": { "type": "string" },
+          "session_count": { "type": "integer" },
+          "updated_at": { "type": "string" },
+          "user_id": { "type": "string" },
+          "uuid": { "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Type \"Api-Key\" followed by a space and JWT token.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "x-original-swagger-version": "2.0"
+}

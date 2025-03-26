@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-pagination`",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -52,10 +53,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "GET",
@@ -203,10 +205,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "GET",
@@ -292,7 +295,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Meta": {
@@ -350,7 +353,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

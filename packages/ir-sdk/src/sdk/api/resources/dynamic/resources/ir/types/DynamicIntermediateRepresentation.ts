@@ -12,16 +12,23 @@ import * as FernIr from "../../../../../index";
  */
 export interface DynamicIntermediateRepresentation {
     /**
-     * The version of the dynamic IR. This is independent from the verison
+     * The version of the dynamic IR. This is independent from the version
      * of the primary IR.
      */
     version: "1.0.0";
     types: Record<FernIr.TypeId, FernIr.dynamic.NamedType>;
     endpoints: Record<FernIr.EndpointId, FernIr.dynamic.Endpoint>;
+    environments: FernIr.EnvironmentsConfig | undefined;
     /**
      * The headers that are required on every request. These headers
      * are typically included in the SDK's client constructor.
      */
     headers: FernIr.dynamic.NamedParameter[] | undefined;
-    environments: FernIr.EnvironmentsConfig | undefined;
+    /**
+     * The path parameters that are required on every request. These
+     * path parameters are typically included in the SDK's client
+     * constructor.
+     */
+    pathParameters: FernIr.dynamic.NamedParameter[] | undefined;
+    generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
 }

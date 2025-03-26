@@ -130,7 +130,6 @@ client.user.create_user(
 
 The name of the user to create.
 This name is unique to each user.
-
     
 </dd>
 </dl>
@@ -141,8 +140,7 @@ This name is unique to each user.
 **age:** `typing.Optional[int]` 
 
 The age of the user.
-This propery is not required.
-
+This property is not required.
     
 </dd>
 </dl>

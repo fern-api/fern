@@ -1,0 +1,16 @@
+## 0.51.12
+**`(fix):`** The Fern Definition now allows you to declare status codes for the response without having a type.
+This is useful for `204` response status codes.
+
+```yml users.yml
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    update:
+      path: ""
+      response:
+        status-code: 204
+```
+
+

@@ -40,4 +40,12 @@ class User extends JsonSerializableType
         $this->metadataTags = $values['metadataTags'];
         $this->extraProperties = $values['extraProperties'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

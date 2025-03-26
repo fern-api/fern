@@ -438,7 +438,7 @@ from seed import SeedExhaustive
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.params.get_with_allow_multiple_query(
 	query="query",
-	numer=1
+	number=1
 )
 
 ```
@@ -586,6 +586,17 @@ from seed import SeedExhaustive
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.endpoints.primitive.get_and_return_base_64(
 	request="SGVsbG8gd29ybGQh"
+)
+
+```
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.put.add(
+	id="id"
 )
 
 ```

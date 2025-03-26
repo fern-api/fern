@@ -11658,6 +11658,7 @@ You can view the currently authorised admin along with the embedded app object (
               "path": "/me",
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "optional<root.Admin>",
               },
               "source": {
@@ -11735,6 +11736,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.ActivityLogList",
               },
               "source": {
@@ -11779,6 +11781,7 @@ You can view the currently authorised admin along with the embedded app object (
               "path": "/admins",
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.Admins",
               },
               "source": {
@@ -11836,6 +11839,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
               "response": {
                 "docs": "Admin found",
+                "status-code": 200,
                 "type": "optional<Admin>",
               },
               "source": {
@@ -11986,6 +11990,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "optional<Admin>",
               },
               "source": {
@@ -12088,6 +12093,7 @@ service:
       response:
         docs: Successful response
         type: optional<root.Admin>
+        status-code: 200
       examples:
         - name: Successful response
           response:
@@ -12145,6 +12151,7 @@ service:
       response:
         docs: Successful response
         type: optional<Admin>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -12245,6 +12252,7 @@ service:
       response:
         docs: Successful response
         type: root.ActivityLogList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -12292,6 +12300,7 @@ service:
       response:
         docs: Successful response
         type: root.Admins
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -12326,6 +12335,7 @@ service:
       response:
         docs: Admin found
         type: optional<Admin>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -13534,6 +13544,7 @@ imports:
               },
               "response": {
                 "docs": "article created",
+                "status-code": 200,
                 "type": "Article",
               },
               "source": {
@@ -13574,6 +13585,7 @@ imports:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.DeletedArticleObject",
               },
               "source": {
@@ -13640,6 +13652,7 @@ imports:
               "path": "/articles",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.Articles",
               },
               "source": {
@@ -14114,6 +14127,7 @@ imports:
               },
               "response": {
                 "docs": "Article found",
+                "status-code": 200,
                 "type": "Article",
               },
               "source": {
@@ -14204,6 +14218,7 @@ imports:
               },
               "response": {
                 "docs": "Search successful",
+                "status-code": 200,
                 "type": "ArticleSearchResponse",
               },
               "source": {
@@ -15139,6 +15154,7 @@ imports:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Article",
               },
               "source": {
@@ -15399,6 +15415,7 @@ service:
       response:
         docs: successful
         type: root.Articles
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -15451,6 +15468,7 @@ service:
       response:
         docs: article created
         type: Article
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -16295,6 +16313,7 @@ service:
       response:
         docs: Article found
         type: Article
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -16723,6 +16742,7 @@ service:
       response:
         docs: successful
         type: Article
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -17556,6 +17576,7 @@ service:
       response:
         docs: successful
         type: root.DeletedArticleObject
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -17600,6 +17621,7 @@ service:
       response:
         docs: Search successful
         type: ArticleSearchResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -17950,6 +17972,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.CompanyAttachedContacts",
               },
               "source": {
@@ -17999,6 +18022,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.CompanyAttachedSegments",
               },
               "source": {
@@ -18078,6 +18102,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -18162,6 +18187,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -18372,6 +18398,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -18462,6 +18489,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -18502,6 +18530,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.DeletedCompanyObject",
               },
               "source": {
@@ -18586,6 +18615,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -18691,6 +18721,7 @@ When using the Companies endpoint and the pages object to iterate through the re
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.Companies",
               },
               "source": {
@@ -18814,6 +18845,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.Companies",
               },
               "source": {
@@ -18908,6 +18940,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "optional<root.CompanyScroll>",
               },
               "source": {
@@ -19106,6 +19139,7 @@ service:
       response:
         docs: Successful
         type: root.Companies
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19186,6 +19220,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19244,6 +19279,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19305,6 +19341,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19361,6 +19398,7 @@ service:
       response:
         docs: Successful
         type: root.DeletedCompanyObject
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19388,6 +19426,7 @@ service:
       response:
         docs: Successful
         type: root.CompanyAttachedContacts
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19478,6 +19517,7 @@ service:
       response:
         docs: Successful
         type: root.CompanyAttachedSegments
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -19540,6 +19580,7 @@ service:
       response:
         docs: Successful
         type: root.Companies
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -19625,6 +19666,7 @@ service:
       response:
         docs: Successful
         type: optional<root.CompanyScroll>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -19688,6 +19730,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19828,6 +19871,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -20020,6 +20064,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactArchived",
               },
               "source": {
@@ -20110,6 +20155,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Contact",
               },
               "source": {
@@ -20150,6 +20196,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactDeleted",
               },
               "source": {
@@ -20258,6 +20305,7 @@ types:
               "path": "/contacts",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactList",
               },
               "source": {
@@ -20367,6 +20415,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Contact",
               },
               "source": {
@@ -20591,6 +20640,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactList",
               },
               "source": {
@@ -20686,6 +20736,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Contact",
               },
               "source": {
@@ -20723,6 +20774,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactUnarchived",
               },
               "source": {
@@ -20877,6 +20929,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Contact",
               },
               "source": {
@@ -20951,6 +21004,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ContactAttachedCompanies",
               },
               "source": {
@@ -21000,6 +21054,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.Segments",
               },
               "source": {
@@ -21089,6 +21144,7 @@ The data property will show a combined list of:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.SubscriptionTypeList",
               },
               "source": {
@@ -21138,6 +21194,7 @@ The data property will show a combined list of:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.Tags",
               },
               "source": {
@@ -21383,6 +21440,7 @@ service:
       response:
         docs: successful
         type: root.ContactAttachedCompanies
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -21438,6 +21496,7 @@ service:
       response:
         docs: successful
         type: root.Segments
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -21483,6 +21542,7 @@ service:
       response:
         docs: Successful
         type: root.SubscriptionTypeList
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -21539,6 +21599,7 @@ service:
       response:
         docs: successful
         type: root.Tags
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -21571,6 +21632,7 @@ service:
       response:
         docs: successful
         type: Contact
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -21680,6 +21742,7 @@ service:
       response:
         docs: successful
         type: Contact
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -21750,6 +21813,7 @@ service:
       response:
         docs: successful
         type: root.ContactDeleted
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -21790,6 +21854,7 @@ service:
       response:
         docs: successful
         type: Contact
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -22073,6 +22138,7 @@ service:
       response:
         docs: successful
         type: root.ContactList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -22172,6 +22238,7 @@ service:
       response:
         docs: successful
         type: root.ContactList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -22258,6 +22325,7 @@ service:
       response:
         docs: successful
         type: Contact
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -22322,6 +22390,7 @@ service:
       response:
         docs: successful
         type: root.ContactArchived
+        status-code: 200
       examples:
         - name: successful
           path-parameters:
@@ -22347,6 +22416,7 @@ service:
       response:
         docs: successful
         type: root.ContactUnarchived
+        status-code: 200
       examples:
         - name: successful
           path-parameters:
@@ -22935,6 +23005,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               },
               "response": {
                 "docs": "Attach a contact to a conversation",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -23080,6 +23151,7 @@ It is not possible to use this endpoint with Workflows.
               },
               "response": {
                 "docs": "Assign a conversation using assignment rules",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -23372,6 +23444,7 @@ It is not possible to use this endpoint with Workflows.
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "optional<tickets.Ticket>",
               },
               "source": {
@@ -23462,6 +23535,7 @@ This will return the Message model that has been created.
               },
               "response": {
                 "docs": "conversation created",
+                "status-code": 200,
                 "type": "messages.Message",
               },
               "source": {
@@ -24208,6 +24282,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               },
               "response": {
                 "docs": "Detach a contact from a group conversation",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -24236,11 +24311,29 @@ You can optionally request the result page size and the cursor to start after to
                     "body": {
                       "data": [
                         {
-                          "created_at": 1674917488,
-                          "id": "12312",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1674917488,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -24285,6 +24378,7 @@ You can optionally request the result page size and the cursor to start after to
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.PaginatedResponse",
               },
               "source": {
@@ -24313,9 +24407,7 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "request": {
                     "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
+                    "message_type": "close",
                     "type": "admin",
                   },
                   "response": {
@@ -24430,11 +24522,9 @@ You can optionally request the result page size and the cursor to start after to
                     "id": "123",
                   },
                   "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
-                    "message_type": "assignment",
-                    "type": "admin",
+                    "admin_id": "5017691",
+                    "message_type": "snoozed",
+                    "snoozed_until": 1673609604,
                   },
                   "response": {
                     "body": {
@@ -24548,11 +24638,8 @@ You can optionally request the result page size and the cursor to start after to
                     "id": "123",
                   },
                   "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
-                    "message_type": "assignment",
-                    "type": "admin",
+                    "admin_id": "5017690",
+                    "message_type": "open",
                   },
                   "response": {
                     "body": {
@@ -24668,7 +24755,6 @@ You can optionally request the result page size and the cursor to start after to
                   "request": {
                     "admin_id": "12345",
                     "assignee_id": "4324241",
-                    "body": "Let me pass you over to one of my colleagues.",
                     "message_type": "assignment",
                     "type": "admin",
                   },
@@ -24789,9 +24875,7 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "request": {
                     "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
+                    "message_type": "close",
                     "type": "admin",
                   },
                   "response": {
@@ -24916,6 +25000,7 @@ You can optionally request the result page size and the cursor to start after to
               },
               "response": {
                 "docs": "Assign a conversation",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -25183,6 +25268,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               },
               "response": {
                 "docs": "Redact a conversation part",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -25709,6 +25795,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               },
               "response": {
                 "docs": "User last conversation reply",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -25852,6 +25939,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
               },
               "response": {
                 "docs": "conversation found",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -26082,6 +26170,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.ConversationList",
               },
               "source": {
@@ -26434,6 +26523,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               },
               "response": {
                 "docs": "conversation found",
+                "status-code": 200,
                 "type": "Conversation",
               },
               "source": {
@@ -26741,6 +26831,7 @@ service:
       response:
         docs: successful
         type: root.PaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -26759,11 +26850,28 @@ service:
                 total_pages: 1
               total_count: 1
               data:
-                - type: newsfeed
-                  id: '12312'
-                  name: My Newsfeed
-                  created_at: 1674917488
-                  updated_at: 1674917488
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     createConversation:
       path: /conversations
       method: POST
@@ -26804,6 +26912,7 @@ service:
       response:
         docs: conversation created
         type: messages.Message
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -26880,6 +26989,7 @@ service:
       response:
         docs: conversation found
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -26994,6 +27104,7 @@ service:
       response:
         docs: conversation found
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -27551,6 +27662,7 @@ service:
       response:
         docs: successful
         type: root.ConversationList
+        status-code: 200
       examples:
         - name: successful
           request:
@@ -27649,6 +27761,7 @@ service:
       response:
         docs: User last conversation reply
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -28045,6 +28158,7 @@ service:
       response:
         docs: Assign a conversation
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -28054,11 +28168,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
+            message_type: close
           response:
             body:
               type: conversation
@@ -28140,11 +28252,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            admin_id: '5017691'
+            snoozed_until: 1673609604
+            message_type: snoozed
           response:
             body:
               type: conversation
@@ -28226,11 +28336,8 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            admin_id: '5017690'
+            message_type: open
           response:
             body:
               type: conversation
@@ -28312,11 +28419,10 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
             assignee_id: '4324241'
-            body: Let me pass you over to one of my colleagues.
+            message_type: assignment
           response:
             body:
               type: conversation
@@ -28401,11 +28507,9 @@ service:
           path-parameters:
             id: '123'
           request:
-            message_type: assignment
             type: admin
             admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
+            message_type: close
           response:
             body:
               type: conversation
@@ -28506,6 +28610,7 @@ service:
       response:
         docs: Assign a conversation using assignment rules
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -28630,6 +28735,7 @@ service:
       response:
         docs: Attach a contact to a conversation
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -28935,6 +29041,7 @@ service:
       response:
         docs: Detach a contact from a group conversation
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -29488,6 +29595,7 @@ service:
       response:
         docs: Redact a conversation part
         type: Conversation
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -29691,6 +29799,7 @@ service:
       response:
         docs: successful
         type: optional<tickets.Ticket>
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:
@@ -30387,6 +30496,7 @@ types:
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "DataAttribute",
               },
               "source": {
@@ -30804,6 +30914,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.DataAttributeList",
               },
               "source": {
@@ -31014,6 +31125,7 @@ You can update a data attribute.
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "DataAttribute",
               },
               "source": {
@@ -31314,6 +31426,7 @@ service:
       response:
         docs: Successful response
         type: root.DataAttributeList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -31692,6 +31805,7 @@ service:
       response:
         docs: Successful
         type: DataAttribute
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -31901,6 +32015,7 @@ service:
       response:
         docs: Successful
         type: DataAttribute
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -32182,6 +32297,7 @@ You can optionally define the result page size as well with the `per_page` param
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.DataEventSummary",
               },
               "source": {
@@ -32458,6 +32574,7 @@ service:
       response:
         docs: Successful response
         type: root.DataEventSummary
+        status-code: 200
       errors:
         - root.UnauthorizedError
     createDataEvent:
@@ -32683,6 +32800,7 @@ docs: Everything about your Data Events
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "DataExport",
               },
               "source": {
@@ -32749,6 +32867,7 @@ The only parameters you need to provide are the range of dates that you want exp
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "DataExport",
               },
               "source": {
@@ -32822,6 +32941,7 @@ Your exported message data will be streamed continuously back down to you in a g
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "DataExport",
               },
               "source": {
@@ -32942,6 +33062,7 @@ Your exported message data will be streamed continuously back down to you in a g
       response:
         docs: successful
         type: DataExport
+        status-code: 200
       examples:
         - name: successful
           request:
@@ -32982,6 +33103,7 @@ Your exported message data will be streamed continuously back down to you in a g
       response:
         docs: successful
         type: DataExport
+        status-code: 200
       examples:
         - name: successful
           path-parameters:
@@ -33007,6 +33129,7 @@ Your exported message data will be streamed continuously back down to you in a g
       response:
         docs: successful
         type: DataExport
+        status-code: 200
       examples:
         - name: successful
           path-parameters:
@@ -33561,6 +33684,7 @@ types:
               },
               "response": {
                 "docs": "collection created",
+                "status-code": 200,
                 "type": "Collection",
               },
               "source": {
@@ -33601,6 +33725,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.DeletedCollectionObject",
               },
               "source": {
@@ -33670,6 +33795,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               "path": "/help_center/collections",
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.Collections",
               },
               "source": {
@@ -33709,6 +33835,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               "path": "/help_center/help_centers",
               "response": {
                 "docs": "Help Centers found",
+                "status-code": 200,
                 "type": "HelpCenterList",
               },
               "source": {
@@ -33945,6 +34072,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
               "response": {
                 "docs": "Collection found",
+                "status-code": 200,
                 "type": "Collection",
               },
               "source": {
@@ -33989,6 +34117,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
               "response": {
                 "docs": "Collection found",
+                "status-code": 200,
                 "type": "HelpCenter",
               },
               "source": {
@@ -34466,6 +34595,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Collection",
               },
               "source": {
@@ -34618,6 +34748,7 @@ service:
       response:
         docs: Successful
         type: root.Collections
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -34696,6 +34827,7 @@ service:
       response:
         docs: collection created
         type: Collection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -35050,6 +35182,7 @@ service:
       response:
         docs: Collection found
         type: Collection
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -35259,6 +35392,7 @@ service:
       response:
         docs: successful
         type: Collection
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -35616,6 +35750,7 @@ service:
       response:
         docs: successful
         type: root.DeletedCollectionObject
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -35645,6 +35780,7 @@ service:
       response:
         docs: Collection found
         type: HelpCenter
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -35674,6 +35810,7 @@ service:
       response:
         docs: Help Centers found
         type: HelpCenterList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -35991,6 +36128,7 @@ This will return the Message model that has been created.
               },
               "response": {
                 "docs": "admin message created",
+                "status-code": 200,
                 "type": "Message",
               },
               "source": {
@@ -36098,6 +36236,7 @@ service:
       response:
         docs: admin message created
         type: Message
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -36346,6 +36485,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "NewsItem",
               },
               "source": {
@@ -36386,6 +36526,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.DeletedObject",
               },
               "source": {
@@ -36409,11 +36550,29 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1674917488,
-                          "id": "12312",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1674917488,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -36443,6 +36602,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.PaginatedResponse",
               },
               "source": {
@@ -36463,18 +36623,54 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1719492976,
-                          "id": "29",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1719492976,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                         {
-                          "created_at": 1719492976,
-                          "id": "30",
-                          "name": "My Newsfeed",
-                          "type": "newsfeed",
-                          "updated_at": 1719492976,
+                          "body": "We are excited to announce the launch of News Items, a new content type in Intercom enabling you to announce product updates, company news, promotions, events and more with your customers.",
+                          "cover_image_url": "https://example.com/cover.jpg",
+                          "created_at": 1610589632,
+                          "deliver_silently": true,
+                          "id": "141",
+                          "labels": [
+                            "Product Update",
+                          ],
+                          "newsfeed_assignments": [
+                            {
+                              "newsfeed_id": 198313,
+                              "published_at": 1674917488,
+                            },
+                          ],
+                          "reactions": [
+                            "👍",
+                          ],
+                          "sender_id": 123,
+                          "state": "draft",
+                          "title": "New feature: News Items",
+                          "type": "news-item",
+                          "updated_at": 1610589632,
+                          "workspace_id": "t74hdn32",
                         },
                       ],
                       "pages": {
@@ -36498,6 +36694,7 @@ types:
               "path": "/news/news_items",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.PaginatedResponse",
               },
               "source": {
@@ -36518,18 +36715,18 @@ types:
                     "body": {
                       "data": [
                         {
-                          "created_at": 1719492987,
-                          "id": "68",
-                          "name": "Visitor Feed",
+                          "created_at": 1674917488,
+                          "id": "12312",
+                          "name": "My Newsfeed",
                           "type": "newsfeed",
-                          "updated_at": 1719492987,
+                          "updated_at": 1674917488,
                         },
                         {
-                          "created_at": 1719492987,
-                          "id": "69",
-                          "name": "Visitor Feed",
+                          "created_at": 1674917488,
+                          "id": "12312",
+                          "name": "My Newsfeed",
                           "type": "newsfeed",
-                          "updated_at": 1719492987,
+                          "updated_at": 1674917488,
                         },
                       ],
                       "pages": {
@@ -36553,6 +36750,7 @@ types:
               "path": "/news/newsfeeds",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.PaginatedResponse",
               },
               "source": {
@@ -36614,6 +36812,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "NewsItem",
               },
               "source": {
@@ -36654,6 +36853,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Newsfeed",
               },
               "source": {
@@ -36769,6 +36969,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "NewsItem",
               },
               "source": {
@@ -36923,6 +37124,7 @@ service:
       response:
         docs: successful
         type: root.PaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -36940,16 +37142,50 @@ service:
                 total_pages: 1
               total_count: 2
               data:
-                - type: newsfeed
-                  id: '29'
-                  name: My Newsfeed
-                  created_at: 1719492976
-                  updated_at: 1719492976
-                - type: newsfeed
-                  id: '30'
-                  name: My Newsfeed
-                  created_at: 1719492976
-                  updated_at: 1719492976
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     createNewsItem:
       path: /news/news_items
       method: POST
@@ -36965,6 +37201,7 @@ service:
       response:
         docs: successful
         type: NewsItem
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -37021,6 +37258,7 @@ service:
       response:
         docs: successful
         type: NewsItem
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -37067,6 +37305,7 @@ service:
       response:
         docs: successful
         type: NewsItem
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -37144,6 +37383,7 @@ service:
       response:
         docs: successful
         type: root.DeletedObject
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -37173,6 +37413,7 @@ service:
       response:
         docs: successful
         type: root.PaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -37192,11 +37433,28 @@ service:
                 total_pages: 0
               total_count: 0
               data:
-                - type: newsfeed
-                  id: '12312'
-                  name: My Newsfeed
-                  created_at: 1674917488
-                  updated_at: 1674917488
+                - id: '141'
+                  workspace_id: t74hdn32
+                  title: 'New feature: News Items'
+                  body: >-
+                    We are excited to announce the launch of News Items, a new
+                    content type in Intercom enabling you to announce product
+                    updates, company news, promotions, events and more with your
+                    customers.
+                  sender_id: 123
+                  state: draft
+                  newsfeed_assignments:
+                    - newsfeed_id: 198313
+                      published_at: 1674917488
+                  labels:
+                    - Product Update
+                  cover_image_url: https://example.com/cover.jpg
+                  reactions:
+                    - 👍
+                  deliver_silently: true
+                  created_at: 1610589632
+                  updated_at: 1610589632
+                  type: news-item
     listNewsfeeds:
       path: /news/newsfeeds
       method: GET
@@ -37208,6 +37466,7 @@ service:
       response:
         docs: successful
         type: root.PaginatedResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -37225,16 +37484,16 @@ service:
                 total_pages: 1
               total_count: 2
               data:
-                - type: newsfeed
-                  id: '68'
-                  name: Visitor Feed
-                  created_at: 1719492987
-                  updated_at: 1719492987
-                - type: newsfeed
-                  id: '69'
-                  name: Visitor Feed
-                  created_at: 1719492987
-                  updated_at: 1719492987
+                - id: '12312'
+                  name: My Newsfeed
+                  created_at: 1674917488
+                  updated_at: 1674917488
+                  type: newsfeed
+                - id: '12312'
+                  name: My Newsfeed
+                  created_at: 1674917488
+                  updated_at: 1674917488
+                  type: newsfeed
     retrieveNewsfeed:
       path: /news/newsfeeds/{id}
       method: GET
@@ -37252,6 +37511,7 @@ service:
       response:
         docs: successful
         type: Newsfeed
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -37572,6 +37832,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "Note",
               },
               "source": {
@@ -37678,6 +37939,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.NoteList",
               },
               "source": {
@@ -37745,6 +38007,7 @@ types:
               },
               "response": {
                 "docs": "Note found",
+                "status-code": 200,
                 "type": "Note",
               },
               "source": {
@@ -37831,6 +38094,7 @@ service:
       response:
         docs: Successful response
         type: root.NoteList
+        status-code: 200
       errors:
         - root.NotFoundError
       examples:
@@ -37924,6 +38188,7 @@ service:
       response:
         docs: Successful response
         type: Note
+        status-code: 200
       errors:
         - root.NotFoundError
       examples:
@@ -38041,6 +38306,7 @@ service:
       response:
         docs: Note found
         type: Note
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -38182,6 +38448,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "root.SegmentList",
               },
               "source": {
@@ -38226,6 +38493,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "Segment",
               },
               "source": {
@@ -38311,6 +38579,7 @@ service:
       response:
         docs: Successful response
         type: root.SegmentList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -38350,6 +38619,7 @@ service:
       response:
         docs: Successful response
         type: Segment
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -38567,6 +38837,7 @@ This will return a subscription type model for the subscription type that was ad
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "SubscriptionType",
               },
               "source": {
@@ -38628,6 +38899,7 @@ This will return a subscription type model for the subscription type that was ad
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "SubscriptionType",
               },
               "source": {
@@ -38679,6 +38951,7 @@ This will return a subscription type model for the subscription type that was ad
               "path": "/subscription_types",
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "root.SubscriptionTypeList",
               },
               "source": {
@@ -38806,6 +39079,7 @@ service:
       response:
         docs: Successful
         type: SubscriptionType
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -38899,6 +39173,7 @@ service:
       response:
         docs: Successful
         type: SubscriptionType
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -38936,6 +39211,7 @@ service:
       response:
         docs: Successful
         type: root.SubscriptionTypeList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -39123,6 +39399,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "optional<root.PhoneSwitch>",
               },
               "source": {
@@ -39164,6 +39441,7 @@ service:
       response:
         docs: successful
         type: optional<root.PhoneSwitch>
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -39326,6 +39604,7 @@ docs: Everything about Switch
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39416,6 +39695,7 @@ docs: Everything about Switch
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39506,6 +39786,7 @@ docs: Everything about Switch
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39627,6 +39908,7 @@ Each operation will return a tag object.
               },
               "response": {
                 "docs": "Action successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39706,6 +39988,7 @@ Each operation will return a tag object.
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39818,6 +40101,7 @@ Each operation will return a tag object.
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39930,6 +40214,7 @@ Each operation will return a tag object.
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -39977,6 +40262,7 @@ This will return a tag object.
               },
               "response": {
                 "docs": "Tag found",
+                "status-code": 200,
                 "type": "Tag",
               },
               "source": {
@@ -40018,6 +40304,7 @@ This will return a tag object.
               "path": "/tags",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.Tags",
               },
               "source": {
@@ -40114,6 +40401,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40180,6 +40468,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40225,6 +40514,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40287,6 +40577,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40349,6 +40640,7 @@ service:
       response:
         docs: successful
         type: root.Tags
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -40390,6 +40682,7 @@ service:
       response:
         docs: Action successful
         type: Tag
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -40464,6 +40757,7 @@ service:
       response:
         docs: Tag found
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40529,6 +40823,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40591,6 +40886,7 @@ service:
       response:
         docs: successful
         type: Tag
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -40721,6 +41017,7 @@ types:
               "path": "/teams",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.TeamList",
               },
               "source": {
@@ -40772,6 +41069,7 @@ types:
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "Team",
               },
               "source": {
@@ -40831,6 +41129,7 @@ service:
       response:
         docs: successful
         type: root.TeamList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -40861,6 +41160,7 @@ service:
       response:
         docs: successful
         type: Team
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -41028,6 +41328,7 @@ types:
               },
               "response": {
                 "docs": "Ticket Type Attribute created",
+                "status-code": 200,
                 "type": "optional<root.TicketTypeAttribute>",
               },
               "source": {
@@ -41146,6 +41447,7 @@ types:
               },
               "response": {
                 "docs": "Ticket Type Attribute updated",
+                "status-code": 200,
                 "type": "optional<root.TicketTypeAttribute>",
               },
               "source": {
@@ -41268,6 +41570,7 @@ service:
       response:
         docs: Ticket Type Attribute created
         type: optional<root.TicketTypeAttribute>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -41379,6 +41682,7 @@ service:
       response:
         docs: Ticket Type Attribute updated
         type: optional<root.TicketTypeAttribute>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -41499,6 +41803,7 @@ docs: Everything about your ticket type attributes
               },
               "response": {
                 "docs": "Ticket type created",
+                "status-code": 200,
                 "type": "optional<tickets.TicketType>",
               },
               "source": {
@@ -41569,6 +41874,7 @@ docs: Everything about your ticket type attributes
               },
               "response": {
                 "docs": "Ticket type found",
+                "status-code": 200,
                 "type": "optional<tickets.TicketType>",
               },
               "source": {
@@ -41611,6 +41917,7 @@ docs: Everything about your ticket type attributes
               "path": "/ticket_types",
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.TicketTypeList",
               },
               "source": {
@@ -41696,6 +42003,7 @@ You can update a ticket type.
               },
               "response": {
                 "docs": "Ticket type updated",
+                "status-code": 200,
                 "type": "optional<tickets.TicketType>",
               },
               "source": {
@@ -41726,6 +42034,7 @@ service:
       response:
         docs: successful
         type: root.TicketTypeList
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -41770,6 +42079,7 @@ service:
       response:
         docs: Ticket type created
         type: optional<tickets.TicketType>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -41827,6 +42137,7 @@ service:
       response:
         docs: Ticket type found
         type: optional<tickets.TicketType>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -41895,6 +42206,7 @@ service:
       response:
         docs: Ticket type updated
         type: optional<tickets.TicketType>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -42101,6 +42413,7 @@ docs: Everything about your ticket types
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "optional<Ticket>",
               },
               "source": {
@@ -42223,6 +42536,7 @@ docs: Everything about your ticket types
               },
               "response": {
                 "docs": "Ticket found",
+                "status-code": 200,
                 "type": "optional<Ticket>",
               },
               "source": {
@@ -42454,6 +42768,7 @@ docs: Everything about your ticket types
               },
               "response": {
                 "docs": "Admin quick_reply reply",
+                "status-code": 200,
                 "type": "root.TicketReply",
               },
               "source": {
@@ -42661,6 +42976,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "root.TicketList",
               },
               "source": {
@@ -43438,6 +43754,7 @@ The table below shows the operators you can use to define how you want to search
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "optional<Ticket>",
               },
               "source": {
@@ -44137,6 +44454,7 @@ service:
       response:
         docs: Admin quick_reply reply
         type: root.TicketReply
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -44342,6 +44660,7 @@ service:
       response:
         docs: Successful response
         type: optional<Ticket>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -44438,6 +44757,7 @@ service:
       response:
         docs: Ticket found
         type: optional<Ticket>
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -44552,6 +44872,7 @@ service:
       response:
         docs: Successful response
         type: optional<Ticket>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -45284,6 +45605,7 @@ service:
       response:
         docs: successful
         type: root.TicketList
+        status-code: 200
       examples:
         - name: successful
           request:
@@ -45502,6 +45824,7 @@ docs: Everything about your tickets
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "contacts.Contact",
               },
               "source": {
@@ -45620,6 +45943,7 @@ docs: Everything about your tickets
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "optional<root.Visitor>",
               },
               "source": {
@@ -45834,6 +46158,7 @@ docs: Everything about your tickets
               },
               "response": {
                 "docs": "successful",
+                "status-code": 200,
                 "type": "optional<root.Visitor>",
               },
               "source": {
@@ -45870,6 +46195,7 @@ service:
       response:
         docs: successful
         type: optional<root.Visitor>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -45965,6 +46291,7 @@ service:
       response:
         docs: successful
         type: optional<root.Visitor>
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -46147,6 +46474,7 @@ service:
       response:
         docs: successful
         type: contacts.Contact
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:

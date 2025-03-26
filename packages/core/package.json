@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/fdr-cjs-sdk": "0.127.5-72dd47f6f",
+    "@fern-fern/fdr-cjs-sdk": "0.132.0-26ae3d805",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "@fern-api/venus-api-sdk": "0.10.2",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
@@ -42,6 +42,6 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/jest": "^29.5.14",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

@@ -111,7 +111,7 @@ describe("NodePre18StreamWrapper", () => {
         expect(data).toEqual({ test: "test" });
     });
 
-    it("should allow use with async iteratable stream", async () => {
+    it("should allow use with async iterable stream", async () => {
         const rawStream = (await import("readable-stream")).Readable.from(["test", "test"]);
         let data = "";
         const stream = new NodePre18StreamWrapper(rawStream);

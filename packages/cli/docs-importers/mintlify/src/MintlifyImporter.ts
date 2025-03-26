@@ -1,26 +1,21 @@
 import { readFile } from "fs/promises";
 
 import { stripLeadingSlash } from "@fern-api/core-utils";
-import { DocsImporter, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
-import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
+import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
 
 import { convertColors } from "./convertColors";
 import { convertLogo } from "./convertLogo";
 import { convertNavigationItem } from "./convertNavigationItem";
 import { MintJsonSchema, MintNavigationItem } from "./mintlify";
+import { convertInstanceName } from "./utils/convertInstanceName";
 import { getTabForMintItem } from "./utils/getTabForMintItem";
 
 export declare namespace MintlifyImporter {
     interface Args {
         absolutePathToMintJson: AbsoluteFilePath;
     }
-}
-
-interface TabInfo {
-    name: string;
-    url: string;
-    navigationBuilder: FernDocsNavigationBuilder;
 }
 
 export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
@@ -52,15 +47,41 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
         }
         this.context.logger.debug("Converted color configuration");
 
-        for (const tab of mint.tabs ?? []) {
-            this.tabUrlToInfo[tab.url] = {
-                name: tab.name,
-                url: tab.url,
-                navigationBuilder: builder.getNavigationBuilder({
-                    tabId: tab.url,
-                    tabConfig: { slug: tab.url, displayName: tab.name }
-                })
-            };
+        builder.setLayout({ layout: DEFAULT_LAYOUT });
+
+        if (mint.tabs != null) {
+            for (const tab of mint.tabs ?? []) {
+                this.tabUrlToInfo[tab.url] = {
+                    name: tab.name,
+                    url: tab.url,
+                    navigationBuilder: builder.getNavigationBuilder({
+                        tabId: tab.url,
+                        tabConfig: { slug: tab.url, displayName: tab.name }
+                    })
+                };
+            }
+        } else if (mint.anchors != null) {
+            for (const anchor of mint.anchors) {
+                if ("url" in anchor && anchor.url != null && anchor.url.startsWith("https://")) {
+                    this.tabUrlToInfo[anchor.url] = {
+                        name: anchor.name,
+                        url: anchor.url,
+                        navigationBuilder: builder.getNavigationBuilder({
+                            tabId: anchor.name,
+                            tabConfig: { href: anchor.url, displayName: anchor.name }
+                        })
+                    };
+                } else if ("url" in anchor && anchor.url != null) {
+                    this.tabUrlToInfo[anchor.url] = {
+                        name: anchor.name,
+                        url: anchor.url,
+                        navigationBuilder: builder.getNavigationBuilder({
+                            tabId: anchor.url,
+                            tabConfig: { slug: anchor.url, displayName: anchor.name }
+                        })
+                    };
+                }
+            }
         }
 
         for (const mintItem of mint.navigation) {
@@ -83,6 +104,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                 RelativeFilePath.of(stripLeadingSlash(mint.openapi))
             );
             builder.addOpenAPI({
+                relativePathToOpenAPI: RelativeFilePath.of(stripLeadingSlash(mint.openapi)),
                 absolutePathToOpenAPI
             });
         } else if (mint.openapi != null) {
@@ -92,16 +114,28 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                     RelativeFilePath.of(stripLeadingSlash(openapi))
                 );
                 builder.addOpenAPI({
+                    relativePathToOpenAPI: RelativeFilePath.of(stripLeadingSlash(openapi)),
                     absolutePathToOpenAPI
                 });
+            }
+        } else if (mint.anchors != null) {
+            for (const anchor of mint.anchors) {
+                if ("openapi" in anchor && anchor.openapi != null) {
+                    const absolutePathToOpenAPI = join(
+                        dirname(args.absolutePathToMintJson),
+                        RelativeFilePath.of(stripLeadingSlash(anchor.openapi))
+                    );
+                    builder.addOpenAPI({
+                        relativePathToOpenAPI: RelativeFilePath.of(stripLeadingSlash(anchor.openapi)),
+                        absolutePathToOpenAPI
+                    });
+                }
             }
         }
         this.context.logger.debug("Imported OpenAPI specs");
 
-        // We're currently setting one instance so that clients can generate docs out of the box,
-        // but they'll have the option to add additional instances and custom domains later.
         const instanceUrl = builder.setInstance({
-            companyName: mint.name
+            companyName: convertInstanceName(mint.name)
         });
         this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
     }

@@ -1,8 +1,7 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = User.V1;
-
-#nullable enable
+using ProtoUserV1 = User.V1;
 
 namespace SeedApi;
 
@@ -23,17 +22,34 @@ public record UserModel
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new UserModel type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UserModel FromProto(ProtoUserV1.UserModel value)
     {
-        return JsonUtils.Serialize(this);
+        return new UserModel
+        {
+            Username = value.Username,
+            Email = value.Email,
+            Age = value.Age,
+            Weight = value.Weight,
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+        };
     }
 
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.UserModel ToProto()
+    internal ProtoUserV1.UserModel ToProto()
     {
-        var result = new Proto.UserModel();
+        var result = new ProtoUserV1.UserModel();
         if (Username != null)
         {
             result.Username = Username ?? "";
@@ -57,18 +73,9 @@ public record UserModel
         return result;
     }
 
-    /// <summary>
-    /// Returns a new UserModel type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static UserModel FromProto(Proto.UserModel value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new UserModel
-        {
-            Username = value.Username,
-            Email = value.Email,
-            Age = value.Age,
-            Weight = value.Weight,
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

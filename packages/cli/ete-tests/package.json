@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.127.5-72dd47f6f",
+    "@fern-fern/fdr-cjs-sdk": "0.132.0-26ae3d805",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-typescript/fetcher": "workspace:*",
@@ -52,8 +52,8 @@
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "@types/node-fetch": "2.6.9",
-    "form-data": "4.0.0",
+    "form-data": "4.0.1",
     "jest-environment-jsdom": "^29.7.0",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

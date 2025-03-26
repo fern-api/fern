@@ -26,16 +26,16 @@ service:
       path: /just-file
       method: POST
       request:
-        name: JustFileRequet
+        name: JustFileRequest
         body:
           properties:
             file: file
-    
+
     justFileWithQueryParams:
       path: /just-file-with-query-params
       method: POST
       request:
-        name: JustFileWithQueryParamsRequet
+        name: JustFileWithQueryParamsRequest
         query-parameters:
           maybeString: optional<string>
           integer: integer
@@ -49,19 +49,19 @@ service:
         body:
           properties:
             file: file
-    
-    withContentType: 
+
+    withContentType:
       path: "/with-content-type"
       method: POST
       request:
         name: WithContentTypeRequest
         body:
           properties:
-            file: 
+            file:
               type: file
               content-type: application/octet-stream
             foo: string
-            bar: 
+            bar:
               type: MyObject
               content-type: application/json
 

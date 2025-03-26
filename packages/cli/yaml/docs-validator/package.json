@@ -31,7 +31,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.128.0-8c361ea2b",
+    "@fern-api/fdr-sdk": "0.132.0-26ae3d805",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
@@ -40,11 +40,13 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@types/estree": "^1.0.6",
     "@types/tinycolor2": "^1.4.6",
     "chalk": "^5.3.0",
     "chardet": "^2.0.0",
     "estree-walker": "^3.0.3",
     "file-type": "^19.0.0",
+    "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "mdast-util-to-hast": "^13.2.0",
     "next-mdx-remote": "^5.0.0",
@@ -59,17 +61,17 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@types/hast": "^3.0.4",
     "@fern-api/configs": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/hast": "^3.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/js-yaml": "^4.0.8",
     "@types/node": "18.15.3",
     "@types/unist": "^3.0.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "@types/jest": "^29.5.14",
-    "@types/js-yaml": "^4.0.8",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

@@ -239,8 +239,7 @@ export class ComplexQueryParamTypeDetector {
     }): boolean {
         switch (type._type) {
             case "literal":
-                // For now, we consider complex objects to be those that define any literals.
-                return true;
+                return false;
             case "map":
                 return (
                     this.isComplex({

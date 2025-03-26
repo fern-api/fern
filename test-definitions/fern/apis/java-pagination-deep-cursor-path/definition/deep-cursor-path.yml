@@ -1,0 +1,87 @@
+types:
+  D:
+    properties:
+      starting_after: optional<string>
+  C:
+    properties:
+      d: optional<D>
+  B:
+    properties:
+      c: C
+  A:
+    properties:
+      b: optional<B>
+  Response:
+    properties:
+      starting_after: optional<string>
+      results: list<string>
+  IndirectionRequired:
+    properties:
+      starting_after: optional<string>
+      results: list<string>
+  MainRequired:
+    properties:
+      indirection: IndirectionRequired
+  InlineD:
+    inline: true
+    properties:
+      starting_after: optional<string>
+  InlineC:
+    inline: true
+    properties:
+      b: optional<InlineD>
+  InlineB:
+    inline: true
+    properties:
+      c: InlineC
+  InlineA:
+    inline: true
+    properties:
+      b: optional<InlineB>
+service:
+  auth: false
+  base-path: ''
+  display-name: Long Path
+  endpoints:
+    do-thing:
+      display-name: Do Thing
+      method: POST
+      pagination:
+        cursor: $request.b.c.d.starting_after
+        next_cursor: $response.starting_after
+        results: $response.results
+      path: /
+      request:
+        body:
+          type: A
+        content-type: application/json
+      response:
+        type: Response
+    do-thing-required:
+      display-name: Do Thing
+      method: POST
+      pagination:
+        cursor: $request.indirection.starting_after
+        next_cursor: $response.starting_after
+        results: $response.results
+      path: /
+      request:
+        body:
+          type: MainRequired
+        content-type: application/json
+      response:
+        type: Response
+    do-thing-inline:
+      display-name: Do Thing
+      method: POST
+      pagination:
+        cursor: $request.b.c.b.starting_after
+        next_cursor: $response.starting_after
+        results: $response.results
+      path: /
+      request:
+        body:
+          type: InlineA
+        content-type: application/json
+      response:
+        type: Response

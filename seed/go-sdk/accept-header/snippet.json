@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.endpoint"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/accept-header/fern/client\"\n\toption \"github.com/accept-header/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Service.Endpoint(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

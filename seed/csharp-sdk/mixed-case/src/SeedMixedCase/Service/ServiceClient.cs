@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public partial class ServiceClient
@@ -16,30 +14,33 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetResourceAsync("rsc-xyz");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> GetResourceAsync(
         string resourceId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/resource/{resourceId}",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/resource/{0}",
+                        ValueConvert.ToPathParameterString(resourceId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<object>(responseBody)!;
@@ -50,20 +51,21 @@ public partial class ServiceClient
             }
         }
 
-        throw new SeedMixedCaseApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedCaseApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.ListResourcesAsync(
     ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<object>> ListResourcesAsync(
         ListResourcesRequest request,
         RequestOptions? options = null,
@@ -73,20 +75,22 @@ public partial class ServiceClient
         var _query = new Dictionary<string, object>();
         _query["page_limit"] = request.PageLimit.ToString();
         _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/resource",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/resource",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
@@ -97,10 +101,13 @@ public partial class ServiceClient
             }
         }
 
-        throw new SeedMixedCaseApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedCaseApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

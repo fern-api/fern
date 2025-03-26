@@ -14,8 +14,8 @@ export interface ParseOpenAPIOptions {
     audiences: string[] | undefined;
     /* Whether or not to make additional property values optional */
     optionalAdditionalProperties: boolean;
-    /* Whether or not to cooerce enums as literals */
-    cooerceEnumsToLiterals: boolean;
+    /* Whether or not to coerce enums as literals */
+    coerceEnumsToLiterals: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
     /* Whether or not to respect nullable properties in schemas */
@@ -30,6 +30,12 @@ export interface ParseOpenAPIOptions {
     objectQueryParameters: boolean;
     /* Whether or not to use undiscriminated unions with literals. */
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    /* Whether or not to use idiomatic request names for endpoints. */
+    shouldUseIdiomaticRequestNames: boolean;
+    /* What the default encoding should be for form data parameters. */
+    defaultFormParameterEncoding: "form" | "json" | undefined;
+    /* Whether or not to use the `bytes` type for binary responses. */
+    useBytesForBinaryResponse: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -47,7 +53,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useTitlesAsName: true,
     audiences: undefined,
     optionalAdditionalProperties: true,
-    cooerceEnumsToLiterals: true,
+    coerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
     respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
@@ -55,9 +61,12 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     preserveSchemaIds: false,
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
+    shouldUseIdiomaticRequestNames: false,
     filter: undefined,
     asyncApiNaming: "v1",
-    exampleGeneration: undefined
+    exampleGeneration: undefined,
+    defaultFormParameterEncoding: "json",
+    useBytesForBinaryResponse: false
 };
 
 export function getParseOptions({
@@ -80,10 +89,10 @@ export function getParseOptions({
             overrides?.optionalAdditionalProperties ??
             options?.optionalAdditionalProperties ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        cooerceEnumsToLiterals:
-            overrides?.cooerceEnumsToLiterals ??
-            options?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
+        coerceEnumsToLiterals:
+            overrides?.coerceEnumsToLiterals ??
+            options?.coerceEnumsToLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceEnumsToLiterals,
         respectReadonlySchemas:
             overrides?.respectReadonlySchemas ??
             options?.respectReadonlySchemas ??
@@ -105,6 +114,10 @@ export function getParseOptions({
             overrides?.shouldUseUndiscriminatedUnionsWithLiterals ??
             options?.shouldUseUndiscriminatedUnionsWithLiterals ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseUndiscriminatedUnionsWithLiterals,
+        shouldUseIdiomaticRequestNames:
+            overrides?.shouldUseIdiomaticRequestNames ??
+            options?.shouldUseIdiomaticRequestNames ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseIdiomaticRequestNames,
         objectQueryParameters:
             overrides?.objectQueryParameters ??
             options?.objectQueryParameters ??
@@ -112,6 +125,12 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
+        defaultFormParameterEncoding:
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
     };
 }

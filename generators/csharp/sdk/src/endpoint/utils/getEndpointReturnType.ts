@@ -22,6 +22,7 @@ export function getEndpointReturnType({
         },
         streaming: () => undefined,
         text: () => csharp.Type.string(),
+        bytes: () => undefined,
         _other: () => undefined
     });
 }

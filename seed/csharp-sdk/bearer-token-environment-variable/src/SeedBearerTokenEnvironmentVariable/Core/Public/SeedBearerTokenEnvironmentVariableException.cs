@@ -1,7 +1,5 @@
 using System;
 
-#nullable enable
-
 namespace SeedBearerTokenEnvironmentVariable;
 
 /// <summary>
@@ -10,4 +8,4 @@ namespace SeedBearerTokenEnvironmentVariable;
 public class SeedBearerTokenEnvironmentVariableException(
     string message,
     Exception? innerException = null
-) : Exception(message, innerException) { }
+) : Exception(message, innerException);

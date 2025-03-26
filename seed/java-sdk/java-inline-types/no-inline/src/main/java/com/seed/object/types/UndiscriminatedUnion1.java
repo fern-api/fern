@@ -138,7 +138,7 @@ public final class UndiscriminatedUnion1 {
         }
 
         @java.lang.Override
-        public UndiscriminatedUnion1 deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public UndiscriminatedUnion1 deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType1.class));

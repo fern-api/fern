@@ -19,7 +19,7 @@ export declare namespace IdempotencyRequestOptions {
     }
 }
 
-// TODO: Implrement this, also figure out the best way to handle the headerGenerator concept
+// TODO: Implement this, also figure out the best way to handle the headerGenerator concept
 export class IdempotencyRequestOptions extends RequestOptions {
     public idempotencyHeaderProperties: Property[];
 

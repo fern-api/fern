@@ -14,6 +14,10 @@ colors:
   background:
     dark: null
     light: null
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
 tabs:
   api-reference:
     slug: api-reference
@@ -43,72 +47,99 @@ navigation:
       - section: Getting Started
         contents:
           - page: SDK Installation
+            icon: null
             path: sdks.mdx
-          - page: ''
+          - page: Introduction
+            icon: null
             path: projects.mdx
-          - page: ''
+          - page: Introduction
+            icon: null
             path: users.mdx
       - section: Chat History Memory
         contents:
           - page: Overview
+            icon: null
             path: chat-history-memory/overview.mdx
           - page: Memories
+            icon: null
             path: chat-history-memory/memories.mdx
-          - page: ''
+          - page: Introduction
+            icon: null
             path: chat-history-memory/sessions.mdx
-          - page: ''
+          - page: Introduction
+            icon: null
             path: chat-history-memory/messages.mdx
-          - page: ''
+          - page: Introduction
+            icon: null
             path: chat-history-memory/summaries.mdx
           - page: Vector Search Over Chat History
+            icon: null
             path: chat-history-memory/search.mdx
       - section: Dialog Tools
         contents:
           - page: Dialog Classification
+            icon: null
             path: dialog-classification.mdx
           - page: Question Synthesis
+            icon: null
             path: question-synthesis.mdx
       - section: Working with Search
         contents:
           - page: Constructing Search Queries
+            icon: null
             path: working-with-search.mdx
       - section: Document Collections
         contents:
           - page: Document Collections
+            icon: null
             path: document-collections.mdx
       - section: Ecosystem
         contents:
           - section: LangChain
             contents:
               - page: Overview
+                icon: null
                 path: langchain/overview.mdx
               - page: ZepChatMessageHistory
+                icon: null
                 path: langchain/messagehistory.mdx
               - page: ZepVectorStore
+                icon: null
                 path: langchain/vectorstore.mdx
               - section: Examples
                 contents:
                   - page: MessageHistory Example
+                    icon: null
                     path: langchain/examples/messagehistory-example.mdx
                   - page: VectorStore Example
+                    icon: null
                     path: langchain/examples/vectorstore-example.mdx
                   - page: RAG + Message History example
+                    icon: null
                     path: langchain/examples/rag-message-history-example.mdx
           - page: Flowise
+            icon: null
             path: ecosystem/flowise.mdx
           - page: Chainlit
+            icon: null
             path: ecosystem/chainlit.mdx
           - page: LlamaIndex
+            icon: null
             path: ecosystem/llamaindex.mdx
           - page: LangFlow
+            icon: null
             path: ecosystem/langflow.mdx
           - page: n8n
+            icon: null
             path: ecosystem/n8n.mdx
       - section: Legal
         contents:
           - page: Privacy Policy
+            icon: null
             path: legal/privacy-policy.mdx
           - page: Terms of Service
+            icon: null
             path: legal/terms-of-service.mdx
           - page: Website Terms of Use
+            icon: null
             path: legal/website-terms-of-use.mdx

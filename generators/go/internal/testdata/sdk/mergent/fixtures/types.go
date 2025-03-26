@@ -37,7 +37,7 @@ type Error struct {
 	Message *string `json:"message,omitempty" url:"message,omitempty"`
 	// If the error is parameter-specific, the parameter related to the error.
 	Param *string `json:"param,omitempty" url:"param,omitempty"`
-	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
+	// If multiple errors occurred (e.g., with param validation), the list of errors that occurred.
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
 
 	extraProperties map[string]interface{}

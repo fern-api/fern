@@ -61,7 +61,7 @@ function getReferencedTypesFromReference({
         unknown: noop,
         void: noop,
         _unknown: () => {
-            throw new Error("Unknown TypeRefrence: " + reference._type);
+            throw new Error("Unknown TypeReference: " + reference._type);
         }
     });
 }

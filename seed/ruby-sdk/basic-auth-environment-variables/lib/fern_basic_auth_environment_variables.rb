@@ -13,16 +13,16 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
-    # @param password [String]
+    # @param access_token [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
-                   password: ENV["PASSWORD"])
+                   access_token: ENV["PASSWORD"])
       @request_client = SeedBasicAuthEnvironmentVariablesClient::RequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         username: username,
-        password: password
+        access_token: access_token
       )
       @basic_auth = SeedBasicAuthEnvironmentVariablesClient::BasicAuthClient.new(request_client: @request_client)
     end
@@ -36,16 +36,16 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
-    # @param password [String]
+    # @param access_token [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
-                   password: ENV["PASSWORD"])
+                   access_token: ENV["PASSWORD"])
       @async_request_client = SeedBasicAuthEnvironmentVariablesClient::AsyncRequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         username: username,
-        password: password
+        access_token: access_token
       )
       @basic_auth = SeedBasicAuthEnvironmentVariablesClient::AsyncBasicAuthClient.new(request_client: @async_request_client)
     end

@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class TraceResponsesPage
-      # @return [Integer] If present, use this to load subseqent pages.
+      # @return [Integer] If present, use this to load subsequent pages.
       #  The offset is the id of the next trace response to load.
       attr_reader :offset
       # @return [Array<SeedTraceClient::Submission::TraceResponse>]
@@ -20,7 +20,7 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param offset [Integer] If present, use this to load subseqent pages.
+      # @param offset [Integer] If present, use this to load subsequent pages.
       #  The offset is the id of the next trace response to load.
       # @param trace_responses [Array<SeedTraceClient::Submission::TraceResponse>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition

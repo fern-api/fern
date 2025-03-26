@@ -1,7 +1,5 @@
 using System;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 /// <summary>
@@ -10,4 +8,4 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 public class SeedMultiUrlEnvironmentNoDefaultException(
     string message,
     Exception? innerException = null
-) : Exception(message, innerException) { }
+) : Exception(message, innerException);

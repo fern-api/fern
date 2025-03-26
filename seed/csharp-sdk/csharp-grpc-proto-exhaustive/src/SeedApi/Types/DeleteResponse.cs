@@ -1,7 +1,5 @@
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -15,15 +13,15 @@ public record DeleteResponse
     /// <summary>
     /// Maps the DeleteResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.DeleteResponse ToProto()
+    internal ProtoDataV1Grpc.DeleteResponse ToProto()
     {
-        return new Proto.DeleteResponse();
+        return new ProtoDataV1Grpc.DeleteResponse();
     }
 
     /// <summary>
     /// Returns a new DeleteResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static DeleteResponse FromProto(Proto.DeleteResponse value)
+    internal static DeleteResponse FromProto(ProtoDataV1Grpc.DeleteResponse value)
     {
         return new DeleteResponse();
     }

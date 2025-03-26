@@ -340,7 +340,7 @@ See [outputSourceFiles](#outputSourceFiles) under SDK Configuration
 
 **Default:** `false`
 
-By default, the generated `register()` will require an implementatiion for every
+By default, the generated `register()` will require an implementation for every
 service defined in your Fern Definition.
 
 If `optionalImplementations` is enabled, then `register()` won't require any

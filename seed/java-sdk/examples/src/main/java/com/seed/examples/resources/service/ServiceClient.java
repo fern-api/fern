@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.QueryStringMapper;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.SeedExamplesApiException;
 import com.seed.examples.core.SeedExamplesException;
@@ -45,6 +46,7 @@ public class ServiceClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -86,6 +88,7 @@ public class ServiceClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -115,16 +118,18 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("metadata");
         if (request.getShallow().isPresent()) {
-            httpUrl.addQueryParameter("shallow", request.getShallow().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "shallow", request.getShallow().get().toString(), false);
         }
         if (request.getTag().isPresent()) {
-            httpUrl.addQueryParameter("tag", request.getTag().get());
+            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-API-Version", request.getXApiVersion());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -172,6 +177,7 @@ public class ServiceClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

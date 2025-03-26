@@ -39,4 +39,12 @@ class File extends JsonSerializableType
         $this->contents = $values['contents'];
         $this->info = $values['info'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

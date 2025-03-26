@@ -22,8 +22,8 @@ class UsernamePage extends JsonSerializableType
 
     /**
      * @param array{
-     *   after?: ?string,
      *   data: array<string>,
+     *   after?: ?string,
      * } $values
      */
     public function __construct(
@@ -31,5 +31,13 @@ class UsernamePage extends JsonSerializableType
     ) {
         $this->after = $values['after'] ?? null;
         $this->data = $values['data'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

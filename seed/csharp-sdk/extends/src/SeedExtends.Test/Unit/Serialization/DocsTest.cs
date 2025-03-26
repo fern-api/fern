@@ -1,11 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtends;
-
-#nullable enable
+using SeedExtends.Core;
 
 namespace SeedExtends.Test;
 
@@ -13,24 +9,32 @@ namespace SeedExtends.Test;
 public class DocsTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "docs": "Types extend this type to include a docs property."
+            }
+            """;
+        var expectedObject = new Docs
+        {
+            Docs_ = "Types extend this type to include a docs property.",
+        };
+        var deserializedObject = JsonUtils.Deserialize<Docs>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""docs"": ""Types extend this type to include a docs property.""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Docs>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var expectedJson = """
+            {
+              "docs": "Types extend this type to include a docs property."
+            }
+            """;
+        var actualObj = new Docs { Docs_ = "Types extend this type to include a docs property." };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

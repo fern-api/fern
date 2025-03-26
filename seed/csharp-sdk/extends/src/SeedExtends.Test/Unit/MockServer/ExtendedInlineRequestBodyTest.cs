@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExtends;
 
-#nullable enable
-
 namespace SeedExtends.Test.Unit.MockServer;
 
 [TestFixture]
@@ -13,6 +11,8 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
+              "docs": "docs",
+              "name": "name",
               "unique": "unique"
             }
             """;

@@ -181,7 +181,7 @@ await client.queryParam.sendList({
     operand: ">",
     maybeOperand: ">",
     operandOrColor: "red",
-    maybeOperandOrColor: undefined,
+    maybeOperandOrColor: "red",
 });
 ```
 

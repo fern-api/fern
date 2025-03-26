@@ -123,7 +123,7 @@ export class ClassReference extends AstNode {
     }
 }
 
-// Basic or primitve class references for which we don't do much
+// Basic or primitive class references for which we don't do much
 export const OpenStructClassReference = new ClassReference({
     name: RubyClass.OPENSTRUCT,
     import_: new Import({ from: "ostruct", isExternal: true })

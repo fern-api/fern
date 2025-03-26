@@ -2,6 +2,7 @@ import {
     CodeBlock,
     Enum,
     Field,
+    File,
     Func,
     FuncInvocation,
     GoTypeReference,
@@ -21,6 +22,10 @@ export function enum_(args: Enum.Args): Enum {
 
 export function field(args: Field.Args): Field {
     return new Field(args);
+}
+
+export function file(args: File.Args = {}): File {
+    return new File(args);
 }
 
 export function func(args: Func.Args): Func {
@@ -56,6 +61,7 @@ export {
     CodeBlock,
     Enum,
     Field,
+    File,
     Func,
     FuncInvocation,
     GoTypeReference as TypeReference,

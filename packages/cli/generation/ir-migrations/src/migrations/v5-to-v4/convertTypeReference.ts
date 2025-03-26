@@ -11,7 +11,7 @@ export function convertTypeReference(
         primitive: (primitive) => IrVersions.V4.types.TypeReference.primitive(primitive),
         unknown: IrVersions.V4.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error("Unkonwn TypeReference: " + typeReference._type);
+            throw new Error("Unknown TypeReference: " + typeReference._type);
         }
     });
 }

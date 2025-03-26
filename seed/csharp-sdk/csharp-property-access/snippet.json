@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpAccess;\n\nvar client = new SeedCsharpAccessClient();\nawait client.CreateUserAsync(\n    new User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+            }
+        }
+    ]
+}

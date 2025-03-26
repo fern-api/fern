@@ -13,12 +13,21 @@ func do() () {
             "https://api.fern.com",
         ),
     )
-    client.Union.Update(
+    client.Bigunion.Update(
         context.TODO(),
-        &unions.Shape{
-            Circle: &unions.Circle{
-                Radius: 1.1,
+        &unions.BigUnion{
+            NormalSweet: &unions.NormalSweet{
+                Value: "value",
             },
+            Id: "id",
+            CreatedAt: unions.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            ArchivedAt: unions.Time(
+                unions.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
         },
     )
 }

@@ -6,10 +6,10 @@ from core.datetime_utils import serialize_datetime
 class TraceResponsesPage(BaseModel):
     offset: Optional[int] = None
     """
-    If present, use this to load subseqent pages.
+    If present, use this to load subsequent pages.
     The offset is the id of the next trace response to load.
     """
-    trace_responses: List[TraceResponse] = 
+    trace_responses: List[TraceResponse] =
     class Config:
         frozen = True
         smart_union = True

@@ -36,6 +36,7 @@ type fileWriter struct {
 	inlinePathParameters         bool
 	inlineFileProperties         bool
 	unionVersion                 UnionVersion
+	packageLayout                PackageLayout
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
@@ -53,6 +54,7 @@ func newFileWriter(
 	alwaysSendRequiredProperties bool,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	packageLayout PackageLayout,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -95,6 +97,7 @@ func newFileWriter(
 		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
 		inlinePathParameters:         inlinePathParameters,
 		inlineFileProperties:         inlineFileProperties,
+		packageLayout:                packageLayout,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
@@ -173,6 +176,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.alwaysSendRequiredProperties,
 		f.inlinePathParameters,
 		f.inlineFileProperties,
+		f.packageLayout,
 		f.unionVersion,
 		f.types,
 		f.errors,

@@ -852,7 +852,7 @@
                                     }
                                 },
                                 "availability": null,
-                                "docs": "The age of the user.\nThis propery is not required.\n"
+                                "docs": "The age of the user.\nThis property is not required.\n"
                             }
                         ],
                         "extra-properties": false,

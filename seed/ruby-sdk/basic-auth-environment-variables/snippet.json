@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
             },
             "snippet": {
-                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  password: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.get_with_basic_auth",
+                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  access_token: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.get_with_basic_auth",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
             },
             "snippet": {
-                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  password: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {\"key\":\"value\"})",
+                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  access_token: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {\"key\":\"value\"})",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
             },
             "snippet": {
-                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  password: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.get_with_basic_auth",
+                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  access_token: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.get_with_basic_auth",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
             },
             "snippet": {
-                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  password: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {\"key\":\"value\"})",
+                "client": "require \"fern_basic_auth_environment_variables\"\n\nbasic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(\n  base_url: \"https://api.example.com\",\n  username: \"YOUR_USERNAME\",\n  access_token: \"YOUR_PASSWORD\"\n)\nbasic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {\"key\":\"value\"})",
                 "type": "ruby"
             }
         }

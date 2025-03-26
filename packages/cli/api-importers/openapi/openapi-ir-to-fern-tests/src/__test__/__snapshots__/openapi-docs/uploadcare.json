@@ -3537,6 +3537,7 @@ processing operations.
               },
               "response": {
                 "docs": "The group was created successfully.",
+                "status-code": 200,
                 "type": "root.GroupInfo",
               },
               "source": {
@@ -3728,6 +3729,7 @@ Log.d("TAG", group.toString())
               },
               "response": {
                 "docs": "File group information was retrieved successfully.",
+                "status-code": 200,
                 "type": "root.GroupInfo",
               },
               "source": {
@@ -3791,6 +3793,7 @@ service:
       response:
         docs: The group was created successfully.
         type: root.GroupInfo
+        status-code: 200
       errors:
         - root.CreateFilesGroupRequestBadRequestError
         - root.CreateFilesGroupRequestForbiddenError
@@ -3972,6 +3975,7 @@ service:
       response:
         docs: File group information was retrieved successfully.
         type: root.GroupInfo
+        status-code: 200
       errors:
         - root.FilesGroupInfoRequestBadRequestError
         - root.FilesGroupInfoRequestForbiddenError
@@ -4290,6 +4294,7 @@ Log.d("TAG", file.toString())
               },
               "response": {
                 "docs": "The file was uploaded successfully.",
+                "status-code": 200,
                 "type": "BaseUploadResponse",
               },
               "source": {
@@ -4517,6 +4522,7 @@ Log.d("TAG", file.toString())
               },
               "response": {
                 "docs": "File information was retrieved successfully.",
+                "status-code": 200,
                 "type": "root.FileUploadInfo",
               },
               "source": {
@@ -4936,6 +4942,7 @@ to the value of the `check_URL_duplicates` parameter.
               },
               "response": {
                 "docs": "Status Token or File Info of an already downloaded file.",
+                "status-code": 200,
                 "type": "FromUrlUploadResponse",
               },
               "source": {
@@ -5540,6 +5547,7 @@ Log.d("TAG", status.toString())
               "response": {
                 "docs": "Request was processed successfully.
 ",
+                "status-code": 200,
                 "type": "FromUrlUploadStatusResponse",
               },
               "source": {
@@ -5795,6 +5803,7 @@ Log.d("TAG", file.toString())
               },
               "response": {
                 "docs": "The file was uploaded successfully.",
+                "status-code": 200,
                 "type": "root.FileUploadInfo",
               },
               "source": {
@@ -6134,6 +6143,7 @@ to us as a value of the `part_size` parameter (in bytes).
               },
               "response": {
                 "docs": "Multipart upload started successfully.",
+                "status-code": 200,
                 "type": "MultipartFileUploadStartResponse",
               },
               "source": {
@@ -6383,6 +6393,7 @@ service:
       response:
         docs: The file was uploaded successfully.
         type: BaseUploadResponse
+        status-code: 200
       errors:
         - root.BaseUploadRequestBadRequestError
         - root.BaseUploadRequestForbiddenError
@@ -6580,6 +6591,7 @@ service:
       response:
         docs: Multipart upload started successfully.
         type: MultipartFileUploadStartResponse
+        status-code: 200
       errors:
         - root.MultipartFileUploadStartRequestBadRequestError
         - root.MultipartFileUploadStartRequestForbiddenError
@@ -6896,6 +6908,7 @@ service:
       response:
         docs: The file was uploaded successfully.
         type: root.FileUploadInfo
+        status-code: 200
       errors:
         - root.MultipartFileUploadCompleteRequestBadRequestError
         - root.MultipartFileUploadCompleteRequestForbiddenError
@@ -7207,6 +7220,7 @@ service:
       response:
         docs: Status Token or File Info of an already downloaded file.
         type: FromUrlUploadResponse
+        status-code: 200
       errors:
         - root.FromUrlUploadRequestBadRequestError
         - root.FromUrlUploadRequestForbiddenError
@@ -7541,6 +7555,7 @@ service:
         docs: |
           Request was processed successfully.
         type: FromUrlUploadStatusResponse
+        status-code: 200
       errors:
         - root.FromUrlUploadStatusRequestBadRequestError
       examples:
@@ -8073,6 +8088,7 @@ service:
       response:
         docs: File information was retrieved successfully.
         type: root.FileUploadInfo
+        status-code: 200
       errors:
         - root.FileUploadInfoRequestBadRequestError
         - root.FileUploadInfoRequestForbiddenError

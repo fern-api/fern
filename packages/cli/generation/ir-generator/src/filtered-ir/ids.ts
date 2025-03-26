@@ -41,7 +41,7 @@ export interface InlinedRequestHeadersNode {
     parametersByAudience: Record<AudienceId, Set<string>>;
 }
 
-export interface InlinedWebhookPayloadProperiesNode {
+export interface InlinedWebhookPayloadPropertiesNode {
     webhookId: WebhookId;
     /* If audience not present, keep all properties */
     propertiesByAudience: Record<AudienceId, Set<string>>;

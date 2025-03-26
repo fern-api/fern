@@ -12,6 +12,7 @@
       "name": "Sandbox"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -124,7 +125,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -202,7 +204,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -281,10 +284,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
       "authed": false,
       "method": "POST",
@@ -480,7 +484,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -565,10 +570,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.\n\nAuth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
       "authed": false,
       "method": "POST",
@@ -784,7 +790,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -805,7 +812,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -823,10 +831,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
       "authed": false,
       "method": "GET",
@@ -1079,7 +1088,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1100,7 +1110,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1118,10 +1129,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
       "authed": false,
       "method": "GET",
@@ -1610,7 +1622,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1631,7 +1644,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1649,10 +1663,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
       "authed": false,
       "method": "GET",
@@ -1880,7 +1895,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1923,10 +1939,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "The Get Carriers method returns an array of Carrier objects.",
       "authed": false,
       "method": "GET",
@@ -2039,7 +2056,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Account": {
@@ -2366,7 +2383,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2711,7 +2729,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2992,7 +3011,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3385,7 +3405,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3554,7 +3575,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

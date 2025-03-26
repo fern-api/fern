@@ -92,6 +92,7 @@
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "WholeDeprecatedSettings",
               },
               "source": {
@@ -129,6 +130,7 @@
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NotDeprecatedSettings",
               },
               "source": {
@@ -166,6 +168,7 @@
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NotDeprecatedSettings",
               },
               "source": {
@@ -206,6 +209,7 @@
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NotDeprecatedSettings",
               },
               "source": {
@@ -246,6 +250,7 @@
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NotDeprecatedSettings",
               },
               "source": {
@@ -343,6 +348,7 @@
       response:
         docs: OK
         type: WholeDeprecatedSettings
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -370,6 +376,7 @@
       response:
         docs: OK
         type: NotDeprecatedSettings
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -393,6 +400,7 @@
       response:
         docs: OK
         type: NotDeprecatedSettings
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -413,6 +421,7 @@
       response:
         docs: OK
         type: NotDeprecatedSettings
+        status-code: 200
       availability: deprecated
       examples:
         - request: {}
@@ -434,6 +443,7 @@
       response:
         docs: OK
         type: NotDeprecatedSettings
+        status-code: 200
       availability: pre-release
       examples:
         - request: {}

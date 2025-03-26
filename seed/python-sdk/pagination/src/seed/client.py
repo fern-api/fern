@@ -3,8 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .complex_.client import ComplexClient
 from .users.client import UsersClient
 from .core.client_wrapper import AsyncClientWrapper
+from .complex_.client import AsyncComplexClient
 from .users.client import AsyncUsersClient
 
 
@@ -57,6 +59,7 @@ class SeedPagination:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.complex_ = ComplexClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
 
 
@@ -109,4 +112,5 @@ class AsyncSeedPagination:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.complex_ = AsyncComplexClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)

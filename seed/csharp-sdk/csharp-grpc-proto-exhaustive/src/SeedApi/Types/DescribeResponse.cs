@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -28,9 +26,9 @@ public record DescribeResponse
     /// <summary>
     /// Maps the DescribeResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.DescribeResponse ToProto()
+    internal ProtoDataV1Grpc.DescribeResponse ToProto()
     {
-        var result = new Proto.DescribeResponse();
+        var result = new ProtoDataV1Grpc.DescribeResponse();
         if (Namespaces != null && Namespaces.Any())
         {
             foreach (var kvp in Namespaces)
@@ -57,7 +55,7 @@ public record DescribeResponse
     /// <summary>
     /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static DescribeResponse FromProto(Proto.DescribeResponse value)
+    internal static DescribeResponse FromProto(ProtoDataV1Grpc.DescribeResponse value)
     {
         return new DescribeResponse
         {

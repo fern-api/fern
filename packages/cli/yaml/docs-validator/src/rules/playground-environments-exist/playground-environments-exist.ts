@@ -14,18 +14,18 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
                 return [];
             }
 
-            const nonExistentEnviromentIds = playgroundEnvironmentIds.filter((id) => !availableEnvironmentIds.has(id));
+            const nonExistentEnvironmentIds = playgroundEnvironmentIds.filter((id) => !availableEnvironmentIds.has(id));
 
-            if (nonExistentEnviromentIds.length === 0) {
+            if (nonExistentEnvironmentIds.length === 0) {
                 return [];
             }
 
-            if (nonExistentEnviromentIds.length === 1) {
+            if (nonExistentEnvironmentIds.length === 1) {
                 return [
                     {
                         severity: "fatal",
-                        message: `The API does not contain the ${nonExistentEnviromentIds[0]} environment. ${
-                            getExistingEnviromentIds(Array.from(availableEnvironmentIds)) ?? ""
+                        message: `The API does not contain the ${nonExistentEnvironmentIds[0]} environment. ${
+                            getExistingEnvironmentIds(Array.from(availableEnvironmentIds)) ?? ""
                         }`
                     }
                 ];
@@ -34,21 +34,21 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
             return [
                 {
                     severity: "fatal",
-                    message: `The API does not contain the following enviroments: ${nonExistentEnviromentIds.join(
+                    message: `The API does not contain the following environments: ${nonExistentEnvironmentIds.join(
                         ", "
-                    )}. ${getExistingEnviromentIds(Array.from(availableEnvironmentIds)) ?? ""}`
+                    )}. ${getExistingEnvironmentIds(Array.from(availableEnvironmentIds)) ?? ""}`
                 }
             ];
         }
     })
 };
 
-function getExistingEnviromentIds(availableEnvironmentIds: string[]): string | undefined {
+function getExistingEnvironmentIds(availableEnvironmentIds: string[]): string | undefined {
     if (availableEnvironmentIds.length === 0) {
         return undefined;
     }
     if (availableEnvironmentIds.length === 1 && availableEnvironmentIds[0] != null) {
         return `The only configured environment is ${availableEnvironmentIds[0]}`;
     }
-    return `Existing enviroments include ${availableEnvironmentIds.join(", ")}.`;
+    return `Existing environments include ${availableEnvironmentIds.join(", ")}.`;
 }

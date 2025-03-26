@@ -32,7 +32,8 @@ describe("add-generator-groups", () => {
                 absolutePathToMintJson,
                 outputPath,
                 taskContext,
-                versionOfCli: "*"
+                versionOfCli: "*",
+                organization: "fern"
             });
         });
     }

@@ -8,6 +8,18 @@ inputs:
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
     required: true
+  validate-git-diff:
+    description: Whether to validate that no git-tracked files were changed
+    required: false
+    default: 'true'
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: 'false'
+  allow-unexpected-failures:
+    description: Whether to allow unexpected failures during seed generation
+    required: false
+    default: 'false'
 
 runs:
   using: "composite"
@@ -50,7 +62,7 @@ runs:
     - name: Install protoc-gen-openapi
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
-      run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
     - name: Seed Test
       if: steps.cache.outputs.cache-hit != 'true'
@@ -58,9 +70,14 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
-        pnpm seed:local test --generator ${{ inputs.generator-name }} --parallel 16
+        pnpm seed:local test \
+          --generator ${{ inputs.generator-name }} \
+          --parallel 16 \
+          ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
     - name: Validate results
+      if: inputs.validate-git-diff == 'true'
       id: validate
       shell: bash
       run: |

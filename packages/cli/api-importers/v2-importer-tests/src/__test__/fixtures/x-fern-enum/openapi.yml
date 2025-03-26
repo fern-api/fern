@@ -1,0 +1,17 @@
+openapi: 3.1.0
+info:
+  title: Test extension `x-fern-enum` for enums
+  version: 1.0.0
+paths: {}
+components: 
+  schemas: 
+    SpeechModel:
+      type: string
+      description: The speech model to use for the transcription.
+      x-fern-sdk-group-name: transcripts
+      enum:
+        - nano
+      x-fern-enum:
+        nano:
+          name: Nano
+          description: The Nano tier is a lightweight model that is optimized for speed and cost.

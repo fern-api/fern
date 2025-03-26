@@ -5,6 +5,7 @@
       "url": "https://localhost:5001"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -109,6 +110,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -153,7 +155,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/user-management",
@@ -355,6 +357,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -439,7 +442,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/user-management",
@@ -630,6 +633,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -686,7 +690,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/user-management/{id}",
@@ -869,6 +873,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -965,7 +970,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}",
@@ -1278,7 +1283,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/user-management/{id}",
@@ -1357,6 +1362,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1493,7 +1499,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}/lock",
@@ -1657,6 +1663,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1793,7 +1800,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}/unlock",
@@ -1940,6 +1947,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1984,7 +1992,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api",
@@ -2107,6 +2115,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2151,7 +2160,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Search the user by query that contains the email address or the part of the email address.",
       "authed": true,
       "method": "GET",
@@ -2303,6 +2312,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2359,7 +2369,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/users/{id}",
@@ -2513,6 +2523,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -2569,7 +2580,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/users/{id}/picture",
@@ -2649,6 +2660,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2733,7 +2745,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/translations",
@@ -2833,6 +2845,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2877,7 +2890,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/templates",
@@ -3058,6 +3071,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3114,7 +3128,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/templates/{name}",
@@ -3245,6 +3259,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3301,7 +3316,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/contributors",
@@ -3531,6 +3546,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -3627,7 +3643,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/teams/{team}/contributors",
@@ -3850,6 +3866,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3946,7 +3963,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/me",
@@ -4173,6 +4190,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4269,7 +4287,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/{id}",
@@ -4478,6 +4496,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4522,7 +4541,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all teams, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -4678,6 +4697,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -4802,7 +4822,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new team automatically.",
       "authed": true,
       "method": "POST",
@@ -4970,6 +4990,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5026,7 +5047,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}",
@@ -5211,6 +5232,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5307,7 +5329,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/teams/{team}",
@@ -5486,6 +5508,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5542,7 +5565,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/log",
@@ -5671,6 +5694,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5727,7 +5751,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
@@ -5973,6 +5997,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6029,7 +6054,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
@@ -6242,6 +6267,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6298,7 +6324,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/today",
@@ -6399,6 +6425,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6455,7 +6482,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/today",
@@ -6596,6 +6623,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6652,7 +6680,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
@@ -6824,6 +6852,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6880,7 +6909,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
@@ -7041,6 +7070,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7097,7 +7127,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/search",
@@ -7273,6 +7303,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -7409,7 +7440,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields",
@@ -7453,17 +7484,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -7865,17 +7889,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -7977,17 +7994,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -8143,6 +8153,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -8279,7 +8290,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
@@ -8333,17 +8344,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -8745,17 +8749,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -8857,17 +8854,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -9007,6 +8997,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9103,7 +9094,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
@@ -9508,17 +9499,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -9620,17 +9604,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -9770,6 +9747,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9866,7 +9844,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
@@ -10284,17 +10262,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -10396,17 +10367,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -10562,6 +10526,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10658,7 +10623,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
@@ -11086,17 +11051,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -11198,17 +11156,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -11364,6 +11315,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11460,7 +11412,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
@@ -11507,17 +11459,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -11919,17 +11864,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12031,17 +11969,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -12178,6 +12109,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12274,7 +12206,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
@@ -12685,17 +12617,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12797,17 +12722,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -12979,6 +12897,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13075,7 +12994,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -13132,17 +13051,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -13544,17 +13456,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -13656,17 +13561,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -13819,6 +13717,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13915,7 +13814,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -14336,17 +14235,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -14448,17 +14340,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -14595,6 +14480,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14691,7 +14577,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A locked field cannot be updated or deleted.",
       "authed": true,
       "method": "PUT",
@@ -15103,17 +14989,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -15215,17 +15094,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -15378,6 +15250,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15474,7 +15347,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A locked field cannot be edited or deleted.",
       "authed": true,
       "method": "PUT",
@@ -15896,17 +15769,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16008,17 +15874,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -16155,6 +16014,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16251,7 +16111,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -16663,17 +16523,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16775,17 +16628,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -16938,6 +16784,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17034,7 +16881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -17456,17 +17303,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -17568,17 +17408,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -17715,6 +17548,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17811,7 +17645,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -18223,17 +18057,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -18335,17 +18162,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -18498,6 +18318,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18594,7 +18415,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -19016,17 +18837,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19128,17 +18942,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -19275,6 +19082,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19371,7 +19179,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -19783,17 +19591,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19895,17 +19696,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -20058,6 +19852,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20154,7 +19949,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -20576,17 +20371,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -20688,17 +20476,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -20835,6 +20616,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20931,7 +20713,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -21343,17 +21125,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -21455,17 +21230,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -21618,6 +21386,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21714,7 +21483,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -22136,17 +21905,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -22248,17 +22010,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -22363,6 +22118,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22419,7 +22175,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/schemas",
@@ -22747,17 +22503,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -22881,6 +22630,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -23005,7 +22755,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas",
@@ -23426,17 +23176,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -23538,17 +23281,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -23669,6 +23405,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23725,7 +23462,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -24126,17 +23863,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -24238,17 +23968,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -24388,6 +24111,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24484,7 +24208,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -24897,17 +24621,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -25009,17 +24726,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -25218,7 +24928,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -25343,6 +25053,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25439,7 +25150,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/sync",
@@ -25866,17 +25577,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -25978,17 +25682,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -26128,6 +25825,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26224,7 +25922,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/category",
@@ -26629,17 +26327,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -26741,17 +26432,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -26891,6 +26575,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26987,7 +26672,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
@@ -27406,17 +27091,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -27518,17 +27196,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -27668,6 +27339,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27764,7 +27436,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/scripts",
@@ -28169,17 +27841,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -28281,17 +27946,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -28431,6 +28089,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28527,7 +28186,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/rules",
@@ -28932,17 +28591,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29044,17 +28696,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -29175,6 +28820,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29271,7 +28917,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/publish",
@@ -29672,17 +29318,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29784,17 +29423,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -29915,6 +29547,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30011,7 +29644,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/unpublish",
@@ -30412,17 +30045,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -30524,17 +30150,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -30634,6 +30253,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30678,7 +30298,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/actions",
@@ -30850,6 +30470,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30906,7 +30527,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules",
@@ -31061,15 +30682,8 @@
                             "value": {
                               "triggerType": {
                                 "value": {
-                                  "value": "Usage",
+                                  "value": "AssetChanged",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "limit": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -31081,48 +30695,44 @@
                         "action": {
                           "value": {
                             "value": {
+                              "appId": {
+                                "value": {
+                                  "value": "appId",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "apiKey": {
+                                "value": {
+                                  "value": "apiKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "indexName": {
+                                "value": {
+                                  "value": "indexName",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "document": {
+                                "value": {
+                                  "value": "document",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "delete": {
+                                "value": {
+                                  "value": "delete",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
                               "actionType": {
                                 "value": {
-                                  "value": "Webhook",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "url": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "method": {
-                                "value": "POST",
-                                "type": "enum"
-                              },
-                              "payload": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "payloadType": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "headers": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "sharedSecret": {
-                                "value": {
-                                  "value": "action",
+                                  "value": "Algolia",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -31250,6 +30860,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -31346,7 +30957,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/rules",
@@ -31373,15 +30984,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -31393,48 +30997,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -31546,24 +31146,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -31575,48 +31168,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -31778,7 +31367,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/run",
@@ -31893,6 +31482,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31989,7 +31579,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}",
@@ -32122,24 +31712,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32151,48 +31734,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -32382,7 +31961,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}",
@@ -32488,6 +32067,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32584,7 +32164,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/enable",
@@ -32713,24 +32293,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32742,48 +32315,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -32895,6 +32464,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32991,7 +32561,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/disable",
@@ -33120,24 +32690,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -33149,48 +32712,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -33380,7 +32939,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/trigger",
@@ -33575,7 +33134,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/run",
@@ -33747,7 +33306,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}/events",
@@ -33856,6 +33415,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33952,7 +33512,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/rules/simulate",
@@ -33979,15 +33539,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -33999,48 +33552,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -34278,6 +33827,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34334,7 +33884,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules/{id}/simulate",
@@ -34639,6 +34189,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34695,7 +34246,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules/events",
@@ -34990,7 +34541,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events",
@@ -35164,7 +34715,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/events/{id}",
@@ -35348,7 +34899,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events/{id}",
@@ -35424,6 +34975,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35468,7 +35020,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/eventtypes",
@@ -35546,6 +35098,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35602,7 +35155,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/eventtypes/{type}",
@@ -35703,6 +35256,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -35759,7 +35313,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/plans",
@@ -36004,6 +35558,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36100,7 +35655,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/plan",
@@ -36206,6 +35761,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36262,7 +35818,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/plans",
@@ -36506,6 +36062,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36602,7 +36159,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/teams/{team}/plan",
@@ -36691,6 +36248,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -36735,7 +36293,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/info",
@@ -36833,7 +36391,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
       "method": "GET",
@@ -36929,7 +36487,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
       "method": "GET",
@@ -37015,6 +36573,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37059,7 +36618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/news/features",
@@ -37154,6 +36713,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37198,7 +36758,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Provide a list of supported language codes, following the ISO2Code standard.",
       "authed": true,
       "method": "GET",
@@ -37329,6 +36889,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37385,7 +36946,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/history",
@@ -37546,6 +37107,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37602,7 +37164,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/history",
@@ -37719,6 +37281,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37763,7 +37326,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/event-consumers",
@@ -37958,6 +37521,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38054,7 +37618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/start",
@@ -38220,6 +37784,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38316,7 +37881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/stop",
@@ -38482,6 +38047,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38578,7 +38144,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/reset",
@@ -38793,7 +38359,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/diagnostics/dump",
@@ -38910,7 +38476,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/diagnostics/gcdump",
@@ -39038,6 +38604,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -39094,7 +38661,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -39468,17 +39035,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -39720,6 +39280,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -39816,7 +39377,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -40222,17 +39783,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -40410,6 +39964,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40506,7 +40061,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -40884,17 +40439,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -41092,6 +40640,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41148,7 +40697,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -41491,17 +41040,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -41603,17 +41145,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -41847,6 +41382,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41943,7 +41479,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -42359,17 +41895,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -42563,6 +42092,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42659,7 +42189,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PUT",
@@ -43075,17 +42605,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -43381,7 +42904,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -43533,6 +43056,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -43629,7 +43153,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PATCH",
@@ -44045,17 +43569,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -44308,7 +43825,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -44463,6 +43980,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44519,7 +44037,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -44903,17 +44421,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -45110,6 +44621,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45166,7 +44678,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -45550,17 +45062,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -45741,6 +45246,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -45797,7 +45303,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "availability": "Deprecated",
@@ -45900,6 +45406,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45996,7 +45503,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "availability": "Deprecated",
@@ -46256,6 +45763,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -46352,7 +45860,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -46594,6 +46102,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -46690,7 +46199,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PUT",
@@ -47086,17 +46595,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -47271,6 +46773,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47367,7 +46870,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -47751,17 +47254,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -47936,6 +47432,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48032,7 +47529,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -48416,17 +47913,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -48601,6 +48091,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48697,7 +48188,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -49081,17 +48572,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -49259,6 +48743,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49315,7 +48800,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/watching/{resource}",
@@ -49449,6 +48934,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49505,7 +48991,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
       "method": "GET",
@@ -49748,6 +49234,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -49844,7 +49331,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/comments/{commentsId}",
@@ -50118,7 +49605,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -50340,7 +49827,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -50462,6 +49949,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -50506,7 +49994,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
       "method": "GET",
@@ -50797,7 +50285,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/users/{userId}/notifications/{commentId}",
@@ -50893,6 +50381,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -50949,7 +50438,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/backups/{id}",
@@ -51104,7 +50593,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/backups/{id}",
@@ -51227,6 +50716,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -51283,7 +50773,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/backups/{id}",
@@ -51344,6 +50834,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -51400,7 +50891,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/backups",
@@ -51682,7 +51173,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/backups",
@@ -51744,6 +51235,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -51788,7 +51280,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/restore",
@@ -51969,7 +51461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/restore",
@@ -52372,6 +51864,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -52428,7 +51921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/assets/{app}/{idOrSlug}/{more}",
@@ -52773,6 +52266,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -52829,7 +52323,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "Deprecated",
       "method": "GET",
@@ -52934,6 +52428,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -52990,7 +52485,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all asset folders for the app.",
       "authed": true,
       "method": "GET",
@@ -53278,6 +52773,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -53374,7 +52870,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/assets/folders",
@@ -53574,6 +53070,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -53670,7 +53167,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}",
@@ -53939,7 +53436,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/folders/{id}",
@@ -54064,6 +53561,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54160,7 +53658,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}/parent",
@@ -54339,6 +53837,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54395,7 +53894,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all tags for assets.",
       "authed": true,
       "method": "GET",
@@ -54544,6 +54043,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54640,7 +54140,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/tags/{name}",
@@ -54911,6 +54411,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54967,7 +54468,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
       "method": "GET",
@@ -55385,7 +54886,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -55410,6 +54912,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -55546,7 +55049,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
       "method": "POST",
@@ -55884,6 +55387,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -55980,7 +55484,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
       "method": "POST",
@@ -56362,6 +55866,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -56418,7 +55923,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/assets/{id}",
@@ -56793,7 +56298,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -56818,6 +56324,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -56954,7 +56461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
       "method": "POST",
@@ -57318,6 +56825,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -57414,7 +56922,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}",
@@ -57879,7 +57387,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/{id}",
@@ -57993,6 +57501,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -58089,7 +57598,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/assets/bulk",
@@ -58267,7 +57776,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -58292,6 +57802,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -58428,7 +57939,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Use multipart request to upload an asset.",
       "authed": true,
       "method": "PUT",
@@ -58792,6 +58303,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -58888,7 +58400,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}/parent",
@@ -59216,6 +58728,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -59272,7 +58785,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/assets/scripts",
@@ -59472,6 +58985,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -59568,7 +59082,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/scripts",
@@ -59753,6 +59267,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -59809,7 +59324,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets all configured clients for the app with the specified name.",
       "authed": true,
       "method": "GET",
@@ -60043,6 +59558,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -60139,7 +59655,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new client for the app with the specified name.\nThe client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
       "authed": true,
       "method": "POST",
@@ -60401,6 +59917,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -60497,7 +60014,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Only the display name can be changed, create a new client if necessary.",
       "authed": true,
       "method": "PUT",
@@ -60742,6 +60259,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -60838,7 +60356,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
       "authed": true,
       "method": "DELETE",
@@ -61063,6 +60581,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -61119,7 +60638,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/contributors",
@@ -61350,6 +60869,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -61446,7 +60966,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/contributors",
@@ -61670,6 +61190,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -61766,7 +61287,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/me",
@@ -61994,6 +61515,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -62090,7 +61612,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/{id}",
@@ -62302,6 +61824,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -62358,7 +61881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/image",
@@ -62411,7 +61934,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -62436,6 +61960,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -62532,7 +62057,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/image",
@@ -62771,6 +62296,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -62867,7 +62393,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/image",
@@ -63102,6 +62628,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -63158,7 +62685,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/languages",
@@ -63382,6 +62909,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -63478,7 +63006,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/languages",
@@ -63730,6 +63258,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -63826,7 +63355,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/languages/{language}",
@@ -64061,6 +63590,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -64157,7 +63687,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/languages/{language}",
@@ -64372,6 +63902,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -64428,7 +63959,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/roles",
@@ -64673,6 +64204,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -64769,7 +64301,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/roles",
@@ -65011,6 +64543,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -65067,7 +64600,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/roles/permissions",
@@ -65197,6 +64730,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -65293,7 +64827,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/roles/{roleName}",
@@ -65562,6 +65096,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -65658,7 +65193,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/roles/{roleName}",
@@ -65881,6 +65416,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -65925,7 +65461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -66149,6 +65685,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -66273,7 +65810,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new app automatically.",
       "authed": true,
       "method": "POST",
@@ -66514,6 +66051,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -66558,7 +66096,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -66792,6 +66330,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -66848,7 +66387,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}",
@@ -67102,6 +66641,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -67198,7 +66738,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}",
@@ -67515,7 +67055,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}",
@@ -67614,6 +67154,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -67710,7 +67251,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/team",
@@ -67949,6 +67490,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -68005,7 +67547,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/settings",
@@ -68225,6 +67767,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -68321,7 +67864,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/settings",
@@ -68575,6 +68118,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -68631,7 +68175,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/workflows",
@@ -68875,6 +68419,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -68971,7 +68516,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/workflows",
@@ -69243,6 +68788,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -69339,7 +68885,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/workflows/{id}",
@@ -69617,6 +69163,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -69713,7 +69260,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/workflows/{id}",
@@ -69899,7 +69446,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ErrorDto": {
@@ -70337,7 +69884,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -70497,7 +70045,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -70888,7 +70437,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71319,7 +70869,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71341,7 +70892,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71706,7 +71258,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71923,7 +71476,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71981,7 +71535,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72239,7 +71794,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72360,7 +71916,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72382,7 +71939,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72484,7 +72042,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72570,7 +72129,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72726,7 +72286,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72821,7 +72382,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72966,7 +72528,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73070,7 +72633,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73469,7 +73033,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73486,7 +73051,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -73632,7 +73198,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73778,7 +73345,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -73836,7 +73404,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -73964,7 +73533,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -74349,7 +73919,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74614,7 +74185,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74662,7 +74234,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74736,7 +74309,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -75011,7 +74585,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -75027,7 +74602,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -75501,7 +75077,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -75885,7 +75462,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -76714,7 +76292,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -76887,7 +76466,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -76930,7 +76510,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77024,7 +76605,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77556,7 +77138,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77699,7 +77282,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -77840,7 +77424,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -77943,7 +77528,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77996,7 +77582,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78018,7 +77605,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78349,7 +77937,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78474,7 +78063,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -79029,7 +78619,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -79446,7 +79037,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -79463,7 +79055,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81364,7 +80957,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81705,7 +81299,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81837,7 +81432,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81854,7 +81450,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -81916,7 +81513,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81938,7 +81536,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82506,7 +82105,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82523,7 +82123,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -82728,7 +82329,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82745,7 +82347,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -84326,7 +83929,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -84466,7 +84070,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -85317,7 +84922,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -85414,7 +85020,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -85682,7 +85289,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

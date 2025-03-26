@@ -20,6 +20,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
+import { hashJSON } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -27,7 +28,6 @@ import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { hashJSON } from "../../utils/hashJSON";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
@@ -349,11 +349,11 @@ function convertExampleRequestBody({
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
     for (const [wireKey, propertyExample] of Object.entries(example.request)) {
         const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey];
-        const inilnedRequestPropertyType =
+        const inlinedRequestPropertyType =
             typeof inlinedRequestPropertyDeclaration === "string"
                 ? inlinedRequestPropertyDeclaration
                 : inlinedRequestPropertyDeclaration?.type;
-        if (inilnedRequestPropertyType != null && parseRawFileType(inilnedRequestPropertyType) != null) {
+        if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
             // HACK skip file properties
             continue;
         }
@@ -585,7 +585,7 @@ function buildUrl({
     }
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
     url = url.replaceAll("//", "/");
-    // for backwards compatiblity we always make sure that the url stats with a slash
+    // for backwards compatibility we always make sure that the url stats with a slash
     if (!url.startsWith("/")) {
         url = `/${url}`;
     }

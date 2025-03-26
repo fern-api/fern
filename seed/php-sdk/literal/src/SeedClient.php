@@ -38,13 +38,15 @@ class SeedClient
     public ReferenceClient $reference;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -52,13 +54,19 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $version
+     * @param ?bool $auditLogging
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
+        ?string $version = null,
+        ?bool $auditLogging = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -67,7 +75,14 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($version != null) {
+            $defaultHeaders['X-API-Version'] = $version;
+        }
+        if ($auditLogging != null) {
+            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging;
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(
@@ -79,10 +94,10 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->headers = new HeadersClient($this->client);
-        $this->inlined = new InlinedClient($this->client);
-        $this->path = new PathClient($this->client);
-        $this->query = new QueryClient($this->client);
-        $this->reference = new ReferenceClient($this->client);
+        $this->headers = new HeadersClient($this->client, $this->options);
+        $this->inlined = new InlinedClient($this->client, $this->options);
+        $this->path = new PathClient($this->client, $this->options);
+        $this->query = new QueryClient($this->client, $this->options);
+        $this->reference = new ReferenceClient($this->client, $this->options);
     }
 }

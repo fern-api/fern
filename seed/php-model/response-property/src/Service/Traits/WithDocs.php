@@ -4,6 +4,9 @@ namespace Seed\Service\Traits;
 
 use Seed\Core\Json\JsonProperty;
 
+/**
+ * @property string $docs
+ */
 trait WithDocs
 {
     /**

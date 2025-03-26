@@ -102,14 +102,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 continue;
             }
             const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `;
-            const docsStrs = parameter.docs.split("\n").map((line, index) => {
+            const docsStrings = parameter.docs.split("\n").map((line: string, index: number) => {
                 if (index === 0) {
                     return `${docsStrPrefix}${line}`;
                 } else {
                     return `${" ".repeat(docsStrPrefix.length)}${line}`;
                 }
             });
-            params.push(...docsStrs);
+            params.push(...docsStrings);
         }
 
         // Every method supports request options, so we always include this parameter last.
@@ -194,7 +194,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const responseVariableName = "response";
         const pageVariableName = "page";
-        const itemVaribaleName = "item";
+        const itemVariableName = "item";
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -215,7 +215,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(itemVaribaleName),
+                            ts.factory.createIdentifier(itemVariableName),
                             undefined,
                             undefined,
                             undefined
@@ -233,7 +233,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
-                                [ts.factory.createIdentifier(itemVaribaleName)]
+                                [ts.factory.createIdentifier(itemVariableName)]
                             )
                         )
                     ],

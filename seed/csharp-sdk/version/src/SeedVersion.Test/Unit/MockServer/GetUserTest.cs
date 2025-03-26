@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedVersion;
 using SeedVersion.Core;
-
-#nullable enable
 
 namespace SeedVersion.Test.Unit.MockServer;
 
@@ -12,7 +9,7 @@ namespace SeedVersion.Test.Unit.MockServer;
 public class GetUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -31,9 +28,9 @@ public class GetUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetUserAsync("userId", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -31,4 +31,12 @@ class UserPage extends JsonSerializableType
         $this->data = $values['data'];
         $this->next = $values['next'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

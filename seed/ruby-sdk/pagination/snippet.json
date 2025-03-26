@@ -2,12 +2,45 @@
     "endpoints": [
         {
             "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifierOverride": "endpoint_complex.search"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifierOverride": "endpoint_complex.search"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifierOverride": "endpoint_users.listWithCursorPagination"
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_cursor_pagination(\n  page: 1,\n  per_page: 1,\n  order: ASC,\n  starting_after: \"starting_after\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_mixed_type_cursor_pagination(cursor: \"cursor\")",
                 "type": "ruby"
             }
         },
@@ -30,6 +63,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination(\n  page: 1,\n  per_page: 1,\n  order: ASC,\n  starting_after: \"starting_after\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_double_offset_pagination(\n  page: 1.1,\n  per_page: 1.1,\n  order: ASC,\n  starting_after: \"starting_after\"\n)",
                 "type": "ruby"
             }
         },
@@ -96,6 +140,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames(starting_after: \"starting_after\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames_custom(starting_after: \"starting_after\")",
                 "type": "ruby"
             }
         },
@@ -125,6 +180,17 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
+                "identifierOverride": "endpoint_users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_mixed_type_cursor_pagination(cursor: \"cursor\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
                 "identifierOverride": "endpoint_users.listWithBodyCursorPagination"
             },
             "snippet": {
@@ -140,6 +206,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_offset_pagination(\n  page: 1,\n  per_page: 1,\n  order: ASC,\n  starting_after: \"starting_after\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_with_double_offset_pagination(\n  page: 1.1,\n  per_page: 1.1,\n  order: ASC,\n  starting_after: \"starting_after\"\n)",
                 "type": "ruby"
             }
         },
@@ -206,6 +283,17 @@
             },
             "snippet": {
                 "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames(starting_after: \"starting_after\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifierOverride": "endpoint_users.listUsernamesCustom"
+            },
+            "snippet": {
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.users.list_usernames_custom(starting_after: \"starting_after\")",
                 "type": "ruby"
             }
         },

@@ -1,0 +1,76 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "DELETE",
+          "id": "endpoint",
+          "originalEndpointId": "endpoint_service.endpoint",
+          "name": "Endpoint",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/container"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Admin not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
+          "examples": [
+            {
+              "path": "/container/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service"
+    ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

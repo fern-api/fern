@@ -1,8 +1,7 @@
 using System.Net.Http;
 using System.Threading;
+using global::System.Threading.Tasks;
 using SeedCsharpNamespaceConflict.Core;
-
-#nullable enable
 
 namespace SeedCsharpNamespaceConflict;
 
@@ -15,35 +14,37 @@ public partial class TasktestClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Tasktest.HelloAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task HelloAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task HelloAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hello",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hello",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedCsharpNamespaceConflictApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedCsharpNamespaceConflictApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

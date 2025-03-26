@@ -7,8 +7,7 @@ You can specify the environments where your server is deployed.
 
 ## Single URL environments
 
-<CodeBlock title="api.yml">
-```yaml
+```yaml title="api.yml"
 name: api
 environments:
   Production: https://www.yoursite.com
@@ -16,7 +15,6 @@ environments:
     docs: This staging environment is helpful for testing!
     url: https://www.staging.yoursite.com
 ```
-</CodeBlock>
 
 ## Multiple URLs per environment
 
@@ -24,8 +22,7 @@ You can specify multiple URLs per environment. This is helpful if you have a
 microservice architecture, and you want a single SDK to interact with multiple
 servers.
 
-<CodeBlock title="api.yml">
-```yaml
+```yaml title="api.yml"
 environments:
   Production:
     urls:
@@ -36,25 +33,21 @@ environments:
       Auth: https://auth.staging.yoursite.com
       Plants: https://plants.staging.yoursite.com
 ```
-</CodeBlock>
 
 If you choose to use this feature, you must specify a `url` for each service you define:
 
-<CodeBlock title="auth.yml">
-```yaml
+```yaml title="auth.yml"
 service:
   url: Auth
   base-path: /auth
   ...
 ```
-</CodeBlock>
 
 ## Default environment
 
 You can also provide a default environment:
 
-<CodeBlock title="api.yml">
-```yaml
+```yaml title="api.yml"
 name: api
 environments:
   Production: https://www.yoursite.com
@@ -63,7 +56,6 @@ environments:
     url: https://www.staging.yoursite.com
 default-environment: Production
 ```
-</CodeBlock>
 
 <Note> By providing a default environment, the generated SDK will be setup to hit that URL out-of-the-box. </Note>
 
@@ -71,7 +63,7 @@ default-environment: Production
 If you would like all of your endpoints to be prefixed with a path, use `base-path`. 
 
 In the example below, every endpoint is prefixed with a `/v1`: 
-```yaml api.yml
+```yaml title="api.yml"
 name: api
 base-path: /v1
 ```
@@ -80,18 +72,16 @@ base-path: /v1
 
 If you have listed environments that you want to filter, you can leverage audiences. 
 
-<CodeBlock title="api.yml">
-```yaml 
+```yaml title="api.yml"
 audiences:
   - public
 
 environments:
   Dev: 
-    url: https://dev.com
+    url: https://api.dev.buildwithfern.com
   Prod: 
-    url: https://rewards-api.getkard.com
+    url: https://api.buildwithfern.com
     audiences:
       - external
 ```
-</CodeBlock>
 

@@ -3,25 +3,22 @@ title: Augment with custom code
 description: Extend the generated SDK to provide additional functionality
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
-  or [email us](mailto:support@buildwithfern.com) to get started. 
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
-The Fern generated SDKs are designed to be extended with custom code. Your custom code 
+The Fern generated SDKs are designed to be extended with custom code. Your custom code
 can be used to add additional functionality to the SDK and will live in harmony with
 the generated code.
 
 ## Custom logic
 
-If you want to provide any logic in your SDK that goes beyond hitting the REST API, you can 
+If you want to provide any logic in your SDK that goes beyond hitting the REST API, you can
 do so by leveraging `.fernignore`.
 
 Simply add your custom files to the SDK repository and  list them out in `.fernignore`. Fern
 won't override any files that you add in `.fernignore`.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Steps>
       ### Create a new file `src/helper.ts`
 
@@ -41,9 +38,9 @@ won't override any files that you add in `.fernignore`.
         ```
       </CodeBlock>
 
-      ### Consume the helper 
+      ### Consume the helper
 
-      Now your users can consume the helper function by importing it from the SDK: 
+      Now your users can consume the helper function by importing it from the SDK:
 
       ```typescript
       import { myHelper } from "sdk/helper";
@@ -52,12 +49,12 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     <Steps>
       ### Create a new file `src/<package>/helper.py`
 
       ```python
-      def my_helper() -> None: 
+      def my_helper() -> None:
         print "Hello World!"
       ```
 
@@ -72,8 +69,8 @@ won't override any files that you add in `.fernignore`.
       </CodeBlock>
 
       ### Consume the helper
-      
-      Now your users can consume the helper function by importing it from the SDK: 
+
+      Now your users can consume the helper function by importing it from the SDK:
 
       ```python
       from package.helper import my_helper
@@ -82,7 +79,7 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Java">
+  <Tab title="Java" language="java">
     <Steps>
       ### Create a new file `src/main/java/<package>/Helper.java`
 
@@ -125,7 +122,7 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Go">
+  <Tab title="Go" language="go">
     <Steps>
       ### Create a new file `helper.go`
 
@@ -160,14 +157,14 @@ won't override any files that you add in `.fernignore`.
 
 ## Custom SDK methods
 
-Fern also allows you to add custom methods to the SDK itself (e.g. `client.my_method()` ). 
+Fern also allows you to add custom methods to the SDK itself (e.g. `client.my_method()` ).
 
-While the specifics are slightly different for each language, the underlying 
-principle is the same: **extension**. You can inherit the 
-Fern generated client and add whatever methods you want. 
+While the specifics are slightly different for each language, the underlying
+principle is the same: **extension**. You can inherit the
+Fern generated client and add whatever methods you want.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Note>
       See an example from Flatfile using this process in their [TypeScript SDK](https://github.com/FlatFilers/flatfile-node)
     </Note>
@@ -175,14 +172,14 @@ Fern generated client and add whatever methods you want.
     <Steps>
       ### Create a new file `src/wrapper/MyClient.ts`
 
-      You can import the Fern generated client from `../client` and alias it to `FernClient`. 
-      Next, extend `FernClient` and add whatever methods you want. 
+      You can import the Fern generated client from `../client` and alias it to `FernClient`.
+      Next, extend `FernClient` and add whatever methods you want.
 
       ```typescript
       import { MyClient as FernClient } from "../client"; // alias the Fern generated client
 
       export class MyClient extends FernClient { // extend the Fern generated client
-        
+
         public myHelper(): void {
           console.log("Hello world!");
         }
@@ -192,8 +189,8 @@ Fern generated client and add whatever methods you want.
 
       ### Export the extended client
 
-      Instead of exporting the generated client, export the extended client. To do this, 
-      you will need to update the `index.ts` file. 
+      Instead of exporting the generated client, export the extended client. To do this,
+      you will need to update the `index.ts` file.
 
       <CodeBlock title="src/index.ts">
         ```typescript
@@ -213,24 +210,24 @@ Fern generated client and add whatever methods you want.
       </CodeBlock>
 
       ### Consume the method
-      
-      Now your users can consume the helper function by importing it from the SDK: 
+
+      Now your users can consume the helper function by importing it from the SDK:
 
       ```typescript
       client.myHelper()
       ```
     </Steps>
   </Tab>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     <Note>
-      See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py). 
+      See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py).
     </Note>
 
     <Steps>
       ### Update `generators.yml` configuration
 
-      To add a custom method to the Python SDK, you will need to configure the 
-      generator to output the client in a file called `base_client.py`. Then, you can 
+      To add a custom method to the Python SDK, you will need to configure the
+      generator to output the client in a file called `base_client.py`. Then, you can
       extend the base client and add whatever methods you want. See the
 
       ```yaml {4-8}
@@ -241,32 +238,32 @@ Fern generated client and add whatever methods you want.
             class_name: BaseClient        # The name of the generated client you will extend
             filename: base_client.py      # The name of the file the generated client will live in
             exported_class_name: Client   # The name of the class you will be creating that extends the generated client
-            exported_filename: client.py 
+            exported_filename: client.py
       ```
 
       ### Generate the SDK
 
-      Trigger SDK generation by running `fern generate`. 
+      Trigger SDK generation by running `fern generate`.
 
       ### Create a new file `src/<package>/client.py`
 
-      You can import the Fern generated client from `../client` and alias it to `FernClient`. 
-      Next, extend `FernClient` and add whatever methods you want. 
+      You can import the Fern generated client from `../client` and alias it to `FernClient`.
+      Next, extend `FernClient` and add whatever methods you want.
 
       ```python
       from .base_client import \
         BaseClient, AsyncBaseClient
-      
-      class YourClient(BaseClient): 
+
+      class YourClient(BaseClient):
 
         def my_helper(): -> None
           print("Hello World")
-      
-      class AsyncYourClient(AsyncBaseClient): 
+
+      class AsyncYourClient(AsyncBaseClient):
 
         def my_helper(): -> None
           print("Hello World")
-      
+
       ```
 
       ### Update `.fernignore`
@@ -280,15 +277,15 @@ Fern generated client and add whatever methods you want.
       </CodeBlock>
 
       ### Consume the method
-      
-      Now your users can consume the helper function by importing it from the SDK: 
+
+      Now your users can consume the helper function by importing it from the SDK:
 
       ```typescript
       client.my_helper()
       ```
     </Steps>
   </Tab>
-  <Tab title="Java">
+  <Tab title="Java" language="java">
     <Steps>
       ### Rename the Fern-generated client
       We suggest naming your Fern-generated client something like `BaseClient`to reflect that this client will be extended.
@@ -297,7 +294,7 @@ Fern generated client and add whatever methods you want.
       - name: fernapi/fern-java-sdk
           version: "..."
           config:
-            client-class-name: BaseClient 
+            client-class-name: BaseClient
       ```
 
       ### Create a new file `src/main/java/com/example/MyClient.java`
@@ -334,7 +331,7 @@ Fern generated client and add whatever methods you want.
       ```
     </Steps>
   </Tab>
-  <Tab title="Go">
+  <Tab title="Go" language="go">
     <Steps>
       ### Create a new file `client/my_client.go`
 
@@ -346,7 +343,7 @@ Fern generated client and add whatever methods you want.
       }
 
       func NewMyClient(opts ...option.RequestOption) *MyClient {
-        retun &MyClient{
+        return &MyClient{
           Client: NewClient(opts...),
         }
       }
@@ -391,29 +388,29 @@ Fern generated client and add whatever methods you want.
 
 ## Custom dependencies
 
-To add custom dependencies to your generated SDKs, you can update your `generators.yml`. 
+To add custom dependencies to your generated SDKs, you can update your `generators.yml`.
 
-<CodeBlocks>
-  <CodeBlock title="TypeScript">
+<Tabs>
+  <Tab title="TypeScript" language="typescript">
       ```yaml {4-7}
       - name: fernapi/fern-typescript-node-sdk
         version: "..."
         config:
-          extraDependencies: 
+          extraDependencies:
             lodash-es: '1.0.0'
-          extraDevDependencies: 
+          extraDevDependencies:
             "@types/lodash-es": '1.0.0'
       ```
-  </CodeBlock>
-  <CodeBlock title="Python">
+  </Tab>
+  <Tab title="Python" language="python">
       ```yaml {4-7}
       - name: fernapi/fern-python-sdk
         version: "..."
         config:
-          extra_dependencies: 
+          extra_dependencies:
             numpy: '1.2.0'
-          extra_dev_dependencies: 
+          extra_dev_dependencies:
             requests_mock: '1.12.1'
       ```
-  </CodeBlock>
-</CodeBlocks>
+  </Tab>
+</Tabs>

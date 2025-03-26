@@ -6,6 +6,7 @@ package com.seed.crossPackageTypeNames.resources.foo;
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.MediaTypes;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
+import com.seed.crossPackageTypeNames.core.QueryStringMapper;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesException;
@@ -38,8 +39,8 @@ public class FooClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         if (request.getOptionalString().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalString", request.getOptionalString().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
         Map<String, Object> properties = new HashMap<>();
         if (request.getPublicProperty().isPresent()) {
@@ -59,7 +60,8 @@ public class FooClient {
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

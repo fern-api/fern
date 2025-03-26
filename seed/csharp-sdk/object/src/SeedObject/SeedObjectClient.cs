@@ -1,12 +1,10 @@
 using SeedObject.Core;
 
-#nullable enable
-
 namespace SeedObject;
 
 public partial class SeedObjectClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedObjectClient(ClientOptions? clientOptions = null)
     {

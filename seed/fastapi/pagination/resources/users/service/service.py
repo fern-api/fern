@@ -5,6 +5,9 @@ import typing
 from ..types.order import Order
 from ..types.list_users_pagination_response import ListUsersPaginationResponse
 import abc
+from ..types.list_users_mixed_type_pagination_response import (
+    ListUsersMixedTypePaginationResponse,
+)
 from .list_users_body_cursor_pagination_request import (
     ListUsersBodyCursorPaginationRequest,
 )
@@ -46,6 +49,11 @@ class AbstractUsersService(AbstractFernService):
     ) -> ListUsersPaginationResponse: ...
 
     @abc.abstractmethod
+    def list_with_mixed_type_cursor_pagination(
+        self, *, cursor: typing.Optional[str] = None
+    ) -> ListUsersMixedTypePaginationResponse: ...
+
+    @abc.abstractmethod
     def list_with_body_cursor_pagination(
         self, *, body: ListUsersBodyCursorPaginationRequest
     ) -> ListUsersPaginationResponse: ...
@@ -56,6 +64,16 @@ class AbstractUsersService(AbstractFernService):
         *,
         page: typing.Optional[int] = None,
         per_page: typing.Optional[int] = None,
+        order: typing.Optional[Order] = None,
+        starting_after: typing.Optional[str] = None,
+    ) -> ListUsersPaginationResponse: ...
+
+    @abc.abstractmethod
+    def list_with_double_offset_pagination(
+        self,
+        *,
+        page: typing.Optional[float] = None,
+        per_page: typing.Optional[float] = None,
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
     ) -> ListUsersPaginationResponse: ...
@@ -99,6 +117,11 @@ class AbstractUsersService(AbstractFernService):
     ) -> UsernameCursor: ...
 
     @abc.abstractmethod
+    def list_usernames_custom(
+        self, *, starting_after: typing.Optional[str] = None
+    ) -> UsernameCursor: ...
+
+    @abc.abstractmethod
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None
     ) -> UsernameContainer: ...
@@ -111,14 +134,17 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_list_with_cursor_pagination(router=router)
+        cls.__init_list_with_mixed_type_cursor_pagination(router=router)
         cls.__init_list_with_body_cursor_pagination(router=router)
         cls.__init_list_with_offset_pagination(router=router)
+        cls.__init_list_with_double_offset_pagination(router=router)
         cls.__init_list_with_body_offset_pagination(router=router)
         cls.__init_list_with_offset_step_pagination(router=router)
         cls.__init_list_with_offset_pagination_has_next_page(router=router)
         cls.__init_list_with_extended_results(router=router)
         cls.__init_list_with_extended_results_and_optional_data(router=router)
         cls.__init_list_usernames(router=router)
+        cls.__init_list_usernames_custom(router=router)
         cls.__init_list_with_global_config(router=router)
 
     @classmethod
@@ -190,6 +216,60 @@ class AbstractUsersService(AbstractFernService):
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_cursor_pagination, default_tag="users"),
+        )(wrapper)
+
+    @classmethod
+    def __init_list_with_mixed_type_cursor_pagination(
+        cls, router: fastapi.APIRouter
+    ) -> None:
+        endpoint_function = inspect.signature(
+            cls.list_with_mixed_type_cursor_pagination
+        )
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "cursor":
+                new_parameters.append(
+                    parameter.replace(default=fastapi.Query(default=None))
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.list_with_mixed_type_cursor_pagination,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.list_with_mixed_type_cursor_pagination)
+        def wrapper(
+            *args: typing.Any, **kwargs: typing.Any
+        ) -> ListUsersMixedTypePaginationResponse:
+            try:
+                return cls.list_with_mixed_type_cursor_pagination(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_with_mixed_type_cursor_pagination' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(
+            cls.list_with_mixed_type_cursor_pagination.__globals__
+        )
+
+        router.post(
+            path="/users",
+            response_model=ListUsersMixedTypePaginationResponse,
+            description=AbstractUsersService.list_with_mixed_type_cursor_pagination.__doc__,
+            **get_route_args(
+                cls.list_with_mixed_type_cursor_pagination, default_tag="users"
+            ),
         )(wrapper)
 
     @classmethod
@@ -308,6 +388,81 @@ class AbstractUsersService(AbstractFernService):
         )(wrapper)
 
     @classmethod
+    def __init_list_with_double_offset_pagination(
+        cls, router: fastapi.APIRouter
+    ) -> None:
+        endpoint_function = inspect.signature(cls.list_with_double_offset_pagination)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "page":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=None, description="Defaults to first page"
+                        )
+                    )
+                )
+            elif parameter_name == "per_page":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=None, description="Defaults to per page"
+                        )
+                    )
+                )
+            elif parameter_name == "order":
+                new_parameters.append(
+                    parameter.replace(default=fastapi.Query(default=None))
+                )
+            elif parameter_name == "starting_after":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=None,
+                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
+                        )
+                    )
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.list_with_double_offset_pagination,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.list_with_double_offset_pagination)
+        def wrapper(
+            *args: typing.Any, **kwargs: typing.Any
+        ) -> ListUsersPaginationResponse:
+            try:
+                return cls.list_with_double_offset_pagination(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_with_double_offset_pagination' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.list_with_double_offset_pagination.__globals__)
+
+        router.get(
+            path="/users",
+            response_model=ListUsersPaginationResponse,
+            description=AbstractUsersService.list_with_double_offset_pagination.__doc__,
+            **get_route_args(
+                cls.list_with_double_offset_pagination, default_tag="users"
+            ),
+        )(wrapper)
+
+    @classmethod
     def __init_list_with_body_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_body_offset_pagination)
         new_parameters: typing.List[inspect.Parameter] = []
@@ -373,7 +528,7 @@ class AbstractUsersService(AbstractFernService):
                     parameter.replace(
                         default=fastapi.Query(
                             default=None,
-                            description="The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                         )
                     )
                 )
@@ -440,7 +595,7 @@ class AbstractUsersService(AbstractFernService):
                     parameter.replace(
                         default=fastapi.Query(
                             default=None,
-                            description="The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                         )
                     )
                 )
@@ -632,6 +787,55 @@ class AbstractUsersService(AbstractFernService):
             response_model=UsernameCursor,
             description=AbstractUsersService.list_usernames.__doc__,
             **get_route_args(cls.list_usernames, default_tag="users"),
+        )(wrapper)
+
+    @classmethod
+    def __init_list_usernames_custom(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_usernames_custom)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "starting_after":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=None,
+                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
+                        )
+                    )
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.list_usernames_custom,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.list_usernames_custom)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UsernameCursor:
+            try:
+                return cls.list_usernames_custom(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_usernames_custom' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.list_usernames_custom.__globals__)
+
+        router.get(
+            path="/users",
+            response_model=UsernameCursor,
+            description=AbstractUsersService.list_usernames_custom.__doc__,
+            **get_route_args(cls.list_usernames_custom, default_tag="users"),
         )(wrapper)
 
     @classmethod

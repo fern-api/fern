@@ -1,6 +1,7 @@
 {
   "title": "Inlined path parameters",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -31,7 +32,7 @@
       "headers": [],
       "generatedRequestName": "GetUserRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
       "method": "GET",
@@ -161,10 +162,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
       "method": "GET",
@@ -252,6 +254,20 @@
             },
             "generatedName": "SearchRequestId",
             "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "organization_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "",
             "type": "primitive"
           },
           "source": {
@@ -365,10 +381,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "POST",
@@ -381,6 +398,16 @@
               "value": {
                 "value": {
                   "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "organization_id",
+              "value": {
+                "value": {
+                  "value": "organization_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -424,7 +451,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

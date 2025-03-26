@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedAliasExtends;
 
-#nullable enable
-
 namespace SeedAliasExtends.Test.Unit.MockServer;
 
 [TestFixture]
@@ -13,6 +11,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
+              "parent": "parent",
               "child": "child"
             }
             """;

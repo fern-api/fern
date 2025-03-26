@@ -32,6 +32,16 @@ export class Operator extends AstNode {
                 return "or";
             case OperatorType.And:
                 return "and";
+            case OperatorType.Add:
+                return "+";
+            case OperatorType.Subtract:
+                return "-";
+            case OperatorType.Multiply:
+                return "*";
+            case OperatorType.Divide:
+                return "/";
+            case OperatorType.Modulo:
+                return "%";
             case OperatorType.LeftShift:
                 return "<<";
             case OperatorType.RightShift:

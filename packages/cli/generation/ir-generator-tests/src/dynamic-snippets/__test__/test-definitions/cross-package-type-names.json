@@ -209,7 +209,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-b/common:Foo": {
             "type": "object",
@@ -348,7 +349,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-c/common:Foo": {
             "type": "object",
@@ -484,7 +486,8 @@
                         "value": "UUID"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_folder-d/service:Response": {
             "type": "object",
@@ -623,7 +626,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_foo:ImportingType": {
             "type": "object",
@@ -720,7 +724,8 @@
                         "value": "type_commons:Imported"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_foo:OptionalString": {
             "type": "alias",
@@ -915,7 +920,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_folder-d/service.getDirectThread": {
             "auth": null,
@@ -1033,7 +1039,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_foo.find": {
             "auth": null,
@@ -1277,8 +1284,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

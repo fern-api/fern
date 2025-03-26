@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedMultiLineDocs.Core;
 
-#nullable enable
-
 namespace SeedMultiLineDocs;
 
 public record CreateUserRequest
@@ -16,11 +14,12 @@ public record CreateUserRequest
 
     /// <summary>
     /// The age of the user.
-    /// This propery is not required.
+    /// This property is not required.
     /// </summary>
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -44,7 +44,7 @@ Initialize Fern with your OpenAPI spec:
 ```bash
 fern init --openapi ./path/to/openapi.yml
 # or
-fern init --openapi https://link.buildwithfern.com/petstore-openapi
+fern init --openapi https://link.buildwithfern.com/plantstore-openapi
 ```
 
 Your directory should look like the following:
@@ -74,6 +74,7 @@ Check out docs built with Fern:
 - [docs.vellum.ai](https://docs.vellum.ai)
 - [docs.superagent.sh](https://docs.superagent.sh/)
 - [docs.hume.ai](https://docs.hume.ai/)
+- [docs.deepgram.com](https://docs.deepgram.com/)
 
 Get started [here](https://github.com/fern-api/docs-starter-openapi).
 

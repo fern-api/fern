@@ -65,4 +65,12 @@ class SubmitRequestV2 extends JsonSerializableType
         $this->problemVersion = $values['problemVersion'] ?? null;
         $this->userId = $values['userId'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

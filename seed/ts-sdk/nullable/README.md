@@ -31,6 +31,9 @@ await client.nullable.createUser({
         updatedAt: "2024-01-15T09:30:00Z",
         avatar: "avatar",
         activated: true,
+        status: {
+            type: "active",
+        },
     },
     avatar: "avatar",
 });
@@ -85,10 +88,10 @@ const response = await client.nullable.createUser(..., {
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)

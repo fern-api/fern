@@ -16,14 +16,8 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithBodyOffsetPagination(
+    client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersBodyOffsetPaginationRequest{
-            Pagination: &fern.WithPage{
-                Page: fern.Int(
-                    1,
-                ),
-            },
-        },
+        &fern.ListUsersMixedTypeCursorPaginationRequest{},
     )
 }

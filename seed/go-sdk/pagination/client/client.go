@@ -3,6 +3,7 @@
 package client
 
 import (
+	complex "github.com/pagination/fern/complex"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
@@ -15,7 +16,8 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	Users *users.Client
+	Complex *complex.Client
+	Users   *users.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,7 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		Users:  users.NewClient(opts...),
+		header:  options.ToHeader(),
+		Complex: complex.NewClient(opts...),
+		Users:   users.NewClient(opts...),
 	}
 }

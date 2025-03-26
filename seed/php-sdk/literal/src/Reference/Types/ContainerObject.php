@@ -24,4 +24,12 @@ class ContainerObject extends JsonSerializableType
     ) {
         $this->nestedObjects = $values['nestedObjects'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

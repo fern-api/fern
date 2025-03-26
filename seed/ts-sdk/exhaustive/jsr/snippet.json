@@ -272,7 +272,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithAllowMultipleQuery({\n    query: \"query\",\n    numer: 1\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithAllowMultipleQuery({\n    query: \"query\",\n    number: 1\n});\n"
             }
         },
         {
@@ -416,6 +416,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnBase64(\"SGVsbG8gd29ybGQh\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.put.add(\"id\");\n"
             }
         },
         {

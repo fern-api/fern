@@ -69,7 +69,7 @@ export class FunctionInvocation extends AstNode {
         }
     }
 
-    private writeArgmuments(startingTabSpaces: number) {
+    private writeArguments(startingTabSpaces: number) {
         if (this.arguments_.length > 2) {
             this.addText({ stringContent: "(", appendToLastString: true });
             this.arguments_.forEach((arg, idx) =>
@@ -108,7 +108,7 @@ export class FunctionInvocation extends AstNode {
             startingTabSpaces,
             appendToLastString: true
         });
-        this.writeArgmuments(startingTabSpaces);
+        this.writeArguments(startingTabSpaces);
         this.writeBlock(startingTabSpaces);
     }
 

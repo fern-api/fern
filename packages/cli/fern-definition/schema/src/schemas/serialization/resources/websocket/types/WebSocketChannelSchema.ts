@@ -19,6 +19,7 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         auth: core.serialization.boolean(),
+        url: core.serialization.string().optional(),
         path: core.serialization.string(),
         headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
@@ -32,6 +33,7 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
 export declare namespace WebSocketChannelSchema {
     export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
+        url?: string | null;
         path: string;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;

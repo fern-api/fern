@@ -1,12 +1,10 @@
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public partial class SeedMixedCaseClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedMixedCaseClient(ClientOptions? clientOptions = null)
     {

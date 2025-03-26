@@ -1,10 +1,11 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 
 import {
     HttpEndpoint,
     HttpHeader,
-    HttpService,
     Name,
+    PrimitiveTypeV1,
     QueryParameter,
     SdkRequest,
     SdkRequestWrapper,
@@ -173,8 +174,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             case "reference":
             case "inlinedRequestBody":
                 return "json";
+            case "fileUpload":
+                return "multipartform";
+            default:
+                assertNever(this.endpoint.requestBody);
         }
-        return undefined;
     }
 
     private stringify({
@@ -189,10 +193,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): csharp.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
-        const maybeDotValue = this.isOptional({ typeReference: reference }) && (allowOptionals ?? true) ? ".Value" : "";
         if (this.isString(reference)) {
             return csharp.codeblock(`${parameter}`);
-        } else if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
+        }
+        const maybeDotValue =
+            (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
+            this.isStruct({ typeReference: reference }) &&
+            (allowOptionals ?? true)
+                ? ".Value"
+                : "";
+
+        if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
@@ -210,8 +221,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.addNamespace(this.context.getCoreNamespace());
                 writer.write(`${parameter}${maybeDotValue}.Stringify()`);
             });
+        } else if (this.shouldJsonSerialize({ typeReference: reference })) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: this.context.getJsonUtilsClassReference(),
+                        method: "Serialize",
+                        arguments_: [csharp.codeblock(`${parameter}${maybeDotValue}`)]
+                    })
+                );
+            });
         } else {
-            return csharp.codeblock(`${parameter}.ToString()`);
+            return csharp.codeblock(`${parameter}${maybeDotValue}.ToString()`);
         }
     }
 
@@ -225,35 +246,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
-            inlinedRequestBody: (inlinedRequestBody) => {
-                if (this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0) {
-                    return {
-                        requestBodyReference: `${this.getParameterName()}`
-                    };
-                }
-                const allProperties = [
-                    ...inlinedRequestBody.properties,
-                    ...(inlinedRequestBody.extendedProperties ?? [])
-                ];
-                const requestBody = csharp.dictionary({
-                    keyType: csharp.Type.string(),
-                    valueType: csharp.Type.object(),
-                    values: {
-                        type: "entries",
-                        entries: allProperties.map((property) => ({
-                            key: csharp.codeblock(`"${property.name.wireValue}"`),
-                            value: csharp.codeblock(
-                                `${this.getParameterName()}.${property.name.name.pascalCase.safeName}`
-                            )
-                        }))
-                    }
-                });
+            inlinedRequestBody: () => {
                 return {
-                    requestBodyReference: this.getRequestBodyVariableName(),
-                    code: csharp.codeblock((writer) => {
-                        writer.write(`var ${this.getRequestBodyVariableName()} = `);
-                        writer.writeNodeStatement(requestBody);
-                    })
+                    requestBodyReference: this.getParameterName()
                 };
             },
             fileUpload: () => undefined,
@@ -272,6 +267,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (typeReference.container.type === "optional") {
                     return this.isString(typeReference.container.optional);
                 }
+                if (typeReference.container.type === "nullable") {
+                    return this.isString(typeReference.container.nullable);
+                }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -281,7 +279,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
             case "primitive": {
-                return typeReference.primitive.v1 === "STRING";
+                const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
+                return csharpType.internalType.type === "string";
             }
             case "unknown": {
                 return false;
@@ -294,6 +293,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             case "container":
                 if (typeReference.container.type === "optional") {
                     return true;
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.isOptional({ typeReference: typeReference.container.nullable });
                 }
                 return false;
             case "named": {
@@ -310,6 +312,111 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
         }
+    }
+
+    private isNullable({ typeReference }: { typeReference: TypeReference }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isNullable({ typeReference: typeReference.container.optional });
+                }
+                if (typeReference.container.type === "nullable") {
+                    return true;
+                }
+                return false;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isNullable({ typeReference: declaration.shape.aliasOf });
+                }
+                return false;
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Whether is a struct in .NET
+     */
+    private isStruct({ typeReference }: { typeReference: TypeReference }): boolean {
+        return typeReference._visit<boolean>({
+            container: (container) => {
+                return container._visit<boolean>({
+                    list: () => false,
+                    map: () => false,
+                    set: () => false,
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => false,
+                            boolean: () => true,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional) => this.isStruct({ typeReference: optional }),
+                    nullable: (nullable) => this.isStruct({ typeReference: nullable }),
+                    _other: () => false
+                });
+            },
+            named: (named) => {
+                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                return declaration.shape._visit<boolean>({
+                    alias: (alias) => this.isStruct({ typeReference: alias.aliasOf }),
+                    object: () => false,
+                    undiscriminatedUnion: () => false,
+                    union: () => false,
+                    // this won't be true for forward compatible enums
+                    enum: () => true,
+                    _other: () => false
+                });
+            },
+            primitive: (primitive) => {
+                return (
+                    primitive.v2?._visit<boolean | undefined>({
+                        integer: () => true,
+                        long: () => true,
+                        uint: () => true,
+                        uint64: () => true,
+                        float: () => true,
+                        double: () => true,
+                        boolean: () => true,
+                        date: () => true,
+                        dateTime: () => true,
+                        uuid: () => true,
+                        bigInteger: () => true,
+                        string: () => false,
+                        // if typed as bytes, it's a struct
+                        // if typed as a string, it's not
+                        base64: () => false,
+                        _other: () => undefined
+                    }) ??
+                    PrimitiveTypeV1._visit<boolean>(primitive.v1, {
+                        integer: () => true,
+                        long: () => true,
+                        uint: () => true,
+                        uint64: () => true,
+                        float: () => true,
+                        double: () => true,
+                        boolean: () => true,
+                        date: () => true,
+                        dateTime: () => true,
+                        uuid: () => true,
+                        bigInteger: () => true,
+                        string: () => false,
+                        // if typed as bytes, it's a struct
+                        // if typed as a string, it's not
+                        base64: () => false,
+                        _other: () => false
+                    })
+                );
+            },
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     private isDateOrDateTime({
@@ -366,5 +473,49 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
         }
+    }
+
+    private shouldJsonSerialize({ typeReference }: { typeReference: TypeReference }): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                return container._visit({
+                    list: () => true,
+                    map: () => true,
+                    set: () => true,
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => false,
+                            boolean: () => true,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional) => {
+                        return this.shouldJsonSerialize({ typeReference: optional });
+                    },
+                    nullable: (nullable) => this.shouldJsonSerialize({ typeReference: nullable }),
+                    _other: () => false
+                });
+            },
+            named: (named) => {
+                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                return declaration.shape._visit({
+                    alias: (alias) => this.shouldJsonSerialize({ typeReference: alias.aliasOf }),
+                    object: () => true,
+                    undiscriminatedUnion: () => true,
+                    union: () => true,
+                    enum: () => false,
+                    _other: () => false
+                });
+            },
+            primitive: (primitive) => {
+                const isBoolean = primitive.v2?.type === "boolean" || primitive.v1 === "BOOLEAN";
+                if (isBoolean) {
+                    return true;
+                }
+                return false;
+            },
+            unknown: () => true,
+            _other: () => false
+        });
     }
 }

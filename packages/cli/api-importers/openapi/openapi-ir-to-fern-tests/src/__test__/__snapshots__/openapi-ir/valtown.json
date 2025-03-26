@@ -8,6 +8,7 @@
       "name": "Production"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "vals": {
@@ -161,7 +162,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -180,10 +182,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Search for vals across the platform",
       "authed": false,
       "method": "GET",
@@ -422,10 +425,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get basic details about a user, given their username",
       "authed": false,
       "method": "GET",
@@ -952,10 +956,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a val",
       "authed": false,
       "method": "GET",
@@ -1346,10 +1351,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get profile information for the current user",
       "authed": false,
       "method": "GET",
@@ -1521,7 +1527,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1540,10 +1547,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get vals liked by the current user",
       "authed": false,
       "method": "GET",
@@ -2159,7 +2167,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -2178,10 +2187,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get comments related to current user, either given or received",
       "authed": false,
       "method": "GET",
@@ -2670,7 +2680,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -2689,10 +2700,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get vals that depend on any of the user's vals",
       "authed": false,
       "method": "GET",
@@ -2950,10 +2962,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List blobs in your account",
       "authed": false,
       "method": "GET",
@@ -3041,10 +3054,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a blob’s contents.",
       "authed": false,
       "method": "GET",
@@ -3105,7 +3119,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Store data in blob storage",
       "authed": true,
       "method": "POST",
@@ -3172,7 +3186,7 @@
       "headers": [],
       "generatedRequestName": "BlobsDeleteRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Delete a blob",
       "authed": true,
       "method": "DELETE",
@@ -3245,10 +3259,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get basic information about a user",
       "authed": false,
       "method": "GET",
@@ -3437,7 +3452,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -3456,10 +3472,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List a user's vals",
       "authed": false,
       "method": "GET",
@@ -3759,7 +3776,7 @@
                                           "file": "../openapi.yml",
                                           "type": "openapi"
                                         },
-                                        "type": "undisciminated"
+                                        "type": "undiscriminated"
                                       },
                                       "type": "oneOf"
                                     },
@@ -3822,7 +3839,7 @@
                                           "type": "openapi"
                                         },
                                         "inline": true,
-                                        "type": "undisciminated"
+                                        "type": "undiscriminated"
                                       },
                                       "type": "oneOf"
                                     },
@@ -3840,7 +3857,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -3866,7 +3883,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -3927,10 +3944,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Execute a single SQLite statement and return results",
       "authed": true,
       "method": "POST",
@@ -4251,7 +4269,7 @@
                                             "file": "../openapi.yml",
                                             "type": "openapi"
                                           },
-                                          "type": "undisciminated"
+                                          "type": "undiscriminated"
                                         },
                                         "type": "oneOf"
                                       },
@@ -4314,7 +4332,7 @@
                                             "type": "openapi"
                                           },
                                           "inline": true,
-                                          "type": "undisciminated"
+                                          "type": "undiscriminated"
                                         },
                                         "type": "oneOf"
                                       },
@@ -4332,7 +4350,7 @@
                                   "file": "../openapi.yml",
                                   "type": "openapi"
                                 },
-                                "type": "undisciminated"
+                                "type": "undiscriminated"
                               },
                               "type": "oneOf"
                             },
@@ -4358,7 +4376,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -4477,10 +4495,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Execute a batch of SQLite statements and return results for all of them",
       "authed": true,
       "method": "POST",
@@ -4735,7 +4754,7 @@
                 "file": "../openapi.yml",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -4747,6 +4766,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4825,7 +4845,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
       "method": "POST",
@@ -5025,7 +5045,7 @@
                 "file": "../openapi.yml",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -5037,6 +5057,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5116,7 +5137,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
       "method": "GET",
@@ -5207,7 +5228,7 @@
       "headers": [],
       "generatedRequestName": "RunGetRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Run a val, specify any parameters in a querystring",
       "authed": false,
       "availability": "Deprecated",
@@ -5320,7 +5341,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Run a val, with arguments in the request body",
       "authed": false,
       "availability": "Deprecated",
@@ -5483,7 +5504,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -5577,7 +5598,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -5654,7 +5675,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -5670,7 +5691,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -5764,7 +5785,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -5841,7 +5862,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -5857,7 +5878,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -5951,7 +5972,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -6028,7 +6049,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -6044,7 +6065,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -6347,7 +6368,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -6421,6 +6442,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6477,7 +6499,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Send emails",
       "authed": true,
       "method": "POST",
@@ -6739,10 +6761,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Create a new val",
       "authed": true,
       "method": "POST",
@@ -7003,7 +7026,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Run an existing val or create a new one",
       "authed": true,
       "method": "PUT",
@@ -7085,10 +7108,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a val by id",
       "authed": false,
       "method": "GET",
@@ -7436,7 +7460,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Update an existing val",
       "authed": true,
       "method": "PUT",
@@ -7556,7 +7580,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a val",
       "authed": true,
       "method": "DELETE",
@@ -7742,7 +7766,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -7761,10 +7786,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "List versions of a val",
       "authed": false,
       "method": "GET",
@@ -8100,10 +8126,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Create a new version of a val",
       "authed": true,
       "method": "POST",
@@ -8397,10 +8424,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Get a specific version of a val",
       "authed": false,
       "method": "GET",
@@ -8651,7 +8679,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a specific version of a val",
       "authed": true,
       "method": "DELETE",
@@ -8773,6 +8801,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8804,7 +8833,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Cancel a running val",
       "authed": true,
       "method": "POST",
@@ -8861,7 +8890,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {
@@ -9127,7 +9156,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },

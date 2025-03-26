@@ -7,6 +7,7 @@ from .service import (
 from .types import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
     ListUsersPaginationResponse,
     NextPage,
     Order,
@@ -26,6 +27,7 @@ __all__ = [
     "ListUsersBodyOffsetPaginationRequest",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",

@@ -11,7 +11,7 @@ class Practitioner extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var string $resourceType
+     * @var 'Practitioner' $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -24,20 +24,33 @@ class Practitioner extends JsonSerializableType
 
     /**
      * @param array{
-     *   resourceType: string,
-     *   name: string,
      *   id: string,
-     *   relatedResources: array<Account|Patient|Practitioner|Script>,
+     *   relatedResources: array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )>,
      *   memo: Memo,
+     *   resourceType: 'Practitioner',
+     *   name: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->resourceType = $values['resourceType'];
-        $this->name = $values['name'];
         $this->id = $values['id'];
         $this->relatedResources = $values['relatedResources'];
         $this->memo = $values['memo'];
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -5,7 +5,7 @@ interface Accessible {
 }
 
 export function orderByAccess<T extends Accessible>(items: T[]): T[] {
-    return _orderByAccess(items, [Access.Public, Access.Protected, Access.Private]);
+    return _orderByAccess(items, [Access.Public, Access.PublicReadonly, Access.Protected, Access.Private]);
 }
 
 function _orderByAccess<T extends Accessible>(items: T[], order: Access[]): T[] {

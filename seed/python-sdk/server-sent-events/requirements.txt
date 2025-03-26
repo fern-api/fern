@@ -1,0 +1,5 @@
+httpx>=0.21.2
+httpx-sse==0.4.0
+pydantic>= 1.9.2
+pydantic-core==^2.18.2
+typing_extensions>= 4.0.0

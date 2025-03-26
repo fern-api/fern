@@ -11058,6 +11058,7 @@ errors:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.PaymentBreakDownContainer",
               },
               "source": {
@@ -11107,6 +11108,7 @@ errors:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.InvoiceDownloadContainer",
               },
               "source": {
@@ -11156,6 +11158,7 @@ errors:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.InvoiceDownloadContainer",
               },
               "source": {
@@ -11231,6 +11234,7 @@ errors:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.InvoiceListContainer",
               },
               "source": {
@@ -11314,6 +11318,7 @@ errors:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.PaymentListContainer",
               },
               "source": {
@@ -11360,6 +11365,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11400,6 +11406,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceDownloadContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11434,6 +11441,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceDownloadContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11489,6 +11497,7 @@ service:
       response:
         docs: Successful operation.
         type: root.PaymentListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11529,6 +11538,7 @@ service:
       response:
         docs: Successful operation.
         type: root.PaymentBreakDownContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11635,6 +11645,7 @@ docs: End-points to retrieve paid invoices and reciepts.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.OutputToCreateFileRefContainer",
               },
               "source": {
@@ -11691,6 +11702,7 @@ service:
       response:
         docs: Successful operation.
         type: root.OutputToCreateFileRefContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -11766,6 +11778,7 @@ service:
               "path": "/people/me",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.PeopleMeContainer",
               },
               "source": {
@@ -11879,6 +11892,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.PeopleContainer",
               },
               "source": {
@@ -11920,6 +11934,7 @@ service:
       response:
         docs: Successful operation.
         type: root.PeopleContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11988,6 +12003,7 @@ service:
       response:
         docs: Successful operation.
         type: root.PeopleMeContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -12102,6 +12118,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.PremiumResultAddedContainer",
               },
               "source": {
@@ -12164,6 +12181,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -12335,6 +12353,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractContainer",
               },
               "source": {
@@ -12503,6 +12522,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractContainerOngoingTimeBased",
               },
               "source": {
@@ -12669,6 +12689,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractContainerPaygMilestones",
               },
               "source": {
@@ -12835,6 +12856,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractContainerPaygTasks",
               },
               "source": {
@@ -13003,6 +13025,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractContainerPayAsYouGoTimeBased",
               },
               "source": {
@@ -13104,6 +13127,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -13167,6 +13191,7 @@ service:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.ContractTerminationResultContainer",
               },
               "source": {
@@ -13201,6 +13226,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainerPayAsYouGoTimeBased
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13328,6 +13354,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainerPaygTasks
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13453,6 +13480,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainerPaygMilestones
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13578,6 +13606,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainerOngoingTimeBased
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13706,6 +13735,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13874,6 +13904,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13914,6 +13945,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractTerminationResultContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -13957,6 +13989,7 @@ service:
       response:
         docs: Successful operation.
         type: root.PremiumResultAddedContainer
+        status-code: 201
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -14006,6 +14039,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -14085,7 +14119,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -14097,6 +14134,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ContractDocumentContainer",
               },
               "source": {
@@ -14123,11 +14161,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                     "contract_id": "37nex2x",
                   },
                   "response": {
-                    "body": {
-                      "data": {
-                        "updated": true,
-                      },
-                    },
+                    "body": {},
                   },
                 },
               ],
@@ -14142,6 +14176,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 204,
                 "type": "root.GenericResultUpdated",
               },
               "source": {
@@ -14206,6 +14241,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -14278,6 +14314,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.FinalPaymentCalculatedContainer",
               },
               "source": {
@@ -14328,7 +14365,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -14340,6 +14380,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ContractDocumentContainer",
               },
               "source": {
@@ -14386,6 +14427,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.AlternateEmailList",
               },
               "source": {
@@ -14526,6 +14568,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ContractContainer",
               },
               "source": {
@@ -14651,6 +14694,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ContractListContainer",
               },
               "source": {
@@ -14688,6 +14732,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "path": "/contract-templates",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ContractTemplateListContainer",
               },
               "source": {
@@ -14753,6 +14798,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -14823,6 +14869,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.ResponseEstimateFirstPaymentContainer",
               },
               "source": {
@@ -14887,6 +14934,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -14934,6 +14982,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -15028,6 +15077,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15080,6 +15130,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15198,6 +15249,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15236,12 +15288,15 @@ service:
         name: AddContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
         docs: Successful operation.
         type: root.ContractDocumentContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15277,12 +15332,15 @@ service:
         name: EditContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
         docs: Successful operation.
         type: root.ContractDocumentContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15317,6 +15375,7 @@ service:
       response:
         docs: Successful operation.
         type: root.AlternateEmailList
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15353,6 +15412,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15388,6 +15448,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultUpdated
+        status-code: 204
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15398,9 +15459,7 @@ service:
         - path-parameters:
             contract_id: 37nex2x
           response:
-            body:
-              data:
-                updated: true
+            body: {}
       audiences:
         - external
     inviteToSignContract:
@@ -15424,6 +15483,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15460,6 +15520,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -15509,6 +15570,7 @@ service:
       response:
         docs: Successful operation.
         type: root.FinalPaymentCalculatedContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -15549,6 +15611,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ResponseEstimateFirstPaymentContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -15589,6 +15652,7 @@ service:
       response:
         docs: Successful operation.
         type: root.ContractTemplateListContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -15714,6 +15778,7 @@ types:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.EorContractCreatedContainer",
               },
               "source": {
@@ -15809,6 +15874,7 @@ types:
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.EorCountryValidationsContainer",
               },
               "source": {
@@ -15844,6 +15910,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorCountryValidationsContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -15917,6 +15984,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorContractCreatedContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -16012,7 +16080,8 @@ docs: Employee of Record (EOR).
                     },
                     "contract": {
                       "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
-                      "employment_type": "FULL_TIME",
+                      "employment_type": "PART_TIME",
+                      "part_time_percentage": 1.1,
                       "start_date": "1999-12-31",
                     },
                     "employee_details": {
@@ -16042,8 +16111,9 @@ docs: Employee of Record (EOR).
                         "contract": {
                           "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
                           "employee_number": 1.1,
-                          "employment_type": "FULL_TIME",
+                          "employment_type": "PART_TIME",
                           "end_date": "1999-12-31",
+                          "part_time_percentage": 1.1,
                           "start_date": "1999-12-31",
                         },
                         "employee_details": {
@@ -16082,6 +16152,7 @@ docs: Employee of Record (EOR).
               },
               "response": {
                 "docs": "Hris direct employee object that was created or edited",
+                "status-code": 201,
                 "type": "root.HrisDirectEmployeeContainer",
               },
               "source": {
@@ -16113,6 +16184,7 @@ service:
       response:
         docs: Hris direct employee object that was created or edited
         type: root.HrisDirectEmployeeContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -16139,9 +16211,10 @@ service:
               gross_annual_salary: 1.1
               currency: USD
             contract:
-              employment_type: FULL_TIME
               contract_oid: pdcMQe0cXCCXWTkqkdytw
               start_date: '1999-12-31'
+              part_time_percentage: 1.1
+              employment_type: PART_TIME
           response:
             body:
               data:
@@ -16163,11 +16236,12 @@ service:
                   gross_annual_salary: 1.1
                   currency: USD
                 contract:
-                  employment_type: FULL_TIME
                   contract_oid: pdcMQe0cXCCXWTkqkdytw
                   start_date: '1999-12-31'
                   employee_number: 1.1
                   end_date: '1999-12-31'
+                  part_time_percentage: 1.1
+                  employment_type: PART_TIME
                 vacation_info:
                   vacation_accrual_start_date: vacation_accrual_start_date
                   vacation_yearly_policy: 1.1
@@ -16248,6 +16322,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.InvoiceAdjustmentCreatedContainer",
               },
               "source": {
@@ -16312,6 +16387,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -16370,6 +16446,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -16426,6 +16503,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -16568,6 +16646,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.InvoiceAdjustmentListContainer",
               },
               "source": {
@@ -16715,6 +16794,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.InvoiceAdjustmentListContainer",
               },
               "source": {
@@ -16779,6 +16859,7 @@ docs: API end-points related to HRIS data.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultUpdated",
               },
               "source": {
@@ -16862,6 +16943,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceAdjustmentListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -16983,6 +17065,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceAdjustmentListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17055,6 +17138,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceAdjustmentCreatedContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17101,6 +17185,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17142,6 +17227,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultUpdated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17183,6 +17269,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17220,6 +17307,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17304,6 +17392,7 @@ docs: >-
               "path": "/lookups/countries",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.CountryListContainer",
               },
               "source": {
@@ -17345,6 +17434,7 @@ docs: >-
               "path": "/lookups/currencies",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.CurrencyListContainer",
               },
               "source": {
@@ -17403,6 +17493,7 @@ docs: >-
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.JobTitleListContainer",
               },
               "source": {
@@ -17455,6 +17546,7 @@ docs: >-
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.SeniorityListContainer",
               },
               "source": {
@@ -17495,6 +17587,7 @@ docs: >-
               "path": "/lookups/time-off-types",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TimeoffTypeListContainer",
               },
               "source": {
@@ -17524,6 +17617,7 @@ service:
       response:
         docs: Successful operation.
         type: root.CountryListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17557,6 +17651,7 @@ service:
       response:
         docs: Successful operation.
         type: root.CurrencyListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17596,6 +17691,7 @@ service:
       response:
         docs: Successful operation.
         type: root.JobTitleListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17636,6 +17732,7 @@ service:
       response:
         docs: Successful operation.
         type: root.SeniorityListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17666,6 +17763,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TimeoffTypeListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -17761,6 +17859,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -17830,6 +17929,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -17897,6 +17997,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -17949,6 +18050,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -18012,6 +18114,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.MilestoneListContainer",
               },
               "source": {
@@ -18078,6 +18181,7 @@ docs: Helper end-points for choosing options for other operations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.MilestoneContainer",
               },
               "source": {
@@ -18111,6 +18215,7 @@ service:
       response:
         docs: Successful operation.
         type: root.MilestoneListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18161,6 +18266,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18201,6 +18307,7 @@ service:
       response:
         docs: Successful operation.
         type: root.MilestoneContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18249,6 +18356,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18291,6 +18399,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18333,6 +18442,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18432,6 +18542,7 @@ docs: Helper end-points for managing milestones of Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -18501,6 +18612,7 @@ docs: Helper end-points for managing milestones of Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.OffCyclePaymentContainer",
               },
               "source": {
@@ -18567,6 +18679,7 @@ docs: Helper end-points for managing milestones of Deel contracts
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.OffCyclePaymentListContainer",
               },
               "source": {
@@ -18600,6 +18713,7 @@ service:
       response:
         docs: Successful operation.
         type: root.OffCyclePaymentListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18655,6 +18769,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18694,6 +18809,7 @@ service:
       response:
         docs: Successful operation.
         type: root.OffCyclePaymentContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18812,6 +18928,7 @@ docs: End-points to manage off-cycle payments for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.AgreementListContainer",
               },
               "source": {
@@ -18855,6 +18972,7 @@ docs: End-points to manage off-cycle payments for a given contract
               "path": "/legal-entities",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.LegalEntityListContainer",
               },
               "source": {
@@ -18896,6 +19014,7 @@ docs: End-points to manage off-cycle payments for a given contract
               "path": "/organizations",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.OrganizationListContainer",
               },
               "source": {
@@ -18937,6 +19056,7 @@ docs: End-points to manage off-cycle payments for a given contract
               "path": "/teams",
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TeamListContainer",
               },
               "source": {
@@ -18966,6 +19086,7 @@ service:
       response:
         docs: Successful operation.
         type: root.LegalEntityListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -18997,6 +19118,7 @@ service:
       response:
         docs: Successful operation.
         type: root.OrganizationListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19024,6 +19146,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TeamListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19063,6 +19186,7 @@ service:
       response:
         docs: Successful operation.
         type: root.AgreementListContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -19167,6 +19291,7 @@ docs: Helper end-points for additional information about your organizations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -19245,6 +19370,7 @@ docs: Helper end-points for additional information about your organizations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.TaskListContainer",
               },
               "source": {
@@ -19324,6 +19450,7 @@ docs: Helper end-points for additional information about your organizations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.TaskListContainer",
               },
               "source": {
@@ -19385,6 +19512,7 @@ docs: Helper end-points for additional information about your organizations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -19442,6 +19570,7 @@ docs: Helper end-points for additional information about your organizations
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TaskListContainer",
               },
               "source": {
@@ -19475,6 +19604,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TaskListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19520,6 +19650,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19562,6 +19693,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TaskListContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19616,6 +19748,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TaskListContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19668,6 +19801,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -19831,6 +19965,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.EorTimeoffsItemContainer",
               },
               "source": {
@@ -19880,6 +20015,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -20018,6 +20154,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.EorTimeoffsItemContainer",
               },
               "source": {
@@ -20116,6 +20253,7 @@ docs: End-points to manage tasks for a given contract
               "path": "/time-offs/",
               "response": {
                 "docs": "successful operation",
+                "status-code": 200,
                 "type": "root.EorClientTimeoffsContainer",
               },
               "source": {
@@ -20179,6 +20317,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.EorEntitlementsContainer",
               },
               "source": {
@@ -20278,6 +20417,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.EorTimeoffsContainer",
               },
               "source": {
@@ -20342,6 +20482,7 @@ docs: End-points to manage tasks for a given contract
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultUpdated",
               },
               "source": {
@@ -20375,6 +20516,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorTimeoffsContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20453,6 +20595,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorTimeoffsItemContainer
+        status-code: 201
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20561,6 +20704,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorTimeoffsItemContainer
+        status-code: 201
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20667,6 +20811,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20697,6 +20842,7 @@ service:
       response:
         docs: Successful operation.
         type: root.EorEntitlementsContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20738,6 +20884,7 @@ service:
       response:
         docs: successful operation
         type: root.EorClientTimeoffsContainer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -20813,6 +20960,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultUpdated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -20907,6 +21055,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.InvoiceAdjustmentCreatedContainer",
               },
               "source": {
@@ -20971,6 +21120,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -21029,6 +21179,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 201,
                 "type": "root.GenericResultCreated",
               },
               "source": {
@@ -21085,6 +21236,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultDeleted",
               },
               "source": {
@@ -21179,6 +21331,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TimesheetContainer",
               },
               "source": {
@@ -21299,6 +21452,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TimesheetListContainer",
               },
               "source": {
@@ -21424,6 +21578,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.TimesheetListContainer",
               },
               "source": {
@@ -21489,6 +21644,7 @@ docs: Manage time off requests.
               },
               "response": {
                 "docs": "Successful operation.",
+                "status-code": 200,
                 "type": "root.GenericResultUpdated",
               },
               "source": {
@@ -21558,6 +21714,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TimesheetListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21661,6 +21818,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TimesheetListContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21726,6 +21884,7 @@ service:
       response:
         docs: Successful operation.
         type: root.InvoiceAdjustmentCreatedContainer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21766,6 +21925,7 @@ service:
       response:
         docs: Successful operation.
         type: root.TimesheetContainer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21842,6 +22002,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultDeleted
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21880,6 +22041,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultUpdated
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21922,6 +22084,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -21959,6 +22122,7 @@ service:
       response:
         docs: Successful operation.
         type: root.GenericResultCreated
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -22122,6 +22286,7 @@ docs: >-
               },
               "response": {
                 "docs": "successful operation",
+                "status-code": 200,
                 "type": "root.WebhookItemResponse",
               },
               "source": {
@@ -22178,6 +22343,7 @@ docs: >-
               },
               "response": {
                 "docs": "successful operation",
+                "status-code": 200,
                 "type": "root.WebhookItemResponse",
               },
               "source": {
@@ -22275,6 +22441,7 @@ docs: >-
               },
               "response": {
                 "docs": "successful operation",
+                "status-code": 201,
                 "type": "root.WebhookItemResponse",
               },
               "source": {
@@ -22327,6 +22494,7 @@ docs: >-
               "path": "/webhooks",
               "response": {
                 "docs": "successful operation",
+                "status-code": 200,
                 "type": "root.WebhookListResponse",
               },
               "source": {
@@ -22380,6 +22548,7 @@ service:
       response:
         docs: successful operation
         type: root.WebhookListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -22443,6 +22612,7 @@ service:
       response:
         docs: successful operation
         type: root.WebhookItemResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -22488,6 +22658,7 @@ service:
       response:
         docs: successful operation
         type: root.WebhookItemResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -22575,6 +22746,7 @@ service:
       response:
         docs: successful operation
         type: root.WebhookItemResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

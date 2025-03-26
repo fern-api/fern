@@ -6,6 +6,7 @@ package com.seed.audiences.resources.foo;
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.MediaTypes;
 import com.seed.audiences.core.ObjectMappers;
+import com.seed.audiences.core.QueryStringMapper;
 import com.seed.audiences.core.RequestOptions;
 import com.seed.audiences.core.SeedAudiencesApiException;
 import com.seed.audiences.core.SeedAudiencesException;
@@ -38,8 +39,8 @@ public class FooClient {
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
 
         if (request.getOptionalString().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalString", request.getOptionalString().get());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
         Map<String, Object> properties = new HashMap<>();
         if (request.getPublicProperty().isPresent()) {
@@ -59,7 +60,8 @@ public class FooClient {
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

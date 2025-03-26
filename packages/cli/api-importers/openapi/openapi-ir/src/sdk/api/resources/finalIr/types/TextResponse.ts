@@ -4,4 +4,7 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export interface TextResponse extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {}
+export interface TextResponse
+    extends FernOpenapiIr.WithDescription,
+        FernOpenapiIr.WithSource,
+        FernOpenapiIr.WithStatusCode {}

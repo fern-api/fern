@@ -46,7 +46,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
 
     @abc.abstractmethod
     def get_with_allow_multiple_query(
-        self, *, query: typing.List[str], numer: typing.List[int], auth: ApiAuth
+        self, *, query: typing.List[str], number: typing.List[int], auth: ApiAuth
     ) -> None:
         """
         GET with multiple of same query param
@@ -257,7 +257,7 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(default=fastapi.Query(default=[]))
                 )
-            elif parameter_name == "numer":
+            elif parameter_name == "number":
                 new_parameters.append(
                     parameter.replace(default=fastapi.Query(default=[]))
                 )

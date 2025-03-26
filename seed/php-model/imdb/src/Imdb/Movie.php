@@ -39,4 +39,12 @@ class Movie extends JsonSerializableType
         $this->title = $values['title'];
         $this->rating = $values['rating'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

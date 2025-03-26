@@ -39,4 +39,12 @@ class GenericCreateProblemError extends JsonSerializableType
         $this->type = $values['type'];
         $this->stacktrace = $values['stacktrace'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -30,7 +30,8 @@ export async function generateAndSnapshotDynamicIR({
         audiences,
         keywords: undefined,
         smartCasing: true,
-        disableExamples: false,
+        exampleGeneration: { disabled: false },
+        disableDynamicExamples: true,
         readme: undefined,
         version: undefined,
         packageName: undefined,
@@ -38,7 +39,10 @@ export async function generateAndSnapshotDynamicIR({
         sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 
-    const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(intermediateRepresentation);
+    const dynamicIntermediateRepresentation = convertIrToDynamicSnippetsIr({
+        ir: intermediateRepresentation,
+        disableExamples: true
+    });
 
     const dynamicIntermediateRepresentationJson = IrSerialization.dynamic.DynamicIntermediateRepresentation.jsonOrThrow(
         dynamicIntermediateRepresentation,

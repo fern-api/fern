@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`class > Renders docs correctly 1`] = `
+"class MyClass:
+    """This is a class"""
+
+    pass
+"
+`;
+
+exports[`class > Renders docs with multi-line strings correctly 1`] = `
+"class MyClass:
+    """This is a class.
+    I'm on a new line.
+    So am I."""
+
+    pass
+"
+`;
+
 exports[`class > basic 1`] = `
 "class Car:
     pass

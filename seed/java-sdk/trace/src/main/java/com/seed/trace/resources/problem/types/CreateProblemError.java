@@ -71,6 +71,7 @@ public final class CreateProblemError {
     }
 
     @JsonTypeName("generic")
+    @JsonIgnoreProperties("_type")
     private static final class GenericValue implements Value {
         @JsonUnwrapped
         private GenericCreateProblemError value;
@@ -108,6 +109,7 @@ public final class CreateProblemError {
         }
     }
 
+    @JsonIgnoreProperties("_type")
     private static final class _UnknownValue implements Value {
         private String type;
 

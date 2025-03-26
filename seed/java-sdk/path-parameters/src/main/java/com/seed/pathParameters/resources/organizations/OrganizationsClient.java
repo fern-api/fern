@@ -6,6 +6,7 @@ package com.seed.pathParameters.resources.organizations;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.ObjectMappers;
+import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
@@ -44,6 +45,7 @@ public class OrganizationsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -64,6 +66,11 @@ public class OrganizationsClient {
         }
     }
 
+    public User getOrganizationUser(String organizationId, String userId) {
+        return getOrganizationUser(
+                organizationId, userId, GetOrganizationUserRequest.builder().build());
+    }
+
     public User getOrganizationUser(String organizationId, String userId, GetOrganizationUserRequest request) {
         return getOrganizationUser(organizationId, userId, request, null);
     }
@@ -81,7 +88,8 @@ public class OrganizationsClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -119,13 +127,15 @@ public class OrganizationsClient {
                 .addPathSegment(organizationId)
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

@@ -58,8 +58,8 @@ export async function publishCli({
     // Instance of PublishCommand configuration, leverage these commands outright
     const unparsedCommands = publishConfig.command;
     const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
-    const versionSubsitution = publishConfig.versionSubstitution;
-    const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
+    const versionSubstitution = publishConfig.versionSubstitution;
+    const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubstitution));
 
     let workingDirectory = cliWorkspace.absolutePathToWorkspace;
     if (publishConfig.workingDirectory) {

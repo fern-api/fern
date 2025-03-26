@@ -120,7 +120,7 @@ export function optionalNullable<Raw, Parsed>(
                     value: undefined,
                 };
             }
-            if (raw == null) {
+            if (raw === null) {
                 return {
                     ok: true,
                     value: null,
@@ -135,7 +135,7 @@ export function optionalNullable<Raw, Parsed>(
                     value: undefined,
                 };
             }
-            if (parsed == null) {
+            if (parsed === null) {
                 return {
                     ok: true,
                     value: null,

@@ -15,15 +15,15 @@ class TestCase extends JsonSerializableType
     public string $id;
 
     /**
-     * @var array<mixed> $params
+     * @var array<VariableValue> $params
      */
-    #[JsonProperty('params'), ArrayType(['mixed'])]
+    #[JsonProperty('params'), ArrayType([VariableValue::class])]
     public array $params;
 
     /**
      * @param array{
      *   id: string,
-     *   params: array<mixed>,
+     *   params: array<VariableValue>,
      * } $values
      */
     public function __construct(
@@ -31,5 +31,13 @@ class TestCase extends JsonSerializableType
     ) {
         $this->id = $values['id'];
         $this->params = $values['params'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

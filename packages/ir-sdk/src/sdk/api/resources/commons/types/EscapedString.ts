@@ -4,7 +4,7 @@
 
 /**
  * Defines the original string, and its escaped-equivalent (depending on the target programming language).
- * This is paricularly relevant to example string literals.
+ * This is particularly relevant to example string literals.
  *
  * For example, in Python we escape strings that contain single or double quotes by using triple quotes,
  * in Go we use backticks, etc.

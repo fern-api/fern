@@ -5,7 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface HttpResponseSchemaDetailed extends FernDefinition.WithDocsSchema {
-    type: string;
+    type?: string;
     property?: string;
     "status-code"?: number;
 }

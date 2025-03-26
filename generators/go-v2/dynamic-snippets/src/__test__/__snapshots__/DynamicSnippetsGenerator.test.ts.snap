@@ -391,7 +391,7 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFile(
 		context.TODO(),
-		&acme.JustFileRequet{
+		&acme.JustFileRequest{
 			File: strings.NewReader(
 				"Hello, world!",
 			),
@@ -415,7 +415,7 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acme.JustFileWithQueryParamsRequet{
+		&acme.JustFileWithQueryParamsRequest{
 			Integer: 42,
 			MaybeString: acme.String(
 				"exists",
@@ -565,6 +565,89 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
     "message": "Environment \\"Unrecognized\\" was not found"
   }
 ]"
+`;
+
+exports[`snippets (default) > nullable > 'Body properties' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	client.Nullable.CreateUser(
+		context.TODO(),
+		&acme.CreateUserRequest{
+			Username: "john.doe",
+			Tags: []string{
+				"admin",
+			},
+			Metadata: &acme.Metadata{
+				CreatedAt: acme.MustParseDateTime(
+					"1980-01-01T00:00:00Z",
+				),
+				UpdatedAt: acme.MustParseDateTime(
+					"1980-01-01T00:00:00Z",
+				),
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	client.Nullable.GetUsers(
+		context.TODO(),
+		&acme.GetUsersRequest{
+			Usernames: []*string{
+				acme.String(
+					"john.doe",
+				),
+				acme.String(
+					"jane.doe",
+				),
+			},
+			Tags: []*string{},
+		},
+	)
+}
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
@@ -1055,7 +1138,7 @@ func do() {
 	client := client.NewFernClient()
 	client.Service.JustFile(
 		context.TODO(),
-		&acme.JustFileRequet{
+		&acme.JustFileRequest{
 			File: strings.NewReader(
 				"Hello, world!",
 			),
@@ -1079,7 +1162,7 @@ func do() {
 	client := client.NewFernClient()
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acme.JustFileWithQueryParamsRequet{
+		&acme.JustFileWithQueryParamsRequest{
 			Integer: 42,
 			MaybeString: acme.String(
 				"exists",
@@ -1229,6 +1312,89 @@ exports[`snippets (exportedClientName) > multi-url-environment > 'Unrecognized e
     "message": "Environment \\"Unrecognized\\" was not found"
   }
 ]"
+`;
+
+exports[`snippets (exportedClientName) > nullable > 'Body properties' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	client.Nullable.CreateUser(
+		context.TODO(),
+		&acme.CreateUserRequest{
+			Username: "john.doe",
+			Tags: []string{
+				"admin",
+			},
+			Metadata: &acme.Metadata{
+				CreatedAt: acme.MustParseDateTime(
+					"1980-01-01T00:00:00Z",
+				),
+				UpdatedAt: acme.MustParseDateTime(
+					"1980-01-01T00:00:00Z",
+				),
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > nullable > 'Query parameters' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	client.Nullable.GetUsers(
+		context.TODO(),
+		&acme.GetUsersRequest{
+			Usernames: []*string{
+				acme.String(
+					"john.doe",
+				),
+				acme.String(
+					"jane.doe",
+				),
+			},
+			Tags: []*string{},
+		},
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > single-url-environment-default > 'Production environment' 1`] = `

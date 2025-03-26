@@ -46,9 +46,9 @@ export class EnvironmentsGenerator {
                     environmentEnumName,
                     defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
                 }),
-            multipleBaseUrls: (mulitpleBaseUrlEnvironments) =>
+            multipleBaseUrls: (multipleBaseUrlEnvironments) =>
                 new GeneratedMultipleUrlsEnvironmentsImpl({
-                    environments: mulitpleBaseUrlEnvironments,
+                    environments: multipleBaseUrlEnvironments,
                     environmentEnumName,
                     environmentUrlsTypeName,
                     defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined

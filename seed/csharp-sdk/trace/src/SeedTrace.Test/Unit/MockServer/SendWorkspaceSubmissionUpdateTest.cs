@@ -2,14 +2,12 @@ using System.Globalization;
 using NUnit.Framework;
 using SeedTrace;
 
-#nullable enable
-
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class SendWorkspaceSubmissionUpdateTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

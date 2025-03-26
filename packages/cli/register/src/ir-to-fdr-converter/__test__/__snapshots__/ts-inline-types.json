@@ -496,14 +496,6 @@
             }
           },
           {
-            "typeName": "UndiscriminatedUnion1DiscriminatedUnion1",
-            "description": "lorem ipsum",
-            "type": {
-              "type": "id",
-              "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
-            }
-          },
-          {
             "typeName": "UndiscriminatedUnion1InlineEnum1",
             "description": "lorem ipsum",
             "type": {

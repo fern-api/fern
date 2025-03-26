@@ -79,6 +79,7 @@ public final class UnionTypeWithAliasMapVariant {
     }
 
     @JsonTypeName("aliasVariant")
+    @JsonIgnoreProperties("type")
     private static final class AliasVariantValue_ implements Value {
         @JsonProperty("value")
         private Map<AliasVariantKey, AliasVariantValue> value;
@@ -114,6 +115,7 @@ public final class UnionTypeWithAliasMapVariant {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

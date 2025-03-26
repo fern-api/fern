@@ -9,7 +9,7 @@
           "auth": false,
           "base-path": "",
           "endpoints": {
-            "Get": {
+            "Post": {
               "auth": false,
               "docs": undefined,
               "examples": [
@@ -22,9 +22,9 @@
                   },
                 },
               ],
-              "method": "GET",
+              "method": "POST",
               "pagination": undefined,
-              "path": "/get",
+              "path": "/post",
               "request": {
                 "body": {
                   "properties": {
@@ -43,6 +43,7 @@
               },
               "response": {
                 "docs": "A simple API response.",
+                "status-code": 200,
                 "type": "Response",
               },
               "source": {
@@ -94,9 +95,9 @@
   auth: false
   base-path: ''
   endpoints:
-    Get:
-      path: /get
-      method: GET
+    Post:
+      path: /post
+      method: POST
       auth: false
       source:
         openapi: ../openapi.yml
@@ -112,6 +113,7 @@
       response:
         docs: A simple API response.
         type: Response
+        status-code: 200
       examples:
         - request: {}
           response:

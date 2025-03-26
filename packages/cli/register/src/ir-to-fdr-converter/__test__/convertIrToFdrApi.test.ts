@@ -59,7 +59,7 @@ describe("fdr", async () => {
                 audiences: { type: "all" },
                 keywords: undefined,
                 smartCasing: true,
-                disableExamples: false,
+                exampleGeneration: { disabled: false },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
@@ -74,7 +74,8 @@ describe("fdr", async () => {
                     pythonSdk: undefined,
                     javaSdk: undefined,
                     rubySdk: undefined,
-                    goSdk: undefined
+                    goSdk: undefined,
+                    csharpSdk: undefined
                 },
                 playgroundConfig: {
                     oauth: true

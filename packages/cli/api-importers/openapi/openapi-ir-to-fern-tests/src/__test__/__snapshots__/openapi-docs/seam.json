@@ -10417,6 +10417,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "access_code",
+                "status-code": 200,
                 "type": "AccessCodesCreateResponse",
               },
               "source": {
@@ -10524,6 +10525,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "access_codes",
+                "status-code": 200,
                 "type": "AccessCodesCreateMultipleResponse",
               },
               "source": {
@@ -10595,6 +10597,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "AccessCodesDeleteResponse",
               },
               "source": {
@@ -10674,6 +10677,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "generated_code",
+                "status-code": 200,
                 "type": "AccessCodesGenerateCodeResponse",
               },
               "source": {
@@ -10761,6 +10765,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "access_code",
+                "status-code": 200,
                 "type": "AccessCodesGetResponse",
               },
               "source": {
@@ -10842,6 +10847,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "access_codes",
+                "status-code": 200,
                 "type": "AccessCodesListResponse",
               },
               "source": {
@@ -10921,6 +10927,7 @@ types:
               "response": {
                 "docs": "OK",
                 "property": "backup_access_code",
+                "status-code": 200,
                 "type": "AccessCodesPullBackupAccessCodeResponse",
               },
               "source": {
@@ -11021,6 +11028,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "AccessCodesUpdateResponse",
               },
               "source": {
@@ -11378,6 +11386,7 @@ service:
       response:
         docs: OK
         type: AccessCodesCreateResponse
+        status-code: 200
         property: access_code
       errors:
         - root.AccessCodesCreateRequestBadRequestError
@@ -11461,6 +11470,7 @@ service:
       response:
         docs: OK
         type: AccessCodesCreateMultipleResponse
+        status-code: 200
         property: access_codes
       errors:
         - root.AccessCodesCreateMultipleRequestBadRequestError
@@ -11522,6 +11532,7 @@ service:
       response:
         docs: OK
         type: AccessCodesDeleteResponse
+        status-code: 200
       errors:
         - root.AccessCodesDeleteRequestBadRequestError
         - root.AccessCodesDeleteRequestUnauthorizedError
@@ -11556,6 +11567,7 @@ service:
       response:
         docs: OK
         type: AccessCodesGenerateCodeResponse
+        status-code: 200
         property: generated_code
       errors:
         - root.AccessCodesGenerateCodeRequestBadRequestError
@@ -11614,6 +11626,7 @@ service:
       response:
         docs: OK
         type: AccessCodesGetResponse
+        status-code: 200
         property: access_code
       errors:
         - root.AccessCodesGetRequestBadRequestError
@@ -11668,6 +11681,7 @@ service:
       response:
         docs: OK
         type: AccessCodesListResponse
+        status-code: 200
         property: access_codes
       errors:
         - root.AccessCodesListRequestBadRequestError
@@ -11720,6 +11734,7 @@ service:
       response:
         docs: OK
         type: AccessCodesPullBackupAccessCodeResponse
+        status-code: 200
         property: backup_access_code
       errors:
         - root.AccessCodesPullBackupAccessCodeRequestBadRequestError
@@ -11804,6 +11819,7 @@ service:
       response:
         docs: OK
         type: AccessCodesUpdateResponse
+        status-code: 200
       errors:
         - root.AccessCodesUpdateRequestBadRequestError
         - root.AccessCodesUpdateRequestUnauthorizedError
@@ -11909,6 +11925,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "access_code",
+                "status-code": 200,
                 "type": "SimulateCreateUnmanagedAccessCodeResponse",
               },
               "source": {
@@ -11973,6 +11990,7 @@ service:
       response:
         docs: OK
         type: SimulateCreateUnmanagedAccessCodeResponse
+        status-code: 200
         property: access_code
       errors:
         - root.SimulateCreateUnmanagedAccessCodeRequestBadRequestError
@@ -12066,6 +12084,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UnmanagedConvertToManagedResponse",
               },
               "source": {
@@ -12128,6 +12147,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UnmanagedDeleteResponse",
               },
               "source": {
@@ -12206,6 +12226,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "access_code",
+                "status-code": 200,
                 "type": "UnmanagedGetResponse",
               },
               "source": {
@@ -12279,6 +12300,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "access_codes",
+                "status-code": 200,
                 "type": "UnmanagedListResponse",
               },
               "source": {
@@ -12335,6 +12357,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UnmanagedUpdateResponse",
               },
               "source": {
@@ -12462,6 +12485,7 @@ service:
       response:
         docs: OK
         type: UnmanagedConvertToManagedResponse
+        status-code: 200
       errors:
         - root.UnmanagedConvertToManagedRequestBadRequestError
         - root.UnmanagedConvertToManagedRequestUnauthorizedError
@@ -12493,6 +12517,7 @@ service:
       response:
         docs: OK
         type: UnmanagedDeleteResponse
+        status-code: 200
       errors:
         - root.UnmanagedDeleteRequestBadRequestError
         - root.UnmanagedDeleteRequestUnauthorizedError
@@ -12532,6 +12557,7 @@ service:
       response:
         docs: OK
         type: UnmanagedGetResponse
+        status-code: 200
         property: access_code
       errors:
         - root.UnmanagedGetRequestBadRequestError
@@ -12576,6 +12602,7 @@ service:
       response:
         docs: OK
         type: UnmanagedListResponse
+        status-code: 200
         property: access_codes
       errors:
         - root.UnmanagedListRequestBadRequestError
@@ -12624,6 +12651,7 @@ service:
       response:
         docs: OK
         type: UnmanagedUpdateResponse
+        status-code: 200
       errors:
         - root.UnmanagedUpdateRequestBadRequestError
         - root.UnmanagedUpdateRequestUnauthorizedError
@@ -12703,6 +12731,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "AccessGroupsAddUserResponse",
               },
               "source": {
@@ -12767,6 +12796,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_access_group",
+                "status-code": 200,
                 "type": "AccessGroupsGetResponse",
               },
               "source": {
@@ -12840,6 +12870,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_access_groups",
+                "status-code": 200,
                 "type": "AccessGroupsListResponse",
               },
               "source": {
@@ -12917,6 +12948,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_users",
+                "status-code": 200,
                 "type": "AccessGroupsListUsersResponse",
               },
               "source": {
@@ -12978,6 +13010,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "AccessGroupsRemoveUserResponse",
               },
               "source": {
@@ -13103,6 +13136,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsAddUserResponse
+        status-code: 200
       errors:
         - root.AccessGroupsAddUserRequestBadRequestError
         - root.AccessGroupsAddUserRequestUnauthorizedError
@@ -13132,6 +13166,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsGetResponse
+        status-code: 200
         property: acs_access_group
       errors:
         - root.AccessGroupsGetRequestBadRequestError
@@ -13176,6 +13211,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsListResponse
+        status-code: 200
         property: acs_access_groups
       errors:
         - root.AccessGroupsListRequestBadRequestError
@@ -13215,6 +13251,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsListUsersResponse
+        status-code: 200
         property: acs_users
       errors:
         - root.AccessGroupsListUsersRequestBadRequestError
@@ -13269,6 +13306,7 @@ service:
       response:
         docs: OK
         type: AccessGroupsRemoveUserResponse
+        status-code: 200
       errors:
         - root.AccessGroupsRemoveUserRequestBadRequestError
         - root.AccessGroupsRemoveUserRequestUnauthorizedError
@@ -13350,6 +13388,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credential_pools",
+                "status-code": 200,
                 "type": "CredentialPoolsListResponse",
               },
               "source": {
@@ -13407,6 +13446,7 @@ service:
       response:
         docs: OK
         type: CredentialPoolsListResponse
+        status-code: 200
         property: acs_credential_pools
       errors:
         - root.CredentialPoolsListRequestBadRequestError
@@ -13521,6 +13561,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credential_provisioning_automation",
+                "status-code": 200,
                 "type": "CredentialProvisioningAutomationsLaunchResponse",
               },
               "source": {
@@ -13591,6 +13632,7 @@ service:
       response:
         docs: OK
         type: CredentialProvisioningAutomationsLaunchResponse
+        status-code: 200
         property: acs_credential_provisioning_automation
       errors:
         - root.CredentialProvisioningAutomationsLaunchRequestBadRequestError
@@ -13720,6 +13762,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "CredentialsAssignResponse",
               },
               "source": {
@@ -13843,6 +13886,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credential",
+                "status-code": 200,
                 "type": "CredentialsCreateResponse",
               },
               "source": {
@@ -13894,6 +13938,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "CredentialsDeleteResponse",
               },
               "source": {
@@ -13989,6 +14034,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credential",
+                "status-code": 200,
                 "type": "CredentialsGetResponse",
               },
               "source": {
@@ -14067,6 +14113,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credentials",
+                "status-code": 200,
                 "type": "CredentialsListResponse",
               },
               "source": {
@@ -14143,6 +14190,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_entrances",
+                "status-code": 200,
                 "type": "CredentialsListAccessibleEntrancesResponse",
               },
               "source": {
@@ -14247,6 +14295,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "CredentialsUnassignResponse",
               },
               "source": {
@@ -14343,6 +14392,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "CredentialsUpdateResponse",
               },
               "source": {
@@ -14632,6 +14682,7 @@ service:
       response:
         docs: OK
         type: CredentialsAssignResponse
+        status-code: 200
       errors:
         - root.CredentialsAssignRequestBadRequestError
         - root.CredentialsAssignRequestUnauthorizedError
@@ -14709,6 +14760,7 @@ service:
       response:
         docs: OK
         type: CredentialsCreateResponse
+        status-code: 200
         property: acs_credential
       errors:
         - root.CredentialsCreateRequestBadRequestError
@@ -14771,6 +14823,7 @@ service:
       response:
         docs: OK
         type: CredentialsDeleteResponse
+        status-code: 200
       errors:
         - root.CredentialsDeleteRequestBadRequestError
         - root.CredentialsDeleteRequestUnauthorizedError
@@ -14799,6 +14852,7 @@ service:
       response:
         docs: OK
         type: CredentialsGetResponse
+        status-code: 200
         property: acs_credential
       errors:
         - root.CredentialsGetRequestBadRequestError
@@ -14857,6 +14911,7 @@ service:
       response:
         docs: OK
         type: CredentialsListResponse
+        status-code: 200
         property: acs_credentials
       errors:
         - root.CredentialsListRequestBadRequestError
@@ -14911,6 +14966,7 @@ service:
       response:
         docs: OK
         type: CredentialsListAccessibleEntrancesResponse
+        status-code: 200
         property: acs_entrances
       errors:
         - root.CredentialsListAccessibleEntrancesRequestBadRequestError
@@ -14960,6 +15016,7 @@ service:
       response:
         docs: OK
         type: CredentialsUnassignResponse
+        status-code: 200
       errors:
         - root.CredentialsUnassignRequestBadRequestError
         - root.CredentialsUnassignRequestUnauthorizedError
@@ -15023,6 +15080,7 @@ service:
       response:
         docs: OK
         type: CredentialsUpdateResponse
+        status-code: 200
       errors:
         - root.CredentialsUpdateRequestBadRequestError
         - root.CredentialsUpdateRequestUnauthorizedError
@@ -15152,6 +15210,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_entrance",
+                "status-code": 200,
                 "type": "EntrancesGetResponse",
               },
               "source": {
@@ -15213,6 +15272,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "EntrancesGrantAccessResponse",
               },
               "source": {
@@ -15296,6 +15356,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_entrances",
+                "status-code": 200,
                 "type": "EntrancesListResponse",
               },
               "source": {
@@ -15385,6 +15446,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_credentials",
+                "status-code": 200,
                 "type": "EntrancesListCredentialsWithAccessResponse",
               },
               "source": {
@@ -15491,6 +15553,7 @@ service:
       response:
         docs: OK
         type: EntrancesGetResponse
+        status-code: 200
         property: acs_entrance
       errors:
         - root.EntrancesGetRequestBadRequestError
@@ -15543,6 +15606,7 @@ service:
       response:
         docs: OK
         type: EntrancesGrantAccessResponse
+        status-code: 200
       errors:
         - root.EntrancesGrantAccessRequestBadRequestError
         - root.EntrancesGrantAccessRequestUnauthorizedError
@@ -15576,6 +15640,7 @@ service:
       response:
         docs: OK
         type: EntrancesListResponse
+        status-code: 200
         property: acs_entrances
       errors:
         - root.EntrancesListRequestBadRequestError
@@ -15621,6 +15686,7 @@ service:
       response:
         docs: OK
         type: EntrancesListCredentialsWithAccessResponse
+        status-code: 200
         property: acs_credentials
       errors:
         - root.EntrancesListCredentialsWithAccessRequestBadRequestError
@@ -15699,8 +15765,8 @@ service:
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "visionline_instance_unreachable",
-                            "message": "errors",
+                            "error_code": "seam_bridge_disconnected",
+                            "message": "message",
                           },
                         ],
                         "external_type": "pti_site",
@@ -15746,6 +15812,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_system",
+                "status-code": 200,
                 "type": "SystemsGetResponse",
               },
               "source": {
@@ -15779,8 +15846,8 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "error_code": "seam_bridge_disconnected",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -15827,6 +15894,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_systems",
+                "status-code": 200,
                 "type": "SystemsListResponse",
               },
               "source": {
@@ -15862,8 +15930,8 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "error_code": "seam_bridge_disconnected",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -15910,6 +15978,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_systems",
+                "status-code": 200,
                 "type": "SystemsListCompatibleCredentialManagerAcsSystemsResponse",
               },
               "source": {
@@ -16001,6 +16070,7 @@ service:
       response:
         docs: OK
         type: SystemsGetResponse
+        status-code: 200
         property: acs_system
       errors:
         - root.SystemsGetRequestBadRequestError
@@ -16024,9 +16094,9 @@ service:
                 image_url: image_url
                 image_alt_text: image_alt_text
                 errors:
-                  - error_code: visionline_instance_unreachable
-                    created_at: '2024-01-15T09:30:00Z'
-                    message: errors
+                  - created_at: '2024-01-15T09:30:00Z'
+                    message: message
+                    error_code: seam_bridge_disconnected
                 warnings:
                   - {}
                 can_automate_enrollment: true
@@ -16053,6 +16123,7 @@ service:
       response:
         docs: OK
         type: SystemsListResponse
+        status-code: 200
         property: acs_systems
       errors:
         - root.SystemsListRequestBadRequestError
@@ -16075,9 +16146,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                    - created_at: '2024-01-15T09:30:00Z'
+                      message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -16104,6 +16175,7 @@ service:
       response:
         docs: OK
         type: SystemsListCompatibleCredentialManagerAcsSystemsResponse
+        status-code: 200
         property: acs_systems
       errors:
         - >-
@@ -16129,9 +16201,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                    - created_at: '2024-01-15T09:30:00Z'
+                      message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -16208,6 +16280,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersAddToAccessGroupResponse",
               },
               "source": {
@@ -16319,6 +16392,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_user",
+                "status-code": 200,
                 "type": "UsersCreateResponse",
               },
               "source": {
@@ -16370,6 +16444,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersDeleteResponse",
               },
               "source": {
@@ -16445,6 +16520,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_user",
+                "status-code": 200,
                 "type": "UsersGetResponse",
               },
               "source": {
@@ -16531,6 +16607,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_users",
+                "status-code": 200,
                 "type": "UsersListResponse",
               },
               "source": {
@@ -16607,6 +16684,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_entrances",
+                "status-code": 200,
                 "type": "UsersListAccessibleEntrancesResponse",
               },
               "source": {
@@ -16668,6 +16746,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersRemoveFromAccessGroupResponse",
               },
               "source": {
@@ -16719,6 +16798,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersRevokeAccessToAllEntrancesResponse",
               },
               "source": {
@@ -16770,6 +16850,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersSuspendResponse",
               },
               "source": {
@@ -16821,6 +16902,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersUnsuspendResponse",
               },
               "source": {
@@ -16907,6 +16989,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UsersUpdateResponse",
               },
               "source": {
@@ -17160,6 +17243,7 @@ service:
       response:
         docs: OK
         type: UsersAddToAccessGroupResponse
+        status-code: 200
       errors:
         - root.UsersAddToAccessGroupRequestBadRequestError
         - root.UsersAddToAccessGroupRequestUnauthorizedError
@@ -17211,6 +17295,7 @@ service:
       response:
         docs: OK
         type: UsersCreateResponse
+        status-code: 200
         property: acs_user
       errors:
         - root.UsersCreateRequestBadRequestError
@@ -17261,6 +17346,7 @@ service:
       response:
         docs: OK
         type: UsersDeleteResponse
+        status-code: 200
       errors:
         - root.UsersDeleteRequestBadRequestError
         - root.UsersDeleteRequestUnauthorizedError
@@ -17289,6 +17375,7 @@ service:
       response:
         docs: OK
         type: UsersGetResponse
+        status-code: 200
         property: acs_user
       errors:
         - root.UsersGetRequestBadRequestError
@@ -17345,6 +17432,7 @@ service:
       response:
         docs: OK
         type: UsersListResponse
+        status-code: 200
         property: acs_users
       errors:
         - root.UsersListRequestBadRequestError
@@ -17394,6 +17482,7 @@ service:
       response:
         docs: OK
         type: UsersListAccessibleEntrancesResponse
+        status-code: 200
         property: acs_entrances
       errors:
         - root.UsersListAccessibleEntrancesRequestBadRequestError
@@ -17443,6 +17532,7 @@ service:
       response:
         docs: OK
         type: UsersRemoveFromAccessGroupResponse
+        status-code: 200
       errors:
         - root.UsersRemoveFromAccessGroupRequestBadRequestError
         - root.UsersRemoveFromAccessGroupRequestUnauthorizedError
@@ -17472,6 +17562,7 @@ service:
       response:
         docs: OK
         type: UsersRevokeAccessToAllEntrancesResponse
+        status-code: 200
       errors:
         - root.UsersRevokeAccessToAllEntrancesRequestBadRequestError
         - root.UsersRevokeAccessToAllEntrancesRequestUnauthorizedError
@@ -17500,6 +17591,7 @@ service:
       response:
         docs: OK
         type: UsersSuspendResponse
+        status-code: 200
       errors:
         - root.UsersSuspendRequestBadRequestError
         - root.UsersSuspendRequestUnauthorizedError
@@ -17528,6 +17620,7 @@ service:
       response:
         docs: OK
         type: UsersUnsuspendResponse
+        status-code: 200
       errors:
         - root.UsersUnsuspendRequestBadRequestError
         - root.UsersUnsuspendRequestUnauthorizedError
@@ -17577,6 +17670,7 @@ service:
       response:
         docs: OK
         type: UsersUpdateResponse
+        status-code: 200
       errors:
         - root.UsersUpdateRequestBadRequestError
         - root.UsersUpdateRequestUnauthorizedError
@@ -17653,6 +17747,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ActionAttemptsGetResponse",
               },
               "source": {
@@ -17708,6 +17803,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempts",
+                "status-code": 200,
                 "type": "ActionAttemptsListResponse",
               },
               "source": {
@@ -17782,6 +17878,7 @@ service:
       response:
         docs: OK
         type: ActionAttemptsGetResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ActionAttemptsGetRequestBadRequestError
@@ -17814,6 +17911,7 @@ service:
       response:
         docs: OK
         type: ActionAttemptsListResponse
+        status-code: 200
         property: action_attempts
       errors:
         - root.ActionAttemptsListRequestBadRequestError
@@ -17910,6 +18008,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "client_session",
+                "status-code": 200,
                 "type": "ClientSessionsCreateResponse",
               },
               "source": {
@@ -17961,6 +18060,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ClientSessionsDeleteResponse",
               },
               "source": {
@@ -18021,6 +18121,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "client_session",
+                "status-code": 200,
                 "type": "ClientSessionsGetResponse",
               },
               "source": {
@@ -18092,6 +18193,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "client_session",
+                "status-code": 200,
                 "type": "ClientSessionsGetOrCreateResponse",
               },
               "source": {
@@ -18154,6 +18256,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ClientSessionsGrantAccessResponse",
               },
               "source": {
@@ -18219,6 +18322,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "client_sessions",
+                "status-code": 200,
                 "type": "ClientSessionsListResponse",
               },
               "source": {
@@ -18270,6 +18374,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ClientSessionsRevokeResponse",
               },
               "source": {
@@ -18429,6 +18534,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsCreateResponse
+        status-code: 200
         property: client_session
       errors:
         - root.ClientSessionsCreateRequestBadRequestError
@@ -18470,6 +18576,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsDeleteResponse
+        status-code: 200
       errors:
         - root.ClientSessionsDeleteRequestBadRequestError
         - root.ClientSessionsDeleteRequestUnauthorizedError
@@ -18496,6 +18603,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsGetResponse
+        status-code: 200
         property: client_session
       errors:
         - root.ClientSessionsGetRequestBadRequestError
@@ -18541,6 +18649,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsGetOrCreateResponse
+        status-code: 200
         property: client_session
       errors:
         - root.ClientSessionsGetOrCreateRequestBadRequestError
@@ -18583,6 +18692,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsGrantAccessResponse
+        status-code: 200
       errors:
         - root.ClientSessionsGrantAccessRequestBadRequestError
         - root.ClientSessionsGrantAccessRequestUnauthorizedError
@@ -18624,6 +18734,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsListResponse
+        status-code: 200
         property: client_sessions
       errors:
         - root.ClientSessionsListRequestBadRequestError
@@ -18665,6 +18776,7 @@ service:
       response:
         docs: OK
         type: ClientSessionsRevokeResponse
+        status-code: 200
       errors:
         - root.ClientSessionsRevokeRequestBadRequestError
         - root.ClientSessionsRevokeRequestUnauthorizedError
@@ -18764,6 +18876,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connect_webview",
+                "status-code": 200,
                 "type": "ConnectWebviewsCreateResponse",
               },
               "source": {
@@ -18815,6 +18928,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ConnectWebviewsDeleteResponse",
               },
               "source": {
@@ -18894,6 +19008,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connect_webview",
+                "status-code": 200,
                 "type": "ConnectWebviewsGetResponse",
               },
               "source": {
@@ -18973,6 +19088,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connect_webviews",
+                "status-code": 200,
                 "type": "ConnectWebviewsListResponse",
               },
               "source": {
@@ -19280,6 +19396,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsCreateResponse
+        status-code: 200
         property: connect_webview
       errors:
         - root.ConnectWebviewsCreateRequestBadRequestError
@@ -19331,6 +19448,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsDeleteResponse
+        status-code: 200
       errors:
         - root.ConnectWebviewsDeleteRequestBadRequestError
         - root.ConnectWebviewsDeleteRequestUnauthorizedError
@@ -19359,6 +19477,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsGetResponse
+        status-code: 200
         property: connect_webview
       errors:
         - root.ConnectWebviewsGetRequestBadRequestError
@@ -19418,6 +19537,7 @@ service:
       response:
         docs: OK
         type: ConnectWebviewsListResponse
+        status-code: 200
         property: connect_webviews
       errors:
         - root.ConnectWebviewsListRequestBadRequestError
@@ -19513,6 +19633,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ConnectedAccountsDeleteResponse",
               },
               "source": {
@@ -19572,6 +19693,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connected_account",
+                "status-code": 200,
                 "type": "ConnectedAccountsGetResponse",
               },
               "source": {
@@ -19635,6 +19757,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connected_accounts",
+                "status-code": 200,
                 "type": "ConnectedAccountsListResponse",
               },
               "source": {
@@ -19712,6 +19835,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "connected_account",
+                "status-code": 200,
                 "type": "ConnectedAccountsUpdateResponse",
               },
               "source": {
@@ -19949,6 +20073,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsDeleteResponse
+        status-code: 200
       errors:
         - root.ConnectedAccountsDeleteRequestBadRequestError
         - root.ConnectedAccountsDeleteRequestUnauthorizedError
@@ -19971,6 +20096,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsGetResponse
+        status-code: 200
         property: connected_account
       errors:
         - root.ConnectedAccountsGetRequestBadRequestError
@@ -20021,6 +20147,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsListResponse
+        status-code: 200
         property: connected_accounts
       errors:
         - root.ConnectedAccountsListRequestBadRequestError
@@ -20065,6 +20192,7 @@ service:
       response:
         docs: OK
         type: ConnectedAccountsUpdateResponse
+        status-code: 200
         property: connected_account
       errors:
         - root.ConnectedAccountsUpdateRequestBadRequestError
@@ -20152,6 +20280,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "DevicesDeleteResponse",
               },
               "source": {
@@ -20456,6 +20585,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "device",
+                "status-code": 200,
                 "type": "DevicesGetResponse",
               },
               "source": {
@@ -20578,6 +20708,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "devices",
+                "status-code": 200,
                 "type": "DevicesListResponse",
               },
               "source": {
@@ -20630,6 +20761,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "device_providers",
+                "status-code": 200,
                 "type": "DevicesListDeviceProvidersResponse",
               },
               "source": {
@@ -20688,6 +20820,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "DevicesUpdateResponse",
               },
               "source": {
@@ -21195,6 +21328,7 @@ service:
       response:
         docs: OK
         type: DevicesDeleteResponse
+        status-code: 200
       errors:
         - root.DevicesDeleteRequestBadRequestError
         - root.DevicesDeleteRequestUnauthorizedError
@@ -21224,6 +21358,7 @@ service:
       response:
         docs: OK
         type: DevicesGetResponse
+        status-code: 200
         property: device
       errors:
         - root.DevicesGetRequestBadRequestError
@@ -21465,6 +21600,7 @@ service:
       response:
         docs: OK
         type: DevicesListResponse
+        status-code: 200
         property: devices
       errors:
         - root.DevicesListRequestBadRequestError
@@ -21524,6 +21660,7 @@ service:
       response:
         docs: OK
         type: DevicesListDeviceProvidersResponse
+        status-code: 200
         property: device_providers
       errors:
         - root.DevicesListDeviceProvidersRequestBadRequestError
@@ -21566,6 +21703,7 @@ service:
       response:
         docs: OK
         type: DevicesUpdateResponse
+        status-code: 200
       errors:
         - root.DevicesUpdateRequestBadRequestError
         - root.DevicesUpdateRequestUnauthorizedError
@@ -21634,6 +21772,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "SimulateConnectResponse",
               },
               "source": {
@@ -21685,6 +21824,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "SimulateDisconnectResponse",
               },
               "source": {
@@ -21736,6 +21876,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "SimulateRemoveResponse",
               },
               "source": {
@@ -21821,6 +21962,7 @@ service:
       response:
         docs: OK
         type: SimulateConnectResponse
+        status-code: 200
       errors:
         - root.SimulateConnectRequestBadRequestError
         - root.SimulateConnectRequestUnauthorizedError
@@ -21849,6 +21991,7 @@ service:
       response:
         docs: OK
         type: SimulateDisconnectResponse
+        status-code: 200
       errors:
         - root.SimulateDisconnectRequestBadRequestError
         - root.SimulateDisconnectRequestUnauthorizedError
@@ -21877,6 +22020,7 @@ service:
       response:
         docs: OK
         type: SimulateRemoveResponse
+        status-code: 200
       errors:
         - root.SimulateRemoveRequestBadRequestError
         - root.SimulateRemoveRequestUnauthorizedError
@@ -21996,6 +22140,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "device",
+                "status-code": 200,
                 "type": "UnmanagedGetResponse",
               },
               "source": {
@@ -22110,6 +22255,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "devices",
+                "status-code": 200,
                 "type": "UnmanagedListResponse",
               },
               "source": {
@@ -22163,6 +22309,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UnmanagedUpdateResponse",
               },
               "source": {
@@ -22567,6 +22714,7 @@ service:
       response:
         docs: OK
         type: UnmanagedGetResponse
+        status-code: 200
         property: device
       errors:
         - root.UnmanagedGetRequestBadRequestError
@@ -22652,6 +22800,7 @@ service:
       response:
         docs: OK
         type: UnmanagedListResponse
+        status-code: 200
         property: devices
       errors:
         - root.UnmanagedListRequestBadRequestError
@@ -22709,6 +22858,7 @@ service:
       response:
         docs: OK
         type: UnmanagedUpdateResponse
+        status-code: 200
       errors:
         - root.UnmanagedUpdateRequestBadRequestError
         - root.UnmanagedUpdateRequestUnauthorizedError
@@ -22802,6 +22952,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "event",
+                "status-code": 200,
                 "type": "EventsGetResponse",
               },
               "source": {
@@ -22896,6 +23047,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "events",
+                "status-code": 200,
                 "type": "EventsListResponse",
               },
               "source": {
@@ -23720,6 +23872,7 @@ service:
       response:
         docs: OK
         type: EventsGetResponse
+        status-code: 200
         property: event
       errors:
         - root.EventsGetRequestBadRequestError
@@ -23779,6 +23932,7 @@ service:
       response:
         docs: OK
         type: EventsListResponse
+        status-code: 200
         property: events
       errors:
         - root.EventsListRequestBadRequestError
@@ -24366,6 +24520,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "device",
+                "status-code": 200,
                 "type": "LocksGetResponse",
               },
               "source": {
@@ -24536,6 +24691,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "devices",
+                "status-code": 200,
                 "type": "LocksListResponse",
               },
               "source": {
@@ -24599,6 +24755,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "LocksLockDoorResponse",
               },
               "source": {
@@ -24662,6 +24819,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "LocksUnlockDoorResponse",
               },
               "source": {
@@ -25089,6 +25247,7 @@ service:
       response:
         docs: OK
         type: LocksGetResponse
+        status-code: 200
         property: device
       errors:
         - root.LocksGetRequestBadRequestError
@@ -25525,6 +25684,7 @@ service:
       response:
         docs: OK
         type: LocksListResponse
+        status-code: 200
         property: devices
       errors:
         - root.LocksListRequestBadRequestError
@@ -25624,6 +25784,7 @@ service:
       response:
         docs: OK
         type: LocksLockDoorResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.LocksLockDoorRequestBadRequestError
@@ -25662,6 +25823,7 @@ service:
       response:
         docs: OK
         type: LocksUnlockDoorResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.LocksUnlockDoorRequestBadRequestError
@@ -25744,6 +25906,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "network",
+                "status-code": 200,
                 "type": "NetworksGetResponse",
               },
               "source": {
@@ -25792,6 +25955,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "networks",
+                "status-code": 200,
                 "type": "NetworksListResponse",
               },
               "source": {
@@ -25866,6 +26030,7 @@ service:
       response:
         docs: OK
         type: NetworksGetResponse
+        status-code: 200
         property: network
       errors:
         - root.NetworksGetRequestBadRequestError
@@ -25896,6 +26061,7 @@ service:
       response:
         docs: OK
         type: NetworksListResponse
+        status-code: 200
         property: networks
       errors:
         - root.NetworksListRequestBadRequestError
@@ -25997,6 +26163,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "noise_threshold",
+                "status-code": 200,
                 "type": "NoiseThresholdsCreateResponse",
               },
               "source": {
@@ -26069,6 +26236,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NoiseThresholdsDeleteResponse",
               },
               "source": {
@@ -26130,6 +26298,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "noise_threshold",
+                "status-code": 200,
                 "type": "NoiseThresholdsGetResponse",
               },
               "source": {
@@ -26194,6 +26363,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "noise_thresholds",
+                "status-code": 200,
                 "type": "NoiseThresholdsListResponse",
               },
               "source": {
@@ -26271,6 +26441,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "NoiseThresholdsUpdateResponse",
               },
               "source": {
@@ -26406,6 +26577,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsCreateResponse
+        status-code: 200
         property: noise_threshold
       errors:
         - root.NoiseThresholdsCreateRequestBadRequestError
@@ -26458,6 +26630,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsDeleteResponse
+        status-code: 200
       errors:
         - root.NoiseThresholdsDeleteRequestBadRequestError
         - root.NoiseThresholdsDeleteRequestUnauthorizedError
@@ -26493,6 +26666,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsGetResponse
+        status-code: 200
         property: noise_threshold
       errors:
         - root.NoiseThresholdsGetRequestBadRequestError
@@ -26531,6 +26705,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsListResponse
+        status-code: 200
         property: noise_thresholds
       errors:
         - root.NoiseThresholdsListRequestBadRequestError
@@ -26580,6 +26755,7 @@ service:
       response:
         docs: OK
         type: NoiseThresholdsUpdateResponse
+        status-code: 200
       errors:
         - root.NoiseThresholdsUpdateRequestBadRequestError
         - root.NoiseThresholdsUpdateRequestUnauthorizedError
@@ -26655,6 +26831,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "SimulateTriggerNoiseThresholdResponse",
               },
               "source": {
@@ -26710,6 +26887,7 @@ service:
       response:
         docs: OK
         type: SimulateTriggerNoiseThresholdResponse
+        status-code: 200
       errors:
         - root.SimulateTriggerNoiseThresholdRequestBadRequestError
         - root.SimulateTriggerNoiseThresholdRequestUnauthorizedError
@@ -26770,6 +26948,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "PhonesDeactivateResponse",
               },
               "source": {
@@ -26857,6 +27036,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "phones",
+                "status-code": 200,
                 "type": "PhonesListResponse",
               },
               "source": {
@@ -26926,6 +27106,7 @@ service:
       response:
         docs: OK
         type: PhonesDeactivateResponse
+        status-code: 200
       errors:
         - root.PhonesDeactivateRequestBadRequestError
         - root.PhonesDeactivateRequestUnauthorizedError
@@ -26954,6 +27135,7 @@ service:
       response:
         docs: OK
         type: PhonesListResponse
+        status-code: 200
         property: phones
       errors:
         - root.PhonesListRequestBadRequestError
@@ -27101,6 +27283,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "phone",
+                "status-code": 200,
                 "type": "SimulateCreateSandboxPhoneResponse",
               },
               "source": {
@@ -27279,6 +27462,7 @@ service:
       response:
         docs: OK
         type: SimulateCreateSandboxPhoneResponse
+        status-code: 200
         property: phone
       errors:
         - root.SimulateCreateSandboxPhoneRequestBadRequestError
@@ -27396,6 +27580,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ThermostatsCoolResponse",
               },
               "source": {
@@ -27700,6 +27885,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "thermostat",
+                "status-code": 200,
                 "type": "ThermostatsGetResponse",
               },
               "source": {
@@ -27765,6 +27951,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ThermostatsHeatResponse",
               },
               "source": {
@@ -27832,6 +28019,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ThermostatsHeatCoolResponse",
               },
               "source": {
@@ -27954,6 +28142,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "thermostats",
+                "status-code": 200,
                 "type": "ThermostatsListResponse",
               },
               "source": {
@@ -28017,6 +28206,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ThermostatsOffResponse",
               },
               "source": {
@@ -28082,6 +28272,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "ThermostatsSetFanModeResponse",
               },
               "source": {
@@ -28135,6 +28326,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ThermostatsUpdateResponse",
               },
               "source": {
@@ -28713,6 +28905,7 @@ service:
       response:
         docs: OK
         type: ThermostatsCoolResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ThermostatsCoolRequestBadRequestError
@@ -28749,6 +28942,7 @@ service:
       response:
         docs: OK
         type: ThermostatsGetResponse
+        status-code: 200
         property: thermostat
       errors:
         - root.ThermostatsGetRequestBadRequestError
@@ -28977,6 +29171,7 @@ service:
       response:
         docs: OK
         type: ThermostatsHeatResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ThermostatsHeatRequestBadRequestError
@@ -29019,6 +29214,7 @@ service:
       response:
         docs: OK
         type: ThermostatsHeatCoolResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ThermostatsHeatCoolRequestBadRequestError
@@ -29074,6 +29270,7 @@ service:
       response:
         docs: OK
         type: ThermostatsListResponse
+        status-code: 200
         property: thermostats
       errors:
         - root.ThermostatsListRequestBadRequestError
@@ -29139,6 +29336,7 @@ service:
       response:
         docs: OK
         type: ThermostatsOffResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ThermostatsOffRequestBadRequestError
@@ -29179,6 +29377,7 @@ service:
       response:
         docs: OK
         type: ThermostatsSetFanModeResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.ThermostatsSetFanModeRequestBadRequestError
@@ -29215,6 +29414,7 @@ service:
       response:
         docs: OK
         type: ThermostatsUpdateResponse
+        status-code: 200
       errors:
         - root.ThermostatsUpdateRequestBadRequestError
         - root.ThermostatsUpdateRequestUnauthorizedError
@@ -29311,6 +29511,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "climate_setting_schedule",
+                "status-code": 200,
                 "type": "ClimateSettingSchedulesCreateResponse",
               },
               "source": {
@@ -29362,6 +29563,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ClimateSettingSchedulesDeleteResponse",
               },
               "source": {
@@ -29441,6 +29643,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "climate_setting_schedule",
+                "status-code": 200,
                 "type": "ClimateSettingSchedulesGetResponse",
               },
               "source": {
@@ -29516,6 +29719,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "climate_setting_schedules",
+                "status-code": 200,
                 "type": "ClimateSettingSchedulesListResponse",
               },
               "source": {
@@ -29599,6 +29803,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "ClimateSettingSchedulesUpdateResponse",
               },
               "source": {
@@ -29773,6 +29978,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesCreateResponse
+        status-code: 200
         property: climate_setting_schedule
       errors:
         - root.ClimateSettingSchedulesCreateRequestBadRequestError
@@ -29822,6 +30028,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesDeleteResponse
+        status-code: 200
       errors:
         - root.ClimateSettingSchedulesDeleteRequestBadRequestError
         - root.ClimateSettingSchedulesDeleteRequestUnauthorizedError
@@ -29854,6 +30061,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesGetResponse
+        status-code: 200
         property: climate_setting_schedule
       errors:
         - root.ClimateSettingSchedulesGetRequestBadRequestError
@@ -29901,6 +30109,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesListResponse
+        status-code: 200
         property: climate_setting_schedules
       errors:
         - root.ClimateSettingSchedulesListRequestBadRequestError
@@ -29960,6 +30169,7 @@ service:
       response:
         docs: OK
         type: ClimateSettingSchedulesUpdateResponse
+        status-code: 200
       errors:
         - root.ClimateSettingSchedulesUpdateRequestBadRequestError
         - root.ClimateSettingSchedulesUpdateRequestUnauthorizedError
@@ -30056,6 +30266,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesAddAcsUserResponse",
               },
               "source": {
@@ -30135,6 +30346,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "user_identity",
+                "status-code": 200,
                 "type": "UserIdentitiesCreateResponse",
               },
               "source": {
@@ -30186,6 +30398,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesDeleteResponse",
               },
               "source": {
@@ -30232,6 +30445,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "user_identity",
+                "status-code": 200,
                 "type": "UserIdentitiesGetResponse",
               },
               "source": {
@@ -30293,6 +30507,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesGrantAccessToDeviceResponse",
               },
               "source": {
@@ -30355,6 +30570,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "user_identities",
+                "status-code": 200,
                 "type": "UserIdentitiesListResponse",
               },
               "source": {
@@ -30503,6 +30719,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "devices",
+                "status-code": 200,
                 "type": "UserIdentitiesListAccessibleDevicesResponse",
               },
               "source": {
@@ -30538,8 +30755,8 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "error_code": "seam_bridge_disconnected",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -30586,6 +30803,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_systems",
+                "status-code": 200,
                 "type": "UserIdentitiesListAcsSystemsResponse",
               },
               "source": {
@@ -30663,6 +30881,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "acs_users",
+                "status-code": 200,
                 "type": "UserIdentitiesListAcsUsersResponse",
               },
               "source": {
@@ -30724,6 +30943,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesRemoveAcsUserResponse",
               },
               "source": {
@@ -30785,6 +31005,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesRevokeAccessToDeviceResponse",
               },
               "source": {
@@ -30864,6 +31085,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "UserIdentitiesUpdateResponse",
               },
               "source": {
@@ -31179,6 +31401,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesAddAcsUserResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesAddAcsUserRequestBadRequestError
         - root.UserIdentitiesAddAcsUserRequestUnauthorizedError
@@ -31217,6 +31440,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesCreateResponse
+        status-code: 200
         property: user_identity
       errors:
         - root.UserIdentitiesCreateRequestBadRequestError
@@ -31254,6 +31478,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesDeleteResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesDeleteRequestBadRequestError
         - root.UserIdentitiesDeleteRequestUnauthorizedError
@@ -31276,6 +31501,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesGetResponse
+        status-code: 200
         property: user_identity
       errors:
         - root.UserIdentitiesGetRequestBadRequestError
@@ -31318,6 +31544,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesGrantAccessToDeviceResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesGrantAccessToDeviceRequestBadRequestError
         - root.UserIdentitiesGrantAccessToDeviceRequestUnauthorizedError
@@ -31347,6 +31574,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListResponse
+        status-code: 200
         property: user_identities
       errors:
         - root.UserIdentitiesListRequestBadRequestError
@@ -31384,6 +31612,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAccessibleDevicesResponse
+        status-code: 200
         property: devices
       errors:
         - root.UserIdentitiesListAccessibleDevicesRequestBadRequestError
@@ -31481,6 +31710,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAcsSystemsResponse
+        status-code: 200
         property: acs_systems
       errors:
         - root.UserIdentitiesListAcsSystemsRequestBadRequestError
@@ -31504,9 +31734,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                    - created_at: '2024-01-15T09:30:00Z'
+                      message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -31533,6 +31763,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesListAcsUsersResponse
+        status-code: 200
         property: acs_users
       errors:
         - root.UserIdentitiesListAcsUsersRequestBadRequestError
@@ -31587,6 +31818,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesRemoveAcsUserResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesRemoveAcsUserRequestBadRequestError
         - root.UserIdentitiesRemoveAcsUserRequestUnauthorizedError
@@ -31620,6 +31852,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesRevokeAccessToDeviceResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesRevokeAccessToDeviceRequestBadRequestError
         - root.UserIdentitiesRevokeAccessToDeviceRequestUnauthorizedError
@@ -31662,6 +31895,7 @@ service:
       response:
         docs: OK
         type: UserIdentitiesUpdateResponse
+        status-code: 200
       errors:
         - root.UserIdentitiesUpdateRequestBadRequestError
         - root.UserIdentitiesUpdateRequestUnauthorizedError
@@ -31730,6 +31964,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "EnrollmentAutomationsDeleteResponse",
               },
               "source": {
@@ -31789,6 +32024,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "enrollment_automation",
+                "status-code": 200,
                 "type": "EnrollmentAutomationsGetResponse",
               },
               "source": {
@@ -31878,6 +32114,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "enrollment_automation",
+                "status-code": 200,
                 "type": "EnrollmentAutomationsLaunchResponse",
               },
               "source": {
@@ -31939,6 +32176,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "enrollment_automations",
+                "status-code": 200,
                 "type": "EnrollmentAutomationsListResponse",
               },
               "source": {
@@ -32126,6 +32364,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsDeleteResponse
+        status-code: 200
       errors:
         - root.EnrollmentAutomationsDeleteRequestBadRequestError
         - root.EnrollmentAutomationsDeleteRequestUnauthorizedError
@@ -32154,6 +32393,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsGetResponse
+        status-code: 200
         property: enrollment_automation
       errors:
         - root.EnrollmentAutomationsGetRequestBadRequestError
@@ -32202,6 +32442,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsLaunchResponse
+        status-code: 200
         property: enrollment_automation
       errors:
         - root.EnrollmentAutomationsLaunchRequestBadRequestError
@@ -32239,6 +32480,7 @@ service:
       response:
         docs: OK
         type: EnrollmentAutomationsListResponse
+        status-code: 200
         property: enrollment_automations
       errors:
         - root.EnrollmentAutomationsListRequestBadRequestError
@@ -32324,6 +32566,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "webhook",
+                "status-code": 200,
                 "type": "WebhooksCreateResponse",
               },
               "source": {
@@ -32367,6 +32610,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "WebhooksDeleteResponse",
               },
               "source": {
@@ -32419,6 +32663,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "webhook",
+                "status-code": 200,
                 "type": "WebhooksGetResponse",
               },
               "source": {
@@ -32458,6 +32703,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "webhooks",
+                "status-code": 200,
                 "type": "WebhooksListResponse",
               },
               "source": {
@@ -32505,6 +32751,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "WebhooksUpdateResponse",
               },
               "source": {
@@ -32627,6 +32874,7 @@ service:
       response:
         docs: OK
         type: WebhooksCreateResponse
+        status-code: 200
         property: webhook
       errors:
         - root.WebhooksCreateRequestBadRequestError
@@ -32659,6 +32907,7 @@ service:
       response:
         docs: OK
         type: WebhooksDeleteResponse
+        status-code: 200
       errors:
         - root.WebhooksDeleteRequestBadRequestError
         - root.WebhooksDeleteRequestUnauthorizedError
@@ -32684,6 +32933,7 @@ service:
       response:
         docs: OK
         type: WebhooksGetResponse
+        status-code: 200
         property: webhook
       errors:
         - root.WebhooksGetRequestBadRequestError
@@ -32710,6 +32960,7 @@ service:
       response:
         docs: OK
         type: WebhooksListResponse
+        status-code: 200
         property: webhooks
       errors:
         - root.WebhooksListRequestBadRequestError
@@ -32741,6 +32992,7 @@ service:
       response:
         docs: OK
         type: WebhooksUpdateResponse
+        status-code: 200
       errors:
         - root.WebhooksUpdateRequestBadRequestError
         - root.WebhooksUpdateRequestUnauthorizedError
@@ -32826,6 +33078,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "workspace",
+                "status-code": 200,
                 "type": "WorkspacesCreateResponse",
               },
               "source": {
@@ -32862,6 +33115,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "workspace",
+                "status-code": 200,
                 "type": "WorkspacesGetResponse",
               },
               "source": {
@@ -32900,6 +33154,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "workspaces",
+                "status-code": 200,
                 "type": "WorkspacesListResponse",
               },
               "source": {
@@ -32936,6 +33191,7 @@ service:
               "response": {
                 "docs": "OK",
                 "property": "action_attempt",
+                "status-code": 200,
                 "type": "WorkspacesResetSandboxResponse",
               },
               "source": {
@@ -33072,6 +33328,7 @@ service:
       response:
         docs: OK
         type: WorkspacesCreateResponse
+        status-code: 200
         property: workspace
       errors:
         - root.WorkspacesCreateRequestBadRequestError
@@ -33098,6 +33355,7 @@ service:
       response:
         docs: OK
         type: WorkspacesGetResponse
+        status-code: 200
         property: workspace
       errors:
         - root.WorkspacesGetRequestBadRequestError
@@ -33122,6 +33380,7 @@ service:
       response:
         docs: OK
         type: WorkspacesListResponse
+        status-code: 200
         property: workspaces
       errors:
         - root.WorkspacesListRequestBadRequestError
@@ -33146,6 +33405,7 @@ service:
       response:
         docs: OK
         type: WorkspacesResetSandboxResponse
+        status-code: 200
         property: action_attempt
       errors:
         - root.WorkspacesResetSandboxRequestBadRequestError

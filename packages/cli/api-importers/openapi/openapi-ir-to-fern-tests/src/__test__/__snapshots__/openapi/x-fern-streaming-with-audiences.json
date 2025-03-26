@@ -96,7 +96,7 @@
                   },
                 },
               ],
-              "method": "GET",
+              "method": "POST",
               "pagination": undefined,
               "path": "/user/{userId}",
               "path-parameters": {
@@ -122,6 +122,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -149,7 +150,7 @@
                   },
                 },
               ],
-              "method": "GET",
+              "method": "POST",
               "pagination": undefined,
               "path": "/user/{userId}",
               "path-parameters": {
@@ -196,7 +197,7 @@ service:
   endpoints:
     get_stream:
       path: /user/{userId}
-      method: GET
+      method: POST
       auth: false
       source:
         openapi: ../openapi.yml
@@ -226,7 +227,7 @@ service:
                 streamed: true
     get:
       path: /user/{userId}
-      method: GET
+      method: POST
       auth: false
       source:
         openapi: ../openapi.yml
@@ -243,6 +244,7 @@ service:
       response:
         docs: ''
         type: root.User
+        status-code: 200
       examples:
         - path-parameters:
             userId: userId

@@ -1,7 +1,6 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExtends.Core;
-
-#nullable enable
 
 namespace SeedExtends;
 
@@ -13,6 +12,14 @@ public record Json
     [JsonPropertyName("docs")]
     public required string Docs { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

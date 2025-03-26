@@ -1,0 +1,10 @@
+## 1.9.12
+**`(fix):`** Change serialization logic for headers and querystring parameters:
+- Strings, enums, dates, times, and date times are serialized as before.
+- Booleans are now serialized as `true` and `false` instead of `True` and `False`.
+- Objects, lists, maps, dictionaries, undiscriminated, and discriminated unions are serialized to JSON.
+
+
+**`(fix):`** Only use `.Value` on nullable structs when serializing parameters to headers and querystring parameters.
+
+

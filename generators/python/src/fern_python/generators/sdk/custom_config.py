@@ -29,18 +29,19 @@ class ClientConfiguration(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
-class BaseDependencyCusomConfig(pydantic.BaseModel):
+class BaseDependencyCustomConfig(pydantic.BaseModel):
     version: str
     extras: Optional[List[str]] = None
 
 
-class DependencyCusomConfig(BaseDependencyCusomConfig):
-    optional: bool
+class DependencyCustomConfig(BaseDependencyCustomConfig):
+    python: Optional[str] = None
+    optional: bool = False
 
 
 class SDKCustomConfig(pydantic.BaseModel):
-    extra_dependencies: Dict[str, Union[str, DependencyCusomConfig]] = {}
-    extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCusomConfig]] = {}
+    extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
+    extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
     extras: Dict[str, List[str]] = {}
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
@@ -52,7 +53,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
     # Feature flag that improves imports in the
-    # Python SDK by removing nested `resources` directoy
+    # Python SDK by removing nested `resources` directory
     improved_imports: bool = True
 
     follow_redirects_by_default: Optional[bool] = True

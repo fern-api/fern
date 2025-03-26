@@ -1,4 +1,4 @@
-name: java
+name: Java Generator
 
 on:
   pull_request:

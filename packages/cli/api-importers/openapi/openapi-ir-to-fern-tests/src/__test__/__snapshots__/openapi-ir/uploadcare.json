@@ -7,6 +7,7 @@
       "description": "Production server"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Integrations": {
@@ -93,7 +94,8 @@
               "isArray": true,
               "type": "file"
             },
-            "description": "File's content"
+            "description": "File's content",
+            "exploded": false
           },
           {
             "key": "metadata[{key}]",
@@ -204,6 +206,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -381,7 +384,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -675,7 +678,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -844,7 +847,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Direct file uploads comply with the [RFC 7578](https://www.rfc-editor.org/rfc/rfc7578) standard.\nIn other words, you can perform a direct upload by making an HTTP POST request with the Content-Type\nheader set to `multipart/form-data`.\n\n**Note**: Direct file uploads support files smaller than 100 megabytes only.\nIf you would like to upload larger files, please use [Multipart Uploads](/api-refs/upload-api/#operation/multipartFileUploadStart) instead.\n\nFile upload example with curl:\n\n```\ncurl -F \"UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY\" -F \"my_file.jpg=@my_file.jpg\" \"https://upload.uploadcare.com/base/\"\n```\n",
       "authed": false,
       "method": "POST",
@@ -1173,6 +1176,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1377,7 +1381,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -1701,7 +1705,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -1842,7 +1846,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Multipart uploads should be used if you need to upload files larger than 100 megabytes or if you want to\nexplicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/).\nWhen you use Multipart Uploads your files go straight to AWS S3 bypassing our upload instances.\n\nTo upload large files, 3 requests are sent in sequence:\n1. `/multipart/start/`\n2. `<presigned-url-x>`\n3. `/multipart/complete/`.\n\n**Note**: Multipart uploads support files larger than 10 megabytes only.\n",
       "authed": false,
       "method": "POST",
@@ -2005,7 +2009,7 @@
         "type": "octetStream"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "The second phase is about uploading the file parts to the presigned upload URLs returned from the\n`/multipart/start/` endpoint.\n\nEach uploaded part should be at least 5 MiB (5242880 bytes) in size except for the last one, which can be smaller.\nYou can upload the file parts in parallel provided that the byte order stays unchanged.\n\n**Note**: You MUST define `Content-Type` header for your data.\n",
       "authed": false,
       "method": "PUT",
@@ -2122,6 +2126,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2236,7 +2241,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -2388,7 +2393,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -2450,7 +2455,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Once all the file parts have been uploaded successfully, complete the\nupload session to assemble all the file parts into a single resulting file.\n",
       "authed": false,
       "method": "POST",
@@ -3325,7 +3330,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -3403,6 +3408,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3625,7 +3631,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -3969,7 +3975,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -4110,7 +4116,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Uploadcare can fetch a file from a publicly available URL and then automatically upload the\nfetched file to your project.\n\n#### Upload tokens\nRequests to the endpoint return a JSON dictionary with a `token` that can be further used\nto [check the status](/api-refs/upload-api/#operation/fromURLUploadStatus) of the upload\nrequest.\n\n**Note:** The token is not a file ID and can't be used to address the file directly.\nThe actual file ID should be retrieved by calling the `/from_url/status/` endpoint.\n\n#### Duplicates prevention\nBy default, every call to the `/from_url/` endpoint with the same `source_url` results in\na new upload leading to file duplication.\n\nIf you would like Uploadcare to keep track of the requested URLs and avoid the duplicate\nuploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.\n",
       "authed": false,
       "method": "POST",
@@ -4912,7 +4918,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -5011,6 +5017,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5044,7 +5051,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "The endpoint notifies about the progress of the task by changing the value of the `status` field:\n  * the field is set to `waiting` initially\n  * once the system starts processing the request, the field is set to `progress`\n  * if the file is fetched and uploaded successfully, the `status` field is set to `success`\n    and the endpoint returns a JSON object holding information about the uploaded file\n  * if the system fails to fetch/upload the file, the `status` field is set to `error` and\n    the `error` field is set to the cause of the error.\n",
       "authed": false,
       "method": "GET",
@@ -6039,6 +6046,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6081,7 +6089,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -6153,7 +6161,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -6215,7 +6223,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).\n",
       "authed": false,
       "method": "GET",
@@ -6949,6 +6957,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7045,7 +7054,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -7240,7 +7249,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -7343,7 +7352,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a file group from a set of already uploaded files.\n\nThe most common use case for creating a file group is when a user uploads\nmultiple files at once and then wants to display them together.\n\n**Note:** A group itself and files within it MUST belong to the same project.\n\n**Note:** Groups are immutable and the only way to add/remove a file to a group\nis to create a new one.\n",
       "authed": false,
       "method": "POST",
@@ -8096,6 +8105,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8129,7 +8139,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -8191,7 +8201,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -8253,7 +8263,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns a JSON object with information about a file group (when the group was created,\nnumber of the files in the group, etc).\n",
       "authed": false,
       "method": "GET",
@@ -8944,7 +8954,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "signatureType": {
@@ -9156,7 +9166,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9172,7 +9183,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9188,7 +9200,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9204,7 +9217,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11822,7 +11836,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -11843,7 +11858,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],

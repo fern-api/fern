@@ -15,6 +15,7 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
@@ -24,7 +25,6 @@ import { VariableResolver } from "../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
-import { constructHttpPath } from "./services/constructHttpPath";
 import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from "./services/convertHttpService";
 import { getQueryParameterName } from "./services/convertQueryParameter";
 import {
@@ -62,6 +62,7 @@ export function convertChannel({
     return {
         availability: convertAvailability(channel.availability),
         path: constructHttpPath(channel.path),
+        baseUrl: channel.url,
         auth: channel.auth,
         // since there's only 1 channel per file, we can use the file name as the channel's name
         name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),
@@ -297,7 +298,16 @@ function convertMessageSchema({
             extends: getExtensionsAsList(body.extends ?? []).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            properties: []
+            properties: Object.entries(body.properties ?? {}).map(([key, property]) => ({
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: key, property }).name,
+                    wireValue: key
+                }),
+                value: file.parseTypeReference(property),
+                valueType: file.parseTypeReference(property),
+                availability: undefined,
+                docs: undefined
+            }))
         });
     }
 }

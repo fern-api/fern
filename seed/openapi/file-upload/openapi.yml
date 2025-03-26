@@ -152,6 +152,29 @@ paths:
                 foo_bar:
                   $ref: '#/components/schemas/MyObject'
                   nullable: true
+  /with-form-encoding:
+    post:
+      operationId: service_withFormEncoding
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                foo:
+                  type: string
+                bar:
+                  $ref: '#/components/schemas/MyObject'
 components:
   schemas:
     Id:

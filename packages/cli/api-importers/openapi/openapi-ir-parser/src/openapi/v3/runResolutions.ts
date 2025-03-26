@@ -35,7 +35,7 @@ export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): Op
 
 interface AddComponentSchemaArgs {
     openapi: OpenAPIV3.Document;
-    /* A reference to the inlined schema which should be made a comonent schema */
+    /* A reference to the inlined schema which should be made a component schema */
     schemaReference: string;
     /* The name of the schema to be added */
     schemaName: string;
@@ -45,7 +45,7 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
     const keys = schemaReference
         .replace("#/", "")
         .split("/")
-        .map((key) => key.replace("~1", "/"));
+        .map((key) => key.replaceAll("~1", "/"));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
@@ -106,7 +106,7 @@ function replaceWithSchemaReference({
     const keys = replaceReference
         .replace("#/", "")
         .split("/")
-        .map((key) => key.replace("~1", "/"));
+        .map((key) => key.replaceAll("~1", "/"));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;

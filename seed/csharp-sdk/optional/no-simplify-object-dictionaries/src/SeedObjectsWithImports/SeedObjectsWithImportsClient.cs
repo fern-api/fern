@@ -1,12 +1,10 @@
 using SeedObjectsWithImports.Core;
 
-#nullable enable
-
 namespace SeedObjectsWithImports;
 
 public partial class SeedObjectsWithImportsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {

@@ -696,7 +696,7 @@
         }
       ]
     },
-    "docs.UntabbedNavigationConifg": {
+    "docs.UntabbedNavigationConfig": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/docs.NavigationItem"
@@ -731,7 +731,7 @@
     "docs.NavigationConfig": {
       "oneOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConifg"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         },
         {
           "$ref": "#/definitions/docs.TabbedNavigationConfig"

@@ -50,71 +50,6 @@ tabs:
 [View an example](https://github.com/humanloop/humanloop-docs/blob/30ddedaf6d2779361e8ee1f373f722364e5dd71d/fern/versions/v5.yml#L10-L13) in GitHub of Humanloop's `docs.yml` which powers [their Changelog](https://humanloop.com/docs/changelog).
 
 </Accordion>
-<Accordion title='API-level Changelog'>
-Configure a changelog at the API-level by creating a changelog folder specific to an API.
-
-<CodeBlocks>
-<CodeBlock title="OpenAPI">
-```yaml {6-8}
-fern/
-├─ fern.config.json
-├─ docs.yml
-└─ openapi/
-    ├─ openapi.yml
-    └─ changelog/
-        ├─ 07-15-24.md
-        └─ 08-23-24.mdx
-```
-</CodeBlock>
-<CodeBlock title="Fern Definition">
-```yaml {7-9}
-fern/
-├─ fern.config.json
-├─ docs.yml
-└─ definition/
-    ├─ api.yml
-    ├─ imdb.yml
-    └─ changelog/
-        ├─ 07-15-24.md
-        └─ 08-23-24.mdx 
-```
-</CodeBlock>
-<CodeBlock title="Multiple APIs">
-```yaml {8-10,14-17}
-fern/
-├─ fern.config.json
-├─ docs.yml
-└─ apis/
-    ├─ user-api/
-        └─ openapi/
-            ├─ openapi.yml
-            ├─ openapi-overrides.yml
-            └─ changelog
-                ├─ 07-15-24.md
-                └─ 08-23-24.mdx
-    └─ admin-api/
-        └─ openapi/
-            ├─ openapi.yml
-            └─ changelog
-                ├─ 06-29-24.md
-                └─ 08-02-24.md
-                └─ 08-15-24.md
-```
-</CodeBlock>
-</CodeBlocks>
-
-Changelogs contained within your API folder will automatically be displayed at the bottom of your API reference. You do not need to configure your changelog(s) within `docs.yml`. 
-
-View an example of a changelog per API in [Astronomer's docs](https://www.astronomer.io/docs/api/iam-api-reference/changelog).
-
-<Frame
-    caption="A unique changelog per API"
-    background="subtle"
-  >
-      <img src="changelog-astronomer.png" />
-  </Frame>
-
-</Accordion>
 <Accordion title="Section-level Changelog">
 Configure a changelog for your project by creating a changelog folder.
 
@@ -147,6 +82,10 @@ navigation:
     slug: api-release-notes
 ```
 </CodeBlock>
+
+<Note>
+Section-level changelogs **cannot** be nested within an `api` entry. See [API-level changelogs](#api-level-changelog) to add an API-level entry.
+</Note>
 </Accordion>
 </AccordionGroup>
 

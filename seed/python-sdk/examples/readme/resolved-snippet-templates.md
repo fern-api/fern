@@ -255,7 +255,18 @@ client.service.create_big_entity(
 		cast=[
 			"cast",
 			"cast"
-		]
+		],
+		id="id",
+		prequel="prequel",
+		title="title",
+		from_="from",
+		rating=1.1,
+		tag="tag",
+		book="book",
+		metadata={
+			"metadata": {"key":"value"}
+		},
+		revenue=1000000
 	),
 	entity=Entity(
 		name="name"

@@ -101,9 +101,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": null,
         "environments": {
@@ -159,5 +161,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

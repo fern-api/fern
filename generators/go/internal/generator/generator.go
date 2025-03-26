@@ -13,6 +13,7 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
+	gov2 "github.com/fern-api/fern-go/internal/generator/v2"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
 
@@ -131,7 +132,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	return g.generate(ir, mode)
 }
 
-func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootPackageName string) ([]*File, error) {
+func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootClientInstantiation *ast.AssignStmt, rootPackageName string) ([]*File, []*GeneratedClient, error) {
 	fileInfoToTypes, err := fileInfoToTypes(
 		rootPackageName,
 		ir.Types,
@@ -139,11 +140,13 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		ir.ServiceTypeReferenceInfo,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
 	)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	files := make([]*File, 0, len(fileInfoToTypes))
+	var generatedRootClients []*GeneratedClient
 	for fileInfo, typesToGenerate := range fileInfoToTypes {
 		writer := newFileWriter(
 			fileInfo.filename,
@@ -153,6 +156,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -162,12 +166,12 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			switch {
 			case typeToGenerate.TypeDeclaration != nil:
 				if err := writer.WriteType(typeToGenerate.TypeDeclaration, mode == ModeClient); err != nil {
-					return nil, err
+					return nil, nil, err
 				}
 			case typeToGenerate.Endpoint != nil:
 				if mode == ModeFiber {
 					if err := writer.WriteFiberRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
-						return nil, err
+						return nil, nil, err
 					}
 				} else if mode == ModeClient {
 					if err := writer.WriteRequestType(
@@ -178,18 +182,40 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 						g.config.EnableExplicitNull,
 						g.config.InlineFileProperties,
 					); err != nil {
-						return nil, err
+						return nil, nil, err
 					}
 				}
+			case g.config.PackageLayout == PackageLayoutFlat && typeToGenerate.Endpoint == nil && typeToGenerate.Service != nil:
+				generatedClient, err := writer.WriteClient(
+					ir.Auth,
+					typeToGenerate.Service.Endpoints,
+					ir.Headers,
+					typeToGenerate.Service.Headers,
+					ir.IdempotencyHeaders,
+					nil, // Subpackages are not supported with the flat package layout.
+					ir.Environments,
+					ir.ErrorDiscriminationStrategy,
+					typeToGenerate.FernFilepath,
+					rootClientInstantiation,
+					g.config.InlinePathParameters,
+					g.config.InlineFileProperties,
+					g.config.PackageLayout,
+					"",
+					"",
+				)
+				if err != nil {
+					return nil, nil, err
+				}
+				generatedRootClients = append(generatedRootClients, generatedClient)
 			}
 		}
 		file, err := writer.File()
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		files = append(files, file)
 	}
-	return files, nil
+	return files, generatedRootClients, nil
 }
 
 func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) ([]*File, error) {
@@ -202,7 +228,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
 				if typeImportPath != referencedImportPath {
 					return nil, fmt.Errorf(
-						"%s referneces %s from another package, but a generator import path was not specified",
+						"%s references %s from another package, but a generator import path was not specified",
 						typeDeclaration.Name.TypeId,
 						referencedType.TypeId,
 					)
@@ -210,7 +236,21 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 	}
-	exportedClientName := getExportedClientName(ir, g.config.ExportedClientName)
+	if g.config.PackageLayout == PackageLayoutFlat {
+		for _, subpackage := range ir.Subpackages {
+			if subpackage.FernFilepath.PackagePath != nil && len(subpackage.FernFilepath.PackagePath) > 0 {
+				var packagePathElements []string
+				for _, packagePathElement := range subpackage.FernFilepath.AllParts {
+					packagePathElements = append(packagePathElements, packagePathElement.OriginalName)
+				}
+				return nil, fmt.Errorf(
+					"the flat package layout setting is not supported for APIs defined in nested directories (e.g. %s)",
+					strings.Join(packagePathElements, "/"),
+				)
+			}
+		}
+	}
+	exportedClientName := getExportedClientName(ir, g.config.ExportedClientName, g.config.ClientName)
 	rootPackageName := getRootPackageName(ir, g.config.PackageName)
 	cycleInfo, err := cycleInfoFromIR(ir, g.config.ImportPath)
 	if err != nil {
@@ -263,6 +303,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -284,6 +325,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -292,11 +334,19 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer.WriteDocs(subpackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
+	// Set up the root client to reference each of the nested endpoint.
+	var rootClientInstantiation *ast.AssignStmt
+	generatedRootClient := &GeneratedClient{
+		Instantiation: rootClientInstantiation,
+	}
 	// Then split up all the types based on the Fern directory they belong to (i.e. the root package,
 	// or some other subpackage).
-	modelFiles, err := g.generateModelTypes(ir, mode, rootPackageName)
+	modelFiles, generatedRootClients, err := g.generateModelTypes(ir, mode, rootClientInstantiation, rootPackageName)
 	if err != nil {
 		return nil, err
+	}
+	for _, generatedRootClient := range generatedRootClients {
+		generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedRootClient.Endpoints...)
 	}
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
@@ -304,10 +354,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
-	var rootClientInstantiation *ast.AssignStmt
-	generatedRootClient := &GeneratedClient{
-		Instantiation: rootClientInstantiation,
-	}
 	var generatedPagination bool
 	switch mode {
 	case ModeFiber:
@@ -328,6 +374,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -359,6 +406,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
+				g.config.PackageLayout,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -384,6 +432,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -403,6 +452,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedAuth,
 			generatedEnvironment,
 			exportedClientName,
+			g.config.ClientConstructorName,
+			g.config.PackageLayout,
 		)
 		if len(ir.IdempotencyHeaders) > 0 {
 			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
@@ -414,6 +465,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
+				g.config.PackageLayout,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -436,6 +488,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
+				g.config.PackageLayout,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -461,6 +514,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
+				g.config.PackageLayout,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -485,6 +539,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.AlwaysSendRequiredProperties,
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
+			g.config.PackageLayout,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -526,8 +581,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if generatedPagination {
 			files = append(files, newPageFile(g.coordinator))
 			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
+			files = append(files, newPagerTestFile(g.coordinator))
 		}
-		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
+		clientTestFile, err := newClientTestFile(g.config.ImportPath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
 		}
@@ -542,6 +598,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.AlwaysSendRequiredProperties,
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
+				g.config.PackageLayout,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -571,12 +628,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				rootSubpackages = append(rootSubpackages, subpackage)
 			}
 			if ir.RootPackage.Service != nil {
-				file, generatedClient, err := g.generateService(
+				file, generatedClient, err := g.generateRootService(
 					ir,
 					ir.Services[*ir.RootPackage.Service],
 					rootSubpackages,
 					rootClientInstantiation,
 					ir.RootPackage.FernFilepath,
+					rootPackageName,
 				)
 				if err != nil {
 					return nil, err
@@ -592,6 +650,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					ir.RootPackage.FernFilepath,
 					rootSubpackages,
 					rootClientInstantiation,
+					rootPackageName,
 				)
 				if err != nil {
 					return nil, err
@@ -603,29 +662,44 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 		// Then generate the client for all of the subpackages.
-		for _, subpackageToGenerate := range subpackagesToGenerate {
-			irSubpackage := subpackageToGenerate.Subpackage
-			var subpackages []*fernir.Subpackage
-			for _, subpackageID := range irSubpackage.Subpackages {
-				subpackage := ir.Subpackages[subpackageID]
-				if !subpackage.HasEndpointsInTree {
-					// We only want to include subpackages that have endpoints.
+		if g.config.PackageLayout != PackageLayoutFlat {
+			for _, subpackageToGenerate := range subpackagesToGenerate {
+				irSubpackage := subpackageToGenerate.Subpackage
+				var subpackages []*fernir.Subpackage
+				for _, subpackageID := range irSubpackage.Subpackages {
+					subpackage := ir.Subpackages[subpackageID]
+					if !subpackage.HasEndpointsInTree {
+						// We only want to include subpackages that have endpoints.
+						continue
+					}
+					subpackages = append(subpackages, subpackage)
+				}
+				if irSubpackage.Service == nil && len(subpackages) == 0 {
+					// This subpackage doesn't have any transitive services,
+					// so we don't need to generate a client for it.
 					continue
 				}
-				subpackages = append(subpackages, subpackage)
-			}
-			if irSubpackage.Service == nil && len(subpackages) == 0 {
-				// This subpackage doesn't have any transitive services,
-				// so we don't need to generate a client for it.
-				continue
-			}
-			if irSubpackage.Service == nil {
-				// This subpackage doesn't have a service, but we still need
-				// to generate an intermediary client for it to access the
-				// nested endpoints.
-				file, err := g.generateServiceWithoutEndpoints(
+				if irSubpackage.Service == nil {
+					// This subpackage doesn't have a service, but we still need
+					// to generate an intermediary client for it to access the
+					// nested endpoints.
+					file, err := g.generateServiceWithoutEndpoints(
+						ir,
+						irSubpackage,
+						subpackages,
+						rootClientInstantiation,
+						subpackageToGenerate.OriginalFernFilepath,
+					)
+					if err != nil {
+						return nil, err
+					}
+					files = append(files, file)
+					continue
+				}
+				// This service has endpoints, so we proceed with the normal flow.
+				file, generatedClient, err := g.generateService(
 					ir,
-					irSubpackage,
+					ir.Services[*irSubpackage.Service],
 					subpackages,
 					rootClientInstantiation,
 					subpackageToGenerate.OriginalFernFilepath,
@@ -634,23 +708,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					return nil, err
 				}
 				files = append(files, file)
-				continue
-			}
-			// This service has endpoints, so we proceed with the normal flow.
-			file, generatedClient, err := g.generateService(
-				ir,
-				ir.Services[*irSubpackage.Service],
-				subpackages,
-				rootClientInstantiation,
-				subpackageToGenerate.OriginalFernFilepath,
-			)
-			if err != nil {
-				return nil, err
-			}
-			files = append(files, file)
 
-			// Merge this client's endpoints with the root generated client.
-			generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
+				// Merge this client's endpoints with the root generated client.
+				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
+			}
 		}
 	}
 	// Write the snippets, if any.
@@ -678,17 +739,28 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 	}
+	// Finally, run the go-v2 SDK generator.
+	g.coordinator.Log(
+		generatorexec.LogLevelDebug,
+		"Constructing go-v2 SDK generator...",
+	)
+
+	v2 := gov2.New(g.coordinator)
+	if v2Err := v2.Run(); v2Err != nil {
+		return nil, v2Err
+	}
 	return files, nil
 }
 
-func (g *Generator) generateService(
+func (g *Generator) generateRootService(
 	ir *fernir.IntermediateRepresentation,
 	irService *fernir.HttpService,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
 	originalFernFilepath *fernir.FernFilepath,
+	rootPackageName string,
 ) (*File, *GeneratedClient, error) {
-	fileInfo := fileInfoForService(irService.Name.FernFilepath)
+	fileInfo := fileInfoForRootService(irService.Name.FernFilepath, rootPackageName, g.config.PackageLayout)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -697,6 +769,7 @@ func (g *Generator) generateService(
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -715,6 +788,58 @@ func (g *Generator) generateService(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
+		g.config.ClientName,
+		g.config.ClientConstructorName,
+	)
+	if err != nil {
+		return nil, nil, err
+	}
+	file, err := writer.File()
+	if err != nil {
+		return nil, nil, err
+	}
+	return file, generatedClient, nil
+}
+
+func (g *Generator) generateService(
+	ir *fernir.IntermediateRepresentation,
+	irService *fernir.HttpService,
+	irSubpackages []*fernir.Subpackage,
+	rootClientInstantiation *ast.AssignStmt,
+	originalFernFilepath *fernir.FernFilepath,
+) (*File, *GeneratedClient, error) {
+	fileInfo := fileInfoForService(irService.Name.FernFilepath)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.ImportPath,
+		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.PackageLayout,
+		g.config.UnionVersion,
+		ir.Types,
+		ir.Errors,
+		g.coordinator,
+	)
+	generatedClient, err := writer.WriteClient(
+		ir.Auth,
+		irService.Endpoints,
+		ir.Headers,
+		irService.Headers,
+		ir.IdempotencyHeaders,
+		irSubpackages,
+		ir.Environments,
+		ir.ErrorDiscriminationStrategy,
+		originalFernFilepath,
+		rootClientInstantiation,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.PackageLayout,
+		"",
+		"",
 	)
 	if err != nil {
 		return nil, nil, err
@@ -745,6 +870,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -763,6 +889,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
+		"",
+		"",
 	); err != nil {
 		return nil, err
 	}
@@ -777,8 +906,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 	fernFilepath *fernir.FernFilepath,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
+	rootPackageName string,
 ) (*File, *GeneratedClient, error) {
-	fileInfo := fileInfoForService(fernFilepath)
+	fileInfo := fileInfoForRootService(fernFilepath, rootPackageName, g.config.PackageLayout)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -787,6 +917,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.AlwaysSendRequiredProperties,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -805,6 +936,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		rootClientInstantiation,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.PackageLayout,
+		g.config.ClientName,
+		g.config.ClientConstructorName,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -916,7 +1050,7 @@ func (g *Generator) generateReadme(
 	)
 }
 
-// readIR reads the *InermediateRepresentation from the given filename.
+// readIR reads the *IntermediateRepresentation from the given filename.
 func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	bytes, err := os.ReadFile(irFilename)
 	if err != nil {
@@ -1033,22 +1167,36 @@ func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, g
 
 func newClientTestFile(
 	baseImportPath string,
+	rootPackageName string,
 	coordinator *coordinator.Client,
+	packageLayout PackageLayout,
+	clientNameOverride string,
+	clientConstructorNameOverride string,
 ) (*File, error) {
+	var (
+		filename    = "client_test.go"
+		packageName = rootPackageName
+	)
+	if packageLayout != PackageLayoutFlat {
+		filename = "client/client_test.go"
+		packageName = "client"
+	}
 	f := newFileWriter(
-		"client/client_test.go",
-		"client",
+		filename,
+		packageName,
 		baseImportPath,
 		false,
 		false,
 		false,
 		false,
+		packageLayout,
 		UnionVersionUnspecified,
 		nil,
 		nil,
 		coordinator,
 	)
-	f.WriteRaw(clientTestFile)
+	content := replaceClientTestConstructorName(clientTestFile, clientNameOverride, clientConstructorNameOverride)
+	f.WriteRaw(content)
 	return f.File()
 }
 
@@ -1153,6 +1301,14 @@ func newPagerFile(coordinator *coordinator.Client, baseImportPath string) *File 
 	)
 }
 
+func newPagerTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/pager_test.go",
+		[]byte(pagerTestFile),
+	)
+}
+
 func newPageFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
@@ -1241,6 +1397,22 @@ func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/extra_properties_test.go",
 		[]byte(extraPropertiesTestFile),
+	)
+}
+
+func replaceClientTestConstructorName(content string, clientNameOverride string, clientConstructorNameOverride string) string {
+	if clientNameOverride == "" && clientConstructorNameOverride == "" {
+		return content
+	}
+	override := "New" + clientNameOverride
+	if clientConstructorNameOverride != "" {
+		override = clientConstructorNameOverride
+	}
+	return strings.Replace(
+		content,
+		"NewClient",
+		override,
+		-1,
 	)
 }
 
@@ -1359,6 +1531,16 @@ func fileInfoForPackageDocs(fernFilepath *fernir.FernFilepath) *fileInfo {
 	return &fileInfo{
 		filename:    filepath.Join(append(packagePath, "doc.go")...),
 		packageName: packagePath[len(packagePath)-1],
+	}
+}
+
+func fileInfoForRootService(fernFilepath *fernir.FernFilepath, rootPackageName string, packageLayout PackageLayout) *fileInfo {
+	if packageLayout != PackageLayoutFlat {
+		return fileInfoForService(fernFilepath)
+	}
+	return &fileInfo{
+		filename:    "client.go",
+		packageName: rootPackageName,
 	}
 }
 
@@ -1500,14 +1682,24 @@ func fileInfoToTypes(
 	irServiceTypeReferenceInfo *fernir.ServiceTypeReferenceInfo,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	packageLayout PackageLayout,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 	for _, irService := range irServices {
+		fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
+		if packageLayout == PackageLayoutFlat && irService.Name.FernFilepath.File != nil {
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					FernFilepath: irService.Name.FernFilepath,
+					Service:      irService,
+				},
+			)
+		}
 		for _, irEndpoint := range irService.Endpoints {
 			if shouldSkipRequestType(irEndpoint, inlinePathParameters, inlineFileProperties) {
 				continue
 			}
-			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 			result[fileInfo] = append(
 				result[fileInfo],
 				&typeToGenerate{
@@ -1721,9 +1913,12 @@ func getRootPackageName(ir *fernir.IntermediateRepresentation, packageNameOverri
 
 // getExportedClientName returns the exported client name. This is configurable so that
 // users can customize how snippets are rendered, but it has no impact on the generated code.
-func getExportedClientName(ir *fernir.IntermediateRepresentation, exportedClientNameOverride string) string {
+func getExportedClientName(ir *fernir.IntermediateRepresentation, exportedClientNameOverride string, clientNameOverride string) string {
 	if exportedClientNameOverride != "" {
 		return exportedClientNameOverride
+	}
+	if clientNameOverride != "" {
+		return clientNameOverride
 	}
 	return defaultExportedClientName
 }

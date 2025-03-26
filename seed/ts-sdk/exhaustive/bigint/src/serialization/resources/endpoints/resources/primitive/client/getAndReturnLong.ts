@@ -9,7 +9,7 @@ export const Request: core.serialization.Schema<serializers.endpoints.primitive.
     core.serialization.bigint();
 
 export declare namespace Request {
-    export type Raw = string;
+    export type Raw = bigint | number;
 }
 
 export const Response: core.serialization.Schema<
@@ -18,5 +18,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.bigint();
 
 export declare namespace Response {
-    export type Raw = string;
+    export type Raw = bigint | number;
 }

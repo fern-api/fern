@@ -15,13 +15,13 @@ export interface SchemaParserContext {
     resolveGroupName(groupName: SdkGroupName): SdkGroupName;
     markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
     markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
-    markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void;
+    markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discriminant: string, times: number): void;
 
     // Schemas marked with a discriminant value will have their discriminants
     // added as explicitly defaulted literal fields
     markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void;
 }

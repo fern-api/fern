@@ -1,15 +1,13 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedExtends.Core;
-
-#nullable enable
 
 namespace SeedExtends;
 
 public partial class SeedExtendsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedExtendsClient(ClientOptions? clientOptions = null)
     {
@@ -33,37 +31,39 @@ public partial class SeedExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
-    /// </code>
-    /// </example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         Inlined request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/extends/extended-inline-request-body",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/extends/extended-inline-request-body",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

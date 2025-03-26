@@ -122,7 +122,11 @@ export async function runPreviewServer({
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
-    const reloadDocsDefinition = async () => {
+    let reloadTimer: NodeJS.Timeout | null = null;
+    let isReloading = false;
+    const RELOAD_DEBOUNCE_MS = 1000;
+
+    const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
@@ -132,7 +136,9 @@ export async function runPreviewServer({
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
-                context
+                context,
+                previousDocsDefinition: docsDefinition,
+                editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
@@ -161,25 +167,51 @@ export async function runPreviewServer({
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
-        debounce: 1000,
+        debounce: 100,
         renameDetection: true
     });
+
+    const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-        sendData({
-            version: 1,
-            type: "startReload"
-        });
-        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        const reloadedDocsDefinition = await reloadDocsDefinition();
-        if (reloadedDocsDefinition != null) {
-            docsDefinition = reloadedDocsDefinition;
+
+        // Don't schedule another reload if one is in progress
+        if (isReloading) {
+            return;
         }
-        sendData({
-            version: 1,
-            type: "finishReload"
-        });
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+
+        // Clear any existing timer
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        // Set up new timer
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                if (reloadedDocsDefinition != null) {
+                    docsDefinition = reloadedDocsDefinition;
+                }
+
+                editedAbsoluteFilepaths.length = 0;
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                isReloading = false;
+            })();
+        }, RELOAD_DEBOUNCE_MS);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -198,6 +230,7 @@ export async function runPreviewServer({
             };
             res.send(response);
         } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
         }
@@ -227,7 +260,7 @@ export async function runPreviewServer({
 
     context.logger.info(`Running server on http://localhost:${port}`);
 
-    // await infiinitely
+    // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
 }

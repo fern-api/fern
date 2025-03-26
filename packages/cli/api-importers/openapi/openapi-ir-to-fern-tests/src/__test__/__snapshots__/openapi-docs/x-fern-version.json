@@ -79,6 +79,7 @@
               },
               "response": {
                 "docs": "Success!",
+                "status-code": 200,
                 "type": "string",
               },
               "source": {
@@ -111,6 +112,7 @@
       response:
         docs: Success!
         type: string
+        status-code: 200
       examples:
         - request:
             prompt: prompt

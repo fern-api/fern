@@ -10,7 +10,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "complete": "GameComplete",
               "date": {
                 "type": "string",
@@ -22,8 +25,14 @@
                 },
               },
               "extra_fields": "list<GameExtraFieldsItem>",
-              "group": "optional<string>",
-              "id": "optional<integer>",
+              "group": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "id": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
               "name": {
                 "type": "optional<string>",
                 "validation": {
@@ -33,11 +42,23 @@
                   "pattern": undefined,
                 },
               },
-              "photos": "optional<list<GamePhotosItem>>",
-              "room": "optional<string>",
-              "start_at": "optional<datetime>",
+              "photos": {
+                "access": "read-only",
+                "type": "optional<list<GamePhotosItem>>",
+              },
+              "room": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "start_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "time": "string",
-              "updated_at": "optional<datetime>",
+              "updated_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -62,7 +83,10 @@
             "inline": true,
             "properties": {
               "key": "string",
-              "label": "optional<string>",
+              "label": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "present": "boolean",
               "value": "optional<map<string, unknown>>",
             },
@@ -74,9 +98,13 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "photo": "string",
               "processed_image": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "binary",
@@ -85,7 +113,10 @@
                   "pattern": undefined,
                 },
               },
-              "ready": "optional<string>",
+              "ready": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -95,7 +126,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "date": {
                 "type": "string",
                 "validation": {
@@ -105,8 +139,14 @@
                   "pattern": undefined,
                 },
               },
-              "games": "optional<list<GroupGamesItem>>",
-              "id": "optional<integer>",
+              "games": {
+                "access": "read-only",
+                "type": "optional<list<GroupGamesItem>>",
+              },
+              "id": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
               "is_event": "optional<boolean>",
               "name": {
                 "type": "optional<string>",
@@ -117,11 +157,20 @@
                   "pattern": undefined,
                 },
               },
-              "photos": "optional<list<GroupPhotosItem>>",
+              "photos": {
+                "access": "read-only",
+                "type": "optional<list<GroupPhotosItem>>",
+              },
               "players": "list<GroupPlayersItem>",
-              "start_at": "optional<datetime>",
+              "start_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "time": "string",
-              "updated_at": "optional<datetime>",
+              "updated_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -131,7 +180,10 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "complete": "GroupGamesItemComplete",
               "date": {
                 "type": "string",
@@ -143,7 +195,10 @@
                 },
               },
               "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
-              "id": "optional<integer>",
+              "id": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
               "name": {
                 "type": "optional<string>",
                 "validation": {
@@ -153,10 +208,19 @@
                   "pattern": undefined,
                 },
               },
-              "room": "optional<string>",
-              "start_at": "optional<datetime>",
+              "room": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "start_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "time": "string",
-              "updated_at": "optional<datetime>",
+              "updated_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -181,7 +245,10 @@
             "inline": true,
             "properties": {
               "key": "string",
-              "label": "optional<string>",
+              "label": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "present": "boolean",
               "value": "optional<map<string, unknown>>",
             },
@@ -193,10 +260,17 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "added_at": "optional<datetime>",
-              "game": "optional<string>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "game": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "photo": "string",
               "processed_image": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "binary",
@@ -205,7 +279,10 @@
                   "pattern": undefined,
                 },
               },
-              "ready": "optional<string>",
+              "ready": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -215,7 +292,10 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "email": {
                 "type": "string",
                 "validation": {
@@ -245,9 +325,18 @@
                 },
               },
               "phone": "string",
-              "player": "optional<string>",
-              "signature": "optional<string>",
-              "updated_at": "optional<datetime>",
+              "player": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "signature": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "updated_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -258,7 +347,10 @@
             "inline": true,
             "properties": {
               "key": "string",
-              "label": "optional<string>",
+              "label": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "present": "boolean",
               "value": "optional<map<string, unknown>>",
             },
@@ -270,8 +362,14 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "added_at": "optional<datetime>",
-              "id": "optional<string>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "original_image": {
                 "type": "string",
                 "validation": {
@@ -291,11 +389,21 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "added_at": "optional<datetime>",
-              "game": "optional<string>",
-              "group": "optional<string>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "game": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "group": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "photo": "string",
               "processed_image": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "binary",
@@ -304,7 +412,10 @@
                   "pattern": undefined,
                 },
               },
-              "ready": "optional<string>",
+              "ready": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -314,7 +425,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "added_at": "optional<datetime>",
+              "added_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "email": {
                 "type": "string",
                 "validation": {
@@ -334,7 +448,10 @@
                   "pattern": undefined,
                 },
               },
-              "id": "optional<integer>",
+              "id": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
               "last_name": {
                 "type": "optional<string>",
                 "validation": {
@@ -344,9 +461,15 @@
                   "pattern": undefined,
                 },
               },
-              "marketing_email_allowed": "optional<boolean>",
+              "marketing_email_allowed": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "phone": "string",
-              "updated_at": "optional<datetime>",
+              "updated_at": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -357,7 +480,10 @@
             "inline": true,
             "properties": {
               "key": "string",
-              "label": "optional<string>",
+              "label": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "present": "boolean",
               "value": "optional<map<string, unknown>>",
             },
@@ -370,7 +496,10 @@
             "inline": undefined,
             "properties": {
               "hidden": "optional<boolean>",
-              "id": "optional<integer>",
+              "id": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
               "name": {
                 "type": "string",
                 "validation": {
@@ -390,7 +519,9 @@
       "rawContents": "types:
   Room:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       name:
         type: string
         validation:
@@ -400,20 +531,27 @@
       openapi: ../openapi.yml
   GamePhotosItem:
     properties:
-      added_at: optional<datetime>
+      added_at:
+        type: optional<datetime>
+        access: read-only
       photo: string
       processed_image:
         type: optional<string>
         validation:
           format: binary
-      ready: optional<string>
+        access: read-only
+      ready:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
   GameExtraFieldsItem:
     properties:
       key: string
-      label: optional<string>
+      label:
+        type: optional<string>
+        access: read-only
       value: optional<map<string, unknown>>
       present: boolean
     source:
@@ -431,9 +569,15 @@
     inline: true
   Game:
     properties:
-      id: optional<integer>
-      added_at: optional<datetime>
-      updated_at: optional<datetime>
+      id:
+        type: optional<integer>
+        access: read-only
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       name:
         type: optional<string>
         validation:
@@ -443,10 +587,18 @@
         validation:
           format: date
       time: string
-      start_at: optional<datetime>
-      group: optional<string>
-      room: optional<string>
-      photos: optional<list<GamePhotosItem>>
+      start_at:
+        type: optional<datetime>
+        access: read-only
+      group:
+        type: optional<string>
+        access: read-only
+      room:
+        type: optional<string>
+        access: read-only
+      photos:
+        type: optional<list<GamePhotosItem>>
+        access: read-only
       extra_fields: list<GameExtraFieldsItem>
       complete: GameComplete
     source:
@@ -454,7 +606,9 @@
   GroupGamesItemExtraFieldsItem:
     properties:
       key: string
-      label: optional<string>
+      label:
+        type: optional<string>
+        access: read-only
       value: optional<map<string, unknown>>
       present: boolean
     source:
@@ -472,9 +626,15 @@
     inline: true
   GroupGamesItem:
     properties:
-      id: optional<integer>
-      added_at: optional<datetime>
-      updated_at: optional<datetime>
+      id:
+        type: optional<integer>
+        access: read-only
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       name:
         type: optional<string>
         validation:
@@ -484,8 +644,12 @@
         validation:
           format: date
       time: string
-      start_at: optional<datetime>
-      room: optional<string>
+      start_at:
+        type: optional<datetime>
+        access: read-only
+      room:
+        type: optional<string>
+        access: read-only
       extra_fields: list<GroupGamesItemExtraFieldsItem>
       complete: GroupGamesItemComplete
     source:
@@ -494,7 +658,9 @@
   GroupPlayersItemExtraFieldsItem:
     properties:
       key: string
-      label: optional<string>
+      label:
+        type: optional<string>
+        access: read-only
       value: optional<map<string, unknown>>
       present: boolean
     source:
@@ -502,9 +668,15 @@
     inline: true
   GroupPlayersItem:
     properties:
-      added_at: optional<datetime>
-      updated_at: optional<datetime>
-      player: optional<string>
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
+      player:
+        type: optional<string>
+        access: read-only
       first_name:
         type: optional<string>
         validation:
@@ -519,28 +691,43 @@
           format: email
       phone: string
       extra_fields: list<GroupPlayersItemExtraFieldsItem>
-      signature: optional<string>
+      signature:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
   GroupPhotosItem:
     properties:
-      added_at: optional<datetime>
-      game: optional<string>
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      game:
+        type: optional<string>
+        access: read-only
       photo: string
       processed_image:
         type: optional<string>
         validation:
           format: binary
-      ready: optional<string>
+        access: read-only
+      ready:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
   Group:
     properties:
-      id: optional<integer>
-      added_at: optional<datetime>
-      updated_at: optional<datetime>
+      id:
+        type: optional<integer>
+        access: read-only
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       is_event: optional<boolean>
       name:
         type: optional<string>
@@ -551,16 +738,24 @@
         validation:
           format: date
       time: string
-      start_at: optional<datetime>
-      games: optional<list<GroupGamesItem>>
+      start_at:
+        type: optional<datetime>
+        access: read-only
+      games:
+        type: optional<list<GroupGamesItem>>
+        access: read-only
       players: list<GroupPlayersItem>
-      photos: optional<list<GroupPhotosItem>>
+      photos:
+        type: optional<list<GroupPhotosItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PlayerExtraFieldsItem:
     properties:
       key: string
-      label: optional<string>
+      label:
+        type: optional<string>
+        access: read-only
       value: optional<map<string, unknown>>
       present: boolean
     source:
@@ -568,9 +763,15 @@
     inline: true
   Player:
     properties:
-      id: optional<integer>
-      added_at: optional<datetime>
-      updated_at: optional<datetime>
+      id:
+        type: optional<integer>
+        access: read-only
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       first_name:
         type: optional<string>
         validation:
@@ -585,27 +786,42 @@
           format: email
       phone: string
       extra_fields: list<PlayerExtraFieldsItem>
-      marketing_email_allowed: optional<boolean>
+      marketing_email_allowed:
+        type: optional<boolean>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PhotoProcessedItem:
     properties:
-      added_at: optional<datetime>
-      game: optional<string>
-      group: optional<string>
+      added_at:
+        type: optional<datetime>
+        access: read-only
+      game:
+        type: optional<string>
+        access: read-only
+      group:
+        type: optional<string>
+        access: read-only
       photo: string
       processed_image:
         type: optional<string>
         validation:
           format: binary
-      ready: optional<string>
+        access: read-only
+      ready:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
   Photo:
     properties:
-      id: optional<string>
-      added_at: optional<datetime>
+      id:
+        type: optional<string>
+        access: read-only
+      added_at:
+        type: optional<datetime>
+        access: read-only
       original_image:
         type: string
         validation:
@@ -657,6 +873,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListAccountsResponse",
               },
               "source": {
@@ -734,6 +951,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListGamesResponse",
               },
               "source": {
@@ -820,6 +1038,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListGroupsResponse",
               },
               "source": {
@@ -861,6 +1080,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListLocationsResponse",
               },
               "source": {
@@ -907,6 +1127,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListPhotosResponse",
               },
               "source": {
@@ -959,6 +1180,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ListPlayersResponse",
               },
               "source": {
@@ -993,6 +1215,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Room",
               },
               "source": {
@@ -1079,6 +1302,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Game",
               },
               "source": {
@@ -1179,6 +1403,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Group",
               },
               "source": {
@@ -1213,6 +1438,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Room",
               },
               "source": {
@@ -1257,6 +1483,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Photo",
               },
               "source": {
@@ -1306,6 +1533,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Player",
               },
               "source": {
@@ -1317,269 +1545,8 @@
             "openapi": "../openapi.yml",
           },
         },
-        "types": {
-          "ListAccountsResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Room>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ListGamesResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Game>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ListGroupsResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Group>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ListLocationsResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Room>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ListPhotosResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Photo>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ListPlayersResponse": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "count": "optional<integer>",
-              "next": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "previous": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "results": "optional<list<root.Player>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-        },
       },
-      "rawContents": "types:
-  ListAccountsResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Room>>
-    source:
-      openapi: ../openapi.yml
-  ListGamesResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Game>>
-    source:
-      openapi: ../openapi.yml
-  ListGroupsResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Group>>
-    source:
-      openapi: ../openapi.yml
-  ListPlayersResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Player>>
-    source:
-      openapi: ../openapi.yml
-  ListLocationsResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Room>>
-    source:
-      openapi: ../openapi.yml
-  ListPhotosResponse:
-    properties:
-      count: optional<integer>
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: optional<list<root.Photo>>
-    source:
-      openapi: ../openapi.yml
-service:
+      "rawContents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -1599,6 +1566,7 @@ service:
       response:
         docs: ''
         type: ListAccountsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1623,6 +1591,7 @@ service:
       response:
         docs: ''
         type: root.Room
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1659,6 +1628,7 @@ service:
       response:
         docs: ''
         type: ListGamesResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1711,6 +1681,7 @@ service:
       response:
         docs: ''
         type: root.Game
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1764,6 +1735,7 @@ service:
       response:
         docs: ''
         type: ListGroupsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1818,6 +1790,7 @@ service:
       response:
         docs: ''
         type: root.Group
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1879,6 +1852,7 @@ service:
       response:
         docs: ''
         type: ListPlayersResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1911,6 +1885,7 @@ service:
       response:
         docs: ''
         type: root.Player
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1946,6 +1921,7 @@ service:
       response:
         docs: ''
         type: ListLocationsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -1970,6 +1946,7 @@ service:
       response:
         docs: ''
         type: root.Room
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -1994,6 +1971,7 @@ service:
       response:
         docs: ''
         type: ListPhotosResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -2020,6 +1998,7 @@ service:
       response:
         docs: ''
         type: root.Photo
+        status-code: 200
       examples:
         - path-parameters:
             photo_id: photo_id

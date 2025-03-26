@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -19,9 +17,9 @@ public record NamespaceSummary
     /// <summary>
     /// Maps the NamespaceSummary type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.NamespaceSummary ToProto()
+    internal ProtoDataV1Grpc.NamespaceSummary ToProto()
     {
-        var result = new Proto.NamespaceSummary();
+        var result = new ProtoDataV1Grpc.NamespaceSummary();
         if (Count != null)
         {
             result.Count = Count ?? 0;
@@ -32,7 +30,7 @@ public record NamespaceSummary
     /// <summary>
     /// Returns a new NamespaceSummary type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static NamespaceSummary FromProto(Proto.NamespaceSummary value)
+    internal static NamespaceSummary FromProto(ProtoDataV1Grpc.NamespaceSummary value)
     {
         return new NamespaceSummary { Count = value.Count };
     }

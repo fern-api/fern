@@ -5,15 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { UntabbedNavigationConifg } from "./UntabbedNavigationConifg";
+import { UntabbedNavigationConfig } from "./UntabbedNavigationConfig";
 import { TabbedNavigationConfig } from "./TabbedNavigationConfig";
 import { TabbedNavigationItem } from "./TabbedNavigationItem";
 
 export const NavigationConfig: core.serialization.Schema<
     serializers.NavigationConfig.Raw,
     FernDocsConfig.NavigationConfig
-> = core.serialization.undiscriminatedUnion([UntabbedNavigationConifg, TabbedNavigationConfig]);
+> = core.serialization.undiscriminatedUnion([UntabbedNavigationConfig, TabbedNavigationConfig]);
 
 export declare namespace NavigationConfig {
-    export type Raw = UntabbedNavigationConifg.Raw | TabbedNavigationConfig.Raw;
+    export type Raw = UntabbedNavigationConfig.Raw | TabbedNavigationConfig.Raw;
 }

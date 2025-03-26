@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -45,9 +45,10 @@ fixtures:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
 scripts:
-  - docker: bitnami/dotnet-sdk:8
+  - docker: fernapi/csharp-seed
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      - dotnet restore src
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
 allowedFailures:
   - mixed-file-directory
   - objects-with-imports

@@ -2,8 +2,6 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Types;
 
 [JsonConverter(typeof(EnumSerializer<WeatherReport>))]

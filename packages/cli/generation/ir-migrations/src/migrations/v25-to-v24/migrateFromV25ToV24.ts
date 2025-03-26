@@ -104,13 +104,13 @@ export const V25_TO_V24_MIGRATION: IrMigration<
             );
             if (textHttpEndpoints.length === 1 && textHttpEndpoints[0] != null) {
                 context.taskContext.logger.warn(
-                    `Therefore, endpoint ${textHttpEndpoints[0].name.originalName} response type will be casted to unkown.`
+                    `Therefore, endpoint ${textHttpEndpoints[0].name.originalName} response type will be casted to unknown.`
                 );
             } else {
                 context.taskContext.logger.warn(
                     `Therefore, endpoints ${textHttpEndpoints
                         .map((endpoint) => endpoint.name.originalName)
-                        .join(", ")} response types will be casted to unkown.`
+                        .join(", ")} response types will be casted to unknown.`
                 );
             }
         }

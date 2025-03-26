@@ -4,15 +4,15 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export type OneOfSchema = FernOpenapiIr.OneOfSchema.Discriminated | FernOpenapiIr.OneOfSchema.Undisciminated;
+export type OneOfSchema = FernOpenapiIr.OneOfSchema.Discriminated | FernOpenapiIr.OneOfSchema.Undiscriminated;
 
 export namespace OneOfSchema {
     export interface Discriminated extends FernOpenapiIr.DiscriminatedOneOfSchema, _Utils {
         type: "discriminated";
     }
 
-    export interface Undisciminated extends FernOpenapiIr.UnDiscriminatedOneOfSchema, _Utils {
-        type: "undisciminated";
+    export interface Undiscriminated extends FernOpenapiIr.UnDiscriminatedOneOfSchema, _Utils {
+        type: "undiscriminated";
     }
 
     export interface _Utils {
@@ -21,7 +21,7 @@ export namespace OneOfSchema {
 
     export interface _Visitor<_Result> {
         discriminated: (value: FernOpenapiIr.DiscriminatedOneOfSchema) => _Result;
-        undisciminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchema) => _Result;
+        undiscriminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchema) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -40,12 +40,12 @@ export const OneOfSchema = {
         };
     },
 
-    undisciminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchema): FernOpenapiIr.OneOfSchema.Undisciminated => {
+    undiscriminated: (value: FernOpenapiIr.UnDiscriminatedOneOfSchema): FernOpenapiIr.OneOfSchema.Undiscriminated => {
         return {
             ...value,
-            type: "undisciminated",
+            type: "undiscriminated",
             _visit: function <_Result>(
-                this: FernOpenapiIr.OneOfSchema.Undisciminated,
+                this: FernOpenapiIr.OneOfSchema.Undiscriminated,
                 visitor: FernOpenapiIr.OneOfSchema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.OneOfSchema._visit(this, visitor);
@@ -60,8 +60,8 @@ export const OneOfSchema = {
         switch (value.type) {
             case "discriminated":
                 return visitor.discriminated(value);
-            case "undisciminated":
-                return visitor.undisciminated(value);
+            case "undiscriminated":
+                return visitor.undiscriminated(value);
             default:
                 return visitor._other(value as any);
         }

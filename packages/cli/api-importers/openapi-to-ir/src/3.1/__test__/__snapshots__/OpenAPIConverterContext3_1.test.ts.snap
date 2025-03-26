@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OpenAPIConverterContext3_1 > resolves URL references 1`] = `
+{
+  "resolved": true,
+  "value": {
+    "description": "A pet for sale in the pet store",
+    "example": {
+      "category": {
+        "id": 6,
+        "name": "name",
+      },
+      "id": 0,
+      "name": "doggie",
+      "photoUrls": [
+        "photoUrls",
+        "photoUrls",
+      ],
+      "status": "available",
+      "tags": [
+        {
+          "id": 1,
+          "name": "name",
+        },
+        {
+          "id": 1,
+          "name": "name",
+        },
+      ],
+    },
+    "properties": {
+      "category": {
+        "$ref": "#/components/schemas/Category",
+      },
+      "id": {
+        "format": "int64",
+        "type": "integer",
+      },
+      "name": {
+        "example": "doggie",
+        "type": "string",
+      },
+      "photoUrls": {
+        "items": {
+          "type": "string",
+        },
+        "type": "array",
+        "xml": {
+          "name": "photoUrl",
+          "wrapped": true,
+        },
+      },
+      "status": {
+        "description": "pet status in the store",
+        "enum": [
+          "available",
+          "pending",
+          "sold",
+        ],
+        "type": "string",
+      },
+      "tags": {
+        "items": {
+          "$ref": "#/components/schemas/Tag",
+        },
+        "type": "array",
+        "xml": {
+          "name": "tag",
+          "wrapped": true,
+        },
+      },
+    },
+    "required": [
+      "name",
+      "photoUrls",
+    ],
+    "title": "a Pet",
+    "type": "object",
+    "xml": {
+      "name": "Pet",
+    },
+  },
+}
+`;

@@ -128,7 +128,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"userName\",\n    \"metadata_tags\": [\n        \"metadata_tags\",\n        \"metadata_tags\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n    }\n}",
+              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"userName\",\n    \"metadata_tags\": [\n        \"metadata_tags\",\n        \"metadata_tags\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n    },\n    \"status\": \"ACTIVE\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -255,7 +255,7 @@
                 "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        }\n    },\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        }\n    }\n]",
+              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        },\n        \"status\": \"ACTIVE\"\n    },\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        },\n        \"status\": \"ACTIVE\"\n    }\n]",
               "_postman_previewlanguage": "json"
             }
           ]

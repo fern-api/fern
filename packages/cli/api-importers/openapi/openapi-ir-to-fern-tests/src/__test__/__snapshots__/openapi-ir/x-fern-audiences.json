@@ -16,6 +16,7 @@
       ]
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -93,7 +94,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v1/users",
@@ -117,7 +118,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "BaseUser": {

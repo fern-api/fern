@@ -86,7 +86,7 @@ public final class Key {
     }
 
     @java.lang.Override
-    public Key deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public Key deserialize(JsonParser p, DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, KeyType.class));

@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/container/",
+                "method": "DELETE",
+                "identifier_override": "endpoint_service.endpoint"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedAccept;\n\nvar client = new SeedAcceptClient(\"TOKEN\");\nawait client.Service.EndpointAsync();\n"
+            }
+        }
+    ]
+}

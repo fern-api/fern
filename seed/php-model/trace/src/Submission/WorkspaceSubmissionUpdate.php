@@ -16,15 +16,15 @@ class WorkspaceSubmissionUpdate extends JsonSerializableType
     public DateTime $updateTime;
 
     /**
-     * @var mixed $updateInfo
+     * @var WorkspaceSubmissionUpdateInfo $updateInfo
      */
     #[JsonProperty('updateInfo')]
-    public mixed $updateInfo;
+    public WorkspaceSubmissionUpdateInfo $updateInfo;
 
     /**
      * @param array{
      *   updateTime: DateTime,
-     *   updateInfo: mixed,
+     *   updateInfo: WorkspaceSubmissionUpdateInfo,
      * } $values
      */
     public function __construct(
@@ -32,5 +32,13 @@ class WorkspaceSubmissionUpdate extends JsonSerializableType
     ) {
         $this->updateTime = $values['updateTime'];
         $this->updateInfo = $values['updateInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

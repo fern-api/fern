@@ -105,13 +105,13 @@ module SeedExhaustiveClient
       # GET with multiple of same query param
       #
       # @param query [String]
-      # @param numer [Integer]
+      # @param number [Integer]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", numer: 1)
-      def get_with_allow_multiple_query(query:, numer:, request_options: nil)
+      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", number: 1)
+      def get_with_allow_multiple_query(query:, number:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -123,7 +123,7 @@ module SeedExhaustiveClient
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "query": query,
-            "numer": numer
+            "number": number
           }.compact
           unless request_options.nil? || request_options&.additional_body_parameters.nil?
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact
@@ -346,13 +346,13 @@ module SeedExhaustiveClient
       # GET with multiple of same query param
       #
       # @param query [String]
-      # @param numer [Integer]
+      # @param number [Integer]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Void]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", numer: 1)
-      def get_with_allow_multiple_query(query:, numer:, request_options: nil)
+      #  exhaustive.endpoints.params.get_with_allow_multiple_query(query: "query", number: 1)
+      def get_with_allow_multiple_query(query:, number:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -365,7 +365,7 @@ module SeedExhaustiveClient
             req.params = {
               **(request_options&.additional_query_parameters || {}),
               "query": query,
-              "numer": numer
+              "number": number
             }.compact
             unless request_options.nil? || request_options&.additional_body_parameters.nil?
               req.body = { **(request_options&.additional_body_parameters || {}) }.compact

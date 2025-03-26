@@ -4499,6 +4499,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantCreateBulkOperationResult",
               },
               "source": {
@@ -4570,6 +4571,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserCreateBulkOperationResult",
               },
               "source": {
@@ -4628,6 +4630,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantDeleteBulkOperationResult",
               },
               "source": {
@@ -4686,6 +4689,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserDeleteBulkOperationResult",
               },
               "source": {
@@ -4757,6 +4761,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserReplaceBulkOperationResult",
               },
               "source": {
@@ -4803,6 +4808,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserCreateBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4851,6 +4857,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserReplaceBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4899,6 +4906,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserDeleteBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4938,6 +4946,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantCreateBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4982,6 +4991,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantDeleteBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5108,6 +5118,7 @@ If the permission is already granted, it is skipped.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRuleRead>",
               },
               "source": {
@@ -5204,6 +5215,7 @@ If the permission is already granted, it is skipped.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRuleRead>",
               },
               "source": {
@@ -5357,6 +5369,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5434,6 +5447,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5756,6 +5770,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -5909,6 +5924,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -6055,6 +6071,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRead>",
               },
               "source": {
@@ -6201,6 +6218,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRead>",
               },
               "source": {
@@ -6354,6 +6372,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListConditionSetsResponse",
               },
               "source": {
@@ -6521,6 +6540,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -6614,6 +6634,7 @@ service:
       response:
         docs: Successful Response
         type: ListConditionSetsResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6740,6 +6761,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6838,6 +6860,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6984,6 +7007,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7097,6 +7121,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7203,6 +7228,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7423,6 +7449,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7487,6 +7514,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7578,6 +7606,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7663,6 +7692,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EnvironmentRead>",
               },
               "source": {
@@ -7791,6 +7821,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentStats",
               },
               "source": {
@@ -7882,6 +7913,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7935,6 +7967,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentStats
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8043,6 +8076,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.EnvironmentRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8085,6 +8119,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8133,6 +8168,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8224,6 +8260,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8314,6 +8351,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 201
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8464,6 +8502,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationReadWithAPIKey",
               },
               "source": {
@@ -8527,6 +8566,7 @@ if such org exists and can be accessed by the authenticated actor.",
               "path": "/v2/orgs/active/org",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8572,6 +8612,7 @@ if such org exists and can be accessed by the authenticated actor.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8639,6 +8680,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.OrganizationRead>",
               },
               "source": {
@@ -8709,6 +8751,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8756,6 +8799,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.OrganizationRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8803,6 +8847,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationReadWithAPIKey
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8842,6 +8887,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8906,6 +8952,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8937,6 +8984,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9075,6 +9123,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9149,6 +9198,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9218,6 +9268,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ProjectRead>",
               },
               "source": {
@@ -9299,6 +9350,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9344,6 +9396,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ProjectRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9405,6 +9458,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9443,6 +9497,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9516,6 +9571,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9667,6 +9723,7 @@ to a role as one action.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -9777,6 +9834,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -9870,6 +9928,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceActionGroupRead>",
               },
               "source": {
@@ -9965,6 +10024,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -10026,6 +10086,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceActionGroupRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10107,6 +10168,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10173,6 +10235,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10295,6 +10358,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10436,6 +10500,7 @@ Each (resource, action) pair defines a unique permission level.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10543,6 +10608,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10633,6 +10699,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceActionRead>",
               },
               "source": {
@@ -10724,6 +10791,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10785,6 +10853,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceActionRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10861,6 +10930,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10920,6 +10990,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11037,6 +11108,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11156,6 +11228,7 @@ define a boolean `private` attributes that we can now use in our policies.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11292,6 +11365,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11380,6 +11454,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceAttributeRead>",
               },
               "source": {
@@ -11452,6 +11527,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11513,6 +11589,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11565,6 +11642,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11625,6 +11703,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11744,6 +11823,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11902,6 +11982,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -11999,6 +12080,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -12085,6 +12167,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceInstanceRead>",
               },
               "source": {
@@ -12167,6 +12250,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -12223,6 +12307,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceInstanceRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12303,6 +12388,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12359,6 +12445,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12452,6 +12539,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12591,6 +12679,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12707,6 +12796,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12819,6 +12909,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12892,6 +12983,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleList",
               },
               "source": {
@@ -12965,6 +13057,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleList",
               },
               "source": {
@@ -13060,6 +13153,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceRoleRead>",
               },
               "source": {
@@ -13142,6 +13236,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -13249,6 +13344,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -13310,6 +13406,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceRoleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13400,6 +13497,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13465,6 +13563,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13595,6 +13694,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13667,6 +13767,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13738,6 +13839,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13799,6 +13901,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13858,6 +13961,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14087,6 +14191,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14227,6 +14332,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14354,6 +14460,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListResourcesResponse",
               },
               "source": {
@@ -14503,6 +14610,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14642,6 +14750,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14734,6 +14843,7 @@ service:
       response:
         docs: Successful Response
         type: ListResourcesResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14838,6 +14948,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14933,6 +15044,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15059,6 +15171,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15208,6 +15321,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15370,6 +15484,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleAssignmentRead",
               },
               "source": {
@@ -15424,6 +15539,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BulkRoleAssignmentReport",
               },
               "source": {
@@ -15478,6 +15594,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BulkRoleUnAssignmentReport",
               },
               "source": {
@@ -15576,6 +15693,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.RoleAssignmentRead>",
               },
               "source": {
@@ -15705,6 +15823,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.RoleAssignmentRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15755,6 +15874,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleAssignmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15844,6 +15964,7 @@ service:
       response:
         docs: Successful Response
         type: root.BulkRoleAssignmentReport
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15882,6 +16003,7 @@ service:
       response:
         docs: Successful Response
         type: root.BulkRoleUnAssignmentReport
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15999,6 +16121,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16109,6 +16232,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16210,6 +16334,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16277,6 +16402,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleList",
               },
               "source": {
@@ -16344,6 +16470,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleList",
               },
               "source": {
@@ -16446,6 +16573,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListRolesResponse",
               },
               "source": {
@@ -16522,6 +16650,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16623,6 +16752,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16711,6 +16841,7 @@ service:
       response:
         docs: Successful Response
         type: ListRolesResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16797,6 +16928,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16855,6 +16987,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16972,6 +17105,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17036,6 +17170,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17099,6 +17234,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17152,6 +17288,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17203,6 +17340,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17339,6 +17477,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17479,6 +17618,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17609,6 +17749,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultUserRead",
               },
               "source": {
@@ -17709,6 +17850,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListTenantsResponse",
               },
               "source": {
@@ -17795,6 +17937,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17878,6 +18021,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17963,6 +18107,7 @@ service:
       response:
         docs: Successful Response
         type: ListTenantsResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18018,6 +18163,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18074,6 +18220,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18173,6 +18320,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18348,11 +18496,15 @@ define a string `owner` attribute that we can now use in our policies.
                 "content-type": "application/json",
                 "name": "CreateUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18422,7 +18574,10 @@ attribute to evaluate as `undefined`.",
                       "multipleOf": undefined,
                     },
                   },
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "source": {
@@ -18481,11 +18636,15 @@ attribute to evaluate as `undefined`.",
               "request": {
                 "name": "GetUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18565,11 +18724,15 @@ attribute to evaluate as `undefined`.",
                       "multipleOf": undefined,
                     },
                   },
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceAttributeRead>",
               },
               "source": {
@@ -18636,11 +18799,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "name": "UpdateUserAttributeRequest",
                 "query-parameters": {
-                  "resource_id": "optional<string>",
+                  "resource_id": {
+                    "default": "__user",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18681,7 +18848,9 @@ service:
       request:
         name: ListUserAttributesRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
           page:
             type: optional<integer>
             default: 1
@@ -18698,6 +18867,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18741,12 +18911,15 @@ service:
         body:
           type: root.ResourceAttributeCreate
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
         name: CreateUserAttributeRequest
         content-type: application/json
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18800,10 +18973,13 @@ service:
       request:
         name: GetUserAttributeRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18856,7 +19032,9 @@ service:
       request:
         name: DeleteUserAttributeRequest
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
           page:
             type: optional<integer>
             default: 1
@@ -18907,12 +19085,15 @@ service:
         body:
           type: root.ResourceAttributeUpdate
         query-parameters:
-          resource_id: optional<string>
+          resource_id:
+            type: optional<string>
+            default: __user
         name: UpdateUserAttributeRequest
         content-type: application/json
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19057,6 +19238,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleAssignmentRead",
               },
               "source": {
@@ -19163,6 +19345,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19287,6 +19470,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19412,6 +19596,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultUserRead",
               },
               "source": {
@@ -19519,6 +19704,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "An existing user was replaced",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19705,6 +19891,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19767,6 +19954,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19837,6 +20025,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19911,6 +20100,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19978,6 +20168,7 @@ service:
       response:
         docs: An existing user was replaced
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -20109,6 +20300,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -20194,6 +20386,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleAssignmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:

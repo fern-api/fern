@@ -87,6 +87,7 @@ public final class Data {
     }
 
     @JsonTypeName("string")
+    @JsonIgnoreProperties("type")
     private static final class StringValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -123,6 +124,7 @@ public final class Data {
     }
 
     @JsonTypeName("base64")
+    @JsonIgnoreProperties("type")
     private static final class Base64Value implements Value {
         @JsonProperty("value")
         private byte[] value;
@@ -158,6 +160,7 @@ public final class Data {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

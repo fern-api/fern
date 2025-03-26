@@ -210,3 +210,20 @@ var value = acme.User{
     Age: 42,
 }"
 `;
+
+exports[`file > import collision 1`] = `
+"package example
+
+import (
+    common "github.com/acme/acme-go/common"
+    _common "github.com/acme/acme-go/nested/common"
+)
+
+type Foo struct {
+    Name common.Identifier
+}
+type Bar struct {
+    Name _common.Identifier
+}
+"
+`;

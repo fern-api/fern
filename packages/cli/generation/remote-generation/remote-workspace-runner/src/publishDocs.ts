@@ -191,7 +191,8 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ api, apiName }) => {
+        async ({ api, snippetsConfig, apiName }) => {
+            api.snippetsConfiguration = snippetsConfig;
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
@@ -231,7 +232,7 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
+    context.logger.debug("Publishing docs...");
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {

@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
 using SeedStreaming.Core;
 
-#nullable enable
-
 namespace SeedStreaming;
 
 public record Generateequest
 {
     [JsonPropertyName("stream")]
-    public required bool Stream { get; set; }
+    public bool Stream { get; set; } = false;
 
     [JsonPropertyName("num_events")]
     public required int NumEvents { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -46,7 +46,7 @@ export class InlinedRequests {
      *         nestedObject: {
      *             string: "string",
      *             integer: 1,
-     *             long: 1000000,
+     *             long: BigInt("1000000"),
      *             double: 1.1,
      *             bool: true,
      *             datetime: "2024-01-15T09:30:00Z",
@@ -58,7 +58,7 @@ export class InlinedRequests {
      *             map: {
      *                 1: "map"
      *             },
-     *             bigint: "1000000"
+     *             bigint: BigInt("1000000")
      *         }
      *     })
      */

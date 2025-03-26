@@ -3,29 +3,26 @@ title: Retries with Backoff
 description: Automatically retry failures with exponential backoff
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
-  or [email us](mailto:support@buildwithfern.com) to get started. 
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
-Fern SDKs will automatically retry failed requests with exponential backoff. A request will be retried as 
-long as the request is deemed retriable and the number of retry attempts has 
+Fern SDKs will automatically retry failed requests with exponential backoff. A request will be retried as
+long as the request is deemed retryable and the number of retry attempts has
 not grown larger than the configured retry limit.
 
-### Retriable status codes
+### Retryable status codes
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Note that you can configure the list of retriable status codes as well. For example, 
-if you want to remove the `429` status code from the list of retriable status codes, you can do so.
+Note that you can configure the list of retryable status codes as well. For example,
+if you want to remove the `429` status code from the list of retryable status codes, you can do so.
 
 ### Overriding the retry limit
 
-By default, the SDK will retry a failed request up to 2 times. SDK users can override the global 
-default retry limit when instantiating the client. 
+By default, the SDK will retry a failed request up to 2 times. SDK users can override the global
+default retry limit when instantiating the client.
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">
@@ -73,7 +70,7 @@ default retry limit when instantiating the client.
   </CodeBlock>
 </CodeBlocks>
 
-It's also possible to override the retry limit on a per-request basis. 
+It's also possible to override the retry limit on a per-request basis.
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">

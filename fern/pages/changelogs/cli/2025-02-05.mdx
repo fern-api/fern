@@ -1,0 +1,6 @@
+## 0.51.26
+**`(fix):`** The OpenAPI parser now correctly generates examples for discriminated unions where a variant may itself be a union.
+Previously, if a discriminated union variant was itself a union (e.g. `{ type: "foo", value: { type: "bar" } }`),
+the example generation would skip. Now it recursively handles nested unions to generate valid examples.
+
+

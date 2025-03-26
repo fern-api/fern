@@ -31,4 +31,12 @@ class TestCaseResultWithStdout extends JsonSerializableType
         $this->result = $values['result'];
         $this->stdout = $values['stdout'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

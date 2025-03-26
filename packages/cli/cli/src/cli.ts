@@ -13,7 +13,7 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
+import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -62,7 +62,7 @@ async function runCli() {
 
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
+        setGlobalDispatcher(new Agent({ connect: { timeout: 10_000 }, bodyTimeout: 0, headersTimeout: 600_000 }));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -206,6 +206,17 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
 
+async function getOrganization(cliContext: CliContext): Promise<string | undefined> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory != null) {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        return projectConfig.organization;
+    }
+    return undefined;
+}
+
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "init",
@@ -231,14 +242,36 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .option("mintlify", {
                     type: "string",
-                    description: "Migrate docs from Mintlify"
+                    description: "Migrate docs from Mintlify provided a path to a mint.json file"
+                })
+                .option("readme", {
+                    type: "string",
+                    description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
                 }),
         async (argv) => {
             if (argv.organization == null) {
-                argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                const projectConfig = await getOrganization(cliContext);
+                if (projectConfig != null) {
+                    argv.organization = projectConfig;
+                } else {
+                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                }
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.readme != null && argv.mintlify != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.readme != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeWithReadme({
+                        readmeUrl: argv.readme,
+                        organization: argv.organization ?? "fern",
+                        taskContext: context,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
+                    });
+                });
             } else if (argv.docs != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeDocs({
@@ -251,6 +284,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.runTask(async (taskContext) => {
                     await initializeWithMintlify({
                         pathToMintJson: argv.mintlify,
+                        organization: argv.organization ?? "fern",
                         taskContext,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
@@ -402,6 +436,17 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description: "Ignore prompts to confirm generation, defaults to false"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -445,7 +490,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    brokenLinks: argv.brokenLinks,
+                    strictBrokenLinks: argv.strictBrokenLinks
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -500,6 +547,11 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("smart-casing", {
                     boolean: true,
                     description: "Whether to use smart casing"
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -515,7 +567,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                readme: undefined
+                readme: undefined,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
@@ -587,6 +640,10 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 .option("smart-casing", {
                     boolean: true,
                     description: "Whether to use smart casing"
+                })
+                .option("disable-examples", {
+                    boolean: true,
+                    description: "Whether to suppress examples from being included in the IR"
                 }),
         async (argv) => {
             await generateDynamicIrForWorkspaces({
@@ -601,7 +658,8 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 audiences: { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: argv.smartCasing ?? false
+                smartCasing: argv.smartCasing ?? false,
+                disableDynamicExamples: argv.disableExamples ?? false
             });
         }
     );
@@ -732,6 +790,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Log warnings in addition to errors.",
                     default: false
                 })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
                 .option("strict-broken-links", {
                     boolean: true,
                     description:
@@ -746,6 +809,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 logWarnings: argv.warnings,
+                brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks
             });
         }
@@ -1023,6 +1087,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     string: true,
                     hidden: true,
                     description: "Path of the local docs bundle to use"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    default: false,
+                    description: "Check for broken links in your docs"
                 }),
         async (argv) => {
             let port: number;
@@ -1040,7 +1109,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     }),
                 cliContext,
                 port,
-                bundlePath
+                bundlePath,
+                brokenLinks: argv.brokenLinks
             });
         }
     );

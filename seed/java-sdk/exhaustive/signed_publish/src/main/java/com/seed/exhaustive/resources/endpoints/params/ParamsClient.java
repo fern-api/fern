@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.core.SeedExhaustiveException;
@@ -54,6 +55,7 @@ public class ParamsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -77,6 +79,13 @@ public class ParamsClient {
     /**
      * GET with path param
      */
+    public String getWithInlinePath(String param) {
+        return getWithInlinePath(param, GetWithInlinePath.builder().build());
+    }
+
+    /**
+     * GET with path param
+     */
     public String getWithInlinePath(String param, GetWithInlinePath request) {
         return getWithInlinePath(param, request, null);
     }
@@ -95,7 +104,8 @@ public class ParamsClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -130,8 +140,8 @@ public class ParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -170,8 +180,8 @@ public class ParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -212,7 +222,7 @@ public class ParamsClient {
                 .addPathSegments("params")
                 .addPathSegments("path-query")
                 .addPathSegment(param);
-        httpUrl.addQueryParameter("query", request.getQuery());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -254,7 +264,7 @@ public class ParamsClient {
                 .addPathSegments("params")
                 .addPathSegments("path-query")
                 .addPathSegment(param);
-        httpUrl.addQueryParameter("query", request.getQuery());
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -308,6 +318,7 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -358,6 +369,7 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

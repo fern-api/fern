@@ -10,12 +10,14 @@ export async function previewDocsWorkspace({
     loadProject,
     cliContext,
     port,
-    bundlePath
+    bundlePath,
+    brokenLinks
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
     bundlePath?: string;
+    brokenLinks: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -39,28 +41,42 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                await validateDocsWorkspaceWithoutExiting({
-                    workspace: docsWorkspace,
-                    context,
-                    logWarnings: true,
-                    logSummary: false,
-                    fernWorkspaces: await Promise.all(
+                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
+                if (docsWorkspace.config.experimental?.openapiParserV3) {
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        fernWorkspaces: [],
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
+                    });
+                } else {
+                    const fernWorkspaces = await Promise.all(
                         project.apiWorkspaces.map(async (workspace) => {
                             return workspace.toFernWorkspace({ context });
                         })
-                    ),
-                    ossWorkspaces: await filterOssWorkspaces(project)
-                });
-                for (const apiWorkspace of project.apiWorkspaces) {
-                    await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
-                        const workspace = await apiWorkspace.toFernWorkspace({ context }, { preserveSchemaIds: true });
-                        await validateAPIWorkspaceWithoutExiting({
-                            workspace,
-                            context: apiWorkspaceContext,
-                            logWarnings: false,
-                            logSummary: false
-                        });
+                    );
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        fernWorkspaces,
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
                     });
+                    for (const fernWorkspace of fernWorkspaces) {
+                        await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
+                            await validateAPIWorkspaceWithoutExiting({
+                                workspace: fernWorkspace,
+                                context: apiWorkspaceContext,
+                                logWarnings: false,
+                                logSummary: false
+                            });
+                        });
+                    }
                 }
             },
             context,

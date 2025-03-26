@@ -88,6 +88,7 @@ public final class TestCaseImplementationReference {
     }
 
     @JsonTypeName("templateId")
+    @JsonIgnoreProperties("type")
     private static final class TemplateIdValue implements Value {
         @JsonProperty("value")
         private String value;
@@ -124,6 +125,7 @@ public final class TestCaseImplementationReference {
     }
 
     @JsonTypeName("implementation")
+    @JsonIgnoreProperties("type")
     private static final class ImplementationValue implements Value {
         @JsonUnwrapped
         private TestCaseImplementation value;
@@ -161,6 +163,7 @@ public final class TestCaseImplementationReference {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

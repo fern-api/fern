@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
-
-#nullable enable
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 public class ListTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
@@ -49,9 +45,9 @@ public class ListTest : BaseMockServerTest
             new ListUsersRequest { Limit = 1 },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
+        );
     }
 }

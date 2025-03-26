@@ -1,0 +1,212 @@
+{
+  "title": "URL Form Encoded API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Submit form data",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSubmitRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSubmitRequestUsername",
+              "key": "username",
+              "schema": {
+                "description": "The user's username",
+                "schema": {
+                  "example": "johndoe",
+                  "type": "string"
+                },
+                "generatedName": "PostSubmitRequestUsername",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postSubmitRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": "The user's email address",
+                "schema": {
+                  "format": "email",
+                  "example": "john@example.com",
+                  "type": "string"
+                },
+                "generatedName": "PostSubmitRequestEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSubmitRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful operation",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSubmitResponseStatus",
+              "key": "status",
+              "schema": {
+                "generatedName": "postSubmitResponseStatus",
+                "value": {
+                  "schema": {
+                    "example": "success",
+                    "type": "string"
+                  },
+                  "generatedName": "PostSubmitResponseStatus",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postSubmitResponseMessage",
+              "key": "message",
+              "schema": {
+                "generatedName": "postSubmitResponseMessage",
+                "value": {
+                  "schema": {
+                    "example": "Data received successfully.",
+                    "type": "string"
+                  },
+                  "generatedName": "PostSubmitResponseMessage",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSubmitResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/submit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "username": {
+                "value": {
+                  "value": "johndoe",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "john@example.com",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "status": {
+                  "value": {
+                    "value": "success",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "message": {
+                  "value": {
+                    "value": "Data received successfully.",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

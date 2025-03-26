@@ -1,4 +1,3 @@
-import { getSchemaOptions } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -31,7 +30,7 @@ export function appendPropertyToFormData({
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
             let statement = context.coreUtilities.formDataUtils.appendFile({
-                referencetoFormData: referenceToFormData,
+                referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
@@ -70,7 +69,7 @@ export function appendPropertyToFormData({
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.appendFile({
-                                referencetoFormData: referenceToFormData,
+                                referenceToFormData,
                                 key: property.key.wireValue,
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
                             })
@@ -111,7 +110,52 @@ export function appendPropertyToFormData({
 
             let statement: ts.Statement;
 
-            if (isMaybeIterable(property.valueType, context)) {
+            if (property.style === "form") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createArrayBindingPattern([
+                                    ts.factory.createBindingElement(undefined, undefined, "key"),
+                                    ts.factory.createBindingElement(undefined, undefined, "value")
+                                ]),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("entries")
+                        ),
+                        undefined,
+                        [
+                            context.coreUtilities.formDataUtils.encodeAsFormParameter({
+                                referenceToArgument: ts.factory.createObjectLiteralExpression([
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createStringLiteral(property.name.wireValue),
+                                        referenceToBodyProperty
+                                    )
+                                ])
+                            })
+                        ]
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.coreUtilities.formDataUtils.append({
+                                referenceToFormData,
+                                key: ts.factory.createIdentifier("key"),
+                                value: ts.factory.createIdentifier("value")
+                            })
+                        ],
+                        true
+                    )
+                );
+            } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(
@@ -129,7 +173,7 @@ export function appendPropertyToFormData({
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.append({
-                                referencetoFormData: referenceToFormData,
+                                referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
@@ -172,7 +216,7 @@ export function appendPropertyToFormData({
                 }
             } else {
                 statement = context.coreUtilities.formDataUtils.append({
-                    referencetoFormData: referenceToFormData,
+                    referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false

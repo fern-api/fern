@@ -1,12 +1,10 @@
 using SeedWebsocket.Core;
 
-#nullable enable
-
 namespace SeedWebsocket;
 
 public partial class SeedWebsocketClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedWebsocketClient(ClientOptions? clientOptions = null)
     {

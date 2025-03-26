@@ -3,37 +3,34 @@ title: Integration Tests
 description: Test your SDK against a mock server
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
-  or [email us](mailto:support@buildwithfern.com) to get started. 
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
 To make sure that your SDK works in production, Fern will auto-generate
 integration tests that run before release. The release will only take place
 if no tests fail.
 
-### What gets generated? 
+### What gets generated?
 
 <AccordionGroup>
   <Accordion title="Mock Server">
     Fern will use your API Definition to generate a mock server that will be used
-    in the integration tests. The mock server will assert that the SDK is 
-    making the correct requests. 
+    in the integration tests. The mock server will assert that the SDK is
+    making the correct requests.
 
-    By default, the mock server will use the examples specified in your 
-    API Definition. If no examples are specified, Fern will generate examples to 
+    By default, the mock server will use the examples specified in your
+    API Definition. If no examples are specified, Fern will generate examples to
     the best of its ability.
 
     <Note>
-    Specifying examples in your API Definition is recommended to ensure so that you can 
+    Specifying examples in your API Definition is recommended to ensure so that you can
     control what data is used in the tests.
     </Note>
   </Accordion>
   <Accordion title="Integration Tests">
-    Fern will generate integration tests as part of your SDK. These integration tests 
+    Fern will generate integration tests as part of your SDK. These integration tests
     will run against the mock server and assert validity of requests and responses.
 
-    The generated tests will use appropriate testing framework for the language: 
+    The generated tests will use appropriate testing framework for the language:
       - Jest for JavaScript/TypeScript
       - Pytest for Python
       - JUnit for Java
@@ -41,9 +38,9 @@ if no tests fail.
       - NUnit for C#
       - The standard library for Go
   </Accordion>
-  <Accordion title="GitHub Wofklows">
-    Fern will generate a GitHub workflow that will run the integration tests 
-    on every pull request, commit and release. 
+  <Accordion title="GitHub Workflows">
+    Fern will generate a GitHub workflow that will run the integration tests
+    on every pull request, commit and release.
 
     <Frame caption="The `test` job runs the integration tests">
     ![GitHub Workflow](https://fern-image-hosting.s3.amazonaws.com/fern/test-ci.png)
@@ -53,13 +50,13 @@ if no tests fail.
 
 ### Adding additional tests
 
-If you would like to add additional tests, you can do so by committing them 
-directly to the generated SDK repositories. Note that you will need to 
+If you would like to add additional tests, you can do so by committing them
+directly to the generated SDK repositories. Note that you will need to
 add the test files to your `.fernignore` file to prevent them from being
 overwritten by Fern.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Steps>
       ### Create `tests/custom.test.ts`
       ```typescript
@@ -73,7 +70,7 @@ overwritten by Fern.
           });
         });
       ```
-      
+
       ### Run your test
       ```bash
       yarn install
@@ -88,7 +85,7 @@ overwritten by Fern.
       ```
     </Steps>
   </Tab>
-    <Tab title="Python">
+    <Tab title="Python" language="python">
       <Steps>
           ### Create `tests/test_custom.py`
           ```python
@@ -109,12 +106,12 @@ overwritten by Fern.
           ### `.fernignore` your test file
           ```yaml .fernignore {3}
             # Specify any files that shouldn't be modified by Fern
-            
+
           tests/test_custom.py
           ```
         </Steps>
   </Tab>
-      <Tab title="Java">
+      <Tab title="Java" language="java">
       <Steps>
           ### Create `src/test/java/com/example/MyClientTest.java`
 
@@ -144,13 +141,13 @@ overwritten by Fern.
           ```
 
           ### `.fernignore` your test file
-          
+
           ```yaml .fernignore {3}
           # Specify any files that shouldn't be modified by Fern
-          
+
           src/test/java/com/example/MyClientTest.java
           ```
         </Steps>
   </Tab>
-  
+
 </Tabs>

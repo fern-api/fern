@@ -1,8 +1,7 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
-
-#nullable enable
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -31,9 +30,9 @@ public record QueryColumn
     /// <summary>
     /// Maps the QueryColumn type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.QueryColumn ToProto()
+    internal ProtoDataV1Grpc.QueryColumn ToProto()
     {
-        var result = new Proto.QueryColumn();
+        var result = new ProtoDataV1Grpc.QueryColumn();
         if (Values.Any())
         {
             result.Values.AddRange(Values);
@@ -60,11 +59,11 @@ public record QueryColumn
     /// <summary>
     /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static QueryColumn FromProto(Proto.QueryColumn value)
+    internal static QueryColumn FromProto(ProtoDataV1Grpc.QueryColumn value)
     {
         return new QueryColumn
         {
-            Values = value.Values?.ToList() ?? new List<float>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
             TopK = value.TopK,
             Namespace = value.Namespace,
             Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,

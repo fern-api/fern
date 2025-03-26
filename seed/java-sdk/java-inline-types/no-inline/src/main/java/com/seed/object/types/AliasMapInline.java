@@ -5,9 +5,10 @@ package com.seed.object.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.object.core.WrappedAlias;
 import java.util.Map;
 
-public final class AliasMapInline {
+public final class AliasMapInline implements WrappedAlias {
     private final Map<String, AliasInlineValue> value;
 
     private AliasMapInline(Map<String, AliasInlineValue> value) {

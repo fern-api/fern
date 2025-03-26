@@ -34,31 +34,9 @@ tabs:
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
-    slug: cli-api
+    skip-slug: true
 
 css: ./assets/styles.css
-
-redirects:
-  - source: /learn/api-definition/fern/api-yml-reference
-    destination: /learn/api-definition/fern/api-yml/overview
-  - source: /learn/docs/api-references/api-playground/:slug
-    destination: /learn/docs/api-references/api-explorer/:slug
-  - source: /learn/docs/api-references/api-playground
-    destination: /learn/docs/api-references/api-explorer
-  - source: /learn/sdks/features/:slug
-    destination: /learn/sdks/capabilities/:slug
-  - source: /learn/sdks/package-managers/:slug
-    destination: /learn/sdks/guides/publish-to-package-managers/:slug
-  - source: /learn/sdks/introduction/configuration
-    destination: /learn/sdks/introduction/language-support
-  - source: /learn/sdks/getting-started/generate-your-first-sdk
-    destination: /learn/sdks/guides/generate-your-first-sdk
-  - source: /learn/sdks/getting-started/preview-your-sdk-locally
-    destination: /learn/sdks/guides/preview-your-sdk-locally
-  - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
-    destination: /learn/sdks/guides/publish-a-public-facing-sdk
-  - source: /learn/docs/building-your-docs/:slug
-    destination: /learn/docs/building-and-customizing-your-docs/:slug
 
 navigation:
   - tab: home
@@ -84,6 +62,9 @@ navigation:
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/openapi/auth.mdx
+          - page: Servers
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/openapi/servers.mdx            
           - section: Endpoints
             icon: fa-regular fa-object-intersect
             slug: endpoints
@@ -96,7 +77,7 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/openapi/endpoints/multipart.mdx
                 slug: multipart
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
                 icon: fa-regular fa-signal-stream
                 slug: sse
@@ -118,7 +99,6 @@ navigation:
               - page: Parameter Names
                 icon: fa-regular fa-input-text
                 path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
-                slug: parameter-names
               - page: Other
                 icon: fa-regular fa-ellipsis-h
                 path: ./pages/api-definition/openapi/extensions/others.mdx
@@ -165,7 +145,7 @@ navigation:
                 path: ./pages/api-definition/fern-definition/endpoints/bytes.mdx
                 icon: fa-regular fa-server
                 slug: bytes                
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 icon: fa-regular fa-signal-stream
                 path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
                 slug: sse
@@ -175,6 +155,7 @@ navigation:
           - page: WebSockets
             icon: fa-regular fa-globe
             path: ./pages/api-definition/fern-definition/websockets.mdx
+            slug: websockets
           - page: Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx
@@ -254,6 +235,7 @@ navigation:
             path: ./pages/sdks/capabilities/strongly-typed.mdx
           - page: Idiomatic Method Names
             path: ./pages/sdks/capabilities/idiomatic-method-names.mdx
+            slug: method-names
           - page: Schema Validation
             path: ./pages/sdks/capabilities/schema-validation.mdx
           - page: Discriminated Unions
@@ -271,9 +253,11 @@ navigation:
           - page: OAuth Token Refresh
             path: ./pages/sdks/capabilities/oauth.mdx
             icon: fa-regular fa-pro
+            slug: oauth
           - page: Retries with Backoff
             path: ./pages/sdks/capabilities/retries-with-backoff.mdx
             icon: fa-regular fa-pro
+            slug: retries
           - page: Webhook Signature Verification
             path: ./pages/sdks/capabilities/webhook-signature-verification.mdx
             icon: fa-regular fa-pro
@@ -292,12 +276,19 @@ navigation:
           - page: Augment with Custom Code
             path: ./pages/sdks/capabilities/augment-with-custom-code.mdx
             icon: fa-regular fa-pro
+            slug: custom-code
           - page: Merging Multiple APIs
             path: ./pages/sdks/capabilities/merging-multiple-apis.mdx
             icon: fa-regular fa-pro
+            slug: merging-apis
           - page: WebSockets
             path: ./pages/sdks/capabilities/websockets.mdx
             icon: fa-regular fa-pro
+            slug: websockets
+          - page: Model Context Protocol
+            icon: fa-regular fa-pro
+            path: ./pages/sdks/capabilities/mcp.mdx
+            slug: mcp
       - section: Reference
         contents:
           - page: Configuration
@@ -397,7 +388,7 @@ navigation:
             icon: fa-regular fa-palette
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
-            icon: fa-regular fa-magnifying-glass
+            icon: fa-regular fa-code-pull-request
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
             icon: fa-regular fa-globe
@@ -405,13 +396,21 @@ navigation:
           - page: Edit This Page and User Feedback
             icon: fa-regular fa-comment-dots
             path: ./pages/docs/building-your-docs/user-feedback.mdx
+          - page: Role based access control (RBAC)
+            icon: fa-regular fa-lock
+            path: ./pages/docs/building-your-docs/rbac.mdx
+            slug: rbac
+          - page: Search
+            icon: fa-regular fa-magnifying-glass
+            path: ./pages/docs/building-your-docs/search.mdx
+            slug: search
 
       - section: Writing Content
         slug: content
         contents:
           - page: Write Markdown Content
             icon: fa-regular fa-font
-            path: ./pages/fern-docs/content/write-markdown.mdx
+            path: ./pages/docs/writing-content/write-markdown.mdx
             slug: write-markdown
           - section: Components
             icon: fa-regular fa-puzzle-piece
@@ -448,18 +447,10 @@ navigation:
                 path: ./pages/docs/components/code-blocks.mdx
                 slug: code-blocks
                 icon: fa-regular fa-code
-              - page: Steps
-                path: ./pages/docs/components/steps.mdx
-                icon: fa-regular fa-list-ol
-                slug: steps
-              - page: Frames
-                path: ./pages/docs/components/frames.mdx
-                icon: fa-regular fa-border-all
-                slug: frames
-              - page: Tabs
-                path: ./pages/docs/components/tabs.mdx
-                icon: fa-regular fa-window-restore
-                slug: tabs
+              - page: Embed
+                path: ./pages/docs/components/embed.mdx
+                icon: fa-regular fa-window-maximize
+                slug: embed
               - page: Endpoint Request Snippet
                 path: ./pages/docs/components/endpoint-request-snippet.mdx
                 icon: fa-regular fa-arrow-up-right-from-square
@@ -468,12 +459,35 @@ navigation:
                 path: ./pages/docs/components/endpoint-response-snippet.mdx
                 icon: fa-regular fa-arrow-down
                 slug: response-snippet
+              - page: Frames
+                path: ./pages/docs/components/frames.mdx
+                icon: fa-regular fa-border-all
+                slug: frames
+              - page: Icons
+                path: ./pages/docs/components/icons.mdx
+                icon: fa-regular fa-icons
+                slug: icons
+              - page: Parameter Fields
+                path: ./pages/docs/components/paramfield.mdx
+                icon: fa-regular fa-input-text
+                slug: paramfield
+              - page: Steps
+                path: ./pages/docs/components/steps.mdx
+                icon: fa-regular fa-list-ol
+                slug: steps
+              - page: Tabs
+                path: ./pages/docs/components/tabs.mdx
+                icon: fa-regular fa-window-restore
+                slug: tabs
+          - page: Custom React Components
+            icon: fa-brands fa-react
+            path: ./pages/docs/writing-content/custom-react-components.mdx
           - page: Frontmatter
             icon: fa-regular fa-sliders
-            path: ./pages/fern-docs/content/frontmatter.mdx
+            path: ./pages/docs/writing-content/frontmatter.mdx
           - page: Reusable Snippets
             icon: fa-regular fa-recycle
-            path: ./pages/fern-docs/content/reusable-snippets.mdx
+            path: ./pages/docs/writing-content/reusable-snippets.mdx
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
@@ -481,35 +495,45 @@ navigation:
       - section: API References
         contents:
           - page: Generate API Reference
-            icon: fa-solid fa-wand-magic-sparkles
-            path: ./pages/fern-docs/content/generate-api-ref.mdx
+            icon: fa-regular fa-wand-sparkles
+            path: ./pages/docs/api-references/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK Snippets
+            icon: fa-regular fa-brackets-curly
+            path: ./pages/docs/api-references/sdk-snippets.mdx
+          - page: HTTP Snippets
             icon: fa-regular fa-code
-            path: ./pages/fern-docs/config/sdk-snippets.mdx
+            path: ./pages/docs/api-references/http-snippets.mdx
           - section: API Explorer
             slug: api-explorer
-            path: ./pages/fern-docs/content/api-explorer.mdx
+            path: ./pages/docs/api-references/api-explorer.mdx
             icon: fa-regular fa-play
             contents:
               - page: Auto-populate API Keys
                 icon: fa-regular fa-key
-                path: ./pages/fern-docs/content/autopopulate-api-key.mdx
+                path: ./pages/docs/api-references/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/fern-docs/content/customize-api-explorer.mdx
+                path: ./pages/docs/api-references/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
-            path: ./pages/fern-docs/config/endpoint-errors.mdx
+            path: ./pages/docs/api-references/endpoint-errors.mdx
           - page: Audiences
             icon: fa-regular fa-user-group
-            path: ./pages/fern-docs/config/audiences.mdx
+            path: ./pages/docs/api-references/audiences.mdx
           - page: Customize API Reference Layout
             icon: fa-regular fa-arrows-up-down-left-right
-            path: ./pages/fern-docs/content/customize-api-ref.mdx
+            path: ./pages/docs/api-references/customize-api-ref.mdx
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
-            path: ./pages/fern-docs/content/api-ref-content.mdx
+            path: ./pages/docs/api-references/api-ref-content.mdx
+          - page: Generate Webhook Reference
+            icon: fa-regular fa-webhook
+            path: ./pages/docs/api-references/generate-webhook-ref.mdx
+          - page: Generate WebSocket Reference
+            icon: fa-regular fa-plug
+            path: ./pages/docs/api-references/generate-websocket-ref.mdx
+            slug: generate-websocket-ref
 
       - section: Integrations
         slug: integrations
@@ -543,6 +567,9 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
+          - page: Feature Flags
+            path: ./pages/docs/integrations/launchdarkly.mdx
+            icon: fa-regular fa-flag
 
       - section: Developer Tools
         contents:
@@ -560,6 +587,9 @@ navigation:
           - page: Vale
             icon: fa-regular fa-shield-check
             path: ./pages/docs/developer-tools/vale.mdx
+          - page: View Markdown
+            icon: fa-brands fa-markdown
+            path: ./pages/docs/developer-tools/view-markdown.mdx
 
       - section: Alternatives
         hidden: true
@@ -575,22 +605,30 @@ navigation:
     layout:
       - section: CLI Reference
         contents:
-          - page: CLI Overview
-            path: ./pages/cli-api/overview.mdx
+          - page: Get Started with Fern CLI
+            path: ./pages/cli-api/cli-get-started.mdx
+            slug: overview
           - page: Global Options
             path: ./pages/cli-api/global-options.mdx
+            slug: options
           - page: Commands
             path: ./pages/cli-api/commands.mdx
           - changelog: ./pages/changelogs/cli
       - api: API Reference
         api-name: public-api
-        summary: ./pages/cli-api/api-summary.mdx
+        icon: fa-regular fa-pro
         paginated: true
         audiences:
           - external
         layout:
           - page: Overview
-            path: ./pages/cli-api/api-summary.mdx
+            path: ./pages/cli-api/api-get-started.mdx
+          - sdk: 
+            - endpoint: sdk.generate
+              hidden: true
+            - endpoint: sdk.getStatus
+              hidden: true
+
 
 navbar-links:
   - type: minimal
@@ -619,18 +657,24 @@ logo:
   href: https://www.buildwithfern.com
   light: ./images/logo-primary.svg
   dark: ./images/logo-white.svg
-  height: 30
+  height: 20
 colors:
-  accentPrimary:
-    dark: "#1DA32B"
-    light: "#1DA32B"
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
   background:
-    dark: "#081008"
-    light: "#FBFFFA"
+    dark: "#111113"
+    light: "#F9F9FB"
+  border: 
+    dark: "#393A40"
+    light: "#E0E1E6"
   header-background:
-    dark: "#081008"
-    light: "#FBFFFA"
-favicon: ./images/favicon.ico
+    dark: "#19191B"
+    light: "#FFFFFF"
+  card-background:
+    dark: "#222325"
+    light: "#FFFFFF"
+favicon: ./images/favicon_32.png
 
 layout:
   page-width: 1504px
@@ -638,11 +682,84 @@ layout:
   searchbar-placement: header
   tabs-placement: header
 
-js:
-  - ./js/koala.js
-
 analytics:
   posthog:
     api-key: ${POSTHOG_API_KEY}
   gtm:
     container-id: GTM-55W3VNDW
+
+redirects:
+  - source: /learn/welcome
+    destination: /learn
+    permanent: true
+  - source: /learn/home
+    destination: /learn
+    permanent: true
+  - source: /learn/api-definition/fern/api-yml-reference
+    destination: /learn/api-definition/fern/api-yml/overview
+    permanent: true
+  - source: /learn/docs/api-references/api-playground/:slug*
+    destination: /learn/docs/api-references/api-explorer/:slug*
+    permanent: true
+  - source: /learn/docs/api-references/api-playground
+    destination: /learn/docs/api-references/api-explorer
+    permanent: true
+  - source: /learn/sdks/features/:slug*
+    destination: /learn/sdks/capabilities/:slug*
+    permanent: true
+  - source: /learn/sdks/package-managers/:slug*
+    destination: /learn/sdks/guides/publish-to-package-managers/:slug*
+    permanent: true
+  - source: /learn/sdks/introduction/configuration
+    destination: /learn/sdks/introduction/language-support
+    permanent: true
+  - source: /learn/sdks/getting-started/:slug*
+    destination: /learn/sdks/guides/:slug*
+    permanent: true
+  - source: /learn/docs/building-your-docs/:slug*
+    destination: /learn/docs/building-and-customizing-your-docs/:slug*
+    permanent: true
+  - source: /learn/cli-api/cli-reference/get-started-with-fern-cli
+    destination: /learn/cli-reference/overview
+    permanent: true
+  - source: /learn/cli-api/cli-reference/cli-overview
+    destination: /learn/cli-reference/overview
+    permanent: true
+  - source: /learn/cli-reference/cli-overview
+    destination: /learn/cli-reference/overview
+    permanent: true
+  - source: /learn/cli-api/cli-reference/global-options
+    destination: /learn/cli-reference/options
+    permanent: true
+  - source: /learn/cli-api/cli-reference/:slug*
+    destination: /learn/cli-reference/:slug*
+    permanent: true
+  - source: /learn/cli-api/cli/:slug*
+    destination: /learn/cli-reference/:slug*
+    permanent: true
+  - source: /learn/cli-api/:slug*
+    destination: /learn/cli-reference/:slug*
+    permanent: true
+  - source: /learn/api-definition/fern/web-sockets
+    destination: /learn/api-definition/fern/websockets
+    permanent: true
+  - source: /learn/sdks/capabilities/idiomatic-method-names
+    destination: /learn/sdks/capabilities/method-names
+    permanent: true
+  - source: /learn/sdks/capabilities/o-auth-token-refresh
+    destination: /learn/sdks/capabilities/oauth
+    permanent: true
+  - source: /learn/sdks/capabilities/retries-with-backoff
+    destination: /learn/sdks/capabilities/retries
+    permanent: true
+  - source: /learn/sdks/capabilities/web-sockets
+    destination: /learn/sdks/capabilities/websockets
+    permanent: true
+  - source: /learn/sdks/capabilities/augment-with-custom-code
+    destination: /learn/sdks/capabilities/custom-code
+    permanent: true
+  - source: /learn/sdks/capabilities/merging-multiple-apis
+    destination: /learn/sdks/capabilities/merging-apis
+    permanent: true
+    
+

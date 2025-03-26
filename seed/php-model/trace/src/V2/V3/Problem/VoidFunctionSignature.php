@@ -24,4 +24,12 @@ class VoidFunctionSignature extends JsonSerializableType
     ) {
         $this->parameters = $values['parameters'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

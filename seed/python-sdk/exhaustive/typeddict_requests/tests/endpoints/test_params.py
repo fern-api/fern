@@ -26,9 +26,9 @@ async def test_get_with_query(client: SeedExhaustive, async_client: AsyncSeedExh
 
 async def test_get_with_allow_multiple_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1) is None  # type: ignore[func-returns-value]
+    assert client.endpoints.params.get_with_allow_multiple_query(query="string", number=1) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.endpoints.params.get_with_allow_multiple_query(query="string", numer=1) is None  # type: ignore[func-returns-value]
+    assert await async_client.endpoints.params.get_with_allow_multiple_query(query="string", number=1) is None  # type: ignore[func-returns-value]
 
 
 async def test_get_with_path_and_query(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:

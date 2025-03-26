@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public record SendEnumInlinedRequest
@@ -20,6 +18,7 @@ public record SendEnumInlinedRequest
     [JsonPropertyName("maybeOperandOrColor")]
     public OneOf<Color, Operand>? MaybeOperandOrColor { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

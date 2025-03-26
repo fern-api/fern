@@ -186,7 +186,7 @@ types:
       changelog: "changelog"
       ```
 
-      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like 
+      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like
       - `/fern/changelog/2024-04-29.mdx`.
       - `/fern/changelog/2023-01-02.mdx`.
 
@@ -197,7 +197,7 @@ types:
       private:
         type: optional<boolean>
         docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated 
+        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -260,10 +260,10 @@ types:
   NavigationConfig:
     discriminated: false
     union:
-      - UntabbedNavigationConifg
+      - UntabbedNavigationConfig
       - TabbedNavigationConfig
 
-  UntabbedNavigationConifg: list<NavigationItem>
+  UntabbedNavigationConfig: list<NavigationItem>
 
   TabbedNavigationConfig:
     type: list<TabbedNavigationItem>
@@ -450,7 +450,7 @@ types:
       orphaned:
         type: optional<boolean>
         docs: When `orphaned` is set to `true`, the roles will not inherit from parents.
-  
+
   FeatureFlag:
     properties:
       flag:
@@ -462,16 +462,16 @@ types:
       match:
         type: optional<unknown>
         docs: The value that the feature flag should match for the content to be shown. If not specified, content is shown when the flag is true.
-  
+
   FeatureFlagConfiguration:
     discriminated: false
-    union: 
+    union:
       - type: string
-        docs: The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true. 
+        docs: The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true.
       - type: FeatureFlag
-        docs: A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags. 
+        docs: A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags.
       - type: list<FeatureFlag>
-        docs: A list of feature flags. If any of the feature flags are satisifed, we will show all content. 
+        docs: A list of feature flags. If any of the feature flags are satisfied, we will show all content.
 
   WithFeatureFlags:
     properties:
@@ -485,7 +485,7 @@ types:
           If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
       path:
         type: optional<string>
-        docs: The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead.
+        docs: The relative path of the font file. To define multiple weight and style variations of the same font, use `paths` instead.
       weight:
         type: optional<FontWeight>
         docs: |
@@ -560,6 +560,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      noindex: optional<boolean>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -593,7 +594,7 @@ types:
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
-      openrpc: 
+      openrpc:
         type: optional<string>
         docs: Path to an openrpc spec.
         availability: pre-release
@@ -730,13 +731,14 @@ types:
       go: optional<SnippetLanguageConfiguration>
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
+      csharp: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
       accent-primary:
         type: optional<ColorConfig>
         docs: |
-          The primary accent color is used for buttons, links, and other interactive elements. 
+          The primary accent color is used for buttons, links, and other interactive elements.
 
           @default: #818CF8
 
@@ -1006,8 +1008,14 @@ types:
           This behavior is unstable and may change in the future.
       openapi-parser-v2:
         type: optional<boolean>
+        availability: deprecated
         docs: |
-          If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern.
+          OpenAPI parser rewrite, now deprecated.  
+      openapi-parser-v3:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          OpenAPI parser in alpha.
 
   PlaygroundSettings:
     properties:

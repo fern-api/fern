@@ -27,21 +27,35 @@ class _Factory:
 
 
 class UnionWithPrimitive(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithPrimitive_Integer
+
+    UnionWithPrimitive_Integer(value=9)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -50,7 +64,11 @@ class UnionWithPrimitive(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
+    def visit(
+        self,
+        integer: typing.Callable[[int], T_Result],
+        string: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "integer":
             return integer(unioned_value.value)

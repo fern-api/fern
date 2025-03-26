@@ -5,6 +5,7 @@ package com.seed.multiLineDocs;
 
 import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedMultiLineDocsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -17,10 +18,26 @@ public final class SeedMultiLineDocsClientBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedMultiLineDocsClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedMultiLineDocsClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedMultiLineDocsClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

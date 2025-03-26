@@ -164,8 +164,8 @@ types:
         type: optional<string>
       errors:
         docs: >-
-          If multiple errors occured (e.g., with param validation), the list of
-          errors that occured.
+          If multiple errors occurred (e.g., with param validation), the list of
+          errors that occurred.
         type: optional<list<Error>>
 
 service:

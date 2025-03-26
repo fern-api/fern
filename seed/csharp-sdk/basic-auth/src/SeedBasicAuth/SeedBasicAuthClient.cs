@@ -1,12 +1,10 @@
 using SeedBasicAuth.Core;
 
-#nullable enable
-
 namespace SeedBasicAuth;
 
 public partial class SeedBasicAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedBasicAuthClient(
         string? username = null,

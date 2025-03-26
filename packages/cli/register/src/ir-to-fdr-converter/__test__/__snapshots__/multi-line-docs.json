@@ -153,7 +153,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The name of the user to create.\nThis name is unique to each user.\n",
+                    "description": "The name of the user to create.\nThis name is unique to each user.",
                     "key": "name",
                     "valueType": {
                       "type": "primitive",
@@ -163,7 +163,7 @@
                     }
                   },
                   {
-                    "description": "The age of the user.\nThis propery is not required.\n",
+                    "description": "The age of the user.\nThis property is not required.",
                     "key": "age",
                     "valueType": {
                       "type": "optional",

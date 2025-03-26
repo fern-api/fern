@@ -31,4 +31,12 @@ class TracedFile extends JsonSerializableType
         $this->filename = $values['filename'];
         $this->directory = $values['directory'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

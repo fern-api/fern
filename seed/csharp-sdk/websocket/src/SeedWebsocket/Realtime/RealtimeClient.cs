@@ -1,7 +1,5 @@
 using SeedWebsocket.Core;
 
-#nullable enable
-
 namespace SeedWebsocket;
 
 public partial class RealtimeClient

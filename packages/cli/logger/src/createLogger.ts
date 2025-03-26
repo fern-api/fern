@@ -38,6 +38,12 @@ class LoggerImpl implements Logger {
             this.log(LogLevel.Error, ...args);
         }
     }
+
+    public trace(...args: string[]): void {
+        if (this.enabled) {
+            this.log(LogLevel.Trace, ...args);
+        }
+    }
 }
 
 export function createLogger(log: (level: LogLevel, ...args: string[]) => void): Logger {

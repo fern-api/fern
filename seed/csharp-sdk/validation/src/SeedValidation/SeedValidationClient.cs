@@ -3,13 +3,11 @@ using System.Text.Json;
 using System.Threading;
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation;
 
 public partial class SeedValidationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
@@ -33,8 +31,7 @@ public partial class SeedValidationClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateAsync(
     ///     new CreateRequest
     ///     {
@@ -44,28 +41,29 @@ public partial class SeedValidationClient
     ///         Shape = Shape.Square,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> CreateAsync(
         CreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/create",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/create",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Type>(responseBody)!;
@@ -76,15 +74,17 @@ public partial class SeedValidationClient
             }
         }
 
-        throw new SeedValidationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedValidationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync(
     ///     new GetRequest
     ///     {
@@ -93,8 +93,7 @@ public partial class SeedValidationClient
     ///         Name = "foo",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> GetAsync(
         GetRequest request,
         RequestOptions? options = null,
@@ -105,20 +104,22 @@ public partial class SeedValidationClient
         _query["decimal"] = request.Decimal.ToString();
         _query["even"] = request.Even.ToString();
         _query["name"] = request.Name;
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Type>(responseBody)!;
@@ -129,10 +130,13 @@ public partial class SeedValidationClient
             }
         }
 
-        throw new SeedValidationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedValidationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

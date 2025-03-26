@@ -17,15 +17,15 @@ class ObjectFieldValue extends JsonSerializableType
     public string $name;
 
     /**
-     * @var mixed $value
+     * @var FieldValue $value
      */
     #[JsonProperty('value')]
-    public mixed $value;
+    public FieldValue $value;
 
     /**
      * @param array{
      *   name: string,
-     *   value: mixed,
+     *   value: FieldValue,
      * } $values
      */
     public function __construct(
@@ -33,5 +33,13 @@ class ObjectFieldValue extends JsonSerializableType
     ) {
         $this->name = $values['name'];
         $this->value = $values['value'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

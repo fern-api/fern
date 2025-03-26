@@ -20,7 +20,7 @@ class GetTokenRequest extends JsonSerializableType
     public string $clientSecret;
 
     /**
-     * @var string $grantType
+     * @var 'client_credentials' $grantType
      */
     #[JsonProperty('grant_type')]
     public string $grantType;
@@ -29,7 +29,7 @@ class GetTokenRequest extends JsonSerializableType
      * @param array{
      *   clientId: string,
      *   clientSecret: string,
-     *   grantType: string,
+     *   grantType: 'client_credentials',
      * } $values
      */
     public function __construct(

@@ -1,7 +1,7 @@
 from .class_reference import ClassReference
 from .module import Module
 from .module_path import ModulePath
-from .qualfied_name import QualifiedName
+from .qualified_name import QualifiedName
 from .reference import Reference, ReferenceImport
 
 __all__ = [

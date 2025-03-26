@@ -382,7 +382,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(className)
                 .addParameter(JsonParser.class, "p")
-                .addParameter(DeserializationContext.class, "ctxt")
+                .addParameter(DeserializationContext.class, "context")
                 .addException(IOException.class)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(

@@ -32,14 +32,16 @@ class Animal(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+            typing.Union[_Animal.Dog, _Animal.Cat],
+            pydantic.Field(discriminator="animal"),
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+            typing.Union[_Animal.Dog, _Animal.Cat],
+            pydantic.Field(discriminator="animal"),
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:

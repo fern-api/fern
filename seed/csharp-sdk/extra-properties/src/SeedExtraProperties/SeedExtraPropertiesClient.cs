@@ -1,12 +1,10 @@
 using SeedExtraProperties.Core;
 
-#nullable enable
-
 namespace SeedExtraProperties;
 
 public partial class SeedExtraPropertiesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedExtraPropertiesClient(ClientOptions? clientOptions = null)
     {

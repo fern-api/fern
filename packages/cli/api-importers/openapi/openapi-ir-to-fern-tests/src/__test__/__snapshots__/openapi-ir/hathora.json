@@ -8,6 +8,7 @@
       "url": "/"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -44,10 +45,11 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/apps/v1/list",
@@ -296,6 +298,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -354,7 +357,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/apps/v1/create",
@@ -531,6 +534,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -589,7 +593,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/apps/v1/update/{appId}",
@@ -758,6 +762,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -789,7 +794,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/apps/v1/info/{appId}",
@@ -982,7 +987,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/apps/v1/delete/{appId}",
@@ -1073,6 +1078,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1104,7 +1110,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/anonymous",
@@ -1248,6 +1254,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1279,7 +1286,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/nickname",
@@ -1435,6 +1442,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1493,7 +1501,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/auth/v1/{appId}/login/google",
@@ -1597,6 +1605,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1628,7 +1637,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/builds/v1/{appId}/list",
@@ -1810,6 +1819,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1841,7 +1851,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/builds/v1/{appId}/info/{buildId}",
@@ -2012,6 +2022,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -2097,7 +2108,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/builds/v1/{appId}/create",
@@ -2266,7 +2277,8 @@
               "isOptional": false,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -2281,6 +2293,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -2339,7 +2352,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/builds/v1/{appId}/run/{buildId}",
@@ -2475,7 +2488,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/builds/v1/{appId}/delete/{buildId}",
@@ -2562,6 +2575,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2593,7 +2607,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/deployments/v1/{appId}/list",
@@ -2789,6 +2803,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2820,7 +2835,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
@@ -3040,6 +3055,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -3125,7 +3141,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/deployments/v1/{appId}/create/{buildId}",
@@ -3344,10 +3360,11 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/discovery/v1/ping",
@@ -3497,6 +3514,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3636,7 +3654,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -3788,6 +3806,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3927,7 +3946,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -4084,6 +4103,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4142,7 +4162,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "GET",
@@ -4386,7 +4406,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -4424,6 +4445,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -4563,7 +4585,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -4832,7 +4854,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -4870,6 +4893,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -5009,7 +5033,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -5278,7 +5302,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5316,6 +5341,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -5455,7 +5481,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -5756,7 +5782,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5794,6 +5821,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -5933,7 +5961,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/lobby/v2/{appId}/create",
@@ -6169,10 +6197,11 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/lobby/v2/{appId}/list/public",
@@ -6358,6 +6387,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6389,7 +6419,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/lobby/v2/{appId}/info/{roomId}",
@@ -6627,6 +6657,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6685,7 +6716,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/lobby/v2/{appId}/setState/{roomId}",
@@ -6938,6 +6969,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -6969,7 +7001,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/all",
@@ -7070,6 +7102,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {
@@ -7101,7 +7134,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/process/{processId}",
@@ -7202,6 +7235,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "text"
       },
       "errors": {
@@ -7233,7 +7267,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
@@ -7390,6 +7424,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7448,7 +7483,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/metrics/v1/{appId}/process/{processId}",
@@ -7660,6 +7695,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7691,7 +7727,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/list/running",
@@ -7946,6 +7982,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7977,7 +8014,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/list/stopped",
@@ -8187,6 +8224,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8218,7 +8256,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/processes/v1/{appId}/info/{processId}",
@@ -8419,7 +8457,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -8457,6 +8496,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -8515,7 +8555,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/create",
@@ -8622,6 +8662,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8653,7 +8694,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/info/{roomId}",
@@ -8853,6 +8894,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8884,7 +8926,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/active",
@@ -9051,6 +9093,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9082,7 +9125,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
@@ -9284,7 +9327,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
@@ -9422,7 +9465,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
@@ -9520,6 +9563,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9605,7 +9649,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
@@ -9639,34 +9683,16 @@
             "value": {
               "value": {
                 "value": {
-                  "status": {
-                    "value": {
-                      "value": "active",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "transportType": {
-                    "value": "tcp",
-                    "type": "enum"
-                  },
-                  "port": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
-                    },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "string",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "roomId": {
                     "value": {
-                      "value": "string",
+                      "value": "roomId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": "starting",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -9689,7 +9715,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Record_string.never_": {
@@ -9797,7 +9823,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9864,7 +9891,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -9885,7 +9913,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10100,7 +10129,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10116,7 +10146,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10252,7 +10283,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10268,7 +10300,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10284,7 +10317,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10324,7 +10358,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10405,7 +10440,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -10426,7 +10462,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10568,7 +10605,8 @@
                       "type": "reference"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -10737,7 +10775,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10753,7 +10792,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10812,7 +10852,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -10979,7 +11020,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10995,7 +11037,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11011,7 +11054,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11445,7 +11489,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11461,7 +11506,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11477,7 +11523,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11493,7 +11540,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11595,7 +11643,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11611,7 +11660,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11641,7 +11691,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11657,7 +11708,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11673,7 +11725,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11821,7 +11874,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11857,7 +11911,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11873,7 +11928,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11903,7 +11959,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11933,7 +11990,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11977,7 +12035,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

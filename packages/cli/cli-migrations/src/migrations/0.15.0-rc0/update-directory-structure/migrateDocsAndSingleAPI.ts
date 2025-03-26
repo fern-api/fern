@@ -14,7 +14,7 @@ import { migrateDocsInstances } from "./migrateDocsInstances";
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
  *    definition/...
- *    generatiors.yml
+ *    generators.yml
  *    docs.yml
  *
  * This function migrates docs.yml and generators.yml to the new format, and then moves

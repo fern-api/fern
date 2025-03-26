@@ -5,9 +5,15 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "generators/typescript/sdk/VERSION"
+      - "generators/typescript/sdk/CHANGELOG.md"
   pull_request:
     branches:
       - main
+    paths:
+      - "generators/typescript/sdk/VERSION"
+      - "generators/typescript/sdk/CHANGELOG.md"
 
 jobs:
   check-versions:
@@ -15,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install
         uses: ./.github/actions/install

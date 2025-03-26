@@ -1,12 +1,10 @@
 using SeedQueryParameters.Core;
 
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public partial class SeedQueryParametersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedQueryParametersClient(ClientOptions? clientOptions = null)
     {

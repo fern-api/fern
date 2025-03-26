@@ -92,7 +92,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         return GeneratedSpringServerInterface.builder()
                 .className(className)
                 .javaFile(springServiceJavaFile)
-                .addAllGeenratedRequestBodyFiles(generatedRequestBodyFiles)
+                .addAllGeneratedRequestBodyFiles(generatedRequestBodyFiles)
                 .build();
     }
 
@@ -141,6 +141,11 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 @Override
                 public Void visitText(TextResponse text) {
                     throw new RuntimeException("Text plain responses are not supported in spring server generator");
+                }
+
+                @Override
+                public Void visitBytes(BytesResponse bytesResponse) {
+                    throw new RuntimeException("Bytes responses are not supported in spring server generator");
                 }
 
                 @Override

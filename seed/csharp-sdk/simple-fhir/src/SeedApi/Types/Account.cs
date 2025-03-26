@@ -1,15 +1,14 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 using SeedApi.Core;
-
-#nullable enable
 
 namespace SeedApi;
 
 public record Account
 {
     [JsonPropertyName("resource_type")]
-    public required string ResourceType { get; set; }
+    public string ResourceType { get; set; } = "Account";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -31,6 +30,14 @@ public record Account
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

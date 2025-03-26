@@ -32,4 +32,12 @@ class Metadata extends JsonSerializableType
         $this->id = $values['id'];
         $this->data = $values['data'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

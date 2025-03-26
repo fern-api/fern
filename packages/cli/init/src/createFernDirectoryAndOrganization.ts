@@ -45,7 +45,7 @@ export async function createFernDirectoryAndWorkspace({
                 if (response.ok) {
                     organization = response.body.organizationId;
                 } else {
-                    taskContext.failAndThrow("Unathorized. FERN_TOKEN is invalid.");
+                    taskContext.failAndThrow("Unauthorized. FERN_TOKEN is invalid.");
                     // dummy return value to appease the linter. won't actually ever get run.
                     return { absolutePathToFernDirectory: AbsoluteFilePath.of("/dummy"), organization: "dummy" };
                 }

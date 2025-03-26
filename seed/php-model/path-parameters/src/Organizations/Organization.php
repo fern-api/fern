@@ -32,4 +32,12 @@ class Organization extends JsonSerializableType
         $this->name = $values['name'];
         $this->tags = $values['tags'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

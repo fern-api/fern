@@ -46,12 +46,12 @@ class ExecutionSessionState extends JsonSerializableType
 
     /**
      * @param array{
-     *   lastTimeContacted?: ?string,
      *   sessionId: string,
      *   isWarmInstance: bool,
-     *   awsTaskId?: ?string,
      *   language: value-of<Language>,
      *   status: value-of<ExecutionSessionStatus>,
+     *   lastTimeContacted?: ?string,
+     *   awsTaskId?: ?string,
      * } $values
      */
     public function __construct(
@@ -63,5 +63,13 @@ class ExecutionSessionState extends JsonSerializableType
         $this->awsTaskId = $values['awsTaskId'] ?? null;
         $this->language = $values['language'];
         $this->status = $values['status'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

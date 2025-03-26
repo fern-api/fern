@@ -40,6 +40,7 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
@@ -92,7 +93,7 @@
     "@types/validate-npm-package-name": "^4.0.0",
     "@types/yargs": "^17.0.28",
     "ansi-escapes": "^5.0.0",
-    "axios": "^1.7.7",
+    "axios": "^1.8.2",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "esbuild": "^0.24.0",
@@ -106,7 +107,7 @@
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.3.5",
-    "undici": "^6.20.1",
+    "undici": "^6.21.1",
     "validate-npm-package-name": "^5.0.1",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1",
@@ -117,7 +118,7 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "dependencies": {}
 }

@@ -344,6 +344,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
               "response": {
                 "docs": "Successful",
+                "status-code": 200,
                 "type": "Company",
               },
               "source": {
@@ -528,6 +529,7 @@ service:
       response:
         docs: Successful
         type: Company
+        status-code: 200
       errors:
         - root.CreateOrUpdateCompanyRequestBadRequestError
         - root.CreateOrUpdateCompanyRequestUnauthorizedError

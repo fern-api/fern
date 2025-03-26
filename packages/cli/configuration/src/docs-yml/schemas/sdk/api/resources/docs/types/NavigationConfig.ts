@@ -4,4 +4,4 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export type NavigationConfig = FernDocsConfig.UntabbedNavigationConifg | FernDocsConfig.TabbedNavigationConfig;
+export type NavigationConfig = FernDocsConfig.UntabbedNavigationConfig | FernDocsConfig.TabbedNavigationConfig;

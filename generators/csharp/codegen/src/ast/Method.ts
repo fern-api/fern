@@ -1,11 +1,14 @@
+import { assertNever } from "@fern-api/core-utils";
+
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { TypeParameter } from "./TypeParameter";
+import { XmlDocBlock } from "./XmlDocBlock";
 import { AstNode } from "./core/AstNode";
-import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 
 export enum MethodType {
@@ -13,54 +16,23 @@ export enum MethodType {
     STATIC
 }
 
-export declare namespace Method {
-    interface Args {
-        /* The name of the method */
-        name: string;
-        /* The access of the method */
-        access?: Access;
-        /* Whether the method is sync or async. Defaults to false. */
-        isAsync?: boolean;
-        /* The parameters of the method */
-        parameters: Parameter[];
-        /* Whether the method overrides a method in it's base class */
-        override?: boolean;
-        /* The return type of the method */
-        return_?: Type;
-        /* If true, no method body will be written. This is for interface methods. */
-        noBody?: boolean;
-        /* The body of the method */
-        body?: CodeBlock;
-        /* Summary for the method */
-        summary?: string;
-        /* The type of the method, defaults to INSTANCE */
-        type?: MethodType;
-        /* The class this method belongs to, if any */
-        classReference?: ClassReference;
-        /* Any annotations to add to the method */
-        annotations?: Annotation[];
-        /* Any code example to add to the method */
-        codeExample?: string;
-        /* If specified, use the interface name in front of the method name */
-        interfaceReference?: ClassReference;
-    }
-}
-
 export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
     public readonly access: Access | undefined;
-    public readonly return: Type | undefined;
+    public readonly return: Type | TypeParameter | undefined;
     public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
+    private readonly bodyType: Method.BodyType;
     public readonly summary: string | undefined;
+    private readonly doc: XmlDocBlock;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
     public readonly override: boolean;
     private readonly parameters: Parameter[];
+    private readonly typeParameters: TypeParameter[];
     private readonly annotations: Annotation[];
-    private readonly codeExample: string | undefined;
-    private interfaceReference?: ClassReference;
+    private readonly interfaceReference?: ClassReference;
 
     constructor({
         name,
@@ -70,10 +42,13 @@ export class Method extends AstNode {
         return_,
         body,
         noBody,
+        bodyType,
         summary,
+        doc,
         type,
         classReference,
         parameters,
+        typeParameters,
         annotations,
         codeExample,
         interfaceReference
@@ -86,12 +61,14 @@ export class Method extends AstNode {
         this.return = return_;
         this.noBody = noBody ?? false;
         this.body = body;
+        this.bodyType = bodyType ?? Method.BodyType.Statement;
         this.summary = summary;
+        this.doc = XmlDocBlock.of(doc ?? { summary, codeExample });
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
+        this.typeParameters = typeParameters ?? [];
         this.annotations = annotations ?? [];
-        this.codeExample = codeExample;
         this.interfaceReference = interfaceReference;
     }
 
@@ -100,26 +77,12 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const docXmlWriter = new DocXmlWriter(writer);
-        if (this.summary != null) {
-            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
-        }
-        if (this.codeExample != null) {
-            docXmlWriter.writeOpenNode("example");
-            docXmlWriter.writeOpenNode("code");
-            docXmlWriter.writeMultilineWithEscaping(this.codeExample);
-            docXmlWriter.writeCloseNode("code");
-            docXmlWriter.writeCloseNode("example");
-        }
+        writer.writeNode(this.doc);
 
-        if (this.annotations.length > 0) {
-            writer.write("[");
-            this.annotations.forEach((annotation) => {
-                annotation.write(writer);
-            });
-            writer.write("]");
-            writer.writeNewLineIfLastLineNot();
-        }
+        this.annotations.forEach((annotation) => {
+            annotation.write(writer);
+        });
+        writer.writeNewLineIfLastLineNot();
 
         if (this.access) {
             writer.write(`${this.access} `);
@@ -138,7 +101,8 @@ export class Method extends AstNode {
                 writer.writeNode(
                     new ClassReference({
                         name: "Task",
-                        namespace: "System.Threading.Tasks"
+                        namespace: "global::System.Threading.Tasks",
+                        fullyQualified: true
                     })
                 );
                 writer.write(" ");
@@ -147,6 +111,8 @@ export class Method extends AstNode {
             }
         } else {
             if (this.isAsync) {
+                // Don't add a class reference for Task<T> since we don't want the writer
+                // to detect a conflict between Task<T> and Task and add a fully qualified name
                 writer.write("Task<");
                 this.return.write(writer);
                 writer.write(">");
@@ -159,6 +125,16 @@ export class Method extends AstNode {
             writer.write(`${this.interfaceReference.name}.`);
         }
         writer.write(this.name);
+        if (this.typeParameters.length > 0) {
+            writer.write("<");
+            this.typeParameters.forEach((typeParameter, idx) => {
+                typeParameter.write(writer);
+                if (idx < this.typeParameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(">");
+        }
         writer.write("(");
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer);
@@ -170,17 +146,73 @@ export class Method extends AstNode {
         if (this.noBody) {
             writer.writeLine(";");
         } else {
-            writer.writeLine(" {");
+            switch (this.bodyType) {
+                case Method.BodyType.Statement:
+                    writer.writeLine(" {");
 
-            writer.indent();
-            this.body?.write(writer);
-            writer.dedent();
+                    writer.indent();
+                    this.body?.write(writer);
+                    writer.dedent();
 
-            writer.writeLine("}");
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine("}");
+                    break;
+                case Method.BodyType.Expression:
+                    writer.write(" => ");
+                    this.body?.write(writer);
+                    writer.writeSemicolonIfLastCharacterIsNot();
+                    break;
+                default:
+                    assertNever(this.bodyType);
+            }
         }
     }
 
     public getParameters(): Parameter[] {
         return this.parameters;
     }
+}
+
+export namespace Method {
+    export interface Args {
+        /* Any annotations to add to the method */
+        annotations?: Annotation[];
+        /* Summary for the method */
+        summary?: string;
+        doc?: XmlDocBlock.Like;
+        /* The access of the method */
+        access?: Access;
+        /* The type of the method, defaults to INSTANCE */
+        type?: MethodType;
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
+        /* Whether the method is sync or async. Defaults to false. */
+        isAsync?: boolean;
+        /* The return type of the method */
+        return_?: Type | TypeParameter;
+        /* The name of the method */
+        name: string;
+        /* The parameters of the method */
+        typeParameters?: TypeParameter[];
+        /* The parameters of the method */
+        parameters: Parameter[];
+        /* If true, no method body will be written. This is for interface methods. */
+        noBody?: boolean;
+        /* The body of the method */
+        body?: CodeBlock;
+        /* The body type of the method */
+        bodyType?: BodyType;
+        /* The class this method belongs to, if any */
+        classReference?: ClassReference;
+        /* Any code example to add to the method */
+        codeExample?: string;
+        /* If specified, use the interface name in front of the method name */
+        interfaceReference?: ClassReference;
+    }
+
+    export const BodyType = {
+        Statement: "statement",
+        Expression: "expression"
+    } as const;
+    export type BodyType = (typeof BodyType)[keyof typeof BodyType];
 }

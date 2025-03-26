@@ -38,7 +38,7 @@ export class Object_ {
      *     await client.endpoints.object.getAndReturnWithOptionalField({
      *         string: "string",
      *         integer: 1,
-     *         long: 1000000,
+     *         long: BigInt("1000000"),
      *         double: 1.1,
      *         bool: true,
      *         datetime: "2024-01-15T09:30:00Z",
@@ -50,7 +50,7 @@ export class Object_ {
      *         map: {
      *             1: "map"
      *         },
-     *         bigint: 1000000
+     *         bigint: BigInt("1000000")
      *     })
      */
     public async getAndReturnWithOptionalField(
@@ -253,7 +253,7 @@ export class Object_ {
      *         NestedObject: {
      *             string: "string",
      *             integer: 1,
-     *             long: 1000000,
+     *             long: BigInt("1000000"),
      *             double: 1.1,
      *             bool: true,
      *             datetime: "2024-01-15T09:30:00Z",
@@ -265,7 +265,7 @@ export class Object_ {
      *             map: {
      *                 1: "map"
      *             },
-     *             bigint: 1000000
+     *             bigint: BigInt("1000000")
      *         }
      *     })
      */
@@ -336,7 +336,7 @@ export class Object_ {
      *         NestedObject: {
      *             string: "string",
      *             integer: 1,
-     *             long: 1000000,
+     *             long: BigInt("1000000"),
      *             double: 1.1,
      *             bool: true,
      *             datetime: "2024-01-15T09:30:00Z",
@@ -348,7 +348,7 @@ export class Object_ {
      *             map: {
      *                 1: "map"
      *             },
-     *             bigint: 1000000
+     *             bigint: BigInt("1000000")
      *         }
      *     })
      */
@@ -419,7 +419,7 @@ export class Object_ {
      *             NestedObject: {
      *                 string: "string",
      *                 integer: 1,
-     *                 long: 1000000,
+     *                 long: BigInt("1000000"),
      *                 double: 1.1,
      *                 bool: true,
      *                 datetime: "2024-01-15T09:30:00Z",
@@ -431,14 +431,14 @@ export class Object_ {
      *                 map: {
      *                     1: "map"
      *                 },
-     *                 bigint: 1000000
+     *                 bigint: BigInt("1000000")
      *             }
      *         }, {
      *             string: "string",
      *             NestedObject: {
      *                 string: "string",
      *                 integer: 1,
-     *                 long: 1000000,
+     *                 long: BigInt("1000000"),
      *                 double: 1.1,
      *                 bool: true,
      *                 datetime: "2024-01-15T09:30:00Z",
@@ -450,7 +450,7 @@ export class Object_ {
      *                 map: {
      *                     1: "map"
      *                 },
-     *                 bigint: 1000000
+     *                 bigint: BigInt("1000000")
      *             }
      *         }])
      */

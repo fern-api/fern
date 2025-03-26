@@ -41,10 +41,10 @@ class ProblemInfoV2 extends JsonSerializableType
     public array $supportedLanguages;
 
     /**
-     * @var mixed $customFiles
+     * @var CustomFiles $customFiles
      */
     #[JsonProperty('customFiles')]
-    public mixed $customFiles;
+    public CustomFiles $customFiles;
 
     /**
      * @var GeneratedFiles $generatedFiles
@@ -77,7 +77,7 @@ class ProblemInfoV2 extends JsonSerializableType
      *   problemName: string,
      *   problemVersion: int,
      *   supportedLanguages: array<value-of<Language>>,
-     *   customFiles: mixed,
+     *   customFiles: CustomFiles,
      *   generatedFiles: GeneratedFiles,
      *   customTestCaseTemplates: array<TestCaseTemplate>,
      *   testcases: array<TestCaseV2>,
@@ -97,5 +97,13 @@ class ProblemInfoV2 extends JsonSerializableType
         $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
         $this->testcases = $values['testcases'];
         $this->isPublic = $values['isPublic'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

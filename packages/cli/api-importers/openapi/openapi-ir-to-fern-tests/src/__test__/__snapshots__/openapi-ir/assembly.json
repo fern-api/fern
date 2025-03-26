@@ -7,6 +7,12 @@
       "description": "AssemblyAI API"
     }
   ],
+  "websocketServers": [
+    {
+      "name": "API",
+      "url": "wss://api.assemblyai.com/v2/realtime/ws"
+    }
+  ],
   "tags": {
     "tagsById": {
       "transcript": {
@@ -70,6 +76,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -263,7 +270,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
       "authed": true,
       "method": "POST",
@@ -499,6 +506,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -692,7 +700,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of transcripts you have created.",
       "authed": true,
       "method": "GET",
@@ -860,6 +868,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -1053,7 +1062,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a transcript from an audio or video file that is accessible via a URL.",
       "authed": true,
       "method": "POST",
@@ -2002,6 +2011,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2195,7 +2205,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the transcript resource. The transcript is ready when the \"status\" is \"completed\".",
       "authed": true,
       "method": "GET",
@@ -3143,6 +3153,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3336,7 +3347,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the transcript",
       "authed": true,
       "method": "DELETE",
@@ -4313,6 +4324,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "text"
       },
       "errors": {
@@ -4506,7 +4518,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
       "authed": true,
       "method": "GET",
@@ -4567,6 +4579,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4760,7 +4773,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
       "authed": true,
       "method": "GET",
@@ -4945,6 +4958,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5138,7 +5152,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
       "authed": true,
       "method": "GET",
@@ -5345,6 +5359,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5538,7 +5553,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
       "authed": true,
       "method": "GET",
@@ -5599,6 +5614,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5792,7 +5808,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
       "authed": true,
       "method": "GET",
@@ -5896,6 +5912,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6089,7 +6106,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a temporary authentication token for real-time transcription",
       "authed": true,
       "method": "POST",
@@ -6187,6 +6204,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6380,7 +6398,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
       "authed": true,
       "method": "POST",
@@ -6490,6 +6508,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6683,7 +6702,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
       "authed": true,
       "method": "POST",
@@ -6827,6 +6846,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7020,7 +7040,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Use LeMUR to generate a list of Action Items from a transcript",
       "authed": true,
       "method": "POST",
@@ -7130,6 +7150,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7323,7 +7344,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Use LeMUR to ask anything with Custom Task",
       "authed": true,
       "method": "POST",
@@ -7438,6 +7459,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7631,7 +7653,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete the data for a previously submitted LeMUR request.\nThe LLM response data, as well as any context provided in the original request will be removed.\n",
       "authed": true,
       "method": "DELETE",
@@ -7692,7 +7714,286 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {
+    "/{userId}": {
+      "audiences": [],
+      "handshake": {
+        "headers": [
+          {
+            "name": "Authentication",
+            "schema": {
+              "generatedName": "RealtimeAuthentication",
+              "description": "Authenticate using your AssemblyAI API key.",
+              "value": {
+                "description": "Authenticate using your AssemblyAI API key.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RealtimeAuthentication",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "Authenticate using your AssemblyAI API key.",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "queryParameters": [
+          {
+            "name": "sample_rate",
+            "schema": {
+              "generatedName": "RealtimeSampleRate",
+              "description": "The sample rate of the streamed audio.",
+              "value": {
+                "description": "The sample rate of the streamed audio.",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "RealtimeSampleRate",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "The sample rate of the streamed audio.",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "word_boost",
+            "schema": {
+              "generatedName": "RealtimeWordBoost",
+              "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
+              "value": {
+                "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RealtimeWordBoost",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "token",
+            "schema": {
+              "generatedName": "RealtimeToken",
+              "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+              "value": {
+                "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RealtimeToken",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": [
+          {
+            "name": "userId",
+            "description": "The ID of the user.",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "Realtime",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ]
+      },
+      "groupName": [
+        "/{userId}"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "value": {
+              "description": "Send messages to the WebSocket",
+              "generatedName": "sendMessage",
+              "nameOverride": "sendMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "AudioData",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "TerminateSession",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "undiscriminated"
+            },
+            "type": "oneOf"
+          }
+        },
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "value": {
+              "description": "Receive messages from the WebSocket",
+              "generatedName": "receiveMessage",
+              "nameOverride": "receiveMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "SessionBegins",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "PartialTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeTwo",
+                  "schema": "FinalTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeThree",
+                  "schema": "SessionTerminated",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeFour",
+                  "schema": "RealtimeError",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "undiscriminated"
+            },
+            "type": "oneOf"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "API",
+          "url": "wss://api.assemblyai.com/v2/realtime/ws"
+        }
+      ],
+      "path": "/{userId}",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "audio_data": {
+                    "value": {
+                      "value": "audio_data",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {
+                  "message_type": {
+                    "value": "SessionBegins",
+                    "type": "enum"
+                  },
+                  "terminate_session": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
   "groupedSchemas": {
     "rootSchemas": {
       "RedactedAudioResponse": {
@@ -7713,7 +8014,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8005,7 +8307,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8244,7 +8547,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8373,7 +8677,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8654,7 +8959,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8676,7 +8982,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9433,7 +9740,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9455,7 +9763,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9852,7 +10161,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10102,7 +10412,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10209,7 +10520,8 @@
                         "type": "reference"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -10304,7 +10616,8 @@
                         "type": "reference"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -10971,7 +11284,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11279,7 +11593,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11461,7 +11776,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11622,7 +11938,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12453,7 +12770,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12592,7 +12910,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12667,7 +12986,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13170,7 +13490,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -13198,7 +13518,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13400,7 +13721,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -13581,6 +13902,701 @@
         "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RealtimeBaseMessage": {
+        "properties": [
+          {
+            "key": "message_type",
+            "schema": {
+              "generatedName": "RealtimeBaseMessageMessageType",
+              "schema": "MessageType",
+              "description": "Describes the type of the message.",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseMessageMessageType",
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "generatedName": "RealtimeBaseMessage",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RealtimeMessage": {
+        "value": {
+          "generatedName": "RealtimeMessage",
+          "schemas": [
+            {
+              "generatedName": "RealtimeMessageZero",
+              "schema": "SessionBegins",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "RealtimeMessageOne",
+              "schema": "PartialTranscript",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "RealtimeMessageTwo",
+              "schema": "FinalTranscript",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "RealtimeMessageThree",
+              "schema": "SessionTerminated",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "RealtimeMessageFour",
+              "schema": "RealtimeError",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "RealtimeError": {
+        "properties": [
+          {
+            "key": "error",
+            "schema": {
+              "generatedName": "RealtimeErrorError",
+              "schema": {
+                "type": "string"
+              },
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeErrorError"
+          }
+        ],
+        "generatedName": "RealtimeError",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "MessageType": {
+        "generatedName": "MessageType",
+        "values": [
+          {
+            "generatedName": "SessionBegins",
+            "value": "SessionBegins",
+            "casing": {}
+          },
+          {
+            "generatedName": "PartialTranscript",
+            "value": "PartialTranscript",
+            "casing": {}
+          },
+          {
+            "generatedName": "FinalTranscript",
+            "value": "FinalTranscript",
+            "casing": {}
+          },
+          {
+            "generatedName": "SessionTerminated",
+            "value": "SessionTerminated",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "RealtimeTranscriptType": {
+        "generatedName": "RealtimeTranscriptType",
+        "values": [
+          {
+            "generatedName": "PartialTranscript",
+            "value": "PartialTranscript",
+            "casing": {}
+          },
+          {
+            "generatedName": "FinalTranscript",
+            "value": "FinalTranscript",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "RealtimeTranscript": {
+        "value": {
+          "generatedName": "RealtimeTranscript",
+          "schemas": [
+            {
+              "generatedName": "RealtimeTranscriptZero",
+              "schema": "PartialTranscript",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "RealtimeTranscriptOne",
+              "schema": "FinalTranscript",
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../asyncapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "SessionBegins": {
+        "properties": [
+          {
+            "key": "message_type",
+            "schema": {
+              "generatedName": "SessionBeginsMessageType",
+              "value": {
+                "value": "SessionBegins",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "Describes the type of the message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {
+              "RealtimeBaseMessage": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "sessionBeginsMessageType"
+          },
+          {
+            "key": "session_id",
+            "schema": {
+              "generatedName": "SessionBeginsSessionId",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Unique identifier for the established session.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionBeginsSessionId"
+          },
+          {
+            "key": "expires_at",
+            "schema": {
+              "generatedName": "SessionBeginsExpiresAt",
+              "description": "Timestamp when this session will expire.",
+              "schema": {
+                "type": "datetime"
+              },
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sessionBeginsExpiresAt"
+          }
+        ],
+        "generatedName": "SessionBegins",
+        "allOf": [
+          {
+            "generatedName": "RealtimeBaseMessage",
+            "schema": "RealtimeBaseMessage",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SessionTerminated": {
+        "properties": [
+          {
+            "key": "message_type",
+            "schema": {
+              "generatedName": "SessionTerminatedMessageType",
+              "value": {
+                "value": "SessionTerminated",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "Describes the type of the message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {
+              "RealtimeBaseMessage": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "sessionTerminatedMessageType"
+          }
+        ],
+        "generatedName": "SessionTerminated",
+        "allOf": [
+          {
+            "generatedName": "RealtimeBaseMessage",
+            "schema": "RealtimeBaseMessage",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RealtimeBaseTranscript": {
+        "properties": [
+          {
+            "key": "audio_start",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptAudioStart",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Start time of audio sample relative to session start, in milliseconds.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptAudioStart"
+          },
+          {
+            "key": "audio_end",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptAudioEnd",
+              "schema": {
+                "type": "int"
+              },
+              "description": "End time of audio sample relative to session start, in milliseconds.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptAudioEnd"
+          },
+          {
+            "key": "confidence",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptConfidence",
+              "schema": {
+                "minimum": 0,
+                "maximum": 1,
+                "type": "double"
+              },
+              "description": "The confidence score of the entire transcription, between 0 and 1.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptConfidence"
+          },
+          {
+            "key": "text",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The partial transcript for your audio.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptText"
+          },
+          {
+            "key": "words",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptWords",
+              "value": {
+                "generatedName": "RealtimeBaseTranscriptWordsItem",
+                "schema": "Word",
+                "source": {
+                  "file": "../asyncapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "description": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptWords"
+          },
+          {
+            "key": "created",
+            "schema": {
+              "generatedName": "RealtimeBaseTranscriptCreated",
+              "description": "The timestamp for the partial transcript.",
+              "schema": {
+                "type": "datetime"
+              },
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "realtimeBaseTranscriptCreated"
+          }
+        ],
+        "generatedName": "RealtimeBaseTranscript",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PartialTranscript": {
+        "properties": [
+          {
+            "key": "message_type",
+            "schema": {
+              "generatedName": "PartialTranscriptMessageType",
+              "value": {
+                "value": "PartialTranscript",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "Describes the type of message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "partialTranscriptMessageType"
+          }
+        ],
+        "generatedName": "PartialTranscript",
+        "allOf": [
+          {
+            "generatedName": "RealtimeBaseTranscript",
+            "schema": "RealtimeBaseTranscript",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "FinalTranscript": {
+        "properties": [
+          {
+            "key": "message_type",
+            "schema": {
+              "generatedName": "FinalTranscriptMessageType",
+              "value": {
+                "value": "FinalTranscript",
+                "type": "string"
+              },
+              "groupName": [],
+              "description": "Describes the type of message.",
+              "type": "literal"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "finalTranscriptMessageType"
+          },
+          {
+            "key": "punctuated",
+            "schema": {
+              "generatedName": "FinalTranscriptPunctuated",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Whether the text has been punctuated and cased.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "finalTranscriptPunctuated"
+          },
+          {
+            "key": "text_formatted",
+            "schema": {
+              "generatedName": "FinalTranscriptTextFormatted",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "Whether the text has been formatted (e.g. Dollar -> $)",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "finalTranscriptTextFormatted"
+          }
+        ],
+        "generatedName": "FinalTranscript",
+        "allOf": [
+          {
+            "generatedName": "RealtimeBaseTranscript",
+            "schema": "RealtimeBaseTranscript",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Word": {
+        "properties": [
+          {
+            "key": "start",
+            "schema": {
+              "generatedName": "WordStart",
+              "schema": {
+                "type": "int"
+              },
+              "description": "Start time of the word in milliseconds",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "wordStart"
+          },
+          {
+            "key": "end",
+            "schema": {
+              "generatedName": "WordEnd",
+              "schema": {
+                "type": "int"
+              },
+              "description": "End time of the word in milliseconds",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "wordEnd"
+          },
+          {
+            "key": "confidence",
+            "schema": {
+              "generatedName": "WordConfidence",
+              "schema": {
+                "minimum": 0,
+                "maximum": 1,
+                "type": "double"
+              },
+              "description": "Confidence score of the word",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "wordConfidence"
+          },
+          {
+            "key": "text",
+            "schema": {
+              "generatedName": "WordText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The word itself",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "wordText"
+          }
+        ],
+        "generatedName": "Word",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AudioData": {
+        "properties": [
+          {
+            "key": "audio_data",
+            "schema": {
+              "generatedName": "AudioDataAudioData",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "audioDataAudioData"
+          }
+        ],
+        "generatedName": "AudioData",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TerminateSession": {
+        "properties": [
+          {
+            "key": "terminate_session",
+            "schema": {
+              "generatedName": "TerminateSessionTerminateSession",
+              "schema": {
+                "type": "boolean"
+              },
+              "description": "A boolean value to communicate that you wish to end your real-time session forever.",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "terminateSessionTerminateSession"
+          }
+        ],
+        "generatedName": "TerminateSession",
+        "allOf": [
+          {
+            "generatedName": "RealtimeBaseMessage",
+            "schema": "RealtimeBaseMessage",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
           "type": "openapi"
         },
         "type": "object"

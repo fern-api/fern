@@ -1207,6 +1207,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.ListExtensionV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1274,6 +1275,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.ExtensionV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1345,6 +1347,7 @@ types:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.ExtensionV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1380,6 +1383,7 @@ service:
       response:
         docs: OK
         type: root.ListExtensionV1EnvelopeDefaultMetaWrapper
+        status-code: 200
       examples:
         - query-parameters:
             name: Widget
@@ -1422,6 +1426,7 @@ service:
       response:
         docs: Created
         type: root.ExtensionV1EnvelopeDefaultMetaWrapper
+        status-code: 201
       examples:
         - request:
             name: Special Widget
@@ -1480,6 +1485,7 @@ service:
       response:
         docs: OK
         type: root.ExtensionV1EnvelopeDefaultMetaWrapper
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -1626,6 +1632,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.ListProfileV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1696,6 +1703,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.ProfileV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1780,6 +1788,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.ProfileV1EnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -1821,6 +1830,7 @@ service:
       response:
         docs: OK
         type: root.ListProfileV1EnvelopeDefaultMetaWrapper
+        status-code: 200
       examples:
         - query-parameters:
             name: ^Acme.*
@@ -1871,6 +1881,7 @@ service:
       response:
         docs: Created
         type: root.ProfileV1EnvelopeDefaultMetaWrapper
+        status-code: 201
       examples:
         - request:
             name: Acme corp login
@@ -1937,6 +1948,7 @@ service:
       response:
         docs: OK
         type: root.ProfileV1EnvelopeDefaultMetaWrapper
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -2003,11 +2015,12 @@ service:
                       {
                         "data": {
                           "data": {
-                            "code": "code",
                             "event": "event",
-                            "message": "message",
+                            "eventTimeMillis": 1000000,
+                            "id": "id",
+                            "status": "awaiting_capacity",
                           },
-                          "event": "error",
+                          "event": "status",
                           "id": 1,
                           "retry": 1,
                         },
@@ -2114,6 +2127,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -2218,6 +2232,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SessionsWithPaginationEnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -2305,6 +2320,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -2496,6 +2512,7 @@ service:
       response:
         docs: OK
         type: root.SessionsWithPaginationEnvelopeDefaultMetaWrapper
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -2556,6 +2573,7 @@ service:
       response:
         docs: Created
         type: root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -2609,6 +2627,7 @@ service:
       response:
         docs: OK
         type: root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper
+        status-code: 200
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -2698,13 +2717,14 @@ service:
             stream:
               - event: ''
                 data:
-                  event: error
                   data:
-                    code: code
                     event: event
-                    message: message
+                    eventTimeMillis: 1000000
+                    id: id
+                    status: awaiting_capacity
                   id: 1
                   retry: 1
+                  event: status
       audiences:
         - public
   source:
@@ -2801,6 +2821,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.WindowEnvelopeDefaultMetaWrapper",
               },
               "source": {
@@ -2900,6 +2921,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.ModelResponseExternalSessionAiResponseMetadataWrapper",
               },
               "source": {
@@ -2980,6 +3002,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper",
               },
               "source": {
@@ -3072,6 +3095,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "root.ModelResponseExternalSessionAiResponseMetadataWrapper",
               },
               "source": {
@@ -3126,6 +3150,7 @@ service:
       response:
         docs: Created
         type: root.WindowEnvelopeDefaultMetaWrapper
+        status-code: 201
       examples:
         - path-parameters:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
@@ -3186,6 +3211,7 @@ service:
       response:
         docs: Created
         type: root.ModelResponseExternalSessionAiResponseMetadataWrapper
+        status-code: 201
       examples:
         - path-parameters:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
@@ -3234,6 +3260,7 @@ service:
       response:
         docs: Created
         type: root.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper
+        status-code: 201
       examples:
         - path-parameters:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
@@ -3296,6 +3323,7 @@ service:
       response:
         docs: Created
         type: root.ModelResponseExternalSessionAiResponseMetadataWrapper
+        status-code: 201
       examples:
         - path-parameters:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b

@@ -44,6 +44,7 @@
               "path": "/token",
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "Token",
               },
               "source": {
@@ -81,6 +82,7 @@
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -112,6 +114,7 @@
               "path": "/users",
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -175,6 +178,7 @@ service:
       response:
         docs: Successful response
         type: User
+        status-code: 200
       errors:
         - UnauthorizedError
         - NotFoundError
@@ -198,6 +202,7 @@ service:
       response:
         docs: Successful response
         type: User
+        status-code: 200
       errors:
         - UnauthorizedError
         - NotFoundError
@@ -221,6 +226,7 @@ service:
       response:
         docs: Successful response
         type: Token
+        status-code: 200
       errors:
         - UnauthorizedError
       examples:

@@ -1,12 +1,10 @@
 using SeedAnyAuth.Core;
 
-#nullable enable
-
 namespace SeedAnyAuth;
 
 public partial class SeedAnyAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedAnyAuthClient(
         string? token = null,

@@ -31,4 +31,12 @@ class StackInformation extends JsonSerializableType
         $this->numStackFrames = $values['numStackFrames'];
         $this->topStackFrame = $values['topStackFrame'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

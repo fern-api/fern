@@ -62,7 +62,7 @@ export function convertOperation({
 }): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
-        context.logger.info(
+        context.logger.debug(
             `${pathItemContext.method.toUpperCase()} ${pathItemContext.path} is marked with x-fern-ignore. Skipping.`
         );
         return undefined;
@@ -78,7 +78,8 @@ export function convertOperation({
             operation,
             sdkMethodName,
             httpMethod: pathItemContext.method,
-            path: pathItemContext.path
+            path: pathItemContext.path,
+            shouldUseIdiomaticRequestNames: context.options.shouldUseIdiomaticRequestNames
         }),
         operation,
         operationParameters: operation.parameters ?? [],
@@ -155,22 +156,29 @@ function getBaseBreadcrumbs({
     sdkMethodName,
     operation,
     httpMethod,
-    path
+    path,
+    shouldUseIdiomaticRequestNames
 }: {
     sdkMethodName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
     httpMethod: HttpMethod;
     path: string;
+    shouldUseIdiomaticRequestNames: boolean;
 }): string[] {
     const baseBreadcrumbs: string[] = [];
     if (sdkMethodName != null) {
+        if (shouldUseIdiomaticRequestNames) {
+            baseBreadcrumbs.push(sdkMethodName.methodName);
+        }
         if (sdkMethodName.groupName.length > 0) {
             const lastGroupName = sdkMethodName.groupName[sdkMethodName.groupName.length - 1];
             if (lastGroupName != null) {
                 baseBreadcrumbs.push(typeof lastGroupName === "string" ? lastGroupName : lastGroupName.name);
             }
         }
-        baseBreadcrumbs.push(sdkMethodName.methodName);
+        if (!shouldUseIdiomaticRequestNames) {
+            baseBreadcrumbs.push(sdkMethodName.methodName);
+        }
     } else if (operation.operationId != null) {
         baseBreadcrumbs.push(operation.operationId);
     } else {

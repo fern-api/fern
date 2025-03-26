@@ -53,7 +53,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public markReferencedByDiscriminatedUnion(
         _schema: OpenAPIV3.ReferenceObject,
-        _discrminant: string,
+        _discriminant: string,
         _times: number
     ): void {
         return;
@@ -75,7 +75,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public markSchemaWithDiscriminantValue(
         _schema: OpenAPIV3.ReferenceObject,
-        _discrminant: string,
+        _discriminant: string,
         _discriminantValue: string
     ): void {
         return;

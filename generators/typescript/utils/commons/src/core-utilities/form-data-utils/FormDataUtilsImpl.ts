@@ -33,31 +33,38 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             ts.factory.createAwaitExpression(ts.factory.createCallExpression(fdw.getExpression(), undefined, []))
     );
 
+    public readonly encodeAsFormParameter = this.withExportedName(
+        "encodeAsFormParameter",
+        (encodeAsFormParameter) =>
+            ({ referenceToArgument }: { referenceToArgument: ts.Expression }): ts.CallExpression =>
+                ts.factory.createCallExpression(encodeAsFormParameter.getExpression(), undefined, [referenceToArgument])
+    );
+
     public readonly append = ({
-        referencetoFormData,
+        referenceToFormData,
         key,
         value
     }: {
-        referencetoFormData: ts.Expression;
-        key: string;
+        referenceToFormData: ts.Expression;
+        key: string | ts.Expression;
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
+                ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("append")),
                 undefined,
-                [ts.factory.createStringLiteral(key), value]
+                [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value]
             )
         );
     };
 
     public readonly appendFile = ({
-        referencetoFormData,
+        referenceToFormData,
         key,
         value,
         filename
     }: {
-        referencetoFormData: ts.Expression;
+        referenceToFormData: ts.Expression;
         key: string;
         value: ts.Expression;
         filename?: ts.Expression;
@@ -66,7 +73,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
-                        referencetoFormData,
+                        referenceToFormData,
                         ts.factory.createIdentifier("appendFile")
                     ),
                     undefined,
@@ -78,27 +85,27 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         );
     };
 
-    public readonly getRequest = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
+    public readonly getRequest = ({ referenceToFormData }: { referenceToFormData: ts.Expression }): ts.Expression => {
         return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("getRequest")),
+            ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("getRequest")),
             undefined,
             []
         );
     };
 
-    public readonly getBody = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
-        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("body"));
+    public readonly getBody = ({ referenceToFormData }: { referenceToFormData: ts.Expression }): ts.Expression => {
+        return ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("body"));
     };
 
-    public readonly getHeaders = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
-        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("headers"));
+    public readonly getHeaders = ({ referenceToFormData }: { referenceToFormData: ts.Expression }): ts.Expression => {
+        return ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("headers"));
     };
 
     public readonly getDuplexSetting = ({
-        referencetoFormData
+        referenceToFormData
     }: {
-        referencetoFormData: ts.Expression;
+        referenceToFormData: ts.Expression;
     }): ts.Expression => {
-        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("duplex"));
+        return ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("duplex"));
     };
 }

@@ -19,10 +19,12 @@ class User extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $name The user's name. This name is unique to each user. A few examples are included below:
-     - Alice
-     - Bob
-     - Charlie
+     * The user's name. This name is unique to each user. A few examples are included below:
+     *  - Alice
+     *  - Bob
+     *  - Charlie
+     *
+     * @var string $name
      */
     #[JsonProperty('name')]
     public string $name;
@@ -46,5 +48,13 @@ class User extends JsonSerializableType
         $this->id = $values['id'];
         $this->name = $values['name'];
         $this->age = $values['age'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

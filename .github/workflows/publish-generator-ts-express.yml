@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-ts-express
+name: Publish TypeScript Express Generator
 
 on:
   push:
@@ -18,7 +18,7 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
-  publish-changed-generators:
+  run:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +59,7 @@ jobs:
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
-  publish-manually:
+  manual:
     runs-on: ubuntu-latest
     # Only run this job if this has been triggered manually
     if: ${{ github.event_name == 'workflow_dispatch' }}

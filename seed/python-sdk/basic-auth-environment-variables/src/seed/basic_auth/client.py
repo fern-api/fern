@@ -38,7 +38,7 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.get_with_basic_auth()
@@ -73,7 +73,10 @@ class BasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         POST request with basic auth scheme
@@ -95,7 +98,7 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.post_with_basic_auth(
@@ -161,7 +164,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -202,7 +205,10 @@ class AsyncBasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[typing.Any] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         POST request with basic auth scheme
@@ -226,7 +232,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 

@@ -192,6 +192,7 @@ service:
         content-type: application/json
       response:
         docs: Payment successful
+        status-code: 200
         type: CreateBookingPaymentResponse
       source:
         openapi: openapi/trains/openapi.yml

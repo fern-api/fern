@@ -5,13 +5,13 @@ info:
 paths:
   /movies/create-movie:
     post:
-      description: Add a movie to the database
+      description: Add a movie to the database using the movies/* /... path.
       operationId: imdb_createMovie
       tags:
         - Imdb
       parameters: []
       responses:
-        '200':
+        '201':
           description: ''
           content:
             application/json:

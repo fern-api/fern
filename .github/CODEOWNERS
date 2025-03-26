@@ -12,6 +12,7 @@ generators/php/* @amckinney
 generators/commons/* @amckinney
 generators/csharp/* @Swimburger
 generators/typescript/* @Swimburger
+generators/typescript-v2/* @Swimburger
 generators/java/* @dsinghvi
 generators/python/* @dsinghvi
 generators/python-v2/* @dsinghvi
@@ -23,5 +24,6 @@ generators/openapi/* @dsinghvi
 # Specific rules for packages
 packages/cli/* @amckinney
 packages/cli/api-importers/* @eyw520
+packages/cli/docs-importers/* @eyw520
 packages/generators/cli/* @dsinghvi
 packages/generators/docker/* @dsinghvi

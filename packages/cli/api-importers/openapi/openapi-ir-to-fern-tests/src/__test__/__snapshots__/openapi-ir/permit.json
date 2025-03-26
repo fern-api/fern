@@ -6,6 +6,7 @@
       "url": "https://api.permit.io"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Organizations": {
@@ -195,6 +196,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -224,7 +226,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the organizations that can be accessed by the\nauthenticated actor (i.e: human team member or api key).",
       "authed": true,
       "method": "GET",
@@ -365,6 +367,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -394,7 +397,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new organization that will be owned by the\nauthenticated actor (i.e: human team member or api key).",
       "authed": true,
       "method": "POST",
@@ -563,6 +566,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -592,7 +596,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor.",
       "authed": true,
       "method": "GET",
@@ -750,7 +754,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes an organization (Permit.io account) and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -845,6 +849,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -874,7 +879,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Updates the organization's profile.",
       "authed": true,
       "method": "PATCH",
@@ -1006,6 +1011,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1035,7 +1041,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor.",
       "authed": true,
       "method": "GET",
@@ -1216,6 +1222,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1245,7 +1252,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the projects under the active organization.",
       "authed": true,
       "method": "GET",
@@ -1407,6 +1414,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1436,7 +1444,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new project under the active organization.",
       "authed": true,
       "method": "POST",
@@ -1612,6 +1620,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1641,7 +1650,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single project matching the given proj_id, if such project exists.",
       "authed": true,
       "method": "GET",
@@ -1820,7 +1829,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the project and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -1915,6 +1924,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1944,7 +1954,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Updates the project.",
       "authed": true,
       "method": "PATCH",
@@ -2134,6 +2144,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2163,7 +2174,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/projects/{proj_id}/envs/{env_id}/stats",
@@ -2822,6 +2833,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2851,7 +2863,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the environments under a given project.",
       "authed": true,
       "method": "GET",
@@ -3074,6 +3086,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3103,7 +3116,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new environment under a given project.",
       "authed": true,
       "method": "POST",
@@ -3339,6 +3352,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3368,7 +3382,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single environment matching the given env_id, if such environment exists.",
       "authed": true,
       "method": "GET",
@@ -3606,7 +3620,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes an environment and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -3729,6 +3743,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3758,7 +3773,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Updates the environment.",
       "authed": true,
       "method": "PATCH",
@@ -4008,6 +4023,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -4037,7 +4053,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Copy environment\n\nThis endpoint either duplicates an existing environment to a new environment\nin the same project, or copies from an existing environment to another\nexisting environment.\n\nThe `scope` object controls which objects will be copied to the target\nenvironment.\n\nTo clone to a new environment, the user must have write permissions\nto the containing project. To clone into an existing environment,\nthe user must have write permissions to the target environment.\n\nCopying environments across projects or organizations is not\nallowed.",
       "authed": true,
       "method": "POST",
@@ -4430,7 +4446,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -4439,6 +4455,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4468,7 +4485,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the resources defined in your schema.",
       "authed": true,
       "method": "GET",
@@ -4838,6 +4855,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4867,7 +4885,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new resource (a type of object you may protect with permissions).",
       "authed": true,
       "method": "POST",
@@ -5455,6 +5473,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5484,7 +5503,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single resource, if such resource exists.",
       "authed": true,
       "method": "GET",
@@ -5998,6 +6017,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6027,7 +6047,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Completely replaces the resource definition.\n\n- If the resource key is changed, all role and permissions assignments for the the resource will be revoked.\n- If the resource key is unchanged, but some actions are removed or renamed from the resource definition,\nrole and permissions assignments for these actions will be revoked.\n\nTODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT completely while there are permissions that can be affected.",
       "authed": true,
       "method": "PUT",
@@ -6560,7 +6580,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the resource and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -6711,6 +6731,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6740,7 +6761,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the resource definition.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -7303,6 +7324,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7332,7 +7354,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the actions defined on the resource.",
       "authed": true,
       "method": "GET",
@@ -7594,6 +7616,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7623,7 +7646,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new action that can affect the resource.",
       "authed": true,
       "method": "POST",
@@ -7905,6 +7928,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7934,7 +7958,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single action defined on the resource, if such action exists.",
       "authed": true,
       "method": "GET",
@@ -8211,7 +8235,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the action and all its related data.\nThis includes any permissions granted to perform the action.",
       "authed": true,
       "method": "DELETE",
@@ -8390,6 +8414,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8419,7 +8444,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the action defined on a resource.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -8743,6 +8768,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8772,7 +8798,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the action groups defined on the resource.",
       "authed": true,
       "method": "GET",
@@ -9046,6 +9072,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9075,7 +9102,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new action group that can affect the resource.",
       "authed": true,
       "method": "POST",
@@ -9388,6 +9415,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9417,7 +9445,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single action group defined on the resource, if such action exists.",
       "authed": true,
       "method": "GET",
@@ -9706,7 +9734,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the action and all its related data.\nThis includes any permissions granted to perform the action.",
       "authed": true,
       "method": "DELETE",
@@ -9885,6 +9913,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9914,7 +9943,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the action defined on a resource.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -10242,6 +10271,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10271,7 +10301,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the roles defined on the resource.",
       "authed": true,
       "method": "GET",
@@ -10550,6 +10580,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10579,7 +10610,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new role associated with the resource.",
       "authed": true,
       "method": "POST",
@@ -10902,6 +10933,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10931,7 +10963,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single role defined on the resource, if such role exists.",
       "authed": true,
       "method": "GET",
@@ -11225,7 +11257,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the role and all its related data.\nThis includes any permissions granted to said role.",
       "authed": true,
       "method": "DELETE",
@@ -11404,6 +11436,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11433,7 +11466,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the role defined on a resource.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -11759,6 +11792,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11788,7 +11822,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Assign permissions to role.\n\nIf some of the permissions specified are already assigned, will skip them.",
       "authed": true,
       "method": "POST",
@@ -12107,6 +12141,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12136,7 +12171,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Remove permissions from role.\n\nIf some of the permissions specified are already unassigned, will skip them.",
       "authed": true,
       "method": "DELETE",
@@ -12436,6 +12471,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12465,7 +12501,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/ancestors",
@@ -12757,6 +12793,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12786,7 +12823,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/descendants",
@@ -13124,6 +13161,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13153,7 +13191,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the attributes defined on the resource.",
       "authed": true,
       "method": "GET",
@@ -13398,6 +13436,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13427,7 +13466,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new attribute as part of the resource definition.",
       "authed": true,
       "method": "POST",
@@ -13689,6 +13728,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13718,7 +13758,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single attribute defined on the resource, if such attribute exists.",
       "authed": true,
       "method": "GET",
@@ -14036,7 +14076,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the attribute and all its related data.\n\nNote: If the attribute is used by policies, removing it will cause the\nattribute to evaluate as `undefined`.",
       "authed": true,
       "method": "DELETE",
@@ -14215,6 +14255,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14244,7 +14285,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the attribute defined on a resource.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -14556,6 +14597,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14585,7 +14627,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the attributes defined on the User resource.",
       "authed": true,
       "method": "GET",
@@ -14826,6 +14868,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14855,7 +14898,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new attribute for the User resource.",
       "authed": true,
       "method": "POST",
@@ -15113,6 +15156,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15142,7 +15186,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single attribute defined on the User resource, if such attribute exists.",
       "authed": true,
       "method": "GET",
@@ -15455,7 +15499,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the attribute and all its related data.\n\nNote: If the attribute is used by policies, removing it will cause the\nattribute to evaluate as `undefined`.",
       "authed": true,
       "method": "DELETE",
@@ -15630,6 +15674,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15659,7 +15704,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the attribute defined on the User resource.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -16005,7 +16050,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -16014,6 +16059,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16043,7 +16089,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all tenant roles.",
       "authed": true,
       "method": "GET",
@@ -16306,6 +16352,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16335,7 +16382,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new tenant role.",
       "authed": true,
       "method": "POST",
@@ -16623,6 +16670,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16652,7 +16700,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single tenant role, if such role exists.",
       "authed": true,
       "method": "GET",
@@ -16911,7 +16959,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes a tenant role and all its related data.\nThis includes any permissions granted to said role.",
       "authed": true,
       "method": "DELETE",
@@ -17062,6 +17110,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17091,7 +17140,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates a tenant role.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -17382,6 +17431,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17411,7 +17461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Assign permissions to role.\n\nIf some of the permissions specified are already assigned, will skip them.",
       "authed": true,
       "method": "POST",
@@ -17695,6 +17745,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17724,7 +17775,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Remove permissions from role.\n\nIf some of the permissions specified are already unassigned, will skip them.",
       "authed": true,
       "method": "DELETE",
@@ -17989,6 +18040,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18018,7 +18070,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/ancestors",
@@ -18275,6 +18327,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18304,7 +18357,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/descendants",
@@ -18697,7 +18750,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -18706,6 +18759,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -18735,7 +18789,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all condition sets matching a filter.",
       "authed": true,
       "method": "GET",
@@ -19264,6 +19318,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19293,7 +19348,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new condition set (can be either a user set or a resource set).",
       "authed": true,
       "method": "POST",
@@ -19932,6 +19987,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19961,7 +20017,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a single condition set, if such condition set exists.",
       "authed": true,
       "method": "GET",
@@ -20509,7 +20565,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes a condition set and all its related data.\nThis includes any permissions granted to said condition set (i.e: any matching condition set rules).",
       "authed": true,
       "method": "DELETE",
@@ -20660,6 +20716,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20689,7 +20746,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates a condition set.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -21384,6 +21441,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21413,7 +21471,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets all ancestors (parent, parent of parent, and so on)",
       "authed": true,
       "method": "GET",
@@ -22019,6 +22077,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22048,7 +22107,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets all descendants (children, children of children, and so on)",
       "authed": true,
       "method": "GET",
@@ -22684,6 +22743,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22713,7 +22773,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the users defined within an environment.",
       "authed": true,
       "method": "GET",
@@ -23105,6 +23165,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23134,7 +23195,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new user inside the Permit.io system, from that point forward\nyou may run permission checks on that user.\n\nIf the user is already created: will return 200 instead of 201,\nand will return the existing user object in the response body.",
       "authed": true,
       "method": "POST",
@@ -23611,6 +23672,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23640,7 +23702,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a user, if such user exists. Otherwise returns 404.",
       "authed": true,
       "method": "GET",
@@ -24036,6 +24098,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24065,7 +24128,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}",
@@ -24562,7 +24625,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the user and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -24713,6 +24776,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24742,7 +24806,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the user definition.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -25142,6 +25206,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25171,7 +25236,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Assigns a role to the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
       "authed": true,
       "method": "POST",
@@ -25437,7 +25502,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Unassigns the role from the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404.",
       "authed": true,
       "method": "DELETE",
@@ -25700,6 +25765,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25729,7 +25795,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users",
@@ -26242,7 +26308,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -26251,6 +26317,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26280,7 +26347,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the tenants defined within an environment.",
       "authed": true,
       "method": "GET",
@@ -26538,6 +26605,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26567,7 +26635,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new tenant inside the Permit.io system.\n\nIf the tenant is already created: will return 200 instead of 201,\nand will return the existing tenant object in the response body.",
       "authed": true,
       "method": "POST",
@@ -26852,6 +26920,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -26881,7 +26950,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a tenant, if such tenant exists. Otherwise returns 404.",
       "authed": true,
       "method": "GET",
@@ -27135,7 +27204,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the tenant and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -27286,6 +27355,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27315,7 +27385,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the tenant definition.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -27591,7 +27661,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes a user under a tenant.",
       "authed": true,
       "method": "DELETE",
@@ -27860,6 +27930,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27889,7 +27960,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user.\n- If the `tenant` filter is present, will only return the role assignments in that tenant.\n- If the `role` filter is present, will only return role assignments that are granting that role.",
       "authed": true,
       "method": "GET",
@@ -28102,6 +28173,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28131,7 +28203,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Assigns a role to a user within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
       "authed": true,
       "method": "POST",
@@ -28376,7 +28448,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Unassigns a user role within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404.",
       "authed": true,
       "method": "DELETE",
@@ -28531,6 +28603,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28560,7 +28633,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
@@ -28734,6 +28807,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28763,7 +28837,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
@@ -29053,6 +29127,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29082,7 +29157,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists the condition set rules matching the filter.\n- If the `user_set` filter is present, will only return the permissions set of that user set.\n- If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.\n- If the `resource_set` filter is present, will only return the permissions set of that resource set.",
       "authed": true,
       "method": "GET",
@@ -29294,6 +29369,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29323,7 +29399,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Grant permissions to a user set *on* a resource set.\n\nIf the permission is already granted, it is skipped.",
       "authed": true,
       "method": "POST",
@@ -29566,7 +29642,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Revokes permissions to a user set *on* a resource set.\n\nIf the permission is not granted, it is skipped.",
       "authed": true,
       "method": "DELETE",
@@ -29760,6 +29836,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -29789,7 +29866,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all the resource instances defined within an environment.",
       "authed": true,
       "method": "GET",
@@ -30039,6 +30116,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30068,7 +30146,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Creates a new instance inside the Permit.io system.\n\nIf the instance is already created: will return 200 instead of 201,\nand will return the existing instance object in the response body.",
       "authed": true,
       "method": "POST",
@@ -30375,6 +30453,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30404,7 +30483,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets a instance, if such instance exists. Otherwise returns 404.",
       "authed": true,
       "method": "GET",
@@ -30669,7 +30748,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Deletes the instance and all its related data.",
       "authed": true,
       "method": "DELETE",
@@ -30820,6 +30899,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30849,7 +30929,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Partially updates the instance definition.\nFields that will be provided will be completely overwritten.",
       "authed": true,
       "method": "PATCH",
@@ -31146,6 +31226,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31175,7 +31256,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/v2/facts/{proj_id}/{env_id}/bulk/users",
@@ -31424,6 +31505,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31453,7 +31535,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/v2/facts/{proj_id}/{env_id}/bulk/users",
@@ -31702,6 +31784,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31731,7 +31814,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/v2/facts/{proj_id}/{env_id}/bulk/users",
@@ -31877,6 +31960,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31906,7 +31990,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/v2/facts/{proj_id}/{env_id}/bulk/tenants",
@@ -32097,6 +32181,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -32126,7 +32211,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/v2/facts/{proj_id}/{env_id}/bulk/tenants",
@@ -32191,7 +32276,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ActionBlockEditable": {
@@ -33159,7 +33244,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34823,7 +34909,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -35868,7 +35955,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37096,7 +37184,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37112,7 +37201,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40388,7 +40478,7 @@
                   "file": "../openapi.json",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -41623,7 +41713,7 @@
                   "file": "../openapi.json",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43717,7 +43807,7 @@
                     "file": "../openapi.json",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },

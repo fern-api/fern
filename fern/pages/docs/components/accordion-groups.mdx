@@ -1,7 +1,6 @@
 ---
 title: 'Accordion Groups'
 description: 'Display expandable/collapsible options that reveal more information with improved search functionality'
-icon: 'table-rows'
 ---
 
 Accordion Groups allow you to organize content into collapsible sections, making it easier for users to navigate through information. With recent updates, our Accordion component now supports improved search functionality using the browser's built-in search feature.
@@ -61,8 +60,44 @@ The recent update to our Accordion component improves content discoverability by
     </Frame>
   </Accordion>
 </AccordionGroup>
-````
-</CodeBlock>
+
+<Aside>
+  <CodeBlock title="Example Usage">
+    ````jsx
+    <AccordionGroup>
+      <Accordion title="Text Example">
+        This is a basic example of an accordion group.
+      </Accordion>
+
+      <Accordion title="Multimedia Example">
+        You can embed photos, videos, and other media within accordions for rich interactive content.
+
+        <embed 
+          src="./growing-fern.mp4" 
+          type="video/mp4"
+          width="640"
+          height="360"
+        />
+      </Accordion>
+
+      <Accordion title="Rich Content Support">
+        Accordions can contain rich content including code blocks, callouts, and other components.
+
+        ```ts
+        export function greet(name: string) {
+          return `Hello, ${name}!`;
+        }   
+        ```
+      </Accordion>
+      
+      <Accordion title="Best Practices Using Accordion Groups">
+        - Use accordion groups when you have multiple related sections
+        - Each accordion should have a clear title
+        - Keep content concise and focused
+      </Accordion>
+    </AccordionGroup>
+  ````
+  </CodeBlock>
 </Aside>
 
 ### Usage Examples

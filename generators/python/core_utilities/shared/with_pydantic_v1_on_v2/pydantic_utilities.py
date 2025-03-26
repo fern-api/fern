@@ -78,7 +78,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         Override the default dict method to `exclude_unset` by default. This function patches
         `exclude_unset` to work include fields within non-None default values.
         """
-        # Note: the logic here is multi-plexed given the levers exposed in Pydantic V1 vs V2
+        # Note: the logic here is multiplexed given the levers exposed in Pydantic V1 vs V2
         # Pydantic V1's .dict can be extremely slow, so we do not want to call it twice.
         #
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models

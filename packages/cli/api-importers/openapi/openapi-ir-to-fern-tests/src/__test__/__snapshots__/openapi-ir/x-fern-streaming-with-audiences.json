@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -93,12 +94,13 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
-      "method": "GET",
+      "method": "POST",
       "path": "/user/{userId}",
       "examples": [
         {
@@ -249,12 +251,13 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
-      "method": "GET",
+      "method": "POST",
       "path": "/user/{userId}",
       "examples": [
         {
@@ -317,7 +320,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

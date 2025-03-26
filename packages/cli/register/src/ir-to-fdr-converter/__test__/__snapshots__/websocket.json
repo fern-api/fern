@@ -86,7 +86,17 @@
               "body": {
                 "type": "object",
                 "extends": [],
-                "properties": []
+                "properties": [
+                  {
+                    "key": "text",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
               }
             }
           ],

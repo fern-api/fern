@@ -39,4 +39,12 @@ class RecordedResponseNotification extends JsonSerializableType
         $this->traceResponsesSize = $values['traceResponsesSize'];
         $this->testCaseId = $values['testCaseId'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

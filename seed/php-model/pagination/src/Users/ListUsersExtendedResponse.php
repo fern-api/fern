@@ -18,16 +18,24 @@ class ListUsersExtendedResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   totalCount: int,
      *   data: UserListContainer,
+     *   totalCount: int,
      *   next?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->totalCount = $values['totalCount'];
         $this->data = $values['data'];
         $this->next = $values['next'] ?? null;
+        $this->totalCount = $values['totalCount'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

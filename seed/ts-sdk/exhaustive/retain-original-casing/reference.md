@@ -1450,7 +1450,7 @@ GET with multiple of same query param
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
     query: "query",
-    numer: 1,
+    number: 1,
 });
 ```
 
@@ -2200,6 +2200,64 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dd>
 
 **requestOptions:** `Primitive.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Put
+
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>(id, { ...params }) -> SeedExhaustive.PutResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.put.add("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.PutRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Put.RequestOptions`
 
 </dd>
 </dl>

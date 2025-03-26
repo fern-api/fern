@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
+import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
 import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -94,6 +94,9 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
         for (const endpoint of service.endpoints) {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
+                    continue;
+                }
                 const generator = new WrappedEndpointRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context,

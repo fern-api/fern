@@ -14,15 +14,15 @@ class TestCaseWithActualResultImplementation extends JsonSerializableType
     public NonVoidFunctionDefinition $getActualResult;
 
     /**
-     * @var mixed $assertCorrectnessCheck
+     * @var AssertCorrectnessCheck $assertCorrectnessCheck
      */
     #[JsonProperty('assertCorrectnessCheck')]
-    public mixed $assertCorrectnessCheck;
+    public AssertCorrectnessCheck $assertCorrectnessCheck;
 
     /**
      * @param array{
      *   getActualResult: NonVoidFunctionDefinition,
-     *   assertCorrectnessCheck: mixed,
+     *   assertCorrectnessCheck: AssertCorrectnessCheck,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class TestCaseWithActualResultImplementation extends JsonSerializableType
     ) {
         $this->getActualResult = $values['getActualResult'];
         $this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

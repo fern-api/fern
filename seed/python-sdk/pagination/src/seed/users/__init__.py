@@ -3,6 +3,7 @@
 from .types import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
     ListUsersPaginationResponse,
     NextPage,
     Order,
@@ -20,6 +21,7 @@ from .types import (
 __all__ = [
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",

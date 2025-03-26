@@ -232,8 +232,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 source: oneOfSchema.source,
                 inline: undefined
             });
-        case "undisciminated":
-            return OneOfSchemaWithExample.undisciminated({
+        case "undiscriminated":
+            return OneOfSchemaWithExample.undiscriminated({
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 generatedName: oneOfSchema.generatedName,
@@ -331,6 +331,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,
         availability: objectProperty.availability,
-        readonly: objectProperty.readonly
+        readonly: objectProperty.readonly,
+        writeonly: objectProperty.writeonly
     };
 }

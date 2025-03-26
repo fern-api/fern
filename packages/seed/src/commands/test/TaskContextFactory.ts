@@ -26,6 +26,9 @@ export class TaskContextFactory {
                     const parts = log.parts.flatMap((parts) => parts).flatMap((part) => part.split("\n"));
                     for (const part of parts) {
                         switch (log.level) {
+                            case "trace":
+                                CONSOLE_LOGGER.trace(`[${prefixWithColor}]: `, part);
+                                break;
                             case "debug":
                                 CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, part);
                                 break;

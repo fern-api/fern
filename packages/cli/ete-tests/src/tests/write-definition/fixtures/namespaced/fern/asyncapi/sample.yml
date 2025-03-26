@@ -96,6 +96,7 @@ channels:
           - maticusd
           - injusd
           - sushiusd
+        location: $message.payload#/symbol
         description: >
           Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
           quantities are in CCY1. To read more click
@@ -175,7 +176,7 @@ components:
             type: update
             eventId: 36902233362
             timestamp: 1619769673
-            timestampms: 1619769673527
+            timestamps: 1619769673527
             socket_sequence: 661
             events:
               - type: change
@@ -222,9 +223,9 @@ components:
               type: number
               description: >-
                 The timestamp in seconds for this group of events (included for
-                compatibility reasons). We recommend using the timestampms field
+                compatibility reasons). We recommend using the timestamps field
                 instead.
-            timestampms:
+            timestamps:
               type: number
               description: The timestamp in milliseconds for this group of events.
           required:
@@ -232,7 +233,7 @@ components:
             - eventId
             - events
             - timestamp
-            - timestampms
+            - timestamps
         - $ref: '#/components/schemas/default'
     default:
       type: object

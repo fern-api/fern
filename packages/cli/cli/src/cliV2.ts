@@ -11,7 +11,7 @@ import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGene
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList";
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
-import { getOrganziation } from "./commands/organization/getOrganization";
+import { getOrganization } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
@@ -32,7 +32,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                     outputLocation: argv.output
                 }
             });
-            await getOrganziation({
+            await getOrganization({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: undefined,
                     defaultToAllApiWorkspaces: true

@@ -250,6 +250,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 list_=lambda lt: self._get_type_id(lt),
                 map_=lambda mt: self._get_type_id(mt.key_type) + self._get_type_id(mt.value_type),
                 optional=lambda ot: self._get_type_id(ot),
+                nullable=lambda nt: self._get_type_id(nt),
                 set_=lambda st: self._get_type_id(st),
                 literal=lambda _: [],
             )
@@ -449,7 +450,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         )
 
 
-# TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
+# TODO: For V1 naming, we should take into account if the new name introduces a conflict with an existing class name
 def get_single_union_type_class_name(
     name: ir_types.DeclaredTypeName,
     wire_discriminant_value: ir_types.NameAndWireValue,

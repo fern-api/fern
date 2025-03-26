@@ -2,5 +2,5 @@ namespace SeedTrace;
 
 public class SeedTraceEnvironment
 {
-    public static string Prod = "https://api.trace.come";
+    public const string Prod = "https://api.trace.come";
 }

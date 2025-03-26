@@ -172,13 +172,13 @@ export function buildObjectTypeDeclaration({
                 continue; // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
-                    const parentSchemasToInine = getAllParentSchemasToInline({
+                    const parentSchemasToInline = getAllParentSchemasToInline({
                         property: property.key,
                         schemaId,
                         context,
                         namespace
                     });
-                    parentSchemasToInine.forEach((schemaToInline) => {
+                    parentSchemasToInline.forEach((schemaToInline) => {
                         schemasToInline.add(schemaToInline);
                     });
                 });
@@ -195,11 +195,13 @@ export function buildObjectTypeDeclaration({
         const audiences = property.audiences;
         const name = property.nameOverride;
         const availability = convertAvailability(property.availability);
+        const propertyAccess = getPropertyAccess(property);
         properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
             typeReference,
             audiences,
             name,
-            availability
+            availability,
+            propertyAccess
         });
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
@@ -218,7 +220,7 @@ export function buildObjectTypeDeclaration({
             continue;
         }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
-            continue; // dont extend from schemas that need to be inlined
+            continue; // don't extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
             schema: Schema.reference(allOf),
@@ -248,7 +250,7 @@ export function buildObjectTypeDeclaration({
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             if (schemasToInline.has(extendedSchema.schema)) {
-                continue; // dont extend from schemas that need to be inlined
+                continue; // don't extend from schemas that need to be inlined
             }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
@@ -717,21 +719,24 @@ function convertPropertyTypeReferenceToTypeDefinition({
     typeReference,
     audiences,
     name,
-    availability
+    availability,
+    propertyAccess
 }: {
     typeReference: RawSchemas.TypeReferenceSchema;
     audiences: string[];
     name?: string | undefined;
     availability?: RawSchemas.AvailabilityUnionSchema;
+    propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined;
 }): RawSchemas.ObjectPropertySchema {
-    if (audiences.length === 0 && name == null && availability == null) {
+    if (audiences.length === 0 && name == null && availability == null && propertyAccess == null) {
         return typeReference;
     } else {
         return {
             ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
-            ...(availability != null ? { availability } : {})
+            ...(availability != null ? { availability } : {}),
+            ...(propertyAccess != null ? { access: propertyAccess } : {})
         };
     }
 }
@@ -747,4 +752,17 @@ function getInline(schema: WithInline, declarationDepth: number): boolean | unde
         return true;
     }
     return declarationDepth > 0 ? true : undefined;
+}
+
+function getPropertyAccess(property: ObjectProperty): RawSchemas.ObjectPropertyAccess | undefined {
+    if (property.readonly && property.writeonly) {
+        return undefined;
+    }
+    if (property.readonly) {
+        return RawSchemas.ObjectPropertyAccess.ReadOnly;
+    }
+    if (property.writeonly) {
+        return RawSchemas.ObjectPropertyAccess.WriteOnly;
+    }
+    return undefined;
 }

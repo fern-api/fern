@@ -1,7 +1,5 @@
 using SeedOauthClientCredentials.Auth;
 
-#nullable enable
-
 namespace SeedOauthClientCredentials.Core;
 
 public partial class OAuthTokenProvider
@@ -29,9 +27,11 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
-            var tokenResponse = await _client.GetTokenAsync(
-                new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
-            );
+            var tokenResponse = await _client
+                .GetTokenAsync(
+                    new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
+                )
+                .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;
             _expiresAt = DateTime
                 .UtcNow.AddSeconds(tokenResponse.ExpiresIn)

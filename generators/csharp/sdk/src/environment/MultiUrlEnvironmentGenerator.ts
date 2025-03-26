@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
@@ -36,15 +37,16 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Public,
+                    static_: true,
+                    readonly: true,
                     name:
                         (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    static_: true,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
                         writer.writeNode(
-                            new csharp.ClassInstantiation({
+                            csharp.instantiateClass({
                                 classReference: class_.reference,
                                 arguments_: Object.entries(environment.urls).map(([id, url]) => {
                                     const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);

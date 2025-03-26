@@ -126,7 +126,7 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
                 .collect(Collectors.toList());
         generatedSpringServerInterfaces.forEach(generatedSpringServerInterface -> {
             addGeneratedFile(generatedSpringServerInterface);
-            generatedSpringServerInterface.geenratedRequestBodyFiles().forEach(this::addGeneratedFile);
+            generatedSpringServerInterface.generatedRequestBodyFiles().forEach(this::addGeneratedFile);
         });
     }
 

@@ -8,6 +8,8 @@ export * from "./BaseTypeDeclarationSchema";
 export * from "./AliasSchema";
 export * from "./ObjectSchema";
 export * from "./ObjectPropertySchema";
+export * from "./ObjectPropertyWithAccessSchema";
+export * from "./ObjectPropertyAccess";
 export * from "./ObjectExtendsSchema";
 export * from "./EnumSchema";
 export * from "./EnumValue";

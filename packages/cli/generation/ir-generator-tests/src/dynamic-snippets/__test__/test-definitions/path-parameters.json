@@ -127,7 +127,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user:User": {
             "type": "object",
@@ -255,7 +256,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -336,34 +338,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
@@ -394,7 +368,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_organizations.getOrganizationUser": {
             "auth": null,
@@ -536,34 +511,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
@@ -628,7 +575,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_organizations.searchOrganizations": {
             "auth": null,
@@ -770,34 +718,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "organization_id",
                                 "camelCase": {
                                     "unsafeName": "organizationID",
@@ -866,7 +786,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.getUser": {
             "auth": null,
@@ -1008,34 +929,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
@@ -1072,7 +965,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.createUser": {
             "auth": null,
@@ -1146,36 +1040,7 @@
             },
             "request": {
                 "type": "body",
-                "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    }
-                ],
+                "pathParameters": [],
                 "body": {
                     "type": "typeReference",
                     "value": {
@@ -1186,7 +1051,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.updateUser": {
             "auth": null,
@@ -1328,34 +1194,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
@@ -1420,7 +1258,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_user.searchUsers": {
             "auth": null,
@@ -1562,34 +1401,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
@@ -1658,8 +1469,40 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "tenant_id",
+                    "camelCase": {
+                        "unsafeName": "tenantID",
+                        "safeName": "tenantID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "tenant_id",
+                        "safeName": "tenant_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TENANT_ID",
+                        "safeName": "TENANT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TenantID",
+                        "safeName": "TenantID"
+                    }
+                },
+                "wireValue": "tenant_id"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
+    "environments": null,
+    "generatorConfig": null
 }

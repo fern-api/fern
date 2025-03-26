@@ -89,13 +89,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClientConstructorName(): string {
+        if (this.customConfig?.clientConstructorName != null) {
+            return this.customConfig.clientConstructorName;
+        }
         if (this.customConfig?.exportedClientName != null) {
             return `New${this.customConfig.exportedClientName}`;
         }
-        return "NewClient";
+        return `New${this.getClientName()}`;
+    }
+
+    public getClientName(): string {
+        if (this.customConfig?.clientName != null) {
+            return this.customConfig.clientName;
+        }
+        return "Client";
     }
 
     public getClientImportPath(): string {
+        if (this.customConfig?.packageLayout === "flat") {
+            return this.rootImportPath;
+        }
         return `${this.rootImportPath}/client`;
     }
 

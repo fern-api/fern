@@ -1,7 +1,5 @@
 using System;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsDefault;
 
 /// <summary>
@@ -10,4 +8,4 @@ namespace SeedOauthClientCredentialsDefault;
 public class SeedOauthClientCredentialsDefaultException(
     string message,
     Exception? innerException = null
-) : Exception(message, innerException) { }
+) : Exception(message, innerException);

@@ -12,20 +12,20 @@ class GetWithMultipleQuery extends JsonSerializableType
     public array $query;
 
     /**
-     * @var array<int> $numer
+     * @var array<int> $number
      */
-    public array $numer;
+    public array $number;
 
     /**
      * @param array{
      *   query: array<string>,
-     *   numer: array<int>,
+     *   number: array<int>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->query = $values['query'];
-        $this->numer = $values['numer'];
+        $this->number = $values['number'];
     }
 }

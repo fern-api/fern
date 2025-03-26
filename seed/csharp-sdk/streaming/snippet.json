@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_dummy.generate-stream"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_dummy.generate"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });\n"
             }
         }

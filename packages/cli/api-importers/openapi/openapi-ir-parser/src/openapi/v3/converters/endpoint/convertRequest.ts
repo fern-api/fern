@@ -104,26 +104,6 @@ export function convertRequest({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
-    // convert as application/x-www-form-urlencoded
-    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
-        const convertedUrlEncodedSchema = convertSchema(
-            urlEncodedRequest.schema,
-            false,
-            context,
-            requestBreadcrumbs,
-            source,
-            namespace
-        );
-        return RequestWithExample.json({
-            schema: convertedUrlEncodedSchema,
-            description: resolvedRequestBody.description,
-            contentType: urlEncodedRequest.contentType,
-            source,
-            fullExamples: urlEncodedRequest.examples,
-            additionalProperties: false
-        });
-    }
-
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
         return RequestWithExample.octetStream({
@@ -161,10 +141,12 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
+                        schema: MultipartSchema.file({ isOptional: false, isArray: false, description: undefined }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -177,10 +159,16 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: false,
+                            description: property.schema.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -193,10 +181,16 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
+                        schema: MultipartSchema.file({
+                            isOptional: false,
+                            isArray: true,
+                            description: property.schema.value.description
+                        }),
                         description: property.schema.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -210,19 +204,29 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: true,
+                            description: property.schema.value.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
 
+                const contentType =
+                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
-                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
+                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                    encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
                 });
             }
         }
@@ -238,29 +242,49 @@ export function convertRequest({
         });
     }
 
-    // otherwise, convert as json request.
-    if (jsonMediaObject == null) {
-        return undefined;
+    // convert as application/json
+    if (jsonMediaObject != null) {
+        const requestSchema = convertSchema(
+            jsonMediaObject.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace,
+            true
+        );
+        return RequestWithExample.json({
+            description: undefined,
+            schema: requestSchema,
+            contentType: jsonMediaObject.contentType,
+            fullExamples: jsonMediaObject.examples,
+            additionalProperties:
+                !isReferenceObject(jsonMediaObject.schema) &&
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+            source
+        });
     }
-    const requestSchema = convertSchema(
-        jsonMediaObject.schema,
-        false,
-        context,
-        requestBreadcrumbs,
-        source,
-        namespace,
-        true
-    );
-    return RequestWithExample.json({
-        description: undefined,
-        schema: requestSchema,
-        contentType: jsonMediaObject.contentType,
-        fullExamples: jsonMediaObject.examples,
-        additionalProperties:
-            !isReferenceObject(jsonMediaObject.schema) &&
-            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
-        source
-    });
+
+    // convert as application/x-www-form-urlencoded
+    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
+        const convertedUrlEncodedSchema = convertSchema(
+            urlEncodedRequest.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
+        );
+        return RequestWithExample.json({
+            schema: convertedUrlEncodedSchema,
+            description: resolvedRequestBody.description,
+            contentType: urlEncodedRequest.contentType,
+            source,
+            fullExamples: urlEncodedRequest.examples,
+            additionalProperties: false
+        });
+    }
+    return undefined;
 }
 
 interface ResolvedSchema {

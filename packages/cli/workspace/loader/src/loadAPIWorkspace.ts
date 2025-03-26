@@ -34,10 +34,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                 : undefined;
         if (definition.schema.type === "protobuf") {
-            const absoluteFilepathToProtobufRoot = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.root)
-            );
+            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
+            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -69,14 +67,16 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget,
                 absoluteFilepathToOverrides,
+                relativeFilepathToProtobufRoot,
                 generateLocally: definition.schema.localGeneration,
                 settings: {
                     audiences: definition.audiences ?? [],
                     useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                    cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                    coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
                     respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
@@ -87,7 +87,9 @@ export async function loadSingleNamespaceAPIWorkspace({
                     preserveSchemaIds: false,
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                     filter: definition.settings?.filter,
-                    exampleGeneration: undefined
+                    exampleGeneration: undefined,
+                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false
                 }
             });
             continue;
@@ -126,8 +128,9 @@ export async function loadSingleNamespaceAPIWorkspace({
                 useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
                 respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
@@ -138,7 +141,9 @@ export async function loadSingleNamespaceAPIWorkspace({
                 preserveSchemaIds: false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
-                exampleGeneration: definition.settings?.exampleGeneration
+                exampleGeneration: definition.settings?.exampleGeneration,
+                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false
             },
             source: {
                 type: "openapi",

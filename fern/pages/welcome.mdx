@@ -1,10 +1,110 @@
 ---
 title: The Fern Platform
 description: Input OpenAPI. Output SDKs and Docs.
-slug: home
+slug: /
 layout: overview
 hide-toc: true
 ---
+
+<style>
+{`
+  .background-wrapper {
+    filter: blur(13.5rem);
+    will-change: transform, filter;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    z-index: -1;
+    width: 100%;
+    max-width: 86rem;
+    display: flex;
+    position: fixed;
+    inset: 0%;
+    margin-right: auto;
+    margin-left: auto;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+  }
+
+  .gradient-radial.is-green {
+    background-color: #dbfdd3;
+  }
+
+  .gradient-radial.is-blue {
+    background-color: #a7bff7;
+  }
+
+  :is(.dark) .gradient-radial.is-green {
+    background-color: #17450A;
+  }
+
+  :is(.dark) .gradient-radial.is-blue {
+    background-color: #1E2E5A;
+  }
+
+
+  .gradient-radial {
+    will-change: transform;
+    transform-style: preserve-3d;
+    border-radius: 50%;
+    width: 12rem;
+    height: 19rem;
+    display: block;
+    position: absolute;
+    transform: translateZ(0);
+  }
+
+  .gradient-radial.hero-1 {
+    transform-style: preserve-3d;
+    transform: rotate(-34deg)scale(1.4,.5)
+    position: absolute;
+    top: 54%;
+    left: 0%;
+  }
+
+  .gradient-radial.hero-2 {
+    transform-style: preserve-3d;
+    transform: rotate(-74deg)scale(1.7,1.1);
+    position: absolute;
+    top: 40%;
+    left: -2%;
+  }
+
+  .gradient-radial.hero-3 {
+    transform-style: preserve-3d;
+    transform: rotate(-20deg)scaleY(1.4)
+    position: absolute;
+    top: 20%;
+    left: 8%;
+  }
+
+  .gradient-radial.hero-4 {
+    transform-style: preserve-3d;
+    transform: rotate(37deg)scale(1.1,1.5)
+    position: absolute;
+    top: 37%;
+    right: 11%;
+  }
+
+  .gradient-radial.hero-5 {
+    transform-style: preserve-3d;
+    transform: rotate(37deg)scale(.9,1.8)
+    position: absolute;
+    top: 52%;
+    right: -7%;
+  }
+
+`}
+</style>
+
+<div className="background-wrapper">
+  <div className="gradient-radial hero-1 is-green"> </div>
+  <div className="gradient-radial hero-2 is-blue"> </div>
+  <div className="gradient-radial hero-3 is-green"> </div>
+  <div className="gradient-radial hero-4 is-blue"> </div>
+  <div className="gradient-radial hero-5 is-blue"> </div>
+</div>
 
 Fern allows developers to instantly transform your OpenAPI into SDKs and Docs. Engineering teams build with Fern to offer a best-in-class developer experience.
 

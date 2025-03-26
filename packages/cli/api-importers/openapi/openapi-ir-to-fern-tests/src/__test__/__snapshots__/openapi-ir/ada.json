@@ -7,6 +7,7 @@
       "description": "The subdomain of the client"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "End Users API": {
@@ -64,6 +65,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -344,7 +346,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific end user",
       "authed": true,
       "method": "GET",
@@ -641,6 +643,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1059,7 +1062,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update an end user. Request data is limited to 4KB in size total.",
       "authed": true,
       "method": "PATCH",
@@ -1458,6 +1461,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1738,7 +1742,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get multiple end users",
       "authed": true,
       "method": "GET",
@@ -2006,7 +2010,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "EndUser": {

@@ -13,7 +13,7 @@ type CreateUserRequest struct {
 	// This name is unique to each user.
 	Name string `json:"name" url:"-"`
 	// The age of the user.
-	// This propery is not required.
+	// This property is not required.
 	Age *int `json:"age,omitempty" url:"-"`
 }
 

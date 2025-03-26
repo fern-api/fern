@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v57.1.0] - 2024-03-05
+
+- Feature: File properties can now support descriptions.
+
+## [v57.0.0] - 2024-03-03
+
+- Feature: The IR now supports the full generator-exec config.
+- Feature: The Dynamic IR now supports the generator config, OAuth, additional properties, and root path parameters.
+
+## [v56.0.0] - 2024-02-28
+
+- Feature: Add custom pagination schema
+
+## [v55.4.0] - 2024-02-26
+
+- Feature: ObjectProperty declarations now contain an optional `propertyAccess` field (i.e. for `readOnly` or `writeOnly` properties).
+
+## [v55.3.0] - 2024-02-19
+
+- Feature: The Dynamic IR now supports optional list of examples in each enpdoint.
+
+## [v55.2.0] - 2024-02-18
+
+- Feature: Add support for configuring a websocket channel URL.
+
+## [v55.1.0] - 2024-02-18
+
+- Feature: Support form encoding in multipart requests.
+
 ## [v55.0.0] - 2024-01-13
 
 - Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.
@@ -16,8 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v54.0.0] - 2024-12-11
 
-- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages - 
-  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case. 
+- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages -
+  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case.
 
 ## [v53.24.0] - 2024-11-04
 
@@ -32,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Redacted: Use v53.23.0 instead.
 - Internal: Add the `dynamic` property to the IR. This should be
-  made requried in IRv54.
+  made required in IRv54.
 
 ## [v53.21.0] - 2024-11-04
 

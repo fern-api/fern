@@ -8,6 +8,7 @@
       "name": "Default"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -56,10 +57,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a deployment given its ID or name.\n",
       "authed": true,
       "method": "GET",
@@ -274,10 +276,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCreates a new document index.",
       "authed": true,
       "method": "POST",
@@ -1049,10 +1052,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to list documents. Optionally filter on supported fields.\n",
       "authed": true,
       "method": "GET",
@@ -1237,10 +1241,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [
+      "servers": [
         {
           "url": "https://predict.vellum.ai",
           "name": "Predict"
@@ -1262,40 +1267,26 @@
                   {
                     "value": {
                       "value": {
-                        "type": {
-                          "value": {
-                            "value": "CHAT_HISTORY",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "name": {
                           "value": {
-                            "value": "inputs",
+                            "value": "name",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "value": {
-                          "value": [
-                            {
-                              "properties": {
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "role": {
-                                  "value": "SYSTEM",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": {
+                          "value": {
+                            "value": "STRING",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         }
                       },
                       "type": "discriminated"
@@ -1314,23 +1305,16 @@
               {
                 "value": {
                   "value": {
-                    "type": {
-                      "value": {
-                        "value": "NODE",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "run_id": {
                       "value": {
-                        "value": "string",
+                        "value": "run_id",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "external_id": {
                       "value": {
-                        "value": "string",
+                        "value": "external_id",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -1340,20 +1324,6 @@
                         "id": {
                           "value": {
                             "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "node_id": {
-                          "value": {
-                            "value": "node_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "node_result_id": {
-                          "value": {
-                            "value": "node_result_id",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1369,63 +1339,47 @@
                           },
                           "type": "primitive"
                         },
-                        "data": {
+                        "output": {
                           "value": {
                             "value": {
-                              "type": {
+                              "name": {
                                 "value": {
-                                  "value": "TERMINAL",
+                                  "value": "name",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "data": {
-                                "properties": {
-                                  "output": {
-                                    "value": {
-                                      "value": {
-                                        "type": {
-                                          "value": {
-                                            "value": "CHAT_HISTORY",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
-                                        "name": {
-                                          "value": {
-                                            "value": "output",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
-                                        "value": {
-                                          "value": [
-                                            {
-                                              "properties": {
-                                                "text": {
-                                                  "value": {
-                                                    "value": "text",
-                                                    "type": "string"
-                                                  },
-                                                  "type": "primitive"
-                                                },
-                                                "role": {
-                                                  "value": "SYSTEM",
-                                                  "type": "enum"
-                                                }
-                                              },
-                                              "type": "object"
-                                            }
-                                          ],
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "discriminated"
-                                    },
-                                    "type": "oneOf"
-                                  }
+                              "state": {
+                                "value": "INITIATED",
+                                "type": "enum"
+                              },
+                              "node_id": {
+                                "value": {
+                                  "value": "node_id",
+                                  "type": "string"
                                 },
-                                "type": "object"
+                                "type": "primitive"
+                              },
+                              "delta": {
+                                "value": {
+                                  "value": "delta",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": {
+                                "value": {
+                                  "value": "STRING",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -1450,6 +1404,13 @@
                         }
                       },
                       "type": "object"
+                    },
+                    "type": {
+                      "value": {
+                        "value": "WORKFLOW",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -1513,6 +1474,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1649,7 +1611,7 @@
           ]
         }
       },
-      "server": [
+      "servers": [
         {
           "url": "https://predict.vellum.ai",
           "name": "Predict"
@@ -1820,6 +1782,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {
@@ -1956,7 +1919,7 @@
           ]
         }
       },
-      "server": [
+      "servers": [
         {
           "url": "https://predict.vellum.ai",
           "name": "Predict"
@@ -2133,10 +2096,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a model version given its ID.\n",
       "authed": true,
       "method": "GET",
@@ -2454,10 +2418,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCompiles the prompt backing the model version using the provided input values.",
       "authed": true,
       "method": "POST",
@@ -2585,6 +2550,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2622,7 +2588,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
       "authed": true,
       "method": "POST",
@@ -2987,10 +2953,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
       "authed": true,
       "method": "POST",
@@ -3394,7 +3361,7 @@
       "headers": [],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "authed": true,
       "method": "DELETE",
@@ -3479,6 +3446,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3582,7 +3550,7 @@
           ]
         }
       },
-      "server": [
+      "servers": [
         {
           "url": "https://predict.vellum.ai",
           "name": "Predict"
@@ -3811,7 +3779,7 @@
           ]
         }
       },
-      "server": [
+      "servers": [
         {
           "url": "https://predict.vellum.ai",
           "name": "Predict"
@@ -3912,10 +3880,11 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
       "authed": true,
       "method": "POST",
@@ -4075,7 +4044,7 @@
       "headers": [],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
       "authed": true,
       "method": "DELETE",
@@ -4210,7 +4179,8 @@
               "isArray": false,
               "type": "file"
             },
-            "description": "The file contents of the document."
+            "description": "The file contents of the document.",
+            "exploded": false
           },
           {
             "key": "keywords",
@@ -4267,6 +4237,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -4370,7 +4341,7 @@
           ]
         }
       },
-      "server": [
+      "servers": [
         {
           "url": "https://documents.vellum.ai",
           "name": "Documents"
@@ -4423,7 +4394,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "BlockTypeEnum": {
@@ -4489,7 +4460,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4533,7 +4505,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4595,7 +4568,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4685,7 +4659,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -5563,7 +5538,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6405,7 +6381,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6454,7 +6431,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -6475,7 +6453,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6519,7 +6498,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6862,7 +6842,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7224,7 +7205,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -7681,7 +7663,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -7801,7 +7784,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -7817,7 +7801,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -8398,7 +8383,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8414,7 +8400,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -8818,7 +8805,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9364,7 +9352,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -9526,7 +9515,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -9848,7 +9838,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10978,7 +10969,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11008,7 +11000,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11589,7 +11582,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11633,7 +11627,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11723,7 +11718,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11791,7 +11787,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11933,7 +11930,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12268,7 +12266,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12414,7 +12413,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12524,7 +12524,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12632,7 +12633,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

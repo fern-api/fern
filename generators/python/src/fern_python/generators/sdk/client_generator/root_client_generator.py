@@ -361,7 +361,7 @@ class RootClientGenerator:
                     docs=environment_docs,
                 ),
             )
-        # If mutli url environment present, client should provide only environment argument
+        # If multi url environment present, client should provide only environment argument
         elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
             default_environment = (
                 AST.Expression(
@@ -425,7 +425,7 @@ class RootClientGenerator:
                     else None,
                     validation_check=AST.Expression(
                         AST.CodeWriter(
-                            self._get_paramter_validation_writer(
+                            self._get_parameter_validation_writer(
                                 param_name=param.constructor_parameter_name,
                                 environment_variable=param.environment_variable,
                             )
@@ -461,7 +461,7 @@ class RootClientGenerator:
                         else None,
                         validation_check=AST.Expression(
                             AST.CodeWriter(
-                                self._get_paramter_validation_writer(
+                                self._get_parameter_validation_writer(
                                     param_name="client_id",
                                     environment_variable=oauth.client_id_env_var,
                                 )
@@ -494,7 +494,7 @@ class RootClientGenerator:
                         else None,
                         validation_check=AST.Expression(
                             AST.CodeWriter(
-                                self._get_paramter_validation_writer(
+                                self._get_parameter_validation_writer(
                                     param_name="client_secret",
                                     environment_variable=oauth.client_secret_env_var,
                                 )
@@ -560,7 +560,7 @@ class RootClientGenerator:
     def _environment_is_enum(self) -> bool:
         return self._context.ir.environments is not None
 
-    def _get_paramter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
+    def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if {param_name} is None:")
             writer.indent()
@@ -592,7 +592,9 @@ class RootClientGenerator:
                             left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
                             if isinstance(self._context.custom_config.timeout_in_seconds, int)
                             else AST.Expression(AST.TypeHint.none()),
-                            right=AST.Expression("None"),
+                            right=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}.timeout.read"
+                            ),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
                             ),

@@ -1,13 +1,11 @@
 using SeedTrace.Core;
 using SeedTrace.V2;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public partial class SeedTraceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedTraceClient(
         string token,
@@ -18,6 +16,7 @@ public partial class SeedTraceClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Random-Header", xRandomHeader },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedTrace" },
