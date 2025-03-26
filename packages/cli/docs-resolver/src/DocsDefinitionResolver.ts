@@ -364,6 +364,13 @@ export class DocsDefinitionResolver {
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const root = await this.toRootNode();
         const config: DocsV1Write.DocsConfig = {
+            aiChatConfig:
+                this.parsedDocsConfig.aiChatConfig != null
+                    ? {
+                          model: this.parsedDocsConfig.aiChatConfig.model,
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                      }
+                    : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
@@ -680,13 +687,15 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenRPC document");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 apiName: item.apiName,
                 snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 undefined,
                 this.docsWorkspace,
@@ -707,13 +716,15 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 workspace,
                 this.docsWorkspace,
