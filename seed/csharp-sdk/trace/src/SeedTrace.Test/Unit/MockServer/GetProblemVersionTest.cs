@@ -7,7 +7,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetProblemVersionTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -327,8 +327,7 @@ public class GetProblemVersionTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
     }
 }

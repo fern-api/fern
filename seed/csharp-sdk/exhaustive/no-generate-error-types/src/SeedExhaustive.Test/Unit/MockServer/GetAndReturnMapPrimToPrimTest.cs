@@ -44,7 +44,7 @@ public class GetAndReturnMapPrimToPrimTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, string>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

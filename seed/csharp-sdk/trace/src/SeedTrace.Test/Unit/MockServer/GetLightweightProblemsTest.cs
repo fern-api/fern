@@ -7,7 +7,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetLightweightProblemsTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -55,7 +55,7 @@ public class GetLightweightProblemsTest : BaseMockServerTest
             Is.EqualTo(
                     JsonUtils.Deserialize<IEnumerable<V2.V3.LightweightProblemInfoV2>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

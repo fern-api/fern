@@ -47,7 +47,9 @@ class SeedAliasExtends:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -59,7 +61,11 @@ class SeedAliasExtends:
         )
 
     def extended_inline_request_body(
-        self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        child: str,
+        parent: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -140,7 +146,9 @@ class AsyncSeedAliasExtends:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -152,7 +160,11 @@ class AsyncSeedAliasExtends:
         )
 
     async def extended_inline_request_body(
-        self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        child: str,
+        parent: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters

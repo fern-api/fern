@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
@@ -35,14 +35,13 @@ public class UserTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<User>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "userName": "username",
               "metadata_tags": [
@@ -55,7 +54,7 @@ public class UserTest
               }
             }
             """;
-        var obj = new User
+        var actualObj = new User
         {
             UserName = "username",
             MetadataTags = new List<string>() { "tag1", "tag2" },
@@ -65,8 +64,8 @@ public class UserTest
                 { "baz", "qux" },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

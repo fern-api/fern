@@ -1463,6 +1463,16 @@
             }
           ]
         },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default-form-parameter-encoding": {
           "oneOf": [
             {

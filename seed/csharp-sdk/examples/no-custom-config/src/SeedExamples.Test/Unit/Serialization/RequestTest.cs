@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -8,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class RequestTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -18,21 +18,20 @@ public class RequestTest
             """;
         var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
         var deserializedObject = JsonUtils.Deserialize<Request>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "request": {}
             }
             """;
-        var obj = new Request { Request_ = new Dictionary<object, object?>() { } };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualObj = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -8,7 +8,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetAttemptedMigrationsTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -45,8 +45,7 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse)).UsingDefaults()
         );
     }
 }

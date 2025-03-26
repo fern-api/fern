@@ -12,11 +12,6 @@ public record FetchRequest
     [JsonIgnore]
     public string? Namespace { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the FetchRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -32,5 +27,11 @@ public record FetchRequest
             result.Namespace = Namespace ?? "";
         }
         return result;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

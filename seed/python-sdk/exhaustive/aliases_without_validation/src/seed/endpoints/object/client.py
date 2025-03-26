@@ -11,8 +11,12 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
-from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
-from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+from ...types.object.types.nested_object_with_optional_field import (
+    NestedObjectWithOptionalField,
+)
+from ...types.object.types.nested_object_with_required_field import (
+    NestedObjectWithRequiredField,
+)
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -198,7 +202,10 @@ class ObjectClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_with_map_of_map(
-        self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        map_: typing.Dict[str, typing.Dict[str, str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithMapOfMap:
         """
         Parameters
@@ -716,7 +723,10 @@ class AsyncObjectClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_with_map_of_map(
-        self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        map_: typing.Dict[str, typing.Dict[str, str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithMapOfMap:
         """
         Parameters

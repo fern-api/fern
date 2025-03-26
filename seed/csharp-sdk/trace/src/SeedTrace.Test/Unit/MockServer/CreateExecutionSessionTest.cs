@@ -8,7 +8,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class CreateExecutionSessionTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -41,7 +41,7 @@ public class CreateExecutionSessionTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

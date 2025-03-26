@@ -44,8 +44,7 @@ public class GetAndReturnWithRequiredFieldTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField>(mockResponse)).UsingDefaults()
         );
     }
 }

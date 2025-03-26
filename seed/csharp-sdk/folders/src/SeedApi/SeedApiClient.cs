@@ -39,11 +39,9 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; init; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.FooAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

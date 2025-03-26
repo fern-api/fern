@@ -11,7 +11,9 @@ import pydantic
 from ....commons.types.list_type import ListType
 from ....commons.types.map_type import MapType
 from .parameter import Parameter
-from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+from .function_implementation_for_multiple_languages import (
+    FunctionImplementationForMultipleLanguages,
+)
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):

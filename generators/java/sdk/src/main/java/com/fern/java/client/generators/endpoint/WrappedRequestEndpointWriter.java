@@ -140,7 +140,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
             }
         } else {
-            if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
             } else {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
@@ -369,13 +370,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName =
-                        WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(fileProperty);
+                        WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
+                                clientGeneratorContext, fileProperty);
                 if (fileProperty.visit(new FilePropertyIsOptional())) {
                     requestBodyCodeBlock
-                            .beginControlFlow(
-                                    "if ($N.isPresent())",
-                                    WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
-                                            fileProperty))
+                            .beginControlFlow("if ($N.isPresent())", filePropertyParameterName)
                             .addStatement(
                                     "String $L = $T.probeContentType($L.get().toPath())",
                                     mimeTypeVariableName,
@@ -415,12 +414,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L))",
                                     variables.getMultipartBodyPropertiesName(),
                                     filePropertyKey.getWireValue(),
-                                    WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
-                                            fileProperty),
+                                    filePropertyParameterName,
                                     RequestBody.class,
                                     mediaTypeVariableName,
-                                    WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
-                                            fileProperty));
+                                    filePropertyParameterName);
                 }
             }
         }

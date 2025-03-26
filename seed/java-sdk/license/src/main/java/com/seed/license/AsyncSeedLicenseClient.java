@@ -72,7 +72,7 @@ public class AsyncSeedLicenseClient {
         return future;
     }
 
-    public static SeedLicenseClientBuilder builder() {
-        return new SeedLicenseClientBuilder();
+    public static AsyncSeedLicenseClientBuilder builder() {
+        return new AsyncSeedLicenseClientBuilder();
     }
 }

@@ -31,11 +31,9 @@ public partial class SeedAliasClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync("typeId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetAsync(
         string typeId,
         RequestOptions? options = null,
@@ -48,7 +46,7 @@ public partial class SeedAliasClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{JsonUtils.SerializeAsString(typeId)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
                     Options = options,
                 },
                 cancellationToken

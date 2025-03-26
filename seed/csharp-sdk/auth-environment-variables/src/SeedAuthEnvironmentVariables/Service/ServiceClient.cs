@@ -17,11 +17,9 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetWithApiKeyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithApiKeyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -68,13 +66,11 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetWithHeaderAsync(
     ///     new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithHeaderAsync(
         HeaderAuthRequest request,
         RequestOptions? options = null,

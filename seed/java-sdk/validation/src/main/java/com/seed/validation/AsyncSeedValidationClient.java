@@ -141,7 +141,7 @@ public class AsyncSeedValidationClient {
         return future;
     }
 
-    public static SeedValidationClientBuilder builder() {
-        return new SeedValidationClientBuilder();
+    public static AsyncSeedValidationClientBuilder builder() {
+        return new AsyncSeedValidationClientBuilder();
     }
 }

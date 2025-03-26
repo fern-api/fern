@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -8,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class MovieTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -59,14 +59,13 @@ public class MovieTest
             Revenue = 1000000,
         };
         var deserializedObject = JsonUtils.Deserialize<Movie>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "id": "movie-c06a4ad7",
               "prequel": "movie-cv9b914f",
@@ -90,7 +89,7 @@ public class MovieTest
               "revenue": 1000000
             }
             """;
-        var obj = new Movie
+        var actualObj = new Movie
         {
             Id = "movie-c06a4ad7",
             Prequel = "movie-cv9b914f",
@@ -113,8 +112,8 @@ public class MovieTest
             },
             Revenue = 1000000,
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

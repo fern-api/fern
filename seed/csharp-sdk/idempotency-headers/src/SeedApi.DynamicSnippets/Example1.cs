@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedIdempotencyHeaders;
-using SeedIdempotencyHeaders.Core;
 
 namespace Usage;
 

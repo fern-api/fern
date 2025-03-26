@@ -3,27 +3,52 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic } from "@fern-api/ir-sdk";
 import { NopSourceResolver } from "@fern-api/source-resolver";
 
-import { Spec } from "./Spec";
+import { OpenAPISpec } from "./Spec";
 import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
 import { createTaskContext } from "./utils/createTaskContext";
 
 export function generateDynamicIR({
     spec,
     language,
-    generatorsConfiguration,
     audiences,
     keywords,
-    smartCasing
+    smartCasing,
+    disableDynamicExamples
 }: {
-    spec: Spec;
+    spec: OpenAPISpec;
     language: generatorsYml.GenerationLanguage;
-    generatorsConfiguration?: generatorsYml.GeneratorsConfiguration;
     audiences?: Audiences;
     keywords?: string[];
     smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
+}): dynamic.DynamicIntermediateRepresentation {
+    return generateDynamicIRFromOpenAPI({
+        spec,
+        language,
+        audiences,
+        keywords,
+        smartCasing,
+        disableDynamicExamples
+    });
+}
+
+function generateDynamicIRFromOpenAPI({
+    spec,
+    language,
+    audiences,
+    keywords,
+    smartCasing,
+    disableDynamicExamples
+}: {
+    spec: OpenAPISpec;
+    language: generatorsYml.GenerationLanguage;
+    audiences?: Audiences;
+    keywords?: string[];
+    smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
 }): dynamic.DynamicIntermediateRepresentation {
     const context = createTaskContext();
-    const workspace = convertSpecToWorkspace({ context, spec, generatorsConfiguration });
+    const workspace = convertSpecToWorkspace({ context, spec });
     const ir = generateIntermediateRepresentation({
         context,
         workspace,
@@ -33,6 +58,7 @@ export function generateDynamicIR({
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
         exampleGeneration: { disabled: true },
+        disableDynamicExamples,
         version: undefined,
         packageName: undefined,
         readme: undefined

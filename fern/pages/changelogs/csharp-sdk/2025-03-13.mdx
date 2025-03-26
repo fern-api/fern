@@ -1,0 +1,20 @@
+## 1.13.0
+**`(feat):`** Add support for multipartform requests with file and non-file parameters.
+This is useful when you want to send a file along with other form data in a single request.
+
+For example, you can use the following code to upload a file with a description and some metadata:
+```csharp
+await client.UploadAsync(
+    new UploadRequest
+    {
+        File = new FileParameter { Stream = fileStream, FileName = "file.txt" },
+        Description = "This is a test file",
+        Meta = new Meta {
+            Key1 = "value1",
+            Key2 = "value2"
+        }
+    }
+);
+```
+
+

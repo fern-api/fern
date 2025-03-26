@@ -22,7 +22,7 @@ public class AsyncSeedVariablesClient {
         return this.serviceClient.get();
     }
 
-    public static SeedVariablesClientBuilder builder() {
-        return new SeedVariablesClientBuilder();
+    public static AsyncSeedVariablesClientBuilder builder() {
+        return new AsyncSeedVariablesClientBuilder();
     }
 }

@@ -15,6 +15,7 @@ export declare namespace BaseOpenAPIWorkspace {
         respectReadonlySchemas: boolean | undefined;
         respectNullableSchemas: boolean | undefined;
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+        useBytesForBinaryResponse: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -27,6 +28,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public respectReadonlySchemas: boolean | undefined;
     public respectNullableSchemas: boolean | undefined;
     public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    public useBytesForBinaryResponse: boolean | undefined;
 
     private converter: FernDefinitionConverter;
 
@@ -38,6 +40,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.respectNullableSchemas = args.respectNullableSchemas;
         this.exampleGeneration = args.exampleGeneration;
+        this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -98,6 +101,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public objectQueryParameters: boolean | undefined;
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
+    public useBytesForBinaryResponse: boolean | undefined;
 
     private converter: FernDefinitionConverter;
 
@@ -107,6 +111,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.objectQueryParameters = args.objectQueryParameters;
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
+        this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.converter = new FernDefinitionConverter(args);
     }
 

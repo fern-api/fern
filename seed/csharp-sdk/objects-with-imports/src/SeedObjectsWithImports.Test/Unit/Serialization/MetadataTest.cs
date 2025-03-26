@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
@@ -26,14 +26,13 @@ public class MetadataTest
             Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
         };
         var deserializedObject = JsonUtils.Deserialize<Metadata>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "id": "metadata-js8dg24b",
               "data": {
@@ -42,13 +41,13 @@ public class MetadataTest
               }
             }
             """;
-        var obj = new Metadata
+        var actualObj = new Metadata
         {
             Id = "metadata-js8dg24b",
             Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

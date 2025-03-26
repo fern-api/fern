@@ -30,7 +30,7 @@ public class AsyncSeedAnyAuthClient {
         return this.userClient.get();
     }
 
-    public static SeedAnyAuthClientBuilder builder() {
-        return new SeedAnyAuthClientBuilder();
+    public static AsyncSeedAnyAuthClientBuilder builder() {
+        return new AsyncSeedAnyAuthClientBuilder();
     }
 }

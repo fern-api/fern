@@ -8,7 +8,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetNumWarmInstancesTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -35,7 +35,7 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Dictionary<Language, int>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

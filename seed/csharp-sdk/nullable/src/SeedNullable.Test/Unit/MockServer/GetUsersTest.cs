@@ -15,6 +15,7 @@ public class GetUsersTest : BaseMockServerTest
             [
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -23,11 +24,26 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
                 }
               },
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -36,7 +52,21 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
                 }
               }
             ]
@@ -72,8 +102,7 @@ public class GetUsersTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
         );
     }
 }

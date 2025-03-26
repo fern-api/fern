@@ -1,3 +1,3 @@
 export { AstNode } from "./AstNode";
-export { DocXmlWriter } from "./DocXmlWriter";
+export { XmlDocWriter } from "./XmlDocWriter";
 export { Writer } from "./Writer";

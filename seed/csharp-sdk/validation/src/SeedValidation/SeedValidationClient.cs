@@ -31,8 +31,7 @@ public partial class SeedValidationClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateAsync(
     ///     new CreateRequest
     ///     {
@@ -42,8 +41,7 @@ public partial class SeedValidationClient
     ///         Shape = Shape.Square,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> CreateAsync(
         CreateRequest request,
         RequestOptions? options = null,
@@ -86,8 +84,7 @@ public partial class SeedValidationClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync(
     ///     new GetRequest
     ///     {
@@ -96,8 +93,7 @@ public partial class SeedValidationClient
     ///         Name = "foo",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> GetAsync(
         GetRequest request,
         RequestOptions? options = null,

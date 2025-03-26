@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -8,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class TreeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -32,14 +32,13 @@ public class TreeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Tree>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "nodes": [
                 {
@@ -51,7 +50,7 @@ public class TreeTest
               ]
             }
             """;
-        var obj = new Tree
+        var actualObj = new Tree
         {
             Nodes = new List<Node>()
             {
@@ -59,8 +58,8 @@ public class TreeTest
                 new Node { Name = "right" },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

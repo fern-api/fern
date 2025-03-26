@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExtends;
 using SeedExtends.Core;
@@ -23,26 +23,25 @@ public class JsonTest
             Raw = "{\"docs\": true, \"json\": true}",
         };
         var deserializedObject = JsonUtils.Deserialize<Json>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "docs": "Types extend this type to include a docs and json property.",
               "raw": "{\"docs\": true, \"json\": true}"
             }
             """;
-        var obj = new Json
+        var actualObj = new Json
         {
             Docs = "Types extend this type to include a docs and json property.",
             Raw = "{\"docs\": true, \"json\": true}",
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

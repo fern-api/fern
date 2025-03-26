@@ -13,11 +13,6 @@ public record DescribeRequest
     [JsonPropertyName("after")]
     public DateTime? After { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the DescribeRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -33,5 +28,11 @@ public record DescribeRequest
             result.After = WellKnownProto.Timestamp.FromDateTime(After.Value.ToUniversalTime());
         }
         return result;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

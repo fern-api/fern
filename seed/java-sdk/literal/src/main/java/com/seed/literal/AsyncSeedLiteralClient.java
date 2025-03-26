@@ -54,7 +54,7 @@ public class AsyncSeedLiteralClient {
         return this.referenceClient.get();
     }
 
-    public static SeedLiteralClientBuilder builder() {
-        return new SeedLiteralClientBuilder();
+    public static AsyncSeedLiteralClientBuilder builder() {
+        return new AsyncSeedLiteralClientBuilder();
     }
 }

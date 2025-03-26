@@ -1,7 +1,9 @@
 import { camelCase, upperFirst } from "lodash-es";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
+import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -49,6 +51,8 @@ export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+    public readonly formatter: AbstractFormatter;
+    public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
@@ -59,6 +63,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+        this.formatter = new CsharpFormatter();
+        this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
@@ -66,6 +72,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             readmeConfigBuilder: new ReadmeConfigBuilder()
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+    }
+
+    public getAdditionalQueryParametersType(): csharp.Type {
+        return csharp.Type.list(
+            csharp.Type.reference(
+                this.getKeyValuePairsClassReference({
+                    key: csharp.Type.string(),
+                    value: csharp.Type.string()
+                })
+            )
+        );
+    }
+
+    public getAdditionalBodyPropertiesType(): csharp.Type {
+        return csharp.Type.optional(csharp.Type.object());
     }
 
     /**
@@ -160,6 +181,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         const files = [
             AsIsFiles.Constants,
             AsIsFiles.Extensions,
+            AsIsFiles.FormUrlEncoder,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
@@ -169,7 +191,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Json.JsonAccessAttribute,
             AsIsFiles.Json.JsonConfiguration,
             AsIsFiles.Json.OneOfSerializer,
-            AsIsFiles.RawClient
+            AsIsFiles.QueryStringConverter,
+            AsIsFiles.RawClient,
+            AsIsFiles.ValueConvert
         ];
         if (this.includeExceptionHandler()) {
             files.push(AsIsFiles.ExceptionHandler);
@@ -181,7 +205,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
         }
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.Json.StringEnumSerializer);
@@ -205,9 +229,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
-            AsIsFiles.Test.RawClientTests
+            AsIsFiles.Test.QueryStringConverterTests,
+            AsIsFiles.Test.RawClientTests.AdditionalHeadersTests,
+            AsIsFiles.Test.RawClientTests.AdditionalParametersTests,
+            AsIsFiles.Test.RawClientTests.MultipartFormTests,
+            AsIsFiles.Test.RawClientTests.RetriesTests
         ];
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.Test.Json.EnumSerializerTests);
@@ -220,10 +248,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getPublicCoreAsIsFiles(): string[] {
+        const files = [AsIsFiles.FileParameter];
         if (this.hasGrpcEndpoints()) {
-            return [AsIsFiles.GrpcRequestOptions];
+            files.push(AsIsFiles.GrpcRequestOptions);
         }
-        return [];
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {
@@ -231,7 +260,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsTestUtils(): string[] {
-        return [];
+        return Object.values(AsIsFiles.Test.Utils);
     }
 
     public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {
@@ -584,12 +613,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         stepType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        offsetType: csharp.Type;
-        stepType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        offsetType: csharp.Type | csharp.TypeParameter;
+        stepType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -605,11 +634,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         cursorType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        cursorType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        cursorType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),

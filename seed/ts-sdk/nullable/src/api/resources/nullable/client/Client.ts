@@ -147,7 +147,10 @@ export class Nullable {
      *             createdAt: "2024-01-15T09:30:00Z",
      *             updatedAt: "2024-01-15T09:30:00Z",
      *             avatar: "avatar",
-     *             activated: true
+     *             activated: true,
+     *             status: {
+     *                 type: "active"
+     *             }
      *         },
      *         avatar: "avatar"
      *     })

@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
@@ -27,14 +27,13 @@ public class TypeTest
             Shape = Shape.Square,
         };
         var deserializedObject = JsonUtils.Deserialize<Type>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "decimal": 1.1,
               "even": 2,
@@ -42,15 +41,15 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        var obj = new Type
+        var actualObj = new Type
         {
             Decimal = 1.1,
             Even = 2,
             Name = "rules",
             Shape = Shape.Square,
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

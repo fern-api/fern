@@ -14,11 +14,9 @@ public partial class OrganizationsClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Organization> GetOrganizationAsync(
         string tenantId,
         string organizationId,
@@ -32,8 +30,11 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -62,8 +63,7 @@ public partial class OrganizationsClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.GetOrganizationUserAsync(
     ///     new GetOrganizationUserRequest
     ///     {
@@ -72,8 +72,7 @@ public partial class OrganizationsClient
     ///         UserId = "user_id",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetOrganizationUserAsync(
         GetOrganizationUserRequest request,
         RequestOptions? options = null,
@@ -86,8 +85,12 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(request.TenantId)}/organizations/{JsonUtils.SerializeAsString(request.OrganizationId)}/users/{JsonUtils.SerializeAsString(request.UserId)}",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/users/{2}",
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.OrganizationId),
+                        ValueConvert.ToPathParameterString(request.UserId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -116,15 +119,13 @@ public partial class OrganizationsClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organizations.SearchOrganizationsAsync(
     ///     "tenant_id",
     ///     "organization_id",
     ///     new SearchOrganizationsRequest { Limit = 1 }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(
         string tenantId,
         string organizationId,
@@ -144,8 +145,11 @@ public partial class OrganizationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/search",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/search",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
                     Query = _query,
                     Options = options,
                 },

@@ -8,7 +8,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetPlaylistTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -40,7 +40,7 @@ public class GetPlaylistTest : BaseMockServerTest
         var response = await Client.Playlist.GetPlaylistAsync(1, "playlistId", RequestOptions);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()
         );
     }
 }

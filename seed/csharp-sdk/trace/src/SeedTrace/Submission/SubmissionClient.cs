@@ -18,11 +18,9 @@ public partial class SubmissionClient
     /// <summary>
     /// Returns sessionId and execution server URL for session. Spins up server.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Submission.CreateExecutionSessionAsync(Language.Java);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
         Language language,
         RequestOptions? options = null,
@@ -35,7 +33,10 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/sessions/create-session/{JsonUtils.SerializeAsString(language)}",
+                    Path = string.Format(
+                        "/sessions/create-session/{0}",
+                        ValueConvert.ToPathParameterString(language)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -67,11 +68,9 @@ public partial class SubmissionClient
     /// <summary>
     /// Returns execution server URL for session. Returns empty if session isn't registered.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Submission.GetExecutionSessionAsync("sessionId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
@@ -84,7 +83,10 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/sessions/{JsonUtils.SerializeAsString(sessionId)}",
+                    Path = string.Format(
+                        "/sessions/{0}",
+                        ValueConvert.ToPathParameterString(sessionId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -116,11 +118,9 @@ public partial class SubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Submission.StopExecutionSessionAsync("sessionId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task StopExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
@@ -133,7 +133,10 @@ public partial class SubmissionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/sessions/stop/{JsonUtils.SerializeAsString(sessionId)}",
+                    Path = string.Format(
+                        "/sessions/stop/{0}",
+                        ValueConvert.ToPathParameterString(sessionId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -153,11 +156,9 @@ public partial class SubmissionClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Submission.GetExecutionSessionsStateAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

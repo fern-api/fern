@@ -17,11 +17,9 @@ public partial class ImdbClient
     /// <summary>
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> CreateMovieAsync(
         CreateMovieRequest request,
         RequestOptions? options = null,
@@ -64,11 +62,9 @@ public partial class ImdbClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Imdb.GetMovieAsync("movieId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
@@ -81,7 +77,10 @@ public partial class ImdbClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
+                    Path = string.Format(
+                        "/movies/{0}",
+                        ValueConvert.ToPathParameterString(movieId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

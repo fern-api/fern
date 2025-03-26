@@ -31,11 +31,6 @@ public record UpdateRequest
     [JsonPropertyName("indexTypes")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -88,5 +83,11 @@ public record UpdateRequest
             );
         }
         return result;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

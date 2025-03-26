@@ -18,11 +18,9 @@ public partial class FolderClient
 
     public ServiceClient Service { get; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Folder.FooAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

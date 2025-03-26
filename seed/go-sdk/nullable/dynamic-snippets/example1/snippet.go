@@ -34,6 +34,9 @@ func do() () {
                 Activated: fern.Bool(
                     true,
                 ),
+                Status: &fern.Status{
+                    Active: "active",
+                },
             },
             Avatar: fern.String(
                 "avatar",

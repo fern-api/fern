@@ -18,11 +18,6 @@ public record ListRequest
     [JsonIgnore]
     public string? Namespace { get; set; }
 
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
-
     /// <summary>
     /// Maps the ListRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -46,5 +41,11 @@ public record ListRequest
             result.Namespace = Namespace ?? "";
         }
         return result;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
     }
 }

@@ -1,4 +1,49 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.4.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for raw bytes responses.
+
+- version: 4.3.21
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the default `timeout` was not being respected when a custom `httpx_client` was provided.
+
+- version: 4.3.20
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
+- version: 4.3.19
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 4.3.18
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        original parameter name internally, causing errors.
+
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
 - version: 4.3.16
   irVersion: 53
   changelogEntry:

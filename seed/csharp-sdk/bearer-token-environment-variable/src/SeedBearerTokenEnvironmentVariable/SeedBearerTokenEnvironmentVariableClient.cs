@@ -27,6 +27,10 @@ public partial class SeedBearerTokenEnvironmentVariableClient
             }
         );
         clientOptions ??= new ClientOptions();
+        if (clientOptions.Version != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.Version;
+        }
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))

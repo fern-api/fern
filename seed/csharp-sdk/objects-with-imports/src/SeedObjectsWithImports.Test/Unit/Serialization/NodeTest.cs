@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
@@ -36,14 +36,13 @@ public class NodeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization_1()
     {
-        var json = """
+        var expectedJson = """
             {
               "id": "node-8dvgfja2",
               "label": "left",
@@ -56,7 +55,7 @@ public class NodeTest
               }
             }
             """;
-        var obj = new Node
+        var actualObj = new Node
         {
             Id = "node-8dvgfja2",
             Label = "left",
@@ -66,9 +65,9 @@ public class NodeTest
                 Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
     [Test]
@@ -98,14 +97,13 @@ public class NodeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var json = """
+        var expectedJson = """
             {
               "id": "node-cwda9fi2x",
               "label": "right",
@@ -118,7 +116,7 @@ public class NodeTest
               }
             }
             """;
-        var obj = new Node
+        var actualObj = new Node
         {
             Id = "node-cwda9fi2x",
             Label = "right",
@@ -128,8 +126,8 @@ public class NodeTest
                 Data = new Dictionary<string, string>() { { "one", "two" }, { "three", "four" } },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

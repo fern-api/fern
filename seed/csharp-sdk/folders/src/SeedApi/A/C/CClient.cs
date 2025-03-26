@@ -15,11 +15,9 @@ public partial class CClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.A.C.FooAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

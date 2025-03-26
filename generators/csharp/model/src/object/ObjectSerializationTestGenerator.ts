@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -56,16 +57,8 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                             arguments_: [csharp.codeblock("json")]
                         })
                     );
-                    writer.write("var serializedJson = ");
-                    writer.writeNodeStatement(
-                        csharp.invokeMethod({
-                            on: this.context.getJsonUtilsClassReference(),
-                            method: "Serialize",
-                            arguments_: [csharp.codeblock("deserializedObject")]
-                        })
-                    );
                     writer.writeTextStatement(
-                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer())"
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
                     );
                 }),
                 isAsync: false
@@ -74,29 +67,29 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
                 body: csharp.codeblock((writer) => {
-                    writer.writeLine("var json = ");
+                    writer.writeLine("var expectedJson = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
-                    writer.write("var obj  = ");
+                    writer.write("var actualObj  = ");
                     writer.writeNodeStatement(testInput.objectInstantiationSnippet);
-                    writer.write("var objAsNode = ");
+                    writer.write("var actualElement = ");
                     writer.writeNodeStatement(
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
-                            method: "SerializeToNode",
-                            arguments_: [csharp.codeblock("obj")]
+                            method: "SerializeToElement",
+                            arguments_: [csharp.codeblock("actualObj")]
                         })
                     );
-                    writer.write("var jsonAsNode = ");
+                    writer.write("var expectedElement = ");
                     writer.writeNodeStatement(
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [csharp.Type.reference(this.context.getJsonNodeClassReference())],
-                            arguments_: [csharp.codeblock("json")]
+                            generics: [csharp.Type.reference(this.context.getJsonElementClassReference())],
+                            arguments_: [csharp.codeblock("expectedJson")]
                         })
                     );
                     writer.writeTextStatement(
-                        "Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer())"
+                        "Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer())"
                     );
                 }),
                 isAsync: false

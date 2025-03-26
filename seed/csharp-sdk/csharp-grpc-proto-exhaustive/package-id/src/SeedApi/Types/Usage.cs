@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -9,9 +10,19 @@ public record Usage
     [JsonPropertyName("units")]
     public uint? Units { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new Usage type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Usage FromProto(ProtoDataV1Grpc.Usage value)
     {
-        return JsonUtils.Serialize(this);
+        return new Usage { Units = value.Units };
     }
 
     /// <summary>
@@ -27,11 +38,9 @@ public record Usage
         return result;
     }
 
-    /// <summary>
-    /// Returns a new Usage type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static Usage FromProto(ProtoDataV1Grpc.Usage value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new Usage { Units = value.Units };
+        return JsonUtils.Serialize(this);
     }
 }

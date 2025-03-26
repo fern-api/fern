@@ -9,6 +9,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.core.SeedExhaustiveException;
+import com.seed.exhaustive.types.ReqWithHeaders;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;

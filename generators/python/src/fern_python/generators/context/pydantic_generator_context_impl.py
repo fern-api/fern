@@ -144,6 +144,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda _: None,
                 # Ignore literal defaults when the wrapping type is optional
                 optional=lambda opt: self.get_initializer_for_type_reference(opt, ignore_literals=True),
+                nullable=lambda nullable: self.get_initializer_for_type_reference(nullable, ignore_literals=True),
                 map_=lambda _: None,
             )
 
@@ -247,6 +248,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
@@ -267,6 +269,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
@@ -288,6 +291,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or []).extend(
                     self.maybe_get_type_ids_for_type_reference(mt.value_type) or []
                 ),
+                nullable=lambda nullable_tr: self.maybe_get_type_ids_for_type_reference(nullable_tr),
                 optional=lambda optional_tr: self.maybe_get_type_ids_for_type_reference(optional_tr),
                 set_=lambda set_tr: self.maybe_get_type_ids_for_type_reference(set_tr),
                 literal=lambda _: None,
@@ -315,6 +319,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda _: example_type_reference,
                 optional=lambda optional: self.unwrap_example_type_reference(optional.optional)
                 if optional.optional is not None
+                else example_type_reference,
+                nullable=lambda nullable: self.unwrap_example_type_reference(nullable.nullable)
+                if nullable.nullable is not None
                 else example_type_reference,
                 map_=lambda _: example_type_reference,
                 literal=lambda _: example_type_reference,

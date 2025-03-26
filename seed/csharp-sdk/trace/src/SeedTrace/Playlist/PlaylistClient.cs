@@ -18,8 +18,7 @@ public partial class PlaylistClient
     /// <summary>
     /// Create a new playlist
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Playlist.CreatePlaylistAsync(
     ///     1,
     ///     new CreatePlaylistRequest
@@ -33,8 +32,7 @@ public partial class PlaylistClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Playlist> CreatePlaylistAsync(
         int serviceParam,
         CreatePlaylistRequest request,
@@ -56,7 +54,10 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/create",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/create",
+                        ValueConvert.ToPathParameterString(serviceParam)
+                    ),
                     Body = request.Body,
                     Query = _query,
                     Options = options,
@@ -90,8 +91,7 @@ public partial class PlaylistClient
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Playlist.GetPlaylistsAsync(
     ///     1,
     ///     new GetPlaylistsRequest
@@ -103,8 +103,7 @@ public partial class PlaylistClient
     ///         MultipleField = ["multipleField"],
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
         int serviceParam,
         GetPlaylistsRequest request,
@@ -127,7 +126,10 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/all",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/all",
+                        ValueConvert.ToPathParameterString(serviceParam)
+                    ),
                     Query = _query,
                     Options = options,
                 },
@@ -160,11 +162,9 @@ public partial class PlaylistClient
     /// <summary>
     /// Returns a playlist
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Playlist.GetPlaylistAsync(1, "playlistId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Playlist> GetPlaylistAsync(
         int serviceParam,
         string playlistId,
@@ -178,8 +178,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -211,8 +214,7 @@ public partial class PlaylistClient
     /// <summary>
     /// Updates a playlist
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Playlist.UpdatePlaylistAsync(
     ///     1,
     ///     "playlistId",
@@ -222,8 +224,7 @@ public partial class PlaylistClient
     ///         Problems = new List&lt;string&gt;() { "problems", "problems" },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
@@ -238,8 +239,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -272,11 +276,9 @@ public partial class PlaylistClient
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
@@ -290,8 +292,11 @@ public partial class PlaylistClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path =
-                        $"/v2/playlist/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(playlistId)}",
+                    Path = string.Format(
+                        "/v2/playlist/{0}/{1}",
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(playlistId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

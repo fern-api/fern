@@ -11,6 +11,7 @@ public record ListResourcesRequest
     [JsonIgnore]
     public required DateOnly BeforeDate { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

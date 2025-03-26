@@ -14,8 +14,7 @@ public partial class ReferenceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Reference.SendAsync(
     ///     new SendRequest
     ///     {
@@ -37,8 +36,7 @@ public partial class ReferenceClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendRequest request,
         RequestOptions? options = null,

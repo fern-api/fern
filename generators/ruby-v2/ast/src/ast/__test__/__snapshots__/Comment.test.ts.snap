@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Comment > does not write a comment with no content 1`] = `""`;
+
+exports[`Comment > writes multi-line comments 1`] = `
+"# Hello
+# there
+"
+`;
+
+exports[`Comment > writes single-line comments 1`] = `
+"# Hello there
+"
+`;

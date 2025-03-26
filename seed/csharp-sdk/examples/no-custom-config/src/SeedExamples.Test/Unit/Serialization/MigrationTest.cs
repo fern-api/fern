@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
@@ -8,7 +8,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class MigrationTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -19,22 +19,21 @@ public class MigrationTest
             """;
         var expectedObject = new Migration { Name = "001_init", Status = MigrationStatus.Running };
         var deserializedObject = JsonUtils.Deserialize<Migration>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "001_init",
               "status": "RUNNING"
             }
             """;
-        var obj = new Migration { Name = "001_init", Status = MigrationStatus.Running };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualObj = new Migration { Name = "001_init", Status = MigrationStatus.Running };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -1,5 +1,169 @@
 - changelogEntry:
   - summary: |
+      Add `use-bytes-for-binary-response` configuration option to specify whether to use the `bytes` type for binary responses.
+    type: feat
+  irVersion: 57
+  version: 0.57.0
+
+- changelogEntry:
+  - summary: |
+      Parse inlined websocket message properties during Fern Definition -> IR.
+    type: fix
+  irVersion: 57
+  version: 0.56.35
+
+- changelogEntry:
+  - summary: |
+      Fix websocket session example generation for 3.x specs.
+    type: fix
+  irVersion: 57
+  version: 0.56.34
+
+- changelogEntry:
+  - summary: |
+      Refactor out schema converter nodes into the `v2-importer-commons` package.
+    type: fix
+  irVersion: 57
+  version: 0.56.33
+
+- changelogEntry:
+  - summary: |
+      Improvements to channel parsing for v3 AsyncAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.32
+
+- changelogEntry:
+  - summary: |
+      Added support for default values in example generation to prevent SDK generation failures due to corrupted OpenAPI examples.
+    type: feat
+  irVersion: 57
+  version: 0.56.31
+
+- changelogEntry:
+  - summary: |
+      The default behavior of `fern generate` now excludes broken link checking by default.
+      This can be overridden by passing `--broken-links` or `--strict-broken-links`.
+    type: feat
+  irVersion: 57
+  version: 0.56.30
+
+- changelogEntry:
+  - summary: |
+      Fix an edge case in the OpenAPI converter where unused types were being incorrectly added to the Fern definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.29
+
+- changelogEntry:
+  - summary: |
+      Remove Fern definition generation warnings when openapi-parser-v3 is enabled for docs dev.
+    type: fix
+  irVersion: 57
+  version: 0.56.28
+
+- changelogEntry:
+  - summary: |
+      This update includes minor improvements and bugfixes to the v2 AsyncAPI parser.
+    type: feat
+  irVersion: 57
+  version: 0.56.27
+
+- changelogEntry:
+  - summary: |
+      The V2 Parser now handles environment merging across multiple OpenAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.26
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest Python SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.25
+
+- changelogEntry:
+  - summary: |
+      Minor cleanup to simple type schema constructions.
+    type: chore
+  irVersion: 57
+  version: 0.56.24
+
+- changelogEntry:
+  - summary: |
+      CLI now passes validation from OpenAPI to Fern Definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.23
+
+- changelogEntry:
+  - summary: |
+      The `fern init --openapi` command now references the OpenAPI file in 
+      place using the new `specs` syntax in generators.yml instead of copying the file into the 
+      Fern directory. This makes it easier to maintain the source OpenAPI file separately from the Fern configuration.
+    type: fix
+  irVersion: 57
+  version: 0.56.22
+
+- changelogEntry:
+  - summary: |
+      Correctly evaluate SDK groupName for AsyncAPI channels.
+    type: fix
+  irVersion: 57
+  version: 0.56.21
+
+- changelogEntry:
+  - summary: |
+      Include examples by default for dynamic IR generation (replace dynamic-ir --include-examples option with --disable-examples).
+    type: internal
+  irVersion: 57
+  version: 0.56.20
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest Go SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.19
+
+- changelogEntry:
+  - summary: |
+      Minor v3 parser bugfixes pertaining to document importing and message parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.18
+
+- changelogEntry:
+  - summary: |
+      The v3 parser now supports parsing and merging AsyncAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.17
+
+- changelogEntry:
+  - summary: |
+      Revert only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.16
+
+- changelogEntry:
+  - summary: |
+      Only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.15
+
+- changelogEntry:
+  - summary: |
+      Correctly assign a versioned slug to the landing page when applicable.
+    type: fix
+  irVersion: 57
+  version: 0.56.14
+
+- changelogEntry:
+  - summary: |
       Correctly parse channel descriptions in AsyncAPI v2 and v3 specs.
     type: fix
   irVersion: 57

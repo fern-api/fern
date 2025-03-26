@@ -12,6 +12,7 @@ public record ListUsernamesRequestCustom
     [JsonIgnore]
     public string? StartingAfter { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

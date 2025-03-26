@@ -73,7 +73,7 @@ public class AsyncSeedAliasClient {
         return future;
     }
 
-    public static SeedAliasClientBuilder builder() {
-        return new SeedAliasClientBuilder();
+    public static AsyncSeedAliasClientBuilder builder() {
+        return new AsyncSeedAliasClientBuilder();
     }
 }

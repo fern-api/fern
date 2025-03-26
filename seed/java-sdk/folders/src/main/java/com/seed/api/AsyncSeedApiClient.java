@@ -91,7 +91,7 @@ public class AsyncSeedApiClient {
         return this.folderClient.get();
     }
 
-    public static SeedApiClientBuilder builder() {
-        return new SeedApiClientBuilder();
+    public static AsyncSeedApiClientBuilder builder() {
+        return new AsyncSeedApiClientBuilder();
     }
 }

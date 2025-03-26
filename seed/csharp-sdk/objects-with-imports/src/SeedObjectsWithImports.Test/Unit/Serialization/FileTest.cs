@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
@@ -25,29 +25,28 @@ public class FileTest
             Info = FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization_1()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "file.txt",
               "contents": "...",
               "info": "REGULAR"
             }
             """;
-        var obj = new File
+        var actualObj = new File
         {
             Name = "file.txt",
             Contents = "...",
             Info = FileInfo.Regular,
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
     [Test]
@@ -67,28 +66,27 @@ public class FileTest
             Info = FileInfo.Regular,
         };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization_2()
     {
-        var json = """
+        var expectedJson = """
             {
               "name": "another_file.txt",
               "contents": "...",
               "info": "REGULAR"
             }
             """;
-        var obj = new File
+        var actualObj = new File
         {
             Name = "another_file.txt",
             Contents = "...",
             Info = FileInfo.Regular,
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

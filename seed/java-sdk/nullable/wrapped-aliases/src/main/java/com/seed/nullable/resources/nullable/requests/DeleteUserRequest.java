@@ -5,6 +5,7 @@ package com.seed.nullable.resources.nullable.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,6 +35,7 @@ public final class DeleteUserRequest {
     /**
      * @return The user to delete.
      */
+    @JsonIgnore
     public Optional<String> getUsername() {
         if (username == null) {
             return Optional.empty();

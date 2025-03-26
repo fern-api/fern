@@ -1,4 +1,4 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -26,13 +26,17 @@ export class DynamicTypeLiteralMapper {
 
     public convert(args: DynamicTypeLiteralMapper.Args): csharp.TypeLiteral {
         // eslint-disable-next-line eqeqeq
-        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+        if (args.value === null) {
+            if (this.context.isNullable(args.typeReference)) {
+                return csharp.TypeLiteral.null();
+            }
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "Expected non-null value, but got null"
             });
+            return csharp.TypeLiteral.nop();
         }
-        if (args.value == null) {
+        if (args.value === undefined) {
             return csharp.TypeLiteral.nop();
         }
         switch (args.typeReference.type) {
@@ -144,7 +148,9 @@ export class DynamicTypeLiteralMapper {
             case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as });
             case "discriminatedUnion":
-                // TODO: Update this when we support discriminated unions.
+                if (this.context.shouldUseDiscriminatedUnions()) {
+                    return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
+                }
                 return this.convertUnknown({ value });
             case "enum":
                 return this.convertEnum({ enum_: named, value });
@@ -155,6 +161,137 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(named);
         }
+    }
+
+    private convertDiscriminatedUnion({
+        discriminatedUnion,
+        value
+    }: {
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): csharp.TypeLiteral {
+        const classReference = csharp.classReference({
+            name: this.context.getClassName(discriminatedUnion.declaration.name),
+            namespace: this.context.getNamespace(discriminatedUnion.declaration.fernFilepath)
+        });
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return csharp.TypeLiteral.nop();
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const baseProperties = this.getBaseProperties({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
+        });
+        switch (unionVariant.type) {
+            case "samePropertiesAsObject": {
+                const named = this.context.resolveNamedType({
+                    typeId: unionVariant.typeId
+                });
+                if (named == null) {
+                    return csharp.TypeLiteral.nop();
+                }
+                return this.instantiateUnionWithBaseProperties({
+                    classReference,
+                    baseProperties,
+                    arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
+                });
+            }
+            case "singleProperty": {
+                const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                if (record == null) {
+                    return csharp.TypeLiteral.nop();
+                }
+                try {
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    return this.instantiateUnionWithBaseProperties({
+                        classReference,
+                        baseProperties,
+                        arguments_: [
+                            this.convert({
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            })
+                        ]
+                    });
+                } finally {
+                    this.context.errors.unscope();
+                }
+            }
+            case "noProperties":
+                return this.instantiateUnionWithBaseProperties({
+                    classReference,
+                    baseProperties,
+                    arguments_: []
+                });
+            default:
+                assertNever(unionVariant);
+        }
+    }
+
+    private getBaseProperties({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): NamedArgument[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    assignment: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+    }
+
+    private instantiateUnionWithBaseProperties({
+        classReference,
+        arguments_,
+        baseProperties
+    }: {
+        classReference: csharp.ClassReference;
+        arguments_: csharp.AstNode[];
+        baseProperties: NamedArgument[];
+    }): csharp.TypeLiteral {
+        const instantiation = csharp.instantiateClass({
+            classReference,
+            arguments_,
+            multiline: true
+        });
+        if (baseProperties.length === 0) {
+            return csharp.TypeLiteral.reference(instantiation);
+        }
+        return csharp.TypeLiteral.reference(
+            csharp.codeblock((writer) => {
+                writer.writeNode(instantiation);
+                writer.writeLine(" {");
+                writer.indent();
+                for (const baseProperty of baseProperties) {
+                    writer.write(baseProperty.name);
+                    writer.write(" = ");
+                    writer.writeNodeOrString(baseProperty.assignment);
+                    writer.writeLine(",");
+                }
+                writer.dedent();
+                writer.write("}");
+            })
+        );
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): csharp.TypeLiteral {

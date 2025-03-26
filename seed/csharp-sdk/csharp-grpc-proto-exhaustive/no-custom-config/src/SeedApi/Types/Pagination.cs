@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -9,9 +10,19 @@ public record Pagination
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new Pagination type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value)
     {
-        return JsonUtils.Serialize(this);
+        return new Pagination { Next = value.Next };
     }
 
     /// <summary>
@@ -27,11 +38,9 @@ public record Pagination
         return result;
     }
 
-    /// <summary>
-    /// Returns a new Pagination type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new Pagination { Next = value.Next };
+        return JsonUtils.Serialize(this);
     }
 }

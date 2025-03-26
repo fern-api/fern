@@ -15,11 +15,9 @@ public partial class HomepageClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Homepage.GetHomepageProblemsAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<string>> GetHomepageProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -60,11 +58,9 @@ public partial class HomepageClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Homepage.SetHomepageProblemsAsync(new List&lt;string&gt;() { "string", "string" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task SetHomepageProblemsAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,

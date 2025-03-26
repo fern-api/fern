@@ -15,11 +15,9 @@ public partial class SyspropClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
@@ -33,8 +31,11 @@ public partial class SyspropClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path =
-                        $"/sysprop/num-warm-instances/{JsonUtils.SerializeAsString(language)}/{JsonUtils.SerializeAsString(numWarmInstances)}",
+                    Path = string.Format(
+                        "/sysprop/num-warm-instances/{0}/{1}",
+                        ValueConvert.ToPathParameterString(language),
+                        ValueConvert.ToPathParameterString(numWarmInstances)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -54,11 +55,9 @@ public partial class SyspropClient
         }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Sysprop.GetNumWarmInstancesAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

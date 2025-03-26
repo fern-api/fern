@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
@@ -28,14 +28,13 @@ public class MyObjectTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<MyObject>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "unknown": {
                 "boolVal": true,
@@ -43,7 +42,7 @@ public class MyObjectTest
               }
             }
             """;
-        var obj = new MyObject
+        var actualObj = new MyObject
         {
             Unknown = new Dictionary<object, object?>()
             {
@@ -51,8 +50,8 @@ public class MyObjectTest
                 { "strVal", "string" },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

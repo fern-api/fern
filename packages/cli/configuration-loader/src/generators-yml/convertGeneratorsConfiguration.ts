@@ -22,6 +22,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectReadonlySchemas: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
+    useBytesForBinaryResponse: undefined,
     filter: undefined,
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined
@@ -97,7 +98,8 @@ function parseOpenApiDefinitionSettingsSchema(
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
-        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"]
+        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
+        useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"]
     };
 }
 

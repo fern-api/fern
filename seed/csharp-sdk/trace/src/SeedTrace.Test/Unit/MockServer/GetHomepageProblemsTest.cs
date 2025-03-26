@@ -7,7 +7,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetHomepageProblemsTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -31,8 +31,7 @@ public class GetHomepageProblemsTest : BaseMockServerTest
         var response = await Client.Homepage.GetHomepageProblemsAsync(RequestOptions);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
         );
     }
 }

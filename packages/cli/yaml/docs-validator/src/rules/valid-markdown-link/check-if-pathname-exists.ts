@@ -48,6 +48,8 @@ export async function checkIfPathnameExists({
         return true;
     }
 
+    pathname = withoutAnchors(pathname);
+
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file

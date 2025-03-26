@@ -791,6 +791,73 @@
           },
           "errorsV2": [],
           "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "optionalArgs",
+          "originalEndpointId": "endpoint_service.optionalArgs",
+          "name": "Optional Args",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/optional-args"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "OptionalArgsRequest",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "image_file",
+                      "isOptional": true,
+                      "contentType": "image/jpeg"
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "request",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "unknown"
+                      }
+                    },
+                    "contentType": "application/json; charset=utf-8",
+                    "exploded": false
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200
+          },
+          "errorsV2": [],
+          "examples": []
         }
       ],
       "webhooks": [],

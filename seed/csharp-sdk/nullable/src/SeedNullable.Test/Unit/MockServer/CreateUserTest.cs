@@ -23,7 +23,10 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
+                "activated": true,
+                "status": {
+                  "type": "active"
+                }
               },
               "avatar": "avatar"
             }
@@ -32,6 +35,7 @@ public class CreateUserTest : BaseMockServerTest
         const string mockResponse = """
             {
               "name": "name",
+              "id": "id",
               "tags": [
                 "tags",
                 "tags"
@@ -40,7 +44,21 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
+                "activated": true,
+                "status": {
+                  "type": "active"
+                }
+              },
+              "email": "email",
+              "favorite-number": 1,
+              "numbers": [
+                1,
+                1
+              ],
+              "strings": {
+                "strings": {
+                  "key": "value"
+                }
               }
             }
             """;
@@ -79,6 +97,7 @@ public class CreateUserTest : BaseMockServerTest
                     ),
                     Avatar = "avatar",
                     Activated = true,
+                    Status = "no-properties-union",
                 },
                 Avatar = "avatar",
             },
@@ -86,7 +105,7 @@ public class CreateUserTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

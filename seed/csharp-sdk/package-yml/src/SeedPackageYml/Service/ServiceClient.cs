@@ -14,11 +14,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task NopAsync(
         string id,
         string nestedId,
@@ -32,8 +30,11 @@ public partial class ServiceClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(id)}//{JsonUtils.SerializeAsString(nestedId)}",
+                    Path = string.Format(
+                        "/{0}//{1}",
+                        ValueConvert.ToPathParameterString(id),
+                        ValueConvert.ToPathParameterString(nestedId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -18,9 +19,28 @@ public record DescribeResponse
     [JsonPropertyName("totalCount")]
     public uint? TotalCount { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static DescribeResponse FromProto(ProtoDataV1Grpc.DescribeResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new DescribeResponse
+        {
+            Namespaces = value.Namespaces?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => NamespaceSummary.FromProto(kvp.Value)
+            ),
+            Dimension = value.Dimension,
+            Fullness = value.Fullness,
+            TotalCount = value.TotalCount,
+        };
     }
 
     /// <summary>
@@ -52,20 +72,9 @@ public record DescribeResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static DescribeResponse FromProto(ProtoDataV1Grpc.DescribeResponse value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new DescribeResponse
-        {
-            Namespaces = value.Namespaces?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => NamespaceSummary.FromProto(kvp.Value)
-            ),
-            Dimension = value.Dimension,
-            Fullness = value.Fullness,
-            TotalCount = value.TotalCount,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

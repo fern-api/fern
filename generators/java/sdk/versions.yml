@@ -1,5 +1,78 @@
 - changelogEntry:
     - summary: |
+        Change method to `public static void main(String[] args)` in snippet generation
+      type: fix
+  createdAt: '2025-03-24'
+  irVersion: 55
+  version: 2.27.1
+- changelogEntry:
+    - summary: |
+        Support automatic README.md generation
+      type: feat
+  createdAt: '2025-03-21'
+  irVersion: 55
+  version: 2.27.0
+- changelogEntry:
+    - summary: |
+        Expose max retries for clients
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.26.0
+- changelogEntry:
+    - summary: |
+        Add config to inline file properties
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.25.0
+- changelogEntry:
+    - summary: |
+        Prevent put requests from generating without a request body
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.4
+- changelogEntry:
+    - summary: |
+        Fix double unknown in forward-compatible enums
+      type: fix
+    - summary: |
+        Prevent enum keyword use in package paths
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.3
+- changelogEntry:
+    - summary: |
+        Remove 'object' from Java reserved strings list
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.2
+- changelogEntry:
+    - summary: |
+        Add @JsonIgnore to non-serialization getters for nullables
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.1
+- changelogEntry:
+    - summary: |
+        Fix wrapped request paths in flat mode
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.0
+- changelogEntry:
+    - summary: |
+        Fix async client builder generation
+      type: fix
+  createdAt: '2025-03-07'
+  irVersion: 55
+  version: 2.23.1
+- changelogEntry:
+    - summary: |
         Represent protobuf uint as int rather than long
       type: fix
   createdAt: '2025-03-06'

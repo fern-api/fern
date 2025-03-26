@@ -14,8 +14,7 @@ public partial class ReqWithHeadersClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
     ///     new ReqWithHeaders
     ///     {
@@ -24,8 +23,7 @@ public partial class ReqWithHeadersClient
     ///         Body = "string",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,

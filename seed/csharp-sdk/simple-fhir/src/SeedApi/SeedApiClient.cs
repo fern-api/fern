@@ -31,11 +31,9 @@ public partial class SeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAccountAsync("account_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Account> GetAccountAsync(
         string accountId,
         RequestOptions? options = null,
@@ -48,7 +46,10 @@ public partial class SeedApiClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"account/{JsonUtils.SerializeAsString(accountId)}",
+                    Path = string.Format(
+                        "account/{0}",
+                        ValueConvert.ToPathParameterString(accountId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

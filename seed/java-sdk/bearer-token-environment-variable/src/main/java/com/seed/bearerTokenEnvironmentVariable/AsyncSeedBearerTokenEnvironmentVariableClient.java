@@ -22,7 +22,7 @@ public class AsyncSeedBearerTokenEnvironmentVariableClient {
         return this.serviceClient.get();
     }
 
-    public static SeedBearerTokenEnvironmentVariableClientBuilder builder() {
-        return new SeedBearerTokenEnvironmentVariableClientBuilder();
+    public static AsyncSeedBearerTokenEnvironmentVariableClientBuilder builder() {
+        return new AsyncSeedBearerTokenEnvironmentVariableClientBuilder();
     }
 }

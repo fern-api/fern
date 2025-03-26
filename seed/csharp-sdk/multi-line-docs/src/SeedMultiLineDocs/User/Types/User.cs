@@ -1,8 +1,14 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
+/// <summary>
+/// A user object. This type is used throughout the following APIs:
+///   - createUser
+///   - getUser
+/// </summary>
 public record User
 {
     [JsonPropertyName("id")]
@@ -23,6 +29,14 @@ public record User
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

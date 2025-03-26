@@ -11,8 +11,10 @@ public record SendLiteralsInHeadersRequest
     [JsonIgnore]
     public bool Async { get; set; } = true;
 
+    [JsonPropertyName("query")]
     public required string Query { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

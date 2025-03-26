@@ -17,11 +17,9 @@ public partial class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.BasicAuth.GetWithBasicAuthAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> GetWithBasicAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -79,13 +77,11 @@ public partial class BasicAuthClient
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.BasicAuth.PostWithBasicAuthAsync(
     ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> PostWithBasicAuthAsync(
         object request,
         RequestOptions? options = null,

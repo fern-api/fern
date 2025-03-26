@@ -19,11 +19,9 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithPathAsync("param");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithPathAsync(
         string param,
         RequestOptions? options = null,
@@ -39,7 +37,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
-                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -73,11 +74,9 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithInlinePathAsync("param", new GetWithInlinePath());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithInlinePathAsync(
         string param,
         GetWithInlinePath request,
@@ -94,7 +93,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
-                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -128,11 +130,9 @@ public partial class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "query", Number = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithQueryAsync(
         GetWithQuery request,
         RequestOptions? options = null,
@@ -177,13 +177,11 @@ public partial class ParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
     ///     new GetWithMultipleQuery { Query = ["query"], Number = [1] }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
         RequestOptions? options = null,
@@ -228,14 +226,12 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithPathAndQueryAsync(
     ///     "param",
     ///     new GetWithPathAndQuery { Query = "query" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
@@ -254,7 +250,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
-                            Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path-query/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Query = _query,
                             Options = options,
                         },
@@ -280,14 +279,12 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
     ///     "param",
     ///     new GetWithInlinePathAndQuery { Query = "query" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithInlinePathAndQueryAsync(
         string param,
         GetWithInlinePathAndQuery request,
@@ -306,7 +303,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
-                            Path = $"/params/path-query/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path-query/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Query = _query,
                             Options = options,
                         },
@@ -332,11 +332,9 @@ public partial class ParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.ModifyWithPathAsync("param", "string");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> ModifyWithPathAsync(
         string param,
         string request,
@@ -353,7 +351,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Put,
-                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Body = request,
                             Options = options,
                         },
@@ -388,14 +389,12 @@ public partial class ParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Params.ModifyWithInlinePathAsync(
     ///     "param",
     ///     new ModifyResourceAtInlinedPath { Body = "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> ModifyWithInlinePathAsync(
         string param,
         ModifyResourceAtInlinedPath request,
@@ -412,7 +411,10 @@ public partial class ParamsClient
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Put,
-                            Path = $"/params/path/{JsonUtils.SerializeAsString(param)}",
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
                             Body = request.Body,
                             Options = options,
                         },

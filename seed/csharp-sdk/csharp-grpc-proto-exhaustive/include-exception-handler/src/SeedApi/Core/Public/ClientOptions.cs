@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using Grpc.Net.Client;
 using SeedApi.Core;
@@ -8,6 +9,16 @@ namespace SeedApi;
 public partial class ClientOptions
 {
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
+
+    /// <summary>
+    /// A handler that will handle exceptions thrown by the client.
+    /// </summary>
+    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get; init; } = SeedApiEnvironment.Default;
@@ -16,6 +27,12 @@ public partial class ClientOptions
     /// The http client used to make requests.
     /// </summary>
     public HttpClient HttpClient { get; init; } = new HttpClient();
+
+    /// <summary>
+    /// Additional headers to be sent with HTTP requests.
+    /// Headers with matching keys will be overwritten by headers set on the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get; init; } = [];
 
     /// <summary>
     /// The http client used to make requests.
@@ -31,16 +48,6 @@ public partial class ClientOptions
     /// The options used for gRPC client endpoints.
     /// </summary>
     public GrpcChannelOptions? GrpcOptions { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    internal Headers Headers { get; init; } = new();
-
-    /// <summary>
-    /// A handler that will handle exceptions thrown by the client.
-    /// </summary>
-    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
 
     /// <summary>
     /// Clones this and returns a new instance

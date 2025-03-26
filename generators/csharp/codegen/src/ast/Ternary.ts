@@ -1,4 +1,4 @@
-import { Ternary as CommonTernary } from "@fern-api/base-generator";
+import { Ternary as CommonTernary } from "@fern-api/browser-compatible-base-generator";
 
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

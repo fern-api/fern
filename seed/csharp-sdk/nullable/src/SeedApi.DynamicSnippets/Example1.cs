@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedNullable;
-using SeedNullable.Core;
 using System.Globalization;
 
 namespace Usage;
@@ -25,7 +24,10 @@ public class Example1
                     CreatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                     UpdatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                     Avatar = "avatar",
-                    Activated = true
+                    Activated = true,
+                    Status = new Dictionary<string, object>() {
+                        ["type"] = "active",
+                    }
                 },
                 Avatar = "avatar"
             }

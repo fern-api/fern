@@ -30,7 +30,7 @@ public class AsyncSeedMixedFileDirectoryClient {
         return this.userClient.get();
     }
 
-    public static SeedMixedFileDirectoryClientBuilder builder() {
-        return new SeedMixedFileDirectoryClientBuilder();
+    public static AsyncSeedMixedFileDirectoryClientBuilder builder() {
+        return new AsyncSeedMixedFileDirectoryClientBuilder();
     }
 }

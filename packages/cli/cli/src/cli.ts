@@ -436,6 +436,17 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description: "Ignore prompts to confirm generation, defaults to false"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -479,7 +490,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    brokenLinks: argv.brokenLinks,
+                    strictBrokenLinks: argv.strictBrokenLinks
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -628,9 +641,9 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     boolean: true,
                     description: "Whether to use smart casing"
                 })
-                .option("include-examples", {
+                .option("disable-examples", {
                     boolean: true,
-                    description: "Whether to include examples in the IR"
+                    description: "Whether to suppress examples from being included in the IR"
                 }),
         async (argv) => {
             await generateDynamicIrForWorkspaces({
@@ -646,7 +659,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 version: argv.version,
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
-                includeDynamicExamples: argv.includeExamples ?? false
+                disableDynamicExamples: argv.disableExamples ?? false
             });
         }
     );

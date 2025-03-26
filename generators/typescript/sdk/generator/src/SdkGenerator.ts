@@ -22,7 +22,7 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -48,7 +48,8 @@ import {
     IntermediateRepresentation,
     OAuthScheme,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    WebSocketChannel
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 
@@ -66,6 +67,7 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
+import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
@@ -107,6 +109,7 @@ export declare namespace SdkGenerator {
         outputEsm: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
+        shouldGenerateWebsocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         requireDefaultEnvironment: boolean;
@@ -147,6 +150,7 @@ export class SdkGenerator {
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
+    private shouldGenerateWebsocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
@@ -193,10 +197,12 @@ export class SdkGenerator {
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
+    private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
     private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
     private readonly asIsManager: AsIsManager;
+    private websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
 
     constructor({
         namespaceExport,
@@ -217,6 +223,7 @@ export class SdkGenerator {
         this.generateOAuthClients =
             this.config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
+        this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -366,6 +373,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
+            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
@@ -377,6 +385,9 @@ export class SdkGenerator {
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields
+        });
+        this.websocketGenerator = new WebsocketClassGenerator({
+            intermediateRepresentation
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -414,6 +425,12 @@ export class SdkGenerator {
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt
         });
+
+        this.websocketSocketDeclarationReferencer = new WebsocketSocketDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport,
+            packageResolver: this.packageResolver
+        });
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -423,6 +440,10 @@ export class SdkGenerator {
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
+        if (this.shouldGenerateWebsocketClients) {
+            this.generateWebsocketSockets();
+            this.context.logger.debug("Generated websocket clients");
+        }
         this.generateServiceDeclarations();
         this.context.logger.debug("Generated services");
         this.generateEnvironments();
@@ -631,6 +652,21 @@ export class SdkGenerator {
         return { generated };
     }
 
+    private generateWebsocketSockets() {
+        this.forPackageChannel((channel, packageId) => {
+            if (!packageId.isRoot) {
+                const subpackageId = packageId.subpackageId;
+                this.withSourceFile({
+                    filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        context.websocket.getGeneratedWebsocketSocketClass(subpackageId, channel)?.writeToFile(context);
+                    }
+                });
+            }
+        });
+    }
+
     private generateErrorDeclarations() {
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
             this.withSourceFile({
@@ -750,7 +786,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree) {
+            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
                 continue;
             }
             this.withSourceFile({
@@ -825,7 +861,6 @@ export class SdkGenerator {
 
     private async generateReference(): Promise<void> {
         if (this.referenceConfigBuilder.isEmpty()) {
-            // Don't generate a reference.md if there aren't any sections.
             return;
         }
         await this.withRawFile({
@@ -1267,6 +1302,14 @@ export class SdkGenerator {
         ];
     }
 
+    private forPackageChannel(run: (channel: WebSocketChannel, packageId: PackageId) => void): void {
+        for (const packageId of this.getAllPackageIds()) {
+            const channel = this.packageResolver.getChannelDeclaration(packageId);
+            if (channel != null) {
+                run(channel, packageId);
+            }
+        }
+    }
     private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const service = this.packageResolver.getServiceDeclaration(packageId);
@@ -1315,6 +1358,8 @@ export class SdkGenerator {
             requestWrapperGenerator: this.requestWrapperGenerator,
             sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,
             sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
+            websocketSocketDeclarationReferencer: this.websocketSocketDeclarationReferencer,
+            websocketGenerator: this.websocketGenerator,
             typeGenerator: this.typeGenerator,
             sdkErrorGenerator: this.sdkErrorGenerator,
             errorResolver: this.errorResolver,

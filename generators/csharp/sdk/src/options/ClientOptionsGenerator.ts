@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { Name } from "@fern-fern/ir-sdk/api";
@@ -39,8 +40,16 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 interfaceReference: undefined
             })
         );
+        class_.addField(
+            this.baseOptionsGenerator.getAdditionalHeadersField({
+                summary:
+                    "Additional headers to be sent with HTTP requests.\nHeaders with matching keys will be overwritten by headers set on the request.",
+                includeInitializer: true
+            })
+        );
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
+        class_.addFields(this.baseOptionsGenerator.getLiteralHeaderOptions(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
             class_.addField(this.getGrpcOptionsField());
         }

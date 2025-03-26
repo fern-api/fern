@@ -10,9 +10,14 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
     public Metadata(IEnumerable<KeyValuePair<string, MetadataValue?>> value)
         : base(value.ToDictionary(e => e.Key, e => e.Value)) { }
 
-    public override string ToString()
+    internal static Metadata FromProto(WellKnownProto.Struct value)
     {
-        return JsonUtils.Serialize(this);
+        var result = new Metadata();
+        foreach (var kvp in value.Fields)
+        {
+            result[kvp.Key] = kvp.Value != null ? MetadataValue.FromProto(kvp.Value) : null;
+        }
+        return result;
     }
 
     internal WellKnownProto.Struct ToProto()
@@ -25,13 +30,9 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
         return result;
     }
 
-    internal static Metadata FromProto(WellKnownProto.Struct value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        var result = new Metadata();
-        foreach (var kvp in value.Fields)
-        {
-            result[kvp.Key] = kvp.Value != null ? MetadataValue.FromProto(kvp.Value) : null;
-        }
-        return result;
+        return JsonUtils.Serialize(this);
     }
 }

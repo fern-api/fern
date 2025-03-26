@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
@@ -12,9 +13,23 @@ public record QueryResult
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new QueryResult type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryResult FromProto(ProtoDataV1Grpc.QueryResult value)
     {
-        return JsonUtils.Serialize(this);
+        return new QueryResult
+        {
+            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Namespace = value.Namespace,
+        };
     }
 
     /// <summary>
@@ -34,15 +49,9 @@ public record QueryResult
         return result;
     }
 
-    /// <summary>
-    /// Returns a new QueryResult type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static QueryResult FromProto(ProtoDataV1Grpc.QueryResult value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new QueryResult
-        {
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
-            Namespace = value.Namespace,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

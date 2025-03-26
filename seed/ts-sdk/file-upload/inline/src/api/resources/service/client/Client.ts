@@ -76,9 +76,9 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                {for (const _item of request.optionalMetadata) {
+                for (const _item of request.optionalMetadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
-                }}
+                }
         }
 
         if (request.optionalObjectType != null) {
@@ -92,6 +92,24 @@ export class Service {
             _request.append(
                 "optional_id",
                 serializers.Id.jsonOrThrow(request.optionalId, { unrecognizedObjectKeys: "strip" }),
+            );
+        }
+
+        _request.append(
+            "alias_object",
+            toJson(serializers.MyAliasObject.jsonOrThrow(request.aliasObject, { unrecognizedObjectKeys: "strip" })),
+        );
+        for (const _item of request.listOfAliasObject) {
+            _request.append(
+                "list_of_alias_object",
+                toJson(serializers.MyAliasObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
+            );
+        }
+
+        for (const _item of request.aliasListOfObject) {
+            _request.append(
+                "alias_list_of_object",
+                toJson(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
             );
         }
 
@@ -523,6 +541,22 @@ export class Service {
             _request.append(key, value);
         }
 
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.aliasObject }))) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ list_of_alias_object: request.listOfAliasObject }),
+        )) {
+            _request.append(key, value);
+        }
+
+        for (const [key, value] of Object.entries(
+            core.encodeAsFormParameter({ alias_list_of_object: request.aliasListOfObject }),
+        )) {
+            _request.append(key, value);
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url:
@@ -565,6 +599,82 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedFileUpload.OptionalArgsRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public async optionalArgs(
+        request: SeedFileUpload.OptionalArgsRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<string> {
+        const _request = await core.newFormData();
+        if (request.imageFile != null) {
+            await _request.appendFile("image_file", request.imageFile);
+        }
+
+        if (request.request != null) {
+            if (Array.isArray(request.request) || request.request instanceof Set)
+                for (const _item of request.request) {
+                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
+                }
+        }
+
+        const _maybeEncodedRequest = await _request.getRequest();
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/optional-args",
+            ),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/file-upload",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/file-upload/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ..._maybeEncodedRequest.headers,
+                ...requestOptions?.headers,
+            },
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /optional-args.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,

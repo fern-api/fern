@@ -2,6 +2,7 @@
 
 from .bar import Bar
 from .foo import Foo
+from .foo_extended import FooExtended
 from .union import Union, Union_Bar, Union_Foo
 from .union_with_base_properties import (
     UnionWithBaseProperties,
@@ -10,17 +11,37 @@ from .union_with_base_properties import (
     UnionWithBaseProperties_String,
 )
 from .union_with_discriminant import UnionWithDiscriminant, UnionWithDiscriminant_Bar, UnionWithDiscriminant_Foo
+from .union_with_duplicate_primitive import (
+    UnionWithDuplicatePrimitive,
+    UnionWithDuplicatePrimitive_Integer1,
+    UnionWithDuplicatePrimitive_Integer2,
+    UnionWithDuplicatePrimitive_String1,
+    UnionWithDuplicatePrimitive_String2,
+)
+from .union_with_duplicate_types import (
+    UnionWithDuplicateTypes,
+    UnionWithDuplicateTypes_Foo1,
+    UnionWithDuplicateTypes_Foo2,
+)
 from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
+from .union_with_multiple_no_properties import (
+    UnionWithMultipleNoProperties,
+    UnionWithMultipleNoProperties_Empty1,
+    UnionWithMultipleNoProperties_Empty2,
+    UnionWithMultipleNoProperties_Foo,
+)
+from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
 from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime
 from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
 from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
+from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
 from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
-from .union_with_unknown import UnionWithUnknown, UnionWithUnknown_Foo, UnionWithUnknown_Unknown
 from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
 
 __all__ = [
     "Bar",
     "Foo",
+    "FooExtended",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -29,8 +50,23 @@ __all__ = [
     "UnionWithDiscriminant",
     "UnionWithDiscriminant_Bar",
     "UnionWithDiscriminant_Foo",
+    "UnionWithDuplicatePrimitive",
+    "UnionWithDuplicatePrimitive_Integer1",
+    "UnionWithDuplicatePrimitive_Integer2",
+    "UnionWithDuplicatePrimitive_String1",
+    "UnionWithDuplicatePrimitive_String2",
+    "UnionWithDuplicateTypes",
+    "UnionWithDuplicateTypes_Foo1",
+    "UnionWithDuplicateTypes_Foo2",
     "UnionWithLiteral",
     "UnionWithLiteral_Fern",
+    "UnionWithMultipleNoProperties",
+    "UnionWithMultipleNoProperties_Empty1",
+    "UnionWithMultipleNoProperties_Empty2",
+    "UnionWithMultipleNoProperties_Foo",
+    "UnionWithNoProperties",
+    "UnionWithNoProperties_Empty",
+    "UnionWithNoProperties_Foo",
     "UnionWithOptionalTime",
     "UnionWithOptionalTime_Date",
     "UnionWithOptionalTime_Datetime",
@@ -39,13 +75,13 @@ __all__ = [
     "UnionWithPrimitive_String",
     "UnionWithSingleElement",
     "UnionWithSingleElement_Foo",
+    "UnionWithSubTypes",
+    "UnionWithSubTypes_Foo",
+    "UnionWithSubTypes_FooExtended",
     "UnionWithTime",
     "UnionWithTime_Date",
     "UnionWithTime_Datetime",
     "UnionWithTime_Value",
-    "UnionWithUnknown",
-    "UnionWithUnknown_Foo",
-    "UnionWithUnknown_Unknown",
     "UnionWithoutKey",
     "UnionWithoutKey_Bar",
     "UnionWithoutKey_Foo",

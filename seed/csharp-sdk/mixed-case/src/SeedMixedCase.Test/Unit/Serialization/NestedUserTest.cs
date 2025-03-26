@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using NUnit.Framework;
 using SeedMixedCase;
 using SeedMixedCase.Core;
@@ -42,14 +42,13 @@ public class NestedUserTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<NestedUser>(json);
-        var serializedJson = JsonUtils.Serialize(deserializedObject);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
     public void TestSerialization()
     {
-        var json = """
+        var expectedJson = """
             {
               "Name": "username",
               "NestedUser": {
@@ -65,7 +64,7 @@ public class NestedUserTest
               }
             }
             """;
-        var obj = new NestedUser
+        var actualObj = new NestedUser
         {
             Name = "username",
             NestedUser_ = new User
@@ -79,8 +78,8 @@ public class NestedUserTest
                 },
             },
         };
-        var objAsNode = JsonUtils.SerializeToNode(obj);
-        var jsonAsNode = JsonUtils.Deserialize<JsonNode>(json);
-        Assert.That(objAsNode, Is.EqualTo(jsonAsNode).UsingPropertiesComparer());
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }
