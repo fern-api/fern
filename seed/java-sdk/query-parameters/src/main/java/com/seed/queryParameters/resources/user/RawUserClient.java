@@ -64,7 +64,8 @@ public class RawUserClient {
         }
         QueryStringMapper.addQueryParameter(
                 httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "filter", request.getFilter().toString(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

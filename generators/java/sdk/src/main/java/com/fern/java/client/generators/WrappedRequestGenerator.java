@@ -59,6 +59,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean inlinePathParams;
     private final boolean inlineFileProperties;
+    private final ClientGeneratorContext generatorContext;
 
     public WrappedRequestGenerator(
             SdkRequestWrapper sdkRequestWrapper,
@@ -68,6 +69,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClientGeneratorContext generatorContext) {
         super(className, generatorContext);
+        this.generatorContext = generatorContext;
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestWrapper = sdkRequestWrapper;
@@ -124,7 +126,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
             if (queryParameter.getAllowMultiple() && !valueType.isContainer()) {
                 ExplodedQueryParameterGenerator queryParameterGenerator =
-                        new ExplodedQueryParameterGenerator(generatorContext, className, queryParameter);
+                        new ExplodedQueryParameterGenerator(generatorContext, httpService, queryParameter);
                 GeneratedJavaFile explodedQueryParameterClass = queryParameterGenerator.generate();
                 valueType = queryParameterGenerator.asValueType();
                 explodedQueryParameterClasses.add(explodedQueryParameterClass);

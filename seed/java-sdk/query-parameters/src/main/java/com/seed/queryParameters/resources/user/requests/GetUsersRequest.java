@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.queryParameters.core.ObjectMappers;
+import com.seed.queryParameters.resources.user.types.ExcludeUser;
+import com.seed.queryParameters.resources.user.types.Filter;
 import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
@@ -52,9 +54,9 @@ public final class GetUsersRequest {
 
     private final Optional<User> optionalUser;
 
-    private final User excludeUser;
+    private final ExcludeUser excludeUser;
 
-    private final String filter;
+    private final Filter filter;
 
     private final Map<String, Object> additionalProperties;
 
@@ -71,8 +73,8 @@ public final class GetUsersRequest {
             Optional<String> optionalString,
             NestedUser nestedUser,
             Optional<User> optionalUser,
-            User excludeUser,
-            String filter,
+            ExcludeUser excludeUser,
+            Filter filter,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.id = id;
@@ -152,12 +154,12 @@ public final class GetUsersRequest {
     }
 
     @JsonProperty("excludeUser")
-    public User getExcludeUser() {
+    public ExcludeUser getExcludeUser() {
         return excludeUser;
     }
 
     @JsonProperty("filter")
-    public String getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
@@ -248,11 +250,11 @@ public final class GetUsersRequest {
     }
 
     public interface ExcludeUserStage {
-        FilterStage excludeUser(@NotNull User excludeUser);
+        FilterStage excludeUser(@NotNull ExcludeUser excludeUser);
     }
 
     public interface FilterStage {
-        _FinalStage filter(@NotNull String filter);
+        _FinalStage filter(@NotNull Filter filter);
     }
 
     public interface _FinalStage {
@@ -309,9 +311,9 @@ public final class GetUsersRequest {
 
         private NestedUser nestedUser;
 
-        private User excludeUser;
+        private ExcludeUser excludeUser;
 
-        private String filter;
+        private Filter filter;
 
         private Optional<User> optionalUser = Optional.empty();
 
@@ -398,14 +400,14 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         @JsonSetter("excludeUser")
-        public FilterStage excludeUser(@NotNull User excludeUser) {
+        public FilterStage excludeUser(@NotNull ExcludeUser excludeUser) {
             this.excludeUser = Objects.requireNonNull(excludeUser, "excludeUser must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("filter")
-        public _FinalStage filter(@NotNull String filter) {
+        public _FinalStage filter(@NotNull Filter filter) {
             this.filter = Objects.requireNonNull(filter, "filter must not be null");
             return this;
         }
