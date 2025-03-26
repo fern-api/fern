@@ -1,7 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ErrorCollector, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
+import {
+    AbstractConverter,
+    Converters,
+    ErrorCollector,
+    SchemaOrReferenceConverter
+} from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
