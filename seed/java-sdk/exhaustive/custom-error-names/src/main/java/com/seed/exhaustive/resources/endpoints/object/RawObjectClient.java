@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
@@ -32,15 +33,16 @@ public class RawObjectClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<ObjectWithOptionalField> getAndReturnWithOptionalField() {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField() {
         return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
-    public CustomException<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
+            ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
 
-    public CustomException<ObjectWithOptionalField> getAndReturnWithOptionalField(
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -68,7 +70,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }
@@ -82,11 +84,12 @@ public class RawObjectClient {
         }
     }
 
-    public CustomException<ObjectWithRequiredField> getAndReturnWithRequiredField(ObjectWithRequiredField request) {
+    public SeedExhaustiveHttpResponse<ObjectWithRequiredField> getAndReturnWithRequiredField(
+            ObjectWithRequiredField request) {
         return getAndReturnWithRequiredField(request, null);
     }
 
-    public CustomException<ObjectWithRequiredField> getAndReturnWithRequiredField(
+    public SeedExhaustiveHttpResponse<ObjectWithRequiredField> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -114,7 +117,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class),
                         response);
             }
@@ -128,11 +131,11 @@ public class RawObjectClient {
         }
     }
 
-    public CustomException<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
+    public SeedExhaustiveHttpResponse<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
         return getAndReturnWithMapOfMap(request, null);
     }
 
-    public CustomException<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
+    public SeedExhaustiveHttpResponse<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -160,7 +163,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -173,17 +176,17 @@ public class RawObjectClient {
         }
     }
 
-    public CustomException<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
+    public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
         return getAndReturnNestedWithOptionalField(
                 NestedObjectWithOptionalField.builder().build());
     }
 
-    public CustomException<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+    public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request) {
         return getAndReturnNestedWithOptionalField(request, null);
     }
 
-    public CustomException<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+    public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -211,7 +214,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class),
                         response);
             }
@@ -225,12 +228,12 @@ public class RawObjectClient {
         }
     }
 
-    public CustomException<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+    public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request) {
         return getAndReturnNestedWithRequiredField(string, request, null);
     }
 
-    public CustomException<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+    public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -259,7 +262,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class),
                         response);
             }
@@ -273,12 +276,12 @@ public class RawObjectClient {
         }
     }
 
-    public CustomException<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+    public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
             List<NestedObjectWithRequiredField> request) {
         return getAndReturnNestedWithRequiredFieldAsList(request, null);
     }
 
-    public CustomException<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+    public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -306,7 +309,7 @@ public class RawObjectClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class),
                         response);
             }

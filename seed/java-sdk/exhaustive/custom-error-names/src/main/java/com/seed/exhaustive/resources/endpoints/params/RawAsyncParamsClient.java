@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
@@ -40,14 +41,15 @@ public class RawAsyncParamsClient {
     /**
      * GET with path param
      */
-    public CompletableFuture<CustomException<String>> getWithPath(String param) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithPath(String param) {
         return getWithPath(param, null);
     }
 
     /**
      * GET with path param
      */
-    public CompletableFuture<CustomException<String>> getWithPath(String param, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithPath(
+            String param, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -65,13 +67,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
                         return;
                     }
@@ -97,14 +99,14 @@ public class RawAsyncParamsClient {
     /**
      * GET with path param
      */
-    public CompletableFuture<CustomException<String>> getWithInlinePath(GetWithInlinePath request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(GetWithInlinePath request) {
         return getWithInlinePath(request, null);
     }
 
     /**
      * GET with path param
      */
-    public CompletableFuture<CustomException<String>> getWithInlinePath(
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> getWithInlinePath(
             GetWithInlinePath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -123,13 +125,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
                         return;
                     }
@@ -155,14 +157,15 @@ public class RawAsyncParamsClient {
     /**
      * GET with query param
      */
-    public CompletableFuture<CustomException<Void>> getWithQuery(GetWithQuery request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(GetWithQuery request) {
         return getWithQuery(request, null);
     }
 
     /**
      * GET with query param
      */
-    public CompletableFuture<CustomException<Void>> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithQuery(
+            GetWithQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
@@ -177,13 +180,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -208,14 +211,14 @@ public class RawAsyncParamsClient {
     /**
      * GET with multiple of same query param
      */
-    public CompletableFuture<CustomException<Void>> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
         return getWithAllowMultipleQuery(request, null);
     }
 
     /**
      * GET with multiple of same query param
      */
-    public CompletableFuture<CustomException<Void>> getWithAllowMultipleQuery(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithAllowMultipleQuery(
             GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -231,13 +234,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -262,14 +265,15 @@ public class RawAsyncParamsClient {
     /**
      * GET with path and query params
      */
-    public CompletableFuture<CustomException<Void>> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(
+            String param, GetWithPathAndQuery request) {
         return getWithPathAndQuery(param, request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public CompletableFuture<CustomException<Void>> getWithPathAndQuery(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithPathAndQuery(
             String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -286,13 +290,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -317,14 +321,15 @@ public class RawAsyncParamsClient {
     /**
      * GET with path and query params
      */
-    public CompletableFuture<CustomException<Void>> getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
+            GetWithInlinePathAndQuery request) {
         return getWithInlinePathAndQuery(request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public CompletableFuture<CustomException<Void>> getWithInlinePathAndQuery(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithInlinePathAndQuery(
             GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -341,13 +346,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -372,14 +377,14 @@ public class RawAsyncParamsClient {
     /**
      * PUT to update with path param
      */
-    public CompletableFuture<CustomException<String>> modifyWithPath(String param, String request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(String param, String request) {
         return modifyWithPath(param, request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public CompletableFuture<CustomException<String>> modifyWithPath(
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithPath(
             String param, String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -405,13 +410,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
                         return;
                     }
@@ -437,14 +442,15 @@ public class RawAsyncParamsClient {
     /**
      * PUT to update with path param
      */
-    public CompletableFuture<CustomException<String>> modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
+            ModifyResourceAtInlinedPath request) {
         return modifyWithInlinePath(request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public CompletableFuture<CustomException<String>> modifyWithInlinePath(
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> modifyWithInlinePath(
             ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -470,13 +476,13 @@ public class RawAsyncParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
                         return;
                     }

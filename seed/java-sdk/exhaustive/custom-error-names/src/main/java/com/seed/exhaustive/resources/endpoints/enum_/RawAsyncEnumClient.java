@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -31,11 +32,11 @@ public class RawAsyncEnumClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<WeatherReport>> getAndReturnEnum(WeatherReport request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> getAndReturnEnum(WeatherReport request) {
         return getAndReturnEnum(request, null);
     }
 
-    public CompletableFuture<CustomException<WeatherReport>> getAndReturnEnum(
+    public CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> getAndReturnEnum(
             WeatherReport request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -59,13 +60,13 @@ public class RawAsyncEnumClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<WeatherReport>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class),
                                 response));
                         return;

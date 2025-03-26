@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
@@ -36,16 +37,16 @@ public class RawAsyncObjectClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> getAndReturnWithOptionalField() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getAndReturnWithOptionalField() {
         return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> getAndReturnWithOptionalField(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getAndReturnWithOptionalField(
             ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
 
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> getAndReturnWithOptionalField(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -70,13 +71,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<ObjectWithOptionalField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), ObjectWithOptionalField.class),
                                 response));
@@ -101,12 +102,12 @@ public class RawAsyncObjectClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<ObjectWithRequiredField>> getAndReturnWithRequiredField(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> getAndReturnWithRequiredField(
             ObjectWithRequiredField request) {
         return getAndReturnWithRequiredField(request, null);
     }
 
-    public CompletableFuture<CustomException<ObjectWithRequiredField>> getAndReturnWithRequiredField(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -131,13 +132,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<ObjectWithRequiredField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), ObjectWithRequiredField.class),
                                 response));
@@ -162,11 +163,12 @@ public class RawAsyncObjectClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
+            ObjectWithMapOfMap request) {
         return getAndReturnWithMapOfMap(request, null);
     }
 
-    public CompletableFuture<CustomException<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -191,13 +193,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<ObjectWithMapOfMap>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class),
                                 response));
                         return;
@@ -221,18 +223,19 @@ public class RawAsyncObjectClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>>
+            getAndReturnNestedWithOptionalField() {
         return getAndReturnNestedWithOptionalField(
                 NestedObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
-            NestedObjectWithOptionalField request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>>
+            getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request) {
         return getAndReturnNestedWithOptionalField(request, null);
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithOptionalField>> getAndReturnNestedWithOptionalField(
-            NestedObjectWithOptionalField request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>>
+            getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
@@ -256,13 +259,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<NestedObjectWithOptionalField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), NestedObjectWithOptionalField.class),
                                 response));
@@ -287,13 +290,14 @@ public class RawAsyncObjectClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
-            String string, NestedObjectWithRequiredField request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>>
+            getAndReturnNestedWithRequiredField(String string, NestedObjectWithRequiredField request) {
         return getAndReturnNestedWithRequiredField(string, request, null);
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredField(
-            String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>>
+            getAndReturnNestedWithRequiredField(
+                    String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
@@ -318,13 +322,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), NestedObjectWithRequiredField.class),
                                 response));
@@ -349,13 +353,14 @@ public class RawAsyncObjectClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredFieldAsList(
-            List<NestedObjectWithRequiredField> request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>>
+            getAndReturnNestedWithRequiredFieldAsList(List<NestedObjectWithRequiredField> request) {
         return getAndReturnNestedWithRequiredFieldAsList(request, null);
     }
 
-    public CompletableFuture<CustomException<NestedObjectWithRequiredField>> getAndReturnNestedWithRequiredFieldAsList(
-            List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>>
+            getAndReturnNestedWithRequiredFieldAsList(
+                    List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
@@ -379,13 +384,13 @@ public class RawAsyncObjectClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), NestedObjectWithRequiredField.class),
                                 response));

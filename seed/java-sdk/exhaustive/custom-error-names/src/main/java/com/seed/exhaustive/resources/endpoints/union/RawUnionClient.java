@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.union.types.Animal;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -27,11 +28,11 @@ public class RawUnionClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<Animal> getAndReturnUnion(Animal request) {
+    public SeedExhaustiveHttpResponse<Animal> getAndReturnUnion(Animal request) {
         return getAndReturnUnion(request, null);
     }
 
-    public CustomException<Animal> getAndReturnUnion(Animal request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Animal> getAndReturnUnion(Animal request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("union")
@@ -57,7 +58,7 @@ public class RawUnionClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Animal.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 import com.seed.exhaustive.resources.endpoints.put.types.PutResponse;
 import java.io.IOException;
@@ -30,11 +31,12 @@ public class RawAsyncPutClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<PutResponse>> add(PutRequest request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> add(PutRequest request) {
         return add(request, null);
     }
 
-    public CompletableFuture<CustomException<PutResponse>> add(PutRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> add(
+            PutRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(request.getId())
@@ -50,13 +52,13 @@ public class RawAsyncPutClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<PutResponse>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PutResponse.class),
                                 response));
                         return;

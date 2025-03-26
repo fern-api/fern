@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -31,15 +32,16 @@ public class RawAsyncContentTypeClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentType() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentType() {
         return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentType(ObjectWithOptionalField request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentType(
+            ObjectWithOptionalField request) {
         return postJsonPatchContentType(request, null);
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentType(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -63,13 +65,13 @@ public class RawAsyncContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -91,17 +93,17 @@ public class RawAsyncContentTypeClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentWithCharsetType() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType() {
         return postJsonPatchContentWithCharsetType(
                 ObjectWithOptionalField.builder().build());
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentWithCharsetType(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request) {
         return postJsonPatchContentWithCharsetType(request, null);
     }
 
-    public CompletableFuture<CustomException<Void>> postJsonPatchContentWithCharsetType(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -125,13 +127,13 @@ public class RawAsyncContentTypeClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";

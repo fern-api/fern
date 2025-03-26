@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
 import java.util.List;
@@ -32,11 +33,11 @@ public class RawContainerClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<List<String>> getAndReturnListOfPrimitives(List<String> request) {
+    public SeedExhaustiveHttpResponse<List<String>> getAndReturnListOfPrimitives(List<String> request) {
         return getAndReturnListOfPrimitives(request, null);
     }
 
-    public CustomException<List<String>> getAndReturnListOfPrimitives(
+    public SeedExhaustiveHttpResponse<List<String>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -64,7 +65,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<List<String>>() {}),
                         response);
@@ -79,12 +80,12 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
+    public SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request) {
         return getAndReturnListOfObjects(request, null);
     }
 
-    public CustomException<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
+    public SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -112,7 +113,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {}),
                         response);
@@ -127,11 +128,11 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
+    public SeedExhaustiveHttpResponse<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
         return getAndReturnSetOfPrimitives(request, null);
     }
 
-    public CustomException<Set<String>> getAndReturnSetOfPrimitives(
+    public SeedExhaustiveHttpResponse<Set<String>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -159,7 +160,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {}),
                         response);
             }
@@ -173,12 +174,12 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
+    public SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request) {
         return getAndReturnSetOfObjects(request, null);
     }
 
-    public CustomException<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
+    public SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -206,7 +207,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {}),
                         response);
@@ -221,11 +222,11 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<Map<String, String>> getAndReturnMapPrimToPrim(Map<String, String> request) {
+    public SeedExhaustiveHttpResponse<Map<String, String>> getAndReturnMapPrimToPrim(Map<String, String> request) {
         return getAndReturnMapPrimToPrim(request, null);
     }
 
-    public CustomException<Map<String, String>> getAndReturnMapPrimToPrim(
+    public SeedExhaustiveHttpResponse<Map<String, String>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -253,7 +254,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Map<String, String>>() {}),
                         response);
@@ -268,12 +269,12 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+    public SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request) {
         return getAndReturnMapOfPrimToObject(request, null);
     }
 
-    public CustomException<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+    public SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -301,7 +302,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {}),
                         response);
@@ -316,16 +317,16 @@ public class RawContainerClient {
         }
     }
 
-    public CustomException<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
+    public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
     }
 
-    public CustomException<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+    public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);
     }
 
-    public CustomException<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+    public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -356,7 +357,7 @@ public class RawContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {}),
                         response);

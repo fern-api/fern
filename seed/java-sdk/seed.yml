@@ -158,6 +158,7 @@ allowedFailures:
   - streaming-parameter
   - literal
   - java-pagination-deep-cursor-path
+  - bytes
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.

@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -25,11 +26,11 @@ public class RawNoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<ObjectWithOptionalField> getWithNoRequestBody() {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getWithNoRequestBody() {
         return getWithNoRequestBody(null);
     }
 
-    public CustomException<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -48,7 +49,7 @@ public class RawNoReqBodyClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }
@@ -62,11 +63,11 @@ public class RawNoReqBodyClient {
         }
     }
 
-    public CustomException<String> postWithNoRequestBody() {
+    public SeedExhaustiveHttpResponse<String> postWithNoRequestBody() {
         return postWithNoRequestBody(null);
     }
 
-    public CustomException<String> postWithNoRequestBody(RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> postWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -85,7 +86,7 @@ public class RawNoReqBodyClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

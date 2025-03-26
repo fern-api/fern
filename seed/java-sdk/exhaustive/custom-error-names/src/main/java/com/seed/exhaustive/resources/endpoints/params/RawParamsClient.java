@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
@@ -36,14 +37,14 @@ public class RawParamsClient {
     /**
      * GET with path param
      */
-    public CustomException<String> getWithPath(String param) {
+    public SeedExhaustiveHttpResponse<String> getWithPath(String param) {
         return getWithPath(param, null);
     }
 
     /**
      * GET with path param
      */
-    public CustomException<String> getWithPath(String param, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> getWithPath(String param, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -64,7 +65,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -80,14 +81,15 @@ public class RawParamsClient {
     /**
      * GET with path param
      */
-    public CustomException<String> getWithInlinePath(GetWithInlinePath request) {
+    public SeedExhaustiveHttpResponse<String> getWithInlinePath(GetWithInlinePath request) {
         return getWithInlinePath(request, null);
     }
 
     /**
      * GET with path param
      */
-    public CustomException<String> getWithInlinePath(GetWithInlinePath request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> getWithInlinePath(
+            GetWithInlinePath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -108,7 +110,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -124,14 +126,14 @@ public class RawParamsClient {
     /**
      * GET with query param
      */
-    public CustomException<Void> getWithQuery(GetWithQuery request) {
+    public SeedExhaustiveHttpResponse<Void> getWithQuery(GetWithQuery request) {
         return getWithQuery(request, null);
     }
 
     /**
      * GET with query param
      */
-    public CustomException<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
@@ -149,7 +151,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(
@@ -164,14 +166,14 @@ public class RawParamsClient {
     /**
      * GET with multiple of same query param
      */
-    public CustomException<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
+    public SeedExhaustiveHttpResponse<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
         return getWithAllowMultipleQuery(request, null);
     }
 
     /**
      * GET with multiple of same query param
      */
-    public CustomException<Void> getWithAllowMultipleQuery(
+    public SeedExhaustiveHttpResponse<Void> getWithAllowMultipleQuery(
             GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -190,7 +192,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(
@@ -205,14 +207,14 @@ public class RawParamsClient {
     /**
      * GET with path and query params
      */
-    public CustomException<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
+    public SeedExhaustiveHttpResponse<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
         return getWithPathAndQuery(param, request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public CustomException<Void> getWithPathAndQuery(
+    public SeedExhaustiveHttpResponse<Void> getWithPathAndQuery(
             String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -232,7 +234,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(
@@ -247,14 +249,14 @@ public class RawParamsClient {
     /**
      * GET with path and query params
      */
-    public CustomException<Void> getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
+    public SeedExhaustiveHttpResponse<Void> getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
         return getWithInlinePathAndQuery(request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public CustomException<Void> getWithInlinePathAndQuery(
+    public SeedExhaustiveHttpResponse<Void> getWithInlinePathAndQuery(
             GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -274,7 +276,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(
@@ -289,14 +291,15 @@ public class RawParamsClient {
     /**
      * PUT to update with path param
      */
-    public CustomException<String> modifyWithPath(String param, String request) {
+    public SeedExhaustiveHttpResponse<String> modifyWithPath(String param, String request) {
         return modifyWithPath(param, request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public CustomException<String> modifyWithPath(String param, String request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> modifyWithPath(
+            String param, String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
@@ -324,7 +327,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -340,14 +343,14 @@ public class RawParamsClient {
     /**
      * PUT to update with path param
      */
-    public CustomException<String> modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
+    public SeedExhaustiveHttpResponse<String> modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
         return modifyWithInlinePath(request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public CustomException<String> modifyWithInlinePath(
+    public SeedExhaustiveHttpResponse<String> modifyWithInlinePath(
             ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -376,7 +379,7 @@ public class RawParamsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

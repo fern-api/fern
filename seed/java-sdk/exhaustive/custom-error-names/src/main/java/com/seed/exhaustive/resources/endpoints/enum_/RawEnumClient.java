@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -27,11 +28,12 @@ public class RawEnumClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<WeatherReport> getAndReturnEnum(WeatherReport request) {
+    public SeedExhaustiveHttpResponse<WeatherReport> getAndReturnEnum(WeatherReport request) {
         return getAndReturnEnum(request, null);
     }
 
-    public CustomException<WeatherReport> getAndReturnEnum(WeatherReport request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<WeatherReport> getAndReturnEnum(
+            WeatherReport request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("enum")
@@ -57,7 +59,7 @@ public class RawEnumClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

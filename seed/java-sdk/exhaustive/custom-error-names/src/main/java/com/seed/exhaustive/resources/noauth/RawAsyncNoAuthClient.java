@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
@@ -35,14 +36,15 @@ public class RawAsyncNoAuthClient {
     /**
      * POST request with no auth
      */
-    public CompletableFuture<CustomException<Boolean>> postWithNoAuth(Object request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> postWithNoAuth(Object request) {
         return postWithNoAuth(request, null);
     }
 
     /**
      * POST request with no auth
      */
-    public CompletableFuture<CustomException<Boolean>> postWithNoAuth(Object request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> postWithNoAuth(
+            Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-auth")
@@ -65,13 +67,13 @@ public class RawAsyncNoAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Boolean>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response));
                         return;
                     }

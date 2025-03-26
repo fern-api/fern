@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.union.types.Animal;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -31,11 +32,12 @@ public class RawAsyncUnionClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<Animal>> getAndReturnUnion(Animal request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Animal>> getAndReturnUnion(Animal request) {
         return getAndReturnUnion(request, null);
     }
 
-    public CompletableFuture<CustomException<Animal>> getAndReturnUnion(Animal request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Animal>> getAndReturnUnion(
+            Animal request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("union")
@@ -58,13 +60,13 @@ public class RawAsyncUnionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Animal>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Animal>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Animal.class), response));
                         return;
                     }

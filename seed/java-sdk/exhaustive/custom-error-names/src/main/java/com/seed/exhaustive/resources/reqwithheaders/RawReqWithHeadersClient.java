@@ -9,6 +9,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -26,11 +27,11 @@ public class RawReqWithHeadersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<Void> getWithCustomHeader(ReqWithHeaders request) {
+    public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request) {
         return getWithCustomHeader(request, null);
     }
 
-    public CustomException<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test-headers")
@@ -58,7 +59,7 @@ public class RawReqWithHeadersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(

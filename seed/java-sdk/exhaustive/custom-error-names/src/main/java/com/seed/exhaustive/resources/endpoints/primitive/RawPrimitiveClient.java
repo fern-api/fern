@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -28,11 +29,11 @@ public class RawPrimitiveClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<String> getAndReturnString(String request) {
+    public SeedExhaustiveHttpResponse<String> getAndReturnString(String request) {
         return getAndReturnString(request, null);
     }
 
-    public CustomException<String> getAndReturnString(String request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> getAndReturnString(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -59,7 +60,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -72,11 +73,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<Integer> getAndReturnInt(int request) {
+    public SeedExhaustiveHttpResponse<Integer> getAndReturnInt(int request) {
         return getAndReturnInt(request, null);
     }
 
-    public CustomException<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Integer> getAndReturnInt(int request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -103,7 +104,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), int.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -116,11 +117,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<Long> getAndReturnLong(long request) {
+    public SeedExhaustiveHttpResponse<Long> getAndReturnLong(long request) {
         return getAndReturnLong(request, null);
     }
 
-    public CustomException<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Long> getAndReturnLong(long request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -147,7 +148,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), long.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -160,11 +161,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<Double> getAndReturnDouble(double request) {
+    public SeedExhaustiveHttpResponse<Double> getAndReturnDouble(double request) {
         return getAndReturnDouble(request, null);
     }
 
-    public CustomException<Double> getAndReturnDouble(double request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Double> getAndReturnDouble(double request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -191,7 +192,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), double.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -204,11 +205,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<Boolean> getAndReturnBool(boolean request) {
+    public SeedExhaustiveHttpResponse<Boolean> getAndReturnBool(boolean request) {
         return getAndReturnBool(request, null);
     }
 
-    public CustomException<Boolean> getAndReturnBool(boolean request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Boolean> getAndReturnBool(boolean request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -235,7 +236,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -248,11 +249,12 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
+    public SeedExhaustiveHttpResponse<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request) {
         return getAndReturnDatetime(request, null);
     }
 
-    public CustomException<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<OffsetDateTime> getAndReturnDatetime(
+            OffsetDateTime request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -279,7 +281,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), OffsetDateTime.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -292,11 +294,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<String> getAndReturnDate(String request) {
+    public SeedExhaustiveHttpResponse<String> getAndReturnDate(String request) {
         return getAndReturnDate(request, null);
     }
 
-    public CustomException<String> getAndReturnDate(String request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> getAndReturnDate(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -323,7 +325,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -336,11 +338,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<UUID> getAndReturnUuid(UUID request) {
+    public SeedExhaustiveHttpResponse<UUID> getAndReturnUuid(UUID request) {
         return getAndReturnUuid(request, null);
     }
 
-    public CustomException<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -367,7 +369,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -380,11 +382,11 @@ public class RawPrimitiveClient {
         }
     }
 
-    public CustomException<byte[]> getAndReturnBase64(byte[] request) {
+    public SeedExhaustiveHttpResponse<byte[]> getAndReturnBase64(byte[] request) {
         return getAndReturnBase64(request, null);
     }
 
-    public CustomException<byte[]> getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<byte[]> getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -411,7 +413,7 @@ public class RawPrimitiveClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), byte[].class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

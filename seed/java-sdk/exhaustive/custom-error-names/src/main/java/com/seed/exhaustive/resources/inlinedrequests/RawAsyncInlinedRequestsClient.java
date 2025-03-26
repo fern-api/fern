@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
@@ -37,7 +38,7 @@ public class RawAsyncInlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> postWithObjectBodyandResponse(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> postWithObjectBodyandResponse(
             PostWithObjectBody request) {
         return postWithObjectBodyandResponse(request, null);
     }
@@ -45,7 +46,7 @@ public class RawAsyncInlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> postWithObjectBodyandResponse(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -70,13 +71,13 @@ public class RawAsyncInlinedRequestsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<ObjectWithOptionalField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), ObjectWithOptionalField.class),
                                 response));

@@ -9,6 +9,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -30,11 +31,11 @@ public class RawAsyncReqWithHeadersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<Void>> getWithCustomHeader(ReqWithHeaders request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithCustomHeader(ReqWithHeaders request) {
         return getWithCustomHeader(request, null);
     }
 
-    public CompletableFuture<CustomException<Void>> getWithCustomHeader(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Void>> getWithCustomHeader(
             ReqWithHeaders request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -60,13 +61,13 @@ public class RawAsyncReqWithHeadersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Void>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(null, response));
+                        future.complete(new SeedExhaustiveHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";

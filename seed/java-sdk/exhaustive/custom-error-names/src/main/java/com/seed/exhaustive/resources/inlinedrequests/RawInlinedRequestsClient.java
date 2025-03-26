@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
@@ -33,14 +34,15 @@ public class RawInlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public CustomException<ObjectWithOptionalField> postWithObjectBodyandResponse(PostWithObjectBody request) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> postWithObjectBodyandResponse(
+            PostWithObjectBody request) {
         return postWithObjectBodyandResponse(request, null);
     }
 
     /**
      * POST with custom object in request body, response is an object
      */
-    public CustomException<ObjectWithOptionalField> postWithObjectBodyandResponse(
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -68,7 +70,7 @@ public class RawInlinedRequestsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }

@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
@@ -28,11 +29,11 @@ public class RawHttpMethodsClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<String> testGet(String id) {
+    public SeedExhaustiveHttpResponse<String> testGet(String id) {
         return testGet(id, null);
     }
 
-    public CustomException<String> testGet(String id, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> testGet(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
@@ -52,7 +53,7 @@ public class RawHttpMethodsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -65,11 +66,11 @@ public class RawHttpMethodsClient {
         }
     }
 
-    public CustomException<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
         return testPost(request, null);
     }
 
-    public CustomException<ObjectWithOptionalField> testPost(
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPost(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -96,7 +97,7 @@ public class RawHttpMethodsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }
@@ -110,11 +111,11 @@ public class RawHttpMethodsClient {
         }
     }
 
-    public CustomException<ObjectWithOptionalField> testPut(String id, ObjectWithRequiredField request) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPut(String id, ObjectWithRequiredField request) {
         return testPut(id, request, null);
     }
 
-    public CustomException<ObjectWithOptionalField> testPut(
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPut(
             String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -142,7 +143,7 @@ public class RawHttpMethodsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }
@@ -156,15 +157,15 @@ public class RawHttpMethodsClient {
         }
     }
 
-    public CustomException<ObjectWithOptionalField> testPatch(String id) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPatch(String id) {
         return testPatch(id, ObjectWithOptionalField.builder().build());
     }
 
-    public CustomException<ObjectWithOptionalField> testPatch(String id, ObjectWithOptionalField request) {
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPatch(String id, ObjectWithOptionalField request) {
         return testPatch(id, request, null);
     }
 
-    public CustomException<ObjectWithOptionalField> testPatch(
+    public SeedExhaustiveHttpResponse<ObjectWithOptionalField> testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -192,7 +193,7 @@ public class RawHttpMethodsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class),
                         response);
             }
@@ -206,11 +207,11 @@ public class RawHttpMethodsClient {
         }
     }
 
-    public CustomException<Boolean> testDelete(String id) {
+    public SeedExhaustiveHttpResponse<Boolean> testDelete(String id) {
         return testDelete(id, null);
     }
 
-    public CustomException<Boolean> testDelete(String id, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Boolean> testDelete(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
@@ -230,7 +231,7 @@ public class RawHttpMethodsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

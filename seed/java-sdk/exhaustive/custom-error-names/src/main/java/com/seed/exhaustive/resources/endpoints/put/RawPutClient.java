@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 import com.seed.exhaustive.resources.endpoints.put.types.PutResponse;
 import java.io.IOException;
@@ -26,11 +27,11 @@ public class RawPutClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<PutResponse> add(PutRequest request) {
+    public SeedExhaustiveHttpResponse<PutResponse> add(PutRequest request) {
         return add(request, null);
     }
 
-    public CustomException<PutResponse> add(PutRequest request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<PutResponse> add(PutRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(request.getId())
@@ -49,7 +50,7 @@ public class RawPutClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PutResponse.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

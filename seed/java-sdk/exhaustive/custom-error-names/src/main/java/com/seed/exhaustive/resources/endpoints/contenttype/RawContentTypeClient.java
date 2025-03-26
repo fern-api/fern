@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -27,15 +28,15 @@ public class RawContentTypeClient {
         this.clientOptions = clientOptions;
     }
 
-    public CustomException<Void> postJsonPatchContentType() {
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType() {
         return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
-    public CustomException<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
         return postJsonPatchContentType(request, null);
     }
 
-    public CustomException<Void> postJsonPatchContentType(
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -62,7 +63,7 @@ public class RawContentTypeClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(
@@ -74,16 +75,16 @@ public class RawContentTypeClient {
         }
     }
 
-    public CustomException<Void> postJsonPatchContentWithCharsetType() {
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType() {
         return postJsonPatchContentWithCharsetType(
                 ObjectWithOptionalField.builder().build());
     }
 
-    public CustomException<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
         return postJsonPatchContentWithCharsetType(request, null);
     }
 
-    public CustomException<Void> postJsonPatchContentWithCharsetType(
+    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -110,7 +111,7 @@ public class RawContentTypeClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(null, response);
+                return new SeedExhaustiveHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new CustomApiException(

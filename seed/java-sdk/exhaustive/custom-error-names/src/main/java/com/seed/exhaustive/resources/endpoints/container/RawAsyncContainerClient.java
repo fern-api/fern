@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
 import java.util.List;
@@ -36,11 +37,12 @@ public class RawAsyncContainerClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<List<String>>> getAndReturnListOfPrimitives(List<String> request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<List<String>>> getAndReturnListOfPrimitives(
+            List<String> request) {
         return getAndReturnListOfPrimitives(request, null);
     }
 
-    public CompletableFuture<CustomException<List<String>>> getAndReturnListOfPrimitives(
+    public CompletableFuture<SeedExhaustiveHttpResponse<List<String>>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -65,13 +67,13 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<List<String>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<List<String>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), new TypeReference<List<String>>() {}),
                                 response));
@@ -96,12 +98,12 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
+    public CompletableFuture<SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request) {
         return getAndReturnListOfObjects(request, null);
     }
 
-    public CompletableFuture<CustomException<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
+    public CompletableFuture<SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -126,13 +128,13 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<List<ObjectWithRequiredField>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {}),
                                 response));
@@ -157,11 +159,11 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Set<String>>> getAndReturnSetOfPrimitives(Set<String> request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Set<String>>> getAndReturnSetOfPrimitives(Set<String> request) {
         return getAndReturnSetOfPrimitives(request, null);
     }
 
-    public CompletableFuture<CustomException<Set<String>>> getAndReturnSetOfPrimitives(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Set<String>>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -186,13 +188,13 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Set<String>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Set<String>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), new TypeReference<Set<String>>() {}),
                                 response));
@@ -217,12 +219,12 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request) {
         return getAndReturnSetOfObjects(request, null);
     }
 
-    public CompletableFuture<CustomException<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -247,13 +249,13 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Set<ObjectWithRequiredField>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {}),
                                 response));
@@ -278,12 +280,12 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Map<String, String>>> getAndReturnMapPrimToPrim(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Map<String, String>>> getAndReturnMapPrimToPrim(
             Map<String, String> request) {
         return getAndReturnMapPrimToPrim(request, null);
     }
 
-    public CompletableFuture<CustomException<Map<String, String>>> getAndReturnMapPrimToPrim(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Map<String, String>>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -308,13 +310,13 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Map<String, String>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Map<String, String>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), new TypeReference<Map<String, String>>() {}),
                                 response));
@@ -339,13 +341,13 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
-            Map<String, ObjectWithRequiredField> request) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>>>
+            getAndReturnMapOfPrimToObject(Map<String, ObjectWithRequiredField> request) {
         return getAndReturnMapOfPrimToObject(request, null);
     }
 
-    public CompletableFuture<CustomException<Map<String, ObjectWithRequiredField>>> getAndReturnMapOfPrimToObject(
-            Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>>>
+            getAndReturnMapOfPrimToObject(Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
@@ -369,13 +371,14 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Map<String, ObjectWithRequiredField>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>>> future =
+                new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(),
                                         new TypeReference<Map<String, ObjectWithRequiredField>>() {}),
@@ -401,16 +404,16 @@ public class RawAsyncContainerClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<Optional<ObjectWithRequiredField>>> getAndReturnOptional() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
     }
 
-    public CompletableFuture<CustomException<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);
     }
 
-    public CompletableFuture<CustomException<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
+    public CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -438,13 +441,14 @@ public class RawAsyncContainerClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<Optional<ObjectWithRequiredField>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> future =
+                new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(),
                                         new TypeReference<Optional<ObjectWithRequiredField>>() {}),

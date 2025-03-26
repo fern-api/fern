@@ -102,11 +102,8 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getHttpResponseClassName(
             String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
-        String name = customConfig
-                .baseExceptionClassName()
-                .orElseGet(() ->
-                        customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
-                                + "HttpResponse");
+        String name = customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                + "HttpResponse";
         return getCoreClassName(name);
     }
 

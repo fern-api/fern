@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -29,11 +30,11 @@ public class RawAsyncNoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> getWithNoRequestBody() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getWithNoRequestBody() {
         return getWithNoRequestBody(null);
     }
 
-    public CompletableFuture<CustomException<ObjectWithOptionalField>> getWithNoRequestBody(
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getWithNoRequestBody(
             RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -50,13 +51,13 @@ public class RawAsyncNoReqBodyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<ObjectWithOptionalField>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), ObjectWithOptionalField.class),
                                 response));
@@ -81,11 +82,11 @@ public class RawAsyncNoReqBodyClient {
         return future;
     }
 
-    public CompletableFuture<CustomException<String>> postWithNoRequestBody() {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithNoRequestBody() {
         return postWithNoRequestBody(null);
     }
 
-    public CompletableFuture<CustomException<String>> postWithNoRequestBody(RequestOptions requestOptions) {
+    public CompletableFuture<SeedExhaustiveHttpResponse<String>> postWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-req-body")
@@ -101,13 +102,13 @@ public class RawAsyncNoReqBodyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<CustomException<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful()) {
-                        future.complete(new CustomException<>(
+                        future.complete(new SeedExhaustiveHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
                         return;
                     }

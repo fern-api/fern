@@ -10,6 +10,7 @@ import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
@@ -31,14 +32,14 @@ public class RawNoAuthClient {
     /**
      * POST request with no auth
      */
-    public CustomException<Boolean> postWithNoAuth(Object request) {
+    public SeedExhaustiveHttpResponse<Boolean> postWithNoAuth(Object request) {
         return postWithNoAuth(request, null);
     }
 
     /**
      * POST request with no auth
      */
-    public CustomException<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("no-auth")
@@ -64,7 +65,7 @@ public class RawNoAuthClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new CustomException<>(
+                return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
