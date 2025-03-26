@@ -714,13 +714,13 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
-                api,
+                api: api as any,
                 snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                api as any,
                 parentSlug,
                 workspace,
                 this.docsWorkspace,

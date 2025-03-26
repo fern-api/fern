@@ -178,7 +178,7 @@ export async function parseDocsConfiguration({
         css,
         js,
 
-        aiChat,
+        aiChatConfig: aiChat,
 
         experimental
     };
