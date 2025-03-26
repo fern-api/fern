@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import com.seed.fileUpload.resources.service.types.JustFileWithQueryParamsRequestListOfStrings;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public final class JustFileWithQueryParamsRequest {
 
     private final Optional<Integer> maybeInteger;
 
-    private final String listOfStrings;
+    private final JustFileWithQueryParamsRequestListOfStrings listOfStrings;
 
     private final Optional<String> optionalListOfStrings;
 
@@ -37,7 +38,7 @@ public final class JustFileWithQueryParamsRequest {
             Optional<String> maybeString,
             int integer,
             Optional<Integer> maybeInteger,
-            String listOfStrings,
+            JustFileWithQueryParamsRequestListOfStrings listOfStrings,
             Optional<String> optionalListOfStrings,
             Map<String, Object> additionalProperties) {
         this.maybeString = maybeString;
@@ -64,7 +65,7 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     @JsonProperty("listOfStrings")
-    public String getListOfStrings() {
+    public JustFileWithQueryParamsRequestListOfStrings getListOfStrings() {
         return listOfStrings;
     }
 
@@ -114,7 +115,7 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     public interface ListOfStringsStage {
-        _FinalStage listOfStrings(@NotNull String listOfStrings);
+        _FinalStage listOfStrings(@NotNull JustFileWithQueryParamsRequestListOfStrings listOfStrings);
     }
 
     public interface _FinalStage {
@@ -137,7 +138,7 @@ public final class JustFileWithQueryParamsRequest {
     public static final class Builder implements IntegerStage, ListOfStringsStage, _FinalStage {
         private int integer;
 
-        private String listOfStrings;
+        private JustFileWithQueryParamsRequestListOfStrings listOfStrings;
 
         private Optional<String> optionalListOfStrings = Optional.empty();
 
@@ -169,7 +170,7 @@ public final class JustFileWithQueryParamsRequest {
 
         @java.lang.Override
         @JsonSetter("listOfStrings")
-        public _FinalStage listOfStrings(@NotNull String listOfStrings) {
+        public _FinalStage listOfStrings(@NotNull JustFileWithQueryParamsRequestListOfStrings listOfStrings) {
             this.listOfStrings = Objects.requireNonNull(listOfStrings, "listOfStrings must not be null");
             return this;
         }

@@ -19,25 +19,28 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetWithMultipleQuery.Builder.class)
 public final class GetWithMultipleQuery {
-    private final String query;
+    private final GetWithMultipleQueryQuery query;
 
-    private final int number;
+    private final GetWithMultipleQueryNumber number;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithMultipleQuery(String query, int number, Map<String, Object> additionalProperties) {
+    private GetWithMultipleQuery(
+            GetWithMultipleQueryQuery query,
+            GetWithMultipleQueryNumber number,
+            Map<String, Object> additionalProperties) {
         this.query = query;
         this.number = number;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("query")
-    public String getQuery() {
+    public GetWithMultipleQueryQuery getQuery() {
         return query;
     }
 
     @JsonProperty("number")
-    public int getNumber() {
+    public GetWithMultipleQueryNumber getNumber() {
         return number;
     }
 
@@ -53,7 +56,7 @@ public final class GetWithMultipleQuery {
     }
 
     private boolean equalTo(GetWithMultipleQuery other) {
-        return query.equals(other.query) && number == other.number;
+        return query.equals(other.query) && number.equals(other.number);
     }
 
     @java.lang.Override
@@ -71,13 +74,13 @@ public final class GetWithMultipleQuery {
     }
 
     public interface QueryStage {
-        NumberStage query(@NotNull String query);
+        NumberStage query(@NotNull GetWithMultipleQueryQuery query);
 
         Builder from(GetWithMultipleQuery other);
     }
 
     public interface NumberStage {
-        _FinalStage number(int number);
+        _FinalStage number(@NotNull GetWithMultipleQueryNumber number);
     }
 
     public interface _FinalStage {
@@ -86,9 +89,9 @@ public final class GetWithMultipleQuery {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements QueryStage, NumberStage, _FinalStage {
-        private String query;
+        private GetWithMultipleQueryQuery query;
 
-        private int number;
+        private GetWithMultipleQueryNumber number;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -104,15 +107,15 @@ public final class GetWithMultipleQuery {
 
         @java.lang.Override
         @JsonSetter("query")
-        public NumberStage query(@NotNull String query) {
+        public NumberStage query(@NotNull GetWithMultipleQueryQuery query) {
             this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("number")
-        public _FinalStage number(int number) {
-            this.number = number;
+        public _FinalStage number(@NotNull GetWithMultipleQueryNumber number) {
+            this.number = Objects.requireNonNull(number, "number must not be null");
             return this;
         }
 
