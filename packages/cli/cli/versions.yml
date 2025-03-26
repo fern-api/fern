@@ -3,7 +3,7 @@
       Add AI chat config block to docs.yml for model/system prompt customization
     type: feat
   irVersion: 57
-  version: 0.57.1
+  version: docs@0.12.5
 
 - changelogEntry:
   - summary: |
