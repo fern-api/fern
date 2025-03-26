@@ -10,6 +10,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import java.util.Map;
 
 public class AsyncSubpackageClientGenerator extends AbstractSubpackageClientGenerator {
@@ -51,5 +52,10 @@ public class AsyncSubpackageClientGenerator extends AbstractSubpackageClientGene
                 requestOptionsFile,
                 subpackage,
                 generatedErrors);
+    }
+
+    @Override
+    protected ClassName rawClientImplName(ClassName implClientName) {
+        return ClassName.get(implClientName.packageName(), "AsyncRaw" + implClientName.simpleName());
     }
 }

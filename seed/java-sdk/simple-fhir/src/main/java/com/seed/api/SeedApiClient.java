@@ -4,60 +4,32 @@
 package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.SeedApiApiException;
-import com.seed.api.core.SeedApiException;
 import com.seed.api.types.Account;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
 
+    private final RawSeedApiClient rawClient;
+
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawSeedApiClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawSeedApiClient withRawResponse() {
+        return this.rawClient;
     }
 
     public Account getAccount(String accountId) {
-        return getAccount(accountId, null);
+        return this.rawClient.getAccount(accountId).body();
     }
 
     public Account getAccount(String accountId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("account")
-                .addPathSegment(accountId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Account.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedApiApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getAccount(accountId, requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

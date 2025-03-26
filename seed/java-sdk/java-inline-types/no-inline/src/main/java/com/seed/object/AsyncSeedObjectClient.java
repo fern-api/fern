@@ -3,203 +3,55 @@
  */
 package com.seed.object;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.object.core.ClientOptions;
-import com.seed.object.core.MediaTypes;
-import com.seed.object.core.ObjectMappers;
 import com.seed.object.core.RequestOptions;
-import com.seed.object.core.SeedObjectApiException;
-import com.seed.object.core.SeedObjectException;
 import com.seed.object.requests.GetDiscriminatedUnionRequest;
 import com.seed.object.requests.GetUndiscriminatedUnionRequest;
 import com.seed.object.requests.PostRootRequest;
 import com.seed.object.types.RootType1;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncSeedObjectClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawSeedObjectClient rawClient;
+
     public AsyncSeedObjectClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawSeedObjectClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawSeedObjectClient withRawResponse() {
+        return this.rawClient;
     }
 
     public CompletableFuture<RootType1> getRoot(PostRootRequest request) {
-        return getRoot(request, null);
+        return this.rawClient.getRoot(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<RootType1> getRoot(PostRootRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("root")
-                .addPathSegments("root")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedObjectException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<RootType1> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RootType1.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedObjectApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getRoot(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> getDiscriminatedUnion(GetDiscriminatedUnionRequest request) {
-        return getDiscriminatedUnion(request, null);
+        return this.rawClient.getDiscriminatedUnion(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> getDiscriminatedUnion(
             GetDiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("root")
-                .addPathSegments("discriminated-union")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedObjectException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedObjectApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getDiscriminatedUnion(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> getUndiscriminatedUnion(GetUndiscriminatedUnionRequest request) {
-        return getUndiscriminatedUnion(request, null);
+        return this.rawClient.getUndiscriminatedUnion(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> getUndiscriminatedUnion(
             GetUndiscriminatedUnionRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("root")
-                .addPathSegments("undiscriminated-union")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedObjectException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(null);
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedObjectApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedObjectException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getUndiscriminatedUnion(request, requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedObjectClientBuilder builder() {

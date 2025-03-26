@@ -3,174 +3,52 @@
  */
 package com.seed.customAuth.resources.customauth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.customAuth.core.ClientOptions;
-import com.seed.customAuth.core.MediaTypes;
-import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
-import com.seed.customAuth.core.SeedCustomAuthApiException;
-import com.seed.customAuth.core.SeedCustomAuthException;
-import com.seed.customAuth.resources.errors.errors.BadRequest;
-import com.seed.customAuth.resources.errors.errors.UnauthorizedRequest;
-import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncCustomAuthClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawCustomAuthClient rawClient;
+
     public AsyncCustomAuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawCustomAuthClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawCustomAuthClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * GET request with custom auth scheme
      */
     public CompletableFuture<Boolean> getWithCustomAuth() {
-        return getWithCustomAuth(null);
+        return this.rawClient.getWithCustomAuth().thenApply(response -> response.body());
     }
 
     /**
      * GET request with custom auth scheme
      */
     public CompletableFuture<Boolean> getWithCustomAuth(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("custom-auth")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    try {
-                        if (response.code() == 401) {
-                            future.completeExceptionally(new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                                    responseBodyString, UnauthorizedRequestErrorBody.class)));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    future.completeExceptionally(new SeedCustomAuthApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedCustomAuthException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedCustomAuthException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getWithCustomAuth(requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * POST request with custom auth scheme
      */
     public CompletableFuture<Boolean> postWithCustomAuth(Object request) {
-        return postWithCustomAuth(request, null);
+        return this.rawClient.postWithCustomAuth(request).thenApply(response -> response.body());
     }
 
     /**
      * POST request with custom auth scheme
      */
     public CompletableFuture<Boolean> postWithCustomAuth(Object request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("custom-auth")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedCustomAuthException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    try {
-                        switch (response.code()) {
-                            case 400:
-                                future.completeExceptionally(new BadRequest(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                                return;
-                            case 401:
-                                future.completeExceptionally(
-                                        new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                                                responseBodyString, UnauthorizedRequestErrorBody.class)));
-                                return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    future.completeExceptionally(new SeedCustomAuthApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedCustomAuthException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedCustomAuthException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.postWithCustomAuth(request, requestOptions).thenApply(response -> response.body());
     }
 }

@@ -158,7 +158,6 @@ it.skip("finds webhook by id and by path/method", () => {
                 availability: undefined,
                 namespace: [],
                 operationId: "userCreated",
-                queryParameters: []
             }
         },
         types: {},

@@ -60,6 +60,11 @@ public class SyncRootClientGenerator extends AbstractRootClientGenerator {
     }
 
     @Override
+    protected ClassName rawClientName() {
+        return ClassName.get(className.packageName(), "Raw" + className.simpleName());
+    }
+
+    @Override
     protected ClassName builderName() {
         return ClassName.get(className.packageName(), className.simpleName() + "Builder");
     }

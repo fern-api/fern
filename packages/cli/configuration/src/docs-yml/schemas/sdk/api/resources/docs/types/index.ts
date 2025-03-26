@@ -8,6 +8,8 @@ export * from "./GtmConfig";
 export * from "./GoogleAnalytics4Config";
 export * from "./DocsConfiguration";
 export * from "./TabId";
+export * from "./AiChatConfig";
+export * from "./AiChatModel";
 export * from "./TabConfig";
 export * from "./ChangelogFolderRelativePath";
 export * from "./DocsInstance";

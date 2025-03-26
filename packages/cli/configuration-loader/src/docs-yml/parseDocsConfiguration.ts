@@ -54,6 +54,8 @@ export async function parseDocsConfiguration({
         css: rawCssConfig,
         js: rawJsConfig,
 
+        aiChat,
+
         experimental
     } = rawDocsConfiguration;
 
@@ -175,6 +177,8 @@ export async function parseDocsConfiguration({
         /* scripts */
         css,
         js,
+
+        aiChatConfig: aiChat,
 
         experimental
     };
