@@ -204,8 +204,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
                 AsIsFiles.IIsRetryableContent,
                 AsIsFiles.JsonRequest,
                 AsIsFiles.MultipartFormRequest,
-                AsIsFiles.NdJsonContent,
-                AsIsFiles.NdJsonRequest,
+                // AsIsFiles.NdJsonContent,
+                // AsIsFiles.NdJsonRequest,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
                 AsIsFiles.StreamRequest

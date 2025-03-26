@@ -13,10 +13,6 @@
   changelogEntry:
     - type: chore
       summary: Restructure internal HTTP classes to allow for more granular Fern ignoring.
-    - type: feat
-      summary: |
-        Add `NdJsonContent` and `NdJsonRequest` classes to support NDJSON requests.
-        Currently, endpoints with NDJSON requests are not supported, but this aids manual implementation combined with Fern ignoring.
 
 - version: 1.15.10
   createdAt: "2025-03-22"
