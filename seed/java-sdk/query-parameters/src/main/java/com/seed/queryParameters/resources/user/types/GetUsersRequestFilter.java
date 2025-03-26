@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@JsonDeserialize(using = ExcludeUser.Deserializer.class)
-public final class ExcludeUser {
+@JsonDeserialize(using = GetUsersRequestFilter.Deserializer.class)
+public final class GetUsersRequestFilter {
     private final Object value;
 
     private final int type;
 
-    private ExcludeUser(Object value, int type) {
+    private GetUsersRequestFilter(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -33,9 +33,9 @@ public final class ExcludeUser {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((User) this.value);
+            return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((List<User>) this.value);
+            return visitor.visit((List<String>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -43,10 +43,10 @@ public final class ExcludeUser {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ExcludeUser && equalTo((ExcludeUser) other);
+        return other instanceof GetUsersRequestFilter && equalTo((GetUsersRequestFilter) other);
     }
 
-    private boolean equalTo(ExcludeUser other) {
+    private boolean equalTo(GetUsersRequestFilter other) {
         return value.equals(other.value);
     }
 
@@ -60,34 +60,34 @@ public final class ExcludeUser {
         return this.value.toString();
     }
 
-    public static ExcludeUser of(User value) {
-        return new ExcludeUser(value, 0);
+    public static GetUsersRequestFilter of(String value) {
+        return new GetUsersRequestFilter(value, 0);
     }
 
-    public static ExcludeUser of(List<User> value) {
-        return new ExcludeUser(value, 1);
+    public static GetUsersRequestFilter of(List<String> value) {
+        return new GetUsersRequestFilter(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(User value);
+        T visit(String value);
 
-        T visit(List<User> value);
+        T visit(List<String> value);
     }
 
-    static final class Deserializer extends StdDeserializer<ExcludeUser> {
+    static final class Deserializer extends StdDeserializer<GetUsersRequestFilter> {
         Deserializer() {
-            super(ExcludeUser.class);
+            super(GetUsersRequestFilter.class);
         }
 
         @java.lang.Override
-        public ExcludeUser deserialize(JsonParser p, DeserializationContext context) throws IOException {
+        public GetUsersRequestFilter deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, User.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<User>>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

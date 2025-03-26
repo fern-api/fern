@@ -125,8 +125,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             TypeReference valueType = queryParameter.getValueType();
 
             if (queryParameter.getAllowMultiple() && !valueType.isContainer()) {
-                ExplodedQueryParameterGenerator queryParameterGenerator =
-                        new ExplodedQueryParameterGenerator(generatorContext, httpService, queryParameter);
+                ExplodedQueryParameterGenerator queryParameterGenerator = new ExplodedQueryParameterGenerator(
+                        generatorContext, httpService, sdkRequestWrapper.getWrapperName(), queryParameter);
                 GeneratedJavaFile explodedQueryParameterClass = queryParameterGenerator.generate();
                 valueType = queryParameterGenerator.asValueType();
                 explodedQueryParameterClasses.add(explodedQueryParameterClass);

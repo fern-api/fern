@@ -1,5 +1,6 @@
 package com.fern.java.client.generators;
 
+import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.QueryParameter;
@@ -14,6 +15,7 @@ import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.UndiscriminatedUnionGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.Optional;
 import java.util.Set;
@@ -28,14 +30,17 @@ public class ExplodedQueryParameterGenerator {
     private final DeclaredTypeName declaredTypeName;
 
     public ExplodedQueryParameterGenerator(
-            ClientGeneratorContext generatorContext, HttpService httpService, QueryParameter queryParameter) {
+            ClientGeneratorContext generatorContext,
+            HttpService httpService,
+            Name wrapperName,
+            QueryParameter queryParameter) {
         this.queryParameter = queryParameter;
         this.generatorContext = generatorContext;
         this.prefix = queryParameter.getName().getName().getPascalCase().getUnsafeName();
         this.declaredTypeName = DeclaredTypeName.builder()
                 .typeId(TypeId.of(UUID.randomUUID() + "_" + this.prefix))
                 .fernFilepath(httpService.getName().getFernFilepath())
-                .name(queryParameter.getName().getName())
+                .name(NameUtils.concat(wrapperName, queryParameter.getName().getName()))
                 .build();
         this.className = generatorContext.getPoetClassNameFactory().getTypeClassName(this.declaredTypeName);
     }
