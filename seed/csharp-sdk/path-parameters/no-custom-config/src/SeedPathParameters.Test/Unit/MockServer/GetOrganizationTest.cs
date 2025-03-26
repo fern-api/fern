@@ -37,8 +37,7 @@ public class GetOrganizationTest : BaseMockServerTest
 
         var response = await Client.Organizations.GetOrganizationAsync(
             "tenant_id",
-            "organization_id",
-            RequestOptions
+            "organization_id"
         );
         Assert.That(
             response,

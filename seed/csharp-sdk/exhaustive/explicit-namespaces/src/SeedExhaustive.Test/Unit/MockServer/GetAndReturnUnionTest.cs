@@ -43,8 +43,7 @@ public class GetAndReturnUnionTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Dog { Name = "name", LikesToWoof = true },
-            RequestOptions
+            new Dog { Name = "name", LikesToWoof = true }
         );
         Assert.That(
             response,

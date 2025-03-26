@@ -31,7 +31,7 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Sysprop.GetNumWarmInstancesAsync(RequestOptions);
+        var response = await Client.Sysprop.GetNumWarmInstancesAsync();
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Dictionary<Language, int>>(mockResponse))

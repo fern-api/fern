@@ -25,7 +25,7 @@ public class TestDeleteTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("id", RequestOptions);
+        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("id");
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

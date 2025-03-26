@@ -44,8 +44,7 @@ public class SendWorkspaceSubmissionUpdateTest : BaseMockServerTest
                             DateTimeStyles.AdjustToUniversal
                         ),
                         UpdateInfo = RunningSubmissionState.QueueingSubmission,
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

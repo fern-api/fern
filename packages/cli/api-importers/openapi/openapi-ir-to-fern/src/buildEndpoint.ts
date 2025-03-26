@@ -241,6 +241,13 @@ export function buildEndpoint({
                     "status-code": fileResponse.statusCode
                 };
             },
+            bytes: (bytesResponse) => {
+                convertedEndpoint.response = {
+                    docs: bytesResponse.description ?? undefined,
+                    type: "bytes",
+                    "status-code": bytesResponse.statusCode
+                };
+            },
             streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,

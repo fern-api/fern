@@ -33,11 +33,7 @@ public class ModifyWithPathTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Params.ModifyWithPathAsync(
-            "param",
-            "string",
-            RequestOptions
-        );
+        var response = await Client.Endpoints.Params.ModifyWithPathAsync("param", "string");
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

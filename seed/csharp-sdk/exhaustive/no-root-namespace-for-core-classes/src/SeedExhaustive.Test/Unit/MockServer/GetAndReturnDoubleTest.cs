@@ -33,10 +33,7 @@ public class GetAndReturnDoubleTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnDoubleAsync(
-            1.1,
-            RequestOptions
-        );
+        var response = await Client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<double>(mockResponse)));
     }
 }

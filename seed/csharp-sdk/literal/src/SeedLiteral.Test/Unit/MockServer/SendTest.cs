@@ -86,8 +86,7 @@ public class SendTest : BaseMockServerTest
                         },
                     },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
@@ -158,8 +157,7 @@ public class SendTest : BaseMockServerTest
                         },
                     },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

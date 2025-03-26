@@ -46,8 +46,7 @@ public class CreateUserTest : BaseMockServerTest
                 Type = "CreateUserRequest",
                 Version = "v1",
                 Name = "name",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

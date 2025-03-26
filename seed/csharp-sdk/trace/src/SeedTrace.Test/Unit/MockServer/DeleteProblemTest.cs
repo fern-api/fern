@@ -17,8 +17,6 @@ public class DeleteProblemTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Problem.DeleteProblemAsync("problemId", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Problem.DeleteProblemAsync("problemId"));
     }
 }

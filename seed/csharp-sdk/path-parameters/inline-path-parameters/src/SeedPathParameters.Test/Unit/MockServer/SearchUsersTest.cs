@@ -51,8 +51,7 @@ public class SearchUsersTest : BaseMockServerTest
                 TenantId = "tenant_id",
                 UserId = "user_id",
                 Limit = 1,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

@@ -4,6 +4,7 @@ import { ExampleEndpointCall, HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ServersConverter } from "../../servers/ServersConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
@@ -23,11 +24,16 @@ export declare namespace OperationConverter {
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
     private readonly servers?: OpenAPIV3_1.ServerObject[];
+    private readonly streamingExtensionConverter: FernStreamingExtension;
 
     constructor({ breadcrumbs, operation, method, path, idempotent, servers }: OperationConverter.Args) {
         super({ breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.servers = servers;
+        this.streamingExtensionConverter = new FernStreamingExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation
+        });
     }
 
     public async convert({
@@ -45,6 +51,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
             this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
+
+        const streamingExtension = this.streamingExtensionConverter.convert({ context, errorCollector });
 
         const { headers, pathParameters, queryParameters } = await this.convertParameters({
             context,
@@ -66,7 +74,8 @@ export class OperationConverter extends AbstractOperationConverter {
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
-            method
+            method,
+            streamingExtension
         });
 
         const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? context.spec.servers?.[0];

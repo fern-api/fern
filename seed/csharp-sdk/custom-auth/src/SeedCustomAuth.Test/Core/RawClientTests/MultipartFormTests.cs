@@ -1055,9 +1055,9 @@ public class MultipartFormTests
                 .Value?.Trim('"') ?? throw new Exception("Boundary not found");
     }
 
-    private static RawClient.MultipartFormRequest CreateMultipartFormRequest()
+    private static MultipartFormRequest CreateMultipartFormRequest()
     {
-        return new RawClient.MultipartFormRequest
+        return new MultipartFormRequest
         {
             BaseUrl = "https://localhost",
             Method = HttpMethod.Post,

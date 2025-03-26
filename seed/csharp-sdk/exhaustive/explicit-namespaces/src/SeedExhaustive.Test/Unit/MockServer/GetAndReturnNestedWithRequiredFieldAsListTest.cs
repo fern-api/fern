@@ -161,8 +161,7 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
                         Bigint = "1000000",
                     },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

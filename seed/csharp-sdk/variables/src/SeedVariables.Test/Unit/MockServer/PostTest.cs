@@ -12,8 +12,6 @@ public class PostTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/endpointParam").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Service.PostAsync("endpointParam", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Service.PostAsync("endpointParam"));
     }
 }

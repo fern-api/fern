@@ -39,8 +39,7 @@ public class GetOrganizationUserTest : BaseMockServerTest
             "tenant_id",
             "organization_id",
             "user_id",
-            new GetOrganizationUserRequest(),
-            RequestOptions
+            new GetOrganizationUserRequest()
         );
         Assert.That(
             response,

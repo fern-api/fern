@@ -13,7 +13,7 @@ public class BaseMockServerTest
 
     protected static SeedMultiUrlEnvironmentClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = null!;
+    protected static RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()
@@ -24,9 +24,18 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedMultiUrlEnvironmentClient("TOKEN");
-
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        Client = new SeedMultiUrlEnvironmentClient(
+            "TOKEN",
+            clientOptions: new ClientOptions
+            {
+                Environment = new SeedMultiUrlEnvironmentEnvironment
+                {
+                    Ec2 = Server.Urls[0],
+                    S3 = Server.Urls[0],
+                },
+                MaxRetries = 0,
+            }
+        );
     }
 
     [OneTimeTearDown]

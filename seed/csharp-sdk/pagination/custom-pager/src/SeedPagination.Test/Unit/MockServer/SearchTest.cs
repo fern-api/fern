@@ -79,8 +79,7 @@ public class SearchTest : BaseMockServerTest
                     Operator = SingleFilterSearchRequestOperator.Equals,
                     Value = "value",
                 },
-            },
-            RequestOptions
+            }
         );
         await foreach (var item in pager)
         {

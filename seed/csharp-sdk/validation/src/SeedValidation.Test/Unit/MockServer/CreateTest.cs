@@ -51,8 +51,7 @@ public class CreateTest : BaseMockServerTest
                 Even = 100,
                 Name = "foo",
                 Shape = Shape.Square,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

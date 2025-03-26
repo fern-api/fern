@@ -23,7 +23,7 @@ public class GetWithBasicAuthTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.BasicAuth.GetWithBasicAuthAsync(RequestOptions);
+        var response = await Client.BasicAuth.GetWithBasicAuthAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }
