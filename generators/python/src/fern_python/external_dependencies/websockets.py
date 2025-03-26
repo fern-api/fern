@@ -19,32 +19,36 @@ def _export(*name: str) -> AST.ClassReference:
 
 class Websockets:
     @staticmethod
-    def async_connect(url: str) -> AST.Expression:
+    def get_websocket_client_protocol() -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("WebSocketClientProtocol",),
+            import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
+        )
+
+    @staticmethod
+    def async_connect(url: str, headers: str) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write("await ")
+            writer.write("async with ")
             writer.write_reference(
                 AST.Reference(
                     import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
                     qualified_name_excluding_import=("connect",),
                 )
             )
-            writer.write("(")
-            writer.write(url)
-            writer.write(")\n")
+            writer.write(f"({url}, extra_headers={headers}) as protocol:")
 
         return AST.Expression(AST.CodeWriter(write))
 
     @staticmethod
-    def sync_connect(url: str) -> AST.Expression:
+    def sync_connect(url: str, headers: str) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
+            writer.write("with ")
             writer.write_reference(
                 AST.Reference(
                     import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
                     qualified_name_excluding_import=("sync", "client", "connect"),
                 )
             )
-            writer.write("(")
-            writer.write(url)
-            writer.write(")\n")
+            writer.write(f"({url}, extra_headers={headers}) as protocol:")
 
         return AST.Expression(AST.CodeWriter(write))

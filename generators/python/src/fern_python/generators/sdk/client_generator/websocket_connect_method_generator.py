@@ -5,7 +5,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies import Websockets
+from fern_python.external_dependencies import HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
     WebsocketConnectResponseCodeWriter,
@@ -41,6 +41,8 @@ class GeneratedConnectMethod:
 
 class WebsocketConnectMethodGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
+    SOCKET_CONSTRUCTOR_PARAMETER_NAME = "websocket"
+    WS_URL_VARIABLE = "ws_url"
 
     def __init__(
         self,
@@ -72,6 +74,8 @@ class WebsocketConnectMethodGenerator:
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
         named_parameters = self._get_overridden_parameter_types()
+        parameters = self._get_websocket_parameters()
+        headers = self._get_websocket_headers()
 
         function_declaration = AST.FunctionDeclaration(
             name="connect",
@@ -90,8 +94,8 @@ class WebsocketConnectMethodGenerator:
                 self._create_websocket_body_writer(
                     websocket=self._websocket,
                     is_async=self._is_async,
-                    parameters=unnamed_parameters,
-                    named_parameters=named_parameters,
+                    parameters=parameters,
+                    headers=headers,
                 )
             ),
         )
@@ -101,8 +105,22 @@ class WebsocketConnectMethodGenerator:
         return self._named_parameters_raw
 
     def _get_websocket_return_type(self) -> AST.TypeHint:
-        # TODO: This should be the WebsocketConnection object class.
-        return AST.TypeHint.none()
+        if self._is_async:
+            return AST.TypeHint.async_iterator(
+                wrapped_type=AST.TypeHint(
+                    type=self._context.get_socket_class_reference_for_subpackage_service(
+                        subpackage_id=self._subpackage_id
+                    )
+                )
+            )
+        else:
+            return AST.TypeHint.iterator(
+                wrapped_type=AST.TypeHint(
+                    type=self._context.get_socket_class_reference_for_subpackage_service(
+                        subpackage_id=self._subpackage_id
+                    )
+                )
+            )
 
     def deconflict_parameter_name(self, name: str, used_names: List[str]) -> str:
         while name in used_names:
@@ -178,30 +196,74 @@ class WebsocketConnectMethodGenerator:
                     ),
                 )
 
-        parameters.sort(key=lambda x: x.type_hint is None or x.type_hint.is_optional)
-        # Always include request options last.
-        request_options_docs = "Request-specific configuration."
+        return parameters
 
-        # Check if any existing parameters have the same name as REQUEST_OPTIONS_VARIABLE
-        has_request_options_parameter = False
-        for param in parameters:
-            if param.name == WebsocketConnectMethodGenerator.REQUEST_OPTIONS_VARIABLE:
-                has_request_options_parameter = True
-                break
+    def _get_websocket_parameters(self) -> List[AST.NamedFunctionParameter]:
+        parameters: List[AST.NamedFunctionParameter] = []
 
-        parameters.append(
-            AST.NamedFunctionParameter(
-                name=(
-                    "_" + WebsocketConnectMethodGenerator.REQUEST_OPTIONS_VARIABLE
-                    if has_request_options_parameter
-                    else WebsocketConnectMethodGenerator.REQUEST_OPTIONS_VARIABLE
-                ),
-                docs=request_options_docs,
-                type_hint=AST.TypeHint.optional(
-                    AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
-                ),
-            ),
-        )
+        for path_parameter in self._websocket.path_parameters:
+            if not self._is_type_literal(path_parameter.value_type):
+                name = self._path_parameter_names[path_parameter.name]
+                parameters.append(
+                    AST.FunctionParameter(
+                        name=name,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type,
+                            in_endpoint=True,
+                        ),
+                    ),
+                )
+
+        for query_parameter in self._websocket.query_parameters:
+            if not self._is_type_literal(type_reference=query_parameter.value_type):
+                query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    query_parameter.value_type,
+                    in_endpoint=True,
+                )
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(query_parameter.name.name),
+                        docs=query_parameter.docs,
+                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                            query_parameter.value_type
+                        ),
+                    ),
+                )
+
+        return parameters
+
+    def _get_websocket_headers(self) -> List[AST.NamedFunctionParameter]:
+        parameters: List[AST.NamedFunctionParameter] = []
+
+        for header in self._websocket.headers:
+            if not self._is_header_literal(header):
+                header_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    header.value_type,
+                    in_endpoint=True,
+                )
+                if header.env is not None:
+                    header_type_hint = AST.TypeHint.optional(header_type_hint)
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(header.name.name),
+                        docs=header.docs,
+                        type_hint=header_type_hint,
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{header.env}"')],
+                                )
+                            )
+                            if header.env is not None
+                            else None
+                        ),
+                    ),
+                )
 
         return parameters
 
@@ -216,80 +278,29 @@ class WebsocketConnectMethodGenerator:
         *,
         websocket: ir_types.WebSocketChannel,
         is_async: bool,
-        named_parameters: List[AST.NamedFunctionParameter],
-        parameters: List[AST.FunctionParameter],
+        parameters: List[AST.NamedFunctionParameter],
+        headers: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
-        # TODO: Implement the connect method for the websocket
         def write(writer: AST.NodeWriter) -> None:
-            # TODO: Implement the connect method for the websocket
-            # method = endpoint.method.visit(
-            #     get=lambda: "GET",
-            #     post=lambda: "POST",
-            #     put=lambda: "PUT",
-            #     patch=lambda: "PATCH",
-            #     delete=lambda: "DELETE",
-            # )
-
-            # json_request_body_var = None
-
-            # def get_httpx_request(
-            #     is_streaming: bool, response_code_writer: WebsocketConnectResponseCodeWriter
-            # ) -> AST.Expression:
-            #     # Get the request_options variable name from the last parameter if it exists
-            #     request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
-            #     if named_parameters and len(named_parameters) > 0:
-            #         last_param = named_parameters[-1]
-            #         request_options_variable_name = last_param.name
-
-            #     return HttpX.make_request(
-            #         is_streaming=is_streaming,
-            #         is_async=is_async,
-            #         path=(
-            #             self._get_path_for_endpoint(endpoint=endpoint) if not is_endpoint_path_empty(endpoint) else None
-            #         ),
-            #         url=self._get_environment_as_str(endpoint=endpoint),
-            #         method=method,
-            #         query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint, parent_writer=writer),
-            #         request_body=json_request_body_var,
-            #         content=request_body_parameters.get_content() if request_body_parameters is not None else None,
-            #         files=files,
-            #         response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
-            #         request_options_variable_name=request_options_variable_name,
-            #         headers=self._get_headers_for_endpoint(
-            #             service=service,
-            #             endpoint=endpoint,
-            #             idempotency_headers=idempotency_headers,
-            #             parent_writer=writer,
-            #         ),
-            #         response_code_writer=response_code_writer.get_writer(),
-            #         reference_to_client=AST.Expression(
-            #             f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
-            #         ),
-            #         is_default_body_parameter_used=self.is_default_body_parameter_used,
-            #     )
-
-            # response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
-            # is_streaming = (
-            #     True
-            #     if endpoint.response is not None
-            #     and endpoint.response.body
-            #     and (
-            #         endpoint.response.body.get_as_union().type == "streaming"
-            #         or endpoint.response.body.get_as_union().type == "fileDownload"
-            #     )
-            #     else False
-            # )
-            # httpx_request = get_httpx_request(is_streaming=is_streaming, response_code_writer=response_code_writer)
-            # writer.write_node(httpx_request)
-
-            writer.write_line("# TODO: Implement the connect method for the websocket")
+            writer.write_line(f"{self.WS_URL_VARIABLE} = {self._get_environment_as_str(websocket=websocket)}")
+            if len(parameters) > 0:
+                writer.write(f"query_params = ")
+                writer.write_node(HttpX.query_params())
+                writer.write_line()
+                writer.write_node(self._build_query_parameters(channel=websocket, parent_writer=writer))
+                writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
+            writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
+            writer.write_node(self._extend_headers_with_websocket_headers(websocket=websocket))
             writer.write_line("try:")
             with writer.indent():
                 if is_async:
-                    writer.write_node(Websockets.async_connect(url=self._get_environment_as_str(websocket=websocket)))
+                    writer.write_node(Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"))
                 else:
-                    writer.write_node(Websockets.sync_connect(url=self._get_environment_as_str(websocket=websocket)))
-
+                    writer.write_node(Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"))
+                with writer.indent():
+                    writer.write_line(
+                        f"yield {self._context.get_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                    )
             response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
             response_code_writer.write(writer)
 
@@ -426,9 +437,6 @@ class WebsocketConnectMethodGenerator:
                 return self._path_parameter_names[path_parameter.name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
-    def _get_property_type_off_object(self) -> AST.TypeHint:
-        return AST.TypeHint.any()
-
     def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
         unwrapped_type: Union[ir_types.TypeReference, None] = type_reference
         maybe_wrapped_type: Union[ir_types.TypeReference, None] = type_reference
@@ -444,14 +452,6 @@ class WebsocketConnectMethodGenerator:
                     literal=lambda _: None,
                 )
         return unwrapped_type
-
-    def _write_standard_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
-        writer.write_line("Returns")
-        writer.write_line("-------")
-        writer.write_node(response_hint)
-        if docs is not None:
-            self._write_docs(writer, docs)
-        writer.write_line()
 
     def _write_response_body_type(self, writer: NodeWriter) -> None:
         writer.write_line("Returns")
@@ -475,7 +475,6 @@ class WebsocketConnectMethodGenerator:
 
             is_optional = not self._is_datetime(query_parameter.value_type, allow_optional=False)
             if is_optional:
-                # needed to prevent infinite recursion when writing the reference to file
                 existing_reference = reference
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
@@ -485,7 +484,6 @@ class WebsocketConnectMethodGenerator:
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
         elif self._is_date(query_parameter.value_type, allow_optional=True):
-            # needed to prevent infinite recursion when writing the reference to file
             existing_reference = reference
 
             def write_strftime(writer: AST.NodeWriter) -> None:
@@ -497,7 +495,6 @@ class WebsocketConnectMethodGenerator:
 
             is_optional = not self._is_date(query_parameter.value_type, allow_optional=False)
             if is_optional:
-                # needed to prevent infinite recursion when writing the reference to file
                 existing_reference2 = reference
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
@@ -509,7 +506,6 @@ class WebsocketConnectMethodGenerator:
         elif self._context.custom_config.pydantic_config.use_typeddict_requests and can_tr_be_fern_model(
             query_parameter.value_type, self._context.get_types()
         ):
-            # We don't need any optional wrappings for the coercion here.
             unwrapped_tr = self._context.unwrap_optional_type_reference(query_parameter.value_type)
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 unwrapped_tr, in_endpoint=True, for_typeddict=True
@@ -522,8 +518,6 @@ class WebsocketConnectMethodGenerator:
             context=self._context, object_=reference, type_reference=query_parameter.value_type
         )
 
-    # Only get the environment expression if the environment is multipleBaseUrls, if it's
-    # not we'll leverage the URL from the client wrapper
     def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> str:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
@@ -535,29 +529,19 @@ class WebsocketConnectMethodGenerator:
                     get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
                 return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
-        # TODO: DO WE WANT TO JUST RETURN AN EMPTY STRING HERE?
         return ""
 
-    # Note if we ever somehow allow for objects in headers, we'd need to handle the alias conversion (same as with the other types, via `convert_and_respect_annotation_metadata_raw`)
-    def _get_headers_for_endpoint(
+    def _get_client_wrapper_headers_expression(self) -> str:
+        return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"
+
+    def _extend_headers_with_websocket_headers(
         self,
         *,
-        service: ir_types.HttpService,
-        endpoint: ir_types.HttpEndpoint,
-        idempotency_headers: List[ir_types.HttpHeader],
-        parent_writer: AST.NodeWriter,
+        websocket: ir_types.WebSocketChannel,
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
-        ir_headers = service.headers + endpoint.headers
-        if endpoint.idempotent:
-            ir_headers += idempotency_headers
-
-        if endpoint.request_body is not None:
-            unioned_value = endpoint.request_body.get_as_union()
-            if unioned_value.type == "inlinedRequestBody":
-                if unioned_value.content_type is not None:
-                    headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
+        ir_headers = websocket.headers
 
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
@@ -579,12 +563,10 @@ class WebsocketConnectMethodGenerator:
             return None
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
-            writer.write("{")
             for _, (header_key, header_value) in enumerate(headers):
-                writer.write(f'"{header_key}": ')
+                writer.write(f'headers["{header_key}"] = ')
                 writer.write_node(header_value)
-                writer.write(", ")
-            writer.write_line("}")
+                writer.write_line()
 
         return AST.Expression(AST.CodeWriter(write_headers_dict))
 
@@ -596,26 +578,36 @@ class WebsocketConnectMethodGenerator:
             return AST.Expression(f"{possible_query_literal}")
         return self._get_reference_to_query_parameter(query_parameter)
 
-    def _get_query_parameters_for_endpoint(
-        self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
+    def _build_query_parameters(
+        self, *, channel: ir_types.WebSocketChannel, parent_writer: AST.NodeWriter
     ) -> Optional[AST.Expression]:
         query_parameters = [
             (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
-            for query_parameter in endpoint.query_parameters
+            for query_parameter in channel.query_parameters
         ]
 
         if len(query_parameters) == 0:
             return None
 
-        def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
-            writer.write("{")
+        def write_query_params_check(writer: AST.NodeWriter) -> None:
             for _, (query_param_key, query_param_value) in enumerate(query_parameters):
-                writer.write(f'"{query_param_key}": ')
+                writer.write("if ")
                 writer.write_node(query_param_value)
-                writer.write(", ")
-            writer.write_line("}")
+                writer.write_line(" is not None:")
+                with writer.indent():
+                    writer.write("query_params = query_params.add(")
+                    writer.write(f'"{query_param_key}", ')
+                    writer.write_node(query_param_value)
+                    writer.write(")")
+                    writer.write_line()
 
-        return AST.Expression(AST.CodeWriter(write_query_parameters_dict))
+        return AST.Expression(AST.CodeWriter(write_query_params_check))
+
+    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
+        return self._context.get_literal_value(reference=type_reference) is not None
+
+    def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
+        return self._context.get_literal_header_value(header) is not None
 
     def _is_datetime(
         self,
@@ -708,15 +700,6 @@ class WebsocketConnectMethodGenerator:
             unknown=lambda: False,
         )
 
-    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
-        return self._context.get_literal_value(reference=type_reference) is not None
-
-    def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
-        return self._context.get_literal_header_value(header) is not None
-
-    def _environment_is_enum(self) -> bool:
-        return self._context.ir.environments is not None
-
     def _get_typehint_for_query_param(
         self, query_parameter: ir_types.QueryParameter, query_parameter_type_hint: AST.TypeHint
     ) -> AST.TypeHint:
@@ -775,13 +758,6 @@ class WebsocketConnectMethodGenerator:
         return context.core_utilities.convert_and_respect_annotation_metadata(object_=object_, annotation=type_hint)
 
 
-def _is_request_body_optional(request_body: ir_types.HttpRequestBody) -> bool:
-    union = request_body.get_as_union()
-    if union.type == "reference":
-        return _is_type_reference_optional(union.request_body_type)
-    return False
-
-
 def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
     union = type_reference.get_as_union()
     if union.type == "reference":
@@ -804,10 +780,6 @@ def get_parameter_name(name: ir_types.Name) -> str:
     return name.snake_case.safe_name
 
 
-def is_websocket_path_empty(websocket: ir_types.WebSocketChannel) -> bool:
-    return len(websocket.path.head) == 0 and len(websocket.path.parts) == 0
-
-
 def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
     type_as_union = type_reference.get_as_union()
     if type_as_union.type == "container":
@@ -817,7 +789,3 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "nullable":
             return unwrap_optional_type(container_as_union.nullable)
     return type_reference
-
-
-def raise_bytes_response_error() -> None:
-    raise NotImplementedError("Bytes response type not yet supported")

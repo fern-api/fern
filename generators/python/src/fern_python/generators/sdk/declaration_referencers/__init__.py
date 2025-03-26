@@ -12,6 +12,9 @@ from .subpackage_async_client_declaration_referencer import (
 from .subpackage_client_declaration_referencer import (
     SubpackageClientDeclarationReferencer,
 )
+from .subpackage_socket_client_declaration_referencer import (
+    SubpackageSocketClientDeclarationReferencer,
+)
 from .type_declaration_referencer import TypeDeclarationReferencer
 
 __all__ = [
@@ -22,4 +25,5 @@ __all__ = [
     "RootClientDeclarationReferencer",
     "SubpackageAsyncClientDeclarationReferencer",
     "OAuthTokenProviderDeclarationReferencer",
+    "SubpackageSocketClientDeclarationReferencer",
 ]

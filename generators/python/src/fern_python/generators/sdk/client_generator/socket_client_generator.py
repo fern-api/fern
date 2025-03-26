@@ -13,6 +13,9 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
     EndpointResponseCodeWriter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from src.fern_python.external_dependencies.json import Json
+from src.fern_python.external_dependencies.websockets import Websockets
+from src.fern_python.generators.core_utilities.core_utilities import CoreUtilities
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -40,11 +43,7 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
 
 
 class SocketClientGenerator:
-    RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
-    RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
-
-    TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
-    TOKEN_MEMBER_NAME = "_token"
+    WEBSOCKET_MEMBER_NAME = "_websocket"
 
     def __init__(
         self,
@@ -60,14 +59,14 @@ class SocketClientGenerator:
         self._websocket = websocket
 
     def generate(self, source_file: SourceFile) -> None:
-        class_declaration = self._create_class_declaration(is_async=False)
+        class_declaration = self._create_class_declaration()
         source_file.add_class_declaration(
             declaration=class_declaration,
             should_export=False,
         )
 
-    def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
-        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+    def _create_class_declaration(self) -> AST.ClassDeclaration:
+        constructor_parameters = self._get_constructor_parameters()
 
         named_parameters = [
             AST.NamedFunctionParameter(
@@ -84,47 +83,120 @@ class SocketClientGenerator:
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
                 ),
-                body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
+                body=AST.CodeWriter(self._get_write_constructor_body()),
             ),
         )
-
+        class_declaration.add_method(self._get_aiter_method())
+        class_declaration.add_method(self._get_send_method())
+        class_declaration.add_method(self._get_recv_method())
+        class_declaration.add_method(self._get_send_model_method())
         return class_declaration
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
-        parameters: List[ConstructorParameter] = []
+    def _get_constructor_parameters(self) -> List[ConstructorParameter]:
+        parameters: List[ConstructorParameter] = [
+            ConstructorParameter(
+                constructor_parameter_name=WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME,
+                private_member_name=self.WEBSOCKET_MEMBER_NAME,
+                type_hint=AST.TypeHint(Websockets.get_websocket_client_protocol()),
+            )
+        ]
 
         return parameters
 
-    def _environment_is_enum(self) -> bool:
-        return self._context.ir.environments is not None
-
-    def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
+    def _get_write_constructor_body(self) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+            constructor_parameters = self._get_constructor_parameters()
             for param in constructor_parameters:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
 
-                # TODO: Implement the connect method for the websocket
-                # if self._websocket is not None:
-                #     writer.write_node(
-                #         AST.ClassInstantiation(
-                #             class_=self._context.get_reference_to_websocket_connect_method(),
-                #             kwargs=[],
-                #         )
-                #     )
-
-                #     writer.write_node(AST.Expression(f"self.{self._websocket.name.snake_case.safe_name} = "))
-                #     kwargs = [
-                #         (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
-                #         for param in self._get_constructor_parameters(is_async=is_async)
-                #     ]
-                #     writer.write_node(
-                #         AST.ClassInstantiation(
-                #             class_=self._context.get_reference_to_websocket_connect_method(),
-                #             kwargs=kwargs,
-                #         )
-                #     )
-            writer.write_line("pass")
-
         return _write_constructor_body
+
+    def _get_aiter_method(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="__aiter__",
+            is_async=True,
+            signature=AST.FunctionSignature(),
+            body=AST.CodeWriter(self._get_aiter_method_body()),
+        )
+
+    def _get_aiter_method_body(self) -> CodeWriterFunction:
+        def _get_aiter_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"async for message in self.{self.WEBSOCKET_MEMBER_NAME}:")
+            with writer.indent():
+                writer.write("yield ")
+                writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                # TODO: Create unioned type and parse as it.
+                writer.write("(str, message)")
+
+        return _get_aiter_method_body
+
+    def _get_send_method(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="_send",
+            is_async=True,
+            signature=AST.FunctionSignature(
+                parameters=[
+                    AST.FunctionParameter(
+                        name="data",
+                        type_hint=AST.TypeHint.any(),
+                    ),
+                ],
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(self._get_send_method_body()),
+        )
+
+    def _get_send_method_body(self) -> CodeWriterFunction:
+        def _get_send_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line("if isinstance(data, dict):")
+            with writer.indent():
+                writer.write("data = ")
+                writer.write_node(Json.dumps(AST.Expression("data")))
+                writer.write_line()
+            writer.write_line(f"await self.{self.WEBSOCKET_MEMBER_NAME}.send(data)")
+
+        return _get_send_method_body
+
+    def _get_recv_method(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="_recv",
+            is_async=True,
+            signature=AST.FunctionSignature(
+                return_type=AST.TypeHint.any(),
+            ),
+            body=AST.CodeWriter(self._get_recv_method_body()),
+        )
+
+    def _get_recv_method_body(self) -> CodeWriterFunction:
+        def _get_recv_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"data = await self.{self.WEBSOCKET_MEMBER_NAME}.recv()")
+            writer.write("return ")
+            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+            writer.write("(")
+            writer.write_node(AST.TypeHint.any())
+            writer.write(", data)")
+
+        return _get_recv_method_body
+
+    def _get_send_model_method(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="_send_model",
+            is_async=True,
+            signature=AST.FunctionSignature(
+                parameters=[
+                    AST.FunctionParameter(
+                        name="data",
+                        type_hint=AST.TypeHint.any(),
+                    ),
+                ],
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(self._get_send_model_method_body()),
+        )
+
+    def _get_send_model_method_body(self) -> CodeWriterFunction:
+        def _get_send_model_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"await self._send(data.dict())")
+
+        return _get_send_model_method_body

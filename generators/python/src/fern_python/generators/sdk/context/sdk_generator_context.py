@@ -101,6 +101,11 @@ class SdkGeneratorContext(ABC):
     def get_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str: ...
 
     @abstractmethod
+    def get_socket_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference: ...
+
+    @abstractmethod
     def get_filepath_for_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath: ...
 
     @abstractmethod
