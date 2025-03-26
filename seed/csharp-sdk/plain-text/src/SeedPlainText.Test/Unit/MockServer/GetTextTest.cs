@@ -20,7 +20,7 @@ public class GetTextTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Service.GetTextAsync(RequestOptions);
+        var response = await Client.Service.GetTextAsync();
         Assert.That(response, Is.EqualTo(mockResponse));
     }
 }

@@ -104,8 +104,7 @@ public class GetUsernameTest : BaseMockServerTest
                     },
                 ],
                 Filter = ["filter"],
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

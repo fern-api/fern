@@ -51,8 +51,7 @@ public class CreateUserTest : BaseMockServerTest
                 Name = "name",
                 Email = "email",
                 Password = "password",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

@@ -33,7 +33,7 @@ public class GetAndReturnIntTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnIntAsync(1, RequestOptions);
+        var response = await Client.Endpoints.Primitive.GetAndReturnIntAsync(1);
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<int>(mockResponse)));
     }
 }

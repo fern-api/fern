@@ -39,8 +39,7 @@ public class GetAndReturnWithRequiredFieldTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
+            new ObjectWithRequiredField { String = "string" }
         );
         Assert.That(
             response,

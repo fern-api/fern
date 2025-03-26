@@ -29,8 +29,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ExtendedInlineRequestBodyAsync(
-                    new InlinedChildRequest { Child = "child" },
-                    RequestOptions
+                    new InlinedChildRequest { Child = "child" }
                 )
         );
     }

@@ -37,7 +37,7 @@ public class GetPlaylistTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Playlist.GetPlaylistAsync(1, "playlistId", RequestOptions);
+        var response = await Client.Playlist.GetPlaylistAsync(1, "playlistId");
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()

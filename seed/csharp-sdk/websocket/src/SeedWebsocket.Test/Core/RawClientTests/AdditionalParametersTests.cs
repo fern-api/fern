@@ -33,7 +33,7 @@ public class AdditionalParametersTests
             .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "bar").UsingGet())
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest()
+        var request = new JsonRequest()
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -63,7 +63,7 @@ public class AdditionalParametersTests
             .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "null").UsingGet())
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest()
+        var request = new JsonRequest()
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -94,7 +94,7 @@ public class AdditionalParametersTests
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest()
+        var request = new JsonRequest()
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -138,7 +138,7 @@ public class AdditionalParametersTests
             )
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest
+        var request = new JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -173,7 +173,7 @@ public class AdditionalParametersTests
             )
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest
+        var request = new JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -224,7 +224,7 @@ public class AdditionalParametersTests
             )
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.JsonApiRequest
+        var request = new JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,

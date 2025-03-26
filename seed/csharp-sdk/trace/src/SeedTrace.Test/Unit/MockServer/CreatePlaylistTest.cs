@@ -70,8 +70,7 @@ public class CreatePlaylistTest : BaseMockServerTest
                     Name = "name",
                     Problems = new List<string>() { "problems", "problems" },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

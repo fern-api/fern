@@ -28,8 +28,7 @@ public class GetWithInlinePathTest : BaseMockServerTest
 
         var response = await Client.Endpoints.Params.GetWithInlinePathAsync(
             "param",
-            new GetWithInlinePath(),
-            RequestOptions
+            new GetWithInlinePath()
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

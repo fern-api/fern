@@ -33,7 +33,7 @@ public class GetAndReturnBoolTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnBoolAsync(true, RequestOptions);
+        var response = await Client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

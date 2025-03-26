@@ -66,7 +66,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 static_: true,
                 type: csharp.Type.reference(this.context.getRequestOptionsClassReference()),
                 get: true,
-                initializer: csharp.codeblock("null!"),
+                initializer: csharp.codeblock("new()"),
                 set: true
             })
         );
@@ -79,7 +79,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     static_: true,
                     type: csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
                     get: true,
-                    initializer: csharp.codeblock("null!"),
+                    initializer: csharp.codeblock("new()"),
                     set: true
                 })
             );
@@ -112,28 +112,16 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     writer.writeLine("Client = ");
                     writer.writeNodeStatement(
                         this.rootClientGenerator.generateExampleClientInstantiationSnippet({
-                            includeEnvVarArguments: true
-                        })
-                    );
-                    writer.newLine();
-
-                    writer.writeLine("RequestOptions = ");
-                    writer.writeNodeStatement(
-                        csharp.instantiateClass({
-                            classReference: this.context.getRequestOptionsClassReference(),
-                            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
-                        })
-                    );
-
-                    if (this.context.hasIdempotencyHeaders()) {
-                        writer.writeLine("IdempotentRequestOptions = ");
-                        writer.writeNodeStatement(
-                            csharp.instantiateClass({
-                                classReference: this.context.getIdempotentRequestOptionsClassReference(),
-                                arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+                            includeEnvVarArguments: true,
+                            clientOptionsArgument: csharp.instantiateClass({
+                                classReference: this.context.getClientOptionsClassReference(),
+                                arguments_: [
+                                    { name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") },
+                                    { name: "MaxRetries", assignment: csharp.codeblock("0") }
+                                ]
                             })
-                        );
-                    }
+                        })
+                    );
                 }),
                 isAsync: false,
                 parameters: [],

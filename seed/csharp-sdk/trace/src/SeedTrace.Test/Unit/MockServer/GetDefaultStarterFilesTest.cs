@@ -82,8 +82,7 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
                 },
                 OutputType = "no-properties-union",
                 MethodName = "methodName",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

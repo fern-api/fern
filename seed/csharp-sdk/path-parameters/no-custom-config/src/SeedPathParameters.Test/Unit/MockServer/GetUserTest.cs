@@ -38,8 +38,7 @@ public class GetUserTest : BaseMockServerTest
         var response = await Client.User.GetUserAsync(
             "tenant_id",
             "user_id",
-            new GetUsersRequest(),
-            RequestOptions
+            new GetUsersRequest()
         );
         Assert.That(
             response,

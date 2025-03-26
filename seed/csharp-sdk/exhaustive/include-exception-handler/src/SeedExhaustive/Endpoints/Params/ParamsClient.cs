@@ -33,7 +33,7 @@ public partial class ParamsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -89,7 +89,7 @@ public partial class ParamsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -147,7 +147,7 @@ public partial class ParamsClient
                 _query["number"] = request.Number.ToString();
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -196,7 +196,7 @@ public partial class ParamsClient
                 _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -246,7 +246,7 @@ public partial class ParamsClient
                 _query["query"] = request.Query;
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -299,7 +299,7 @@ public partial class ParamsClient
                 _query["query"] = request.Query;
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
@@ -347,7 +347,7 @@ public partial class ParamsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Put,
@@ -407,7 +407,7 @@ public partial class ParamsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Put,

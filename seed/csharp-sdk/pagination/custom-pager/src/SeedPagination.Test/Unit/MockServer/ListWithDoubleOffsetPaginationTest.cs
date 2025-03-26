@@ -61,8 +61,7 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
                 PerPage = 1.1,
                 Order = Order.Asc,
                 StartingAfter = "starting_after",
-            },
-            RequestOptions
+            }
         );
         await foreach (var item in pager)
         {

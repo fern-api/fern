@@ -35,8 +35,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
             );
 
         var pager = await Client.Users.ListWithGlobalConfigAsync(
-            new ListWithGlobalConfigRequest { Offset = 1 },
-            RequestOptions
+            new ListWithGlobalConfigRequest { Offset = 1 }
         );
         await foreach (var item in pager)
         {

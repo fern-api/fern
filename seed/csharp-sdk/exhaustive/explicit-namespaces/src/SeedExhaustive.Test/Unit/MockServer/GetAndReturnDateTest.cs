@@ -34,8 +34,7 @@ public class GetAndReturnDateTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDateAsync(
-            new DateOnly(2023, 1, 15),
-            RequestOptions
+            new DateOnly(2023, 1, 15)
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateOnly>(mockResponse)));
     }
