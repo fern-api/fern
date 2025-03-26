@@ -1,3 +1,4 @@
+import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -117,7 +118,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                             clientOptionsArgument: csharp.instantiateClass({
                                 classReference: this.context.getClientOptionsClassReference(),
                                 arguments_: [
-                                    this.context.ir.environments?.environments._visit({
+                                    this.context.ir.environments?.environments._visit<NamedArgument>({
                                         singleBaseUrl: () => ({
                                             name: "BaseUrl",
                                             assignment: csharp.codeblock("Server.Urls[0]")
