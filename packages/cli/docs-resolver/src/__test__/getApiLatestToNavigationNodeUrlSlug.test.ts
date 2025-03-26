@@ -83,8 +83,7 @@ it.skip("generates slug for webhook", () => {
         availability: undefined,
         headers: [],
         payloads: [],
-        description: undefined,
-        queryParameters: []
+        description: undefined
     };
     expect(
         getApiLatestToNavigationNodeUrlSlug({
