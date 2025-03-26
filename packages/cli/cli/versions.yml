@@ -11,7 +11,7 @@
         
     type: feat
   irVersion: 57
-  version: docs@0.12.5
+  version: 0.57.1
 
 - changelogEntry:
   - summary: |
