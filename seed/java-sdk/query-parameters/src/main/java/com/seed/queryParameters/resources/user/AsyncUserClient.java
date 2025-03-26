@@ -4,108 +4,33 @@
 package com.seed.queryParameters.resources.user;
 
 import com.seed.queryParameters.core.ClientOptions;
-import com.seed.queryParameters.core.ObjectMappers;
-import com.seed.queryParameters.core.QueryStringMapper;
 import com.seed.queryParameters.core.RequestOptions;
-import com.seed.queryParameters.core.SeedQueryParametersApiException;
-import com.seed.queryParameters.core.SeedQueryParametersException;
 import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.User;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncUserClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawUserClient rawClient;
+
     public AsyncUserClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawUserClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawUserClient withRawResponse() {
+        return this.rawClient;
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request) {
-        return getUsername(request, null);
+        return this.rawClient.getUsername(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<User> getUsername(GetUsersRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("user");
-        QueryStringMapper.addQueryParameter(httpUrl, "limit", Integer.toString(request.getLimit()), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "date", request.getDate(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "deadline", request.getDeadline().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "userList", request.getUserList().toString(), false);
-        if (request.getOptionalDeadline().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "optionalDeadline",
-                    request.getOptionalDeadline().get().toString(),
-                    false);
-        }
-        QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue(), false);
-        if (request.getOptionalString().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalString", request.getOptionalString().get(), false);
-        }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "nestedUser", request.getNestedUser().toString(), false);
-        if (request.getOptionalUser().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalUser", request.getOptionalUser().get().toString(), false);
-        }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<User> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedQueryParametersApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedQueryParametersException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(
-                        new SeedQueryParametersException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.getUsername(request, requestOptions).thenApply(response -> response.body());
     }
 }

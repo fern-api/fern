@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Expose response headers
+      type: feat
+  createdAt: '2025-03-26'
+  irVersion: 55
+  version: 2.28.0
+- changelogEntry:
+    - summary: |
         Change method to `public static void main(String[] args)` in snippet generation
       type: fix
   createdAt: '2025-03-24'

@@ -10,7 +10,7 @@ public class SyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpe
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec) {
-        return new HttpEndpointMethodSpecs(
+        return new DefaultHttpEndpointMethodSpecs(
                 requestOptionsMethodSpec,
                 nonRequestOptionsMethodSpec,
                 noRequestBodyMethodSpec,

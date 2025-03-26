@@ -4,81 +4,37 @@
 package com.seed.errorProperty.resources.propertybasederror;
 
 import com.seed.errorProperty.core.ClientOptions;
-import com.seed.errorProperty.core.ObjectMappers;
 import com.seed.errorProperty.core.RequestOptions;
-import com.seed.errorProperty.core.SeedErrorPropertyApiException;
-import com.seed.errorProperty.core.SeedErrorPropertyException;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncPropertyBasedErrorClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawPropertyBasedErrorClient rawClient;
+
     public AsyncPropertyBasedErrorClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawPropertyBasedErrorClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawPropertyBasedErrorClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * GET request that always throws an error
      */
     public CompletableFuture<String> throwError() {
-        return throwError(null);
+        return this.rawClient.throwError().thenApply(response -> response.body());
     }
 
     /**
      * GET request that always throws an error
      */
     public CompletableFuture<String> throwError(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("property-based-error")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<String> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedErrorPropertyApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedErrorPropertyException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedErrorPropertyException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.throwError(requestOptions).thenApply(response -> response.body());
     }
 }

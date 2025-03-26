@@ -4,60 +4,32 @@
 package com.seed._enum.resources.pathparam;
 
 import com.seed._enum.core.ClientOptions;
-import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.core.RequestOptions;
-import com.seed._enum.core.SeedEnumApiException;
-import com.seed._enum.core.SeedEnumException;
 import com.seed._enum.types.ColorOrOperand;
 import com.seed._enum.types.Operand;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class PathParamClient {
     protected final ClientOptions clientOptions;
 
+    private final RawPathParamClient rawClient;
+
     public PathParamClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawPathParamClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawPathParamClient withRawResponse() {
+        return this.rawClient;
     }
 
     public void send(Operand operand, ColorOrOperand operandOrColor) {
-        send(operand, operandOrColor, null);
+        this.rawClient.send(operand, operandOrColor).body();
     }
 
     public void send(Operand operand, ColorOrOperand operandOrColor, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("path")
-                .addPathSegment(operand.toString())
-                .addPathSegment(operandOrColor.toString())
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedEnumApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedEnumException("Network error executing HTTP request", e);
-        }
+        this.rawClient.send(operand, operandOrColor, requestOptions).body();
     }
 }

@@ -6,7 +6,6 @@ export function convertPlaygroundSettings(
 ): FernNavigation.V1.PlaygroundSettings | undefined {
     if (playgroundSettings) {
         return {
-            disabled: undefined,
             environments:
                 playgroundSettings.environments != null && playgroundSettings.environments.length > 0
                     ? playgroundSettings.environments.map((environmentId) =>

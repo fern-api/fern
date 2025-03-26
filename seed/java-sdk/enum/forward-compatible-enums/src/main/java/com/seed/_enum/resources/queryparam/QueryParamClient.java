@@ -4,120 +4,40 @@
 package com.seed._enum.resources.queryparam;
 
 import com.seed._enum.core.ClientOptions;
-import com.seed._enum.core.ObjectMappers;
-import com.seed._enum.core.QueryStringMapper;
 import com.seed._enum.core.RequestOptions;
-import com.seed._enum.core.SeedEnumApiException;
-import com.seed._enum.core.SeedEnumException;
 import com.seed._enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;
 import com.seed._enum.resources.queryparam.requests.SendEnumListAsQueryParamRequest;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class QueryParamClient {
     protected final ClientOptions clientOptions;
 
+    private final RawQueryParamClient rawClient;
+
     public QueryParamClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawQueryParamClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawQueryParamClient withRawResponse() {
+        return this.rawClient;
     }
 
     public void send(SendEnumAsQueryParamRequest request) {
-        send(request, null);
+        this.rawClient.send(request).body();
     }
 
     public void send(SendEnumAsQueryParamRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("query");
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operand", request.getOperand().toString(), false);
-        if (request.getMaybeOperand().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeOperand", request.getMaybeOperand().get().toString(), false);
-        }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operandOrColor", request.getOperandOrColor().toString(), false);
-        if (request.getMaybeOperandOrColor().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "maybeOperandOrColor",
-                    request.getMaybeOperandOrColor().get().toString(),
-                    false);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedEnumApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedEnumException("Network error executing HTTP request", e);
-        }
+        this.rawClient.send(request, requestOptions).body();
     }
 
     public void sendList(SendEnumListAsQueryParamRequest request) {
-        sendList(request, null);
+        this.rawClient.sendList(request).body();
     }
 
     public void sendList(SendEnumListAsQueryParamRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("query-list");
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operand", request.getOperand().toString(), false);
-        if (request.getMaybeOperand().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeOperand", request.getMaybeOperand().get().toString(), false);
-        }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operandOrColor", request.getOperandOrColor().toString(), false);
-        if (request.getMaybeOperandOrColor().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "maybeOperandOrColor",
-                    request.getMaybeOperandOrColor().get().toString(),
-                    false);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedEnumApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedEnumException("Network error executing HTTP request", e);
-        }
+        this.rawClient.sendList(request, requestOptions).body();
     }
 }

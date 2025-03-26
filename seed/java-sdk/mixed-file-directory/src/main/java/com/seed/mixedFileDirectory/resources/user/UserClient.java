@@ -3,86 +3,54 @@
  */
 package com.seed.mixedFileDirectory.resources.user;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedFileDirectory.core.ClientOptions;
-import com.seed.mixedFileDirectory.core.ObjectMappers;
-import com.seed.mixedFileDirectory.core.QueryStringMapper;
 import com.seed.mixedFileDirectory.core.RequestOptions;
-import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
-import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryException;
 import com.seed.mixedFileDirectory.core.Suppliers;
 import com.seed.mixedFileDirectory.resources.user.events.EventsClient;
 import com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;
 import com.seed.mixedFileDirectory.resources.user.types.User;
-import java.io.IOException;
 import java.util.List;
 import java.util.function.Supplier;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class UserClient {
     protected final ClientOptions clientOptions;
+
+    private final RawUserClient rawClient;
 
     protected final Supplier<EventsClient> eventsClient;
 
     public UserClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawUserClient(clientOptions);
         this.eventsClient = Suppliers.memoize(() -> new EventsClient(clientOptions));
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawUserClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * List all users.
      */
     public List<User> list() {
-        return list(ListUsersRequest.builder().build());
+        return this.rawClient.list().body();
     }
 
     /**
      * List all users.
      */
     public List<User> list(ListUsersRequest request) {
-        return list(request, null);
+        return this.rawClient.list(request).body();
     }
 
     /**
      * List all users.
      */
     public List<User> list(ListUsersRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users");
-        if (request.getLimit().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<User>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMixedFileDirectoryApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedMixedFileDirectoryException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.list(request, requestOptions).body();
     }
 
     public EventsClient events() {

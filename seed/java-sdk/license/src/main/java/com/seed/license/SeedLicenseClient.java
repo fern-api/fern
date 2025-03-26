@@ -4,55 +4,31 @@
 package com.seed.license;
 
 import com.seed.license.core.ClientOptions;
-import com.seed.license.core.ObjectMappers;
 import com.seed.license.core.RequestOptions;
-import com.seed.license.core.SeedLicenseApiException;
-import com.seed.license.core.SeedLicenseException;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SeedLicenseClient {
     protected final ClientOptions clientOptions;
 
+    private final RawSeedLicenseClient rawClient;
+
     public SeedLicenseClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawSeedLicenseClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawSeedLicenseClient withRawResponse() {
+        return this.rawClient;
     }
 
     public void get() {
-        get(null);
+        this.rawClient.get().body();
     }
 
     public void get(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return;
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedLicenseApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedLicenseException("Network error executing HTTP request", e);
-        }
+        this.rawClient.get(requestOptions).body();
     }
 
     public static SeedLicenseClientBuilder builder() {

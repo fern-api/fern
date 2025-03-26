@@ -103,6 +103,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     protected abstract ClassName className();
 
+    protected abstract ClassName rawClientName();
+
     protected abstract ClassName builderName();
 
     @Override
@@ -129,6 +131,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .javaFile(JavaFile.builder(builderName.packageName(), builderTypeSpec)
                                 .build())
                         .build())
+                .rawClient(result.getRawClientImpl().map(rawClient -> GeneratedJavaFile.builder()
+                        .className(rawClientName())
+                        .javaFile(JavaFile.builder(className.packageName(), rawClient.build())
+                                .build())
+                        .build()))
                 .addAllWrappedRequests(result.getGeneratedWrappedRequests())
                 .build();
     }
