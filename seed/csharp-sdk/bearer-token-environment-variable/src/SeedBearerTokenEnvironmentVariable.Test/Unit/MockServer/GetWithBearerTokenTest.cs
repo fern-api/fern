@@ -23,7 +23,7 @@ public class GetWithBearerTokenTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Service.GetWithBearerTokenAsync(RequestOptions);
+        var response = await Client.Service.GetWithBearerTokenAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

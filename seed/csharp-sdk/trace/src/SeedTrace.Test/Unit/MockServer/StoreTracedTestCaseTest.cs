@@ -217,8 +217,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                                 Stdout = "stdout",
                             },
                         },
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

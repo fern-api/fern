@@ -27,8 +27,7 @@ public class UnknownRequestTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Folder.Service.UnknownRequestAsync(
-                    new Dictionary<object, object?>() { { "key", "value" } },
-                    RequestOptions
+                    new Dictionary<object, object?>() { { "key", "value" } }
                 )
         );
     }

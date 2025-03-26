@@ -23,8 +23,7 @@ public class GetWithPathAndQueryTest : BaseMockServerTest
             async () =>
                 await Client.Endpoints.Params.GetWithPathAndQueryAsync(
                     "param",
-                    new GetWithPathAndQuery { Query = "query" },
-                    RequestOptions
+                    new GetWithPathAndQuery { Query = "query" }
                 )
         );
     }

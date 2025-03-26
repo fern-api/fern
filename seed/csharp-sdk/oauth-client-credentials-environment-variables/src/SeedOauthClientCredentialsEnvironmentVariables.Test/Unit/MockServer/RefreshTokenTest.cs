@@ -54,8 +54,7 @@ public class RefreshTokenTest : BaseMockServerTest
                 Audience = "https://api.example.com",
                 GrantType = "refresh_token",
                 Scope = "scope",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

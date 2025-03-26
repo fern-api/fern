@@ -21,7 +21,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -69,7 +69,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -112,7 +112,7 @@ public partial class ServiceClient
         {
             _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
         }
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -144,7 +144,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -182,7 +182,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -219,7 +219,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
@@ -280,7 +280,7 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var multipartFormRequest_ = new RawClient.MultipartFormRequest
+        var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,

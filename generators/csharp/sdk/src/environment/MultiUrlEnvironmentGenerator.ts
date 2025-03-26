@@ -88,6 +88,19 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         });
     }
 
+    public generateSnippet(baseUrlValues?: csharp.AstNode): csharp.ClassInstantiation {
+        const arguments_ = this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
+            const name = baseUrl.name.pascalCase.safeName;
+            const value = baseUrlValues ?? `<${baseUrl.id} URL>`;
+            return { name, assignment: value };
+        });
+
+        return csharp.instantiateClass({
+            classReference: this.context.getEnvironmentsClassReference(),
+            arguments_
+        });
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),

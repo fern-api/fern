@@ -58,7 +58,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.EmptyApiRequest
+        var request = new EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -88,7 +88,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
-        var request = new RawClient.JsonApiRequest
+        var request = new JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -117,7 +117,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new RawClient.StreamApiRequest
+        var request = new StreamRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -145,7 +145,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new RawClient.MultipartFormRequest
+        var request = new MultipartFormRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -186,7 +186,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new RawClient.MultipartFormRequest
+        var request = new MultipartFormRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,

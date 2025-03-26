@@ -37,8 +37,7 @@ public class DeleteUserTest : BaseMockServerTest
             );
 
         var response = await Client.Nullable.DeleteUserAsync(
-            new DeleteUserRequest { Username = "xy" },
-            RequestOptions
+            new DeleteUserRequest { Username = "xy" }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }

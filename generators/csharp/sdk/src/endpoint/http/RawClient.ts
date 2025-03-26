@@ -146,7 +146,7 @@ export class RawClient {
                     requestReference: csharp.instantiateClass({
                         arguments_: args,
                         classReference: csharp.classReference({
-                            name: "RawClient.StreamApiRequest",
+                            name: "StreamRequest",
                             namespace: this.context.getCoreNamespace()
                         })
                     })
@@ -163,7 +163,7 @@ export class RawClient {
                         csharp.instantiateClass({
                             arguments_: args,
                             classReference: csharp.classReference({
-                                name: "RawClient.MultipartFormRequest",
+                                name: "MultipartFormRequest",
                                 namespace: this.context.getCoreNamespace()
                             })
                         })
@@ -195,7 +195,7 @@ export class RawClient {
                     requestReference: csharp.instantiateClass({
                         arguments_: args,
                         classReference: csharp.classReference({
-                            name: "RawClient.JsonApiRequest",
+                            name: "JsonRequest",
                             namespace: this.context.getCoreNamespace()
                         })
                     })

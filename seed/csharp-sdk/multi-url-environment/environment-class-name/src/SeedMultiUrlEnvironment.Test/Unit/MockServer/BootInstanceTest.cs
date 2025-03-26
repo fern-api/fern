@@ -27,10 +27,7 @@ public class BootInstanceTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(
             async () =>
-                await Client.Ec2.BootInstanceAsync(
-                    new BootInstanceRequest { Size = "size" },
-                    RequestOptions
-                )
+                await Client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" })
         );
     }
 }

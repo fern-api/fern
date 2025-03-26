@@ -38,8 +38,7 @@ public class CreateMovieTest : BaseMockServerTest
             );
 
         var response = await Client.Imdb.CreateMovieAsync(
-            new CreateMovieRequest { Title = "title", Rating = 1.1 },
-            RequestOptions
+            new CreateMovieRequest { Title = "title", Rating = 1.1 }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

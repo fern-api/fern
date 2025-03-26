@@ -40,8 +40,7 @@ public class ListEventsTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.ListEventsAsync(
-            new ListUserEventsRequest { Limit = 1 },
-            RequestOptions
+            new ListUserEventsRequest { Limit = 1 }
         );
         Assert.That(
             response,

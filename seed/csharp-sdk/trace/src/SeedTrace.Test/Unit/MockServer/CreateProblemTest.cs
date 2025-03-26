@@ -182,8 +182,7 @@ public class CreateProblemTest : BaseMockServerTest
                     },
                 },
                 MethodName = "methodName",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

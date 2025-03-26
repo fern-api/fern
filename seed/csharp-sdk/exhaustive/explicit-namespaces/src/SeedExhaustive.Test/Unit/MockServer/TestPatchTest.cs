@@ -98,8 +98,7 @@ public class TestPatchTest : BaseMockServerTest
                 Set = new HashSet<string>() { "set" },
                 Map = new Dictionary<int, string>() { { 1, "map" } },
                 Bigint = "1000000",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,

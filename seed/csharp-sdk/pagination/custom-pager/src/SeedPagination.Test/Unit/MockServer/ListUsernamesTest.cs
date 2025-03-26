@@ -38,8 +38,7 @@ public class ListUsernamesTest : BaseMockServerTest
             );
 
         var pager = await Client.Users.ListUsernamesAsync(
-            new ListUsernamesRequest { StartingAfter = "starting_after" },
-            RequestOptions
+            new ListUsernamesRequest { StartingAfter = "starting_after" }
         );
         await foreach (var item in pager)
         {

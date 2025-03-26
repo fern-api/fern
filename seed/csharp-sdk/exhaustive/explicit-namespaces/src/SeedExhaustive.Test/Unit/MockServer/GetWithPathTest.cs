@@ -25,7 +25,7 @@ public class GetWithPathTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Params.GetWithPathAsync("param", RequestOptions);
+        var response = await Client.Endpoints.Params.GetWithPathAsync("param");
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }
