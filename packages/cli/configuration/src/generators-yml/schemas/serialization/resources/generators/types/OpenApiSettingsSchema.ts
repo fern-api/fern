@@ -20,6 +20,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
         "object-query-parameters": core.serialization.boolean().optional(),
         "respect-readonly-schemas": core.serialization.boolean().optional(),
+        "use-bytes-for-binary-response": core.serialization.boolean().optional(),
         "default-form-parameter-encoding": FormParameterEncoding.optional(),
         filter: OpenApiFilterSchema.optional(),
         "example-generation": OpenApiExampleGenerationSchema.optional(),
@@ -33,6 +34,7 @@ export declare namespace OpenApiSettingsSchema {
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
+        "use-bytes-for-binary-response"?: boolean | null;
         "default-form-parameter-encoding"?: FormParameterEncoding.Raw | null;
         filter?: OpenApiFilterSchema.Raw | null;
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;

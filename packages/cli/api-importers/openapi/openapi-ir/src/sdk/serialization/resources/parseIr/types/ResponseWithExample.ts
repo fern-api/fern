@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { FileResponse } from "../../finalIr/types/FileResponse";
 import { JsonResponseWithExample } from "./JsonResponseWithExample";
 import { TextResponse } from "../../finalIr/types/TextResponse";
+import { BytesResponse } from "../../finalIr/types/BytesResponse";
 
 export const ResponseWithExample: core.serialization.Schema<
     serializers.ResponseWithExample.Raw,
@@ -17,6 +18,7 @@ export const ResponseWithExample: core.serialization.Schema<
         file: FileResponse,
         json: JsonResponseWithExample,
         text: TextResponse,
+        bytes: BytesResponse,
         streamingSse: JsonResponseWithExample,
         streamingText: TextResponse,
         streamingJson: JsonResponseWithExample,
@@ -30,6 +32,8 @@ export const ResponseWithExample: core.serialization.Schema<
                     return FernOpenapiIr.ResponseWithExample.json(value);
                 case "text":
                     return FernOpenapiIr.ResponseWithExample.text(value);
+                case "bytes":
+                    return FernOpenapiIr.ResponseWithExample.bytes(value);
                 case "streamingSse":
                     return FernOpenapiIr.ResponseWithExample.streamingSse(value);
                 case "streamingText":
@@ -48,6 +52,7 @@ export declare namespace ResponseWithExample {
         | ResponseWithExample.File
         | ResponseWithExample.Json
         | ResponseWithExample.Text
+        | ResponseWithExample.Bytes
         | ResponseWithExample.StreamingSse
         | ResponseWithExample.StreamingText
         | ResponseWithExample.StreamingJson;
@@ -62,6 +67,10 @@ export declare namespace ResponseWithExample {
 
     export interface Text extends TextResponse.Raw {
         type: "text";
+    }
+
+    export interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
     }
 
     export interface StreamingSse extends JsonResponseWithExample.Raw {

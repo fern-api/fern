@@ -34,6 +34,8 @@ export interface ParseOpenAPIOptions {
     shouldUseIdiomaticRequestNames: boolean;
     /* What the default encoding should be for form data parameters. */
     defaultFormParameterEncoding: "form" | "json" | undefined;
+    /* Whether or not to use the `bytes` type for binary responses. */
+    useBytesForBinaryResponse: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -63,7 +65,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     filter: undefined,
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: "json"
+    defaultFormParameterEncoding: "json",
+    useBytesForBinaryResponse: false
 };
 
 export function getParseOptions({
@@ -122,6 +125,10 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
         exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
         defaultFormParameterEncoding:
             overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined

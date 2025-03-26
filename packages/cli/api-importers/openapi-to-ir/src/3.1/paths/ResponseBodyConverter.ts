@@ -1,8 +1,14 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { HttpResponseBody, JsonResponse, TypeDeclaration } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
+import {
+    AbstractConverter,
+    Converters,
+    ErrorCollector,
+    SchemaOrReferenceConverter
+} from "@fern-api/v2-importer-commons";
 
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace ResponseBodyConverter {
@@ -11,6 +17,12 @@ export declare namespace ResponseBodyConverter {
         group: string[];
         method: string;
         statusCode: string;
+        streamingExtension: FernStreamingExtension.Output | undefined;
+    }
+
+    export interface MediaTypeObject {
+        convertedSchema: SchemaOrReferenceConverter.Output;
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }
 
     export interface Output {
@@ -28,13 +40,22 @@ export class ResponseBodyConverter extends AbstractConverter<
     private readonly group: string[];
     private readonly method: string;
     private readonly statusCode: string;
+    private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
-    constructor({ breadcrumbs, responseBody, group, method, statusCode }: ResponseBodyConverter.Args) {
+    constructor({
+        breadcrumbs,
+        responseBody,
+        group,
+        method,
+        statusCode,
+        streamingExtension
+    }: ResponseBodyConverter.Args) {
         super({ breadcrumbs });
         this.responseBody = responseBody;
         this.group = group;
         this.method = method;
         this.statusCode = statusCode;
+        this.streamingExtension = streamingExtension;
     }
 
     public async convert({
@@ -49,57 +70,121 @@ export class ResponseBodyConverter extends AbstractConverter<
         }
 
         const jsonContentTypes = Object.keys(this.responseBody.content).filter((type) => type.includes("json"));
-
         for (const contentType of [...jsonContentTypes]) {
-            const mediaTypeObject = this.responseBody.content[contentType];
+            const mediaTypeObject = await this.parseMediaTypeObject({ context, errorCollector, contentType });
             if (mediaTypeObject == null) {
                 continue;
             }
-            if (mediaTypeObject.schema == null) {
-                continue;
-            }
-
-            const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
-            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: mediaTypeObject.schema,
-                schemaIdOverride: schemaId
-            });
-
-            const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
-            if (convertedSchema == null) {
-                continue;
-            }
-
-            const examples =
-                mediaTypeObject.examples != null
-                    ? Object.fromEntries(
-                          await Promise.all(
-                              Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
-                                  key,
-                                  context.isReferenceObject(example)
-                                      ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
-                                      : example
-                              ])
-                          )
-                      )
-                    : undefined;
-
             if (contentType.includes("json")) {
                 const responseBody = HttpResponseBody.json(
                     JsonResponse.response({
-                        responseBodyType: convertedSchema.type,
+                        responseBodyType: mediaTypeObject.convertedSchema.type,
                         docs: this.responseBody.description
                     })
                 );
                 return {
                     responseBody,
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    examples
+                    inlinedTypes: mediaTypeObject.convertedSchema.inlinedTypes,
+                    examples: mediaTypeObject.examples
+                };
+            }
+        }
+
+        const nonJsonContentTypes = Object.keys(this.responseBody.content).filter((type) => !type.includes("json"));
+        for (const contentType of nonJsonContentTypes) {
+            const mediaTypeObject = await this.parseMediaTypeObject({ context, errorCollector, contentType });
+            if (mediaTypeObject == null) {
+                continue;
+            }
+            if (this.isBinarySchema(mediaTypeObject.convertedSchema)) {
+                if (context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
+                    const responseBody = HttpResponseBody.bytes({
+                        docs: this.responseBody.description
+                    });
+                    return {
+                        responseBody,
+                        inlinedTypes: {}
+                    };
+                }
+                const responseBody = HttpResponseBody.fileDownload({
+                    docs: this.responseBody.description
+                });
+                return {
+                    responseBody,
+                    inlinedTypes: {}
                 };
             }
         }
 
         return undefined;
+    }
+
+    private async parseMediaTypeObject({
+        context,
+        errorCollector,
+        contentType
+    }: {
+        context: OpenAPIConverterContext3_1;
+        errorCollector: ErrorCollector;
+        contentType: string;
+    }): Promise<ResponseBodyConverter.MediaTypeObject | undefined> {
+        const mediaTypeObject = this.responseBody.content?.[contentType];
+        if (mediaTypeObject == null) {
+            return undefined;
+        }
+        if (mediaTypeObject.schema == null) {
+            return undefined;
+        }
+
+        const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
+        const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+            breadcrumbs: [...this.breadcrumbs, "schema"],
+            schemaOrReference: mediaTypeObject.schema,
+            schemaIdOverride: schemaId
+        });
+
+        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        if (convertedSchema == null) {
+            return undefined;
+        }
+
+        const examples =
+            mediaTypeObject.examples != null
+                ? Object.fromEntries(
+                      await Promise.all(
+                          Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
+                              key,
+                              context.isReferenceObject(example)
+                                  ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                                  : example
+                          ])
+                      )
+                  )
+                : undefined;
+
+        return {
+            convertedSchema,
+            examples
+        };
+    }
+
+    private isBinarySchema(convertedSchema: SchemaOrReferenceConverter.Output): boolean {
+        const typeReference = convertedSchema.type;
+        switch (typeReference.type) {
+            case "container":
+            case "named":
+            case "unknown":
+                return false;
+            case "primitive":
+                if (typeReference.primitive.v2 == null) {
+                    return false;
+                }
+                return (
+                    typeReference.primitive.v2.type === "string" &&
+                    typeReference.primitive.v2.validation?.format === "binary"
+                );
+            default:
+                return false;
+        }
     }
 }
