@@ -27,10 +27,10 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
 
-public class RawAsyncImdbClient {
+public class AsyncRawImdbClient {
     protected final ClientOptions clientOptions;
 
-    public RawAsyncImdbClient(ClientOptions clientOptions) {
+    public AsyncRawImdbClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 

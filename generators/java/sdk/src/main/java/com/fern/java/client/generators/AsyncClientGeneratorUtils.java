@@ -77,4 +77,9 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
                 allGeneratedInterfaces,
                 generatedErrors);
     }
+
+    @Override
+    protected ClassName rawClientImplName(ClassName implClientName) {
+        return ClassName.get(implClientName.packageName(), "AsyncRaw" + implClientName.simpleName());
+    }
 }

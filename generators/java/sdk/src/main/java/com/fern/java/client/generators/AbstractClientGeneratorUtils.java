@@ -65,10 +65,10 @@ public abstract class AbstractClientGeneratorUtils {
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
     private final GeneratedJavaFile requestOptionsFile;
     protected final Map<ErrorId, GeneratedJavaFile> generatedErrors;
-    private final ClassName clientImplName;
+    private final ClassName clientClassName;
 
     public AbstractClientGeneratorUtils(
-            ClassName clientImplName,
+            ClassName clientClassName,
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
             GeneratedObjectMapper generatedObjectMapper,
@@ -83,8 +83,8 @@ public abstract class AbstractClientGeneratorUtils {
                 .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                 .build();
         this.fernPackage = fernPackage;
-        this.clientImplName = clientImplName(clientImplName);
-        this.implBuilder = TypeSpec.classBuilder(this.clientImplName)
+        this.clientClassName = clientClassName;
+        this.implBuilder = TypeSpec.classBuilder(clientImplName(this.clientClassName))
                 .addModifiers(Modifier.PUBLIC)
                 .addField(clientOptionsField);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
@@ -106,9 +106,7 @@ public abstract class AbstractClientGeneratorUtils {
     protected abstract AbstractHttpEndpointMethodSpecFactory endpointMethodSpecFactory(
             HttpService httpService, HttpEndpoint httpEndpoint);
 
-    private ClassName rawClientImplName(ClassName implClientName) {
-        return ClassName.get(implClientName.packageName(), "Raw" + implClientName.simpleName());
-    }
+    protected abstract ClassName rawClientImplName(ClassName implClientName);
 
     public Result buildClients() {
         Optional<HttpService> maybeHttpService = fernPackage
@@ -121,11 +119,11 @@ public abstract class AbstractClientGeneratorUtils {
                 .addStatement("this.$L = $L", clientOptionsField.name, clientOptionsField.name);
         TypeSpec.Builder rawClientImplBuilder = null;
         if (maybeHttpService.isPresent()) {
-            rawClientImplBuilder = TypeSpec.classBuilder(rawClientImplName(clientImplName))
+            rawClientImplBuilder = TypeSpec.classBuilder(rawClientImplName(clientClassName))
                     .addModifiers(Modifier.PUBLIC)
                     .addField(clientOptionsField);
             FieldSpec rawClientFieldSpec = FieldSpec.builder(
-                            rawClientImplName(clientImplName), RAW_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                            rawClientImplName(clientClassName), RAW_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                     .build();
 
             rawClientImplBuilder.addMethod(MethodSpec.constructorBuilder()

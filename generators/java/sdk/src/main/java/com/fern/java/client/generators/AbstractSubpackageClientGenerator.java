@@ -69,9 +69,7 @@ public abstract class AbstractSubpackageClientGenerator extends AbstractFileGene
 
     protected abstract AbstractClientGeneratorUtils clientGeneratorUtils();
 
-    private ClassName rawClientImplName(ClassName implClientName) {
-        return ClassName.get(implClientName.packageName(), "Raw" + implClientName.simpleName());
-    }
+    protected abstract ClassName rawClientImplName(ClassName implClientName);
 
     @Override
     public GeneratedClient generateFile() {

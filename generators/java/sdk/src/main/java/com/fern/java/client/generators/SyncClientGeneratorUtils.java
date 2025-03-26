@@ -76,4 +76,9 @@ public class SyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
                 allGeneratedInterfaces,
                 generatedErrors);
     }
+
+    @Override
+    protected ClassName rawClientImplName(ClassName implClientName) {
+        return ClassName.get(implClientName.packageName(), "Raw" + implClientName.simpleName());
+    }
 }
