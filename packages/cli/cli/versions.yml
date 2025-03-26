@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add AI chat config block to docs.yml for model/system prompt customization
+    type: feat
+  irVersion: 57
+  version: 0.57.1
+
+- changelogEntry:
+  - summary: |
       Add `use-bytes-for-binary-response` configuration option to specify whether to use the `bytes` type for binary responses.
     type: feat
   irVersion: 57
