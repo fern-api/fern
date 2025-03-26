@@ -13,6 +13,7 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
-        this.typeDefinitionsByName = ir.getTypes();
+        this.typeDefinitionsByName = new HashMap<>(ir.getTypes());
         this.resolvedAuthSchemes = resolvedAuthSchemes;
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors();
