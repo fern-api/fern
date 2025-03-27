@@ -24,11 +24,11 @@ public class ServiceClient {
         return this.rawClient;
     }
 
-    public void patch(String id, PatchProxyRequest request) {
-        this.rawClient.patch(id, request).body();
+    public void patch(PatchProxyRequest request) {
+        this.rawClient.patch(request).body();
     }
 
-    public void patch(String id, PatchProxyRequest request, RequestOptions requestOptions) {
-        this.rawClient.patch(id, request, requestOptions).body();
+    public void patch(PatchProxyRequest request, RequestOptions requestOptions) {
+        this.rawClient.patch(request, requestOptions).body();
     }
 }

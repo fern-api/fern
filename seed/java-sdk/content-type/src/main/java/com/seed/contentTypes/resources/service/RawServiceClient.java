@@ -28,12 +28,11 @@ public class RawServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedContentTypesHttpResponse<Void> patch(String id, PatchProxyRequest request) {
-        return patch(id, request, null);
+    public SeedContentTypesHttpResponse<Void> patch(PatchProxyRequest request) {
+        return patch(request, null);
     }
 
-    public SeedContentTypesHttpResponse<Void> patch(
-            String id, PatchProxyRequest request, RequestOptions requestOptions) {
+    public SeedContentTypesHttpResponse<Void> patch(PatchProxyRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();

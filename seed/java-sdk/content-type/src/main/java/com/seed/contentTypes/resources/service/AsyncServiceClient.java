@@ -25,11 +25,11 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<Void> patch(String id, PatchProxyRequest request) {
-        return this.rawClient.patch(id, request).thenApply(response -> response.body());
+    public CompletableFuture<Void> patch(PatchProxyRequest request) {
+        return this.rawClient.patch(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Void> patch(String id, PatchProxyRequest request, RequestOptions requestOptions) {
-        return this.rawClient.patch(id, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<Void> patch(PatchProxyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.patch(request, requestOptions).thenApply(response -> response.body());
     }
 }

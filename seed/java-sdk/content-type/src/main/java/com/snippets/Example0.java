@@ -11,7 +11,6 @@ public class Example0 {
             .build();
 
         client.service().patch(
-            "id",
             PatchProxyRequest
                 .builder()
                 .application("application")

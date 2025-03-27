@@ -32,12 +32,12 @@ public class AsyncRawServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> patch(String id, PatchProxyRequest request) {
-        return patch(id, request, null);
+    public CompletableFuture<SeedContentTypesHttpResponse<Void>> patch(PatchProxyRequest request) {
+        return patch(request, null);
     }
 
     public CompletableFuture<SeedContentTypesHttpResponse<Void>> patch(
-            String id, PatchProxyRequest request, RequestOptions requestOptions) {
+            PatchProxyRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
