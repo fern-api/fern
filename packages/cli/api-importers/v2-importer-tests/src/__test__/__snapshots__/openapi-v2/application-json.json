@@ -126,7 +126,7 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -759,7 +759,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "Data"
     ],

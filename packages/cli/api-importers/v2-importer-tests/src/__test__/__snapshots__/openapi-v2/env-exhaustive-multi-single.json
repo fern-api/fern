@@ -180,7 +180,7 @@
   },
   "errors": {},
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -293,7 +293,7 @@
   "subpackages": {},
   "websocketChannels": {},
   "rootPackage": {
-    "service": "",
+    "service": "service_",
     "types": [],
     "errors": [],
     "subpackages": [],

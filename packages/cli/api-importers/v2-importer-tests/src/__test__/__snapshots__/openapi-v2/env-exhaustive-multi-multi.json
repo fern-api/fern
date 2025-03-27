@@ -585,7 +585,7 @@
   },
   "errors": {},
   "services": {
-    "alpha": {
+    "service_alpha": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -732,7 +732,7 @@
         }
       ]
     },
-    "beta": {
+    "service_beta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -882,6 +882,75 @@
   },
   "webhookGroups": {},
   "subpackages": {
+    "alpha": {
+      "name": {
+        "originalName": "alpha",
+        "camelCase": {
+          "unsafeName": "alpha",
+          "safeName": "alpha"
+        },
+        "snakeCase": {
+          "unsafeName": "alpha",
+          "safeName": "alpha"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ALPHA",
+          "safeName": "ALPHA"
+        },
+        "pascalCase": {
+          "unsafeName": "Alpha",
+          "safeName": "Alpha"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "alpha",
+            "camelCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "snakeCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ALPHA",
+              "safeName": "ALPHA"
+            },
+            "pascalCase": {
+              "unsafeName": "Alpha",
+              "safeName": "Alpha"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "alpha",
+          "camelCase": {
+            "unsafeName": "alpha",
+            "safeName": "alpha"
+          },
+          "snakeCase": {
+            "unsafeName": "alpha",
+            "safeName": "alpha"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ALPHA",
+            "safeName": "ALPHA"
+          },
+          "pascalCase": {
+            "unsafeName": "Alpha",
+            "safeName": "Alpha"
+          }
+        }
+      },
+      "service": "service_alpha",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
     "testChannel": {
       "name": {
         "originalName": "testChannel",
@@ -1018,6 +1087,75 @@
       "errors": [],
       "subpackages": [],
       "websocket": "testChannel2",
+      "hasEndpointsInTree": false
+    },
+    "beta": {
+      "name": {
+        "originalName": "beta",
+        "camelCase": {
+          "unsafeName": "beta",
+          "safeName": "beta"
+        },
+        "snakeCase": {
+          "unsafeName": "beta",
+          "safeName": "beta"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "BETA",
+          "safeName": "BETA"
+        },
+        "pascalCase": {
+          "unsafeName": "Beta",
+          "safeName": "Beta"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "beta",
+            "camelCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "snakeCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BETA",
+              "safeName": "BETA"
+            },
+            "pascalCase": {
+              "unsafeName": "Beta",
+              "safeName": "Beta"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "beta",
+          "camelCase": {
+            "unsafeName": "beta",
+            "safeName": "beta"
+          },
+          "snakeCase": {
+            "unsafeName": "beta",
+            "safeName": "beta"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BETA",
+            "safeName": "BETA"
+          },
+          "pascalCase": {
+            "unsafeName": "Beta",
+            "safeName": "Beta"
+          }
+        }
+      },
+      "service": "service_beta",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
       "hasEndpointsInTree": false
     },
     "testChannels": {
@@ -1442,7 +1580,6 @@
     }
   },
   "rootPackage": {
-    "service": "alpha",
     "types": [
       "testChannel_sendMessage",
       "testChannel2_sendMessage",
@@ -1451,8 +1588,10 @@
     ],
     "errors": [],
     "subpackages": [
+      "alpha",
       "testChannel",
       "testChannel2",
+      "beta",
       "testChannels",
       "testChannels2"
     ],

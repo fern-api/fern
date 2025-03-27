@@ -86,7 +86,7 @@
     }
   },
   "services": {
-    "generativelanguage": {
+    "service_generativelanguage": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -351,15 +351,86 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "generativelanguage",
     "types": [
       "GenerateContentResponse"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "generativelanguage"
+    ],
     "hasEndpointsInTree": false
   },
-  "subpackages": {},
+  "subpackages": {
+    "generativelanguage": {
+      "name": {
+        "originalName": "generativelanguage",
+        "camelCase": {
+          "unsafeName": "generativelanguage",
+          "safeName": "generativelanguage"
+        },
+        "snakeCase": {
+          "unsafeName": "generativelanguage",
+          "safeName": "generativelanguage"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "GENERATIVELANGUAGE",
+          "safeName": "GENERATIVELANGUAGE"
+        },
+        "pascalCase": {
+          "unsafeName": "Generativelanguage",
+          "safeName": "Generativelanguage"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "generativelanguage",
+            "camelCase": {
+              "unsafeName": "generativelanguage",
+              "safeName": "generativelanguage"
+            },
+            "snakeCase": {
+              "unsafeName": "generativelanguage",
+              "safeName": "generativelanguage"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GENERATIVELANGUAGE",
+              "safeName": "GENERATIVELANGUAGE"
+            },
+            "pascalCase": {
+              "unsafeName": "Generativelanguage",
+              "safeName": "Generativelanguage"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "generativelanguage",
+          "camelCase": {
+            "unsafeName": "generativelanguage",
+            "safeName": "generativelanguage"
+          },
+          "snakeCase": {
+            "unsafeName": "generativelanguage",
+            "safeName": "generativelanguage"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GENERATIVELANGUAGE",
+            "safeName": "GENERATIVELANGUAGE"
+          },
+          "pascalCase": {
+            "unsafeName": "Generativelanguage",
+            "safeName": "Generativelanguage"
+          }
+        }
+      },
+      "service": "service_generativelanguage",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

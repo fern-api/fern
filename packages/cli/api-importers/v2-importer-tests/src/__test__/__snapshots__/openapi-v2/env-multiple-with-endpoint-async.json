@@ -315,7 +315,7 @@
   },
   "errors": {},
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -708,7 +708,7 @@
     }
   },
   "rootPackage": {
-    "service": "",
+    "service": "service_",
     "types": [
       "testChannel_sendMessage",
       "testChannel2_sendMessage"

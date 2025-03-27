@@ -950,7 +950,7 @@
     }
   },
   "services": {
-    "End users": {
+    "service_End users": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -2572,7 +2572,6 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "End users",
     "types": [
       "EndUser",
       "EndUserRequest",
@@ -2583,10 +2582,82 @@
       "EndUserUpdatedWebhookPayload"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "End users"
+    ],
     "hasEndpointsInTree": false
   },
-  "subpackages": {},
+  "subpackages": {
+    "End users": {
+      "name": {
+        "originalName": "End users",
+        "camelCase": {
+          "unsafeName": "endUsers",
+          "safeName": "endUsers"
+        },
+        "snakeCase": {
+          "unsafeName": "end_users",
+          "safeName": "end_users"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "END_USERS",
+          "safeName": "END_USERS"
+        },
+        "pascalCase": {
+          "unsafeName": "EndUsers",
+          "safeName": "EndUsers"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "End users",
+            "camelCase": {
+              "unsafeName": "endUsers",
+              "safeName": "endUsers"
+            },
+            "snakeCase": {
+              "unsafeName": "end_users",
+              "safeName": "end_users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "END_USERS",
+              "safeName": "END_USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "EndUsers",
+              "safeName": "EndUsers"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "End users",
+          "camelCase": {
+            "unsafeName": "endUsers",
+            "safeName": "endUsers"
+          },
+          "snakeCase": {
+            "unsafeName": "end_users",
+            "safeName": "end_users"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "END_USERS",
+            "safeName": "END_USERS"
+          },
+          "pascalCase": {
+            "unsafeName": "EndUsers",
+            "safeName": "EndUsers"
+          }
+        }
+      },
+      "service": "service_End users",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

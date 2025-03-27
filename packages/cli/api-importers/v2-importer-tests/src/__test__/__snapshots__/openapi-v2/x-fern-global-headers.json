@@ -248,7 +248,7 @@
     }
   },
   "services": {
-    "user": {
+    "service_user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -919,16 +919,87 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "user",
     "types": [
       "User",
       "StreamUser"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "user"
+    ],
     "hasEndpointsInTree": false
   },
-  "subpackages": {},
+  "subpackages": {
+    "user": {
+      "name": {
+        "originalName": "user",
+        "camelCase": {
+          "unsafeName": "user",
+          "safeName": "user"
+        },
+        "snakeCase": {
+          "unsafeName": "user",
+          "safeName": "user"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "USER",
+          "safeName": "USER"
+        },
+        "pascalCase": {
+          "unsafeName": "User",
+          "safeName": "User"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "user",
+            "camelCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "snakeCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USER",
+              "safeName": "USER"
+            },
+            "pascalCase": {
+              "unsafeName": "User",
+              "safeName": "User"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "user",
+          "camelCase": {
+            "unsafeName": "user",
+            "safeName": "user"
+          },
+          "snakeCase": {
+            "unsafeName": "user",
+            "safeName": "user"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USER",
+            "safeName": "USER"
+          },
+          "pascalCase": {
+            "unsafeName": "User",
+            "safeName": "User"
+          }
+        }
+      },
+      "service": "service_user",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

@@ -237,20 +237,10 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             namespace: context.namespace
         });
 
-        let pkg = this.ir.rootPackage
-        for (let i = 0; i < group.length; i++) {
-            const subpackageId = group.slice(0, i + 1).join(".");
-            if (i < group.length - 1) {
-                const curr = this.getOrCreatePackage({ 
-                    id: group.slice(0, i + 1).join("."),
-                    context,
-                    name: group[i]!
-                });
-                pkg.subpackages.push(subpackageId);
-                pkg = curr;
-            }
-        }
-
+        const pkg = this.getOrCreatePackage({
+            context,
+            group,
+        })
 
         for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
@@ -340,26 +330,18 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     });
                     const groupId = group.join(".");
 
-                    let pkg = this.ir.rootPackage
-                    for (let i = 0; i < group.length; i++) {
-                        const subpackageId = group.slice(0, i + 1).join(".");
-                        if (i < group.length - 1) {
-                            const curr = this.getOrCreatePackage({ 
-                                id: group.slice(0, i + 1).join("."),
-                                context,
-                                name: group[i]!
-                            });
-                            pkg.subpackages.push(subpackageId);
-                            pkg = curr;
-                        }
-                    }
+                    const pkg = this.getOrCreatePackage({
+                        context,
+                        group: endpoint.group,
+                    })
 
                     const allParts = [...group].map((part) => context.casingsGenerator.generateName(part));
                     const finalpart = allParts[allParts.length - 1];
 
                     if (pkg.service == null) {
-                        pkg.service = groupId;
+                        pkg.service = `service_${groupId}`;
                     }
+
                     if (this.ir.services[pkg.service] == null) {
                         this.ir.services[pkg.service] = {
                             name: {
@@ -387,25 +369,30 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     }
                 }
 
+                for (const webhook of convertedPath.webhooks) {                    
+                    const group = this.getGroup({
+                        groupParts: webhook.group,
+                        namespace: context.namespace
+                    });
+                    const groupId = group.join(".");
 
-                // for (const webhook of convertedPath.webhooks) {                    
-                //     const group = this.getStringifiedGroup({
-                //         groupParts: webhook.group,
-                //         namespace: context.namespace
-                //     });
-                //     if (this.ir.webhookGroups[group] == null) {
-                //         this.ir.webhookGroups[group] = [];
-                //     }
-                //     this.ir.webhookGroups[group].push(webhook.webhook);
-                // }
-                // this.ir.types = {
-                //     ...this.ir.types,
-                //     ...convertedPath.inlinedTypes
-                // };
+                    const pkg = this.getOrCreatePackage({
+                        context,
+                        group: webhook.group,
+                    })
+
+                    this.ir.webhookGroups[groupId] ??= []; 
+                    this.ir.webhookGroups[groupId].push(webhook.webhook);
+
+                    pkg.webhooks = groupId;
+                }
+
+                this.ir.types = {
+                    ...this.ir.types,
+                    ...convertedPath.inlinedTypes
+                };
             }
         }
-        this.addWebhookGroupsToIr({ webhookGroups: this.ir.webhookGroups, context });
-
         return { endpointLevelServers };
     }
 
@@ -416,21 +403,41 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
      * @returns The package object
      */
     private getOrCreatePackage({
-        id,
-        name,
-        context
+        context,
+        group,
     }: {
-        id: string;
-        name: string;
         context: OpenAPIConverterContext3_1;
+        group?: string[];
     }): Package {
-        if (this.ir.subpackages[id] == null) {
-            this.ir.subpackages[id] = {
-                name: context.casingsGenerator.generateName(name),
-                ...context.createPackage({ name })
-            };
+
+        const groupParts = [];
+        if (context.namespace != null) {
+            groupParts.push(context.namespace);
         }
-        return this.ir.subpackages[id];
+        groupParts.push(...(group ?? []));
+
+        if (groupParts.length == 0) {
+            return this.ir.rootPackage;
+        }
+
+        let pkg = this.ir.rootPackage
+        for (let i = 0; i < groupParts.length; i++) {
+            const name = groupParts[i];
+            const subpackageId = groupParts.slice(0, i + 1).join(".");
+            if (this.ir.subpackages[subpackageId] == null) {
+                this.ir.subpackages[subpackageId] = {
+                    name: context.casingsGenerator.generateName(name!),
+                    ...context.createPackage({ name })
+                };
+            }
+            const curr = this.ir.subpackages[subpackageId];
+            if (!pkg.subpackages.includes(subpackageId)) {
+                pkg.subpackages.push(subpackageId);
+            }
+            pkg = curr;
+        }
+
+        return pkg;
     }
 
     /**
@@ -452,30 +459,5 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
         group.push(...(groupParts ?? []));
         return group;
-    }
-
-    private addWebhookGroupsToIr({
-        webhookGroups,
-        context
-    }: {
-        webhookGroups: Record<string, FernIr.Webhook[]>;
-        context: OpenAPIConverterContext3_1;
-    }): void {
-        for (const [group, webhooks] of Object.entries(webhookGroups)) {
-            this.ir.webhookGroups[group] = webhooks;
-
-            if (group !== "") {
-                if (this.ir.subpackages[group] == null) {
-                    this.ir.subpackages[group] = {
-                        name: context.casingsGenerator.generateName(group),
-                        ...context.createPackage({ name: group })
-                    };
-                }
-                this.ir.subpackages[group].webhooks = group;
-                this.ir.rootPackage.subpackages.push(group);
-            } else {
-                this.ir.rootPackage.webhooks = group;
-            }
-        }
     }
 }

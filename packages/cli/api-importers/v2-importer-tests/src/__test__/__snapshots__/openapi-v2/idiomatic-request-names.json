@@ -1043,7 +1043,7 @@
     }
   },
   "services": {
-    "OrganizationUsers": {
+    "service_OrganizationUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -3872,7 +3872,62 @@
               "location": "ENDPOINT"
             }
           ]
-        },
+        }
+      ]
+    },
+    "service_Users": {
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "Users",
+              "camelCase": {
+                "unsafeName": "users",
+                "safeName": "users"
+              },
+              "snakeCase": {
+                "unsafeName": "users",
+                "safeName": "users"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "USERS",
+                "safeName": "USERS"
+              },
+              "pascalCase": {
+                "unsafeName": "Users",
+                "safeName": "Users"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "Users",
+            "camelCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "snakeCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USERS",
+              "safeName": "USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Users",
+              "safeName": "Users"
+            }
+          }
+        }
+      },
+      "basePath": {
+        "head": "",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "endpoints": [
         {
           "id": "Users.listUsers",
           "displayName": "List users",
@@ -6539,7 +6594,23 @@
             "parts": []
           },
           "allPathParameters": []
-        },
+        }
+      ]
+    },
+    "service_": {
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        }
+      },
+      "basePath": {
+        "head": "",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "endpoints": [
         {
           "id": ".getAUser",
           "displayName": "Get a user",
@@ -7877,7 +7948,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "OrganizationUsers",
+    "service": "service_",
     "types": [
       "UserCreate",
       "UserList",
@@ -7886,10 +7957,152 @@
       "UserStats"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "OrganizationUsers",
+      "Users"
+    ],
     "hasEndpointsInTree": false
   },
-  "subpackages": {},
+  "subpackages": {
+    "OrganizationUsers": {
+      "name": {
+        "originalName": "OrganizationUsers",
+        "camelCase": {
+          "unsafeName": "organizationUsers",
+          "safeName": "organizationUsers"
+        },
+        "snakeCase": {
+          "unsafeName": "organization_users",
+          "safeName": "organization_users"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ORGANIZATION_USERS",
+          "safeName": "ORGANIZATION_USERS"
+        },
+        "pascalCase": {
+          "unsafeName": "OrganizationUsers",
+          "safeName": "OrganizationUsers"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "OrganizationUsers",
+            "camelCase": {
+              "unsafeName": "organizationUsers",
+              "safeName": "organizationUsers"
+            },
+            "snakeCase": {
+              "unsafeName": "organization_users",
+              "safeName": "organization_users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ORGANIZATION_USERS",
+              "safeName": "ORGANIZATION_USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "OrganizationUsers",
+              "safeName": "OrganizationUsers"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "OrganizationUsers",
+          "camelCase": {
+            "unsafeName": "organizationUsers",
+            "safeName": "organizationUsers"
+          },
+          "snakeCase": {
+            "unsafeName": "organization_users",
+            "safeName": "organization_users"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ORGANIZATION_USERS",
+            "safeName": "ORGANIZATION_USERS"
+          },
+          "pascalCase": {
+            "unsafeName": "OrganizationUsers",
+            "safeName": "OrganizationUsers"
+          }
+        }
+      },
+      "service": "service_OrganizationUsers",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "Users": {
+      "name": {
+        "originalName": "Users",
+        "camelCase": {
+          "unsafeName": "users",
+          "safeName": "users"
+        },
+        "snakeCase": {
+          "unsafeName": "users",
+          "safeName": "users"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "USERS",
+          "safeName": "USERS"
+        },
+        "pascalCase": {
+          "unsafeName": "Users",
+          "safeName": "Users"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "Users",
+            "camelCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "snakeCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USERS",
+              "safeName": "USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Users",
+              "safeName": "Users"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "Users",
+          "camelCase": {
+            "unsafeName": "users",
+            "safeName": "users"
+          },
+          "snakeCase": {
+            "unsafeName": "users",
+            "safeName": "users"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USERS",
+            "safeName": "USERS"
+          },
+          "pascalCase": {
+            "unsafeName": "Users",
+            "safeName": "Users"
+          }
+        }
+      },
+      "service": "service_Users",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
