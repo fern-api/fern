@@ -293,13 +293,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.2)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.2
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1773,13 +1773,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.2)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.2
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -19815,11 +19815,6 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
-
-  '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14(esbuild@0.24.2)':
-    dependencies:
-      esbuild: 0.24.2
-      tslib: 1.14.1
 
   '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14(esbuild@0.25.0)':
     dependencies:
