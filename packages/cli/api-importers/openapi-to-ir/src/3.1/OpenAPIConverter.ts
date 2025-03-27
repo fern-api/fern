@@ -419,6 +419,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             const subpackageId = groupParts.slice(0, i + 1).join(".");
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     name: context.casingsGenerator.generateName(name!),
                     ...context.createPackage({ name })
                 };
