@@ -65,7 +65,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             ClassName className,
             Set<String> reservedTypeNames,
             boolean isTopLevelClass,
-            List<ObjectProperty> fileProperties) {
+            List<ObjectProperty> fileProperties,
+            List<ObjectProperty> allowMultipleProperties) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
 
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();

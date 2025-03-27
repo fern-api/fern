@@ -58,7 +58,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean inlinePathParams;
     private final boolean inlineFileProperties;
-    private final ClientGeneratorContext generatorContext;
 
     public WrappedRequestGenerator(
             SdkRequestWrapper sdkRequestWrapper,
@@ -68,7 +67,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClientGeneratorContext generatorContext) {
         super(className, generatorContext);
-        this.generatorContext = generatorContext;
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestWrapper = sdkRequestWrapper;
@@ -118,7 +116,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .docs(httpHeader.getDocs())
                     .build());
         });
-
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
             queryParameterObjectProperties.add(ObjectProperty.builder()
                     .name(queryParameter.getName())
@@ -224,7 +221,9 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 className,
                 Set.of(className.simpleName()),
                 true,
-                fileObjectProperties);
+                fileObjectProperties,
+                // TODO(ajgateno): Add allow-multiple properties here
+                Collections.emptyList());
         GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
