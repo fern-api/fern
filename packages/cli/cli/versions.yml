@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      Add support for parsing `type: enum` in OpenAPI schemas. This allows for proper conversion of enum types that use the 
+      non-standard `type: enum` format instead of the standard `type: string` with `enum` values.
+        
+    type: feat
+  irVersion: 57
+  version: 0.57.2
+
+- changelogEntry:
+  - summary: |
       Add AI chat config block to docs.yml for model/system prompt customization. Example:
 
       ai-chat:
