@@ -159,7 +159,8 @@ public class AsyncRawServiceClient {
                     httpUrl, "shallow", request.getShallow().get().toString(), false);
         }
         if (request.getTag().isPresent()) {
-            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), false);
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "tag", request.getTag().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

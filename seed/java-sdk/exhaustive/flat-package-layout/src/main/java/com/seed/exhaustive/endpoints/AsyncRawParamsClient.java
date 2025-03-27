@@ -238,7 +238,8 @@ public class AsyncRawParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "number", request.getNumber().toString(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

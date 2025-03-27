@@ -240,7 +240,7 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get(),
+                    request.getOptionalListOfStrings().get().toString(),
                     false);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
