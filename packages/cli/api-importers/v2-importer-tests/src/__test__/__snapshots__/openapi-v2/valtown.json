@@ -8180,7 +8180,7 @@
     }
   },
   "services": {
-    "search": {
+    "service_search": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -10901,7 +10901,7 @@
         }
       ]
     },
-    "alias": {
+    "service_alias": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -12835,7 +12835,7 @@
         }
       ]
     },
-    "me": {
+    "service_me": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -20402,7 +20402,7 @@
         }
       ]
     },
-    "blobs": {
+    "service_blobs": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -21706,7 +21706,7 @@
         }
       ]
     },
-    "users": {
+    "service_users": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -24990,7 +24990,7 @@
         }
       ]
     },
-    "sqlite": {
+    "service_sqlite": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -27124,7 +27124,7 @@
         }
       ]
     },
-    "vals": {
+    "service_vals": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -37650,7 +37650,7 @@
         }
       ]
     },
-    "emails": {
+    "service_emails": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -38413,7 +38413,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "search",
+            "camelCase": {
+              "unsafeName": "search",
+              "safeName": "search"
+            },
+            "snakeCase": {
+              "unsafeName": "search",
+              "safeName": "search"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SEARCH",
+              "safeName": "SEARCH"
+            },
+            "pascalCase": {
+              "unsafeName": "Search",
+              "safeName": "Search"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "search",
@@ -38435,7 +38455,7 @@
           }
         }
       },
-      "service": "search",
+      "service": "service_search",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38462,7 +38482,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "alias",
+            "camelCase": {
+              "unsafeName": "alias",
+              "safeName": "alias"
+            },
+            "snakeCase": {
+              "unsafeName": "alias",
+              "safeName": "alias"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ALIAS",
+              "safeName": "ALIAS"
+            },
+            "pascalCase": {
+              "unsafeName": "Alias",
+              "safeName": "Alias"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "alias",
@@ -38484,7 +38524,7 @@
           }
         }
       },
-      "service": "alias",
+      "service": "service_alias",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38511,7 +38551,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "me",
+            "camelCase": {
+              "unsafeName": "me",
+              "safeName": "me"
+            },
+            "snakeCase": {
+              "unsafeName": "me",
+              "safeName": "me"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ME",
+              "safeName": "ME"
+            },
+            "pascalCase": {
+              "unsafeName": "Me",
+              "safeName": "Me"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "me",
@@ -38533,7 +38593,7 @@
           }
         }
       },
-      "service": "me",
+      "service": "service_me",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38560,7 +38620,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "blobs",
+            "camelCase": {
+              "unsafeName": "blobs",
+              "safeName": "blobs"
+            },
+            "snakeCase": {
+              "unsafeName": "blobs",
+              "safeName": "blobs"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BLOBS",
+              "safeName": "BLOBS"
+            },
+            "pascalCase": {
+              "unsafeName": "Blobs",
+              "safeName": "Blobs"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "blobs",
@@ -38582,7 +38662,7 @@
           }
         }
       },
-      "service": "blobs",
+      "service": "service_blobs",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38609,7 +38689,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "users",
+            "camelCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "snakeCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USERS",
+              "safeName": "USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Users",
+              "safeName": "Users"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "users",
@@ -38631,7 +38731,7 @@
           }
         }
       },
-      "service": "users",
+      "service": "service_users",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38658,7 +38758,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "sqlite",
+            "camelCase": {
+              "unsafeName": "sqlite",
+              "safeName": "sqlite"
+            },
+            "snakeCase": {
+              "unsafeName": "sqlite",
+              "safeName": "sqlite"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SQLITE",
+              "safeName": "SQLITE"
+            },
+            "pascalCase": {
+              "unsafeName": "Sqlite",
+              "safeName": "Sqlite"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "sqlite",
@@ -38680,7 +38800,7 @@
           }
         }
       },
-      "service": "sqlite",
+      "service": "service_sqlite",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38707,7 +38827,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "vals",
+            "camelCase": {
+              "unsafeName": "vals",
+              "safeName": "vals"
+            },
+            "snakeCase": {
+              "unsafeName": "vals",
+              "safeName": "vals"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "VALS",
+              "safeName": "VALS"
+            },
+            "pascalCase": {
+              "unsafeName": "Vals",
+              "safeName": "Vals"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "vals",
@@ -38729,7 +38869,7 @@
           }
         }
       },
-      "service": "vals",
+      "service": "service_vals",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -38756,7 +38896,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "emails",
+            "camelCase": {
+              "unsafeName": "emails",
+              "safeName": "emails"
+            },
+            "snakeCase": {
+              "unsafeName": "emails",
+              "safeName": "emails"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EMAILS",
+              "safeName": "EMAILS"
+            },
+            "pascalCase": {
+              "unsafeName": "Emails",
+              "safeName": "Emails"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "emails",
@@ -38778,7 +38938,7 @@
           }
         }
       },
-      "service": "emails",
+      "service": "service_emails",
       "types": [],
       "errors": [],
       "subpackages": [],

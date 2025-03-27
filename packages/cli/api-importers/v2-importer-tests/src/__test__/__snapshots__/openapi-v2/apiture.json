@@ -16308,7 +16308,7 @@
     }
   },
   "services": {
-    "accounts": {
+    "service_accounts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -31584,7 +31584,7 @@
         }
       ]
     },
-    "accountJointOwners": {
+    "service_accountJointOwners": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -32271,7 +32271,7 @@
         }
       ]
     },
-    "overdraftProtection": {
+    "service_overdraftProtection": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -33527,7 +33527,7 @@
         }
       ]
     },
-    "jointOwners": {
+    "service_jointOwners": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -34699,7 +34699,7 @@
         }
       ]
     },
-    "institutions": {
+    "service_institutions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -42402,7 +42402,7 @@
         }
       ]
     },
-    "transactions": {
+    "service_transactions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -48071,7 +48071,7 @@
         }
       ]
     },
-    "transactionCategories": {
+    "service_transactionCategories": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -49034,7 +49034,7 @@
         }
       ]
     },
-    "transfers": {
+    "service_transfers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -67553,7 +67553,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "accounts",
+            "camelCase": {
+              "unsafeName": "accounts",
+              "safeName": "accounts"
+            },
+            "snakeCase": {
+              "unsafeName": "accounts",
+              "safeName": "accounts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ACCOUNTS",
+              "safeName": "ACCOUNTS"
+            },
+            "pascalCase": {
+              "unsafeName": "Accounts",
+              "safeName": "Accounts"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "accounts",
@@ -67575,7 +67595,7 @@
           }
         }
       },
-      "service": "accounts",
+      "service": "service_accounts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67602,7 +67622,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "accountJointOwners",
+            "camelCase": {
+              "unsafeName": "accountJointOwners",
+              "safeName": "accountJointOwners"
+            },
+            "snakeCase": {
+              "unsafeName": "account_joint_owners",
+              "safeName": "account_joint_owners"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ACCOUNT_JOINT_OWNERS",
+              "safeName": "ACCOUNT_JOINT_OWNERS"
+            },
+            "pascalCase": {
+              "unsafeName": "AccountJointOwners",
+              "safeName": "AccountJointOwners"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "accountJointOwners",
@@ -67624,7 +67664,7 @@
           }
         }
       },
-      "service": "accountJointOwners",
+      "service": "service_accountJointOwners",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67651,7 +67691,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "overdraftProtection",
+            "camelCase": {
+              "unsafeName": "overdraftProtection",
+              "safeName": "overdraftProtection"
+            },
+            "snakeCase": {
+              "unsafeName": "overdraft_protection",
+              "safeName": "overdraft_protection"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OVERDRAFT_PROTECTION",
+              "safeName": "OVERDRAFT_PROTECTION"
+            },
+            "pascalCase": {
+              "unsafeName": "OverdraftProtection",
+              "safeName": "OverdraftProtection"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "overdraftProtection",
@@ -67673,7 +67733,7 @@
           }
         }
       },
-      "service": "overdraftProtection",
+      "service": "service_overdraftProtection",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67700,7 +67760,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "jointOwners",
+            "camelCase": {
+              "unsafeName": "jointOwners",
+              "safeName": "jointOwners"
+            },
+            "snakeCase": {
+              "unsafeName": "joint_owners",
+              "safeName": "joint_owners"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "JOINT_OWNERS",
+              "safeName": "JOINT_OWNERS"
+            },
+            "pascalCase": {
+              "unsafeName": "JointOwners",
+              "safeName": "JointOwners"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "jointOwners",
@@ -67722,7 +67802,7 @@
           }
         }
       },
-      "service": "jointOwners",
+      "service": "service_jointOwners",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67749,7 +67829,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "institutions",
+            "camelCase": {
+              "unsafeName": "institutions",
+              "safeName": "institutions"
+            },
+            "snakeCase": {
+              "unsafeName": "institutions",
+              "safeName": "institutions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "INSTITUTIONS",
+              "safeName": "INSTITUTIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Institutions",
+              "safeName": "Institutions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "institutions",
@@ -67771,7 +67871,7 @@
           }
         }
       },
-      "service": "institutions",
+      "service": "service_institutions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67798,7 +67898,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "transactions",
+            "camelCase": {
+              "unsafeName": "transactions",
+              "safeName": "transactions"
+            },
+            "snakeCase": {
+              "unsafeName": "transactions",
+              "safeName": "transactions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRANSACTIONS",
+              "safeName": "TRANSACTIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Transactions",
+              "safeName": "Transactions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "transactions",
@@ -67820,7 +67940,7 @@
           }
         }
       },
-      "service": "transactions",
+      "service": "service_transactions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67847,7 +67967,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "transactionCategories",
+            "camelCase": {
+              "unsafeName": "transactionCategories",
+              "safeName": "transactionCategories"
+            },
+            "snakeCase": {
+              "unsafeName": "transaction_categories",
+              "safeName": "transaction_categories"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRANSACTION_CATEGORIES",
+              "safeName": "TRANSACTION_CATEGORIES"
+            },
+            "pascalCase": {
+              "unsafeName": "TransactionCategories",
+              "safeName": "TransactionCategories"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "transactionCategories",
@@ -67869,7 +68009,7 @@
           }
         }
       },
-      "service": "transactionCategories",
+      "service": "service_transactionCategories",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -67896,7 +68036,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "transfers",
+            "camelCase": {
+              "unsafeName": "transfers",
+              "safeName": "transfers"
+            },
+            "snakeCase": {
+              "unsafeName": "transfers",
+              "safeName": "transfers"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRANSFERS",
+              "safeName": "TRANSFERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Transfers",
+              "safeName": "Transfers"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "transfers",
@@ -67918,7 +68078,7 @@
           }
         }
       },
-      "service": "transfers",
+      "service": "service_transfers",
       "types": [],
       "errors": [],
       "subpackages": [],

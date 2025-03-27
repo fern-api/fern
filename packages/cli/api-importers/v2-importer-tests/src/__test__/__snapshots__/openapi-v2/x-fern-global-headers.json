@@ -248,7 +248,7 @@
     }
   },
   "services": {
-    "user": {
+    "service_user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -951,7 +951,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "user",
+            "camelCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "snakeCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USER",
+              "safeName": "USER"
+            },
+            "pascalCase": {
+              "unsafeName": "User",
+              "safeName": "User"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "user",
@@ -973,7 +993,7 @@
           }
         }
       },
-      "service": "user",
+      "service": "service_user",
       "types": [],
       "errors": [],
       "subpackages": [],

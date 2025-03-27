@@ -441,7 +441,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "status",
+            "camelCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "snakeCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS",
+              "safeName": "STATUS"
+            },
+            "pascalCase": {
+              "unsafeName": "Status",
+              "safeName": "Status"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "status",

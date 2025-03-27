@@ -1,5 +1,24 @@
 - changelogEntry:
   - summary: |
+      Add support for namespaces in OpenAPI imports. This allows for organizing multiple OpenAPI specs into different namespaces within a single API definition. Example:
+
+      ```yml
+      api:
+        specs:
+          - namespace: petsV1
+            openapi: ./openapi-v1.json
+          - namespace: petsV2
+            openapi: ./openapi-v2.json
+      ```
+
+      Each namespace creates a separate package in the generated IR, allowing for clear separation between different versions or components of your API.
+        
+    type: feat
+  irVersion: 57
+  version: 0.57.4
+
+- changelogEntry:
+  - summary: |
       Add support for Cohere's Command R+ model in AI chat - model ID: command-r-plus
     type: feat
   irVersion: 57
