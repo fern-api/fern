@@ -16,6 +16,7 @@ import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,6 +29,10 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetUsersRequest.Builder.class)
 public final class GetUsersRequest {
+    private final List<User> excludeUser;
+
+    private final List<String> filter;
+
     private final int limit;
 
     private final UUID id;
@@ -52,13 +57,11 @@ public final class GetUsersRequest {
 
     private final Optional<User> optionalUser;
 
-    private final User excludeUser;
-
-    private final String filter;
-
     private final Map<String, Object> additionalProperties;
 
     private GetUsersRequest(
+            List<User> excludeUser,
+            List<String> filter,
             int limit,
             UUID id,
             String date,
@@ -71,9 +74,9 @@ public final class GetUsersRequest {
             Optional<String> optionalString,
             NestedUser nestedUser,
             Optional<User> optionalUser,
-            User excludeUser,
-            String filter,
             Map<String, Object> additionalProperties) {
+        this.excludeUser = excludeUser;
+        this.filter = filter;
         this.limit = limit;
         this.id = id;
         this.date = date;
@@ -86,9 +89,17 @@ public final class GetUsersRequest {
         this.optionalString = optionalString;
         this.nestedUser = nestedUser;
         this.optionalUser = optionalUser;
-        this.excludeUser = excludeUser;
-        this.filter = filter;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("excludeUser")
+    public List<User> getExcludeUser() {
+        return excludeUser;
+    }
+
+    @JsonProperty("filter")
+    public List<String> getFilter() {
+        return filter;
     }
 
     @JsonProperty("limit")
@@ -151,16 +162,6 @@ public final class GetUsersRequest {
         return optionalUser;
     }
 
-    @JsonProperty("excludeUser")
-    public User getExcludeUser() {
-        return excludeUser;
-    }
-
-    @JsonProperty("filter")
-    public String getFilter() {
-        return filter;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -173,7 +174,9 @@ public final class GetUsersRequest {
     }
 
     private boolean equalTo(GetUsersRequest other) {
-        return limit == other.limit
+        return excludeUser.equals(other.excludeUser)
+                && filter.equals(other.filter)
+                && limit == other.limit
                 && id.equals(other.id)
                 && date.equals(other.date)
                 && deadline.equals(other.deadline)
@@ -184,14 +187,14 @@ public final class GetUsersRequest {
                 && keyValue.equals(other.keyValue)
                 && optionalString.equals(other.optionalString)
                 && nestedUser.equals(other.nestedUser)
-                && optionalUser.equals(other.optionalUser)
-                && excludeUser.equals(other.excludeUser)
-                && filter.equals(other.filter);
+                && optionalUser.equals(other.optionalUser);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.excludeUser,
+                this.filter,
                 this.limit,
                 this.id,
                 this.date,
@@ -203,9 +206,7 @@ public final class GetUsersRequest {
                 this.keyValue,
                 this.optionalString,
                 this.nestedUser,
-                this.optionalUser,
-                this.excludeUser,
-                this.filter);
+                this.optionalUser);
     }
 
     @java.lang.Override
@@ -244,19 +245,27 @@ public final class GetUsersRequest {
     }
 
     public interface NestedUserStage {
-        ExcludeUserStage nestedUser(@NotNull NestedUser nestedUser);
-    }
-
-    public interface ExcludeUserStage {
-        FilterStage excludeUser(@NotNull User excludeUser);
-    }
-
-    public interface FilterStage {
-        _FinalStage filter(@NotNull String filter);
+        _FinalStage nestedUser(@NotNull NestedUser nestedUser);
     }
 
     public interface _FinalStage {
         GetUsersRequest build();
+
+        _FinalStage excludeUser(List<User> excludeUser);
+
+        _FinalStage addExcludeUser(User excludeUser);
+
+        _FinalStage addAllExcludeUser(List<User> excludeUser);
+
+        _FinalStage excludeUser(User excludeUser);
+
+        _FinalStage filter(List<String> filter);
+
+        _FinalStage addFilter(String filter);
+
+        _FinalStage addAllFilter(List<String> filter);
+
+        _FinalStage filter(String filter);
 
         _FinalStage userList(List<User> userList);
 
@@ -292,8 +301,6 @@ public final class GetUsersRequest {
                     BytesStage,
                     UserStage,
                     NestedUserStage,
-                    ExcludeUserStage,
-                    FilterStage,
                     _FinalStage {
         private int limit;
 
@@ -309,10 +316,6 @@ public final class GetUsersRequest {
 
         private NestedUser nestedUser;
 
-        private User excludeUser;
-
-        private String filter;
-
         private Optional<User> optionalUser = Optional.empty();
 
         private Optional<String> optionalString = Optional.empty();
@@ -323,6 +326,10 @@ public final class GetUsersRequest {
 
         private List<User> userList = new ArrayList<>();
 
+        private List<String> filter = new ArrayList<>();
+
+        private List<User> excludeUser = new ArrayList<>();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -330,6 +337,8 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public Builder from(GetUsersRequest other) {
+            excludeUser(other.getExcludeUser());
+            filter(other.getFilter());
             limit(other.getLimit());
             id(other.getId());
             date(other.getDate());
@@ -342,8 +351,6 @@ public final class GetUsersRequest {
             optionalString(other.getOptionalString());
             nestedUser(other.getNestedUser());
             optionalUser(other.getOptionalUser());
-            excludeUser(other.getExcludeUser());
-            filter(other.getFilter());
             return this;
         }
 
@@ -391,22 +398,8 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         @JsonSetter("nestedUser")
-        public ExcludeUserStage nestedUser(@NotNull NestedUser nestedUser) {
+        public _FinalStage nestedUser(@NotNull NestedUser nestedUser) {
             this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("excludeUser")
-        public FilterStage excludeUser(@NotNull User excludeUser) {
-            this.excludeUser = Objects.requireNonNull(excludeUser, "excludeUser must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("filter")
-        public _FinalStage filter(@NotNull String filter) {
-            this.filter = Objects.requireNonNull(filter, "filter must not be null");
             return this;
         }
 
@@ -490,8 +483,62 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
+        public _FinalStage filter(String filter) {
+            this.filter = Collections.singletonList(filter);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllFilter(List<String> filter) {
+            this.filter.addAll(filter);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addFilter(String filter) {
+            this.filter.add(filter);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
+        public _FinalStage filter(List<String> filter) {
+            this.filter.clear();
+            this.filter.addAll(filter);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage excludeUser(User excludeUser) {
+            this.excludeUser = Collections.singletonList(excludeUser);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllExcludeUser(List<User> excludeUser) {
+            this.excludeUser.addAll(excludeUser);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addExcludeUser(User excludeUser) {
+            this.excludeUser.add(excludeUser);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "excludeUser", nulls = Nulls.SKIP)
+        public _FinalStage excludeUser(List<User> excludeUser) {
+            this.excludeUser.clear();
+            this.excludeUser.addAll(excludeUser);
+            return this;
+        }
+
+        @java.lang.Override
         public GetUsersRequest build() {
             return new GetUsersRequest(
+                    excludeUser,
+                    filter,
                     limit,
                     id,
                     date,
@@ -504,8 +551,6 @@ public final class GetUsersRequest {
                     optionalString,
                     nestedUser,
                     optionalUser,
-                    excludeUser,
-                    filter,
                     additionalProperties);
         }
     }

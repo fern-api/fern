@@ -609,7 +609,7 @@ public final class BuilderGenerator {
 
         if (enrichedObjectProperty.enrichedObjectProperty.allowMultiple()) {
             interfaceSetterConsumer.accept(
-                    getAllowMultipleSingleSetter(enrichedObjectProperty, finalStageClassName, implsOverride)
+                    getAllowMultipleSingleSetter(enrichedObjectProperty, finalStageClassName, false)
                             .addModifiers(Modifier.ABSTRACT)
                             .build());
 
@@ -622,12 +622,14 @@ public final class BuilderGenerator {
                                         Optional.class,
                                         Collections.class,
                                         fieldSpec.name)
+                                .addStatement("return this")
                                 .build());
             } else {
                 implSetterConsumer.accept(getAllowMultipleSingleSetter(
                                 enrichedObjectProperty, finalStageClassName, implsOverride)
                         .addStatement(
                                 "this.$L = $T.singletonList($L)", fieldSpec.name, Collections.class, fieldSpec.name)
+                        .addStatement("return this")
                         .build());
             }
         }

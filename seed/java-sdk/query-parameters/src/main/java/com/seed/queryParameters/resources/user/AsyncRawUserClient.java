@@ -67,9 +67,6 @@ public class AsyncRawUserClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalUser", request.getOptionalUser().get().toString(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
