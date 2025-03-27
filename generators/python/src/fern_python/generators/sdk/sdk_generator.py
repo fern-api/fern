@@ -241,7 +241,9 @@ class SdkGenerator(AbstractGenerator):
 
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree or subpackage.websocket:
+            if subpackage.has_endpoints_in_tree or (
+                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+            ):
                 channel_websocket = (
                     ir.websocket_channels[subpackage.websocket]
                     if ir.websocket_channels and subpackage.websocket
@@ -481,7 +483,7 @@ class SdkGenerator(AbstractGenerator):
         endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
-        if websocket is not None:
+        if websocket is not None and context.custom_config.should_generate_websocket_clients:
             socket_filepath = context.get_socket_filepath_for_subpackage_service(subpackage_id)
             socket_source_file = context.source_file_factory.create(
                 project=project, filepath=socket_filepath, generator_exec_wrapper=generator_exec_wrapper

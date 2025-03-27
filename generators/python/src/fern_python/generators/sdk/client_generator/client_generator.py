@@ -140,7 +140,7 @@ class ClientGenerator:
                             self._snippet_registry.register_sync_client_endpoint_snippet(
                                 endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                             )
-        if self._websocket is not None:
+        if self._websocket is not None and self._context.custom_config.should_generate_websocket_clients:
             websocket_connect_method_generator = WebsocketConnectMethodGenerator(
                 context=self._context,
                 package=self._package,

@@ -688,7 +688,10 @@ class RootClientGenerator:
             writer.write_newline_if_last_line_not()
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree or subpackage.websocket is not None:
+                if subpackage.has_endpoints_in_tree or (
+                    subpackage.websocket is not None
+                    and self._context.custom_config.should_generate_websocket_clients
+                ):
                     writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
                     client_wrapper_constructor_kwargs = [
                         (param.constructor_parameter_name, AST.Expression(f"self.{param.constructor_parameter_name}"))

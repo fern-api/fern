@@ -62,6 +62,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # Feature flag that enables generation of Python websocket clients
+    should_generate_websocket_clients: bool = False
+
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
     # deprecated, use client config instead
