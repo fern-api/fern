@@ -156,7 +156,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         ])
                     ),
                     hasQuestionToken: true,
-                    docs: ["Arbitrary optional headers to send with the websocket request."]
+                    docs: ["Arbitrary headers to send with the websocket connect request."]
                 },
                 {
                     name: GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME,
