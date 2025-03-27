@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed._enum.core.ObjectMappers;
-import com.seed._enum.resources.queryparam.types.SendEnumListAsQueryParamRequestOperand;
-import com.seed._enum.resources.queryparam.types.SendEnumListAsQueryParamRequestOperandOrColor;
 import com.seed._enum.types.ColorOrOperand;
 import com.seed._enum.types.Operand;
 import java.util.HashMap;
@@ -25,20 +23,20 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendEnumListAsQueryParamRequest.Builder.class)
 public final class SendEnumListAsQueryParamRequest {
-    private final SendEnumListAsQueryParamRequestOperand operand;
+    private final Operand operand;
 
     private final Optional<Operand> maybeOperand;
 
-    private final SendEnumListAsQueryParamRequestOperandOrColor operandOrColor;
+    private final ColorOrOperand operandOrColor;
 
     private final Optional<ColorOrOperand> maybeOperandOrColor;
 
     private final Map<String, Object> additionalProperties;
 
     private SendEnumListAsQueryParamRequest(
-            SendEnumListAsQueryParamRequestOperand operand,
+            Operand operand,
             Optional<Operand> maybeOperand,
-            SendEnumListAsQueryParamRequestOperandOrColor operandOrColor,
+            ColorOrOperand operandOrColor,
             Optional<ColorOrOperand> maybeOperandOrColor,
             Map<String, Object> additionalProperties) {
         this.operand = operand;
@@ -49,7 +47,7 @@ public final class SendEnumListAsQueryParamRequest {
     }
 
     @JsonProperty("operand")
-    public SendEnumListAsQueryParamRequestOperand getOperand() {
+    public Operand getOperand() {
         return operand;
     }
 
@@ -59,7 +57,7 @@ public final class SendEnumListAsQueryParamRequest {
     }
 
     @JsonProperty("operandOrColor")
-    public SendEnumListAsQueryParamRequestOperandOrColor getOperandOrColor() {
+    public ColorOrOperand getOperandOrColor() {
         return operandOrColor;
     }
 
@@ -101,13 +99,13 @@ public final class SendEnumListAsQueryParamRequest {
     }
 
     public interface OperandStage {
-        OperandOrColorStage operand(@NotNull SendEnumListAsQueryParamRequestOperand operand);
+        OperandOrColorStage operand(@NotNull Operand operand);
 
         Builder from(SendEnumListAsQueryParamRequest other);
     }
 
     public interface OperandOrColorStage {
-        _FinalStage operandOrColor(@NotNull SendEnumListAsQueryParamRequestOperandOrColor operandOrColor);
+        _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor);
     }
 
     public interface _FinalStage {
@@ -124,9 +122,9 @@ public final class SendEnumListAsQueryParamRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements OperandStage, OperandOrColorStage, _FinalStage {
-        private SendEnumListAsQueryParamRequestOperand operand;
+        private Operand operand;
 
-        private SendEnumListAsQueryParamRequestOperandOrColor operandOrColor;
+        private ColorOrOperand operandOrColor;
 
         private Optional<ColorOrOperand> maybeOperandOrColor = Optional.empty();
 
@@ -148,14 +146,14 @@ public final class SendEnumListAsQueryParamRequest {
 
         @java.lang.Override
         @JsonSetter("operand")
-        public OperandOrColorStage operand(@NotNull SendEnumListAsQueryParamRequestOperand operand) {
+        public OperandOrColorStage operand(@NotNull Operand operand) {
             this.operand = Objects.requireNonNull(operand, "operand must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("operandOrColor")
-        public _FinalStage operandOrColor(@NotNull SendEnumListAsQueryParamRequestOperandOrColor operandOrColor) {
+        public _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor) {
             this.operandOrColor = Objects.requireNonNull(operandOrColor, "operandOrColor must not be null");
             return this;
         }

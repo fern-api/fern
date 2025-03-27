@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
-import com.seed.trace.resources.playlist.types.GetPlaylistsRequestMultipleField;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +29,7 @@ public final class GetPlaylistsRequest {
 
     private final Optional<String> optionalMultipleField;
 
-    private final GetPlaylistsRequestMultipleField multipleField;
+    private final String multipleField;
 
     private final Map<String, Object> additionalProperties;
 
@@ -39,7 +38,7 @@ public final class GetPlaylistsRequest {
             String otherField,
             String multiLineDocs,
             Optional<String> optionalMultipleField,
-            GetPlaylistsRequestMultipleField multipleField,
+            String multipleField,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.otherField = otherField;
@@ -77,7 +76,7 @@ public final class GetPlaylistsRequest {
     }
 
     @JsonProperty("multipleField")
-    public GetPlaylistsRequestMultipleField getMultipleField() {
+    public String getMultipleField() {
         return multipleField;
     }
 
@@ -126,7 +125,7 @@ public final class GetPlaylistsRequest {
     }
 
     public interface MultipleFieldStage {
-        _FinalStage multipleField(@NotNull GetPlaylistsRequestMultipleField multipleField);
+        _FinalStage multipleField(@NotNull String multipleField);
     }
 
     public interface _FinalStage {
@@ -147,7 +146,7 @@ public final class GetPlaylistsRequest {
 
         private String multiLineDocs;
 
-        private GetPlaylistsRequestMultipleField multipleField;
+        private String multipleField;
 
         private Optional<String> optionalMultipleField = Optional.empty();
 
@@ -193,7 +192,7 @@ public final class GetPlaylistsRequest {
 
         @java.lang.Override
         @JsonSetter("multipleField")
-        public _FinalStage multipleField(@NotNull GetPlaylistsRequestMultipleField multipleField) {
+        public _FinalStage multipleField(@NotNull String multipleField) {
             this.multipleField = Objects.requireNonNull(multipleField, "multipleField must not be null");
             return this;
         }

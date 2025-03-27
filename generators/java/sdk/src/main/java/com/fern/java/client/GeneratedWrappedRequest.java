@@ -5,7 +5,6 @@ import com.fern.ir.model.http.FileUploadBodyProperty;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.MethodSpec;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +21,6 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
     public abstract List<EnrichedObjectProperty> pathParams();
 
     public abstract Optional<RequestBodyGetter> requestBodyGetter();
-
-    public abstract List<GeneratedJavaFile> explodedQueryParameterClasses();
 
     public static ImmutableGeneratedWrappedRequest.ClassNameBuildStage builder() {
         return ImmutableGeneratedWrappedRequest.builder();

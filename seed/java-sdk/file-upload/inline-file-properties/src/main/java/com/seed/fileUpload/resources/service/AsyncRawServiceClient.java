@@ -267,8 +267,7 @@ public class AsyncRawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "listOfStrings", request.getListOfStrings().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), false);
         if (request.getOptionalListOfStrings().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,

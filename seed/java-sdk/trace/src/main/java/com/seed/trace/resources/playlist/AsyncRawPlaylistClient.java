@@ -144,8 +144,7 @@ public class AsyncRawPlaylistClient {
                     request.getOptionalMultipleField().get(),
                     false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "multipleField", request.getMultipleField().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

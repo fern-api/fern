@@ -40,7 +40,6 @@ import com.fern.java.client.GeneratedWrappedRequest.RequestBodyGetter;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
@@ -105,7 +104,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         List<ObjectProperty> pathParameterObjectProperties = new ArrayList<>();
         List<ObjectProperty> fileObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
-        List<GeneratedJavaFile> explodedQueryParameterClasses = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
             headerObjectProperties.add(ObjectProperty.builder()
                     .name(httpHeader.getName())
@@ -122,19 +120,9 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         });
 
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
-            TypeReference valueType = queryParameter.getValueType();
-
-            if (queryParameter.getAllowMultiple() && !valueType.isContainer()) {
-                ExplodedQueryParameterGenerator queryParameterGenerator = new ExplodedQueryParameterGenerator(
-                        generatorContext, httpService, sdkRequestWrapper.getWrapperName(), queryParameter);
-                GeneratedJavaFile explodedQueryParameterClass = queryParameterGenerator.generate();
-                valueType = queryParameterGenerator.asValueType();
-                explodedQueryParameterClasses.add(explodedQueryParameterClass);
-            }
-
             queryParameterObjectProperties.add(ObjectProperty.builder()
                     .name(queryParameter.getName())
-                    .valueType(valueType)
+                    .valueType(queryParameter.getValueType())
                     .docs(queryParameter.getDocs())
                     .build());
         });
@@ -258,7 +246,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
-                .addAllExplodedQueryParameterClasses(explodedQueryParameterClasses)
                 .build();
     }
 

@@ -364,10 +364,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             GeneratedClient syncGeneratedClient = syncServiceClientGenerator.generateFile();
             this.addGeneratedFile(syncGeneratedClient);
             syncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
-            syncGeneratedClient.wrappedRequests().forEach(wrappedRequest -> {
-                wrappedRequest.explodedQueryParameterClasses().forEach(this::addGeneratedFile);
-                this.addGeneratedFile(wrappedRequest);
-            });
+            syncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
 
             AbstractSubpackageClientGenerator asyncServiceClientGenerator = new AsyncSubpackageClientGenerator(
                     subpackage,
@@ -383,10 +380,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             GeneratedClient asyncGeneratedClient = asyncServiceClientGenerator.generateFile();
             this.addGeneratedFile(asyncGeneratedClient);
             asyncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
-            asyncGeneratedClient.wrappedRequests().forEach(wrappedRequest -> {
-                wrappedRequest.explodedQueryParameterClasses().forEach(this::addGeneratedFile);
-                this.addGeneratedFile(wrappedRequest);
-            });
+            asyncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
 
         // root clients
@@ -405,10 +399,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedSyncRootClient);
         this.addGeneratedFile(generatedSyncRootClient.builderClass());
         generatedSyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
-        generatedSyncRootClient.wrappedRequests().forEach(wrappedRequest -> {
-            wrappedRequest.explodedQueryParameterClasses().forEach(this::addGeneratedFile);
-            this.addGeneratedFile(wrappedRequest);
-        });
+        generatedSyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
         AbstractRootClientGenerator asyncRootClientGenerator = new AsyncRootClientGenerator(
                 context,
@@ -425,10 +416,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedAsyncRootClient);
         this.addGeneratedFile(generatedAsyncRootClient.builderClass());
         generatedAsyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
-        generatedAsyncRootClient.wrappedRequests().forEach(wrappedRequest -> {
-            wrappedRequest.explodedQueryParameterClasses().forEach(this::addGeneratedFile);
-            this.addGeneratedFile(wrappedRequest);
-        });
+        generatedAsyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {
