@@ -4,9 +4,14 @@
 package com.seed.trace.resources.playlist.errors;
 
 import com.seed.trace.core.SeedTraceApiException;
+import okhttp3.Response;
 
 public final class UnauthorizedError extends SeedTraceApiException {
     public UnauthorizedError(Object body) {
         super("UnauthorizedError", 401, body);
+    }
+
+    public UnauthorizedError(Object body, Response rawResponse) {
+        super("UnauthorizedError", 401, body, rawResponse);
     }
 }

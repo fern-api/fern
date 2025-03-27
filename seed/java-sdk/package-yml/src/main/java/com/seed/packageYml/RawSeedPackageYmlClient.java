@@ -64,7 +64,8 @@ public class RawSeedPackageYmlClient {
             throw new SeedPackageYmlApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }

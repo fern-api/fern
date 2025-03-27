@@ -50,7 +50,8 @@ public class RawSeedLicenseClient {
             throw new SeedLicenseApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedLicenseException("Network error executing HTTP request", e);
         }

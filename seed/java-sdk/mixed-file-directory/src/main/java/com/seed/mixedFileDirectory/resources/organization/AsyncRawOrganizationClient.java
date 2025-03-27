@@ -83,7 +83,8 @@ public class AsyncRawOrganizationClient {
                     future.completeExceptionally(new SeedMixedFileDirectoryApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

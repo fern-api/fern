@@ -64,7 +64,8 @@ public class RawSeedExtendsClient {
             throw new SeedExtendsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExtendsException("Network error executing HTTP request", e);
         }

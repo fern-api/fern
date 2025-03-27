@@ -4,6 +4,7 @@
 package com.customprefix.resources.imdb.errors;
 
 import com.customprefix.core.SeedApiApiException;
+import okhttp3.Response;
 
 public final class MovieDoesNotExistError extends SeedApiApiException {
     /**
@@ -13,6 +14,11 @@ public final class MovieDoesNotExistError extends SeedApiApiException {
 
     public MovieDoesNotExistError(String body) {
         super("MovieDoesNotExistError", 404, body);
+        this.body = body;
+    }
+
+    public MovieDoesNotExistError(String body, Response rawResponse) {
+        super("MovieDoesNotExistError", 404, body, rawResponse);
         this.body = body;
     }
 

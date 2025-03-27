@@ -58,6 +58,13 @@ public class SeedApiApiException extends SeedApiException {
         return this.body;
     }
 
+    /**
+     * @return the headers
+     */
+    public Map<String, List<String>> headers() {
+        return this.headers;
+    }
+
     @java.lang.Override
     public String toString() {
         return "SeedApiApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body

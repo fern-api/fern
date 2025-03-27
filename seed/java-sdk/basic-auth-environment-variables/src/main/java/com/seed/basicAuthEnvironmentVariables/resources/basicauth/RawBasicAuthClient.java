@@ -65,8 +65,9 @@ public class RawBasicAuthClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 401) {
-                    throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                            responseBodyString, UnauthorizedRequestErrorBody.class));
+                    throw new UnauthorizedRequest(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnauthorizedRequestErrorBody.class),
+                            response);
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
@@ -74,7 +75,8 @@ public class RawBasicAuthClient {
             throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedBasicAuthEnvironmentVariablesException("Network error executing HTTP request", e);
         }
@@ -124,10 +126,13 @@ public class RawBasicAuthClient {
             try {
                 switch (response.code()) {
                     case 400:
-                        throw new BadRequest(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                        throw new BadRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
                     case 401:
-                        throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, UnauthorizedRequestErrorBody.class));
+                        throw new UnauthorizedRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, UnauthorizedRequestErrorBody.class),
+                                response);
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
@@ -135,7 +140,8 @@ public class RawBasicAuthClient {
             throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedBasicAuthEnvironmentVariablesException("Network error executing HTTP request", e);
         }
