@@ -26,6 +26,27 @@ components:
       properties: {}
       allOf:
         - $ref: '#/components/schemas/RootType'
+    TorU:
+      title: TorU
+      oneOf:
+        - $ref: '#/components/schemas/T'
+        - $ref: '#/components/schemas/U'
+    T:
+      title: T
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/TorU'
+      required:
+        - child
+    U:
+      title: U
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/T'
+      required:
+        - child
     FieldValue:
       title: FieldValue
       oneOf:

@@ -41,10 +41,12 @@ export class WebsocketContextImpl implements WebsocketClassContext {
     }
 
     public getGeneratedWebsocketSocketClass(
+        packageId: PackageId,
         channelId: WebSocketChannelId,
         channel: WebSocketChannel
     ): GeneratedWebsocketSocketClass {
         return this.websocketGenerator.generateWebsocketSocket({
+            packageId,
             channel,
             serviceClassName: this.websocketSocketDeclarationReferencer.getExportedName(channelId),
             includeSerdeLayer: this.includeSerdeLayer
