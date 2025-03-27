@@ -379,7 +379,7 @@ export class ReconnectingWebSocket {
                     return;
                 }
                 const options: Record<string, unknown> = {};
-                if (this._headers?.length > 0) {
+                if (this._headers) {
                     options.headers = this._headers;
                 }
                 this._ws = new WebSocket(url, this._protocols, options);

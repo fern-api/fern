@@ -31,8 +31,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs";
     private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args";
     private static readonly DEBUG_PROPERTY_NAME = "debug";
-    private static readonly HEADERS_PROPERTY_NAME = "requestHeaders";
-    private static readonly HEADERS_VARIABLE_NAME = "headers";
+    private static readonly HEADERS_PROPERTY_NAME = "headers";
+    private static readonly HEADERS_VARIABLE_NAME = "websocketHeaders";
 
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
