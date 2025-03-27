@@ -253,6 +253,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
+                .addAllQueryParams(queryParameterAllowMultipleObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
