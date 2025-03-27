@@ -6,6 +6,7 @@ package com.fern.sdk.resources.types.object.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import okhttp3.Response;
 
 public final class ObjectWithRequiredFieldError extends SeedExhaustiveApiException {
   /**
@@ -15,6 +16,11 @@ public final class ObjectWithRequiredFieldError extends SeedExhaustiveApiExcepti
 
   public ObjectWithRequiredFieldError(ObjectWithRequiredField body) {
     super("ObjectWithRequiredFieldError", 400, body);
+    this.body = body;
+  }
+
+  public ObjectWithRequiredFieldError(ObjectWithRequiredField body, Response rawResponse) {
+    super("ObjectWithRequiredFieldError", 400, body, rawResponse);
     this.body = body;
   }
 

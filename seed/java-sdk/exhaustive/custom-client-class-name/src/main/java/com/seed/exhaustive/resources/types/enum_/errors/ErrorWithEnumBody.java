@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.types.enum_.errors;
 
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
+import okhttp3.Response;
 
 public final class ErrorWithEnumBody extends BestApiException {
     /**
@@ -14,6 +15,11 @@ public final class ErrorWithEnumBody extends BestApiException {
 
     public ErrorWithEnumBody(WeatherReport body) {
         super("ErrorWithEnumBody", 400, body);
+        this.body = body;
+    }
+
+    public ErrorWithEnumBody(WeatherReport body, Response rawResponse) {
+        super("ErrorWithEnumBody", 400, body, rawResponse);
         this.body = body;
     }
 

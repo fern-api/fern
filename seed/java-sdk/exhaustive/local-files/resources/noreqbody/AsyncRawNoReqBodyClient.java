@@ -66,7 +66,7 @@ public class AsyncRawNoReqBodyClient {
             return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
           return;
         }
         catch (IOException e) {
@@ -113,7 +113,7 @@ public class AsyncRawNoReqBodyClient {
             return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
           return;
         }
         catch (IOException e) {

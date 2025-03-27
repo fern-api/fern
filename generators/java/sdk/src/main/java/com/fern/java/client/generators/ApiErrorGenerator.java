@@ -88,6 +88,7 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                 .addMethod(constructorWithHeaders())
                 .addMethod(createGetter(STATUS_CODE_FIELD_SPEC))
                 .addMethod(createGetter(BODY_FIELD_SPEC))
+                .addMethod(createGetter(HEADERS_FIELD_SPEC))
                 .addMethod(ObjectMethodFactory.createToStringMethod(
                         className,
                         List.of(
