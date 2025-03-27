@@ -44,7 +44,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
-        this.typeDefinitionsByName = new HashMap<>(ir.getTypes());
+        this.typeDefinitionsByName = ir.getTypes();
         this.resolvedAuthSchemes = resolvedAuthSchemes;
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors();
