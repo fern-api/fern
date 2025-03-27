@@ -8,3 +8,10 @@ service:
       request:
         content-type: "application/octet-stream"
         body: bytes
+
+    download:
+      path: /download-content/{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: bytes
