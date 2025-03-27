@@ -12,40 +12,52 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileWithQueryParamsRequest.Builder.class)
 public final class JustFileWithQueryParamsRequest {
+    private final List<String> listOfStrings;
+
+    private final Optional<List<String>> optionalListOfStrings;
+
     private final Optional<String> maybeString;
 
     private final int integer;
 
     private final Optional<Integer> maybeInteger;
 
-    private final String listOfStrings;
-
-    private final Optional<String> optionalListOfStrings;
-
     private final Map<String, Object> additionalProperties;
 
     private JustFileWithQueryParamsRequest(
+            List<String> listOfStrings,
+            Optional<List<String>> optionalListOfStrings,
             Optional<String> maybeString,
             int integer,
             Optional<Integer> maybeInteger,
-            String listOfStrings,
-            Optional<String> optionalListOfStrings,
             Map<String, Object> additionalProperties) {
+        this.listOfStrings = listOfStrings;
+        this.optionalListOfStrings = optionalListOfStrings;
         this.maybeString = maybeString;
         this.integer = integer;
         this.maybeInteger = maybeInteger;
-        this.listOfStrings = listOfStrings;
-        this.optionalListOfStrings = optionalListOfStrings;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("listOfStrings")
+    public List<String> getListOfStrings() {
+        return listOfStrings;
+    }
+
+    @JsonProperty("optionalListOfStrings")
+    public Optional<List<String>> getOptionalListOfStrings() {
+        return optionalListOfStrings;
     }
 
     @JsonProperty("maybeString")
@@ -63,16 +75,6 @@ public final class JustFileWithQueryParamsRequest {
         return maybeInteger;
     }
 
-    @JsonProperty("listOfStrings")
-    public String getListOfStrings() {
-        return listOfStrings;
-    }
-
-    @JsonProperty("optionalListOfStrings")
-    public Optional<String> getOptionalListOfStrings() {
-        return optionalListOfStrings;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -85,17 +87,17 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     private boolean equalTo(JustFileWithQueryParamsRequest other) {
-        return maybeString.equals(other.maybeString)
+        return listOfStrings.equals(other.listOfStrings)
+                && optionalListOfStrings.equals(other.optionalListOfStrings)
+                && maybeString.equals(other.maybeString)
                 && integer == other.integer
-                && maybeInteger.equals(other.maybeInteger)
-                && listOfStrings.equals(other.listOfStrings)
-                && optionalListOfStrings.equals(other.optionalListOfStrings);
+                && maybeInteger.equals(other.maybeInteger);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.maybeString, this.integer, this.maybeInteger, this.listOfStrings, this.optionalListOfStrings);
+                this.listOfStrings, this.optionalListOfStrings, this.maybeString, this.integer, this.maybeInteger);
     }
 
     @java.lang.Override
@@ -108,17 +110,27 @@ public final class JustFileWithQueryParamsRequest {
     }
 
     public interface IntegerStage {
-        ListOfStringsStage integer(int integer);
+        _FinalStage integer(int integer);
 
         Builder from(JustFileWithQueryParamsRequest other);
     }
 
-    public interface ListOfStringsStage {
-        _FinalStage listOfStrings(@NotNull String listOfStrings);
-    }
-
     public interface _FinalStage {
         JustFileWithQueryParamsRequest build();
+
+        _FinalStage listOfStrings(List<String> listOfStrings);
+
+        _FinalStage addListOfStrings(String listOfStrings);
+
+        _FinalStage addAllListOfStrings(List<String> listOfStrings);
+
+        _FinalStage listOfStrings(String listOfStrings);
+
+        _FinalStage optionalListOfStrings(Optional<List<String>> optionalListOfStrings);
+
+        _FinalStage optionalListOfStrings(List<String> optionalListOfStrings);
+
+        _FinalStage optionalListOfStrings(String optionalListOfStrings);
 
         _FinalStage maybeString(Optional<String> maybeString);
 
@@ -127,23 +139,19 @@ public final class JustFileWithQueryParamsRequest {
         _FinalStage maybeInteger(Optional<Integer> maybeInteger);
 
         _FinalStage maybeInteger(Integer maybeInteger);
-
-        _FinalStage optionalListOfStrings(Optional<String> optionalListOfStrings);
-
-        _FinalStage optionalListOfStrings(String optionalListOfStrings);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IntegerStage, ListOfStringsStage, _FinalStage {
+    public static final class Builder implements IntegerStage, _FinalStage {
         private int integer;
-
-        private String listOfStrings;
-
-        private Optional<String> optionalListOfStrings = Optional.empty();
 
         private Optional<Integer> maybeInteger = Optional.empty();
 
         private Optional<String> maybeString = Optional.empty();
+
+        private Optional<List<String>> optionalListOfStrings = Optional.empty();
+
+        private List<String> listOfStrings = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -152,38 +160,18 @@ public final class JustFileWithQueryParamsRequest {
 
         @java.lang.Override
         public Builder from(JustFileWithQueryParamsRequest other) {
+            listOfStrings(other.getListOfStrings());
+            optionalListOfStrings(other.getOptionalListOfStrings());
             maybeString(other.getMaybeString());
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
-            listOfStrings(other.getListOfStrings());
-            optionalListOfStrings(other.getOptionalListOfStrings());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("integer")
-        public ListOfStringsStage integer(int integer) {
+        public _FinalStage integer(int integer) {
             this.integer = integer;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("listOfStrings")
-        public _FinalStage listOfStrings(@NotNull String listOfStrings) {
-            this.listOfStrings = Objects.requireNonNull(listOfStrings, "listOfStrings must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage optionalListOfStrings(String optionalListOfStrings) {
-            this.optionalListOfStrings = Optional.ofNullable(optionalListOfStrings);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "optionalListOfStrings", nulls = Nulls.SKIP)
-        public _FinalStage optionalListOfStrings(Optional<String> optionalListOfStrings) {
-            this.optionalListOfStrings = optionalListOfStrings;
             return this;
         }
 
@@ -214,9 +202,54 @@ public final class JustFileWithQueryParamsRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalListOfStrings(String optionalListOfStrings) {
+            this.optionalListOfStrings = Optional.of(Collections.singletonList(optionalListOfStrings));
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalListOfStrings(List<String> optionalListOfStrings) {
+            this.optionalListOfStrings = Optional.ofNullable(optionalListOfStrings);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optionalListOfStrings", nulls = Nulls.SKIP)
+        public _FinalStage optionalListOfStrings(Optional<List<String>> optionalListOfStrings) {
+            this.optionalListOfStrings = optionalListOfStrings;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage listOfStrings(String listOfStrings) {
+            this.listOfStrings = Collections.singletonList(listOfStrings);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllListOfStrings(List<String> listOfStrings) {
+            this.listOfStrings.addAll(listOfStrings);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addListOfStrings(String listOfStrings) {
+            this.listOfStrings.add(listOfStrings);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "listOfStrings", nulls = Nulls.SKIP)
+        public _FinalStage listOfStrings(List<String> listOfStrings) {
+            this.listOfStrings.clear();
+            this.listOfStrings.addAll(listOfStrings);
+            return this;
+        }
+
+        @java.lang.Override
         public JustFileWithQueryParamsRequest build() {
             return new JustFileWithQueryParamsRequest(
-                    maybeString, integer, maybeInteger, listOfStrings, optionalListOfStrings, additionalProperties);
+                    listOfStrings, optionalListOfStrings, maybeString, integer, maybeInteger, additionalProperties);
         }
     }
 }
