@@ -762,18 +762,6 @@ class WebsocketConnectMethodGenerator:
         return context.core_utilities.convert_and_respect_annotation_metadata(object_=object_, annotation=type_hint)
 
 
-def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
-    union = type_reference.get_as_union()
-    if union.type == "reference":
-        request_body = union.request_body_type.get_as_union()
-        if request_body.type == "container":
-            return (
-                request_body.container.get_as_union().type == "optional"
-                or request_body.container.get_as_union().type == "nullable"
-            )
-    return False
-
-
 def get_websocket_name(endpoint: ir_types.WebSocketChannel) -> str:
     if endpoint.name.original_name.lower() in ALLOWED_RESERVED_NAMES:
         return endpoint.name.snake_case.unsafe_name

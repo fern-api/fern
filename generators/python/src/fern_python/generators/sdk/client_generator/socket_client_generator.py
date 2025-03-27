@@ -33,16 +33,6 @@ class ConstructorParameter:
     initializer: Optional[AST.Expression] = None
 
 
-HTTPX_PRIMITIVE_DATA_TYPES = set(
-    [
-        ir_types.PrimitiveTypeV1.STRING,
-        ir_types.PrimitiveTypeV1.INTEGER,
-        ir_types.PrimitiveTypeV1.DOUBLE,
-        ir_types.PrimitiveTypeV1.BOOLEAN,
-    ]
-)
-
-
 class SocketClientGenerator:
     WEBSOCKET_MEMBER_NAME = "_websocket"
 
