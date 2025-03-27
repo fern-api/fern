@@ -1,0 +1,18 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    patch:
+      method: PATCH
+      path: /
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            application: nullable<string>
+            require_auth: nullable<boolean>
+        content-type: application/merge-patch+json
+        name: PatchProxyRequest
+      source:
+        openapi: ../specs/vault/swagger.json
