@@ -8,12 +8,12 @@ import logging
 import typing
 import uuid
 
-import fastapi
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ..types.user import User
+
+import fastapi
 
 
 class AbstractUserService(AbstractFernService):
@@ -36,8 +36,7 @@ class AbstractUserService(AbstractFernService):
         bytes: str,
         optional_string: typing.Optional[str] = None,
         filter: typing.List[str],
-    ) -> User:
-        ...
+    ) -> User: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

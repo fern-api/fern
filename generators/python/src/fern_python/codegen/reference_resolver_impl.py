@@ -2,10 +2,9 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
-from ordered_set import OrderedSet
-
 from . import AST
 from .reference_resolver import ReferenceResolver
+from ordered_set import OrderedSet
 
 
 @dataclasses.dataclass
@@ -17,9 +16,9 @@ class ResolvedImport:
 class ReferenceResolverImpl(ReferenceResolver):
     def __init__(self, module_path_of_source_file: AST.ModulePath):
         self._module_path_of_source_file = module_path_of_source_file
-        self._default_name_to_original_references: DefaultDict[
-            AST.QualifiedName, OrderedSet[AST.Reference]
-        ] = defaultdict(OrderedSet)
+        self._default_name_to_original_references: DefaultDict[AST.QualifiedName, OrderedSet[AST.Reference]] = (
+            defaultdict(OrderedSet)
+        )
         self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, ResolvedImport]] = None
         self._does_file_self_import = False
         self._declarations: Set[AST.QualifiedName] = set()

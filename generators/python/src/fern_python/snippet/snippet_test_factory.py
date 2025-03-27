@@ -348,7 +348,11 @@ class SnippetTestFactory:
                 maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
 
                 writer.write(f"{type_expectation_name}: ")
-                writer.write_node(AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any())) if isinstance(expectations, Tuple) else AST.Expression(AST.TypeHint.any()))  # type: ignore
+                writer.write_node(
+                    AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any()))
+                    if isinstance(expectations, tuple)
+                    else AST.Expression(AST.TypeHint.any())
+                )
                 writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
@@ -486,8 +490,9 @@ class SnippetTestFactory:
                     endpoint.response is not None
                     and endpoint.response.body
                     and (
-                        endpoint.response.body.get_as_union().type == "json"
-                        and endpoint.response.body.get_as_union().value.get_as_union().type == "nestedPropertyAsResponse"  # type: ignore
+                        endpoint.response.body.get_as_union().type == "json"  # type: ignore
+                        and endpoint.response.body.get_as_union().value.get_as_union().type  # type: ignore
+                        == "nestedPropertyAsResponse"
                     )
                 )
             ):

@@ -46,11 +46,11 @@ from .types import (
     UnionWithMultipleNoProperties,
     UnionWithNoProperties,
     UnionWithOptionalTime,
+    UnionWithoutKey,
     UnionWithPrimitive,
     UnionWithSingleElement,
     UnionWithSubTypes,
     UnionWithTime,
-    UnionWithoutKey,
 )
 from .union import Circle, GetShapeRequest, Shape, Square
 

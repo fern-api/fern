@@ -2,6 +2,15 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
+from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .generated_root_client import GeneratedRootClient
+from .request_body_parameters import (
+    AbstractRequestBodyParameters,
+    BytesRequestBodyParameters,
+    FileUploadRequestBodyParameters,
+    InlinedRequestBodyParameters,
+    ReferencedRequestBodyParameters,
+)
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
@@ -32,16 +41,6 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 from fern_python.snippet import SnippetWriter
-
-from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-from .generated_root_client import GeneratedRootClient
-from .request_body_parameters import (
-    AbstractRequestBodyParameters,
-    BytesRequestBodyParameters,
-    FileUploadRequestBodyParameters,
-    InlinedRequestBodyParameters,
-    ReferencedRequestBodyParameters,
-)
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [

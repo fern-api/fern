@@ -1,8 +1,10 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import List, Optional
+
 from .types.scored_column import ScoredColumn
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class QueryResult(BaseModel):

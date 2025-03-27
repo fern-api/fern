@@ -91,23 +91,28 @@ class WriterImpl(AST.Writer):
         content = self._content
 
         if self._should_format and (should_format_override is None or should_format_override):
-            import black
-            import isort
-
             try:
-                if self._should_sort_imports:
-                    content = isort.code(self._content, quiet=True)
+                if self._should_sort_imports or self._should_format:
+                    import subprocess
+                    import tempfile
 
-                content = black.format_file_contents(
-                    content,
-                    fast=True,
-                    # todo read their config?
-                    mode=black.FileMode(
-                        magic_trailing_comma=self._should_format_as_snippet, line_length=self._line_length
-                    ),
-                )
-            except black.report.NothingChanged:
-                pass
+                    with tempfile.NamedTemporaryFile(mode="w+", suffix=".py") as temp_file:
+                        temp_file.write(self._content)
+                        temp_file.flush()
+
+                        subprocess.run(
+                            ["ruff", "format", "--line-length", str(self._line_length), temp_file.name],
+                            check=False,
+                            capture_output=True,
+                        )
+                        subprocess.run(
+                            ["ruff", "check", "--select", "I", "--fix", temp_file.name],
+                            check=False,
+                            capture_output=True,
+                        )
+
+                        temp_file.seek(0)
+                        content = temp_file.read()
             except Exception as e:
                 print("Failed to format", e)
                 pass

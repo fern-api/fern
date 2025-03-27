@@ -1,7 +1,9 @@
-from pydantic import RootModel
 from typing import Any
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import RootModel
 
 
 class MyAlias(RootModel[Any]):

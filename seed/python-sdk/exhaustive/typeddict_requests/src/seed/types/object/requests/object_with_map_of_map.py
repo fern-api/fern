@@ -3,7 +3,6 @@
 import typing
 
 import typing_extensions
-
 from ....core.serialization import FieldMetadata
 
 

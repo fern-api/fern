@@ -5,7 +5,6 @@ import typing
 import uuid
 
 import typing_extensions
-
 from ....core.serialization import FieldMetadata
 
 

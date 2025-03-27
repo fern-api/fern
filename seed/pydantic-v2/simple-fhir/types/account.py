@@ -1,10 +1,12 @@
-from pydantic import BaseModel
-from .types.base_resource import BaseResource
 from typing import Optional
+
+from .types.base_resource import BaseResource
 from .types.patient import Patient
 from .types.practitioner import Practitioner
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class Account(BaseModel, BaseResource):

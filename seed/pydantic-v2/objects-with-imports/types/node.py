@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
-from resources.commons.resources.metadata.types.metadata import Metadata
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.commons.resources.metadata.types.metadata import Metadata
+
+from pydantic import BaseModel
 
 
 class Node(BaseModel):

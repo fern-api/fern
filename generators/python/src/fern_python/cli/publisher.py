@@ -21,17 +21,41 @@ class Publisher:
         self._generator_exec_wrapper = generator_exec_wrapper
         self._generator_config = generator_config
 
-    def run_ruff_format(self) -> None:
-        self._run_command(
-            command=["poetry", "run", "ruff", "format", "--cache-dir", "../.ruffcache"],
-            safe_command="poetry run ruff format",
-            cwd=None,
-        )
-
     def run_poetry_install(self) -> None:
         self._run_command(
             command=["poetry", "install"],
             safe_command="poetry install",
+        )
+
+    def run_ruff_check_fix(self) -> None:
+        self._run_command(
+            command=[
+                "poetry",
+                "run",
+                "ruff",
+                "--config",
+                "pyproject.toml",
+                "check",
+                "--fix",
+            ],
+            safe_command="poetry run ruff check --fix",
+            cwd=None,
+        )
+
+    def run_ruff_format(self) -> None:
+        self._run_command(
+            command=[
+                "poetry",
+                "run",
+                "ruff",
+                "--config",
+                "pyproject.toml",
+                "format",
+                "--cache-dir",
+                "../.ruffcache",
+            ],
+            safe_command="poetry run ruff format",
+            cwd=None,
         )
 
     def publish_package(

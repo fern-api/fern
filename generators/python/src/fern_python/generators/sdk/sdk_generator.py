@@ -5,6 +5,22 @@ from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types
+from .client_generator.client_generator import ClientGenerator
+from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
+from .client_generator.root_client_generator import RootClientGenerator
+from .custom_config import (
+    BaseDependencyCustomConfig,
+    DependencyCustomConfig,
+    SDKCustomConfig,
+)
+from .environment_generators import (
+    GeneratedEnvironment,
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
+from .error_generator.error_generator import ErrorGenerator
+from .v2.generator import PythonV2Generator
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
 
@@ -31,23 +47,6 @@ from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
-
-from .client_generator.client_generator import ClientGenerator
-from .client_generator.generated_root_client import GeneratedRootClient
-from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
-from .client_generator.root_client_generator import RootClientGenerator
-from .custom_config import (
-    BaseDependencyCustomConfig,
-    DependencyCustomConfig,
-    SDKCustomConfig,
-)
-from .environment_generators import (
-    GeneratedEnvironment,
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
-from .error_generator.error_generator import ErrorGenerator
-from .v2.generator import PythonV2Generator
 
 
 class SdkGenerator(AbstractGenerator):
@@ -157,9 +156,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
-        ] = None
+        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
+            None
+        )
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
@@ -262,7 +261,6 @@ class SdkGenerator(AbstractGenerator):
             )
 
         if generator_config.output.mode.get_as_union().type != "downloadFiles":
-
             generator_cli = GeneratorCli(
                 organization=generator_config.organization,
                 project_config=project._project_config,

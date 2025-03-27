@@ -1,8 +1,10 @@
-from pydantic import RootModel
 from typing import Optional
-from resources.service.types.with_docs import WithDocs
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.service.types.with_docs import WithDocs
+
+from pydantic import RootModel
 
 
 class OptionalWithDocs(RootModel[Optional[WithDocs]]):

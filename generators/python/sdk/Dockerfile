@@ -22,7 +22,7 @@ RUN node --version
 RUN npm --version
 
 # Install ruff.
-RUN pip install ruff
+RUN pip install ruff==0.11.2
 RUN ruff --version
 
 # Copy Node CLI from first stage and rename it /bin/go-v2

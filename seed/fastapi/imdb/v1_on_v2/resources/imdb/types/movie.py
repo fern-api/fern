@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from .movie_id import MovieId
+
 import pydantic.v1
 
 

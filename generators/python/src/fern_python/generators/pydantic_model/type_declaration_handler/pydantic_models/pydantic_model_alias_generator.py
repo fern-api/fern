@@ -1,6 +1,9 @@
 from typing import Optional
 
 import fern.ir.resources as ir_types
+from ....context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
@@ -10,10 +13,6 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
     declared_type_name_to_named_type,
 )
 from fern_python.snippet import SnippetWriter
-
-from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
-from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
 
 
 class PydanticModelAliasGenerator(AbstractAliasGenerator):

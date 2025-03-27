@@ -6,15 +6,15 @@ import os
 import types
 import typing
 
-import fastapi
 import starlette
-from fastapi import params
-
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
 from .resources.service.service.service import AbstractServiceService
 from .service.service import AbstractRootService
+
+import fastapi
+from fastapi import params
 
 
 def register(
@@ -22,7 +22,7 @@ def register(
     *,
     root: AbstractRootService,
     service: AbstractServiceService,
-    dependencies: typing.Optional[typing.Sequence[params.Depends]] = None
+    dependencies: typing.Optional[typing.Sequence[params.Depends]] = None,
 ) -> None:
     _app.include_router(__register_service(root), dependencies=dependencies)
     _app.include_router(__register_service(service), dependencies=dependencies)

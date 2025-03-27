@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
+from .publisher import Publisher
 from fern.generator_exec import GeneratorConfig, PypiMetadata
 from fern.generator_exec.config import (
     GeneratorPublishConfig,
@@ -17,8 +18,6 @@ from fern.generator_exec.config import (
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
-from .publisher import Publisher
 
 
 class AbstractGenerator(ABC):
@@ -110,9 +109,11 @@ class AbstractGenerator(ABC):
         elif output_mode_union.type == "github":
             publisher.run_poetry_install()
             publisher.run_ruff_format()
+            publisher.run_ruff_check_fix()
         elif output_mode_union.type == "publish":
             publisher.run_poetry_install()
             publisher.run_ruff_format()
+            publisher.run_ruff_check_fix()
             publisher.publish_package(publish_config=output_mode_union)
 
     # We're trying not to change the casing more than we need to, so here
@@ -162,6 +163,7 @@ class AbstractGenerator(ABC):
         )
         publisher.run_poetry_install()
         publisher.run_ruff_format()
+        publisher.run_ruff_check_fix()
 
     def _publish(
         self,
@@ -288,8 +290,7 @@ def test_client() -> None:
 """
 
     @abstractmethod
-    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
-        ...
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]: ...
 
     @abstractmethod
     def run(
@@ -299,16 +300,14 @@ def test_client() -> None:
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project: Project,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     def should_format_files(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
     def get_relative_path_to_project_for_publish(
@@ -316,17 +315,14 @@ def test_client() -> None:
         *,
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
-    ) -> Tuple[str, ...]:
-        ...
+    ) -> Tuple[str, ...]: ...
 
     @abstractmethod
     def is_flat_layout(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
-    def get_sorted_modules(self) -> Optional[Sequence[str]]:
-        ...
+    def get_sorted_modules(self) -> Optional[Sequence[str]]: ...

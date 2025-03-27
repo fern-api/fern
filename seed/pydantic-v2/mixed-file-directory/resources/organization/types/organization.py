@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import List
-from resources.user.types.user import User
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.user.types.user import User
+
+from pydantic import BaseModel
 
 
 class Organization(BaseModel):

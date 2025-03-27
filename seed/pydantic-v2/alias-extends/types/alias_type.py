@@ -1,7 +1,8 @@
-from pydantic import RootModel
 from .types.parent import Parent
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import RootModel
 
 
 class AliasType(RootModel[Parent]):

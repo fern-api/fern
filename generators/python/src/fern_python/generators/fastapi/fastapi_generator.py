@@ -1,6 +1,14 @@
 from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
+from .auth import SecurityFileGenerator
+from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
+from .custom_config import FastAPICustomConfig
+from .error_generator import ErrorGenerator
+from .fern_http_exception import FernHTTPExceptionGenerator
+from .inlined_request_generator import InlinedRequestGenerator
+from .register import RegisterFileGenerator
+from .service_generator import ServiceGenerator
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
@@ -12,15 +20,6 @@ from fern_python.generators.pydantic_model import (
 )
 from fern_python.snippet import SnippetRegistry
 from fern_python.utils import build_snippet_writer
-
-from .auth import SecurityFileGenerator
-from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
-from .custom_config import FastAPICustomConfig
-from .error_generator import ErrorGenerator
-from .fern_http_exception import FernHTTPExceptionGenerator
-from .inlined_request_generator import InlinedRequestGenerator
-from .register import RegisterFileGenerator
-from .service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):

@@ -4,9 +4,9 @@ import datetime as dt
 import typing
 import uuid
 
-import pydantic
-
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+
+import pydantic
 
 
 class ObjectWithOptionalField(UniversalBaseModel):

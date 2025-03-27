@@ -4,11 +4,10 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
-
-import pydantic
-
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
+
+import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -148,9 +147,9 @@ UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ig
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 

@@ -1,17 +1,15 @@
 from typing import Optional, Union
 
-from typing_extensions import Protocol
-
 from ...ast_node import AstNode, AstNodeMetadata, NodeWriter
 from .metadata_loading_node_writer import MetadataLoadingNodeWriter
+from typing_extensions import Protocol
 
 
 class CodeWriterFunction(Protocol):
     def __call__(
         self,
         writer: NodeWriter,
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 class CodeWriter(AstNode):

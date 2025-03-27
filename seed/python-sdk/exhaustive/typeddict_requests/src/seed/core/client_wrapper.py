@@ -3,7 +3,6 @@
 import typing
 
 import httpx
-
 from .http_client import AsyncHttpClient, HttpClient
 
 

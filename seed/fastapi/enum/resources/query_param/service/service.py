@@ -6,13 +6,13 @@ import inspect
 import logging
 import typing
 
-import fastapi
 import starlette
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ....types.operand import Operand
+
+import fastapi
 
 
 class AbstractQueryParamService(AbstractFernService):
@@ -25,12 +25,10 @@ class AbstractQueryParamService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send(self, *, operand: typing.Optional[Operand] = None) -> None:
-        ...
+    def send(self, *, operand: typing.Optional[Operand] = None) -> None: ...
 
     @abc.abstractmethod
-    def send_list(self, *, operand: typing.Optional[typing.List[Operand]] = None) -> None:
-        ...
+    def send_list(self, *, operand: typing.Optional[typing.List[Operand]] = None) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

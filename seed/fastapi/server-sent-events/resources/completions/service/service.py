@@ -6,13 +6,13 @@ import inspect
 import logging
 import typing
 
-import fastapi
 import starlette
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from .stream_completion_request import StreamCompletionRequest
+
+import fastapi
 
 
 class AbstractCompletionsService(AbstractFernService):
@@ -25,8 +25,7 @@ class AbstractCompletionsService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def stream(self, *, body: StreamCompletionRequest) -> None:
-        ...
+    def stream(self, *, body: StreamCompletionRequest) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

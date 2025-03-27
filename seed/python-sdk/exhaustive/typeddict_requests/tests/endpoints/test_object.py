@@ -4,9 +4,8 @@ import datetime
 import typing
 import uuid
 
-from seed import AsyncSeedExhaustive, SeedExhaustive
-
 from ..utilities import validate_response
+from seed import AsyncSeedExhaustive, SeedExhaustive
 
 
 async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:

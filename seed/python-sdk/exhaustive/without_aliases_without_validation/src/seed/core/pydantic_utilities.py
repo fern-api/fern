@@ -6,11 +6,10 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
-
-import pydantic
-
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
+
+import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -149,6 +148,7 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
+
 def deep_union_pydantic_dicts(
     source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
 ) -> typing.Dict[str, typing.Any]:
@@ -160,6 +160,7 @@ def deep_union_pydantic_dicts(
             destination[key] = value
 
     return destination
+
 
 if IS_PYDANTIC_V2:
 

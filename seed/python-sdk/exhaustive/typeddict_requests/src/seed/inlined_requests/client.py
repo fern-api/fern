@@ -27,7 +27,7 @@ class InlinedRequestsClient:
         string: str,
         integer: int,
         nested_object: ObjectWithOptionalFieldParams,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
         POST with custom object in request body, response is an object
@@ -99,10 +99,14 @@ class InlinedRequestsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json())
+                    )  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -120,7 +124,7 @@ class AsyncInlinedRequestsClient:
         string: str,
         integer: int,
         nested_object: ObjectWithOptionalFieldParams,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
         POST with custom object in request body, response is an object
@@ -199,10 +203,14 @@ class AsyncInlinedRequestsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json())
+                    )  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

@@ -31,12 +31,10 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def get_filepath(self, *, name: T, as_request: bool) -> Filepath:
-        ...
+    def get_filepath(self, *, name: T, as_request: bool) -> Filepath: ...
 
     @abstractmethod
-    def get_class_name(self, *, name: T, as_request: bool) -> str:
-        ...
+    def get_class_name(self, *, name: T, as_request: bool) -> str: ...
 
     def _get_directories_for_fern_filepath(
         self,

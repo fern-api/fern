@@ -1,9 +1,11 @@
-from pydantic import BaseModel
-from .types.base_resource import BaseResource
 from typing import List
+
+from .types.base_resource import BaseResource
 from .types.script import Script
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class Patient(BaseModel, BaseResource):

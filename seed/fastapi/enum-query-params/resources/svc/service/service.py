@@ -6,12 +6,12 @@ import inspect
 import logging
 import typing
 
-import fastapi
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ..types.my_enum import MyEnum
+
+import fastapi
 
 
 class AbstractSvcService(AbstractFernService):
@@ -24,8 +24,7 @@ class AbstractSvcService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def test(self, *, some_enum: typing.Optional[typing.List[MyEnum]] = None) -> str:
-        ...
+    def test(self, *, some_enum: typing.Optional[typing.List[MyEnum]] = None) -> str: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

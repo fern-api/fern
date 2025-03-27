@@ -1,7 +1,9 @@
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
-from dt import datetime
+from typing import Any, Dict, Optional
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class Movie(BaseModel):

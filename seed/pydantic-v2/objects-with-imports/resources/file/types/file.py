@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from resources.file.types.file_info import FileInfo
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.file.types.file_info import FileInfo
+
+from pydantic import BaseModel
 
 
 class File(BaseModel):

@@ -23,11 +23,11 @@ from .object import (
 )
 from .union import (
     Animal,
-    AnimalParams,
     Animal_Cat,
     Animal_CatParams,
     Animal_Dog,
     Animal_DogParams,
+    AnimalParams,
     Cat,
     CatParams,
     Dog,

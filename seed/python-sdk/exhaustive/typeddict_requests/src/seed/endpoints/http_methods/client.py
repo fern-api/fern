@@ -88,7 +88,9 @@ class HttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -133,7 +135,9 @@ class HttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -254,7 +258,9 @@ class HttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -385,7 +391,9 @@ class AsyncHttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -438,7 +446,9 @@ class AsyncHttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -566,7 +576,9 @@ class AsyncHttpMethodsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    ObjectWithOptionalField, parse_obj_as(type_=ObjectWithOptionalField, object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

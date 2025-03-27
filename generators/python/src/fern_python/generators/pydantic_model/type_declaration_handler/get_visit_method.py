@@ -40,7 +40,7 @@ def get_visit_method(
         for item in items:
             writer.write_line(
                 f"if {reference_to_current_value}"
-                + f' {"is" if should_use_is_for_equality_check else "=="} '
+                + f" {'is' if should_use_is_for_equality_check else '=='} "
                 + f"{item.expected_value}:"
             )
             with writer.indent():

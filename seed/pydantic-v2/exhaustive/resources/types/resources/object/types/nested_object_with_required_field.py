@@ -1,9 +1,10 @@
-from pydantic import BaseModel
+from core.datetime_utils import serialize_datetime
+from dt import datetime
 from resources.types.resources.object.types.object_with_optional_field import (
     ObjectWithOptionalField,
 )
-from dt import datetime
-from core.datetime_utils import serialize_datetime
+
+from pydantic import BaseModel
 
 
 class NestedObjectWithRequiredField(BaseModel):

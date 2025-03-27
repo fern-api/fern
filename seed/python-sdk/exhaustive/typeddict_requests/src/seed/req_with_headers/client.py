@@ -21,7 +21,7 @@ class ReqWithHeadersClient:
         x_test_service_header: str,
         x_test_endpoint_header: str,
         request: str,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -83,7 +83,7 @@ class AsyncReqWithHeadersClient:
         x_test_service_header: str,
         x_test_endpoint_header: str,
         request: str,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters

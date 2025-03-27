@@ -6,9 +6,9 @@ import typing
 from collections import defaultdict
 from functools import wraps
 
-import pydantic
-
 from .datetime_utils import serialize_datetime
+
+import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -123,9 +123,9 @@ else:
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 

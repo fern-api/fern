@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import List, Optional, Sequence
 
-from ordered_set import OrderedSet
-
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
@@ -14,6 +12,7 @@ from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
 from ..variable import VariableDeclaration
 from .class_constructor import ClassConstructor
 from .class_method_decorator import ClassMethodDecorator
+from ordered_set import OrderedSet
 
 
 class ClassDeclaration(AstNode):

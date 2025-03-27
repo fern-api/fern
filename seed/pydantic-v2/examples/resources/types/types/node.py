@@ -1,9 +1,11 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import List, Optional
+
+from core.datetime_utils import serialize_datetime
+from dt import datetime
 from resources.types.types.node import Node
 from resources.types.types.tree import Tree
-from dt import datetime
-from core.datetime_utils import serialize_datetime
+
+from pydantic import BaseModel
 
 
 class Node(BaseModel):

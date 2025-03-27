@@ -1,7 +1,8 @@
-from pydantic import BaseModel
 from .types.type import Type
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class Identifier(BaseModel):

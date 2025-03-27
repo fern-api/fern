@@ -7,11 +7,10 @@ import typing
 import uuid
 
 import typing_extensions
-from seed.core.serialization import FieldMetadata
-
 from .color import Color
 from .shape import ShapeParams
 from .undiscriminated_shape import UndiscriminatedShapeParams
+from seed.core.serialization import FieldMetadata
 
 
 class ObjectWithOptionalFieldParams(typing_extensions.TypedDict):
