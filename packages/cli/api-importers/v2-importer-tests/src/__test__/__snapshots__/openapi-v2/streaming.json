@@ -495,47 +495,8 @@
     "": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {

@@ -730,68 +730,17 @@
       "allParts": [],
       "packagePath": []
     },
+    "service": "chatCompletions",
     "types": [
       "CreateCompletionRequest",
       "Completion",
       "CompletionChunk"
     ],
     "errors": [],
-    "subpackages": [
-      "chatCompletions"
-    ],
+    "subpackages": [],
     "hasEndpointsInTree": false
   },
-  "subpackages": {
-    "chatCompletions": {
-      "name": {
-        "originalName": "chatCompletions",
-        "camelCase": {
-          "unsafeName": "chatCompletions",
-          "safeName": "chatCompletions"
-        },
-        "snakeCase": {
-          "unsafeName": "chat_completions",
-          "safeName": "chat_completions"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "CHAT_COMPLETIONS",
-          "safeName": "CHAT_COMPLETIONS"
-        },
-        "pascalCase": {
-          "unsafeName": "ChatCompletions",
-          "safeName": "ChatCompletions"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "chatCompletions",
-          "camelCase": {
-            "unsafeName": "chatCompletions",
-            "safeName": "chatCompletions"
-          },
-          "snakeCase": {
-            "unsafeName": "chat_completions",
-            "safeName": "chat_completions"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CHAT_COMPLETIONS",
-            "safeName": "CHAT_COMPLETIONS"
-          },
-          "pascalCase": {
-            "unsafeName": "ChatCompletions",
-            "safeName": "ChatCompletions"
-          }
-        }
-      },
-      "service": "chatCompletions",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    }
-  },
+  "subpackages": {},
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

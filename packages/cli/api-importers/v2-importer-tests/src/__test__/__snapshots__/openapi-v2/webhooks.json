@@ -261,7 +261,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "CreatePet",
+            "camelCase": {
+              "unsafeName": "createPet",
+              "safeName": "createPet"
+            },
+            "snakeCase": {
+              "unsafeName": "create_pet",
+              "safeName": "create_pet"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_PET",
+              "safeName": "CREATE_PET"
+            },
+            "pascalCase": {
+              "unsafeName": "CreatePet",
+              "safeName": "CreatePet"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "CreatePet",

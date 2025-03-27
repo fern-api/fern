@@ -2572,6 +2572,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "service": "End users",
     "types": [
       "EndUser",
       "EndUserRequest",
@@ -2582,62 +2583,10 @@
       "EndUserUpdatedWebhookPayload"
     ],
     "errors": [],
-    "subpackages": [
-      "End users"
-    ],
+    "subpackages": [],
     "hasEndpointsInTree": false
   },
-  "subpackages": {
-    "End users": {
-      "name": {
-        "originalName": "End users",
-        "camelCase": {
-          "unsafeName": "endUsers",
-          "safeName": "endUsers"
-        },
-        "snakeCase": {
-          "unsafeName": "end_users",
-          "safeName": "end_users"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "END_USERS",
-          "safeName": "END_USERS"
-        },
-        "pascalCase": {
-          "unsafeName": "EndUsers",
-          "safeName": "EndUsers"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "End users",
-          "camelCase": {
-            "unsafeName": "endUsers",
-            "safeName": "endUsers"
-          },
-          "snakeCase": {
-            "unsafeName": "end_users",
-            "safeName": "end_users"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "END_USERS",
-            "safeName": "END_USERS"
-          },
-          "pascalCase": {
-            "unsafeName": "EndUsers",
-            "safeName": "EndUsers"
-          }
-        }
-      },
-      "service": "End users",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    }
-  },
+  "subpackages": {},
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

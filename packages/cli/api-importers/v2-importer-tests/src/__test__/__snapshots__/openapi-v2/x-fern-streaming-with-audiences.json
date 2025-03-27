@@ -637,67 +637,16 @@
       "allParts": [],
       "packagePath": []
     },
+    "service": "user",
     "types": [
       "User",
       "StreamUser"
     ],
     "errors": [],
-    "subpackages": [
-      "user"
-    ],
+    "subpackages": [],
     "hasEndpointsInTree": false
   },
-  "subpackages": {
-    "user": {
-      "name": {
-        "originalName": "user",
-        "camelCase": {
-          "unsafeName": "user",
-          "safeName": "user"
-        },
-        "snakeCase": {
-          "unsafeName": "user",
-          "safeName": "user"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "USER",
-          "safeName": "USER"
-        },
-        "pascalCase": {
-          "unsafeName": "User",
-          "safeName": "User"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "user",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        }
-      },
-      "service": "user",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    }
-  },
+  "subpackages": {},
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

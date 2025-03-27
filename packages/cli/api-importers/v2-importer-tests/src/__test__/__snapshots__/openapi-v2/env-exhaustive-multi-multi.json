@@ -882,55 +882,6 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "alpha": {
-      "name": {
-        "originalName": "alpha",
-        "camelCase": {
-          "unsafeName": "alpha",
-          "safeName": "alpha"
-        },
-        "snakeCase": {
-          "unsafeName": "alpha",
-          "safeName": "alpha"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ALPHA",
-          "safeName": "ALPHA"
-        },
-        "pascalCase": {
-          "unsafeName": "Alpha",
-          "safeName": "Alpha"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "alpha",
-          "camelCase": {
-            "unsafeName": "alpha",
-            "safeName": "alpha"
-          },
-          "snakeCase": {
-            "unsafeName": "alpha",
-            "safeName": "alpha"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ALPHA",
-            "safeName": "ALPHA"
-          },
-          "pascalCase": {
-            "unsafeName": "Alpha",
-            "safeName": "Alpha"
-          }
-        }
-      },
-      "service": "alpha",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    },
     "testChannel": {
       "name": {
         "originalName": "testChannel",
@@ -952,7 +903,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel",
+            "camelCase": {
+              "unsafeName": "testChannel",
+              "safeName": "testChannel"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel",
+              "safeName": "test_channel"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL",
+              "safeName": "TEST_CHANNEL"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel",
+              "safeName": "TestChannel"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel",
@@ -1001,7 +972,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel2",
+            "camelCase": {
+              "unsafeName": "testChannel2",
+              "safeName": "testChannel2"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel_2",
+              "safeName": "test_channel_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL_2",
+              "safeName": "TEST_CHANNEL_2"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel2",
+              "safeName": "TestChannel2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel2",
@@ -1029,55 +1020,6 @@
       "websocket": "testChannel2",
       "hasEndpointsInTree": false
     },
-    "beta": {
-      "name": {
-        "originalName": "beta",
-        "camelCase": {
-          "unsafeName": "beta",
-          "safeName": "beta"
-        },
-        "snakeCase": {
-          "unsafeName": "beta",
-          "safeName": "beta"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "BETA",
-          "safeName": "BETA"
-        },
-        "pascalCase": {
-          "unsafeName": "Beta",
-          "safeName": "Beta"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "beta",
-          "camelCase": {
-            "unsafeName": "beta",
-            "safeName": "beta"
-          },
-          "snakeCase": {
-            "unsafeName": "beta",
-            "safeName": "beta"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BETA",
-            "safeName": "BETA"
-          },
-          "pascalCase": {
-            "unsafeName": "Beta",
-            "safeName": "Beta"
-          }
-        }
-      },
-      "service": "beta",
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "hasEndpointsInTree": false
-    },
     "testChannels": {
       "name": {
         "originalName": "testChannels",
@@ -1099,7 +1041,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannels",
+            "camelCase": {
+              "unsafeName": "testChannels",
+              "safeName": "testChannels"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channels",
+              "safeName": "test_channels"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNELS",
+              "safeName": "TEST_CHANNELS"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannels",
+              "safeName": "TestChannels"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannels",
@@ -1148,7 +1110,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannels2",
+            "camelCase": {
+              "unsafeName": "testChannels2",
+              "safeName": "testChannels2"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channels_2",
+              "safeName": "test_channels_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNELS_2",
+              "safeName": "TEST_CHANNELS_2"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannels2",
+              "safeName": "TestChannels2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannels2",
@@ -1460,6 +1442,7 @@
     }
   },
   "rootPackage": {
+    "service": "alpha",
     "types": [
       "testChannel_sendMessage",
       "testChannel2_sendMessage",
@@ -1468,10 +1451,8 @@
     ],
     "errors": [],
     "subpackages": [
-      "alpha",
       "testChannel",
       "testChannel2",
-      "beta",
       "testChannels",
       "testChannels2"
     ],
