@@ -1,9 +1,31 @@
 types:
+  Email: nullable<string>
+  UserId: string
+
+  WeirdNumber:
+    discriminated: false
+    union:
+      - integer
+      - nullable<float>
+      - optional<nullable<string>>
+      - double
+
   User:
     properties:
       name: string
+      id: UserId
       tags: nullable<list<string>>
       metadata: optional<nullable<Metadata>>
+      email: Email
+      favorite-number: WeirdNumber
+      numbers: optional<nullable<list<integer>>>
+      strings: optional<nullable<map<string, unknown>>>
+
+  Status:
+    union:
+      active: {}
+      archived: nullable<datetime>
+      soft-deleted: optional<datetime>
 
   Metadata:
     properties:
@@ -11,6 +33,7 @@ types:
       updatedAt: datetime
       avatar: nullable<string>
       activated: optional<nullable<boolean>>
+      status: Status
 
 service:
   base-path: /users

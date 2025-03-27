@@ -17,6 +17,10 @@ use Seed\Service\Requests\JustFileRequest;
 use Seed\Service\Requests\JustFileWithQueryParamsRequest;
 use Seed\Service\Requests\WithContentTypeRequest;
 use Seed\Service\Requests\WithFormEncodingRequest;
+use Seed\Service\Requests\MyOtherRequest;
+use Seed\Service\Requests\OptionalArgsRequest;
+use Seed\Core\Json\JsonDecoder;
+use JsonException;
 
 class ServiceClient
 {
@@ -105,6 +109,13 @@ class ServiceClient
         }
         if ($request->optionalId != null) {
             $body->add(name: 'optional_id', value: $request->optionalId);
+        }
+        $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        foreach ($request->listOfAliasObject as $element) {
+            $body->add(name: 'list_of_alias_object', value: $element->toJson());
+        }
+        foreach ($request->aliasListOfObject as $element) {
+            $body->add(name: 'alias_list_of_object', value: $element->toJson());
         }
         try {
             $response = $this->client->sendRequest(
@@ -362,6 +373,171 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param MyOtherRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function withFormEncodedContainers(MyOtherRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        if ($request->maybeString != null) {
+            $body->add(name: 'maybe_string', value: $request->maybeString);
+        }
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('file_list'));
+        }
+        if ($request->maybeFile != null) {
+            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
+        }
+        if ($request->maybeFileList != null) {
+            foreach ($request->maybeFileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
+            }
+        }
+        if ($request->maybeInteger != null) {
+            $body->add(name: 'maybe_integer', value: $request->maybeInteger);
+        }
+        if ($request->optionalListOfStrings != null) {
+            foreach ($request->optionalListOfStrings as $element) {
+                $body->add(name: 'optional_list_of_strings', value: $element);
+            }
+        }
+        foreach ($request->listOfObjects as $element) {
+            $body->add(name: 'list_of_objects', value: $element->toJson());
+        }
+        if ($request->optionalMetadata != null) {
+            $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
+        }
+        if ($request->optionalObjectType != null) {
+            $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
+        }
+        if ($request->optionalId != null) {
+            $body->add(name: 'optional_id', value: $request->optionalId);
+        }
+        foreach ($request->listOfObjectsWithOptionals as $element) {
+            $body->add(name: 'list_of_objects_with_optionals', value: $element->toJson());
+        }
+        $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        foreach ($request->listOfAliasObject as $element) {
+            $body->add(name: 'list_of_alias_object', value: $element->toJson());
+        }
+        foreach ($request->aliasListOfObject as $element) {
+            $body->add(name: 'alias_list_of_object', value: $element->toJson());
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param OptionalArgsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function optionalArgs(OptionalArgsRequest $request = new OptionalArgsRequest(), ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        if ($request->imageFile != null) {
+            $body->addPart(
+                $request->imageFile->toMultipartFormDataPart(
+                    name: 'image_file',
+                    contentType: 'image/jpeg',
+                ),
+            );
+        }
+        if ($request->request != null) {
+            $body->add(
+                name: 'request',
+                value: JsonEncoder::encode($request->request),
+                contentType: 'application/json; charset=utf-8',
+            );
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/optional-args",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if ($response === null) {
