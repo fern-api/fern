@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add support for Cohere's Command R+ model in AI chat - model ID: command-r-plus
+    type: feat
+  irVersion: 57
+  version: 0.57.3
+
+- changelogEntry:
+  - summary: |
       Add support for parsing `type: enum` in OpenAPI schemas. This allows for proper conversion of enum types that use the 
       non-standard `type: enum` format instead of the standard `type: string` with `enum` values.
         
