@@ -16,7 +16,7 @@ export declare namespace Realtime {
     export interface ConnectArgs {
         model?: string | undefined;
         temperature?: number | undefined;
-        /** Arbitrary optional headers to send with the websocket request. */
+        /** Arbitrary headers to send with the websocket connect request. */
         requestHeaders?: Record<string, unknown>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
@@ -38,7 +38,11 @@ export class Realtime {
             queryParams["temperature"] = args.temperature;
         }
 
-        const headers: Record<string, unknown> = args.requestHeaders ?? {};
+        let headers: Record<string, unknown> = {};
+        headers = {
+            ...headers,
+            ...args.requestHeaders,
+        };
         const socket = new core.ReconnectingWebSocket(
             `${(await core.Supplier.get(this._options.baseUrl)) ?? (await core.Supplier.get(this._options.environment))}/realtime/?${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
             [],
