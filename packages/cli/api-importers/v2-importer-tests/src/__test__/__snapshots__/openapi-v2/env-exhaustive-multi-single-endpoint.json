@@ -260,50 +260,11 @@
   },
   "errors": {},
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -412,7 +373,7 @@
   "subpackages": {},
   "websocketChannels": {},
   "rootPackage": {
-    "service": "",
+    "service": "service_",
     "types": [],
     "errors": [],
     "subpackages": [],

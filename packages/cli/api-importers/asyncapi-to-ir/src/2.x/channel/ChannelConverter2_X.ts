@@ -154,7 +154,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
     }): Promise<WebSocketMessage | undefined> {
         let convertedSchema: TypeDeclaration | undefined = undefined;
 
-        if ("$ref" in operation.message) {
+        if (context.isReferenceObject(operation.message)) {
             const resolved = await context.resolveReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>(
                 operation.message as OpenAPIV3.ReferenceObject
             );
@@ -214,11 +214,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
             const convertedTypeDeclaration = convertedSchema;
 
             const typeReference = FernIr.TypeReference.named({
-                fernFilepath: {
-                    allParts: [],
-                    packagePath: [],
-                    file: undefined
-                },
+                fernFilepath: context.createFernFilepath(),
                 name: convertedTypeDeclaration.name.name,
                 typeId: convertedTypeDeclaration.name.typeId,
                 default: undefined,

@@ -364,7 +364,7 @@
     }
   },
   "services": {
-    "chatCompletions": {
+    "service_chatCompletions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -763,7 +763,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "chatCompletions",
+            "camelCase": {
+              "unsafeName": "chatCompletions",
+              "safeName": "chatCompletions"
+            },
+            "snakeCase": {
+              "unsafeName": "chat_completions",
+              "safeName": "chat_completions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CHAT_COMPLETIONS",
+              "safeName": "CHAT_COMPLETIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "ChatCompletions",
+              "safeName": "ChatCompletions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "chatCompletions",
@@ -785,7 +805,7 @@
           }
         }
       },
-      "service": "chatCompletions",
+      "service": "service_chatCompletions",
       "types": [],
       "errors": [],
       "subpackages": [],

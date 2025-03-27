@@ -7555,7 +7555,7 @@
     }
   },
   "services": {
-    "Auth": {
+    "service_Auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7757,7 +7757,7 @@
         }
       ]
     },
-    "Extensions": {
+    "service_Extensions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -16166,7 +16166,7 @@
         }
       ]
     },
-    "Profiles": {
+    "service_Profiles": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -25115,7 +25115,7 @@
         }
       ]
     },
-    "Sessions": {
+    "service_Sessions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -40203,7 +40203,7 @@
         }
       ]
     },
-    "Windows": {
+    "service_Windows": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -53625,7 +53625,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Auth",
+            "camelCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "snakeCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTH",
+              "safeName": "AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "Auth",
+              "safeName": "Auth"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Auth",
@@ -53647,7 +53667,7 @@
           }
         }
       },
-      "service": "Auth",
+      "service": "service_Auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -53674,7 +53694,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Extensions",
+            "camelCase": {
+              "unsafeName": "extensions",
+              "safeName": "extensions"
+            },
+            "snakeCase": {
+              "unsafeName": "extensions",
+              "safeName": "extensions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EXTENSIONS",
+              "safeName": "EXTENSIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Extensions",
+              "safeName": "Extensions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Extensions",
@@ -53696,7 +53736,7 @@
           }
         }
       },
-      "service": "Extensions",
+      "service": "service_Extensions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -53723,7 +53763,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Profiles",
+            "camelCase": {
+              "unsafeName": "profiles",
+              "safeName": "profiles"
+            },
+            "snakeCase": {
+              "unsafeName": "profiles",
+              "safeName": "profiles"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROFILES",
+              "safeName": "PROFILES"
+            },
+            "pascalCase": {
+              "unsafeName": "Profiles",
+              "safeName": "Profiles"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Profiles",
@@ -53745,7 +53805,7 @@
           }
         }
       },
-      "service": "Profiles",
+      "service": "service_Profiles",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -53772,7 +53832,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Sessions",
+            "camelCase": {
+              "unsafeName": "sessions",
+              "safeName": "sessions"
+            },
+            "snakeCase": {
+              "unsafeName": "sessions",
+              "safeName": "sessions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SESSIONS",
+              "safeName": "SESSIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Sessions",
+              "safeName": "Sessions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Sessions",
@@ -53794,7 +53874,7 @@
           }
         }
       },
-      "service": "Sessions",
+      "service": "service_Sessions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -53821,7 +53901,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Windows",
+            "camelCase": {
+              "unsafeName": "windows",
+              "safeName": "windows"
+            },
+            "snakeCase": {
+              "unsafeName": "windows",
+              "safeName": "windows"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "WINDOWS",
+              "safeName": "WINDOWS"
+            },
+            "pascalCase": {
+              "unsafeName": "Windows",
+              "safeName": "Windows"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Windows",
@@ -53843,7 +53943,7 @@
           }
         }
       },
-      "service": "Windows",
+      "service": "service_Windows",
       "types": [],
       "errors": [],
       "subpackages": [],

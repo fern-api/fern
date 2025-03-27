@@ -176,11 +176,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     public convertDeclaredTypeName({ context }: { context: AbstractConverterContext<object> }): DeclaredTypeName {
         return {
             typeId: this.id,
-            fernFilepath: {
-                allParts: [],
-                packagePath: [],
-                file: undefined
-            },
+            fernFilepath: context.createFernFilepath(),
             name: context.casingsGenerator.generateName(this.id)
         };
     }

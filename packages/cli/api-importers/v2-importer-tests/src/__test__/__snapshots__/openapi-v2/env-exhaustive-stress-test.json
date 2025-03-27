@@ -268,7 +268,7 @@
   },
   "errors": {},
   "services": {
-    "alpha": {
+    "service_alpha": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -415,7 +415,7 @@
         }
       ]
     },
-    "beta": {
+    "service_beta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -562,7 +562,7 @@
         }
       ]
     },
-    "gamma": {
+    "service_gamma": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -709,7 +709,7 @@
         }
       ]
     },
-    "delta": {
+    "service_delta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -856,7 +856,7 @@
         }
       ]
     },
-    "mu": {
+    "service_mu": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1003,7 +1003,7 @@
         }
       ]
     },
-    "omega": {
+    "service_omega": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1150,7 +1150,7 @@
         }
       ]
     },
-    "zeta": {
+    "service_zeta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1297,7 +1297,7 @@
         }
       ]
     },
-    "eta": {
+    "service_eta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1468,7 +1468,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "alpha",
+            "camelCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "snakeCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ALPHA",
+              "safeName": "ALPHA"
+            },
+            "pascalCase": {
+              "unsafeName": "Alpha",
+              "safeName": "Alpha"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "alpha",
@@ -1490,7 +1510,7 @@
           }
         }
       },
-      "service": "alpha",
+      "service": "service_alpha",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1517,7 +1537,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "beta",
+            "camelCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "snakeCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BETA",
+              "safeName": "BETA"
+            },
+            "pascalCase": {
+              "unsafeName": "Beta",
+              "safeName": "Beta"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "beta",
@@ -1539,7 +1579,7 @@
           }
         }
       },
-      "service": "beta",
+      "service": "service_beta",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1566,7 +1606,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "gamma",
+            "camelCase": {
+              "unsafeName": "gamma",
+              "safeName": "gamma"
+            },
+            "snakeCase": {
+              "unsafeName": "gamma",
+              "safeName": "gamma"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GAMMA",
+              "safeName": "GAMMA"
+            },
+            "pascalCase": {
+              "unsafeName": "Gamma",
+              "safeName": "Gamma"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "gamma",
@@ -1588,7 +1648,7 @@
           }
         }
       },
-      "service": "gamma",
+      "service": "service_gamma",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1615,7 +1675,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "delta",
+            "camelCase": {
+              "unsafeName": "delta",
+              "safeName": "delta"
+            },
+            "snakeCase": {
+              "unsafeName": "delta",
+              "safeName": "delta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DELTA",
+              "safeName": "DELTA"
+            },
+            "pascalCase": {
+              "unsafeName": "Delta",
+              "safeName": "Delta"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "delta",
@@ -1637,7 +1717,7 @@
           }
         }
       },
-      "service": "delta",
+      "service": "service_delta",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1664,7 +1744,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "mu",
+            "camelCase": {
+              "unsafeName": "mu",
+              "safeName": "mu"
+            },
+            "snakeCase": {
+              "unsafeName": "mu",
+              "safeName": "mu"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "MU",
+              "safeName": "MU"
+            },
+            "pascalCase": {
+              "unsafeName": "Mu",
+              "safeName": "Mu"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "mu",
@@ -1686,7 +1786,7 @@
           }
         }
       },
-      "service": "mu",
+      "service": "service_mu",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1713,7 +1813,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "omega",
+            "camelCase": {
+              "unsafeName": "omega",
+              "safeName": "omega"
+            },
+            "snakeCase": {
+              "unsafeName": "omega",
+              "safeName": "omega"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OMEGA",
+              "safeName": "OMEGA"
+            },
+            "pascalCase": {
+              "unsafeName": "Omega",
+              "safeName": "Omega"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "omega",
@@ -1735,7 +1855,7 @@
           }
         }
       },
-      "service": "omega",
+      "service": "service_omega",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1762,7 +1882,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "zeta",
+            "camelCase": {
+              "unsafeName": "zeta",
+              "safeName": "zeta"
+            },
+            "snakeCase": {
+              "unsafeName": "zeta",
+              "safeName": "zeta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ZETA",
+              "safeName": "ZETA"
+            },
+            "pascalCase": {
+              "unsafeName": "Zeta",
+              "safeName": "Zeta"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "zeta",
@@ -1784,7 +1924,7 @@
           }
         }
       },
-      "service": "zeta",
+      "service": "service_zeta",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1811,7 +1951,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "eta",
+            "camelCase": {
+              "unsafeName": "eta",
+              "safeName": "eta"
+            },
+            "snakeCase": {
+              "unsafeName": "eta",
+              "safeName": "eta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ETA",
+              "safeName": "ETA"
+            },
+            "pascalCase": {
+              "unsafeName": "Eta",
+              "safeName": "Eta"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "eta",
@@ -1833,7 +1993,7 @@
           }
         }
       },
-      "service": "eta",
+      "service": "service_eta",
       "types": [],
       "errors": [],
       "subpackages": [],
