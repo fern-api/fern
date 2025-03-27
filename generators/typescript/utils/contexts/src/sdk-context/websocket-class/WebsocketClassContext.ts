@@ -6,9 +6,9 @@ import { GeneratedWebsocketSocketClass } from "./GeneratedWebsocketSocketClass";
 
 export interface WebsocketClassContext {
     getGeneratedWebsocketSocketClass: (
+        packageId: PackageId,
         channelId: WebSocketChannelId,
-        channel: WebSocketChannel,
-        packageId: PackageId
+        channel: WebSocketChannel
     ) => GeneratedWebsocketSocketClass;
     getReferenceToWebsocketSocketClass: (
         packageId: PackageId,
