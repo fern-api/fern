@@ -71,7 +71,8 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
@@ -128,7 +129,8 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
@@ -157,7 +159,8 @@ public class AsyncRawServiceClient {
                     httpUrl, "shallow", request.getShallow().get().toString(), false);
         }
         if (request.getTag().isPresent()) {
-            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), false);
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "tag", request.getTag().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -185,7 +188,8 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
@@ -251,7 +255,8 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));

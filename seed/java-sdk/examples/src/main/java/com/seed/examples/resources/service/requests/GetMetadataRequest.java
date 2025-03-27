@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,23 +23,28 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetMetadataRequest.Builder.class)
 public final class GetMetadataRequest {
+    private final Optional<List<String>> tag;
+
     private final String xApiVersion;
 
     private final Optional<Boolean> shallow;
 
-    private final Optional<String> tag;
-
     private final Map<String, Object> additionalProperties;
 
     private GetMetadataRequest(
+            Optional<List<String>> tag,
             String xApiVersion,
             Optional<Boolean> shallow,
-            Optional<String> tag,
             Map<String, Object> additionalProperties) {
+        this.tag = tag;
         this.xApiVersion = xApiVersion;
         this.shallow = shallow;
-        this.tag = tag;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("tag")
+    public Optional<List<String>> getTag() {
+        return tag;
     }
 
     @JsonProperty("X-API-Version")
@@ -48,11 +55,6 @@ public final class GetMetadataRequest {
     @JsonProperty("shallow")
     public Optional<Boolean> getShallow() {
         return shallow;
-    }
-
-    @JsonProperty("tag")
-    public Optional<String> getTag() {
-        return tag;
     }
 
     @java.lang.Override
@@ -67,12 +69,12 @@ public final class GetMetadataRequest {
     }
 
     private boolean equalTo(GetMetadataRequest other) {
-        return xApiVersion.equals(other.xApiVersion) && shallow.equals(other.shallow) && tag.equals(other.tag);
+        return tag.equals(other.tag) && xApiVersion.equals(other.xApiVersion) && shallow.equals(other.shallow);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.xApiVersion, this.shallow, this.tag);
+        return Objects.hash(this.tag, this.xApiVersion, this.shallow);
     }
 
     @java.lang.Override
@@ -93,22 +95,24 @@ public final class GetMetadataRequest {
     public interface _FinalStage {
         GetMetadataRequest build();
 
+        _FinalStage tag(Optional<List<String>> tag);
+
+        _FinalStage tag(List<String> tag);
+
+        _FinalStage tag(List<String> tag);
+
         _FinalStage shallow(Optional<Boolean> shallow);
 
         _FinalStage shallow(Boolean shallow);
-
-        _FinalStage tag(Optional<String> tag);
-
-        _FinalStage tag(String tag);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements XApiVersionStage, _FinalStage {
         private String xApiVersion;
 
-        private Optional<String> tag = Optional.empty();
-
         private Optional<Boolean> shallow = Optional.empty();
+
+        private Optional<List<String>> tag = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -117,9 +121,9 @@ public final class GetMetadataRequest {
 
         @java.lang.Override
         public Builder from(GetMetadataRequest other) {
+            tag(other.getTag());
             xApiVersion(other.getXApiVersion());
             shallow(other.getShallow());
-            tag(other.getTag());
             return this;
         }
 
@@ -127,19 +131,6 @@ public final class GetMetadataRequest {
         @JsonSetter("X-API-Version")
         public _FinalStage xApiVersion(@NotNull String xApiVersion) {
             this.xApiVersion = Objects.requireNonNull(xApiVersion, "xApiVersion must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage tag(String tag) {
-            this.tag = Optional.ofNullable(tag);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "tag", nulls = Nulls.SKIP)
-        public _FinalStage tag(Optional<String> tag) {
-            this.tag = tag;
             return this;
         }
 
@@ -157,8 +148,27 @@ public final class GetMetadataRequest {
         }
 
         @java.lang.Override
+        public _FinalStage tag(List<String> tag) {
+            this.tag = Optional.of(Collections.singletonList(tag));
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage tag(List<String> tag) {
+            this.tag = Optional.ofNullable(tag);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "tag", nulls = Nulls.SKIP)
+        public _FinalStage tag(Optional<List<String>> tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        @java.lang.Override
         public GetMetadataRequest build() {
-            return new GetMetadataRequest(xApiVersion, shallow, tag, additionalProperties);
+            return new GetMetadataRequest(tag, xApiVersion, shallow, additionalProperties);
         }
     }
 }

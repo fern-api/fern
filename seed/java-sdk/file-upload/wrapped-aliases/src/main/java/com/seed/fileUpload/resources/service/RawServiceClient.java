@@ -168,7 +168,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -210,7 +211,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -239,7 +241,7 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get(),
+                    request.getOptionalListOfStrings().get().toString(),
                     false);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -268,7 +270,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -318,7 +321,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -362,7 +366,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -470,7 +475,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -531,7 +537,8 @@ public class RawServiceClient {
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }

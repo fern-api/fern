@@ -6,6 +6,7 @@ package com.fern.sdk.resources.types.object.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import okhttp3.Response;
 
 public final class ObjectWithOptionalFieldError extends SeedExhaustiveApiException {
   /**
@@ -15,6 +16,11 @@ public final class ObjectWithOptionalFieldError extends SeedExhaustiveApiExcepti
 
   public ObjectWithOptionalFieldError(ObjectWithOptionalField body) {
     super("ObjectWithOptionalFieldError", 400, body);
+    this.body = body;
+  }
+
+  public ObjectWithOptionalFieldError(ObjectWithOptionalField body, Response rawResponse) {
+    super("ObjectWithOptionalFieldError", 400, body, rawResponse);
     this.body = body;
   }
 

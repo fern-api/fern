@@ -65,7 +65,7 @@ public class RawUnionClient {
         return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Animal.class), response);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
     }
     catch (IOException e) {
       throw new SeedExhaustiveException("Network error executing HTTP request", e);

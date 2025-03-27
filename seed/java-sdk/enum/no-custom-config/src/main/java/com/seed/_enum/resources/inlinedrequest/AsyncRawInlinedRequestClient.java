@@ -72,7 +72,8 @@ public class AsyncRawInlinedRequestClient {
                     future.completeExceptionally(new SeedEnumApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedEnumException("Network error executing HTTP request", e));

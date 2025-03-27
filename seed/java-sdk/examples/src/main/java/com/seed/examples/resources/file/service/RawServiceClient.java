@@ -73,7 +73,8 @@ public class RawServiceClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 404) {
-                    throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
+                    throw new NotFoundError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
@@ -81,7 +82,8 @@ public class RawServiceClient {
             throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExamplesException("Network error executing HTTP request", e);
         }

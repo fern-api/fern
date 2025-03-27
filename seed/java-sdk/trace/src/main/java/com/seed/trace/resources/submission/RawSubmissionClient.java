@@ -70,7 +70,8 @@ public class RawSubmissionClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -116,7 +117,8 @@ public class RawSubmissionClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -157,7 +159,8 @@ public class RawSubmissionClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -197,7 +200,8 @@ public class RawSubmissionClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

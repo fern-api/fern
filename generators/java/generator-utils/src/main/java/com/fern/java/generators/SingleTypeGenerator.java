@@ -78,6 +78,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 className,
                 reservedTypeNamesInScope,
                 isTopLevelClass,
+                Collections.emptyList(),
                 Collections.emptyList());
         return Optional.of(objectGenerator);
     }

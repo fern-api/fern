@@ -72,7 +72,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -117,7 +118,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -157,7 +159,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -179,7 +182,8 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "number", request.getNumber().toString(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -198,7 +202,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -240,7 +245,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -282,7 +288,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -334,7 +341,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
@@ -386,7 +394,8 @@ public class RawParamsClient {
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }

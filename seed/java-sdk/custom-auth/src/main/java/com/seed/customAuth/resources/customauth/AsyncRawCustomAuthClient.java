@@ -73,8 +73,10 @@ public class AsyncRawCustomAuthClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 401) {
-                            future.completeExceptionally(new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                                    responseBodyString, UnauthorizedRequestErrorBody.class)));
+                            future.completeExceptionally(new UnauthorizedRequest(
+                                    ObjectMappers.JSON_MAPPER.readValue(
+                                            responseBodyString, UnauthorizedRequestErrorBody.class),
+                                    response));
                             return;
                         }
                     } catch (JsonProcessingException ignored) {
@@ -83,7 +85,8 @@ public class AsyncRawCustomAuthClient {
                     future.completeExceptionally(new SeedCustomAuthApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -148,12 +151,14 @@ public class AsyncRawCustomAuthClient {
                         switch (response.code()) {
                             case 400:
                                 future.completeExceptionally(new BadRequest(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
                                 return;
                             case 401:
-                                future.completeExceptionally(
-                                        new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
-                                                responseBodyString, UnauthorizedRequestErrorBody.class)));
+                                future.completeExceptionally(new UnauthorizedRequest(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, UnauthorizedRequestErrorBody.class),
+                                        response));
                                 return;
                         }
                     } catch (JsonProcessingException ignored) {
@@ -162,7 +167,8 @@ public class AsyncRawCustomAuthClient {
                     future.completeExceptionally(new SeedCustomAuthApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
