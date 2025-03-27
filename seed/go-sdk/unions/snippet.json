@@ -4,11 +4,44 @@
             "id": {
                 "path": "/",
                 "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026unionsgo.BigUnion{\n\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
                 "identifier_override": "endpoint_union.update"
             },
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026unionsgo.Shape{\n\t\tCircle: \u0026unionsgo.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*unionsgo.BigUnion{\n\t\t\u0026unionsgo.BigUnion{\n\t\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t\t\u0026unionsgo.BigUnion{\n\t\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
             }
         },
         {

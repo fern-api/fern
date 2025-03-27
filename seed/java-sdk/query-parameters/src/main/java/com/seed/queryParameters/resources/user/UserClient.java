@@ -4,81 +4,32 @@
 package com.seed.queryParameters.resources.user;
 
 import com.seed.queryParameters.core.ClientOptions;
-import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.core.RequestOptions;
-import com.seed.queryParameters.core.SeedQueryParametersApiException;
-import com.seed.queryParameters.core.SeedQueryParametersException;
 import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.User;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class UserClient {
     protected final ClientOptions clientOptions;
 
+    private final RawUserClient rawClient;
+
     public UserClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawUserClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawUserClient withRawResponse() {
+        return this.rawClient;
     }
 
     public User getUsername(GetUsersRequest request) {
-        return getUsername(request, null);
+        return this.rawClient.getUsername(request).body();
     }
 
     public User getUsername(GetUsersRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("user");
-        httpUrl.addQueryParameter("limit", Integer.toString(request.getLimit()));
-        httpUrl.addQueryParameter("id", request.getId().toString());
-        httpUrl.addQueryParameter("date", request.getDate());
-        httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
-        httpUrl.addQueryParameter("bytes", request.getBytes().toString());
-        httpUrl.addQueryParameter("user", request.getUser().toString());
-        httpUrl.addQueryParameter("userList", request.getUserList().toString());
-        if (request.getOptionalDeadline().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalDeadline", request.getOptionalDeadline().get().toString());
-        }
-        httpUrl.addQueryParameter("keyValue", request.getKeyValue());
-        if (request.getOptionalString().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalString", request.getOptionalString().get());
-        }
-        httpUrl.addQueryParameter("nestedUser", request.getNestedUser().toString());
-        if (request.getOptionalUser().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optionalUser", request.getOptionalUser().get().toString());
-        }
-        httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().toString());
-        httpUrl.addQueryParameter("filter", request.getFilter());
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedQueryParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedQueryParametersException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getUsername(request, requestOptions).body();
     }
 }

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -23,9 +23,9 @@ public record FetchResponse
     /// <summary>
     /// Maps the FetchResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.FetchResponse ToProto()
+    internal ProtoDataV1Grpc.FetchResponse ToProto()
     {
-        var result = new Proto.FetchResponse();
+        var result = new ProtoDataV1Grpc.FetchResponse();
         if (Columns != null && Columns.Any())
         {
             foreach (var kvp in Columns)
@@ -48,7 +48,7 @@ public record FetchResponse
     /// <summary>
     /// Returns a new FetchResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static FetchResponse FromProto(Proto.FetchResponse value)
+    internal static FetchResponse FromProto(ProtoDataV1Grpc.FetchResponse value)
     {
         return new FetchResponse
         {

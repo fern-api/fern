@@ -1,0 +1,285 @@
+{
+  "title": "Test file upload v1",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Upload a file",
+      "audiences": [],
+      "operationId": "upload-file",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadFileRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "The file to upload",
+            "exploded": false
+          },
+          {
+            "key": "maybe_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": false,
+              "description": "An optional file to upload",
+              "type": "file"
+            },
+            "description": "An optional file to upload",
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi-v1.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-v1.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Upload a list of files",
+      "audiences": [],
+      "operationId": "upload-list",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadListRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "list_file",
+            "schema": {
+              "isOptional": false,
+              "isArray": true,
+              "description": "A list of files to upload",
+              "type": "file"
+            },
+            "exploded": false
+          },
+          {
+            "key": "maybe_list_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": true,
+              "description": "An optional list of files to upload",
+              "type": "file"
+            },
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi-v2.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload-list",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-v2.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Upload a file with a content type",
+      "audiences": [],
+      "operationId": "upload-with-content-type",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadWithContentTypeRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "The file to upload",
+            "contentType": "application/octet-stream",
+            "exploded": false
+          },
+          {
+            "key": "maybe_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": false,
+              "description": "An optional file to upload",
+              "type": "file"
+            },
+            "description": "An optional file to upload",
+            "exploded": false
+          },
+          {
+            "key": "metadata",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestMetadata",
+                "value": {
+                  "generatedName": "UploadWithContentTypeRequestMetadata",
+                  "description": "This is a metadata field",
+                  "key": {
+                    "generatedName": "UploadWithContentTypeRequestMetadataKey",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "groupName": []
+                  },
+                  "value": {
+                    "generatedName": "UploadWithContentTypeRequestMetadataValue",
+                    "groupName": [],
+                    "type": "unknown"
+                  },
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "contentType": "application/json"
+          },
+          {
+            "key": "data",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestData",
+                "value": {
+                  "properties": [
+                    {
+                      "key": "datum",
+                      "schema": {
+                        "generatedName": "uploadWithContentTypeRequestDataDatum",
+                        "value": {
+                          "generatedName": "UploadWithContentTypeRequestDataDatum",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "conflict": {},
+                      "generatedName": "uploadWithContentTypeRequestDataDatum"
+                    }
+                  ],
+                  "generatedName": "UploadWithContentTypeRequestData",
+                  "allOf": [],
+                  "allOfPropertyConflicts": [],
+                  "groupName": [],
+                  "fullExamples": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi-v3.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "exploded": true
+          }
+        ],
+        "source": {
+          "file": "../openapi-v3.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload-with-content-type",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-v3.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

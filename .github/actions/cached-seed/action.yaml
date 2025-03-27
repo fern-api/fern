@@ -62,7 +62,7 @@ runs:
     - name: Install protoc-gen-openapi
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
-      run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
     - name: Seed Test
       if: steps.cache.outputs.cache-hit != 'true'

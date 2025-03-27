@@ -3,10 +3,7 @@ title: OAuth
 description: Fern supports OAuth as a first class citizen
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact)
-  or [email us](mailto:support@buildwithfern.com) to get started.
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
 Fern supports the OAuth 2.0 authorization framework as a first class citizen. With Fern, users don't need
 to retrieve and manage access tokens manually. Instead, Fern SDKs will handle the entire OAuth flow.
@@ -15,7 +12,7 @@ For the `client-credentials` OAuth flow, the user simply provides their `client-
 and they're ready to go.
 
 <Tabs>
-<Tab title="TypeScript">
+<Tab title="TypeScript" language="typescript">
 
   When OAuth is configured, the TypeScript SDK's client constructor will include the `clientId` and
   `clientSecret` parameters.
@@ -33,7 +30,7 @@ and they're ready to go.
 
 </Tab>
 
-<Tab title="Python">
+<Tab title="Python" language="python">
 
   When OAuth is configured, the Python SDK's client constructor will include the `client_id` and
   `client_secret` parameters.
@@ -51,7 +48,7 @@ and they're ready to go.
 
 </Tab>
 
-<Tab title="Java">
+<Tab title="Java" language="java">
 
   When OAuth is configured, the Java SDK’s builder methods for setting the `clientId` and `clientSecret` are available.
 

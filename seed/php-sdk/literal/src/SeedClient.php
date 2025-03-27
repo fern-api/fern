@@ -41,8 +41,9 @@ class SeedClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -53,14 +54,19 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $version
+     * @param ?bool $auditLogging
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
+        ?string $version = null,
+        ?bool $auditLogging = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -71,6 +77,12 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($version != null) {
+            $defaultHeaders['X-API-Version'] = $version;
+        }
+        if ($auditLogging != null) {
+            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging;
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(

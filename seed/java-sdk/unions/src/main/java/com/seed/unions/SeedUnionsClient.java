@@ -5,17 +5,25 @@ package com.seed.unions;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.Suppliers;
+import com.seed.unions.resources.bigunion.BigunionClient;
 import com.seed.unions.resources.union.UnionClient;
 import java.util.function.Supplier;
 
 public class SeedUnionsClient {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<BigunionClient> bigunionClient;
+
     protected final Supplier<UnionClient> unionClient;
 
     public SeedUnionsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.bigunionClient = Suppliers.memoize(() -> new BigunionClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
+    }
+
+    public BigunionClient bigunion() {
+        return this.bigunionClient.get();
     }
 
     public UnionClient union() {

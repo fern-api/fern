@@ -7,12 +7,10 @@ import * as SeedTrace from "../../../index";
 export type ErrorInfo =
     | SeedTrace.ErrorInfo.CompileError
     /**
-     * If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
-     *  */
+     * If the submission cannot be executed and throws a runtime error before getting to any of the testcases. */
     | SeedTrace.ErrorInfo.RuntimeError
     /**
-     * If the trace backend encounters an unexpected error.
-     *  */
+     * If the trace backend encounters an unexpected error. */
     | SeedTrace.ErrorInfo.InternalError
     | SeedTrace.ErrorInfo._Unknown;
 

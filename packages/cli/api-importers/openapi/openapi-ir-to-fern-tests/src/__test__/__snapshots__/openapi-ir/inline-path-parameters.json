@@ -1,6 +1,7 @@
 {
   "title": "Inlined path parameters",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -31,7 +32,7 @@
       "headers": [],
       "generatedRequestName": "GetUserRequest",
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
       "method": "GET",
@@ -165,7 +166,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
       "method": "GET",
@@ -384,7 +385,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "POST",
@@ -450,7 +451,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

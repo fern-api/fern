@@ -8,10 +8,10 @@ use Seed\Core\Json\JsonProperty;
 class ListType extends JsonSerializableType
 {
     /**
-     * @var mixed $valueType
+     * @var VariableType $valueType
      */
     #[JsonProperty('valueType')]
-    public mixed $valueType;
+    public VariableType $valueType;
 
     /**
      * @var ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
@@ -21,7 +21,7 @@ class ListType extends JsonSerializableType
 
     /**
      * @param array{
-     *   valueType: mixed,
+     *   valueType: VariableType,
      *   isFixedLength?: ?bool,
      * } $values
      */

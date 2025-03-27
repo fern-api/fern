@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedAudiences;
 using SeedAudiences.Core;
@@ -11,7 +9,7 @@ namespace SeedAudiences.Test.Unit.MockServer;
 public class FindTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -48,12 +46,11 @@ public class FindTest : BaseMockServerTest
                 OptionalString = "optionalString",
                 PublicProperty = "publicProperty",
                 PrivateProperty = 1,
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingDefaults()
+        );
     }
 }

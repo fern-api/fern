@@ -1,5 +1,5 @@
 using SeedApi.Core;
-using Proto = Google.Protobuf.WellKnownTypes;
+using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
@@ -15,9 +15,9 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
         return JsonUtils.Serialize(this);
     }
 
-    internal Proto.Struct ToProto()
+    internal WellKnownProto.Struct ToProto()
     {
-        var result = new Proto.Struct();
+        var result = new WellKnownProto.Struct();
         foreach (var kvp in this)
         {
             result.Fields[kvp.Key] = kvp.Value?.ToProto();
@@ -25,7 +25,7 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
         return result;
     }
 
-    internal static Metadata FromProto(Proto.Struct value)
+    internal static Metadata FromProto(WellKnownProto.Struct value)
     {
         var result = new Metadata();
         foreach (var kvp in value.Fields)

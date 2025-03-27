@@ -28,12 +28,13 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     description: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
     servers: core.serialization.list(Server),
+    websocketServers: core.serialization.list(Server),
     groups: core.serialization.record(core.serialization.string(), SdkGroupInfo),
     tags: Tags,
     hasEndpointsMarkedInternal: core.serialization.boolean(),
     endpoints: core.serialization.list(Endpoint),
     webhooks: core.serialization.list(Webhook),
-    channel: core.serialization.list(WebsocketChannel),
+    channels: core.serialization.record(core.serialization.string(), WebsocketChannel),
     groupedSchemas: Schemas,
     variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
@@ -49,12 +50,13 @@ export declare namespace OpenApiIntermediateRepresentation {
         description?: string | null;
         basePath?: string | null;
         servers: Server.Raw[];
+        websocketServers: Server.Raw[];
         groups: Record<string, SdkGroupInfo.Raw>;
         tags: Tags.Raw;
         hasEndpointsMarkedInternal: boolean;
         endpoints: Endpoint.Raw[];
         webhooks: Webhook.Raw[];
-        channel: WebsocketChannel.Raw[];
+        channels: Record<string, WebsocketChannel.Raw>;
         groupedSchemas: Schemas.Raw;
         variables: Record<string, PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];

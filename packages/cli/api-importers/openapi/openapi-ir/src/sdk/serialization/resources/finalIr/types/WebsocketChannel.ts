@@ -7,6 +7,8 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { SdkGroupName } from "../../commons/types/SdkGroupName";
 import { WebsocketHandshake } from "./WebsocketHandshake";
+import { WebsocketMessageSchema } from "./WebsocketMessageSchema";
+import { WebsocketServer } from "./WebsocketServer";
 import { WebsocketSessionExample } from "./WebsocketSessionExample";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
@@ -22,8 +24,8 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
         groupName: SdkGroupName,
         summary: core.serialization.string().optional(),
         handshake: WebsocketHandshake,
-        publish: core.serialization.lazy(() => serializers.Schema).optional(),
-        subscribe: core.serialization.lazy(() => serializers.Schema).optional(),
+        messages: core.serialization.list(WebsocketMessageSchema),
+        servers: core.serialization.list(WebsocketServer),
         examples: core.serialization.list(WebsocketSessionExample),
     })
     .extend(WithDescription)
@@ -36,8 +38,8 @@ export declare namespace WebsocketChannel {
         groupName: SdkGroupName.Raw;
         summary?: string | null;
         handshake: WebsocketHandshake.Raw;
-        publish?: serializers.Schema.Raw | null;
-        subscribe?: serializers.Schema.Raw | null;
+        messages: WebsocketMessageSchema.Raw[];
+        servers: WebsocketServer.Raw[];
         examples: WebsocketSessionExample.Raw[];
     }
 }

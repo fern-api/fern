@@ -1,0 +1,15 @@
+{
+  "type": "string",
+  "enum": [
+    "FIELD_BEHAVIOR_UNSPECIFIED",
+    "OPTIONAL",
+    "REQUIRED",
+    "OUTPUT_ONLY",
+    "INPUT_ONLY",
+    "IMMUTABLE",
+    "UNORDERED_LIST",
+    "NON_EMPTY_DEFAULT",
+    "IDENTIFIER"
+  ],
+  "definitions": {}
+}

@@ -23,9 +23,9 @@ class GetMetadataRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   xApiVersion: string,
      *   shallow?: ?bool,
      *   tag?: ?array<string>,
-     *   xApiVersion: string,
      * } $values
      */
     public function __construct(

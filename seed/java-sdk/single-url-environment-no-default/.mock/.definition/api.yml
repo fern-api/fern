@@ -1,7 +1,0 @@
-auth: bearer
-environments:
-  Production: https://production.com/api
-  Staging: https://staging.com/api
-error-discrimination:
-  strategy: status-code
-name: single-url-environment-no-default

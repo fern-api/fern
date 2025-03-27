@@ -1,5 +1,6 @@
-export { type ParseOpenAPIOptions, getParseOptions } from "./options";
-export { parse, type Document, type OpenAPIDocument } from "./parse";
-export { FernOpenAPIExtension, XFernStreaming, FERN_TYPE_EXTENSIONS } from "./openapi/v3/extensions/fernExtensions";
-export { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
 export * from "./asyncapi/v2";
+export * from "./asyncapi/v3";
+export { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
+export { FERN_TYPE_EXTENSIONS, FernOpenAPIExtension, XFernStreaming } from "./openapi/v3/extensions/fernExtensions";
+export { getParseOptions, type ParseOpenAPIOptions } from "./options";
+export { parse, type Document, type OpenAPIDocument } from "./parse";

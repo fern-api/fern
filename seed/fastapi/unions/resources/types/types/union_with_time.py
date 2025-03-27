@@ -40,6 +40,14 @@ class _Factory:
 
 
 class UnionWithTime(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.types import UnionWithTime_Value
+
+    UnionWithTime_Value(value=5)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

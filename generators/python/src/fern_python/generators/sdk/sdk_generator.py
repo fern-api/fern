@@ -47,6 +47,7 @@ from .environment_generators import (
     SingleBaseUrlEnvironmentGenerator,
 )
 from .error_generator.error_generator import ErrorGenerator
+from .v2.generator import PythonV2Generator
 
 
 class SdkGenerator(AbstractGenerator):
@@ -105,7 +106,9 @@ class SdkGenerator(AbstractGenerator):
                 project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
             elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
-                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                    dependency=AST.Dependency(
+                        name=dep, version=value.version, optional=value.optional, python=value.python
+                    )
                 )
 
         project.add_extra(custom_config.extras)
@@ -350,6 +353,12 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 ir=ir,
             )
+
+        # Finally, run the python-v2 generator.
+        pythonv2 = PythonV2Generator(
+            coordinator=generator_exec_wrapper,
+        )
+        pythonv2.run()
 
     def _generate_environments_base(
         self,

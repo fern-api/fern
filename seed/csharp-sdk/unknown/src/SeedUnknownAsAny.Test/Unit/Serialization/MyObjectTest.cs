@@ -1,9 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnknownAsAny;
+using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny.Test;
 
@@ -11,27 +9,49 @@ namespace SeedUnknownAsAny.Test;
 public class MyObjectTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "unknown": {
+                "boolVal": true,
+                "strVal": "string"
+              }
+            }
+            """;
+        var expectedObject = new MyObject
+        {
+            Unknown = new Dictionary<object, object?>()
+            {
+                { "boolVal", true },
+                { "strVal", "string" },
+            },
+        };
+        var deserializedObject = JsonUtils.Deserialize<MyObject>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var expectedJson = """
+            {
+              "unknown": {
+                "boolVal": true,
+                "strVal": "string"
+              }
+            }
+            """;
+        var actualObj = new MyObject
         {
-          ""unknown"": {
-            ""boolVal"": true,
-            ""strVal"": ""string""
-          }
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Unknown = new Dictionary<object, object?>()
+            {
+                { "boolVal", true },
+                { "strVal", "string" },
+            },
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<MyObject>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

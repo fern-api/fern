@@ -27,6 +27,16 @@ class _Factory:
 
 
 class UnionWithSingleElement(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.types import UnionWithSingleElement_Foo
+
+    UnionWithSingleElement_Foo(
+        name="example1",
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedPackageYml;\n\nvar client = new SeedPackageYmlClient();\nawait client.EchoAsync(\"id-ksfd9c1\", new EchoRequest { Name = \"Hello world!\", Size = 20 });\n"
             }
         },
@@ -21,7 +21,7 @@
                 "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedPackageYml;\n\nvar client = new SeedPackageYmlClient();\nawait client.Service.NopAsync(\"id-a2ijs82\", \"id-219xca8\");\n"
             }
         }

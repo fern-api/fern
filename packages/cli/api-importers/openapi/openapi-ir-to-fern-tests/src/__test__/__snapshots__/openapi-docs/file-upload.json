@@ -20,24 +20,17 @@
               ],
               "method": "POST",
               "pagination": undefined,
-              "path": "/upload-with-content-type",
+              "path": "/upload",
               "request": {
                 "body": {
                   "properties": {
-                    "data": {
-                      "style": "exploded",
-                      "type": "optional<UploadFileRequestData>",
-                    },
                     "file": {
-                      "content-type": "application/octet-stream",
                       "docs": "The file to upload",
                       "type": "file",
                     },
-                    "maybe_file": "optional<file>",
-                    "metadata": {
-                      "content-type": "application/json",
-                      "docs": "This is a metadata field",
-                      "type": "optional<map<string, unknown>>",
+                    "maybe_file": {
+                      "docs": "An optional file to upload",
+                      "type": "optional<file>",
                     },
                   },
                 },
@@ -51,13 +44,87 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "upload-list": {
+              "auth": false,
+              "display-name": "Upload a list of files",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-list",
+              "request": {
+                "body": {
+                  "properties": {
+                    "list_file": "list<file>",
+                    "maybe_list_file": "optional<list<file>>",
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadListRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "upload-with-content-type": {
+              "auth": false,
+              "display-name": "Upload a file with a content type",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-with-content-type",
+              "request": {
+                "body": {
+                  "properties": {
+                    "data": {
+                      "style": "exploded",
+                      "type": "optional<UploadWithContentTypeRequestData>",
+                    },
+                    "file": {
+                      "content-type": "application/octet-stream",
+                      "docs": "The file to upload",
+                      "type": "file",
+                    },
+                    "maybe_file": {
+                      "docs": "An optional file to upload",
+                      "type": "optional<file>",
+                    },
+                    "metadata": {
+                      "content-type": "application/json",
+                      "docs": "This is a metadata field",
+                      "type": "optional<map<string, unknown>>",
+                    },
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadWithContentTypeRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
           },
         },
         "types": {
-          "UploadFileRequestData": {
+          "UploadWithContentTypeRequestData": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -74,7 +141,7 @@
   base-path: ''
   endpoints:
     upload-file:
-      path: /upload-with-content-type
+      path: /upload
       method: POST
       auth: false
       source:
@@ -87,14 +154,52 @@
             file:
               type: file
               docs: The file to upload
+            maybe_file:
+              type: optional<file>
+              docs: An optional file to upload
+        content-type: multipart/form-data
+      examples:
+        - request: {}
+    upload-list:
+      path: /upload-list
+      method: POST
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      display-name: Upload a list of files
+      request:
+        name: UploadListRequest
+        body:
+          properties:
+            list_file: list<file>
+            maybe_list_file: optional<list<file>>
+        content-type: multipart/form-data
+      examples:
+        - request: {}
+    upload-with-content-type:
+      path: /upload-with-content-type
+      method: POST
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      display-name: Upload a file with a content type
+      request:
+        name: UploadWithContentTypeRequest
+        body:
+          properties:
+            file:
+              type: file
+              docs: The file to upload
               content-type: application/octet-stream
-            maybe_file: optional<file>
+            maybe_file:
+              type: optional<file>
+              docs: An optional file to upload
             metadata:
               type: optional<map<string, unknown>>
               docs: This is a metadata field
               content-type: application/json
             data:
-              type: optional<UploadFileRequestData>
+              type: optional<UploadWithContentTypeRequestData>
               style: exploded
         content-type: multipart/form-data
       examples:
@@ -102,7 +207,7 @@
   source:
     openapi: ../openapi.yml
 types:
-  UploadFileRequestData:
+  UploadWithContentTypeRequestData:
     properties:
       datum: optional<string>
     source:

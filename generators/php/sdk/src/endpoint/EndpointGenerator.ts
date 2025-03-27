@@ -22,7 +22,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
-    }): php.Method {
+    }): php.Method[] {
         return this.http.generate({
             serviceId,
             service,

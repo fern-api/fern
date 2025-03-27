@@ -1,5 +1,5 @@
-import { AsyncApiOrOpenApiSpecSchema, ConjureSchema } from "../schemas";
+import { ConjureSchema, SpecSchema } from "../schemas";
 
-export function isConjureSchema(specs: AsyncApiOrOpenApiSpecSchema[] | ConjureSchema): specs is ConjureSchema {
+export function isConjureSchema(specs: SpecSchema[] | ConjureSchema): specs is ConjureSchema {
     return (specs as ConjureSchema)?.conjure != null;
 }

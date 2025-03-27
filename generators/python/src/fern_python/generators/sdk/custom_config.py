@@ -35,7 +35,8 @@ class BaseDependencyCustomConfig(pydantic.BaseModel):
 
 
 class DependencyCustomConfig(BaseDependencyCustomConfig):
-    optional: bool
+    python: Optional[str] = None
+    optional: bool = False
 
 
 class SDKCustomConfig(pydantic.BaseModel):

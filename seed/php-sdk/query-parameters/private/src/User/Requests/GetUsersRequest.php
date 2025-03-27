@@ -88,13 +88,13 @@ class GetUsersRequest extends JsonSerializableType
      *   bytes: string,
      *   user: User,
      *   userList: array<User>,
-     *   optionalDeadline?: ?DateTime,
      *   keyValue: array<string, string>,
-     *   optionalString?: ?string,
      *   nestedUser: NestedUser,
-     *   optionalUser?: ?User,
      *   excludeUser: array<User>,
      *   filter: array<string>,
+     *   optionalDeadline?: ?DateTime,
+     *   optionalString?: ?string,
+     *   optionalUser?: ?User,
      * } $values
      */
     public function __construct(

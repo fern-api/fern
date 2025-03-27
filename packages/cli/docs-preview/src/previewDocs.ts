@@ -21,6 +21,7 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
 import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -90,15 +91,18 @@ export async function getPreviewDocsDefinition({
         }
     }
 
-    const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map(
-            async (workspace) =>
-                await workspace.toFernWorkspace(
-                    { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                )
-        )
-    );
+    let fernWorkspaces: FernWorkspace[] = [];
+    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
+        fernWorkspaces = await Promise.all(
+            apiWorkspaces.map(
+                async (workspace) =>
+                    await workspace.toFernWorkspace(
+                        { context },
+                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
+                    )
+            )
+        );
+    }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
@@ -213,8 +217,15 @@ class ReferencedAPICollectorV2 {
 
     constructor(private readonly context: TaskContext) {}
 
-    public addReferencedAPI({ api }: { api: FdrAPI.api.latest.ApiDefinition }): APIDefinitionID {
+    public addReferencedAPI({
+        api,
+        snippetsConfig
+    }: {
+        api: FdrAPI.api.latest.ApiDefinition;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+    }): APIDefinitionID {
         try {
+            api.snippetsConfiguration = snippetsConfig;
             this.apis[api.id] = api;
             return api.id;
         } catch (e) {

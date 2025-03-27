@@ -5,12 +5,17 @@ namespace Seed\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\Union;
-use Seed\Commons\Types\Metadata;
+use Seed\Commons\Types\EventInfo;
+use Seed\Commons\Types\Data;
 
 class BigEntity extends JsonSerializableType
 {
     /**
-     * @var Actor|Actress|StuntDouble|null $castMember
+     * @var (
+     *    Actor
+     *   |Actress
+     *   |StuntDouble
+     * )|null $castMember
      */
     #[JsonProperty('castMember'), Union(Actor::class, Actress::class, StuntDouble::class, 'null')]
     public Actor|Actress|StuntDouble|null $castMember;
@@ -28,28 +33,28 @@ class BigEntity extends JsonSerializableType
     public ?Entity $entity;
 
     /**
-     * @var mixed $metadata
+     * @var ?Metadata $metadata
      */
     #[JsonProperty('metadata')]
-    public mixed $metadata;
+    public ?Metadata $metadata;
 
     /**
-     * @var ?Metadata $commonMetadata
+     * @var ?\Seed\Commons\Types\Metadata $commonMetadata
      */
     #[JsonProperty('commonMetadata')]
-    public ?Metadata $commonMetadata;
+    public ?\Seed\Commons\Types\Metadata $commonMetadata;
 
     /**
-     * @var mixed $eventInfo
+     * @var ?EventInfo $eventInfo
      */
     #[JsonProperty('eventInfo')]
-    public mixed $eventInfo;
+    public ?EventInfo $eventInfo;
 
     /**
-     * @var mixed $data
+     * @var ?Data $data
      */
     #[JsonProperty('data')]
-    public mixed $data;
+    public ?Data $data;
 
     /**
      * @var ?Migration $migration
@@ -58,16 +63,16 @@ class BigEntity extends JsonSerializableType
     public ?Migration $migration;
 
     /**
-     * @var mixed $exception
+     * @var ?Exception $exception
      */
     #[JsonProperty('exception')]
-    public mixed $exception;
+    public ?Exception $exception;
 
     /**
-     * @var mixed $test
+     * @var ?Test $test
      */
     #[JsonProperty('test')]
-    public mixed $test;
+    public ?Test $test;
 
     /**
      * @var ?Node $node
@@ -89,16 +94,20 @@ class BigEntity extends JsonSerializableType
 
     /**
      * @param array{
-     *   castMember?: Actor|Actress|StuntDouble|null,
+     *   castMember?: (
+     *    Actor
+     *   |Actress
+     *   |StuntDouble
+     * )|null,
      *   extendedMovie?: ?ExtendedMovie,
      *   entity?: ?Entity,
-     *   metadata?: mixed,
-     *   commonMetadata?: ?Metadata,
-     *   eventInfo?: mixed,
-     *   data?: mixed,
+     *   metadata?: ?Metadata,
+     *   commonMetadata?: ?\Seed\Commons\Types\Metadata,
+     *   eventInfo?: ?EventInfo,
+     *   data?: ?Data,
      *   migration?: ?Migration,
-     *   exception?: mixed,
-     *   test?: mixed,
+     *   exception?: ?Exception,
+     *   test?: ?Test,
      *   node?: ?Node,
      *   directory?: ?Directory,
      *   moment?: ?Moment,

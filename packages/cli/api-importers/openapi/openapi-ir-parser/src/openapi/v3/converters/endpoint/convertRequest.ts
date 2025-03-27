@@ -141,11 +141,12 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
+                        schema: MultipartSchema.file({ isOptional: false, isArray: false, description: undefined }),
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -158,11 +159,16 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: false,
+                            description: property.schema.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -175,11 +181,16 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
+                        schema: MultipartSchema.file({
+                            isOptional: false,
+                            isArray: true,
+                            description: property.schema.value.description
+                        }),
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
@@ -193,21 +204,29 @@ export function convertRequest({
                 ) {
                     properties.push({
                         key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description,
+                        schema: MultipartSchema.file({
+                            isOptional: true,
+                            isArray: true,
+                            description: property.schema.value.value.description
+                        }),
+                        description: property.schema.value.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false
+                        exploded: false,
+                        encoding: undefined
                     });
                     continue;
                 }
 
+                const contentType =
+                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
                     contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined
+                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                    encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
                 });
             }
         }

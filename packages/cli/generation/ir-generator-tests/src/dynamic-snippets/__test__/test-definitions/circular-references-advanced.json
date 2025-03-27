@@ -61,7 +61,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:RootType": {
             "type": "object",
@@ -120,7 +121,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_a:A": {
             "type": "object",
@@ -217,7 +219,554 @@
                         "value": "STRING"
                     }
                 }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:FirstUnion": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "FirstUnion",
+                    "camelCase": {
+                        "unsafeName": "firstUnion",
+                        "safeName": "firstUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "first_union",
+                        "safeName": "first_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FIRST_UNION",
+                        "safeName": "FIRST_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FirstUnion",
+                        "safeName": "FirstUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_ast:FirstUnionFirstElement"
+                },
+                {
+                    "type": "named",
+                    "value": "type_ast:FirstUnionSecondElement"
+                }
             ]
+        },
+        "type_ast:SecondUnion": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "SecondUnion",
+                    "camelCase": {
+                        "unsafeName": "secondUnion",
+                        "safeName": "secondUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "second_union",
+                        "safeName": "second_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SECOND_UNION",
+                        "safeName": "SECOND_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SecondUnion",
+                        "safeName": "SecondUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_ast:SecondUnionFirstElement"
+                },
+                {
+                    "type": "named",
+                    "value": "type_ast:SecondUnionSecondElement"
+                }
+            ]
+        },
+        "type_ast:FirstUnionFirstElement": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "FirstUnionFirstElement",
+                    "camelCase": {
+                        "unsafeName": "firstUnionFirstElement",
+                        "safeName": "firstUnionFirstElement"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "first_union_first_element",
+                        "safeName": "first_union_first_element"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FIRST_UNION_FIRST_ELEMENT",
+                        "safeName": "FIRST_UNION_FIRST_ELEMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FirstUnionFirstElement",
+                        "safeName": "FirstUnionFirstElement"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        },
+                        "wireValue": "child"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:SecondUnion"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:FirstUnionSecondElement": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "FirstUnionSecondElement",
+                    "camelCase": {
+                        "unsafeName": "firstUnionSecondElement",
+                        "safeName": "firstUnionSecondElement"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "first_union_second_element",
+                        "safeName": "first_union_second_element"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FIRST_UNION_SECOND_ELEMENT",
+                        "safeName": "FIRST_UNION_SECOND_ELEMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FirstUnionSecondElement",
+                        "safeName": "FirstUnionSecondElement"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        },
+                        "wireValue": "child"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:SecondUnion"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:SecondUnionFirstElement": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SecondUnionFirstElement",
+                    "camelCase": {
+                        "unsafeName": "secondUnionFirstElement",
+                        "safeName": "secondUnionFirstElement"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "second_union_first_element",
+                        "safeName": "second_union_first_element"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SECOND_UNION_FIRST_ELEMENT",
+                        "safeName": "SECOND_UNION_FIRST_ELEMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SecondUnionFirstElement",
+                        "safeName": "SecondUnionFirstElement"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        },
+                        "wireValue": "child"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:FirstUnion"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_ast:SecondUnionSecondElement": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SecondUnionSecondElement",
+                    "camelCase": {
+                        "unsafeName": "secondUnionSecondElement",
+                        "safeName": "secondUnionSecondElement"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "second_union_second_element",
+                        "safeName": "second_union_second_element"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SECOND_UNION_SECOND_ELEMENT",
+                        "safeName": "SECOND_UNION_SECOND_ELEMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SecondUnionSecondElement",
+                        "safeName": "SecondUnionSecondElement"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        },
+                        "wireValue": "child"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_ast:FirstUnion"
+                    }
+                }
+            ],
+            "additionalProperties": false
         },
         "type_ast:ContainerValue": {
             "type": "discriminatedUnion",
@@ -555,7 +1104,8 @@
                     }
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_ast:FieldName": {
             "type": "alias",
@@ -929,10 +1479,13 @@
                         "value": "type_ast:FieldValue"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
     "endpoints": {},
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

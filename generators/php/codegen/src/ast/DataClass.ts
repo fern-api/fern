@@ -1,5 +1,5 @@
 import { php } from "..";
-import { ClassReference } from "../php";
+import { Access, ClassReference } from "../php";
 import { Class } from "./Class";
 import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
@@ -14,18 +14,22 @@ import { orderByAccess } from "./utils/orderByAccess";
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 
 export declare namespace DataClass {
-    type Args = Class.Args;
+    interface Args extends Class.Args {
+        constructorAccess?: Access;
+    }
 }
 
 export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
+    private readonly constructorAccess: Access;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits }: DataClass.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
+        this.constructorAccess = constructorAccess ?? "public";
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
@@ -50,7 +54,7 @@ export class DataClass extends AstNode {
         );
         if (orderedFields.length > 0) {
             this.class_.addConstructor({
-                access: "public",
+                access: this.constructorAccess,
                 parameters: this.getConstructorParameters({ orderedFields }),
                 body: php.codeblock((writer) => {
                     for (const field of orderedFields) {

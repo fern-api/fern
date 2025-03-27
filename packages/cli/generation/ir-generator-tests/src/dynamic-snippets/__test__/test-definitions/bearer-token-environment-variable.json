@@ -1,7 +1,39 @@
 {
     "version": "1.0.0",
     "types": {},
-    "headers": [],
+    "headers": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "version",
+                    "camelCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "version",
+                        "safeName": "version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VERSION",
+                        "safeName": "VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Version",
+                        "safeName": "Version"
+                    }
+                },
+                "wireValue": "X-API-Version"
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "1.0.0"
+                }
+            }
+        }
+    ],
     "endpoints": {
         "endpoint_service.getWithBearerToken": {
             "auth": {
@@ -101,8 +133,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

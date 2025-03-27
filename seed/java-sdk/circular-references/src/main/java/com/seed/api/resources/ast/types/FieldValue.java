@@ -109,6 +109,7 @@ public final class FieldValue {
     }
 
     @JsonTypeName("primitive_value")
+    @JsonIgnoreProperties("type")
     private static final class PrimitiveValueValue implements Value {
         @JsonProperty("value")
         private PrimitiveValue value;
@@ -145,6 +146,7 @@ public final class FieldValue {
     }
 
     @JsonTypeName("object_value")
+    @JsonIgnoreProperties("type")
     private static final class ObjectValueValue implements Value {
         @JsonUnwrapped
         private ObjectValue value;
@@ -183,6 +185,7 @@ public final class FieldValue {
     }
 
     @JsonTypeName("container_value")
+    @JsonIgnoreProperties("type")
     private static final class ContainerValueValue implements Value {
         @JsonProperty("value")
         private ContainerValue value;
@@ -218,6 +221,7 @@ public final class FieldValue {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

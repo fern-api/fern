@@ -12,6 +12,6 @@ public class EndpointTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/container/").UsingDelete())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.Service.EndpointAsync(RequestOptions));
+        Assert.DoesNotThrowAsync(async () => await Client.Service.EndpointAsync());
     }
 }

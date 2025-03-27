@@ -13442,6 +13442,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                 "type": "optional<float>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Belvo's unique ID for the current receivable transaction.",
                 "type": "string",
                 "validation": {
@@ -24687,6 +24688,7 @@ types:
         docs: Belvo's unique ID for the current receivable transaction.
         validation:
           format: uuid
+        access: read-only
       account: ReceivablesTransactionAccount
       created_at:
         type: datetime
@@ -86046,11 +86048,11 @@ docs: >-
 error-discrimination:
   strategy: status-code
 display-name: Belvo API Docs
-default-environment: Production
 environments:
   Production: https://api.belvo.com
   Sandbox: https://sandbox.belvo.com
   Development: https://development.belvo.com
+default-environment: Production
 auth-schemes:
   BasicAuthScheme:
     scheme: basic

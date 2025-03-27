@@ -1,3 +1,4 @@
+import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -7,12 +8,18 @@ import {
     IdentifiableSource,
     Spec
 } from "@fern-api/api-workspace-commons";
+import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
+import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { TaskContext } from "@fern-api/task-context";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
+import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
@@ -38,6 +45,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
+            useBytesForBinaryResponse: specs
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
+
+                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
+                .some((spec) => spec.settings?.useBytesForBinaryResponse),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -70,9 +82,80 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
                 objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
-                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration
+                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
+                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse
             }
         });
+    }
+
+    /**
+     * @beta This method is in beta and not ready for production use.
+     * @internal
+     * @owner dsinghvi
+     */
+    public async getIntermediateRepresentation({
+        context
+    }: {
+        context: TaskContext;
+    }): Promise<IntermediateRepresentation> {
+        const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
+        const documents = await this.loader.loadDocuments({ context, specs });
+        let mergedIr: IntermediateRepresentation | undefined;
+        for (const document of documents) {
+            const errorCollector = new ErrorCollector({ logger: context.logger });
+            let result: IntermediateRepresentation | undefined = undefined;
+            if (document.type === "openapi") {
+                const converterContext = new OpenAPIConverterContext3_1({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value as OpenAPIV3_1.Document
+                });
+                const converter = new OpenAPI3_1Converter({ context: converterContext });
+                result = await converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+            } else if (document.type === "asyncapi") {
+                const converterContext = new AsyncAPIConverterContext({
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: document.value
+                });
+                const converter = new AsyncAPIConverter({ context: converterContext });
+                result = await converter.convert({
+                    context: converterContext,
+                    errorCollector
+                });
+            } else {
+                errorCollector.collect({
+                    message: `Unsupported document type: ${document}`,
+                    path: []
+                });
+            }
+            if (errorCollector.hasErrors()) {
+                context.logger.info(
+                    `${document.type === "openapi" ? "OpenAPI" : "AsyncAPI"} Importer encountered errors:`
+                );
+                errorCollector.logErrors();
+            }
+            const casingsGenerator = constructCasingsGenerator({
+                generationLanguage: "typescript",
+                keywords: undefined,
+                smartCasing: false
+            });
+            if (result != null) {
+                mergedIr =
+                    mergedIr === undefined
+                        ? result
+                        : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+            }
+        }
+        if (mergedIr === undefined) {
+            throw new Error("Failed to generate intermediate representation");
+        }
+        return mergedIr;
     }
 
     public async toFernWorkspace(

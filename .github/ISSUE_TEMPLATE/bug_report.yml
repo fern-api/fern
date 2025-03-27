@@ -44,11 +44,21 @@ body:
 
         Environment:
         - OS: [e.g., macOS 13.5, Windows 11, Ubuntu 22.04]
-        - Fern CLI version: [e.g., v0.51.15]
         - Node.js version: [e.g., 18.19.0]
         - Browser (if applicable): [e.g., Chrome 132]
     validations:
       required: true
+
+  - type: textarea
+    id: versions
+    attributes:
+      label: "Fern CLI & Generator Versions"
+      description: "Report your Fern CLI version (from `fern.config.json`) and, if applicable, your SDK Generator versions (from `generators.yml`)."
+      placeholder: |
+        Fern CLI version: [e.g., v0.55.1]
+        SDK Generator versions: 
+          - [e.g., fernapi/fern-node-typescript-sdk v0.48.7]
+          - [e.g., fernapi/fern-java-sdk v2.20.1]
 
   - type: textarea
     id: workaround
@@ -59,11 +69,13 @@ body:
     validations:
       required: false
 
-  - type: textarea
-    id: logs
+  - type: dropdown
+    id: contribute
     attributes:
-      label: "Logs & Additional Context"
-      description: "Paste any relevant logs, error messages, or screenshots. If your `fern folder` is open source, include a link to the branch you're using."
-      placeholder: "Copy and paste logs, specs, links, or drag & drop screenshots here..."
+      label: "Are you interested in contributing a fix?"
+      description: "If this is a confirmed bug, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
     validations:
-      required: false
+      required: true

@@ -121,6 +121,7 @@ public final class SubmissionStatusForTestCase {
   }
 
   @JsonTypeName("graded")
+  @JsonIgnoreProperties("type")
   private static final class GradedValue implements Value {
     @JsonUnwrapped
     private TestCaseResultWithStdout value;
@@ -162,6 +163,7 @@ public final class SubmissionStatusForTestCase {
   }
 
   @JsonTypeName("gradedV2")
+  @JsonIgnoreProperties("type")
   private static final class GradedV2Value implements Value {
     @JsonProperty("value")
     private TestCaseGrade value;
@@ -200,6 +202,7 @@ public final class SubmissionStatusForTestCase {
   }
 
   @JsonTypeName("traced")
+  @JsonIgnoreProperties("type")
   private static final class TracedValue implements Value {
     @JsonUnwrapped
     private TracedTestCase value;
@@ -240,6 +243,7 @@ public final class SubmissionStatusForTestCase {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

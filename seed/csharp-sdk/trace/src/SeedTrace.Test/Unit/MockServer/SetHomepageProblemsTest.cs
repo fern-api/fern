@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class SetHomepageProblemsTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -28,8 +28,7 @@ public class SetHomepageProblemsTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Homepage.SetHomepageProblemsAsync(
-                    new List<string>() { "string", "string" },
-                    RequestOptions
+                    new List<string>() { "string", "string" }
                 )
         );
     }

@@ -1,13 +1,14 @@
 {
   "title": "Test inheritance from undiscrimnated union objects",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
   "hasEndpointsMarkedInternal": false,
   "endpoints": [],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "PartyAccount": {
@@ -104,7 +105,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -236,7 +238,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using SeedOauthClientCredentials.Auth;
 
 namespace SeedOauthClientCredentials.Core;

@@ -12,7 +12,9 @@ from ..core.api_error import ApiError
 import datetime as dt
 from ..submission.types.test_submission_update_info import TestSubmissionUpdateInfo
 from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
-from ..submission.types.workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
+from ..submission.types.workspace_submission_update_info import (
+    WorkspaceSubmissionUpdateInfo,
+)
 from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
 from ..submission.types.trace_response import TraceResponse
 from ..v_2.problem.types.test_case_id import TestCaseId
@@ -136,7 +138,9 @@ class AdminClient:
             json={
                 "updateTime": update_time,
                 "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                    object_=update_info,
+                    annotation=TestSubmissionUpdateInfo,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -260,7 +264,9 @@ class AdminClient:
             json={
                 "updateTime": update_time,
                 "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                    object_=update_info,
+                    annotation=WorkspaceSubmissionUpdateInfo,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -419,10 +425,14 @@ class AdminClient:
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
-                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                    object_=result,
+                    annotation=TestCaseResultWithStdout,
+                    direction="write",
                 ),
                 "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                    object_=trace_responses,
+                    annotation=typing.Sequence[TraceResponse],
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -570,7 +580,9 @@ class AdminClient:
             f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+                object_=request,
+                annotation=typing.Sequence[TraceResponseV2],
+                direction="write",
             ),
             request_options=request_options,
             omit=OMIT,
@@ -724,10 +736,14 @@ class AdminClient:
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
-                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                    object_=workspace_run_details,
+                    annotation=WorkspaceRunDetails,
+                    direction="write",
                 ),
                 "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                    object_=trace_responses,
+                    annotation=typing.Sequence[TraceResponse],
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -871,7 +887,9 @@ class AdminClient:
             f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+                object_=request,
+                annotation=typing.Sequence[TraceResponseV2],
+                direction="write",
             ),
             request_options=request_options,
             omit=OMIT,
@@ -1013,7 +1031,9 @@ class AsyncAdminClient:
             json={
                 "updateTime": update_time,
                 "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                    object_=update_info,
+                    annotation=TestSubmissionUpdateInfo,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -1151,7 +1171,9 @@ class AsyncAdminClient:
             json={
                 "updateTime": update_time,
                 "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                    object_=update_info,
+                    annotation=WorkspaceSubmissionUpdateInfo,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -1317,10 +1339,14 @@ class AsyncAdminClient:
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
-                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                    object_=result,
+                    annotation=TestCaseResultWithStdout,
+                    direction="write",
                 ),
                 "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                    object_=trace_responses,
+                    annotation=typing.Sequence[TraceResponse],
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -1475,7 +1501,9 @@ class AsyncAdminClient:
             f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+                object_=request,
+                annotation=typing.Sequence[TraceResponseV2],
+                direction="write",
             ),
             request_options=request_options,
             omit=OMIT,
@@ -1636,10 +1664,14 @@ class AsyncAdminClient:
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
-                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                    object_=workspace_run_details,
+                    annotation=WorkspaceRunDetails,
+                    direction="write",
                 ),
                 "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                    object_=trace_responses,
+                    annotation=typing.Sequence[TraceResponse],
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -1790,7 +1822,9 @@ class AsyncAdminClient:
             f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+                object_=request,
+                annotation=typing.Sequence[TraceResponseV2],
+                direction="write",
             ),
             request_options=request_options,
             omit=OMIT,

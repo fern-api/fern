@@ -6,6 +6,8 @@ import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative }
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
+
 export type HttpServiceInfo = Partial<
     Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
 >;
@@ -298,6 +300,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }
     ): void {
+        // No-op for types in api.yml
+        if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
+            return;
+        }
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
             fernFile.types = {};

@@ -15,6 +15,7 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 
 import { FernFileContext } from "../../FernFileContext";
@@ -26,7 +27,6 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
-import { constructHttpPath } from "./constructHttpPath";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";

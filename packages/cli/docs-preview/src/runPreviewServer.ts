@@ -22,6 +22,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
+        aiChatConfig: undefined,
         hideNavLinks: undefined,
         navigation: undefined,
         root: undefined,
@@ -230,6 +231,7 @@ export async function runPreviewServer({
             };
             res.send(response);
         } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
         }

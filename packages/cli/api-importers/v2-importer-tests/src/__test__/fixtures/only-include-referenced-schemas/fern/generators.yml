@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+      settings:
+        only-include-referenced-schemas: true

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace SeedIdempotencyHeaders.Core;
 
 internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
-    where TEnum : struct, System.Enum
+    where TEnum : struct, Enum
 {
     private readonly Dictionary<TEnum, string> _enumToString = new();
     private readonly Dictionary<string, TEnum> _stringToEnum = new();
@@ -36,7 +36,7 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
 
     public override TEnum Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {

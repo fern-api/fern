@@ -8,6 +8,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
+    shouldGenerateWebsocketClients: z.optional(z.boolean()),
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),

@@ -89,7 +89,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     // Add Channels
     context.setInState(State.Channel);
-    for (const channel of context.ir.channel) {
+    for (const channel of Object.values(context.ir.channels)) {
         const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
     }

@@ -136,6 +136,7 @@ export abstract class EndpointRequest {
             case "null":
             case "typeDict":
             case "enumString":
+            case "literal":
                 return bodyArgument;
         }
     }

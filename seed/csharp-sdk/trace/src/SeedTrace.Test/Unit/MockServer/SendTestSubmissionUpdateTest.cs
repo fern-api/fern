@@ -7,7 +7,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class SendTestSubmissionUpdateTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -44,8 +44,7 @@ public class SendTestSubmissionUpdateTest : BaseMockServerTest
                             DateTimeStyles.AdjustToUniversal
                         ),
                         UpdateInfo = RunningSubmissionState.QueueingSubmission,
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

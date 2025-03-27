@@ -5,6 +5,7 @@ namespace Seed\V2\Problem;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
+use Seed\Commons\VariableType;
 
 class VoidFunctionSignatureThatTakesActualResult extends JsonSerializableType
 {
@@ -15,15 +16,15 @@ class VoidFunctionSignatureThatTakesActualResult extends JsonSerializableType
     public array $parameters;
 
     /**
-     * @var mixed $actualResultType
+     * @var VariableType $actualResultType
      */
     #[JsonProperty('actualResultType')]
-    public mixed $actualResultType;
+    public VariableType $actualResultType;
 
     /**
      * @param array{
      *   parameters: array<Parameter>,
-     *   actualResultType: mixed,
+     *   actualResultType: VariableType,
      * } $values
      */
     public function __construct(

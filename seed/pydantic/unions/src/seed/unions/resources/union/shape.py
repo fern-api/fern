@@ -8,6 +8,16 @@ import pydantic
 
 
 class Base(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources import Shape_Circle
+
+    Shape_Circle(
+        radius=5.0,
+    )
+    """
+
     id: str
 
     if IS_PYDANTIC_V2:
@@ -19,6 +29,16 @@ class Base(UniversalBaseModel):
 
 
 class Shape_Circle(Base):
+    """
+    Examples
+    --------
+    from seed.unions.resources import Shape_Circle
+
+    Shape_Circle(
+        radius=5.0,
+    )
+    """
+
     type: typing.Literal["circle"] = "circle"
     radius: float
 
@@ -31,6 +51,16 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
+    """
+    Examples
+    --------
+    from seed.unions.resources import Shape_Circle
+
+    Shape_Circle(
+        radius=5.0,
+    )
+    """
+
     type: typing.Literal["square"] = "square"
     length: float
 
@@ -42,4 +72,11 @@ class Shape_Square(Base):
             extra = pydantic.Extra.allow
 
 
+"""
+from seed.unions.resources import Shape_Circle
+
+Shape_Circle(
+    radius=5.0,
+)
+"""
 Shape = typing.Union[Shape_Circle, Shape_Square]

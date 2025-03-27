@@ -5,8 +5,10 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Admin\Requests\StoreTracedWorkspaceRequest;
 use Seed\Submission\Types\WorkspaceRunDetails;
+use Seed\Submission\Types\ExceptionV2;
 use Seed\Submission\Types\ExceptionInfo;
 use Seed\Submission\Types\TraceResponse;
+use Seed\Commons\Types\DebugVariableValue;
 use Seed\Submission\Types\ExpressionLocation;
 use Seed\Submission\Types\StackInformation;
 use Seed\Submission\Types\StackFrame;
@@ -22,7 +24,11 @@ $client->admin->storeTracedWorkspace(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new StoreTracedWorkspaceRequest([
         'workspaceRunDetails' => new WorkspaceRunDetails([
-            'exceptionV2' => 'todo',
+            'exceptionV2' => ExceptionV2::generic(new ExceptionInfo([
+                'exceptionType' => 'exceptionType',
+                'exceptionMessage' => 'exceptionMessage',
+                'exceptionStacktrace' => 'exceptionStacktrace',
+            ])),
             'exception' => new ExceptionInfo([
                 'exceptionType' => 'exceptionType',
                 'exceptionMessage' => 'exceptionMessage',
@@ -34,7 +40,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => 'todo',
+                'returnValue' => DebugVariableValue::integerValue(),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -47,12 +53,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                         ],
@@ -63,7 +69,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => 'todo',
+                'returnValue' => DebugVariableValue::integerValue(),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -76,12 +82,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                         ],

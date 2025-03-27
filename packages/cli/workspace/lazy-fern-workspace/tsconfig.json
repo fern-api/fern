@@ -52,5 +52,20 @@
     {
       "path": "../commons"
     },
+    {
+      "path": "../../api-importers/openapi-to-ir"
+    },
+    {
+      "path": "../../api-importers/asyncapi-to-ir"
+    },
+    {
+      "path": "../../api-importers/v2-importer-commons"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    }
   ]
 }

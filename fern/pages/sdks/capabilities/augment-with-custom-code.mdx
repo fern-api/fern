@@ -3,10 +3,7 @@ title: Augment with custom code
 description: Extend the generated SDK to provide additional functionality
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact)
-  or [email us](mailto:support@buildwithfern.com) to get started.
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
 The Fern generated SDKs are designed to be extended with custom code. Your custom code
 can be used to add additional functionality to the SDK and will live in harmony with
@@ -21,7 +18,7 @@ Simply add your custom files to the SDK repository and  list them out in `.ferni
 won't override any files that you add in `.fernignore`.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Steps>
       ### Create a new file `src/helper.ts`
 
@@ -52,7 +49,7 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     <Steps>
       ### Create a new file `src/<package>/helper.py`
 
@@ -82,7 +79,7 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Java">
+  <Tab title="Java" language="java">
     <Steps>
       ### Create a new file `src/main/java/<package>/Helper.java`
 
@@ -125,7 +122,7 @@ won't override any files that you add in `.fernignore`.
       ```
     </Steps>
   </Tab>
-  <Tab title="Go">
+  <Tab title="Go" language="go">
     <Steps>
       ### Create a new file `helper.go`
 
@@ -167,7 +164,7 @@ principle is the same: **extension**. You can inherit the
 Fern generated client and add whatever methods you want.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Note>
       See an example from Flatfile using this process in their [TypeScript SDK](https://github.com/FlatFilers/flatfile-node)
     </Note>
@@ -221,7 +218,7 @@ Fern generated client and add whatever methods you want.
       ```
     </Steps>
   </Tab>
-  <Tab title="Python">
+  <Tab title="Python" language="python">
     <Note>
       See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py).
     </Note>
@@ -288,7 +285,7 @@ Fern generated client and add whatever methods you want.
       ```
     </Steps>
   </Tab>
-  <Tab title="Java">
+  <Tab title="Java" language="java">
     <Steps>
       ### Rename the Fern-generated client
       We suggest naming your Fern-generated client something like `BaseClient`to reflect that this client will be extended.
@@ -334,7 +331,7 @@ Fern generated client and add whatever methods you want.
       ```
     </Steps>
   </Tab>
-  <Tab title="Go">
+  <Tab title="Go" language="go">
     <Steps>
       ### Create a new file `client/my_client.go`
 
@@ -393,8 +390,8 @@ Fern generated client and add whatever methods you want.
 
 To add custom dependencies to your generated SDKs, you can update your `generators.yml`.
 
-<CodeBlocks>
-  <CodeBlock title="TypeScript">
+<Tabs>
+  <Tab title="TypeScript" language="typescript">
       ```yaml {4-7}
       - name: fernapi/fern-typescript-node-sdk
         version: "..."
@@ -404,8 +401,8 @@ To add custom dependencies to your generated SDKs, you can update your `generato
           extraDevDependencies:
             "@types/lodash-es": '1.0.0'
       ```
-  </CodeBlock>
-  <CodeBlock title="Python">
+  </Tab>
+  <Tab title="Python" language="python">
       ```yaml {4-7}
       - name: fernapi/fern-python-sdk
         version: "..."
@@ -415,5 +412,5 @@ To add custom dependencies to your generated SDKs, you can update your `generato
           extra_dev_dependencies:
             requests_mock: '1.12.1'
       ```
-  </CodeBlock>
-</CodeBlocks>
+  </Tab>
+</Tabs>

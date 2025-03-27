@@ -7,7 +7,8 @@ from .utilities import validate_response
 
 
 async def test_get_token(
-    client: SeedOauthClientCredentialsDefault, async_client: AsyncSeedOauthClientCredentialsDefault
+    client: SeedOauthClientCredentialsDefault,
+    async_client: AsyncSeedOauthClientCredentialsDefault,
 ) -> None:
     expected_response: typing.Any = {"access_token": "access_token", "expires_in": 1}
     expected_types: typing.Any = {"access_token": None, "expires_in": "integer"}

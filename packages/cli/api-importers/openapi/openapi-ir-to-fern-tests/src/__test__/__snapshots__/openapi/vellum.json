@@ -662,8 +662,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "active_model_version_ids": "list<string>",
-              "created": "datetime",
+              "active_model_version_ids": {
+                "access": "read-only",
+                "type": "list<string>",
+              },
+              "created": {
+                "access": "read-only",
+                "type": "datetime",
+              },
               "environment": {
                 "docs": "The environment this deployment is used in
 
@@ -673,6 +679,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
+                "access": "read-only",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -751,6 +758,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "The ID of the document.",
                 "type": "string",
                 "validation": {
@@ -780,6 +788,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "document_index_id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
                 "type": "string",
                 "validation": {
@@ -790,6 +799,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this link.",
                 "type": "string",
                 "validation": {
@@ -818,7 +828,10 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "created": "datetime",
+              "created": {
+                "access": "read-only",
+                "type": "datetime",
+              },
               "environment": {
                 "docs": "The environment this document index is used in
 
@@ -828,6 +841,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
+                "access": "read-only",
                 "type": "string",
                 "validation": {
                   "format": "uuid",
@@ -1266,6 +1280,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "ModelVersionBuildConfig",
               },
               "created": {
+                "access": "read-only",
                 "docs": "Timestamp of when this model version was created.",
                 "type": "datetime",
               },
@@ -1284,6 +1299,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this model version.",
                 "type": "string",
                 "validation": {
@@ -1368,7 +1384,10 @@ Used to submit feedback regarding the quality of previously generated completion
                   "multipleOf": undefined,
                 },
               },
-              "sandbox_id": "optional<string>",
+              "sandbox_id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2062,6 +2081,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this document.",
                 "type": "string",
                 "validation": {
@@ -2514,6 +2534,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "delta": {
+                "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
                 "type": "optional<string>",
               },
@@ -2531,6 +2552,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "delta": {
+                "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
                 "type": "optional<string>",
               },
@@ -3024,7 +3046,10 @@ types:
         type: string
         validation:
           format: uuid
-      created: datetime
+        access: read-only
+      created:
+        type: datetime
+        access: read-only
       label:
         type: string
         docs: A human-readable label for the deployment
@@ -3058,7 +3083,9 @@ types:
 
           * `GENERATE` - Generate
           * `CLASSIFY` - Classify
-      active_model_version_ids: list<string>
+      active_model_version_ids:
+        type: list<string>
+        access: read-only
       last_deployed_on: datetime
     source:
       openapi: ../openapi.yml
@@ -3080,6 +3107,7 @@ types:
         docs: The ID of the document.
         validation:
           format: uuid
+        access: read-only
       label:
         type: string
         docs: The human-readable name for the document.
@@ -3101,6 +3129,7 @@ types:
         docs: Vellum-generated ID that uniquely identifies this link.
         validation:
           format: uuid
+        access: read-only
       document_index_id:
         type: string
         docs: >-
@@ -3108,6 +3137,7 @@ types:
           is included in.
         validation:
           format: uuid
+        access: read-only
       indexing_state:
         type: optional<IndexingStateEnum>
         docs: >-
@@ -3132,7 +3162,10 @@ types:
         type: string
         validation:
           format: uuid
-      created: datetime
+        access: read-only
+      created:
+        type: datetime
+        access: read-only
       label:
         type: string
         docs: A human-readable label for the document index
@@ -3444,9 +3477,11 @@ types:
         docs: Vellum-generated ID that uniquely identifies this model version.
         validation:
           format: uuid
+        access: read-only
       created:
         type: datetime
         docs: Timestamp of when this model version was created.
+        access: read-only
       label:
         type: string
         docs: Human-friendly name for this model version.
@@ -3514,7 +3549,9 @@ types:
       prompt_id:
         type: optional<string>
         docs: The id of the prompt in the sandbox snapshot.
-      sandbox_id: optional<string>
+      sandbox_id:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
   NormalizedLogProbs:
@@ -3926,6 +3963,7 @@ types:
         docs: Vellum-generated ID that uniquely identifies this document.
         validation:
           format: uuid
+        access: read-only
       external_id:
         type: optional<string>
         docs: >-
@@ -4231,6 +4269,7 @@ types:
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
+        access: read-only
       value: optional<list<ChatMessage>>
     source:
       openapi: ../openapi.yml
@@ -4244,6 +4283,7 @@ types:
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
+        access: read-only
       value: optional<map<string, unknown>>
     source:
       openapi: ../openapi.yml
@@ -4330,7 +4370,6 @@ Used to retrieve a deployment given its ID or name.
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -4365,7 +4404,6 @@ service:
         docs: ''
         type: root.DeploymentRead
         status-code: 200
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -4578,7 +4616,6 @@ Creates a new document index.",
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -4651,7 +4688,6 @@ service:
         docs: ''
         type: root.DocumentIndexRead
         status-code: 201
-      url: Default
       examples:
         - name: Index Using Instructor Model
           request:
@@ -4816,7 +4852,6 @@ Used to list documents. Optionally filter on supported fields.
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
             "upload": {
               "auth": true,
@@ -4947,7 +4982,6 @@ service:
         docs: ''
         type: root.PaginatedSlimDocumentList
         status-code: 200
-      url: Default
       examples:
         - response:
             body:
@@ -5099,7 +5133,6 @@ Compiles the prompt backing the model version using the provided input values.",
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
             "retrieve": {
               "auth": true,
@@ -5182,7 +5215,6 @@ Used to retrieve a model version given its ID.
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -5217,7 +5249,6 @@ service:
         docs: ''
         type: root.ModelVersionRead
         status-code: 200
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -5288,7 +5319,6 @@ service:
         docs: ''
         type: root.ModelVersionCompilePromptResponse
         status-code: 200
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -5460,7 +5490,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -5545,7 +5574,6 @@ service:
         docs: ''
         type: root.RegisterPromptResponse
         status-code: 200
-      url: Default
       errors:
         - root.ConflictError
       examples:
@@ -5629,7 +5657,6 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
             "upsert_sandbox_scenario": {
               "auth": true,
@@ -5785,7 +5812,6 @@ or overwritten with default values.",
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -5851,7 +5877,6 @@ service:
         docs: ''
         type: root.SandboxScenario
         status-code: 200
-      url: Default
       examples:
         - name: Basic Example
           path-parameters:
@@ -5926,7 +5951,6 @@ service:
         scenario_id:
           type: string
           docs: An id identifying the scenario that you'd like to delete
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -5974,7 +5998,6 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
             "upsert_test_suite_test_case": {
               "auth": true,
@@ -6062,7 +6085,6 @@ or overwritten with default values.",
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Default",
             },
           },
           "source": {
@@ -6134,7 +6156,6 @@ service:
         docs: ''
         type: root.TestSuiteTestCase
         status-code: 200
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -6170,7 +6191,6 @@ service:
         test_case_id:
           type: string
           docs: An id identifying the test case that you'd like to delete
-      url: Default
       examples:
         - path-parameters:
             id: id
@@ -6191,12 +6211,13 @@ service:
           "type": "string",
         },
       },
-      "default-environment": "Production",
+      "default-environment": "Default",
+      "default-url": "Base",
       "display-name": "Vellum Client API",
       "environments": {
-        "Production": {
+        "Default": {
           "urls": {
-            "Default": "https://api.vellum.ai",
+            "Base": "https://api.vellum.ai",
             "Documents": "https://documents.vellum.ai",
             "Predict": "https://predict.vellum.ai",
           },
@@ -6207,18 +6228,19 @@ service:
       },
       "name": "api",
     },
-    "defaultUrl": undefined,
+    "defaultUrl": "Base",
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
 display-name: Vellum Client API
 environments:
-  Production:
+  Default:
     urls:
-      Default: https://api.vellum.ai
+      Base: https://api.vellum.ai
       Predict: https://predict.vellum.ai
       Documents: https://documents.vellum.ai
-default-environment: Production
+default-environment: Default
+default-url: Base
 auth-schemes:
   apiKeyAuth:
     header: X_API_KEY

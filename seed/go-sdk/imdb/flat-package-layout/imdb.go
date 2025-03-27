@@ -32,7 +32,7 @@ func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
 	}
 }
 
-// Add a movie to the database
+// Add a movie to the database using the movies/* /... path.
 func (i *ImdbClient) CreateMovie(
 	ctx context.Context,
 	request *CreateMovieRequest,

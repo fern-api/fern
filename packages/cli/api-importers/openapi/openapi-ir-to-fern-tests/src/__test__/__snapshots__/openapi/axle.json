@@ -1544,10 +1544,10 @@ service:
 error-discrimination:
   strategy: status-code
 display-name: Axle API
-default-environment: Production
 environments:
   Production: https://api.axle.insure
   Sandbox: https://sandbox.axle.insure
+default-environment: Production
 headers:
   x-client-id:
     type: string

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
@@ -15,8 +14,7 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(
     ///     new CreateUserRequest
     ///     {
@@ -25,8 +23,7 @@ public partial class UserClient
     ///         Name = "name",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
@@ -34,8 +31,8 @@ public partial class UserClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -46,9 +43,9 @@ public partial class UserClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -59,10 +56,13 @@ public partial class UserClient
             }
         }
 
-        throw new SeedExtraPropertiesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExtraPropertiesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

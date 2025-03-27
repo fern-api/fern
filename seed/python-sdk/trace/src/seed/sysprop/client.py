@@ -16,7 +16,11 @@ class SyspropClient:
         self._client_wrapper = client_wrapper
 
     def set_num_warm_instances(
-        self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        language: Language,
+        num_warm_instances: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
@@ -106,7 +110,11 @@ class AsyncSyspropClient:
         self._client_wrapper = client_wrapper
 
     async def set_num_warm_instances(
-        self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        language: Language,
+        num_warm_instances: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters

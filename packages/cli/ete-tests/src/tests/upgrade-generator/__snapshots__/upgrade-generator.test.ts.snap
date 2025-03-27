@@ -41,7 +41,11 @@ Options:
 `;
 
 exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"              ╭──────────────────────────────────────────────────╮
+"Warnings for generators.yml:
+	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
+[api]: Warnings for generators.yml:
+[api]: 	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
+              ╭──────────────────────────────────────────────────╮
               │                                                  │
               │                Generator Upgrades                │
               │                                                  │

@@ -137,6 +137,8 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      "ai-chat": optional<AIChatConfig>
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
@@ -159,6 +161,22 @@ types:
       js: optional<JsConfig>
 
   TabId: string
+
+  AIChatConfig: 
+    properties: 
+      model: optional<AIChatModel>
+      "system-prompt": 
+        type: optional<string>
+        docs: This is a system prompt that acts as context given to the LLM for AI chat. 
+    
+  AIChatModel: 
+    enum: 
+      - value: "claude-3.5"
+        name: claude_3_5
+      - value: "claude-3.7"
+        name: claude_3_7
+      - value: command-r-plus
+        name: command_r_plus
 
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]
@@ -560,6 +578,7 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      noindex: optional<boolean>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -730,6 +749,7 @@ types:
       go: optional<SnippetLanguageConfiguration>
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
+      csharp: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -1006,8 +1026,14 @@ types:
           This behavior is unstable and may change in the future.
       openapi-parser-v2:
         type: optional<boolean>
+        availability: deprecated
         docs: |
-          If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern.
+          OpenAPI parser rewrite, now deprecated.  
+      openapi-parser-v3:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          OpenAPI parser in alpha.
 
   PlaygroundSettings:
     properties:

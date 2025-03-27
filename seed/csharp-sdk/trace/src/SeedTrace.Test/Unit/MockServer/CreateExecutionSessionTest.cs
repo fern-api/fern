@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
@@ -10,8 +8,8 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class CreateExecutionSessionTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -36,13 +34,11 @@ public class CreateExecutionSessionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.CreateExecutionSessionAsync(
-            Language.Java,
-            RequestOptions
+        var response = await Client.Submission.CreateExecutionSessionAsync(Language.Java);
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse>(mockResponse))
+                .UsingDefaults()
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

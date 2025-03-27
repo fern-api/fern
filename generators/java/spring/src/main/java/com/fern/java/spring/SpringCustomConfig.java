@@ -35,6 +35,13 @@ public interface SpringCustomConfig extends ICustomConfig, IDownloadFilesCustomC
         return true;
     }
 
+    @Value.Default
+    @JsonProperty("package-layout")
+    @Override
+    default PackageLayout packageLayout() {
+        return PackageLayout.NESTED;
+    }
+
     static ImmutableSpringCustomConfig.Builder builder() {
         return ImmutableSpringCustomConfig.builder();
     }

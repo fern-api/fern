@@ -96,7 +96,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:User": {
             "type": "object",
@@ -259,7 +260,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:NestedUser": {
             "type": "object",
@@ -384,7 +386,8 @@
                         "value": "type_service:User"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:ResourceStatus": {
             "type": "enum",
@@ -811,7 +814,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.listResources": {
             "auth": null,
@@ -1017,8 +1021,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -7,22 +7,22 @@ use Seed\Core\Json\JsonSerializableType;
 class SendLiteralsInQueryRequest extends JsonSerializableType
 {
     /**
-     * @var string $prompt
+     * @var 'You are a helpful assistant' $prompt
      */
     public string $prompt;
 
     /**
-     * @var ?string $optionalPrompt
+     * @var ?'You are a helpful assistant' $optionalPrompt
      */
     public ?string $optionalPrompt;
 
     /**
-     * @var string $aliasPrompt
+     * @var 'You are a helpful assistant' $aliasPrompt
      */
     public string $aliasPrompt;
 
     /**
-     * @var ?string $aliasOptionalPrompt
+     * @var ?'You are a helpful assistant' $aliasOptionalPrompt
      */
     public ?string $aliasOptionalPrompt;
 
@@ -32,36 +32,36 @@ class SendLiteralsInQueryRequest extends JsonSerializableType
     public string $query;
 
     /**
-     * @var bool $stream
+     * @var false $stream
      */
     public bool $stream;
 
     /**
-     * @var ?bool $optionalStream
+     * @var ?false $optionalStream
      */
     public ?bool $optionalStream;
 
     /**
-     * @var bool $aliasStream
+     * @var false $aliasStream
      */
     public bool $aliasStream;
 
     /**
-     * @var ?bool $aliasOptionalStream
+     * @var ?false $aliasOptionalStream
      */
     public ?bool $aliasOptionalStream;
 
     /**
      * @param array{
-     *   prompt: string,
-     *   optionalPrompt?: ?string,
-     *   aliasPrompt: string,
-     *   aliasOptionalPrompt?: ?string,
+     *   prompt: 'You are a helpful assistant',
+     *   aliasPrompt: 'You are a helpful assistant',
      *   query: string,
-     *   stream: bool,
-     *   optionalStream?: ?bool,
-     *   aliasStream: bool,
-     *   aliasOptionalStream?: ?bool,
+     *   stream: false,
+     *   aliasStream: false,
+     *   optionalPrompt?: ?'You are a helpful assistant',
+     *   aliasOptionalPrompt?: ?'You are a helpful assistant',
+     *   optionalStream?: ?false,
+     *   aliasOptionalStream?: ?false,
      * } $values
      */
     public function __construct(

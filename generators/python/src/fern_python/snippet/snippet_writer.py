@@ -246,6 +246,14 @@ class SnippetWriter:
             )
             if optional.optional is not None
             else None,
+            nullable=lambda nullable: self.get_snippet_for_example_type_reference(
+                example_type_reference=nullable.nullable,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
+                in_typeddict=in_typeddict,
+            )
+            if nullable.nullable is not None
+            else None,
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map.map_,
                 use_typeddict_request=use_typeddict_request,

@@ -58,7 +58,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:OptionalStringResponse": {
             "type": "alias",
@@ -160,7 +161,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:WithDocs": {
             "type": "object",
@@ -257,7 +259,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:OptionalWithDocs": {
             "type": "alias",
@@ -456,7 +459,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_service:Response": {
             "type": "object",
@@ -616,7 +620,8 @@
                         "value": "type_service:Movie"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -704,7 +709,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieDocs": {
             "auth": null,
@@ -789,7 +795,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieName": {
             "auth": null,
@@ -874,7 +881,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getMovieMetadata": {
             "auth": null,
@@ -959,7 +967,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovie": {
             "auth": null,
@@ -1044,7 +1053,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovieDocs": {
             "auth": null,
@@ -1129,7 +1139,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_service.getOptionalMovieName": {
             "auth": null,
@@ -1214,8 +1225,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

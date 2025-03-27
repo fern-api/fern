@@ -148,6 +148,19 @@ export class PhpAttributeMapper {
             }
             case "enumString":
                 return php.codeblock("'string'");
+            case "literal":
+                {
+                    switch (type.internalType.value.internalType.type) {
+                        case "string":
+                            return php.codeblock("'string'");
+                        case "boolean":
+                            return php.codeblock("'bool'");
+                        default:
+                            assertNever(type.internalType.value.internalType);
+                    }
+                }
+                // NOTE: The linter complains if we don't have this here
+                break;
             default:
                 assertNever(type.internalType);
         }

@@ -5,6 +5,7 @@ import { Pagination } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { convertCursorPagination } from "./convertCursorPagination";
+import { convertCustomPagination } from "./convertCustomPagination";
 import { convertOffsetPagination } from "./convertOffsetPagination";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils";
 
@@ -40,6 +41,13 @@ export function convertPagination({
                 file,
                 endpointName,
                 endpointSchema,
+                paginationPropertyComponents
+            });
+        case "custom":
+            return convertCustomPagination({
+                propertyResolver,
+                file,
+                endpointName,
                 paginationPropertyComponents
             });
         default:

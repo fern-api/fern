@@ -1,4 +1,4 @@
-import { WriteablePythonFile } from "@fern-api/base-python-generator";
+import { WriteablePythonFile } from "@fern-api/python-base";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "./ObjectGenerator";

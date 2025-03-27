@@ -2,6 +2,7 @@
   "title": "brain core api",
   "description": "\nBrain Core API. 🚀\n",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -31,7 +32,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Root endpoint that returns a \"Hello World\" message.",
       "authed": false,
       "method": "GET",
@@ -276,7 +277,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the organization.",
       "authed": true,
       "method": "GET",
@@ -573,7 +574,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the organization.",
       "authed": true,
       "method": "GET",
@@ -995,7 +996,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the organization.",
       "authed": true,
       "method": "POST",
@@ -1382,7 +1383,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the organization.",
       "authed": true,
       "method": "POST",
@@ -1571,7 +1572,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org",
@@ -1686,7 +1687,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org",
@@ -1925,7 +1926,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}",
@@ -2175,7 +2176,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}",
@@ -2409,7 +2410,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/join",
@@ -2717,7 +2718,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/invite",
@@ -3079,7 +3080,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/invite",
@@ -3318,7 +3319,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/invite/{org_invite_id}",
@@ -3522,7 +3523,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/domains",
@@ -3797,7 +3798,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/domains",
@@ -4045,7 +4046,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/domains/{domain_id}",
@@ -4295,7 +4296,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/avatar",
@@ -4421,7 +4422,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the profile of the current user.",
       "authed": true,
       "method": "GET",
@@ -4559,7 +4560,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the profile of the current user.",
       "authed": true,
       "method": "POST",
@@ -4701,7 +4702,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/user/avatar",
@@ -4976,7 +4977,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project",
@@ -5269,7 +5270,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project",
@@ -5536,7 +5537,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}",
@@ -5919,7 +5920,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}",
@@ -6097,7 +6098,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/config",
@@ -6419,7 +6420,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/config",
@@ -6745,7 +6746,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/avatar",
@@ -7052,7 +7053,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the project.",
       "authed": true,
       "method": "GET",
@@ -7375,7 +7376,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the project.",
       "authed": true,
       "method": "GET",
@@ -7823,7 +7824,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the project.",
       "authed": true,
       "method": "POST",
@@ -8236,7 +8237,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the project.",
       "authed": true,
       "method": "POST",
@@ -8563,7 +8564,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection",
@@ -8920,7 +8921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection",
@@ -9272,7 +9273,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}",
@@ -9641,7 +9642,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Edit collection details",
       "authed": true,
       "method": "POST",
@@ -10002,7 +10003,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/stats",
@@ -10352,7 +10353,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/chat",
@@ -10721,7 +10722,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/query",
@@ -11002,7 +11003,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Generate and update the summary for a collection",
       "authed": true,
       "method": "POST",
@@ -11297,7 +11298,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add an embedding instance to the collection",
       "authed": true,
       "method": "POST",
@@ -11685,7 +11686,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Remove an embedding instance from the collection",
       "authed": true,
       "method": "POST",
@@ -12091,7 +12092,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the collection.",
       "authed": true,
       "method": "GET",
@@ -12440,7 +12441,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the collection.",
       "authed": true,
       "method": "GET",
@@ -12914,7 +12915,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the collection.",
       "authed": true,
       "method": "POST",
@@ -13353,7 +13354,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the collection.",
       "authed": true,
       "method": "POST",
@@ -13822,7 +13823,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document",
@@ -14235,7 +14236,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document",
@@ -14574,7 +14575,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "Deprecated",
       "method": "POST",
@@ -14948,7 +14949,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/create/status/{group_id}",
@@ -15283,7 +15284,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/query",
@@ -15575,7 +15576,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -15982,7 +15983,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -16377,7 +16378,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -16689,7 +16690,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/embeddings",
@@ -16920,7 +16921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Fetch an individual embedding record by its ID. Useful for examining the source submitted to an LLM",
       "authed": false,
       "method": "GET",
@@ -17239,7 +17240,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the document.",
       "authed": true,
       "method": "GET",
@@ -17588,7 +17589,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the document.",
       "authed": true,
       "method": "GET",
@@ -18062,7 +18063,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the document.",
       "authed": true,
       "method": "POST",
@@ -18501,7 +18502,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the document.",
       "authed": true,
       "method": "POST",
@@ -18677,7 +18678,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/chat/recent",
@@ -18937,7 +18938,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/chat/{chat_id}",
@@ -19222,7 +19223,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/chat/{chat_id}",
@@ -19500,7 +19501,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/chat/{chat_id}/config",
@@ -19795,7 +19796,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/chat/{chat_id}/config",
@@ -20076,7 +20077,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/chat",
@@ -20367,7 +20368,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/chat/{chat_id}/query",
@@ -20646,7 +20647,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the chat.",
       "authed": true,
       "method": "GET",
@@ -20943,7 +20944,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the chat.",
       "authed": true,
       "method": "GET",
@@ -21365,7 +21366,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the chat.",
       "authed": true,
       "method": "POST",
@@ -21752,7 +21753,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the chat.",
       "authed": true,
       "method": "POST",
@@ -21956,7 +21957,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/list-files",
@@ -22208,7 +22209,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch",
@@ -22609,7 +22610,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/authorize",
@@ -22854,7 +22855,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize",
@@ -23088,7 +23089,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}",
@@ -23402,7 +23403,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/runs",
@@ -23776,7 +23777,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run",
@@ -24164,7 +24165,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
@@ -24455,7 +24456,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
@@ -24637,7 +24638,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/box/callback",
@@ -24809,7 +24810,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/list-files",
@@ -25061,7 +25062,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch",
@@ -25462,7 +25463,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/authorize",
@@ -25707,7 +25708,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize",
@@ -25941,7 +25942,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}",
@@ -26255,7 +26256,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/runs",
@@ -26629,7 +26630,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run",
@@ -27017,7 +27018,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
@@ -27308,7 +27309,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
@@ -27490,7 +27491,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/confluence/callback",
@@ -27662,7 +27663,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/list-files",
@@ -27914,7 +27915,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch",
@@ -28315,7 +28316,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/authorize",
@@ -28560,7 +28561,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize",
@@ -28794,7 +28795,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}",
@@ -29108,7 +29109,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/runs",
@@ -29482,7 +29483,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run",
@@ -29870,7 +29871,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
@@ -30161,7 +30162,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
@@ -30343,7 +30344,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/dropbox/callback",
@@ -30515,7 +30516,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/list-files",
@@ -30767,7 +30768,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch",
@@ -31168,7 +31169,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/authorize",
@@ -31413,7 +31414,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize",
@@ -31647,7 +31648,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}",
@@ -31961,7 +31962,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/runs",
@@ -32335,7 +32336,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run",
@@ -32723,7 +32724,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
@@ -33014,7 +33015,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
@@ -33196,7 +33197,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/gdrive/callback",
@@ -33368,7 +33369,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/list-files",
@@ -33620,7 +33621,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch",
@@ -34021,7 +34022,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/authorize",
@@ -34266,7 +34267,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize",
@@ -34500,7 +34501,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}",
@@ -34814,7 +34815,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/runs",
@@ -35188,7 +35189,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run",
@@ -35576,7 +35577,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
@@ -35867,7 +35868,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
@@ -36049,7 +36050,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/notion/callback",
@@ -36221,7 +36222,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/list-files",
@@ -36473,7 +36474,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch",
@@ -36874,7 +36875,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/authorize",
@@ -37119,7 +37120,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize",
@@ -37353,7 +37354,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}",
@@ -37667,7 +37668,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/runs",
@@ -38041,7 +38042,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run",
@@ -38429,7 +38430,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
@@ -38720,7 +38721,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
@@ -38902,7 +38903,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/onedrive/callback",
@@ -39074,7 +39075,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/list-files",
@@ -39326,7 +39327,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch",
@@ -39727,7 +39728,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/authorize",
@@ -39972,7 +39973,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize",
@@ -40206,7 +40207,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}",
@@ -40520,7 +40521,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/runs",
@@ -40894,7 +40895,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run",
@@ -41282,7 +41283,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
@@ -41573,7 +41574,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
@@ -41755,7 +41756,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/datasource/sharepoint/callback",
@@ -41865,7 +41866,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/internal/webhook/hydra/token_hook",
@@ -42132,7 +42133,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/internal/project/{project_id}/register_oauth_client",
@@ -42289,7 +42290,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/internal/webhook/kratos/signup_check",
@@ -42469,7 +42470,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/internal/webhook/kratos/signup_commit",
@@ -42659,7 +42660,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/scrape",
@@ -42829,7 +42830,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/scrape/start",
@@ -43120,7 +43121,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}",
@@ -43433,7 +43434,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/scrape/runs",
@@ -43776,7 +43777,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose",
@@ -44043,7 +44044,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/generate",
@@ -44344,7 +44345,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/update_section",
@@ -44659,7 +44660,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/section_talking_points",
@@ -44955,7 +44956,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/topic",
@@ -45289,7 +45290,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "GET",
@@ -45740,7 +45741,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Tasks are the core of the platform and define the prompts and models used to generate responses.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -46292,7 +46293,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "GET",
@@ -46770,7 +46771,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "POST",
@@ -47304,7 +47305,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Individual Task Runs provide an audit trail for all Task executions.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -47669,8 +47670,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
               "type": "file"
             },
+            "description": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
             "exploded": false
           }
         ],
@@ -47817,7 +47820,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Run a specified Task against provided text and/or image input. The response is controlled by the `output_format` of the Task. Note that a Task must be `enabled` to be run.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -48104,7 +48107,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Lists all members that have been granted direct access to the task.",
       "authed": true,
       "method": "GET",
@@ -48453,7 +48456,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the task.",
       "authed": true,
       "method": "GET",
@@ -48927,7 +48930,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update the roles that a member holds on the task.",
       "authed": true,
       "method": "POST",
@@ -49366,7 +49369,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the task.",
       "authed": true,
       "method": "POST",
@@ -49697,7 +49700,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "GET",
@@ -50058,7 +50061,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A Task Forwarder will receive the output of a Task and forward it to the specified destination. This can be used to send data to external systems, or to trigger other actions based on the output of a Task.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -50428,7 +50431,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "GET",
@@ -50783,7 +50786,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "GenerallyAvailable",
       "method": "POST",
@@ -51143,7 +51146,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Fetch an individual Task Run.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -51572,7 +51575,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "All supported LLM providers and models. Not all models have the same functionality.",
       "authed": true,
       "availability": "GenerallyAvailable",
@@ -51771,7 +51774,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/guardrail",
@@ -51895,7 +51898,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/whoami",
@@ -51936,7 +51939,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "AsyncJobResult": {
@@ -52442,7 +52445,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -52458,7 +52462,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -52553,7 +52558,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -52569,7 +52575,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -52585,7 +52592,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -52616,7 +52624,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -52632,7 +52641,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -52648,7 +52658,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -56526,7 +56537,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -57269,7 +57281,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -57316,7 +57329,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

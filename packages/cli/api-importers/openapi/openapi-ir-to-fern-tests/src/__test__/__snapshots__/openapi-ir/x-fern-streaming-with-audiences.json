@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -97,7 +98,7 @@
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/user/{userId}",
@@ -254,7 +255,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/user/{userId}",
@@ -319,7 +320,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

@@ -287,6 +287,16 @@
               "type": "null"
             }
           ]
+        },
+        "noindex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -477,6 +487,16 @@
           ]
         },
         "ruby": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "csharp": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetLanguageConfiguration"

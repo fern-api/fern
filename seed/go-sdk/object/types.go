@@ -88,6 +88,8 @@ type Type struct {
 	Twentyone   int64            `json:"twentyone" url:"twentyone"`
 	Twentytwo   float64          `json:"twentytwo" url:"twentytwo"`
 	Twentythree string           `json:"twentythree" url:"twentythree"`
+	Twentyfour  *time.Time       `json:"twentyfour,omitempty" url:"twentyfour,omitempty"`
+	Twentyfive  *time.Time       `json:"twentyfive,omitempty" url:"twentyfive,omitempty" format:"date"`
 	eighteen    string
 
 	extraProperties map[string]interface{}
@@ -248,6 +250,20 @@ func (t *Type) GetTwentythree() string {
 	return t.Twentythree
 }
 
+func (t *Type) GetTwentyfour() *time.Time {
+	if t == nil {
+		return nil
+	}
+	return t.Twentyfour
+}
+
+func (t *Type) GetTwentyfive() *time.Time {
+	if t == nil {
+		return nil
+	}
+	return t.Twentyfive
+}
+
 func (t *Type) Eighteen() string {
 	return t.eighteen
 }
@@ -260,9 +276,11 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six      *internal.DateTime `json:"six"`
-		Seven    *internal.Date     `json:"seven"`
-		Eighteen string             `json:"eighteen"`
+		Six        *internal.DateTime `json:"six"`
+		Seven      *internal.Date     `json:"seven"`
+		Twentyfour *internal.DateTime `json:"twentyfour,omitempty"`
+		Twentyfive *internal.Date     `json:"twentyfive,omitempty"`
+		Eighteen   string             `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -272,6 +290,8 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	*t = Type(unmarshaler.embed)
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
+	t.Twentyfour = unmarshaler.Twentyfour.TimePtr()
+	t.Twentyfive = unmarshaler.Twentyfive.TimePtr()
 	if unmarshaler.Eighteen != "eighteen" {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
 	}
@@ -289,14 +309,18 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Six      *internal.DateTime `json:"six"`
-		Seven    *internal.Date     `json:"seven"`
-		Eighteen string             `json:"eighteen"`
+		Six        *internal.DateTime `json:"six"`
+		Seven      *internal.Date     `json:"seven"`
+		Twentyfour *internal.DateTime `json:"twentyfour,omitempty"`
+		Twentyfive *internal.Date     `json:"twentyfive,omitempty"`
+		Eighteen   string             `json:"eighteen"`
 	}{
-		embed:    embed(*t),
-		Six:      internal.NewDateTime(t.Six),
-		Seven:    internal.NewDate(t.Seven),
-		Eighteen: "eighteen",
+		embed:      embed(*t),
+		Six:        internal.NewDateTime(t.Six),
+		Seven:      internal.NewDate(t.Seven),
+		Twentyfour: internal.NewOptionalDateTime(t.Twentyfour),
+		Twentyfive: internal.NewOptionalDate(t.Twentyfive),
+		Eighteen:   "eighteen",
 	}
 	return json.Marshal(marshaler)
 }

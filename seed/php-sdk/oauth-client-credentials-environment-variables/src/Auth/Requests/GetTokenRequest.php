@@ -20,13 +20,13 @@ class GetTokenRequest extends JsonSerializableType
     public string $clientSecret;
 
     /**
-     * @var string $audience
+     * @var 'https://api.example.com' $audience
      */
     #[JsonProperty('audience')]
     public string $audience;
 
     /**
-     * @var string $grantType
+     * @var 'client_credentials' $grantType
      */
     #[JsonProperty('grant_type')]
     public string $grantType;
@@ -41,8 +41,8 @@ class GetTokenRequest extends JsonSerializableType
      * @param array{
      *   clientId: string,
      *   clientSecret: string,
-     *   audience: string,
-     *   grantType: string,
+     *   audience: 'https://api.example.com',
+     *   grantType: 'client_credentials',
      *   scope?: ?string,
      * } $values
      */

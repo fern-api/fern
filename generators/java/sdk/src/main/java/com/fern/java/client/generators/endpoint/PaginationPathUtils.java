@@ -338,6 +338,11 @@ public class PaginationPathUtils {
         }
 
         @Override
+        public Optional<EnrichedCursorPathItem> visitNullable(TypeReference typeReference) {
+            return typeReference.visit(new TypeReferenceEnricher(name, true));
+        }
+
+        @Override
         public Optional<EnrichedCursorPathItem> visitOptional(TypeReference typeReference) {
             return typeReference.visit(new TypeReferenceEnricher(name, true));
         }
@@ -482,6 +487,11 @@ public class PaginationPathUtils {
         }
 
         @Override
+        public Optional<TypeDeclaration> visitNullable(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
         public Optional<TypeDeclaration> visitOptional(TypeReference typeReference) {
             return typeReference.visit(this);
         }
@@ -541,6 +551,11 @@ public class PaginationPathUtils {
         @Override
         public Optional<TypeName> visitMap(MapType mapType) {
             return Optional.empty();
+        }
+
+        @Override
+        public Optional<TypeName> visitNullable(TypeReference typeReference) {
+            return typeReference.visit(new UnboxedTypeNameGetter(generatorContext, typeReference));
         }
 
         @Override

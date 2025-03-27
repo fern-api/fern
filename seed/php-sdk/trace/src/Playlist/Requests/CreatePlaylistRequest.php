@@ -26,8 +26,8 @@ class CreatePlaylistRequest extends JsonSerializableType
     /**
      * @param array{
      *   datetime: DateTime,
-     *   optionalDatetime?: ?DateTime,
      *   body: PlaylistCreateRequest,
+     *   optionalDatetime?: ?DateTime,
      * } $values
      */
     public function __construct(

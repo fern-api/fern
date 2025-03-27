@@ -8,10 +8,10 @@ use Seed\Core\Json\JsonProperty;
 class WorkspaceRunDetails extends JsonSerializableType
 {
     /**
-     * @var mixed $exceptionV2
+     * @var ?ExceptionV2 $exceptionV2
      */
     #[JsonProperty('exceptionV2')]
-    public mixed $exceptionV2;
+    public ?ExceptionV2 $exceptionV2;
 
     /**
      * @var ?ExceptionInfo $exception
@@ -27,9 +27,9 @@ class WorkspaceRunDetails extends JsonSerializableType
 
     /**
      * @param array{
-     *   exceptionV2?: mixed,
-     *   exception?: ?ExceptionInfo,
      *   stdout: string,
+     *   exceptionV2?: ?ExceptionV2,
+     *   exception?: ?ExceptionInfo,
      * } $values
      */
     public function __construct(

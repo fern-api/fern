@@ -22,8 +22,8 @@ class SinglyLinkedListValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   head?: ?string,
      *   nodes: array<string, SinglyLinkedListNodeValue>,
+     *   head?: ?string,
      * } $values
      */
     public function __construct(

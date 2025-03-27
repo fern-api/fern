@@ -6,7 +6,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class SetNumWarmInstancesTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -19,8 +19,7 @@ public class SetNumWarmInstancesTest : BaseMockServerTest
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1, RequestOptions)
+            async () => await Client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1)
         );
     }
 }

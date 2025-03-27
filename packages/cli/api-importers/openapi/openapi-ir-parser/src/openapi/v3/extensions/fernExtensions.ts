@@ -35,6 +35,8 @@ export const FERN_TYPE_EXTENSIONS: Plugin = {
 };
 
 export const FernOpenAPIExtension = {
+    SOURCE: TypedExtensionId.of<string>("source"),
+
     SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
     SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
 
@@ -136,7 +138,7 @@ export const FernOpenAPIExtension = {
 
     /**
      * Used to specify if an endpoint should be generated
-     * as a paginated endpoint. Both cursor and offset pagination
+     * as a paginated endpoint. Both cursor, offset pagination
      * examples are shown below.
      *
      * Example usage:

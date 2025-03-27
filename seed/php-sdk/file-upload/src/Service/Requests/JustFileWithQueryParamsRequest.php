@@ -39,12 +39,12 @@ class JustFileWithQueryParamsRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   maybeString?: ?string,
      *   integer: int,
-     *   maybeInteger?: ?int,
      *   listOfStrings: array<string>,
-     *   optionalListOfStrings?: ?array<string>,
      *   file: File,
+     *   maybeString?: ?string,
+     *   maybeInteger?: ?int,
+     *   optionalListOfStrings?: ?array<string>,
      * } $values
      */
     public function __construct(

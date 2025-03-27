@@ -40,9 +40,9 @@ class RecordingResponseNotification extends JsonSerializableType
     /**
      * @param array{
      *   submissionId: string,
-     *   testCaseId?: ?string,
      *   lineNumber: int,
      *   lightweightStackInfo: LightweightStackframeInformation,
+     *   testCaseId?: ?string,
      *   tracedFile?: ?TracedFile,
      * } $values
      */

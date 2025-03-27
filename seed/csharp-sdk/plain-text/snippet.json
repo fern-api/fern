@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_service.getText"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
             }
         }

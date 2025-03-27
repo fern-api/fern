@@ -8,13 +8,13 @@ use Seed\Core\Json\JsonProperty;
 class CreateUserRequest extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var 'CreateUserRequest' $type
      */
     #[JsonProperty('_type')]
     public string $type;
 
     /**
-     * @var string $version
+     * @var 'v1' $version
      */
     #[JsonProperty('_version')]
     public string $version;
@@ -27,8 +27,8 @@ class CreateUserRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: string,
-     *   version: string,
+     *   type: 'CreateUserRequest',
+     *   version: 'v1',
      *   name: string,
      * } $values
      */

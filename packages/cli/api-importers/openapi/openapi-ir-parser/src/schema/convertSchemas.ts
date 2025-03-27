@@ -22,6 +22,7 @@ import { getExamples } from "../openapi/v3/extensions/getExamples";
 import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
+import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
 import { getValueIfBoolean } from "../utils/getValue";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
@@ -52,12 +53,13 @@ export function convertSchema(
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
-    source: Source,
+    fileSource: Source,
     namespace: string | undefined,
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set(),
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
+    const source = getSourceExtension(schema) ?? fileSource;
     const encoding = getEncoding({ schema, logger: context.logger });
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
@@ -248,7 +250,10 @@ export function convertSchemaObject(
     }
 
     // enums
-    if (schema.enum != null && (schema.type === "string" || schema.type == null)) {
+    if (
+        schema.enum != null &&
+        (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
+    ) {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.

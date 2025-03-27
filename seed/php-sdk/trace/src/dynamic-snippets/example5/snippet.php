@@ -6,7 +6,10 @@ use Seed\SeedClient;
 use Seed\Admin\Requests\StoreTracedTestCaseRequest;
 use Seed\Submission\Types\TestCaseResultWithStdout;
 use Seed\Submission\Types\TestCaseResult;
+use Seed\Commons\Types\VariableValue;
+use Seed\Submission\Types\ActualResult;
 use Seed\Submission\Types\TraceResponse;
+use Seed\Commons\Types\DebugVariableValue;
 use Seed\Submission\Types\ExpressionLocation;
 use Seed\Submission\Types\StackInformation;
 use Seed\Submission\Types\StackFrame;
@@ -24,8 +27,8 @@ $client->admin->storeTracedTestCase(
     new StoreTracedTestCaseRequest([
         'result' => new TestCaseResultWithStdout([
             'result' => new TestCaseResult([
-                'expectedResult' => 'todo',
-                'actualResult' => 'todo',
+                'expectedResult' => VariableValue::integerValue(),
+                'actualResult' => ActualResult::value(),
                 'passed' => true,
             ]),
             'stdout' => 'stdout',
@@ -34,7 +37,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => 'todo',
+                'returnValue' => DebugVariableValue::integerValue(),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -47,12 +50,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                         ],
@@ -63,7 +66,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => 'todo',
+                'returnValue' => DebugVariableValue::integerValue(),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -76,12 +79,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => 'todo',
+                                    'variables' => DebugVariableValue::integerValue(),
                                 ],
                             ]),
                         ],

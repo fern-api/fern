@@ -4,6 +4,7 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Types\DebugVariableValue;
 
 class TraceResponse extends JsonSerializableType
 {
@@ -20,10 +21,10 @@ class TraceResponse extends JsonSerializableType
     public int $lineNumber;
 
     /**
-     * @var mixed $returnValue
+     * @var ?DebugVariableValue $returnValue
      */
     #[JsonProperty('returnValue')]
-    public mixed $returnValue;
+    public ?DebugVariableValue $returnValue;
 
     /**
      * @var ?ExpressionLocation $expressionLocation
@@ -47,9 +48,9 @@ class TraceResponse extends JsonSerializableType
      * @param array{
      *   submissionId: string,
      *   lineNumber: int,
-     *   returnValue?: mixed,
-     *   expressionLocation?: ?ExpressionLocation,
      *   stack: StackInformation,
+     *   returnValue?: ?DebugVariableValue,
+     *   expressionLocation?: ?ExpressionLocation,
      *   stdout?: ?string,
      * } $values
      */

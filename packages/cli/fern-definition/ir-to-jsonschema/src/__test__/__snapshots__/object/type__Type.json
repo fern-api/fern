@@ -123,6 +123,28 @@
     "twentythree": {
       "type": "string",
       "pattern": "^-?[0-9]+$"
+    },
+    "twentyfour": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "twentyfive": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

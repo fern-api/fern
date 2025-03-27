@@ -16,15 +16,15 @@ class TestSubmissionUpdate extends JsonSerializableType
     public DateTime $updateTime;
 
     /**
-     * @var mixed $updateInfo
+     * @var TestSubmissionUpdateInfo $updateInfo
      */
     #[JsonProperty('updateInfo')]
-    public mixed $updateInfo;
+    public TestSubmissionUpdateInfo $updateInfo;
 
     /**
      * @param array{
      *   updateTime: DateTime,
-     *   updateInfo: mixed,
+     *   updateInfo: TestSubmissionUpdateInfo,
      * } $values
      */
     public function __construct(

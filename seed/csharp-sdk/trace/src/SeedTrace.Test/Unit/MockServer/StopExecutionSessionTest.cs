@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class StopExecutionSessionTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -18,8 +18,7 @@ public class StopExecutionSessionTest : BaseMockServerTest
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Submission.StopExecutionSessionAsync("sessionId", RequestOptions)
+            async () => await Client.Submission.StopExecutionSessionAsync("sessionId")
         );
     }
 }

@@ -69,6 +69,10 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
+    public addMethods(methods: Method[]): void {
+        this.methods.push(...methods);
+    }
+
     public addTrait(traitClassReference: ClassReference): void {
         this.traits.push(traitClassReference);
     }

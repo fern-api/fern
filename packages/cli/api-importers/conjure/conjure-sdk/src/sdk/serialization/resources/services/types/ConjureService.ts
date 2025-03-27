@@ -5,7 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernConjure from "../../../../api/index";
 import * as core from "../../../../core";
-import { ConjureEndpoint } from "./ConjureEndpoint";
+import { ConjureAuthDefinition } from "./ConjureAuthDefinition";
+import { ConjureEndpointDefinition } from "./ConjureEndpointDefinition";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const ConjureService: core.serialization.ObjectSchema<
@@ -16,7 +17,8 @@ export const ConjureService: core.serialization.ObjectSchema<
         name: core.serialization.string().optional(),
         package: core.serialization.string().optional(),
         basePath: core.serialization.property("base-path", core.serialization.string().optional()),
-        endpoints: core.serialization.record(core.serialization.string(), ConjureEndpoint).optional(),
+        defaultAuth: core.serialization.property("default-auth", ConjureAuthDefinition.optional()),
+        endpoints: core.serialization.record(core.serialization.string(), ConjureEndpointDefinition).optional(),
     })
     .extend(WithDocs);
 
@@ -25,6 +27,7 @@ export declare namespace ConjureService {
         name?: string | null;
         package?: string | null;
         "base-path"?: string | null;
-        endpoints?: Record<string, ConjureEndpoint.Raw> | null;
+        "default-auth"?: ConjureAuthDefinition.Raw | null;
+        endpoints?: Record<string, ConjureEndpointDefinition.Raw> | null;
     }
 }

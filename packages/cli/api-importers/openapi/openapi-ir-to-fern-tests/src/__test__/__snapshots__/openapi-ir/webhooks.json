@@ -1,6 +1,7 @@
 {
   "title": "Webhooks",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -77,7 +78,7 @@
       }
     }
   ],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Pet": {

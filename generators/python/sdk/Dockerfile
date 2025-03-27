@@ -1,3 +1,12 @@
+# Stage 1: Build Node CLI
+FROM node:20.18-alpine3.20 AS node
+
+RUN apk --no-cache add git zip
+RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+
+COPY ./generators/python-v2/sdk/dist/cli.cjs /dist/cli.cjs
+
+# Stage 2: Final Python image
 FROM python:3.9.14
 
 # Install node and npm.
@@ -12,6 +21,15 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 
+# Install ruff.
+RUN pip install ruff
+RUN ruff --version
+
+# Copy Node CLI from first stage and rename it /bin/go-v2
+COPY --from=node /dist/cli.cjs /bin/python-v2
+RUN chmod +x /bin/python-v2
+
+# Build the Python SDK generator.
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
@@ -19,18 +37,18 @@ ENV HTTPX_LOG_LEVEL=trace
 RUN pip3 install poetry==1.8.5
 RUN poetry config virtualenvs.create false
 
-COPY pyproject.toml ./pyproject.toml
-COPY poetry.lock ./poetry.lock
-COPY ./src/__init__.py ./src/__init__.py
-COPY ./src/fern_python/__init__.py ./src/fern_python/__init__.py
+COPY ./generators/python/pyproject.toml ./pyproject.toml
+COPY ./generators/python/poetry.lock ./poetry.lock
+COPY ./generators/python/src/__init__.py ./src/__init__.py
+COPY ./generators/python/src/fern_python/__init__.py ./src/fern_python/__init__.py
 
 RUN poetry install
 
-COPY ./core_utilities/sdk /assets/core_utilities
-COPY ./core_utilities/shared /assets/core_utilities
-COPY ./sdk/features.yml /assets/features.yml
-COPY ./tests /assets/tests
-COPY ./src ./src
+COPY ./generators/python/core_utilities/sdk /assets/core_utilities
+COPY ./generators/python/core_utilities/shared /assets/core_utilities
+COPY ./generators/python/sdk/features.yml /assets/features.yml
+COPY ./generators/python/tests /assets/tests
+COPY ./generators/python/src ./src
 
 RUN poetry install
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]

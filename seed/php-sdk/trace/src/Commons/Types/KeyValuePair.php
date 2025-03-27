@@ -8,21 +8,21 @@ use Seed\Core\Json\JsonProperty;
 class KeyValuePair extends JsonSerializableType
 {
     /**
-     * @var mixed $key
+     * @var VariableValue $key
      */
     #[JsonProperty('key')]
-    public mixed $key;
+    public VariableValue $key;
 
     /**
-     * @var mixed $value
+     * @var VariableValue $value
      */
     #[JsonProperty('value')]
-    public mixed $value;
+    public VariableValue $value;
 
     /**
      * @param array{
-     *   key: mixed,
-     *   value: mixed,
+     *   key: VariableValue,
+     *   value: VariableValue,
      * } $values
      */
     public function __construct(

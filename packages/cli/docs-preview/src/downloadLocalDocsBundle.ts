@@ -1,10 +1,7 @@
 import { fetcher } from "@fern-typescript/fetcher";
 import decompress from "decompress";
-import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
-import path from "path";
-import { Readable } from "readable-stream";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -109,17 +106,26 @@ export async function downloadBundle({
     const dir = await tmp.dir({ prefix: "fern" });
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path);
 
-    logger.debug(`Downloading docs preview bundle from ${path.join(bucketUrl, key)}`);
+    const docsBundleUrl = new URL(key, bucketUrl).href;
+    logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
     // download docs bundle
     const docsBundleZipResponse = await fetcher<unknown>({
-        url: `${path.join(bucketUrl, key)}`,
+        url: docsBundleUrl,
         method: "GET",
         responseType: "arrayBuffer",
         duplex: "half"
     });
 
     if (!docsBundleZipResponse.ok) {
-        logger.error("Failed to download docs preview bundle.");
+        let errorMessage: string;
+        if (docsBundleZipResponse.error.reason === "status-code") {
+            errorMessage = `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.error.statusCode}`;
+        } else if (docsBundleZipResponse.error.reason === "unknown") {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.errorMessage}`;
+        } else {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.reason}`;
+        }
+        logger.error(errorMessage);
         return {
             type: "failure"
         };

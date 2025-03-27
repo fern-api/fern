@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -15,8 +15,7 @@ public partial class ContentTypeClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -35,17 +34,16 @@ public partial class ContentTypeClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async Task PostJsonPatchContentTypeAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task PostJsonPatchContentTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -61,16 +59,17 @@ public partial class ContentTypeClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -89,17 +88,16 @@ public partial class ContentTypeClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async Task PostJsonPatchContentWithCharsetTypeAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task PostJsonPatchContentWithCharsetTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -115,11 +113,13 @@ public partial class ContentTypeClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

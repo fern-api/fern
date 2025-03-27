@@ -18,6 +18,7 @@ export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     "respect-nullable-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
     "inline-path-parameters": core.serialization.boolean().optional(),
+    "idiomatic-request-names": core.serialization.boolean().optional(),
 });
 
 export declare namespace ApiDefinitionSettingsSchema {
@@ -28,5 +29,6 @@ export declare namespace ApiDefinitionSettingsSchema {
         "respect-nullable-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
+        "idiomatic-request-names"?: boolean | null;
     }
 }

@@ -47,4 +47,9 @@ class UnionWithTime_Datetime(UniversalBaseModel):
             smart_union = True
 
 
+"""
+from seed.types import UnionWithTime_Value
+
+UnionWithTime_Value(value=5)
+"""
 UnionWithTime = typing.Union[UnionWithTime_Value, UnionWithTime_Date, UnionWithTime_Datetime]

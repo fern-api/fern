@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedNullableClient } from \"@fern/nullable\";\n\nconst client = new SeedNullableClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullable.createUser({\n    username: \"username\",\n    tags: [\"tags\", \"tags\"],\n    metadata: {\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        avatar: \"avatar\",\n        activated: true\n    },\n    avatar: \"avatar\"\n});\n"
+                "client": "import { SeedNullableClient } from \"@fern/nullable\";\n\nconst client = new SeedNullableClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullable.createUser({\n    username: \"username\",\n    tags: [\"tags\", \"tags\"],\n    metadata: {\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        avatar: \"avatar\",\n        activated: true,\n        status: {\n            type: \"active\"\n        }\n    },\n    avatar: \"avatar\"\n});\n"
             }
         },
         {

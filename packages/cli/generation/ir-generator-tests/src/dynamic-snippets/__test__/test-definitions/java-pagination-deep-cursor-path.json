@@ -99,7 +99,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:C": {
             "type": "object",
@@ -199,7 +200,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:B": {
             "type": "object",
@@ -296,7 +298,8 @@
                         "value": "type_deep-cursor-path:C"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:A": {
             "type": "object",
@@ -396,7 +399,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:Response": {
             "type": "object",
@@ -527,7 +531,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:IndirectionRequired": {
             "type": "object",
@@ -658,7 +663,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:MainRequired": {
             "type": "object",
@@ -755,7 +761,8 @@
                         "value": "type_deep-cursor-path:IndirectionRequired"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:InlineD": {
             "type": "object",
@@ -855,7 +862,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:InlineC": {
             "type": "object",
@@ -955,7 +963,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:InlineB": {
             "type": "object",
@@ -1052,7 +1061,8 @@
                         "value": "type_deep-cursor-path:InlineC"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_deep-cursor-path:InlineA": {
             "type": "object",
@@ -1152,7 +1162,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -1240,7 +1251,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_deep-cursor-path.do-thing-required": {
             "auth": null,
@@ -1325,7 +1337,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_deep-cursor-path.do-thing-inline": {
             "auth": null,
@@ -1410,8 +1423,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

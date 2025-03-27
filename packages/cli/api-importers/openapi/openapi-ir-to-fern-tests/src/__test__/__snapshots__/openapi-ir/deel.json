@@ -10,6 +10,7 @@
       "description": "Demo server"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "EOR": {
@@ -281,7 +282,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/hris/direct-employees",
@@ -794,7 +795,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
       "authed": true,
       "method": "GET",
@@ -1226,7 +1227,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
       "authed": true,
       "method": "POST",
@@ -1719,7 +1720,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/contracts/time-based",
@@ -2612,7 +2613,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/contracts/task-based",
@@ -3494,7 +3495,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/contracts/milestone-based",
@@ -4376,7 +4377,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/contracts/fixed-rate",
@@ -5483,7 +5484,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of contracts.",
       "authed": true,
       "method": "GET",
@@ -5886,7 +5887,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new Deel contract.",
       "authed": true,
       "method": "POST",
@@ -6778,7 +6779,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a single contract.",
       "authed": true,
       "method": "GET",
@@ -7582,7 +7583,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
       "authed": true,
       "method": "PATCH",
@@ -7686,8 +7687,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Upload the file you want to attach to this entry.",
               "type": "file"
             },
+            "description": "Upload the file you want to attach to this entry.",
             "exploded": false
           }
         ],
@@ -7893,7 +7896,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
       "authed": true,
       "method": "POST",
@@ -7991,8 +7994,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "Upload the file you want to attach to this entry.",
               "type": "file"
             },
+            "description": "Upload the file you want to attach to this entry.",
             "exploded": false
           }
         ],
@@ -8198,7 +8203,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Overwrite the file currently attached to contract document.",
       "authed": true,
       "method": "PUT",
@@ -8487,7 +8492,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
       "authed": true,
       "method": "GET",
@@ -8742,7 +8747,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of tasks for a given contract.",
       "authed": true,
       "method": "GET",
@@ -9088,7 +9093,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new task for the contractor.",
       "authed": true,
       "method": "POST",
@@ -9337,7 +9342,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Returns an array of alternate email objects",
       "authed": true,
       "method": "GET",
@@ -9638,7 +9643,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review multiple tasks to approve or decline the submitted work.",
       "authed": true,
       "method": "POST",
@@ -10033,7 +10038,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review a single task to approve or decline the submitted work.",
       "authed": true,
       "method": "POST",
@@ -10422,7 +10427,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete task from the contract.",
       "authed": true,
       "method": "DELETE",
@@ -10726,7 +10731,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Amend payment details of a contract.",
       "authed": true,
       "method": "POST",
@@ -11029,7 +11034,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Terminate an active contract.",
       "authed": true,
       "method": "POST",
@@ -11339,7 +11344,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Sign a contract as a client.",
       "authed": true,
       "method": "POST",
@@ -11581,7 +11586,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Archive a terminated, cancelled or completed contract.",
       "authed": true,
       "method": "PATCH",
@@ -11862,7 +11867,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Invite a worker to sign the contract. Worker will be notified via email.",
       "authed": true,
       "method": "POST",
@@ -12161,7 +12166,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Remove invite in order to re-invite a worker to sign the contract.",
       "authed": true,
       "method": "DELETE",
@@ -12586,7 +12591,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of timesheets found for a contract.",
       "authed": true,
       "method": "GET",
@@ -13082,7 +13087,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of milestones found for a contract.",
       "authed": true,
       "method": "GET",
@@ -13461,7 +13466,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add a new milestone to contract.",
       "authed": true,
       "method": "POST",
@@ -13783,7 +13788,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a single milestone.",
       "authed": true,
       "method": "GET",
@@ -14164,7 +14169,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a single milestone from a contract.",
       "authed": true,
       "method": "DELETE",
@@ -14484,7 +14489,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review a milestone to approve or decline submitted work.",
       "authed": true,
       "method": "POST",
@@ -14802,7 +14807,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review a batch of milestones to approve or reject submitted work.",
       "authed": true,
       "method": "POST",
@@ -15103,7 +15108,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of off-cycle payments for the given contract id.",
       "authed": true,
       "method": "GET",
@@ -15503,7 +15508,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
       "authed": true,
       "method": "POST",
@@ -15818,7 +15823,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a single off-cycle payment.",
       "authed": true,
       "method": "GET",
@@ -16148,7 +16153,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
       "authed": true,
       "method": "POST",
@@ -16533,7 +16538,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Remove Deel Premium from an existing contract.",
       "authed": true,
       "method": "DELETE",
@@ -16842,7 +16847,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Calculate the final payment due to the contractor when ending the contract.",
       "authed": true,
       "method": "GET",
@@ -17101,7 +17106,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
       "authed": true,
       "method": "POST",
@@ -17391,7 +17396,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the list of time off requests by an employee.",
       "authed": true,
       "method": "GET",
@@ -17905,7 +17910,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Add a time off request for a full-time employee.",
       "authed": true,
       "method": "POST",
@@ -18598,7 +18603,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Edit a time off request for a full-time employee.",
       "authed": true,
       "method": "PUT",
@@ -19282,7 +19287,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Cancel a time off request for an employee.",
       "authed": true,
       "method": "DELETE",
@@ -19720,7 +19725,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
       "method": "GET",
@@ -20206,7 +20211,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Submit work for a contractor.",
       "authed": true,
       "method": "POST",
@@ -20535,7 +20540,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a single timesheet entry by Id.",
       "authed": true,
       "method": "GET",
@@ -21085,7 +21090,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a single timesheet entry.",
       "authed": true,
       "method": "DELETE",
@@ -21378,7 +21383,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update a single timesheet entry.",
       "authed": true,
       "method": "PATCH",
@@ -21695,7 +21700,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review a timesheet to approve or decline submitted work.",
       "authed": true,
       "method": "POST",
@@ -21985,7 +21990,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review a batch of timesheets to approve or reject submitted work.",
       "authed": true,
       "method": "POST",
@@ -22469,7 +22474,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of invoice details for the given contract id.",
       "authed": true,
       "method": "GET",
@@ -23192,7 +23197,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
       "method": "GET",
@@ -23708,7 +23713,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
       "authed": true,
       "method": "POST",
@@ -24056,7 +24061,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update an existing invoice adjustment.",
       "authed": true,
       "method": "DELETE",
@@ -24349,7 +24354,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
       "authed": true,
       "method": "PATCH",
@@ -24659,7 +24664,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review an invoice adjustment to approve or decline it.",
       "authed": true,
       "method": "POST",
@@ -24949,7 +24954,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Review multiple invoice adjustments to approve or decline a batch.",
       "authed": true,
       "method": "POST",
@@ -25221,7 +25226,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of legal entities in your account.",
       "authed": true,
       "method": "GET",
@@ -25490,7 +25495,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of countries supported by Deel.",
       "authed": true,
       "method": "GET",
@@ -25793,7 +25798,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the list of currencies used by Deel.",
       "authed": true,
       "method": "GET",
@@ -26095,7 +26100,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of pre-defined job titles in Deel platform.",
       "authed": true,
       "method": "GET",
@@ -26388,7 +26393,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
       "authed": true,
       "method": "GET",
@@ -26654,7 +26659,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
       "authed": true,
       "method": "GET",
@@ -26914,7 +26919,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
       "authed": true,
       "method": "GET",
@@ -27172,7 +27177,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of teams in your organization.",
       "authed": true,
       "method": "GET",
@@ -27425,7 +27430,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
       "authed": true,
       "method": "POST",
@@ -27733,7 +27738,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "This end-point returns a list of your agreements with Deel.",
       "authed": true,
       "method": "GET",
@@ -28054,7 +28059,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of contract templates in your organization.",
       "authed": true,
       "method": "GET",
@@ -28255,7 +28260,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of time off entitlements for a full-time employee.",
       "authed": true,
       "method": "GET",
@@ -28552,7 +28557,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List of time offs for all employees in your organization.",
       "authed": false,
       "method": "GET",
@@ -29132,7 +29137,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Approve or decline an employee's time off request.",
       "authed": true,
       "method": "PATCH",
@@ -29441,7 +29446,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of paid invoices for your workforce.",
       "authed": true,
       "method": "GET",
@@ -29786,7 +29791,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get link to download the invoice PDF.",
       "authed": true,
       "method": "GET",
@@ -30074,7 +30079,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a link to download the Deel billing invoice PDF.",
       "authed": true,
       "method": "GET",
@@ -30401,7 +30406,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of payments made to Deel.",
       "authed": true,
       "method": "GET",
@@ -30775,7 +30780,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/people",
@@ -31317,7 +31322,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/people/me",
@@ -31659,7 +31664,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a list of webhook subscriptions.",
       "authed": true,
       "method": "GET",
@@ -32001,7 +32006,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new webhooks subscription.",
       "authed": true,
       "method": "POST",
@@ -32370,7 +32375,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Retrieve a single webhook subscription.",
       "authed": true,
       "method": "GET",
@@ -32696,7 +32701,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete a webhook subscription.",
       "authed": true,
       "method": "DELETE",
@@ -32968,7 +32973,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Edit a webhook subscription.",
       "authed": true,
       "method": "PATCH",
@@ -33341,7 +33346,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
       "authed": true,
       "method": "GET",
@@ -33587,7 +33592,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "PaymentStatementInitiatedWebhook": {
@@ -33674,7 +33679,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -33725,7 +33731,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34114,7 +34121,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34369,7 +34377,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34400,7 +34409,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34416,7 +34426,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34490,7 +34501,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34506,7 +34518,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34522,7 +34535,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34538,7 +34552,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34554,7 +34569,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34570,7 +34586,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34614,7 +34631,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34630,7 +34648,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34651,7 +34670,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34672,7 +34692,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34728,7 +34749,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34758,7 +34780,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34788,7 +34811,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34818,7 +34842,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34848,7 +34873,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34878,7 +34904,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34913,7 +34940,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -34998,7 +35026,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35014,7 +35043,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35030,7 +35060,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35060,7 +35091,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35081,7 +35113,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35121,7 +35154,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35137,7 +35171,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35181,7 +35216,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35197,7 +35233,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35213,7 +35250,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35229,7 +35267,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35245,7 +35284,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35261,7 +35301,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35282,7 +35323,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35368,7 +35410,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -35428,7 +35471,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35444,7 +35488,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35460,7 +35505,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -35523,7 +35569,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35539,7 +35586,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35555,7 +35603,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35719,7 +35768,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35740,7 +35790,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35761,7 +35812,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -35841,7 +35893,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35862,7 +35915,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35930,7 +35984,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35951,7 +36006,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -35972,7 +36028,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -36061,7 +36118,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36224,7 +36282,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36245,7 +36304,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -36275,7 +36335,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36307,7 +36368,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -36352,7 +36414,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36383,7 +36446,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36399,7 +36463,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -36429,7 +36494,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36501,7 +36567,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36653,7 +36720,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36710,7 +36778,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -36766,7 +36835,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36787,7 +36857,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36808,7 +36879,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36829,7 +36901,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36870,7 +36943,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36912,7 +36986,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -36933,7 +37008,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37114,7 +37190,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37194,7 +37271,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37224,7 +37302,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37254,7 +37333,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37284,7 +37364,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37425,7 +37506,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37480,7 +37562,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -37616,7 +37699,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37715,7 +37799,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37736,7 +37821,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37977,7 +38063,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37998,7 +38085,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38014,7 +38102,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38073,7 +38162,8 @@
                         "type": "optional"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -38243,7 +38333,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38287,7 +38378,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38338,7 +38430,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38354,7 +38447,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38388,7 +38482,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38404,7 +38499,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38463,7 +38559,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38507,7 +38604,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38537,7 +38635,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38623,7 +38722,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38653,7 +38753,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38942,7 +39043,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39014,7 +39116,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39030,7 +39133,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39060,7 +39164,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39147,7 +39252,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39234,7 +39340,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39250,7 +39357,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39294,7 +39402,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39315,7 +39424,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39346,7 +39456,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39376,7 +39487,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39392,7 +39504,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39508,7 +39621,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39732,7 +39846,8 @@
                     "type": "reference"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -39775,7 +39890,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -39796,7 +39912,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -39892,7 +40009,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39954,7 +40072,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40054,7 +40173,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40124,7 +40244,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40212,7 +40333,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40285,7 +40407,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40315,7 +40438,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40345,7 +40469,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40426,7 +40551,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40456,7 +40582,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40500,7 +40627,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40516,7 +40644,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40537,7 +40666,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40725,7 +40855,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40870,7 +41001,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41081,7 +41213,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41102,7 +41235,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -41274,7 +41408,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41485,7 +41620,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41506,7 +41642,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -41537,7 +41674,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41553,7 +41691,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -41597,7 +41736,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41618,7 +41758,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41634,7 +41775,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41650,7 +41792,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41680,7 +41823,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41696,7 +41840,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41747,7 +41892,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41812,7 +41958,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42036,7 +42183,8 @@
                     "type": "reference"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -42072,7 +42220,8 @@
                     "type": "reference"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -42088,7 +42237,8 @@
                     "type": "reference"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -42181,7 +42331,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42243,7 +42394,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42343,7 +42495,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42420,7 +42573,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42436,7 +42590,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42531,7 +42686,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42580,7 +42736,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42601,7 +42758,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42622,7 +42780,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42643,7 +42802,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42674,7 +42834,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42753,7 +42914,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42834,7 +42996,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42900,7 +43063,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -43052,7 +43216,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -43526,7 +43691,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -43570,7 +43736,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -43738,7 +43905,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -43782,7 +43950,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44223,7 +44392,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44349,7 +44519,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45090,7 +45261,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45120,7 +45292,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45254,7 +45427,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45506,7 +45680,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45536,7 +45711,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45651,7 +45827,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45746,7 +45923,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45776,7 +45954,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45806,7 +45985,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45836,7 +46016,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45904,7 +46085,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45920,7 +46102,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45936,7 +46119,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45986,7 +46170,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -46007,7 +46192,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -46050,7 +46236,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -46071,7 +46258,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -46156,7 +46344,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -46177,7 +46366,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -46357,7 +46547,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46378,7 +46569,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46399,7 +46591,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46420,7 +46613,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -46456,7 +46650,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -46487,7 +46682,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -46531,7 +46727,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46552,7 +46749,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46568,7 +46766,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46600,7 +46799,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46616,7 +46816,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46648,7 +46849,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46950,7 +47152,8 @@
                     "type": "reference"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -47035,7 +47238,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47065,7 +47269,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47095,7 +47300,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47125,7 +47331,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47201,7 +47408,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47244,7 +47452,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47306,7 +47515,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47338,7 +47548,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47359,7 +47570,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47455,7 +47667,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47523,7 +47736,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47544,7 +47758,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47595,7 +47810,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47616,7 +47832,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47911,7 +48128,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47987,7 +48205,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48017,7 +48236,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48047,7 +48267,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48077,7 +48298,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48107,7 +48329,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48137,7 +48360,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48227,7 +48451,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -48248,7 +48473,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -48269,7 +48495,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -49052,7 +49279,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49087,7 +49315,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -49156,7 +49385,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49247,7 +49477,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49406,7 +49637,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49436,7 +49668,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49466,7 +49699,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49680,7 +49914,8 @@
                                 "type": "optional"
                               },
                               "audiences": [],
-                              "readonly": false
+                              "readonly": false,
+                              "writeonly": false
                             }
                           ],
                           "allOfPropertyConflicts": [],
@@ -49743,7 +49978,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -49844,7 +50080,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -49865,7 +50102,8 @@
                     "type": "optional"
                   },
                   "audiences": [],
-                  "readonly": false
+                  "readonly": false,
+                  "writeonly": false
                 },
                 {
                   "conflict": {},
@@ -50452,7 +50690,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50473,7 +50712,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50494,7 +50734,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50566,7 +50807,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -50587,7 +50829,8 @@
                       "type": "optional"
                     },
                     "audiences": [],
-                    "readonly": false
+                    "readonly": false,
+                    "writeonly": false
                   },
                   {
                     "conflict": {},
@@ -51112,7 +51355,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -51864,7 +52108,8 @@
                         "type": "optional"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -53825,7 +54070,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -53906,7 +54152,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -53949,7 +54196,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55260,7 +55508,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55438,7 +55687,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55487,7 +55737,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55625,7 +55876,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55671,7 +55923,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55687,7 +55940,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55703,7 +55957,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55783,7 +56038,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55890,7 +56146,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -56507,7 +56764,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56632,7 +56890,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -56662,7 +56921,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -56799,7 +57059,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56815,7 +57076,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56831,7 +57093,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56847,7 +57110,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56863,7 +57127,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56927,7 +57192,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56948,7 +57214,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56969,7 +57236,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56990,7 +57258,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57583,7 +57852,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57623,7 +57893,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -57717,7 +57988,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57733,7 +58005,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57787,7 +58060,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57963,7 +58237,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -58187,7 +58462,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58269,7 +58545,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58511,7 +58788,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58942,7 +59220,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59024,7 +59303,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59682,7 +59962,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59703,7 +59984,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

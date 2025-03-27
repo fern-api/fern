@@ -6,7 +6,9 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
+import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsharpTestGenerator";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
+import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
@@ -26,13 +28,13 @@ interface DynamicSnippetsGenerator {
 export class DynamicSnippetsTestGenerator {
     private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> =
         {
+            csharp: DynamicSnippetsCsharpTestGenerator,
             go: DynamicSnippetsGoTestGenerator,
+            java: DynamicSnippetsJavaTestGenerator,
             php: DynamicSnippetsPhpTestGenerator,
             typescript: undefined, // TODO: Re-enable dynamic snippet tests when example generation is resolved.
-            java: undefined,
             python: undefined,
             ruby: undefined,
-            csharp: undefined,
             swift: undefined
         };
 

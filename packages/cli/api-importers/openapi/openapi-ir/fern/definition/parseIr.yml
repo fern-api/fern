@@ -54,7 +54,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<finalIr.HttpEndpointServer>
+      servers: list<finalIr.HttpEndpointServer>
       examples:
         type: list<finalIr.EndpointExample>
         docs: |
@@ -112,6 +112,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
+      bytes: finalIr.BytesResponse
       streamingSse: JsonResponseWithExample
       streamingText: finalIr.TextResponse
       streamingJson:
@@ -278,6 +279,7 @@ types:
       key: string
       schema: SchemaWithExample
       readonly: optional<boolean>
+      writeonly: optional<boolean>
       audiences: list<string>
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>

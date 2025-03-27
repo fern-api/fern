@@ -87,6 +87,7 @@ public final class Test {
     }
 
     @JsonTypeName("and")
+    @JsonIgnoreProperties("type")
     private static final class AndValue implements Value {
         @JsonProperty("value")
         private boolean value;
@@ -123,6 +124,7 @@ public final class Test {
     }
 
     @JsonTypeName("or")
+    @JsonIgnoreProperties("type")
     private static final class OrValue implements Value {
         @JsonProperty("value")
         private boolean value;
@@ -158,6 +160,7 @@ public final class Test {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

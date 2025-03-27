@@ -23,6 +23,14 @@ class _Factory:
 
 
 class UnionWithLiteral(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.types import UnionWithLiteral_Fern
+
+    UnionWithLiteral_Fern()
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:

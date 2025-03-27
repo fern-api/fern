@@ -105,6 +105,11 @@ public class InlineTypeIdResolver
     }
 
     @Override
+    public List<NamedTypeId> visitNullable(TypeReference typeReference) {
+        return typeReference.visit(this);
+    }
+
+    @Override
     public List<NamedTypeId> visitOptional(TypeReference typeReference) {
         return typeReference.visit(this);
     }

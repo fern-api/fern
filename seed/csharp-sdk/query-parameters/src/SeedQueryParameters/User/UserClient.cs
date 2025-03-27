@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
@@ -15,8 +14,7 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUsernameAsync(
     ///     new GetUsersRequest
     ///     {
@@ -71,8 +69,7 @@ public partial class UserClient
     ///         Filter = ["filter"],
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,
@@ -81,10 +78,10 @@ public partial class UserClient
     {
         var _query = new Dictionary<string, object>();
         _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id.ToString();
+        _query["id"] = request.Id;
         _query["date"] = request.Date.ToString(Constants.DateFormat);
         _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes.ToString();
+        _query["bytes"] = request.Bytes;
         _query["user"] = JsonUtils.Serialize(request.User);
         _query["userList"] = JsonUtils.Serialize(request.UserList);
         _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
@@ -108,8 +105,8 @@ public partial class UserClient
             _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -120,9 +117,9 @@ public partial class UserClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -133,10 +130,13 @@ public partial class UserClient
             }
         }
 
-        throw new SeedQueryParametersApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedQueryParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

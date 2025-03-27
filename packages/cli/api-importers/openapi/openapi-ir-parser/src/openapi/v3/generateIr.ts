@@ -369,6 +369,7 @@ export function generateIr({
             })
         ),
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        websocketServers: [],
         tags: {
             tagsById: Object.fromEntries(
                 (openApi.tags ?? []).map((tag) => {
@@ -379,7 +380,7 @@ export function generateIr({
         },
         endpoints,
         webhooks,
-        channel: [],
+        channels: {},
         groupedSchemas: getSchemas(namespace, schemas),
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),

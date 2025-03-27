@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
@@ -11,7 +9,7 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class DeleteUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -39,12 +37,8 @@ public class DeleteUserTest : BaseMockServerTest
             );
 
         var response = await Client.Nullable.DeleteUserAsync(
-            new DeleteUserRequest { Username = "xy" },
-            RequestOptions
+            new DeleteUserRequest { Username = "xy" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

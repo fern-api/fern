@@ -13,6 +13,35 @@ use <%= coreNamespace%>\Client\HttpMethod;
 use <%= coreNamespace%>\Client\RawClient;
 use <%= coreNamespace%>\Client\RetryMiddleware;
 use <%= coreNamespace%>\Json\JsonApiRequest;
+use <%= coreNamespace%>\Json\JsonSerializableType;
+use <%= coreNamespace%>\Json\JsonProperty;
+
+class JsonRequest extends JsonSerializableType {
+    /**
+     * @var string
+     */
+    #[JsonProperty('name')]
+    private string $name;
+
+    /**
+     * @param array{
+     *   name: string,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->name = $values['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+}
 
 class RawClientTest extends TestCase
 {
@@ -103,6 +132,204 @@ class RawClientTest extends TestCase
         assert($lastRequest instanceof RequestInterface);
         $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
         $this->assertEquals(json_encode($body), (string)$lastRequest->getBody());
+    }
+
+    public function testAdditionalHeaders(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = new JsonRequest([
+            'name' => 'john.doe'
+        ]);
+        $headers = [
+            'X-API-Version' => '1.0.0',
+        ];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            $headers,
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'headers' => [
+                    'X-Tenancy' => 'test'
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('1.0.0', $lastRequest->getHeaderLine('X-API-Version'));
+        $this->assertEquals('test', $lastRequest->getHeaderLine('X-Tenancy'));
+    }
+
+    public function testOverrideAdditionalHeaders(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = new JsonRequest([
+            'name' => 'john.doe'
+        ]);
+        $headers = [
+            'X-API-Version' => '1.0.0',
+        ];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            $headers,
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'headers' => [
+                    'X-API-Version' => '2.0.0'
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('2.0.0', $lastRequest->getHeaderLine('X-API-Version'));
+    }
+
+    public function testAdditionalBodyProperties(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = new JsonRequest([
+            'name' => 'john.doe'
+        ]);
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            [],
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'bodyProperties' => [
+                    'age' => 42
+                ]
+            ]
+        );
+
+        $expectedJson = [
+            'name' => 'john.doe',
+            'age' => 42
+        ];
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals(json_encode($expectedJson), (string)$lastRequest->getBody());
+    }
+
+    public function testOverrideAdditionalBodyProperties(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $body = [
+            'name' => 'john.doe'
+        ];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            [],
+            [],
+            $body
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'bodyProperties' => [
+                    'name' => 'jane.doe'
+                ]
+            ]
+        );
+
+        $expectedJson = [
+            'name' => 'jane.doe',
+        ];
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals(json_encode($expectedJson), (string)$lastRequest->getBody());
+    }
+
+    public function testAdditionalQueryParameters(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $query = ['key' => 'value'];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            [],
+            $query,
+            []
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'queryParameters' => [
+                    'extra' => 42
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('key=value&extra=42', $lastRequest->getUri()->getQuery());
+    }
+
+    public function testOverrideQueryParameters(): void
+    {
+        $this->mockHandler->append(new Response(200));
+
+        $query = ['key' => 'invalid'];
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::POST,
+            [],
+            $query,
+            []
+        );
+
+        $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'queryParameters' => [
+                    'key' => 'value'
+                ]
+            ]
+        );
+
+        $lastRequest = $this->mockHandler->getLastRequest();
+        assert($lastRequest instanceof RequestInterface);
+        $this->assertEquals('application/json', $lastRequest->getHeaderLine('Content-Type'));
+        $this->assertEquals('key=value', $lastRequest->getUri()->getQuery());
     }
 
     public function testDefaultRetries(): void

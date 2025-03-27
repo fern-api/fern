@@ -30,6 +30,7 @@ const RESERVED_OVERVIEW_PAGE_NAMES = ["summary", "index", "overview"];
 export class ChangelogNodeConverter {
     public constructor(
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
+        private markdownToNoIndex: Map<AbsoluteFilePath, boolean>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator
@@ -73,6 +74,8 @@ export class ChangelogNodeConverter {
             urlSlug: opts.slug ?? kebabCase(title)
         });
 
+        const noindex = overviewPagePath != null ? this.markdownToNoIndex.get(overviewPagePath) : undefined;
+
         // sort changelog items by date, in descending order
         const changelogItems = unsortedChangelogItems.map((item): FernNavigation.V1.ChangelogEntryNode => {
             const date = dayjs.utc(item.date);
@@ -91,7 +94,7 @@ export class ChangelogNodeConverter {
                 hidden: undefined,
                 date: item.date.toISOString(),
                 pageId: item.pageId,
-                noindex: undefined,
+                noindex: this.markdownToNoIndex.get(item.absoluteFilepath),
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -114,7 +117,7 @@ export class ChangelogNodeConverter {
             hidden: opts.hidden,
             children: changelogYears,
             overviewPageId,
-            noindex: undefined,
+            noindex,
             authed: undefined,
             viewers: opts.viewers,
             orphaned: opts.orphaned,

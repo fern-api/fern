@@ -1,0 +1,78 @@
+---
+title: Model Context Protocol
+description: Learn how to use the Model Context Protocol (MCP) to integrate AI capabilities with your Fern documentation
+---
+
+<Note>
+The MCP generator is in development. Interested in offering a MCP Server for your API? Reach out via Slack or support@buildwithfern.com.
+</Note>
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open protocol developed by Anthropic that allows you to provide tools to AI agents. MCP is in the early days of adoption with clients like Cursor, Claude Desktop App, and Windsurf. Our MCP generator allows you to augment your TypeScript SDK with an MCP server that's included in the generated SDK.
+
+## Features
+
+- **Built into Existing SDK**: The MCP server is automatically included in your TypeScript SDK
+- **Official MCP Submission**: Your MCP server will be listed on the [official integrations](https://modelcontextprotocol.io/examples#official-integrations) list
+- **Comprehensive Documentation**: Full getting-started guide and API reference
+- **Developer Resources**: Ready-to-use announcement assets for social media and email
+
+## Configuration 
+
+The MCP generator is configured in your `generators.yml` file. 
+
+```yaml
+generators:
+  groups:
+    ts-sdk:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.48.7
+        config:
+          enableMcpServer: true
+```
+
+The MCP server will be included in your generated TypeScript SDK under the `src/mcp-server` directory.
+
+## Cursor Installation Steps
+
+### 1. Configure Cursor
+
+1. Open Cursor Settings
+2. Navigate to Cursor Settings > Features > MCP
+3. Click the "+ Add New MCP Server" button
+4. Configure the Server:
+   - Name: Give your server a nickname
+   - Type: Select the transport type (stdio)
+
+### 2. Start the MCP Server
+
+To start the MCP server:
+
+```bash
+npx your-sdk-name mcp start
+```
+
+<Note>
+The MCP server will provide tools for:
+- Generating code examples
+- Explaining API endpoints
+- Creating test cases
+- Documenting API responses
+</Note>
+
+## Developer Resources
+
+### Social Media Announcements
+
+We provide ready-to-use assets for announcing your MCP support:
+
+- LinkedIn post template
+- X (Twitter) post template
+- Email announcement template
+- Social media graphics
+
+### Documentation
+
+- Getting started guide
+- API reference
+- Best practices
+- Example implementations

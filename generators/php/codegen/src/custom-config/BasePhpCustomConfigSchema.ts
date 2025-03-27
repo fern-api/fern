@@ -6,7 +6,7 @@ export const BasePhpCustomConfigSchema = z.object({
     packageName: z.string().optional(),
     propertyAccess: z.enum(["public", "private"]).optional(),
     namespace: z.string().optional(),
-
+    composerJson: z.optional(z.record(z.any())),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
 });

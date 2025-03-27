@@ -8,21 +8,21 @@ use Seed\Core\Json\JsonProperty;
 class MapType extends JsonSerializableType
 {
     /**
-     * @var mixed $keyType
+     * @var VariableType $keyType
      */
     #[JsonProperty('keyType')]
-    public mixed $keyType;
+    public VariableType $keyType;
 
     /**
-     * @var mixed $valueType
+     * @var VariableType $valueType
      */
     #[JsonProperty('valueType')]
-    public mixed $valueType;
+    public VariableType $valueType;
 
     /**
      * @param array{
-     *   keyType: mixed,
-     *   valueType: mixed,
+     *   keyType: VariableType,
+     *   valueType: VariableType,
      * } $values
      */
     public function __construct(

@@ -18,8 +18,8 @@ $client->reference->send(
         'query' => 'query',
         'stream' => false,
         'ending' => '$ending',
-        'context' => 'You\'re super wise',
-        'maybeContext' => 'You\'re super wise',
+        'context' => "You're super wise",
+        'maybeContext' => "You're super wise",
         'containerObject' => new ContainerObject([
             'nestedObjects' => [
                 new NestedObjectWithLiterals([

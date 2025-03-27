@@ -16,6 +16,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\JustFileRequest;
 use Seed\Service\Requests\JustFileWithQueryParamsRequest;
 use Seed\Service\Requests\WithContentTypeRequest;
+use Seed\Service\Requests\WithFormEncodingRequest;
 
 class ServiceClient
 {
@@ -23,8 +24,9 @@ class ServiceClient
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     private array $options;
@@ -39,8 +41,9 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   headers?: array<string, string>,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
      * } $options
      */
     public function __construct(
@@ -56,6 +59,9 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -139,6 +145,9 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -187,6 +196,9 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -248,6 +260,9 @@ class ServiceClient
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
@@ -280,6 +295,64 @@ class ServiceClient
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-content-type",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param WithFormEncodingRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function withFormEncoding(WithFormEncodingRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart(
+            $request->file->toMultipartFormDataPart(
+                name: 'file',
+                contentType: 'application/octet-stream',
+            ),
+        );
+        $body->add(name: 'foo', value: $request->foo);
+        $body->add(name: 'bar', value: $request->bar->toJson());
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/with-form-encoding",
                     method: HttpMethod::POST,
                     body: $body,
                 ),

@@ -150,6 +150,7 @@ public final class SubmissionRequest {
   }
 
   @JsonTypeName("initializeProblemRequest")
+  @JsonIgnoreProperties("type")
   private static final class InitializeProblemRequestValue implements Value {
     @JsonUnwrapped
     private InitializeProblemRequest value;
@@ -191,6 +192,7 @@ public final class SubmissionRequest {
   }
 
   @JsonTypeName("initializeWorkspaceRequest")
+  @JsonIgnoreProperties("type")
   private static final class InitializeWorkspaceRequestValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -216,6 +218,7 @@ public final class SubmissionRequest {
   }
 
   @JsonTypeName("submitV2")
+  @JsonIgnoreProperties("type")
   private static final class SubmitV2Value implements Value {
     @JsonUnwrapped
     private SubmitRequestV2 value;
@@ -257,6 +260,7 @@ public final class SubmissionRequest {
   }
 
   @JsonTypeName("workspaceSubmit")
+  @JsonIgnoreProperties("type")
   private static final class WorkspaceSubmitValue implements Value {
     @JsonUnwrapped
     private WorkspaceSubmitRequest value;
@@ -298,6 +302,7 @@ public final class SubmissionRequest {
   }
 
   @JsonTypeName("stop")
+  @JsonIgnoreProperties("type")
   private static final class StopValue implements Value {
     @JsonUnwrapped
     private StopRequest value;
@@ -338,6 +343,7 @@ public final class SubmissionRequest {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

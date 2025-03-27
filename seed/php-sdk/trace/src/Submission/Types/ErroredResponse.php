@@ -14,15 +14,15 @@ class ErroredResponse extends JsonSerializableType
     public string $submissionId;
 
     /**
-     * @var mixed $errorInfo
+     * @var ErrorInfo $errorInfo
      */
     #[JsonProperty('errorInfo')]
-    public mixed $errorInfo;
+    public ErrorInfo $errorInfo;
 
     /**
      * @param array{
      *   submissionId: string,
-     *   errorInfo: mixed,
+     *   errorInfo: ErrorInfo,
      * } $values
      */
     public function __construct(

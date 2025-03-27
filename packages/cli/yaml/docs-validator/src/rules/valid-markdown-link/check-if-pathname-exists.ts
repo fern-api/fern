@@ -48,10 +48,19 @@ export async function checkIfPathnameExists({
         return true;
     }
 
+    pathname = withoutAnchors(pathname);
+
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
-        const redirectedPath = withRedirects(pathname, baseUrl, redirects);
+        let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects));
+        for (let redirectCount = 0; redirectCount < 5; ++redirectCount) {
+            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, baseUrl, redirects));
+            if (redirectedPath === nextRedirectPath) {
+                break;
+            }
+            redirectedPath = nextRedirectPath;
+        }
 
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
@@ -68,7 +77,16 @@ export async function checkIfPathnameExists({
 
     if (absoluteFilepath != null) {
         // if the pathname does not start with a `/`, it is a relative path.
-        // first, we'll check if the pathname is a relativized path
+
+        // If pathname is `.` we'll check if the current directory exists.
+        if (pathname === ".") {
+            const currentDirPath = dirname(absoluteFilepath);
+            if (await doesPathExist(currentDirPath, "directory")) {
+                return true;
+            }
+        }
+
+        // We'll check if the pathname is a relativized path
         const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
 
         if (await doesPathExist(relativizedPathname, "file")) {
@@ -104,4 +122,12 @@ function withRedirects(
         return pathname;
     }
     return result.redirect.destination;
+}
+
+function withoutAnchors(slug: string): string {
+    const hashIndex = slug.indexOf("#");
+    if (hashIndex === -1) {
+        return slug;
+    }
+    return slug.substring(0, hashIndex);
 }

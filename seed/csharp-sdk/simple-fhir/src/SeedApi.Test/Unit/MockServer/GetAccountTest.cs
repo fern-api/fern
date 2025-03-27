@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedApi;
 using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer;
@@ -10,7 +9,7 @@ namespace SeedApi.Test.Unit.MockServer;
 public class GetAccountTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -360,10 +359,10 @@ public class GetAccountTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.GetAccountAsync("account_id", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.GetAccountAsync("account_id");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Account>(mockResponse)).UsingDefaults()
+        );
     }
 }

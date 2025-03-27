@@ -1,3 +1,31 @@
+- version: 0.37.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the `go-v2` generator call prevented the `go` generator from succeeding
+        in remote code generation environments.
+  irVersion: 57
+- version: 0.37.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the primary Go files were not being written due to README.md generation.
+  irVersion: 57
+- version: 0.37.0
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv57.
+    - type: feat
+      summary: >-
+        Add support for automatic `README.md` generation.
+  irVersion: 57
+- version: 0.36.5
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where `map` values were not correctly serialized as deep object query parameters.
+  irVersion: 53
 - version: 0.36.4
   changelogEntry:
     - type: fix

@@ -8,6 +8,16 @@ import pydantic
 
 
 class FooUnionWithSingleElement(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed.types import FooUnionWithSingleElement
+
+    FooUnionWithSingleElement(
+        name="example1",
+    )
+    """
+
     type: typing.Literal["foo"] = "foo"
     name: str
 
@@ -21,4 +31,11 @@ class FooUnionWithSingleElement(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+"""
+from seed.types import FooUnionWithSingleElement
+
+FooUnionWithSingleElement(
+    name="example1",
+)
+"""
 UnionWithSingleElement = FooUnionWithSingleElement

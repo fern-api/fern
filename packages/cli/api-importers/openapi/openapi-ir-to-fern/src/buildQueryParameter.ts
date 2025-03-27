@@ -1,7 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -40,15 +39,6 @@ export function buildQueryParameter({
         queryParameterType = "optional<string>";
     }
 
-    if (
-        queryParameter.description == null &&
-        !typeReference.allowMultiple &&
-        queryParameter.parameterNameOverride == null &&
-        queryParameter.availability == null
-    ) {
-        return queryParameterType;
-    }
-
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
@@ -77,6 +67,17 @@ export function buildQueryParameter({
         if (typeReference.value.validation !== undefined) {
             queryParameterSchema.validation = typeReference.value.validation;
         }
+    }
+
+    if (
+        queryParameterSchema.default == null &&
+        queryParameterSchema["allow-multiple"] == null &&
+        queryParameterSchema.docs == null &&
+        queryParameterSchema.name == null &&
+        queryParameterSchema.availability == null &&
+        queryParameterSchema.validation == null
+    ) {
+        return queryParameterType;
     }
 
     return queryParameterSchema;

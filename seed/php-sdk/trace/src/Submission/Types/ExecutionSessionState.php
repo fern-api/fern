@@ -46,12 +46,12 @@ class ExecutionSessionState extends JsonSerializableType
 
     /**
      * @param array{
-     *   lastTimeContacted?: ?string,
      *   sessionId: string,
      *   isWarmInstance: bool,
-     *   awsTaskId?: ?string,
      *   language: value-of<Language>,
      *   status: value-of<ExecutionSessionStatus>,
+     *   lastTimeContacted?: ?string,
+     *   awsTaskId?: ?string,
      * } $values
      */
     public function __construct(

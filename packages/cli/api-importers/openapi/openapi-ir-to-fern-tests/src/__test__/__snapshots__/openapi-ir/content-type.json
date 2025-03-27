@@ -1,6 +1,7 @@
 {
   "title": "Test content-type parsing.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -137,7 +138,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Test multipart request with different content types.\n",
       "authed": false,
       "method": "POST",
@@ -278,7 +279,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Test request with dual content types.\n",
       "authed": false,
       "method": "POST",
@@ -324,7 +325,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

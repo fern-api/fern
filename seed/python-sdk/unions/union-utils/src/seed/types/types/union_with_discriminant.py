@@ -34,17 +34,23 @@ class UnionWithDiscriminant(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
+            pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(
+            self,
+        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

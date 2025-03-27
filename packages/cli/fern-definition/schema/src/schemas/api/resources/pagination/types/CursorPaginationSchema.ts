@@ -3,6 +3,8 @@
  */
 
 export interface CursorPaginationSchema {
+    /** The type of pagination. */
+    type?: "cursor";
     /** The path to the request property for the cursor. */
     cursor: string;
     /** The path to the response property for the next cursor. */

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
@@ -15,8 +14,7 @@ public partial class AuthClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
     ///     new GetTokenRequest
     ///     {
@@ -27,8 +25,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
@@ -36,8 +33,8 @@ public partial class AuthClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -48,9 +45,9 @@ public partial class AuthClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
@@ -64,15 +61,17 @@ public partial class AuthClient
             }
         }
 
-        throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Auth.RefreshTokenAsync(
     ///     new RefreshTokenRequest
     ///     {
@@ -84,8 +83,7 @@ public partial class AuthClient
     ///         Scope = "scope",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
         RequestOptions? options = null,
@@ -93,8 +91,8 @@ public partial class AuthClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -105,9 +103,9 @@ public partial class AuthClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
@@ -121,10 +119,13 @@ public partial class AuthClient
             }
         }
 
-        throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

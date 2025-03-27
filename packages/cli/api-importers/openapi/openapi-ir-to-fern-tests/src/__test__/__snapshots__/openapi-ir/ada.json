@@ -7,6 +7,7 @@
       "description": "The subdomain of the client"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "End Users API": {
@@ -345,7 +346,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get a specific end user",
       "authed": true,
       "method": "GET",
@@ -1061,7 +1062,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Update an end user. Request data is limited to 4KB in size total.",
       "authed": true,
       "method": "PATCH",
@@ -1741,7 +1742,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get multiple end users",
       "authed": true,
       "method": "GET",
@@ -2009,7 +2010,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "EndUser": {

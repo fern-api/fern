@@ -19,8 +19,8 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
     /**
      * @param array{
      *   data: UserOptionalListContainer,
-     *   next?: ?string,
      *   totalCount: int,
+     *   next?: ?string,
      * } $values
      */
     public function __construct(

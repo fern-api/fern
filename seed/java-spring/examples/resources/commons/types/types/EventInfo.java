@@ -103,6 +103,7 @@ public final class EventInfo {
   }
 
   @JsonTypeName("metadata")
+  @JsonIgnoreProperties("type")
   private static final class MetadataValue implements Value {
     @JsonUnwrapped
     private Metadata value;
@@ -144,6 +145,7 @@ public final class EventInfo {
   }
 
   @JsonTypeName("tag")
+  @JsonIgnoreProperties("type")
   private static final class TagValue implements Value {
     @JsonProperty("value")
     private Tag value;
@@ -181,6 +183,7 @@ public final class EventInfo {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

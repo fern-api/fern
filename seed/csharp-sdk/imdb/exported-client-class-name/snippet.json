@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new CustomClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"title\", Rating = 1.1 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new CustomClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"movieId\");\n"
+            }
+        }
+    ]
+}

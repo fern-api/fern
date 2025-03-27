@@ -1,4 +1,4 @@
-import { CSharpFile } from "@fern-api/csharp-codegen";
+import { CSharpFile } from "@fern-api/csharp-base";
 
 import { WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
@@ -11,25 +11,21 @@ export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): 
         WellKnownProtobufType.struct()
     );
     const resolvedProtoValueType = context.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.value());
-
     if (resolvedProtoStructType == null && resolvedProtoValueType == null) {
         return undefined;
     }
-
     if (resolvedProtoStructType != null && resolvedProtoValueType == null) {
         context.logger.debug(
             "Skipping well-known type generation a google.protobuf.Struct was defined without a google.protobuf.Value type."
         );
         return undefined;
     }
-
     if (resolvedProtoStructType == null && resolvedProtoValueType != null) {
         context.logger.debug(
             "Skipping well-known type generation a google.protobuf.Value was defined without a google.protobuf.Struct type."
         );
         return undefined;
     }
-
     const files: CSharpFile[] = [];
     if (resolvedProtoStructType != null && resolvedProtoValueType != null) {
         const protoStructClassReference = context.csharpTypeMapper.convertToClassReference(
@@ -55,6 +51,5 @@ export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): 
         });
         files.push(protoValueGenerator.generate());
     }
-
     return files;
 }

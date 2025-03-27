@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -29,9 +29,9 @@ public record ScoredColumn
     /// <summary>
     /// Maps the ScoredColumn type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.ScoredColumn ToProto()
+    internal ProtoDataV1Grpc.ScoredColumn ToProto()
     {
-        var result = new Proto.ScoredColumn();
+        var result = new ProtoDataV1Grpc.ScoredColumn();
         result.Id = Id;
         if (Score != null)
         {
@@ -55,7 +55,7 @@ public record ScoredColumn
     /// <summary>
     /// Returns a new ScoredColumn type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static ScoredColumn FromProto(Proto.ScoredColumn value)
+    internal static ScoredColumn FromProto(ProtoDataV1Grpc.ScoredColumn value)
     {
         return new ScoredColumn
         {

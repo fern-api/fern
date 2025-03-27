@@ -6,6 +6,7 @@
       "description": "Production API"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Issue Triggers": {
@@ -644,7 +645,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -823,7 +824,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -892,7 +894,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1050,7 +1053,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -1201,7 +1204,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1270,7 +1274,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -1423,7 +1428,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -1648,7 +1653,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -1876,7 +1881,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -2060,7 +2066,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -2284,7 +2290,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "DELETE",
@@ -2425,7 +2431,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -2645,7 +2651,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -3139,7 +3145,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -3444,7 +3450,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -4374,7 +4380,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -4750,7 +4756,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -5009,7 +5015,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -5456,7 +5462,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -5704,7 +5710,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "DELETE",
@@ -5996,7 +6002,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -7084,7 +7090,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -7542,7 +7548,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -7958,7 +7964,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -8167,7 +8173,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -8672,7 +8678,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -8892,7 +8898,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -9100,7 +9106,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -11138,7 +11144,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -11450,7 +11456,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -11754,7 +11760,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -11895,7 +11901,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -12337,7 +12343,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -15278,7 +15284,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -17201,7 +17207,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -19053,7 +19059,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -19197,7 +19203,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -19450,7 +19456,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -20678,7 +20684,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -21173,7 +21179,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -21597,7 +21603,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -21741,7 +21747,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -21994,7 +22000,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -22320,7 +22326,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -22598,7 +22604,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -22756,7 +22763,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -23018,7 +23025,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -23285,7 +23292,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -23495,7 +23503,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -23720,7 +23728,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "DELETE",
@@ -23924,7 +23932,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -24138,7 +24146,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -25751,7 +25759,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -27530,7 +27538,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -27691,7 +27699,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -28360,7 +28368,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -28651,7 +28659,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "DELETE",
@@ -28973,7 +28981,8 @@
                           "type": "optional"
                         },
                         "audiences": [],
-                        "readonly": false
+                        "readonly": false,
+                        "writeonly": false
                       },
                       {
                         "conflict": {},
@@ -28994,7 +29003,8 @@
                           "type": "optional"
                         },
                         "audiences": [],
-                        "readonly": false
+                        "readonly": false,
+                        "writeonly": false
                       },
                       {
                         "conflict": {},
@@ -29015,7 +29025,8 @@
                           "type": "optional"
                         },
                         "audiences": [],
-                        "readonly": false
+                        "readonly": false,
+                        "writeonly": false
                       },
                       {
                         "conflict": {},
@@ -29036,7 +29047,8 @@
                           "type": "optional"
                         },
                         "audiences": [],
-                        "readonly": false
+                        "readonly": false,
+                        "writeonly": false
                       },
                       {
                         "conflict": {},
@@ -29076,7 +29088,8 @@
                           "type": "optional"
                         },
                         "audiences": [],
-                        "readonly": false
+                        "readonly": false,
+                        "writeonly": false
                       }
                     ],
                     "allOfPropertyConflicts": [],
@@ -30413,7 +30426,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -30708,7 +30721,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -30995,7 +31008,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -31276,7 +31289,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -33624,7 +33637,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -34285,7 +34298,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -35157,7 +35170,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -35178,7 +35192,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -35199,7 +35214,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -35220,7 +35236,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -35260,7 +35277,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 }
                               ],
                               "allOfPropertyConflicts": [],
@@ -36801,7 +36819,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -37153,7 +37171,8 @@
                                         "type": "optional"
                                       },
                                       "audiences": [],
-                                      "readonly": false
+                                      "readonly": false,
+                                      "writeonly": false
                                     },
                                     {
                                       "conflict": {},
@@ -37174,7 +37193,8 @@
                                         "type": "optional"
                                       },
                                       "audiences": [],
-                                      "readonly": false
+                                      "readonly": false,
+                                      "writeonly": false
                                     },
                                     {
                                       "conflict": {},
@@ -37195,7 +37215,8 @@
                                         "type": "optional"
                                       },
                                       "audiences": [],
-                                      "readonly": false
+                                      "readonly": false,
+                                      "writeonly": false
                                     },
                                     {
                                       "conflict": {},
@@ -37216,7 +37237,8 @@
                                         "type": "optional"
                                       },
                                       "audiences": [],
-                                      "readonly": false
+                                      "readonly": false,
+                                      "writeonly": false
                                     },
                                     {
                                       "conflict": {},
@@ -37256,7 +37278,8 @@
                                         "type": "optional"
                                       },
                                       "audiences": [],
-                                      "readonly": false
+                                      "readonly": false,
+                                      "writeonly": false
                                     }
                                   ],
                                   "allOfPropertyConflicts": [],
@@ -38379,7 +38402,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -38674,7 +38697,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -38695,7 +38719,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -38716,7 +38741,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -38737,7 +38763,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 },
                                 {
                                   "conflict": {},
@@ -38777,7 +38804,8 @@
                                     "type": "optional"
                                   },
                                   "audiences": [],
-                                  "readonly": false
+                                  "readonly": false,
+                                  "writeonly": false
                                 }
                               ],
                               "allOfPropertyConflicts": [],
@@ -39886,7 +39914,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -40030,7 +40058,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -40283,7 +40311,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -41410,7 +41438,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -41776,7 +41804,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -42114,7 +42142,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -42336,7 +42364,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -42768,7 +42796,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -42993,7 +43021,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -43214,7 +43242,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -44149,7 +44177,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -44485,7 +44513,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -44779,7 +44807,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -45002,7 +45030,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -45390,7 +45418,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -45616,7 +45644,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -45838,7 +45866,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -46085,7 +46113,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -46570,7 +46598,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -46945,7 +46973,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -47303,7 +47331,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -47519,7 +47547,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -47943,7 +47971,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -48491,7 +48519,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -49296,7 +49324,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -49612,7 +49640,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -50874,7 +50902,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -51794,7 +51822,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "POST",
@@ -52792,7 +52820,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -53302,7 +53330,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "GET",
@@ -54092,7 +54120,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -54605,7 +54633,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -55114,7 +55142,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -55623,7 +55651,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -56132,7 +56160,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": true,
       "method": "PUT",
@@ -56547,7 +56575,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "OrderByDirection": {
@@ -56812,7 +56840,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56922,7 +56951,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57006,7 +57036,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57187,7 +57218,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -57208,7 +57240,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -57229,7 +57262,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -57330,7 +57364,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57346,7 +57381,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57367,7 +57403,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57484,7 +57521,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58002,7 +58040,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -58023,7 +58062,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -58122,7 +58162,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -58303,7 +58344,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -58391,7 +58433,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58833,7 +58876,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58924,7 +58968,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59505,7 +59550,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59889,7 +59935,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59981,7 +60028,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60060,7 +60108,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60162,7 +60211,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60178,7 +60228,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -60596,7 +60647,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60960,7 +61012,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61349,7 +61402,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61522,7 +61576,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61821,7 +61876,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -61842,7 +61898,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -61907,7 +61964,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62098,7 +62156,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62114,7 +62173,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62135,7 +62195,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -62185,7 +62246,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -62425,7 +62487,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62494,7 +62557,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62515,7 +62579,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62572,7 +62637,8 @@
                 "type": "reference"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             },
             {
               "conflict": {},
@@ -62593,7 +62659,8 @@
                 "type": "optional"
               },
               "audiences": [],
-              "readonly": false
+              "readonly": false,
+              "writeonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -62658,7 +62725,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62849,7 +62917,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62865,7 +62934,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62886,7 +62956,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -62956,7 +63027,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63091,7 +63163,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63282,7 +63355,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63298,7 +63372,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -63360,7 +63435,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63551,7 +63627,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63567,7 +63644,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -63828,7 +63906,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64341,7 +64420,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64415,7 +64495,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64607,7 +64688,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64732,7 +64814,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64828,7 +64911,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64932,7 +65016,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -65030,7 +65115,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -65051,7 +65137,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -65072,7 +65159,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -65093,7 +65181,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -65610,7 +65699,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -65813,7 +65903,8 @@
                         "type": "reference"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -65946,7 +66037,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66326,7 +66418,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66472,7 +66565,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66804,7 +66898,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66923,7 +67018,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66939,7 +67035,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -66960,7 +67057,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -67141,7 +67239,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

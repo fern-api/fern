@@ -34,9 +34,9 @@ class Page extends JsonSerializableType
     /**
      * @param array{
      *   page: int,
-     *   next?: ?NextPage,
      *   perPage: int,
      *   totalPage: int,
+     *   next?: ?NextPage,
      * } $values
      */
     public function __construct(

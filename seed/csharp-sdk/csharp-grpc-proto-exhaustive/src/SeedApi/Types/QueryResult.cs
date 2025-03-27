@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using Proto = Data.V1.Grpc;
+using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
@@ -20,9 +20,9 @@ public record QueryResult
     /// <summary>
     /// Maps the QueryResult type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.QueryResult ToProto()
+    internal ProtoDataV1Grpc.QueryResult ToProto()
     {
-        var result = new Proto.QueryResult();
+        var result = new ProtoDataV1Grpc.QueryResult();
         if (Matches != null && Matches.Any())
         {
             result.Matches.AddRange(Matches.Select(elem => elem.ToProto()));
@@ -37,7 +37,7 @@ public record QueryResult
     /// <summary>
     /// Returns a new QueryResult type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static QueryResult FromProto(Proto.QueryResult value)
+    internal static QueryResult FromProto(ProtoDataV1Grpc.QueryResult value)
     {
         return new QueryResult
         {

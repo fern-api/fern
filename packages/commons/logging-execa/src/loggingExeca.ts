@@ -17,7 +17,7 @@ export async function loggingExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): Promise<ExecaReturnValue> {
+): Promise<loggingExeca.ReturnValue> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
@@ -37,5 +37,14 @@ export async function loggingExeca(
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
     }
-    return command;
+    return command.then((result) => {
+        // the execa types are incorrect and sometimes stdout and stderr and not defined
+        if (result.stdout == null) {
+            result.stdout = "";
+        }
+        if (result.stderr == null) {
+            result.stderr = "";
+        }
+        return result;
+    });
 }

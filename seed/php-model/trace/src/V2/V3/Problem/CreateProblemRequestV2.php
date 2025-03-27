@@ -23,10 +23,10 @@ class CreateProblemRequestV2 extends JsonSerializableType
     public ProblemDescription $problemDescription;
 
     /**
-     * @var mixed $customFiles
+     * @var CustomFiles $customFiles
      */
     #[JsonProperty('customFiles')]
-    public mixed $customFiles;
+    public CustomFiles $customFiles;
 
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
@@ -56,7 +56,7 @@ class CreateProblemRequestV2 extends JsonSerializableType
      * @param array{
      *   problemName: string,
      *   problemDescription: ProblemDescription,
-     *   customFiles: mixed,
+     *   customFiles: CustomFiles,
      *   customTestCaseTemplates: array<TestCaseTemplate>,
      *   testcases: array<TestCaseV2>,
      *   supportedLanguages: array<value-of<Language>>,

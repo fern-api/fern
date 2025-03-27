@@ -25,8 +25,8 @@ class TraceResponsesPage extends JsonSerializableType
 
     /**
      * @param array{
-     *   offset?: ?int,
      *   traceResponses: array<TraceResponse>,
+     *   offset?: ?int,
      * } $values
      */
     public function __construct(

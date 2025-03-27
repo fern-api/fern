@@ -46,7 +46,9 @@ class SeedAlias:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -57,7 +59,12 @@ class SeedAlias:
             timeout=_defaulted_timeout,
         )
 
-    def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get(
+        self,
+        type_id: TypeId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
@@ -130,7 +137,9 @@ class AsyncSeedAlias:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -141,7 +150,12 @@ class AsyncSeedAlias:
             timeout=_defaulted_timeout,
         )
 
-    async def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get(
+        self,
+        type_id: TypeId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------

@@ -2,13 +2,14 @@
   "title": "Hume AI Batch API",
   "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
   "hasEndpointsMarkedInternal": false,
   "endpoints": [],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "UnionJob": {

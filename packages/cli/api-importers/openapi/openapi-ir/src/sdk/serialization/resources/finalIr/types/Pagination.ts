@@ -7,12 +7,14 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { CursorPagination } from "./CursorPagination";
 import { OffsetPagination } from "./OffsetPagination";
+import { CustomPagination } from "./CustomPagination";
 
 export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, FernOpenapiIr.Pagination> =
     core.serialization
         .union("type", {
             cursor: CursorPagination,
             offset: OffsetPagination,
+            custom: CustomPagination,
         })
         .transform<FernOpenapiIr.Pagination>({
             transform: (value) => {
@@ -21,6 +23,8 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
                         return FernOpenapiIr.Pagination.cursor(value);
                     case "offset":
                         return FernOpenapiIr.Pagination.offset(value);
+                    case "custom":
+                        return FernOpenapiIr.Pagination.custom(value);
                     default:
                         return value as FernOpenapiIr.Pagination;
                 }
@@ -29,7 +33,7 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
         });
 
 export declare namespace Pagination {
-    export type Raw = Pagination.Cursor | Pagination.Offset;
+    export type Raw = Pagination.Cursor | Pagination.Offset | Pagination.Custom;
 
     export interface Cursor extends CursorPagination.Raw {
         type: "cursor";
@@ -37,5 +41,9 @@ export declare namespace Pagination {
 
     export interface Offset extends OffsetPagination.Raw {
         type: "offset";
+    }
+
+    export interface Custom extends CustomPagination.Raw {
+        type: "custom";
     }
 }

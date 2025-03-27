@@ -24,7 +24,7 @@ export const ValidMarkdownRule: Rule = {
                         }
                     ];
                 }
-                const markdownParseResult = await parseMarkdown({ markdown: content, format });
+                const markdownParseResult = await parseMarkdown({ markdown: content });
                 if (markdownParseResult.type === "failure") {
                     const message =
                         markdownParseResult.message != null
@@ -76,15 +76,9 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({
-    markdown,
-    format
-}: {
-    markdown: string;
-    format: "mdx" | "md";
-}): Promise<MarkdownParseResult> {
+async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
     try {
-        parseMarkdownToTree(markdown, format);
+        parseMarkdownToTree(markdown);
 
         const parsed = await serialize(markdown, {
             scope: {},

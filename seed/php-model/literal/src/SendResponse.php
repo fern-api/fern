@@ -20,7 +20,7 @@ class SendResponse extends JsonSerializableType
     public int $status;
 
     /**
-     * @var bool $success
+     * @var true $success
      */
     #[JsonProperty('success')]
     public bool $success;
@@ -29,7 +29,7 @@ class SendResponse extends JsonSerializableType
      * @param array{
      *   message: string,
      *   status: int,
-     *   success: bool,
+     *   success: true,
      * } $values
      */
     public function __construct(

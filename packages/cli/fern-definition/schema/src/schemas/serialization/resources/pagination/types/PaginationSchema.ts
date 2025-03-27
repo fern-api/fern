@@ -7,12 +7,13 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { CursorPaginationSchema } from "./CursorPaginationSchema";
 import { OffsetPaginationSchema } from "./OffsetPaginationSchema";
+import { CustomPaginationSchema } from "./CustomPaginationSchema";
 
 export const PaginationSchema: core.serialization.Schema<
     serializers.PaginationSchema.Raw,
     FernDefinition.PaginationSchema
-> = core.serialization.undiscriminatedUnion([CursorPaginationSchema, OffsetPaginationSchema]);
+> = core.serialization.undiscriminatedUnion([CursorPaginationSchema, OffsetPaginationSchema, CustomPaginationSchema]);
 
 export declare namespace PaginationSchema {
-    export type Raw = CursorPaginationSchema.Raw | OffsetPaginationSchema.Raw;
+    export type Raw = CursorPaginationSchema.Raw | OffsetPaginationSchema.Raw | CustomPaginationSchema.Raw;
 }

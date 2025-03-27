@@ -6,6 +6,7 @@ import * as FernDefinition from "../../../index";
 
 export interface SingleUndiscriminatedUnionTypeDetailedSchema
     extends FernDefinition.WithDocsSchema,
-        FernDefinition.WithDisplayName {
+        FernDefinition.WithDisplayName,
+        FernDefinition.WithValidation {
     type: string;
 }

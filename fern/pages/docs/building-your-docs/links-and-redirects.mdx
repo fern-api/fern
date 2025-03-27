@@ -4,17 +4,29 @@ description: Set up the navigation for your documentation site built with Fern D
 ---
 ## Redirects
 The `redirects` object allows you to redirect traffic from one path to another. You can also use [`regex`](https://www.npmjs.com/package/path-to-regexp) within redirects. 
-<CodeBlock title="docs.yml">
-```yml
+
+<Tabs>
+<Tab title="Redirect exact paths">
+```yml title="docs.yml"
 redirects:
   - source: "/old-path"
     destination: "/new-path"
   - source: "/incorrect/path"
     destination: "/correct/path"
-  - source: "/old-folder/:slug" # <- using regex
-    destination: "/new-folder/:slug"
 ```
-</CodeBlock>
+</Tab>
+<Tab title="Redirect with regex">
+```yml title="docs.yml"
+  - source: "/old-folder/:slug" # <- /old-folder/foo, /old-folder/bar, etc.
+    destination: "/new-folder/:slug"
+  - source: "/incorrect/:slug*" # <- /incorrect, /incorrect/foo/bar/baz, etc.
+    destination: "/correct/:slug*" 
+```
+<Info>
+Parameters suffixed with an asterisk (`*`) denote a match with zero or more.
+</Info>
+</Tab>
+</Tabs>
 
 By default, the redirects implement temporary (302) redirects. If you would like to implement permanent (301) redirects, you can set `permanent: true`.
 

@@ -32,8 +32,7 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
                         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
                         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
                         Body = "string",
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

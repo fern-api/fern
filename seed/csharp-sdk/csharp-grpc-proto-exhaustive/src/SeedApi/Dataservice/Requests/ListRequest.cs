@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
@@ -5,12 +6,16 @@ namespace SeedApi;
 
 public record ListRequest
 {
+    [JsonIgnore]
     public string? Prefix { get; set; }
 
+    [JsonIgnore]
     public uint? Limit { get; set; }
 
+    [JsonIgnore]
     public string? PaginationToken { get; set; }
 
+    [JsonIgnore]
     public string? Namespace { get; set; }
 
     public override string ToString()

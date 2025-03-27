@@ -129,6 +129,7 @@ types:
     enum: 
       - json
       - exploded
+      - form
 
   HttpQueryParameterSchema:
     discriminated: false

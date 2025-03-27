@@ -88,6 +88,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return endpoint.name.camelCase.safeName;
     }
 
+    public getUnpagedEndpointMethodName(endpoint: HttpEndpoint): string {
+        return `_${this.getEndpointMethodName(endpoint)}`;
+    }
+
+    public getPagedEndpointMethodName(endpoint: HttpEndpoint): string {
+        return this.getEndpointMethodName(endpoint);
+    }
+
     public getSubpackageField(subpackage: Subpackage): php.Field {
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
@@ -177,6 +185,28 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreClientClassReference("HttpMethod");
     }
 
+    public getPagerClassReference(itemType: php.Type): php.ClassReference {
+        return php.classReference({
+            name: "Pager",
+            namespace: this.getCorePaginationNamespace(),
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "OffsetPager",
+            namespace: this.getCorePaginationNamespace()
+        });
+    }
+
+    public getCursorPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "CursorPager",
+            namespace: this.getCorePaginationNamespace()
+        });
+    }
+
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNode(this.getHttpMethodClassReference());
@@ -217,6 +247,18 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "headers";
     }
 
+    public getBodyPropertiesOptionName(): string {
+        return "bodyProperties";
+    }
+
+    public getQueryParametersOptionName(): string {
+        return "queryParameters";
+    }
+
+    public getTimeoutOptionName(): string {
+        return "timeout";
+    }
+
     public getClientOptionsName(): string {
         return this.getOptionsName();
     }
@@ -243,13 +285,18 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     optional: true
                 },
                 {
-                    key: this.getHeadersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                    key: this.getMaxRetriesOptionName(),
+                    valueType: php.Type.int(),
                     optional: true
                 },
                 {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
+                    key: this.getTimeoutOptionName(),
+                    valueType: php.Type.float(),
+                    optional: true
+                },
+                {
+                    key: this.getHeadersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
                     optional: true
                 }
             ],
@@ -259,30 +306,101 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         );
     }
 
-    public getRequestOptionsType(): php.Type {
-        return php.Type.typeDict(
-            [
-                {
-                    key: this.getBaseUrlOptionName(),
-                    valueType: php.Type.string(),
-                    optional: true
-                },
-                {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
-                    optional: true
-                }
-            ],
+    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const options = [
             {
-                multiline: true
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
+                optional: true
+            },
+            {
+                key: this.getMaxRetriesOptionName(),
+                valueType: php.Type.int(),
+                optional: true
+            },
+            {
+                key: this.getTimeoutOptionName(),
+                valueType: php.Type.float(),
+                optional: true
+            },
+            {
+                key: this.getHeadersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                optional: true
+            },
+            {
+                key: this.getQueryParametersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
+                optional: true
             }
-        );
+        ];
+        if (!this.isMultipartEndpoint(endpoint)) {
+            options.push({
+                key: this.getBodyPropertiesOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.mixed()),
+                optional: true
+            });
+        }
+        return php.Type.typeDict(options, {
+            multiline: true
+        });
     }
 
     public getEnvironmentAccess(name: Name): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNode(this.getEnvironmentsClassReference());
             writer.write(`::${this.getEnvironmentName(name)}->value`);
+        });
+    }
+
+    public createRequestWithDefaults(reference: php.ClassReference | php.CodeBlock): php.AstNode {
+        return php.invokeMethod({
+            on: php.classReference({
+                name: "PaginationHelper",
+                namespace: this.getCorePaginationNamespace()
+            }),
+            method: "createRequestWithDefaults",
+            arguments_: [
+                php.codeblock((writer) => {
+                    if (reference instanceof php.ClassReference) {
+                        writer.writeNode(reference);
+                        writer.write("::class");
+                        return;
+                    }
+                    writer.writeNode(reference);
+                })
+            ],
+            static_: true
+        });
+    }
+
+    public deepSetPagination(
+        objectVarToSetOn: php.AstNode,
+        setterPath: Name[],
+        valueVarToSet: php.AstNode
+    ): php.AstNode {
+        if (setterPath.length === 0) {
+            throw new Error("setterPath cannot be empty");
+        }
+        if (setterPath.length === 1) {
+            const singleSetter = setterPath[0] as Name;
+            return php.codeblock((writer) => {
+                writer.writeNode(objectVarToSetOn);
+                writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));
+            });
+        }
+        return php.invokeMethod({
+            on: php.classReference({
+                name: "PaginationHelper",
+                namespace: this.getCorePaginationNamespace()
+            }),
+            method: "setDeep",
+            arguments_: [
+                objectVarToSetOn,
+                php.codeblock(`[${setterPath.map((path) => `"${this.getPropertyName(path)}"`).join(", ")}]`),
+                valueVarToSet
+            ],
+            static_: true
         });
     }
 
@@ -301,6 +419,31 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             };
         }
         return undefined;
+    }
+
+    public getTypeGetter(propertyName: Name): php.AstNode {
+        return php.codeblock((writer) => {
+            if (this.shouldGenerateGetterMethods()) {
+                writer.write(`->${this.getPropertyGetterName(propertyName)}()`);
+            } else {
+                writer.write(`->${this.getPropertyName(propertyName)}`);
+            }
+        });
+    }
+
+    public getTypeSetter(propertyName: Name, valueVarToSet: php.AstNode): php.AstNode {
+        return php.codeblock((writer) => {
+            if (this.shouldGenerateGetterMethods()) {
+                writer.write(`->${this.getPropertySetterName(propertyName)}`);
+                writer.write("(");
+                writer.writeNode(valueVarToSet);
+                writer.write(")");
+            } else {
+                writer.write(`->${this.getPropertyName(propertyName)}`);
+                writer.write(" = ");
+                writer.writeNode(valueVarToSet);
+            }
+        });
     }
 
     public accessRequestProperty({
@@ -362,12 +505,44 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
+            ...this.getCorePagerAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
     }
 
+    private getCorePagerAsIsFiles(): string[] {
+        return this.hasPagination()
+            ? [
+                  AsIsFiles.CursorPager,
+                  AsIsFiles.OffsetPager,
+                  AsIsFiles.Page,
+                  AsIsFiles.Pager,
+                  AsIsFiles.PaginationHelper
+              ]
+            : [];
+    }
+
     public getCoreTestAsIsFiles(): string[] {
-        return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
+        return [
+            AsIsFiles.RawClientTest,
+            ...this.getCorePagerTestAsIsFiles(),
+            ...this.getCoreSerializationTestAsIsFiles()
+        ];
+    }
+
+    private getCorePagerTestAsIsFiles(): string[] {
+        return this.hasPagination()
+            ? [
+                  AsIsFiles.CursorPagerTest,
+                  AsIsFiles.GeneratorPagerTest,
+                  AsIsFiles.HasNextPageOffsetPagerTest,
+                  AsIsFiles.IntOffsetPagerTest,
+                  AsIsFiles.StepOffsetPagerTest,
+                  AsIsFiles.DeepSetTest,
+                  AsIsFiles.DeepSetAccessorsTest,
+                  AsIsFiles.CreateRequestWithDefaultsTest
+              ]
+            : [];
     }
 
     public getUtilsAsIsFiles(): string[] {
@@ -444,5 +619,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     private getOrganizationPascalCase(): string {
         return `${upperFirst(camelCase(this.config.organization))}`;
+    }
+
+    private isMultipartEndpoint(endpoint: HttpEndpoint): boolean {
+        return endpoint.requestBody?.type === "fileUpload";
+    }
+
+    public hasPagination(): boolean {
+        return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 }

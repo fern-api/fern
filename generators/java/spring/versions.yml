@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.5.0
+- changelogEntry:
+    - summary: |
         Fix inlining unwrapped alias types.
       type: fix
   createdAt: '2025-01-17'

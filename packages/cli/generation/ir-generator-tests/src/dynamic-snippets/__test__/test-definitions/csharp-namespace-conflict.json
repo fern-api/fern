@@ -107,7 +107,8 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_a/aa:B": {
             "type": "object",
@@ -215,7 +216,8 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_a/aa:SubTestType": {
             "type": "object",
@@ -380,7 +382,8 @@
                         "value": "type_a/aa:B"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_b:TestType": {
             "type": "object",
@@ -507,7 +510,8 @@
                         "value": "type_a/aa:B"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_tasktest:Task": {
             "type": "object",
@@ -604,7 +608,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -686,8 +691,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -14,7 +14,7 @@ API reference documentation is available [here](https://www.docs.fernapi.com).
 ## Installation
 
 ```sh
-nuget install SeedExamples
+dotnet add package SeedExamples
 ```
 
 ## Usage

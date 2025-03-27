@@ -1199,7 +1199,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",
@@ -1602,7 +1602,7 @@
                 "extends": [],
                 "properties": [
                   {
-                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.\n",
+                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.",
                     "key": "pagination",
                     "valueType": {
                       "type": "optional",
@@ -2133,6 +2133,83 @@
           "id": "listUsernames",
           "originalEndpointId": "endpoint_users.listUsernames",
           "name": "List Usernames",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:UsernameCursor"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "cursor": {
+                  "after": "after",
+                  "data": [
+                    "data",
+                    "data"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "cursor": {
+                    "after": "after",
+                    "data": [
+                      "data",
+                      "data"
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listUsernamesCustom",
+          "originalEndpointId": "endpoint_users.listUsernamesCustom",
+          "name": "List Usernames Custom",
           "path": {
             "pathParameters": [],
             "parts": [

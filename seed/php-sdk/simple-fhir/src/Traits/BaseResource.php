@@ -13,7 +13,12 @@ use Seed\Core\Types\Union;
 
 /**
  * @property string $id
- * @property array<Account|Patient|Practitioner|Script> $relatedResources
+ * @property array<(
+ *    Account
+ *   |Patient
+ *   |Practitioner
+ *   |Script
+ * )> $relatedResources
  * @property Memo $memo
  */
 trait BaseResource
@@ -25,7 +30,12 @@ trait BaseResource
     public string $id;
 
     /**
-     * @var array<Account|Patient|Practitioner|Script> $relatedResources
+     * @var array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )> $relatedResources
      */
     #[JsonProperty('related_resources'), ArrayType([new Union(Account::class, Patient::class, Practitioner::class, Script::class)])]
     public array $relatedResources;

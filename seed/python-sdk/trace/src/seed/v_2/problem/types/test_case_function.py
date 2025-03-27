@@ -12,8 +12,9 @@ from .assert_correctness_check import AssertCorrectnessCheck
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .parameter import Parameter
-from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
-from ....core.pydantic_utilities import update_forward_refs
+from .function_implementation_for_multiple_languages import (
+    FunctionImplementationForMultipleLanguages,
+)
 
 
 class TestCaseFunction_WithActualResult(UniversalBaseModel):
@@ -49,7 +50,3 @@ class TestCaseFunction_Custom(UniversalBaseModel):
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
-update_forward_refs(ListType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
-update_forward_refs(MapType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
-update_forward_refs(ListType, TestCaseFunction_Custom=TestCaseFunction_Custom)
-update_forward_refs(MapType, TestCaseFunction_Custom=TestCaseFunction_Custom)

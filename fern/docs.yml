@@ -62,6 +62,9 @@ navigation:
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/openapi/auth.mdx
+          - page: Servers
+            icon: fa-regular fa-globe
+            path: ./pages/api-definition/openapi/servers.mdx            
           - section: Endpoints
             icon: fa-regular fa-object-intersect
             slug: endpoints
@@ -74,7 +77,7 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/openapi/endpoints/multipart.mdx
                 slug: multipart
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
                 icon: fa-regular fa-signal-stream
                 slug: sse
@@ -142,7 +145,7 @@ navigation:
                 path: ./pages/api-definition/fern-definition/endpoints/bytes.mdx
                 icon: fa-regular fa-server
                 slug: bytes                
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 icon: fa-regular fa-signal-stream
                 path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
                 slug: sse
@@ -282,6 +285,10 @@ navigation:
             path: ./pages/sdks/capabilities/websockets.mdx
             icon: fa-regular fa-pro
             slug: websockets
+          - page: Model Context Protocol
+            icon: fa-regular fa-pro
+            path: ./pages/sdks/capabilities/mcp.mdx
+            slug: mcp
       - section: Reference
         contents:
           - page: Configuration
@@ -381,7 +388,7 @@ navigation:
             icon: fa-regular fa-palette
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
-            icon: fa-regular fa-magnifying-glass
+            icon: fa-regular fa-code-pull-request
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
             icon: fa-regular fa-globe
@@ -393,6 +400,10 @@ navigation:
             icon: fa-regular fa-lock
             path: ./pages/docs/building-your-docs/rbac.mdx
             slug: rbac
+          - page: Search
+            icon: fa-regular fa-magnifying-glass
+            path: ./pages/docs/building-your-docs/search.mdx
+            slug: search
 
       - section: Writing Content
         slug: content
@@ -468,6 +479,9 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+          - page: Custom React Components
+            icon: fa-brands fa-react
+            path: ./pages/docs/writing-content/custom-react-components.mdx
           - page: Frontmatter
             icon: fa-regular fa-sliders
             path: ./pages/docs/writing-content/frontmatter.mdx
@@ -516,6 +530,10 @@ navigation:
           - page: Generate Webhook Reference
             icon: fa-regular fa-webhook
             path: ./pages/docs/api-references/generate-webhook-ref.mdx
+          - page: Generate WebSocket Reference
+            icon: fa-regular fa-plug
+            path: ./pages/docs/api-references/generate-websocket-ref.mdx
+            slug: generate-websocket-ref
 
       - section: Integrations
         slug: integrations
@@ -549,6 +567,9 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
+          - page: Feature Flags
+            path: ./pages/docs/integrations/launchdarkly.mdx
+            icon: fa-regular fa-flag
 
       - section: Developer Tools
         contents:
@@ -566,6 +587,9 @@ navigation:
           - page: Vale
             icon: fa-regular fa-shield-check
             path: ./pages/docs/developer-tools/vale.mdx
+          - page: View Markdown
+            icon: fa-brands fa-markdown
+            path: ./pages/docs/developer-tools/view-markdown.mdx
 
       - section: Alternatives
         hidden: true
@@ -592,12 +616,19 @@ navigation:
           - changelog: ./pages/changelogs/cli
       - api: API Reference
         api-name: public-api
+        icon: fa-regular fa-pro
         paginated: true
         audiences:
           - external
         layout:
           - page: Overview
             path: ./pages/cli-api/api-get-started.mdx
+          - sdk: 
+            - endpoint: sdk.generate
+              hidden: true
+            - endpoint: sdk.getStatus
+              hidden: true
+
 
 navbar-links:
   - type: minimal
@@ -626,27 +657,30 @@ logo:
   href: https://www.buildwithfern.com
   light: ./images/logo-primary.svg
   dark: ./images/logo-white.svg
-  height: 30
+  height: 20
 colors:
   accent-primary:
-    dark: "#2BDB3C"
-    light: "#0D4C14"
+    dark: "#70E155"
+    light: "#008700"
   background:
-    dark: "#081008"
-    light: "#FBFFFA"
+    dark: "#111113"
+    light: "#F9F9FB"
+  border: 
+    dark: "#393A40"
+    light: "#E0E1E6"
   header-background:
-    dark: "#081008"
-    light: "#FBFFFA"
-favicon: ./images/favicon.ico
+    dark: "#19191B"
+    light: "#FFFFFF"
+  card-background:
+    dark: "#222325"
+    light: "#FFFFFF"
+favicon: ./images/favicon_32.png
 
 layout:
   page-width: 1504px
   header-height: 75px
   searchbar-placement: header
   tabs-placement: header
-
-js:
-  - ./js/koala.js
 
 analytics:
   posthog:

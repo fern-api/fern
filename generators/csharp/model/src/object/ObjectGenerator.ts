@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -11,6 +12,7 @@ import {
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateFields } from "../generateFields";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
@@ -31,35 +33,21 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.classReference,
-            partial: false,
+            summary: this.typeDeclaration.docs,
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.Record
         });
-        const flattenedProperties = [
-            ...this.objectDeclaration.properties,
-            ...(this.objectDeclaration.extendedProperties ?? [])
-        ];
-        flattenedProperties.forEach((property) => {
-            class_.addField(
-                csharp.field({
-                    name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
-                    type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
-                    access: csharp.Access.Public,
-                    get: true,
-                    set: true,
-                    summary: property.docs,
-                    jsonPropertyName: property.name.wireValue,
-                    useRequired: true
-                })
-            );
-        });
+        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
+        class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }));
+
+        class_.addField(this.context.createAdditionalPropertiesField());
 
         class_.addMethod(this.context.getToStringMethod());
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
                 class_,
-                flattenedProperties
+                properties
             });
         }
 
@@ -100,17 +88,11 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
-    private addProtobufMappers({
-        class_,
-        flattenedProperties
-    }: {
-        class_: csharp.Class;
-        flattenedProperties: ObjectProperty[];
-    }): void {
+    private addProtobufMappers({ class_, properties }: { class_: csharp.Class; properties: ObjectProperty[] }): void {
         const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
             this.typeDeclaration.name.typeId
         );
-        const properties = flattenedProperties.map((property) => {
+        const protoProperties = properties.map((property) => {
             return {
                 propertyName: this.getPropertyName({
                     className: this.classReference.name,
@@ -123,14 +105,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             this.context.csharpProtobufTypeMapper.toProtoMethod({
                 classReference: this.classReference,
                 protobufClassReference,
-                properties
+                properties: protoProperties
             })
         );
         class_.addMethod(
             this.context.csharpProtobufTypeMapper.fromProtoMethod({
                 classReference: this.classReference,
                 protobufClassReference,
-                properties
+                properties: protoProperties
             })
         );
     }

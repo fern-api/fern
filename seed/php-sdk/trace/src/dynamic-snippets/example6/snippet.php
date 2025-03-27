@@ -5,6 +5,7 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Submission\Types\TraceResponseV2;
 use Seed\Submission\Types\TracedFile;
+use Seed\Commons\Types\DebugVariableValue;
 use Seed\Submission\Types\ExpressionLocation;
 use Seed\Submission\Types\StackInformation;
 use Seed\Submission\Types\StackFrame;
@@ -27,7 +28,7 @@ $client->admin->storeTracedTestCaseV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => 'todo',
+            'returnValue' => DebugVariableValue::integerValue(),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -40,12 +41,12 @@ $client->admin->storeTracedTestCaseV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => 'todo',
+                                'variables' => DebugVariableValue::integerValue(),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => 'todo',
+                                'variables' => DebugVariableValue::integerValue(),
                             ],
                         ]),
                     ],
@@ -60,7 +61,7 @@ $client->admin->storeTracedTestCaseV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => 'todo',
+            'returnValue' => DebugVariableValue::integerValue(),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -73,12 +74,12 @@ $client->admin->storeTracedTestCaseV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => 'todo',
+                                'variables' => DebugVariableValue::integerValue(),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => 'todo',
+                                'variables' => DebugVariableValue::integerValue(),
                             ],
                         ]),
                     ],

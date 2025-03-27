@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v53
+irVersion: v57
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -41,10 +41,21 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      - dotnet build src/*.DynamicSnippets
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
       # - dotnet test src
 
 fixtures:
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-pager-name: MyPager
+      outputFolder: custom-pager
+    - customConfig:
+        custom-pager-name: MyPager
+        include-exception-handler: true
+      outputFolder: custom-pager-with-exception-handler
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -71,10 +82,20 @@ fixtures:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
+    - customConfig:
+        client-class-name: BaseClient
+        exported-client-class-name: CustomClient
+      outputFolder: exported-client-class-name
+    - customConfig:
+        include-exception-handler: true
+      outputFolder: include-exception-handler
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
       outputFolder: no-pascal-case-environments
+    - customConfig:
+        environment-class-name: CustomEnvironment
+      outputFolder: environment-class-name
   exhaustive:
     - customConfig:
         explicit-namespaces: true
@@ -85,11 +106,20 @@ fixtures:
     - customConfig:
         generate-error-types: false
       outputFolder: no-generate-error-types
+    - customConfig:
+        include-exception-handler: true
+      outputFolder: include-exception-handler
   optional:
     - customConfig:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
-  grpc-proto-exhaustive:
+  path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inline-path-parameters: true
+      outputFolder: inline-path-parameters
+  csharp-grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -99,6 +129,15 @@ fixtures:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+    - customConfig:
+        include-exception-handler: true
+      outputFolder: include-exception-handler
+  oauth-client-credentials:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        include-exception-handler: true
+      outputFolder: include-exception-handler
   enum:
     - customConfig:
         experimental-enable-forward-compatible-enums: true
@@ -115,6 +154,12 @@ fixtures:
         type: custom
         filename: "../../LICENSE"
       outputFolder: custom-license
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-discriminated-unions: true
+      outputFolder: use-discriminated-unions
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends
@@ -143,4 +188,17 @@ allowedFailures:
   ## MORE Failures
   - literal
   - oauth-client-credentials-custom
-  - pagination
+  - pagination:no-custom-config
+  - pagination:custom-pager
+  - pagination:custom-pager-with-exception-handler
+
+  ## Dynamic snippets
+  - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
+  - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
+  - trace
+
+  # TODO: Add support for well-known types.
+  - csharp-grpc-proto-exhaustive:no-custom-config
+  - csharp-grpc-proto-exhaustive:package-id
+  - csharp-grpc-proto-exhaustive:read-only-memory
+  - csharp-grpc-proto-exhaustive:include-exception-handler

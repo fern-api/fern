@@ -44,7 +44,6 @@
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
-    "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "tmp-promise": "^3.0.3",
     "@fern-api/configs": "workspace:*",

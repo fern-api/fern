@@ -12,6 +12,7 @@
             "properties": {
               "category": "optional<CategoryEnum>",
               "end_user_email_address": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "email",
@@ -20,9 +21,16 @@
                   "pattern": undefined,
                 },
               },
-              "end_user_organization_name": "optional<string>",
-              "end_user_origin_id": "optional<string>",
+              "end_user_organization_name": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "end_user_origin_id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -31,14 +39,25 @@
                   "pattern": undefined,
                 },
               },
-              "integration": "optional<string>",
-              "integration_slug": "optional<string>",
+              "integration": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "integration_slug": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "is_duplicate": {
+                "access": "read-only",
                 "docs": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
                 "type": "optional<boolean>",
               },
-              "status": "optional<string>",
+              "status": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "webhook_listener_url": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uri",
@@ -150,7 +169,10 @@ View a list of your organization's `LinkedAccount` objects.",
                 "docs": "Company name.",
                 "type": "string",
               },
-              "slug": "optional<string>",
+              "slug": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
               "square_image": {
                 "docs": "Company logo in square shape. <b>Upload an image with a white background.</b>",
                 "type": "optional<string>",
@@ -246,8 +268,12 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -257,6 +283,7 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -264,12 +291,16 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
                 "docs": "When the matching bank object was created in the third party system.",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -317,8 +348,12 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 "docs": "The day and time the benefit ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -328,6 +363,7 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -335,12 +371,16 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
                 "docs": "The name of the benefit provider.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -434,8 +474,12 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
                 "docs": "The company's Employer Identification Numbers.",
                 "type": "optional<list<optional<string>>>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -449,15 +493,20 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -471,6 +520,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
             "inline": undefined,
             "properties": {
               "common_model": {
+                "access": "read-only",
                 "docs": "The common model for which a condition schema is defined.",
                 "type": "optional<string>",
               },
@@ -1095,8 +1145,12 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1106,6 +1160,7 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1113,7 +1168,10 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
                 "docs": "The deduction's name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -1149,8 +1207,12 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1160,10 +1222,14 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -1272,7 +1338,10 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<EthnicityEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "first_name": {
                 "docs": "The employee's first name.",
                 "type": "optional<string>",
@@ -1304,6 +1373,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 },
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1341,6 +1411,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1368,12 +1439,18 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                 "docs": "When the third party's employee was created.",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
-              "remote_was_deleted": "optional<boolean>",
+              "remote_was_deleted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "ssn": {
                 "docs": "The employee's social security number.",
                 "type": "optional<string>",
@@ -1444,8 +1521,14 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run was checked.",
                 "type": "optional<datetime>",
               },
-              "deductions": "optional<list<Deduction>>",
-              "earnings": "optional<list<Earning>>",
+              "deductions": {
+                "access": "read-only",
+                "type": "optional<list<Deduction>>",
+              },
+              "earnings": {
+                "access": "read-only",
+                "type": "optional<list<Earning>>",
+              },
               "employee": {
                 "docs": "The employee whose payroll is being run.",
                 "type": "optional<string>",
@@ -1460,12 +1543,16 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "gross_pay": {
                 "docs": "The total earnings throughout a given period for an employee before any deductions are made.",
                 "type": "optional<double>",
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1475,6 +1562,7 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -1492,12 +1580,16 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -1505,7 +1597,10 @@ Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all
                 "docs": "The day and time the payroll run started.",
                 "type": "optional<datetime>",
               },
-              "taxes": "optional<list<Tax>>",
+              "taxes": {
+                "access": "read-only",
+                "type": "optional<list<Tax>>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1607,12 +1702,18 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                   "pattern": undefined,
                 },
               },
-              "integration_params": "optional<map<string, unknown>>",
+              "integration_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "last_name": {
                 "docs": "The employee's last name.",
                 "type": "optional<string>",
               },
-              "linked_account_params": "optional<map<string, unknown>>",
+              "linked_account_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "manager": {
                 "docs": "The employee ID of the employee's manager.",
                 "type": "optional<string>",
@@ -1762,7 +1863,10 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
 * `FREELANCE` - FREELANCE",
                 "type": "optional<EmploymentTypeEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "flsa_status": {
                 "docs": "The position's FLSA status.
 
@@ -1773,6 +1877,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "type": "optional<FlsaStatusEnum>",
               },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -1786,6 +1891,7 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "type": "optional<string>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -2142,12 +2248,16 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
                 "docs": "The position's pay rate in dollars.",
                 "type": "optional<double>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -2297,8 +2407,12 @@ The `Group` object is used to represent any subset of employees, such as `PayGro
 Fetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2308,6 +2422,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -2325,12 +2440,16 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -2371,11 +2490,18 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "end_user": "optional<map<string, unknown>>",
+              "end_user": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "error_description": "string",
-              "error_details": "optional<list<string>>",
+              "error_details": {
+                "access": "read-only",
+                "type": "optional<list<string>>",
+              },
               "first_incident_time": "optional<datetime>",
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2384,7 +2510,10 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                   "pattern": undefined,
                 },
               },
-              "is_muted": "optional<boolean>",
+              "is_muted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "last_incident_time": "optional<datetime>",
               "status": {
                 "docs": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
@@ -2427,6 +2556,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
             "inline": undefined,
             "properties": {
               "common_model": {
+                "access": "read-only",
                 "docs": "The common model for a specific condition.",
                 "type": "optional<string>",
               },
@@ -2452,7 +2582,10 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                 "docs": "The operator for a specific condition.",
                 "type": "string",
               },
-              "value": "optional<unknown>",
+              "value": {
+                "access": "read-only",
+                "type": "optional<unknown>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2493,6 +2626,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
             "inline": undefined,
             "properties": {
               "linked_account_conditions": {
+                "access": "read-only",
                 "docs": "The conditions belonging to a selective sync.",
                 "type": "optional<list<LinkedAccountCondition>>",
               },
@@ -2792,8 +2926,12 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
 * `ZW` - Zimbabwe",
                 "type": "optional<CountryEnum>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -2810,6 +2948,7 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
                 "type": "optional<LocationTypeEnum>",
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -2821,12 +2960,16 @@ Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office l
                 "docs": "The location's phone number.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -3002,10 +3145,12 @@ Create a `MultipartFormField` to define a multipart form entry.",
             "inline": undefined,
             "properties": {
               "is_unique": {
+                "access": "read-only",
                 "docs": "Whether the operator can be repeated multiple times.",
                 "type": "optional<boolean>",
               },
               "operator": {
+                "access": "read-only",
                 "docs": "The operator for which an operator schema is defined.",
                 "type": "optional<string>",
               },
@@ -3876,8 +4021,12 @@ The `PayGroup` object is used to represent a subset of employees that are put to
 Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -3887,6 +4036,7 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -3894,12 +4044,16 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
                 "docs": "The pay group name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -3951,8 +4105,12 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
                 "docs": "The day and time the payroll run ended.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -3962,15 +4120,20 @@ Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payrol
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4246,8 +4409,12 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 "docs": "Whether or not the employer is responsible for paying the tax.",
                 "type": "optional<boolean>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4257,6 +4424,7 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4264,7 +4432,10 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
                 "docs": "The tax's name.",
                 "type": "optional<string>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
@@ -4287,8 +4458,12 @@ The `Team` object is used to represent a subdivision of the company, usually a d
 If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint to fetch the `Teams`, and then use the `ID` of the team your user selects to filter the `GET Employees` endpoint.",
             "inline": undefined,
             "properties": {
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4298,6 +4473,7 @@ If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4315,12 +4491,16 @@ If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint
                   "pattern": undefined,
                 },
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4370,8 +4550,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 "docs": "The day and time of the end of the time requested off.",
                 "type": "optional<datetime>",
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4381,15 +4565,22 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
-              "remote_was_deleted": "optional<boolean>",
+              "remote_was_deleted": {
+                "access": "read-only",
+                "type": "optional<boolean>",
+              },
               "request_type": {
                 "docs": "The type of time off request.
 
@@ -4450,8 +4641,12 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
                   "pattern": undefined,
                 },
               },
-              "field_mappings": "optional<map<string, unknown>>",
+              "field_mappings": {
+                "access": "read-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "id": {
+                "access": "read-only",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -4461,6 +4656,7 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
                 },
               },
               "modified_at": {
+                "access": "read-only",
                 "docs": "This is the datetime that this object was last updated by Merge",
                 "type": "optional<datetime>",
               },
@@ -4475,12 +4671,16 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
 * `BEREAVEMENT` - BEREAVEMENT",
                 "type": "optional<PolicyTypeEnum>",
               },
-              "remote_data": "optional<list<RemoteData>>",
+              "remote_data": {
+                "access": "read-only",
+                "type": "optional<list<RemoteData>>",
+              },
               "remote_id": {
                 "docs": "The third-party API ID of the matching object.",
                 "type": "optional<string>",
               },
               "remote_was_deleted": {
+                "access": "read-only",
                 "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
                 "type": "optional<boolean>",
               },
@@ -4534,8 +4734,14 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 "docs": "The day and time of the end of the time requested off.",
                 "type": "optional<datetime>",
               },
-              "integration_params": "optional<map<string, unknown>>",
-              "linked_account_params": "optional<map<string, unknown>>",
+              "integration_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
+              "linked_account_params": {
+                "access": "write-only",
+                "type": "optional<map<string, unknown>>",
+              },
               "request_type": {
                 "docs": "The type of time off request.
 
@@ -4660,20 +4866,33 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
-      integration: optional<string>
-      integration_slug: optional<string>
+        access: read-only
+      integration:
+        type: optional<string>
+        access: read-only
+      integration_slug:
+        type: optional<string>
+        access: read-only
       category: optional<CategoryEnum>
-      end_user_origin_id: optional<string>
-      end_user_organization_name: optional<string>
+      end_user_origin_id:
+        type: optional<string>
+        access: read-only
+      end_user_organization_name:
+        type: optional<string>
+        access: read-only
       end_user_email_address:
         type: optional<string>
         validation:
           format: email
-      status: optional<string>
+        access: read-only
+      status:
+        type: optional<string>
+        access: read-only
       webhook_listener_url:
         type: optional<string>
         validation:
           format: uri
+        access: read-only
       is_duplicate:
         type: optional<boolean>
         docs: >-
@@ -4681,6 +4900,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           existing Production Linked Account. This field is `null` for Test
           Linked Accounts, incomplete Production Linked Accounts, and ignored
           duplicate Production Linked Account sets.
+        access: read-only
     source:
       openapi: ../openapi.yml
   AccountDetailsAndActions:
@@ -4770,7 +4990,9 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         validation:
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
           maxLength: 18
-      slug: optional<string>
+      slug:
+        type: optional<string>
+        access: read-only
       is_in_beta:
         type: optional<boolean>
         docs: >-
@@ -4839,6 +5061,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -4873,11 +5096,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Benefit:
@@ -4899,6 +5128,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -4930,11 +5160,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   CategoriesEnum:
@@ -5004,6 +5240,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5021,11 +5258,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   ConditionSchema:
@@ -5040,6 +5283,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       common_model:
         type: optional<string>
         docs: The common model for which a condition schema is defined.
+        access: read-only
       native_name:
         type: optional<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
@@ -5625,6 +5869,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5653,8 +5898,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Earning:
@@ -5676,6 +5926,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5703,8 +5954,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EarningTypeEnum:
@@ -5739,6 +5995,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5905,12 +6162,19 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       custom_fields:
         type: optional<map<string, unknown>>
         docs: Custom fields configured for a given model.
-      remote_was_deleted: optional<boolean>
+      remote_was_deleted:
+        type: optional<boolean>
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmployeePayrollRun:
@@ -5932,6 +6196,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -5964,19 +6229,31 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       check_date:
         type: optional<datetime>
         docs: The day and time the payroll run was checked.
-      earnings: optional<list<Earning>>
-      deductions: optional<list<Deduction>>
-      taxes: optional<list<Tax>>
+      earnings:
+        type: optional<list<Earning>>
+        access: read-only
+      deductions:
+        type: optional<list<Deduction>>
+        access: read-only
+      taxes:
+        type: optional<list<Tax>>
+        access: read-only
       remote_was_deleted:
         type: optional<boolean>
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmployeeRequest:
@@ -6151,8 +6428,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         validation:
           format: uri
           maxLength: 2000
-      integration_params: optional<map<string, unknown>>
-      linked_account_params: optional<map<string, unknown>>
+      integration_params:
+        type: optional<map<string, unknown>>
+        access: write-only
+      linked_account_params:
+        type: optional<map<string, unknown>>
+        access: write-only
     source:
       openapi: ../openapi.yml
   EmployeeResponse:
@@ -6186,6 +6467,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -6878,11 +7160,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   EmploymentStatusEnum:
@@ -7016,6 +7304,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -7042,11 +7331,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   GroupTypeEnum:
@@ -7070,6 +7365,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       status:
         type: optional<IssueStatusEnum>
         docs: |-
@@ -7078,11 +7374,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           * `ONGOING` - ONGOING
           * `RESOLVED` - RESOLVED
       error_description: string
-      end_user: optional<map<string, unknown>>
+      end_user:
+        type: optional<map<string, unknown>>
+        access: read-only
       first_incident_time: optional<datetime>
       last_incident_time: optional<datetime>
-      is_muted: optional<boolean>
-      error_details: optional<list<string>>
+      is_muted:
+        type: optional<boolean>
+        access: read-only
+      error_details:
+        type: optional<list<string>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   IssueStatusEnum:
@@ -7113,13 +7415,16 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       common_model:
         type: optional<string>
         docs: The common model for a specific condition.
+        access: read-only
       native_name:
         type: optional<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
       operator:
         type: string
         docs: The operator for a specific condition.
-      value: optional<unknown>
+      value:
+        type: optional<unknown>
+        access: read-only
       field_name:
         type: optional<string>
         docs: >-
@@ -7149,6 +7454,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       linked_account_conditions:
         type: optional<list<LinkedAccountCondition>>
         docs: The conditions belonging to a selective sync.
+        access: read-only
     source:
       openapi: ../openapi.yml
   LinkedAccountSelectiveSyncConfigurationRequest:
@@ -7183,6 +7489,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -7473,11 +7780,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   LocationTypeEnum:
@@ -7606,9 +7919,11 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       operator:
         type: optional<string>
         docs: The operator for which an operator schema is defined.
+        access: read-only
       is_unique:
         type: optional<boolean>
         docs: Whether the operator can be repeated multiple times.
+        access: read-only
     source:
       openapi: ../openapi.yml
   PaginatedAccountDetailsAndActionsList:
@@ -8696,6 +9011,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -8707,11 +9023,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PayPeriodEnum:
@@ -8756,6 +9078,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -8793,11 +9116,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   PolicyTypeEnum:
@@ -9010,6 +9339,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9034,8 +9364,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   Team:
@@ -9059,6 +9394,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9075,11 +9411,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOff:
@@ -9100,6 +9442,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9158,12 +9501,19 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       end_time:
         type: optional<datetime>
         docs: The day and time of the end of the time requested off.
-      remote_was_deleted: optional<boolean>
+      remote_was_deleted:
+        type: optional<boolean>
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOffBalance:
@@ -9185,6 +9535,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         validation:
           format: uuid
+        access: read-only
       remote_id:
         type: optional<string>
         docs: The third-party API ID of the matching object.
@@ -9215,11 +9566,17 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: >-
           Indicates whether or not this object has been deleted by third party
           webhooks.
+        access: read-only
       modified_at:
         type: optional<datetime>
         docs: This is the datetime that this object was last updated by Merge
-      field_mappings: optional<map<string, unknown>>
-      remote_data: optional<list<RemoteData>>
+        access: read-only
+      field_mappings:
+        type: optional<map<string, unknown>>
+        access: read-only
+      remote_data:
+        type: optional<list<RemoteData>>
+        access: read-only
     source:
       openapi: ../openapi.yml
   TimeOffRequest:
@@ -9291,8 +9648,12 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       end_time:
         type: optional<datetime>
         docs: The day and time of the end of the time requested off.
-      integration_params: optional<map<string, unknown>>
-      linked_account_params: optional<map<string, unknown>>
+      integration_params:
+        type: optional<map<string, unknown>>
+        access: write-only
+      linked_account_params:
+        type: optional<map<string, unknown>>
+        access: write-only
     source:
       openapi: ../openapi.yml
   TimeOffResponse:
@@ -17781,7 +18142,15 @@ service:
                     "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
                     "type": "optional<string>",
                   },
-                  "id": "optional<string>",
+                  "id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "ids": {
                     "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
                     "type": "optional<string>",
@@ -17911,7 +18280,10 @@ service:
             docs: >-
               Comma-separated list of EndUser origin IDs, making it possible to
               specify multiple EndUsers at once.
-          id: optional<string>
+          id:
+            type: optional<string>
+            validation:
+              format: uuid
           ids:
             type: optional<string>
             docs: >-
@@ -21699,10 +22071,10 @@ service:
 error-discrimination:
   strategy: status-code
 display-name: Merge HRIS API
-default-environment: Production
 environments:
   Production: https://api.merge.dev/api/hris/v1
   Sandbox: https://api-sandbox.merge.dev/api/hris/v1
+default-environment: Production
 headers:
   X-Account-Token:
     type: optional<string>

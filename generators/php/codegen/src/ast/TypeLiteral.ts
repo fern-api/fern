@@ -143,7 +143,11 @@ export class TypeLiteral extends AstNode {
                     this.writeStringWithHeredoc({ writer, value: this.internalType.value });
                     break;
                 }
-                writer.write(`'${this.internalType.value.replaceAll("'", "\\'")}'`);
+                if (this.internalType.value.includes("'")) {
+                    writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
+                    break;
+                }
+                writer.write(`'${this.internalType.value}'`);
                 break;
             }
             case "unknown": {
@@ -159,6 +163,17 @@ export class TypeLiteral extends AstNode {
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    public isClass(): this is Class_ {
+        return (this.internalType as Class_).type === "class";
+    }
+
+    public asClassOrThrow(): Class_ {
+        if (this.isClass()) {
+            return this.internalType as Class_;
+        }
+        throw new Error("Internal error; ts.TypeLiteral is not a class");
     }
 
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {

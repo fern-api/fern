@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-sdk-group-name` for schemas",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -42,7 +43,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "This endpoint should be in `auth/user.yml`",
       "authed": false,
       "method": "GET",
@@ -95,7 +96,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "UserId": {

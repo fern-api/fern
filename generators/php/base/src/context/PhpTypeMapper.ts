@@ -53,6 +53,15 @@ export class PhpTypeMapper {
         }
     }
 
+    public convertLiteral({ literal }: { literal: Literal }): php.Type {
+        switch (literal.type) {
+            case "boolean":
+                return php.Type.literalBoolean(literal.boolean);
+            case "string":
+                return php.Type.literalString(literal.string);
+        }
+    }
+
     public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
@@ -114,15 +123,6 @@ export class PhpTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): php.Type {
-        switch (literal.type) {
-            case "boolean":
-                return php.Type.bool();
-            case "string":
-                return php.Type.string();
-        }
-    }
-
     private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): php.Type {
         const classReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
@@ -132,9 +132,8 @@ export class PhpTypeMapper {
             case "enum":
                 return preserveEnums ? php.Type.reference(classReference) : php.Type.enumString(classReference);
             case "object":
-                return php.Type.reference(classReference);
             case "union":
-                return php.Type.mixed();
+                return php.Type.reference(classReference);
             case "undiscriminatedUnion": {
                 return php.Type.union(
                     // need to dedupe because lists and sets are both represented as array

@@ -122,7 +122,7 @@ class NullableClient:
         import datetime
 
         from seed import SeedNullable
-        from seed.nullable import Metadata
+        from seed.nullable import Metadata, Status
 
         client = SeedNullable(
             base_url="https://yourhost.com/path/to/api",
@@ -139,6 +139,7 @@ class NullableClient:
                 ),
                 avatar="avatar",
                 activated=True,
+                status=Status(),
             ),
             avatar="avatar",
         )
@@ -172,7 +173,10 @@ class NullableClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_user(
-        self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        username: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         Parameters
@@ -338,7 +342,7 @@ class AsyncNullableClient:
         import datetime
 
         from seed import AsyncSeedNullable
-        from seed.nullable import Metadata
+        from seed.nullable import Metadata, Status
 
         client = AsyncSeedNullable(
             base_url="https://yourhost.com/path/to/api",
@@ -358,6 +362,7 @@ class AsyncNullableClient:
                     ),
                     avatar="avatar",
                     activated=True,
+                    status=Status(),
                 ),
                 avatar="avatar",
             )
@@ -394,7 +399,10 @@ class AsyncNullableClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_user(
-        self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        username: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> bool:
         """
         Parameters

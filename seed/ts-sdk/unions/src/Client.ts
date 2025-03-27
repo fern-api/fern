@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core";
+import { Bigunion } from "./api/resources/bigunion/client/Client";
 import { Union } from "./api/resources/union/client/Client";
 
 export declare namespace SeedUnionsClient {
@@ -25,9 +26,14 @@ export declare namespace SeedUnionsClient {
 }
 
 export class SeedUnionsClient {
+    protected _bigunion: Bigunion | undefined;
     protected _union: Union | undefined;
 
     constructor(protected readonly _options: SeedUnionsClient.Options) {}
+
+    public get bigunion(): Bigunion {
+        return (this._bigunion ??= new Bigunion(this._options));
+    }
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));

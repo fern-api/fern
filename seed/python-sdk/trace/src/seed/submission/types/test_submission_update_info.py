@@ -13,7 +13,6 @@ import typing_extensions
 from ...v_2.problem.types.test_case_id import TestCaseId
 from ...core.serialization import FieldMetadata
 from .test_case_grade import TestCaseGrade
-from ...core.pydantic_utilities import update_forward_refs
 
 
 class TestSubmissionUpdateInfo_Running(UniversalBaseModel):
@@ -106,5 +105,3 @@ TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_RecordedTestCase,
     TestSubmissionUpdateInfo_Finished,
 ]
-update_forward_refs(KeyValuePair, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)
-update_forward_refs(MapValue, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)

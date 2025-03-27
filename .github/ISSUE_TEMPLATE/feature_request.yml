@@ -49,10 +49,13 @@ body:
     validations:
       required: false
 
-  - type: textarea
-    id: additional-context
+  - type: dropdown
+    id: contribute
     attributes:
-      label: "Anything else? (Optional)"
-      placeholder: "Links, screenshots, or related issues..."
+      label: "Are you interested in contributing this feature?"
+      description: "If this feature is in line with the project's goals, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
     validations:
-      required: false
+      required: true

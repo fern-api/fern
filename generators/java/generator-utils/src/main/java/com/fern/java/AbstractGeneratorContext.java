@@ -51,6 +51,8 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.interfaces = getInterfaceTypeIds(ir);
     }
 
+    public abstract GeneratorType getType();
+
     public abstract boolean deserializeWithAdditionalProperties();
 
     public final IntermediateRepresentation getIr() {
@@ -95,6 +97,13 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         return resolvedAuthSchemes;
     }
 
+    public TypeDeclaration getTypeDeclaration(TypeId typeId) {
+        if (!getTypeDeclarations().containsKey(typeId)) {
+            throw new IllegalArgumentException("Received type id without a corresponding declaration: " + typeId);
+        }
+        return getTypeDeclarations().get(typeId);
+    }
+
     private static Set<TypeId> getInterfaceTypeIds(IntermediateRepresentation ir) {
         Set<TypeId> extendedTypeIdsFromTypes = ir.getTypes().values().stream()
                 .map(TypeDeclaration::getShape)
@@ -118,5 +127,11 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         result.addAll(extendedTypeIdsFromTypes);
         result.addAll(extendedTypeIdsFromInlinedRequests);
         return result;
+    }
+
+    public enum GeneratorType {
+        SDK,
+        MODEL,
+        SPRING,
     }
 }

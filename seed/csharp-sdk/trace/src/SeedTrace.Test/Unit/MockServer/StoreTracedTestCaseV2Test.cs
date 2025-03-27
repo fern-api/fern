@@ -6,7 +6,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class StoreTracedTestCaseV2Test : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -195,8 +195,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                             },
                             Stdout = "stdout",
                         },
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

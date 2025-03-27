@@ -8,21 +8,21 @@ use Seed\Core\Json\JsonProperty;
 class DebugKeyValuePairs extends JsonSerializableType
 {
     /**
-     * @var mixed $key
+     * @var DebugVariableValue $key
      */
     #[JsonProperty('key')]
-    public mixed $key;
+    public DebugVariableValue $key;
 
     /**
-     * @var mixed $value
+     * @var DebugVariableValue $value
      */
     #[JsonProperty('value')]
-    public mixed $value;
+    public DebugVariableValue $value;
 
     /**
      * @param array{
-     *   key: mixed,
-     *   value: mixed,
+     *   key: DebugVariableValue,
+     *   value: DebugVariableValue,
      * } $values
      */
     public function __construct(

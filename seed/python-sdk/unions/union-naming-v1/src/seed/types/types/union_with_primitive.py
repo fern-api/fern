@@ -33,4 +33,9 @@ class StringUnionWithPrimitive(UniversalBaseModel):
             smart_union = True
 
 
+"""
+from seed.types import IntegerUnionWithPrimitive
+
+IntegerUnionWithPrimitive(value=9)
+"""
 UnionWithPrimitive = typing.Union[IntegerUnionWithPrimitive, StringUnionWithPrimitive]

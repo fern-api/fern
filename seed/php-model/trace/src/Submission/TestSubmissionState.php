@@ -28,17 +28,17 @@ class TestSubmissionState extends JsonSerializableType
     public array $customTestCases;
 
     /**
-     * @var mixed $status
+     * @var TestSubmissionStatus $status
      */
     #[JsonProperty('status')]
-    public mixed $status;
+    public TestSubmissionStatus $status;
 
     /**
      * @param array{
      *   problemId: string,
      *   defaultTestCases: array<TestCase>,
      *   customTestCases: array<TestCase>,
-     *   status: mixed,
+     *   status: TestSubmissionStatus,
      * } $values
      */
     public function __construct(
