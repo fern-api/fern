@@ -33306,7 +33306,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".execute-workflow-stream",
+          "id": "execute-workflow-stream",
           "method": "POST",
           "name": {
             "originalName": "execute-workflow-stream",
@@ -35457,7 +35457,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".generate",
+          "id": "generate",
           "method": "POST",
           "name": {
             "originalName": "generate",
@@ -40797,7 +40797,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".generate-stream",
+          "id": "generate-stream",
           "method": "POST",
           "name": {
             "originalName": "generate-stream",
@@ -44119,7 +44119,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".search",
+          "id": "search",
           "method": "POST",
           "name": {
             "originalName": "search",
@@ -45966,7 +45966,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".submit-completion-actuals",
+          "id": "submit-completion-actuals",
           "method": "POST",
           "name": {
             "originalName": "submit-completion-actuals",

@@ -360,7 +360,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getAuthUser",
+          "id": "getAuthUser",
           "method": "GET",
           "name": {
             "originalName": "getAuthUser",

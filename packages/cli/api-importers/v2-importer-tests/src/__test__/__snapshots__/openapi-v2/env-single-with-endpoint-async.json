@@ -302,7 +302,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".list",
+          "id": "list",
           "method": "GET",
           "name": {
             "originalName": "list",

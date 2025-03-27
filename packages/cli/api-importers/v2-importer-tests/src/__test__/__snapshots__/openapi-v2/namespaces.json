@@ -2414,7 +2414,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "pet.addPet",
+          "id": "petsV1.pet.addPet",
           "displayName": "Add a new pet to the store.",
           "method": "POST",
           "name": {
@@ -5537,7 +5537,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.updatePet",
+          "id": "petsV1.pet.updatePet",
           "displayName": "Update an existing pet.",
           "method": "PUT",
           "name": {
@@ -8660,7 +8660,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.findPetsByStatus",
+          "id": "petsV1.pet.findPetsByStatus",
           "displayName": "Finds Pets by status.",
           "method": "GET",
           "name": {
@@ -12749,7 +12749,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.findPetsByTags",
+          "id": "petsV1.pet.findPetsByTags",
           "displayName": "Finds Pets by tags.",
           "method": "GET",
           "name": {
@@ -16826,7 +16826,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.getPetById",
+          "id": "petsV1.pet.getPetById",
           "displayName": "Find pet by ID.",
           "method": "GET",
           "name": {
@@ -18952,7 +18952,7 @@
           ]
         },
         {
-          "id": "pet.updatePetWithForm",
+          "id": "petsV1.pet.updatePetWithForm",
           "displayName": "Updates a pet in the store with form data.",
           "method": "POST",
           "name": {
@@ -21163,7 +21163,7 @@
           ]
         },
         {
-          "id": "pet.deletePet",
+          "id": "petsV1.pet.deletePet",
           "displayName": "Deletes a pet.",
           "method": "DELETE",
           "name": {
@@ -21375,7 +21375,7 @@
           ]
         },
         {
-          "id": "pet.uploadFile",
+          "id": "petsV1.pet.uploadFile",
           "displayName": "Uploads an image.",
           "method": "POST",
           "name": {
@@ -22162,7 +22162,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "store.getInventory",
+          "id": "petsV1.store.getInventory",
           "displayName": "Returns pet inventories by status.",
           "method": "GET",
           "name": {
@@ -22338,7 +22338,7 @@
           "allPathParameters": []
         },
         {
-          "id": "store.placeOrder",
+          "id": "petsV1.store.placeOrder",
           "displayName": "Place an order for a pet.",
           "method": "POST",
           "name": {
@@ -24117,7 +24117,7 @@
           "allPathParameters": []
         },
         {
-          "id": "store.getOrderById",
+          "id": "petsV1.store.getOrderById",
           "displayName": "Find purchase order by ID.",
           "method": "GET",
           "name": {
@@ -25229,7 +25229,7 @@
           ]
         },
         {
-          "id": "store.deleteOrder",
+          "id": "petsV1.store.deleteOrder",
           "displayName": "Delete purchase order by identifier.",
           "method": "DELETE",
           "name": {
@@ -25493,7 +25493,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "user.createUser",
+          "id": "petsV1.user.createUser",
           "displayName": "Create user.",
           "method": "POST",
           "name": {
@@ -27616,7 +27616,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.createUsersWithListInput",
+          "id": "petsV1.user.createUsersWithListInput",
           "displayName": "Creates list of users with given input array.",
           "method": "POST",
           "name": {
@@ -30726,7 +30726,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.loginUser",
+          "id": "petsV1.user.loginUser",
           "displayName": "Logs user into the system.",
           "method": "GET",
           "name": {
@@ -30905,7 +30905,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.logoutUser",
+          "id": "petsV1.user.logoutUser",
           "displayName": "Logs out current logged in user session.",
           "method": "GET",
           "name": {
@@ -30967,7 +30967,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.getUserByName",
+          "id": "petsV1.user.getUserByName",
           "displayName": "Get user by user name.",
           "method": "GET",
           "name": {
@@ -32228,7 +32228,7 @@
           ]
         },
         {
-          "id": "user.updateUser",
+          "id": "petsV1.user.updateUser",
           "displayName": "Update user resource.",
           "method": "PUT",
           "name": {
@@ -33376,7 +33376,7 @@
           ]
         },
         {
-          "id": "user.deleteUser",
+          "id": "petsV1.user.deleteUser",
           "displayName": "Delete user resource.",
           "method": "DELETE",
           "name": {
@@ -33644,7 +33644,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "pet.addPet",
+          "id": "petsV2.pet.addPet",
           "displayName": "Add a new pet to the store.",
           "method": "POST",
           "name": {
@@ -36767,7 +36767,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.updatePet",
+          "id": "petsV2.pet.updatePet",
           "displayName": "Update an existing pet.",
           "method": "PUT",
           "name": {
@@ -39890,7 +39890,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.findPetsByStatus",
+          "id": "petsV2.pet.findPetsByStatus",
           "displayName": "Finds Pets by status.",
           "method": "GET",
           "name": {
@@ -43979,7 +43979,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.findPetsByTags",
+          "id": "petsV2.pet.findPetsByTags",
           "displayName": "Finds Pets by tags.",
           "method": "GET",
           "name": {
@@ -48056,7 +48056,7 @@
           "allPathParameters": []
         },
         {
-          "id": "pet.getPetById",
+          "id": "petsV2.pet.getPetById",
           "displayName": "Find pet by ID.",
           "method": "GET",
           "name": {
@@ -50182,7 +50182,7 @@
           ]
         },
         {
-          "id": "pet.updatePetWithForm",
+          "id": "petsV2.pet.updatePetWithForm",
           "displayName": "Updates a pet in the store with form data.",
           "method": "POST",
           "name": {
@@ -52393,7 +52393,7 @@
           ]
         },
         {
-          "id": "pet.deletePet",
+          "id": "petsV2.pet.deletePet",
           "displayName": "Deletes a pet.",
           "method": "DELETE",
           "name": {
@@ -52605,7 +52605,7 @@
           ]
         },
         {
-          "id": "pet.uploadFile",
+          "id": "petsV2.pet.uploadFile",
           "displayName": "Uploads an image.",
           "method": "POST",
           "name": {
@@ -53392,7 +53392,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "store.getInventory",
+          "id": "petsV2.store.getInventory",
           "displayName": "Returns pet inventories by status.",
           "method": "GET",
           "name": {
@@ -53568,7 +53568,7 @@
           "allPathParameters": []
         },
         {
-          "id": "store.placeOrder",
+          "id": "petsV2.store.placeOrder",
           "displayName": "Place an order for a pet.",
           "method": "POST",
           "name": {
@@ -55347,7 +55347,7 @@
           "allPathParameters": []
         },
         {
-          "id": "store.getOrderById",
+          "id": "petsV2.store.getOrderById",
           "displayName": "Find purchase order by ID.",
           "method": "GET",
           "name": {
@@ -56459,7 +56459,7 @@
           ]
         },
         {
-          "id": "store.deleteOrder",
+          "id": "petsV2.store.deleteOrder",
           "displayName": "Delete purchase order by identifier.",
           "method": "DELETE",
           "name": {
@@ -56723,7 +56723,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "user.createUser",
+          "id": "petsV2.user.createUser",
           "displayName": "Create user.",
           "method": "POST",
           "name": {
@@ -58846,7 +58846,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.createUsersWithListInput",
+          "id": "petsV2.user.createUsersWithListInput",
           "displayName": "Creates list of users with given input array.",
           "method": "POST",
           "name": {
@@ -61956,7 +61956,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.loginUser",
+          "id": "petsV2.user.loginUser",
           "displayName": "Logs user into the system.",
           "method": "GET",
           "name": {
@@ -62135,7 +62135,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.logoutUser",
+          "id": "petsV2.user.logoutUser",
           "displayName": "Logs out current logged in user session.",
           "method": "GET",
           "name": {
@@ -62197,7 +62197,7 @@
           "allPathParameters": []
         },
         {
-          "id": "user.getUserByName",
+          "id": "petsV2.user.getUserByName",
           "displayName": "Get user by user name.",
           "method": "GET",
           "name": {
@@ -63458,7 +63458,7 @@
           ]
         },
         {
-          "id": "user.updateUser",
+          "id": "petsV2.user.updateUser",
           "displayName": "Update user resource.",
           "method": "PUT",
           "name": {
@@ -64606,7 +64606,7 @@
           ]
         },
         {
-          "id": "user.deleteUser",
+          "id": "petsV2.user.deleteUser",
           "displayName": "Delete user resource.",
           "method": "DELETE",
           "name": {

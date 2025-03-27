@@ -141,7 +141,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".listAllPets",
+          "id": "listAllPets",
           "displayName": "List all pets",
           "method": "GET",
           "name": {

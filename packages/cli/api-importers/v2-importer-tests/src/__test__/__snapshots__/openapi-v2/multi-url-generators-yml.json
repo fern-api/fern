@@ -383,7 +383,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".listUsers",
+          "id": "listUsers",
           "displayName": "List Users",
           "method": "GET",
           "name": {
@@ -851,7 +851,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".getUserInformation",
+          "id": "getUserInformation",
           "displayName": "Get user information",
           "method": "GET",
           "name": {
@@ -1429,7 +1429,7 @@
           ]
         },
         {
-          "id": ".getAuthenticationToken",
+          "id": "getAuthenticationToken",
           "displayName": "Get authentication token",
           "method": "GET",
           "name": {

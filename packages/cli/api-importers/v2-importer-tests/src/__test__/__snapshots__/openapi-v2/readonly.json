@@ -954,7 +954,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".createAUser",
+          "id": "createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {
@@ -2660,7 +2660,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".getAUser",
+          "id": "getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {

@@ -20,7 +20,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".get_user",
+          "id": "get_user",
           "method": "GET",
           "name": {
             "originalName": "get_user",

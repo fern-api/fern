@@ -80,10 +80,17 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? context.spec.servers?.[0];
 
+        const endpointId = [];
+        if (context.namespace != null) {
+            endpointId.push(context.namespace);
+        }
+        endpointId.push(...group ?? []);
+        endpointId.push(method);
+
         return {
             group,
             endpoint: {
-                id: `${group?.join(".") ?? ""}.${method}`,
+                id: endpointId.join("."),
                 displayName: this.operation.summary,
                 method: httpMethod,
                 name: context.casingsGenerator.generateName(method),

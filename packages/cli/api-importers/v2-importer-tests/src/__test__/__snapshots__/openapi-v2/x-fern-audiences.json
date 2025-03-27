@@ -103,7 +103,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".postV1Users",
+          "id": "postV1Users",
           "method": "POST",
           "name": {
             "originalName": "postV1Users",
