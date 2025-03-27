@@ -77,13 +77,13 @@ public class RawInlinedRequestsClient {
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       try {
         if (response.code() == 400) {
-          throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class));
+          throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
         }
       }
       catch (JsonProcessingException ignored) {
         // unable to map error response, throwing generic error
       }
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
     }
     catch (IOException e) {
       throw new SeedExhaustiveException("Network error executing HTTP request", e);

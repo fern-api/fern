@@ -8133,7 +8133,7 @@
     }
   },
   "services": {
-    "AppV1": {
+    "service_AppV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18522,7 +18522,7 @@
         }
       ]
     },
-    "AuthV1": {
+    "service_AuthV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -19929,7 +19929,7 @@
         }
       ]
     },
-    "BuildV1": {
+    "service_BuildV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -27033,7 +27033,7 @@
         }
       ]
     },
-    "DeploymentV1": {
+    "service_DeploymentV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -34610,7 +34610,7 @@
         }
       ]
     },
-    "DiscoveryV1": {
+    "service_DiscoveryV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -35399,7 +35399,7 @@
         }
       ]
     },
-    "LobbyV1": {
+    "service_LobbyV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -38914,7 +38914,7 @@
         }
       ]
     },
-    "LobbyV2": {
+    "service_LobbyV2": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -50488,7 +50488,7 @@
         }
       ]
     },
-    "LogV1": {
+    "service_LogV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -52257,7 +52257,7 @@
         }
       ]
     },
-    "MetricsV1": {
+    "service_MetricsV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -52801,7 +52801,7 @@
         }
       ]
     },
-    "ProcessesV1": {
+    "service_ProcessesV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -60945,7 +60945,7 @@
         }
       ]
     },
-    "RoomV1": {
+    "service_RoomV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -65924,7 +65924,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "AppV1",
+            "camelCase": {
+              "unsafeName": "appV1",
+              "safeName": "appV1"
+            },
+            "snakeCase": {
+              "unsafeName": "app_v_1",
+              "safeName": "app_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APP_V_1",
+              "safeName": "APP_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "AppV1",
+              "safeName": "AppV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "AppV1",
@@ -65946,7 +65966,7 @@
           }
         }
       },
-      "service": "AppV1",
+      "service": "service_AppV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -65973,7 +65993,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "AuthV1",
+            "camelCase": {
+              "unsafeName": "authV1",
+              "safeName": "authV1"
+            },
+            "snakeCase": {
+              "unsafeName": "auth_v_1",
+              "safeName": "auth_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTH_V_1",
+              "safeName": "AUTH_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "AuthV1",
+              "safeName": "AuthV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "AuthV1",
@@ -65995,7 +66035,7 @@
           }
         }
       },
-      "service": "AuthV1",
+      "service": "service_AuthV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66022,7 +66062,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "BuildV1",
+            "camelCase": {
+              "unsafeName": "buildV1",
+              "safeName": "buildV1"
+            },
+            "snakeCase": {
+              "unsafeName": "build_v_1",
+              "safeName": "build_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BUILD_V_1",
+              "safeName": "BUILD_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "BuildV1",
+              "safeName": "BuildV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "BuildV1",
@@ -66044,7 +66104,7 @@
           }
         }
       },
-      "service": "BuildV1",
+      "service": "service_BuildV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66071,7 +66131,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "DeploymentV1",
+            "camelCase": {
+              "unsafeName": "deploymentV1",
+              "safeName": "deploymentV1"
+            },
+            "snakeCase": {
+              "unsafeName": "deployment_v_1",
+              "safeName": "deployment_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEPLOYMENT_V_1",
+              "safeName": "DEPLOYMENT_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "DeploymentV1",
+              "safeName": "DeploymentV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "DeploymentV1",
@@ -66093,7 +66173,7 @@
           }
         }
       },
-      "service": "DeploymentV1",
+      "service": "service_DeploymentV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66120,7 +66200,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "DiscoveryV1",
+            "camelCase": {
+              "unsafeName": "discoveryV1",
+              "safeName": "discoveryV1"
+            },
+            "snakeCase": {
+              "unsafeName": "discovery_v_1",
+              "safeName": "discovery_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DISCOVERY_V_1",
+              "safeName": "DISCOVERY_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "DiscoveryV1",
+              "safeName": "DiscoveryV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "DiscoveryV1",
@@ -66142,7 +66242,7 @@
           }
         }
       },
-      "service": "DiscoveryV1",
+      "service": "service_DiscoveryV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66169,7 +66269,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "LobbyV1",
+            "camelCase": {
+              "unsafeName": "lobbyV1",
+              "safeName": "lobbyV1"
+            },
+            "snakeCase": {
+              "unsafeName": "lobby_v_1",
+              "safeName": "lobby_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LOBBY_V_1",
+              "safeName": "LOBBY_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "LobbyV1",
+              "safeName": "LobbyV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "LobbyV1",
@@ -66191,7 +66311,7 @@
           }
         }
       },
-      "service": "LobbyV1",
+      "service": "service_LobbyV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66218,7 +66338,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "LobbyV2",
+            "camelCase": {
+              "unsafeName": "lobbyV2",
+              "safeName": "lobbyV2"
+            },
+            "snakeCase": {
+              "unsafeName": "lobby_v_2",
+              "safeName": "lobby_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LOBBY_V_2",
+              "safeName": "LOBBY_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "LobbyV2",
+              "safeName": "LobbyV2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "LobbyV2",
@@ -66240,7 +66380,7 @@
           }
         }
       },
-      "service": "LobbyV2",
+      "service": "service_LobbyV2",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66267,7 +66407,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "LogV1",
+            "camelCase": {
+              "unsafeName": "logV1",
+              "safeName": "logV1"
+            },
+            "snakeCase": {
+              "unsafeName": "log_v_1",
+              "safeName": "log_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LOG_V_1",
+              "safeName": "LOG_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "LogV1",
+              "safeName": "LogV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "LogV1",
@@ -66289,7 +66449,7 @@
           }
         }
       },
-      "service": "LogV1",
+      "service": "service_LogV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66316,7 +66476,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "MetricsV1",
+            "camelCase": {
+              "unsafeName": "metricsV1",
+              "safeName": "metricsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "metrics_v_1",
+              "safeName": "metrics_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "METRICS_V_1",
+              "safeName": "METRICS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "MetricsV1",
+              "safeName": "MetricsV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "MetricsV1",
@@ -66338,7 +66518,7 @@
           }
         }
       },
-      "service": "MetricsV1",
+      "service": "service_MetricsV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66365,7 +66545,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "ProcessesV1",
+            "camelCase": {
+              "unsafeName": "processesV1",
+              "safeName": "processesV1"
+            },
+            "snakeCase": {
+              "unsafeName": "processes_v_1",
+              "safeName": "processes_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROCESSES_V_1",
+              "safeName": "PROCESSES_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "ProcessesV1",
+              "safeName": "ProcessesV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "ProcessesV1",
@@ -66387,7 +66587,7 @@
           }
         }
       },
-      "service": "ProcessesV1",
+      "service": "service_ProcessesV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -66414,7 +66614,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "RoomV1",
+            "camelCase": {
+              "unsafeName": "roomV1",
+              "safeName": "roomV1"
+            },
+            "snakeCase": {
+              "unsafeName": "room_v_1",
+              "safeName": "room_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ROOM_V_1",
+              "safeName": "ROOM_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "RoomV1",
+              "safeName": "RoomV1"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "RoomV1",
@@ -66436,7 +66656,7 @@
           }
         }
       },
-      "service": "RoomV1",
+      "service": "service_RoomV1",
       "types": [],
       "errors": [],
       "subpackages": [],

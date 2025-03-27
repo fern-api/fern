@@ -1043,7 +1043,7 @@
     }
   },
   "services": {
-    "OrganizationUsers": {
+    "service_OrganizationUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -3875,7 +3875,7 @@
         }
       ]
     },
-    "Users": {
+    "service_Users": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6597,50 +6597,11 @@
         }
       ]
     },
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -6651,7 +6612,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getAUser",
+          "id": "getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {
@@ -7987,7 +7948,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "UserCreate",
       "UserList",
@@ -8024,7 +7985,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "OrganizationUsers",
+            "camelCase": {
+              "unsafeName": "organizationUsers",
+              "safeName": "organizationUsers"
+            },
+            "snakeCase": {
+              "unsafeName": "organization_users",
+              "safeName": "organization_users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ORGANIZATION_USERS",
+              "safeName": "ORGANIZATION_USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "OrganizationUsers",
+              "safeName": "OrganizationUsers"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "OrganizationUsers",
@@ -8046,7 +8027,7 @@
           }
         }
       },
-      "service": "OrganizationUsers",
+      "service": "service_OrganizationUsers",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8073,7 +8054,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Users",
+            "camelCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "snakeCase": {
+              "unsafeName": "users",
+              "safeName": "users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USERS",
+              "safeName": "USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Users",
+              "safeName": "Users"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Users",
@@ -8095,7 +8096,7 @@
           }
         }
       },
-      "service": "Users",
+      "service": "service_Users",
       "types": [],
       "errors": [],
       "subpackages": [],

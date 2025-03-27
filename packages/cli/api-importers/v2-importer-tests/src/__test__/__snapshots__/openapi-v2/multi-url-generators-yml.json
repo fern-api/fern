@@ -368,50 +368,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -422,7 +383,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".listUsers",
+          "id": "listUsers",
           "displayName": "List Users",
           "method": "GET",
           "name": {
@@ -890,7 +851,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".getUserInformation",
+          "id": "getUserInformation",
           "displayName": "Get user information",
           "method": "GET",
           "name": {
@@ -1468,7 +1429,7 @@
           ]
         },
         {
-          "id": ".getAuthenticationToken",
+          "id": "getAuthenticationToken",
           "displayName": "Get authentication token",
           "method": "GET",
           "name": {
@@ -1901,7 +1862,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "User",
       "Token"

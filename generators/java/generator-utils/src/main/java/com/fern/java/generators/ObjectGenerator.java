@@ -16,6 +16,7 @@
 package com.fern.java.generators;
 
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
@@ -32,6 +33,8 @@ import com.fern.java.output.GeneratedObject;
 import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceInlineChecker;
+import com.fern.java.utils.TypeReferenceUtils;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -45,6 +48,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
@@ -65,7 +69,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             ClassName className,
             Set<String> reservedTypeNames,
             boolean isTopLevelClass,
-            List<ObjectProperty> fileProperties) {
+            List<ObjectProperty> fileProperties,
+            List<ObjectProperty> allowMultipleProperties) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
 
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
@@ -80,7 +85,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 selfInterface,
                 objectTypeDeclaration,
                 generatorContext.getPoetTypeNameMapper(),
-                fileProperties);
+                fileProperties,
+                allowMultipleProperties);
         List<ImplementsInterface> implemented = implementsInterfaces(generatorContext, ancestors);
 
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
@@ -260,6 +266,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .objectProperty(prop.objectProperty())
                     .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
                     .generator(prop.generator())
+                    .allowMultiple(prop.allowMultiple())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
@@ -286,7 +293,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             Optional<GeneratedJavaInterface> selfInterface,
             ObjectTypeDeclaration objectTypeDeclaration,
             PoetTypeNameMapper poetTypeNameMapper,
-            List<ObjectProperty> fileProperties) {
+            List<ObjectProperty> fileProperties,
+            List<ObjectProperty> allowMultipleProperties) {
         List<EnrichedObjectProperty> result = new ArrayList<>();
         // NOTE: We don't support file as a type in the IR, and we require type declarations to
         //  use the poet type name mapper in the object generator. This implementation lets us
@@ -308,7 +316,49 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             isOptional
                                     ? ParameterizedTypeName.get(
                                             ClassName.get(Optional.class), ClassName.get(File.class))
-                                    : ClassName.get(File.class));
+                                    : ClassName.get(File.class),
+                            false);
+                })
+                .collect(Collectors.toList()));
+        result.addAll(allowMultipleProperties.stream()
+                .map(prop -> {
+                    TypeName poetTypeName = poetTypeNameMapper.convertToTypeName(false, prop.getValueType());
+
+                    boolean isCollection =
+                            prop.getValueType().visit(new TypeReferenceUtils.IsCollectionType(generatorContext));
+
+                    if (!isCollection) {
+                        // optional<T> with allow-multiple should become optional<list<T>>
+                        if (prop.getValueType().isContainer()) {
+                            ContainerType container =
+                                    prop.getValueType().getContainer().get();
+                            if (container.isOptional() || container.isNullable()) {
+                                Preconditions.checkState(
+                                        poetTypeName instanceof ParameterizedTypeName,
+                                        "Found optional/nullable with non-parameterized type name "
+                                                + prop.getName().getName().getOriginalName());
+                                TypeName parameterType = Objects.requireNonNull(
+                                        ((ParameterizedTypeName) poetTypeName).typeArguments.get(0));
+                                poetTypeName = ParameterizedTypeName.get(
+                                        ClassName.get(Optional.class),
+                                        ParameterizedTypeName.get(ClassName.get(List.class), parameterType));
+                            }
+                        } else {
+                            // T with allow-multiple should become list<T>
+                            poetTypeName = ParameterizedTypeName.get(ClassName.get(List.class), poetTypeName);
+                        }
+                    }
+
+                    return EnrichedObjectProperty.of(
+                            prop,
+                            generatorContext.getType(),
+                            Optional.empty(),
+                            generatorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
+                            false,
+                            false,
+                            generatorContext.getCustomConfig().wrappedAliases(),
+                            poetTypeName,
+                            !isCollection);
                 })
                 .collect(Collectors.toList()));
         if (selfInterface.isEmpty()) {
@@ -328,7 +378,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 false,
                                 inline,
                                 generatorContext.getCustomConfig().wrappedAliases(),
-                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
+                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()),
+                                false);
                     })
                     .collect(Collectors.toList()));
         }
@@ -356,7 +407,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             true,
                             inline,
                             generatorContext.getCustomConfig().wrappedAliases(),
-                            propertyMethodSpec.methodSpec().returnType);
+                            propertyMethodSpec.methodSpec().returnType,
+                            false);
                 })
                 .collect(Collectors.toList());
     }

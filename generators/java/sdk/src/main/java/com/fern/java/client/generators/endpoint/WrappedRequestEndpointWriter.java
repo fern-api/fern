@@ -125,13 +125,22 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 .requestBodyGetter()
                                 .name
                         + "()";
-                initializeRequestBody(generatedObjectMapper, jsonRequestBodyArgument, requestBodyCodeBlock);
+                initializeRequestBody(
+                        generatedObjectMapper,
+                        jsonRequestBodyArgument,
+                        requestBodyCodeBlock,
+                        sendContentType,
+                        contentType);
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
                 initializeRequestBody(
-                        generatedObjectMapper, variables.getRequestBodyPropertiesName(), requestBodyCodeBlock);
+                        generatedObjectMapper,
+                        variables.getRequestBodyPropertiesName(),
+                        requestBodyCodeBlock,
+                        sendContentType,
+                        contentType);
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
                 FileUploadRequestBodyGetters fileUploadRequestBodyGetter = ((FileUploadRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
@@ -240,7 +249,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private void initializeRequestBody(
             GeneratedObjectMapper generatedObjectMapper,
             String variableToJsonify,
-            CodeBlock.Builder requestBodyCodeBlock) {
+            CodeBlock.Builder requestBodyCodeBlock,
+            boolean sendContentType,
+            String contentType) {
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
             isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
@@ -256,16 +267,24 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
                     .beginControlFlow("if ($N.isPresent())", variableToJsonify);
         }
+        CodeBlock requestBodyContentType = CodeBlock.of(
+                "$T.$L",
+                clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
+                CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT);
+
+        if (sendContentType && !contentType.equals(AbstractEndpointWriter.APPLICATION_JSON_HEADER)) {
+            requestBodyContentType = CodeBlock.of("$T.parse($S)", MediaType.class, contentType);
+        }
+
         requestBodyCodeBlock
                 .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
+                        "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
                         variables.getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         variableToJsonify,
-                        clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
-                        CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
+                        requestBodyContentType)
                 .endControlFlow();
         if (isOptional) {
             requestBodyCodeBlock.endControlFlow();

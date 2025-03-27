@@ -80,8 +80,9 @@ public class AsyncRawNoAuthClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 400) {
-                            future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(
-                                    responseBodyString, BadObjectRequestInfo.class)));
+                            future.completeExceptionally(new BadRequestBody(
+                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class),
+                                    response));
                             return;
                         }
                     } catch (JsonProcessingException ignored) {
@@ -90,7 +91,8 @@ public class AsyncRawNoAuthClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));

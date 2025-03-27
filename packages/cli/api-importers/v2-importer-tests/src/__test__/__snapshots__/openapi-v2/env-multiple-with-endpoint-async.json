@@ -315,50 +315,11 @@
   },
   "errors": {},
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -369,7 +330,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".list",
+          "id": "list",
           "method": "GET",
           "name": {
             "originalName": "list",
@@ -486,7 +447,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel",
+            "camelCase": {
+              "unsafeName": "testChannel",
+              "safeName": "testChannel"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel",
+              "safeName": "test_channel"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL",
+              "safeName": "TEST_CHANNEL"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel",
+              "safeName": "TestChannel"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel",
@@ -535,7 +516,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel2",
+            "camelCase": {
+              "unsafeName": "testChannel2",
+              "safeName": "testChannel2"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel_2",
+              "safeName": "test_channel_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL_2",
+              "safeName": "TEST_CHANNEL_2"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel2",
+              "safeName": "TestChannel2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel2",
@@ -707,7 +708,7 @@
     }
   },
   "rootPackage": {
-    "service": "",
+    "service": "service_",
     "types": [
       "testChannel_sendMessage",
       "testChannel2_sendMessage"

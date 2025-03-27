@@ -340,7 +340,7 @@
     }
   },
   "services": {
-    "auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1501,7 +1501,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "auth",
+            "camelCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "snakeCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTH",
+              "safeName": "AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "Auth",
+              "safeName": "Auth"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "auth",
@@ -1523,7 +1543,7 @@
           }
         }
       },
-      "service": "auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],

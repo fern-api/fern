@@ -10,20 +10,9 @@ import { AsyncAPIV3 } from "./3.0";
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
-    public isReferenceObject(
-        parameter:
-            | OpenAPIV3_1.ReferenceObject
-            | OpenAPIV3_1.ParameterObject
-            | OpenAPIV3_1.SchemaObject
-            | OpenAPIV3_1.RequestBodyObject
-            | OpenAPIV3_1.SecuritySchemeObject
-            | OpenAPIV3.ReferenceObject
-            | OpenAPIV3.ParameterObject
-            | OpenAPIV3.SchemaObject
-            | OpenAPIV3.RequestBodyObject
-            | OpenAPIV3.SecuritySchemeObject
-    ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        return parameter != null && "$ref" in parameter;
+    public isReferenceObject(parameter: unknown): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return parameter != null && "$ref" in (parameter as any);
     }
 
     public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
@@ -62,11 +51,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return {
             ok: true,
             reference: TypeReference.named({
-                fernFilepath: {
-                    allParts: [],
-                    packagePath: [],
-                    file: undefined
-                },
+                fernFilepath: this.createFernFilepath(),
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
                 default: undefined,

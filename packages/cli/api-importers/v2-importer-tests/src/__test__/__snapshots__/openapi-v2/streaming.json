@@ -492,50 +492,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -546,7 +507,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".user",
+          "id": "user",
           "method": "POST",
           "name": {
             "originalName": "user",
@@ -882,7 +843,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".user_v2",
+          "id": "user_v2",
           "method": "POST",
           "name": {
             "originalName": "user_v2",
@@ -1218,7 +1179,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".user_v3",
+          "id": "user_v3",
           "method": "POST",
           "name": {
             "originalName": "user_v3",
@@ -1574,7 +1535,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "User",
       "StreamUser",

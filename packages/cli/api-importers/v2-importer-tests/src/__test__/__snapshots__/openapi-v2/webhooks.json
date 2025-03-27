@@ -234,62 +234,10 @@
       "Pet"
     ],
     "errors": [],
-    "subpackages": [
-      "CreatePet"
-    ],
+    "subpackages": [],
     "hasEndpointsInTree": false
   },
-  "subpackages": {
-    "CreatePet": {
-      "name": {
-        "originalName": "CreatePet",
-        "camelCase": {
-          "unsafeName": "createPet",
-          "safeName": "createPet"
-        },
-        "snakeCase": {
-          "unsafeName": "create_pet",
-          "safeName": "create_pet"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "CREATE_PET",
-          "safeName": "CREATE_PET"
-        },
-        "pascalCase": {
-          "unsafeName": "CreatePet",
-          "safeName": "CreatePet"
-        }
-      },
-      "fernFilepath": {
-        "allParts": [],
-        "packagePath": [],
-        "file": {
-          "originalName": "CreatePet",
-          "camelCase": {
-            "unsafeName": "createPet",
-            "safeName": "createPet"
-          },
-          "snakeCase": {
-            "unsafeName": "create_pet",
-            "safeName": "create_pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CREATE_PET",
-            "safeName": "CREATE_PET"
-          },
-          "pascalCase": {
-            "unsafeName": "CreatePet",
-            "safeName": "CreatePet"
-          }
-        }
-      },
-      "types": [],
-      "errors": [],
-      "subpackages": [],
-      "webhooks": "CreatePet",
-      "hasEndpointsInTree": false
-    }
-  },
+  "subpackages": {},
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,

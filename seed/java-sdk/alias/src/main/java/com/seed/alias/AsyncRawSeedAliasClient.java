@@ -59,7 +59,8 @@ public class AsyncRawSeedAliasClient {
                     future.completeExceptionally(new SeedAliasApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedAliasException("Network error executing HTTP request", e));

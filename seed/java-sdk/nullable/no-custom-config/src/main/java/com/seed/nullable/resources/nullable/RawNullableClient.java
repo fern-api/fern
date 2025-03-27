@@ -46,13 +46,17 @@ public class RawNullableClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
-        if (request.getUsernames().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "usernames", request.getUsernames().get(), false);
-        }
         if (request.getAvatar().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "avatar", request.getAvatar().get(), false);
+        }
+        if (request.getExtra().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "extra", request.getExtra().get().toString(), false);
+        }
+        if (request.getUsernames().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "usernames", request.getUsernames().get().toString(), false);
         }
         if (request.getActivated().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -60,11 +64,7 @@ public class RawNullableClient {
         }
         if (request.getTags().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "tags", request.getTags().get(), false);
-        }
-        if (request.getExtra().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "extra", request.getExtra().get().toString(), false);
+                    httpUrl, "tags", request.getTags().get().toString(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -88,7 +88,8 @@ public class RawNullableClient {
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }
@@ -131,7 +132,8 @@ public class RawNullableClient {
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }
@@ -178,7 +180,8 @@ public class RawNullableClient {
             throw new SeedNullableApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedNullableException("Network error executing HTTP request", e);
         }

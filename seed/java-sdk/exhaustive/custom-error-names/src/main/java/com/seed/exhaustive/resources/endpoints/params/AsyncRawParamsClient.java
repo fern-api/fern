@@ -81,7 +81,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -139,7 +140,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -193,7 +195,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -224,7 +227,8 @@ public class AsyncRawParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "number", request.getNumber().toString(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -247,7 +251,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -303,7 +308,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -359,7 +365,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -424,7 +431,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
@@ -490,7 +498,8 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));

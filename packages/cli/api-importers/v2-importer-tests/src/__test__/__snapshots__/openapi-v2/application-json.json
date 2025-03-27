@@ -126,50 +126,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -180,7 +141,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getVndFernUserJsonVersion1",
+          "id": "getVndFernUserJsonVersion1",
           "method": "GET",
           "name": {
             "originalName": "getVndFernUserJsonVersion1",
@@ -479,7 +440,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".getApplicationJson",
+          "id": "getApplicationJson",
           "method": "GET",
           "name": {
             "originalName": "getApplicationJson",
@@ -798,7 +759,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "Data"
     ],

@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.types.object.errors;
 
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import okhttp3.Response;
 
 public final class ObjectWithRequiredFieldError extends BestApiException {
     /**
@@ -14,6 +15,11 @@ public final class ObjectWithRequiredFieldError extends BestApiException {
 
     public ObjectWithRequiredFieldError(ObjectWithRequiredField body) {
         super("ObjectWithRequiredFieldError", 400, body);
+        this.body = body;
+    }
+
+    public ObjectWithRequiredFieldError(ObjectWithRequiredField body, Response rawResponse) {
+        super("ObjectWithRequiredFieldError", 400, body, rawResponse);
         this.body = body;
     }
 

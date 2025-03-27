@@ -89,7 +89,8 @@ public class RawPlaylistClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -122,7 +123,7 @@ public class RawPlaylistClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalMultipleField",
-                    request.getOptionalMultipleField().get(),
+                    request.getOptionalMultipleField().get().toString(),
                     false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), false);
@@ -149,7 +150,8 @@ public class RawPlaylistClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -194,7 +196,8 @@ public class RawPlaylistClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -262,7 +265,8 @@ public class RawPlaylistClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -304,7 +308,8 @@ public class RawPlaylistClient {
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

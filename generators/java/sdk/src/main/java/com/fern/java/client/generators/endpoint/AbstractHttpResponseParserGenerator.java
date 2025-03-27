@@ -428,11 +428,12 @@ public abstract class AbstractHttpResponseParserGenerator {
                     handleExceptionalResult(
                             httpResponseBuilder,
                             CodeBlock.of(
-                                    "new $T($L)",
+                                    "new $T($L, $L)",
                                     errorClassName,
                                     objectMapperUtils.readValueCall(
                                             CodeBlock.of("$L", variables.getResponseBodyStringName()),
-                                            errorDeclaration.getType())));
+                                            errorDeclaration.getType()),
+                                    "response"));
                     if (!multipleErrors) {
                         httpResponseBuilder.endControlFlow();
                     }
@@ -450,13 +451,14 @@ public abstract class AbstractHttpResponseParserGenerator {
         handleExceptionalResult(
                 httpResponseBuilder,
                 CodeBlock.of(
-                        "new $T($S + $L.code(), $L.code(), $L)",
+                        "new $T($S + $L.code(), $L.code(), $L, $L)",
                         apiErrorClassName,
                         "Error with status code ",
                         variables.getResponseName(),
                         variables.getResponseName(),
                         objectMapperUtils.readValueCall(
-                                CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty())));
+                                CodeBlock.of("$L", variables.getResponseBodyStringName()), Optional.empty()),
+                        "response"));
     }
 
     protected ClassName rawHttpResponseClassName() {

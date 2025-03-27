@@ -6189,7 +6189,7 @@
     }
   },
   "services": {
-    "audio": {
+    "service_audio": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8013,7 +8013,7 @@
         }
       ]
     },
-    "auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8394,7 +8394,7 @@
         }
       ]
     },
-    "apikey": {
+    "service_apikey": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8944,7 +8944,7 @@
         }
       ]
     },
-    "voices": {
+    "service_voices": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9506,7 +9506,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "audio",
+            "camelCase": {
+              "unsafeName": "audio",
+              "safeName": "audio"
+            },
+            "snakeCase": {
+              "unsafeName": "audio",
+              "safeName": "audio"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUDIO",
+              "safeName": "AUDIO"
+            },
+            "pascalCase": {
+              "unsafeName": "Audio",
+              "safeName": "Audio"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "audio",
@@ -9528,7 +9548,7 @@
           }
         }
       },
-      "service": "audio",
+      "service": "service_audio",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -9555,7 +9575,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "auth",
+            "camelCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "snakeCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTH",
+              "safeName": "AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "Auth",
+              "safeName": "Auth"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "auth",
@@ -9577,7 +9617,7 @@
           }
         }
       },
-      "service": "auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -9604,7 +9644,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "apikey",
+            "camelCase": {
+              "unsafeName": "apikey",
+              "safeName": "apikey"
+            },
+            "snakeCase": {
+              "unsafeName": "apikey",
+              "safeName": "apikey"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APIKEY",
+              "safeName": "APIKEY"
+            },
+            "pascalCase": {
+              "unsafeName": "Apikey",
+              "safeName": "Apikey"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "apikey",
@@ -9626,7 +9686,7 @@
           }
         }
       },
-      "service": "apikey",
+      "service": "service_apikey",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -9653,7 +9713,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "voices",
+            "camelCase": {
+              "unsafeName": "voices",
+              "safeName": "voices"
+            },
+            "snakeCase": {
+              "unsafeName": "voices",
+              "safeName": "voices"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "VOICES",
+              "safeName": "VOICES"
+            },
+            "pascalCase": {
+              "unsafeName": "Voices",
+              "safeName": "Voices"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "voices",
@@ -9675,7 +9755,7 @@
           }
         }
       },
-      "service": "voices",
+      "service": "service_voices",
       "types": [],
       "errors": [],
       "subpackages": [],
