@@ -31,6 +31,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs";
     private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args";
     private static readonly DEBUG_PROPERTY_NAME = "debug";
+    private static readonly HEADERS_PROPERTY_NAME = "requestHeaders";
+    private static readonly HEADERS_VARIABLE_NAME = "headers";
+
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
@@ -145,6 +148,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     };
                 }),
                 {
+                    name: GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["Arbitrary optional headers to send with the websocket request."]
+                },
+                {
                     name: GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
                     hasQuestionToken: true,
@@ -221,13 +235,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier("headers"),
+                            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
                             undefined,
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                             ]),
-                            ts.factory.createObjectLiteralExpression()
+                            ts.factory.createBinaryExpression(
+                                this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                ts.factory.createObjectLiteralExpression()
+                            )
                         )
                     ],
                     ts.NodeFlags.Let
@@ -244,7 +262,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         ts.factory.createExpressionStatement(
                             ts.factory.createBinaryExpression(
                                 ts.factory.createElementAccessExpression(
-                                    ts.factory.createIdentifier("headers"),
+                                    ts.factory.createIdentifier(
+                                        GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
+                                    ),
                                     ts.factory.createStringLiteral(header.name.wireValue)
                                 ),
                                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),
@@ -258,10 +278,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ? [
                       ts.factory.createExpressionStatement(
                           ts.factory.createBinaryExpression(
-                              ts.factory.createIdentifier("headers"),
+                              ts.factory.createIdentifier(
+                                  GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
+                              ),
                               ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                               ts.factory.createObjectLiteralExpression(
                                   [
+                                      ts.factory.createSpreadAssignment(
+                                          ts.factory.createIdentifier(
+                                              GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
+                                          )
+                                      ),
                                       ts.factory.createSpreadAssignment(
                                           ts.factory.createAwaitExpression(
                                               ts.factory.createCallExpression(
@@ -273,8 +300,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                                   []
                                               )
                                           )
-                                      ),
-                                      ts.factory.createSpreadAssignment(ts.factory.createIdentifier("headers"))
+                                      )
                                   ],
                                   true
                               )
@@ -332,7 +358,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     )
                 )
             ]),
-            headers: ts.factory.createIdentifier("headers")
+            headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME)
         });
     }
 
