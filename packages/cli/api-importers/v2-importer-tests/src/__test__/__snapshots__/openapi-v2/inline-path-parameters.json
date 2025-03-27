@@ -279,7 +279,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".GetUser",
+          "id": "GetUser",
           "method": "GET",
           "name": {
             "originalName": "GetUser",
@@ -449,7 +449,7 @@
           ]
         },
         {
-          "id": ".GetOrganizationUser",
+          "id": "GetOrganizationUser",
           "method": "GET",
           "name": {
             "originalName": "GetOrganizationUser",

@@ -19232,7 +19232,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".List Jobs",
+          "id": "List Jobs",
           "displayName": "List Jobs",
           "method": "GET",
           "name": {
@@ -28319,7 +28319,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".Start Job",
+          "id": "Start Job",
           "displayName": "Start Job",
           "method": "POST",
           "name": {
@@ -28976,7 +28976,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".Get Job Predictions",
+          "id": "Get Job Predictions",
           "displayName": "Get Job Predictions",
           "method": "GET",
           "name": {

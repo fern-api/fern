@@ -6612,7 +6612,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getAUser",
+          "id": "getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {

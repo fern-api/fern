@@ -208,7 +208,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getTree",
+          "id": "getTree",
           "displayName": "Get tree",
           "method": "GET",
           "name": {

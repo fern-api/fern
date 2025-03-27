@@ -20,7 +20,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".send",
+          "id": "send",
           "method": "POST",
           "name": {
             "originalName": "send",

@@ -141,7 +141,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".upload-file",
+          "id": "upload-file",
           "displayName": "Upload a file",
           "method": "POST",
           "name": {
@@ -268,7 +268,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".upload-list",
+          "id": "upload-list",
           "displayName": "Upload a list of files",
           "method": "POST",
           "name": {
@@ -393,7 +393,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".upload-with-content-type",
+          "id": "upload-with-content-type",
           "displayName": "Upload a file with a content type",
           "method": "POST",
           "name": {

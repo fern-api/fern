@@ -141,7 +141,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".submitFormData",
+          "id": "submitFormData",
           "displayName": "Submit form data",
           "method": "POST",
           "name": {

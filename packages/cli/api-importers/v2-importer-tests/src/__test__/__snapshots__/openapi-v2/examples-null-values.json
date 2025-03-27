@@ -909,7 +909,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".createAUser",
+          "id": "createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {

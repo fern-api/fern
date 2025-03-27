@@ -141,7 +141,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getVndFernUserJsonVersion1",
+          "id": "getVndFernUserJsonVersion1",
           "method": "GET",
           "name": {
             "originalName": "getVndFernUserJsonVersion1",
@@ -440,7 +440,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".getApplicationJson",
+          "id": "getApplicationJson",
           "method": "GET",
           "name": {
             "originalName": "getApplicationJson",
