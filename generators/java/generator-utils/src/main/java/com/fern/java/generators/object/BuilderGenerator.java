@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fern.java.PoetTypeWithClassName;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
+import com.google.common.base.Preconditions;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -428,6 +429,34 @@ public final class BuilderGenerator {
         return setter;
     }
 
+    private MethodSpec.Builder getAllowMultipleSingleSetter(
+            EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverridden) {
+        TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
+
+        // Optional<List<T>> should get a T method
+        if (poetTypeName.equals(ClassName.get(Optional.class))) {
+            poetTypeName = getOnlyTypeArgumentOrThrow((ParameterizedTypeName) poetTypeName);
+        }
+
+        // List<T> should get a T method
+        // Can't get here without being of type List<T>
+        Preconditions.checkState(
+                poetTypeName instanceof ParameterizedTypeName,
+                "Expected Optional<List<T>> and instead got " + enrichedProperty.enrichedObjectProperty.poetTypeName());
+        poetTypeName = getOnlyTypeArgumentOrThrow((ParameterizedTypeName) poetTypeName);
+
+        FieldSpec fieldSpec = enrichedProperty.fieldSpec;
+        MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
+                .addParameter(
+                        ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass);
+        if (isOverridden) {
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        return setter;
+    }
+
     private void addAdditionalSetters(
             ParameterizedTypeName propertyTypeName,
             EnrichedObjectPropertyWithField enrichedObjectProperty,
@@ -576,6 +605,31 @@ public final class BuilderGenerator {
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
+        }
+
+        if (enrichedObjectProperty.enrichedObjectProperty.allowMultiple()) {
+            interfaceSetterConsumer.accept(
+                    getAllowMultipleSingleSetter(enrichedObjectProperty, finalStageClassName, implsOverride)
+                            .addModifiers(Modifier.ABSTRACT)
+                            .build());
+
+            if (isEqual(propertyTypeName, ClassName.get(Optional.class))) {
+                implSetterConsumer.accept(
+                        getAllowMultipleSingleSetter(enrichedObjectProperty, finalStageClassName, implsOverride)
+                                .addStatement(
+                                        "this.$L = $T.of($T.singletonList($L))",
+                                        fieldSpec.name,
+                                        Optional.class,
+                                        Collections.class,
+                                        fieldSpec.name)
+                                .build());
+            } else {
+                implSetterConsumer.accept(getAllowMultipleSingleSetter(
+                                enrichedObjectProperty, finalStageClassName, implsOverride)
+                        .addStatement(
+                                "this.$L = $T.singletonList($L)", fieldSpec.name, Collections.class, fieldSpec.name)
+                        .build());
+            }
         }
     }
 

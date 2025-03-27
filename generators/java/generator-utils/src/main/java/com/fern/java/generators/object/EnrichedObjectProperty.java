@@ -52,6 +52,8 @@ public interface EnrichedObjectProperty {
 
     AbstractGeneratorContext.GeneratorType generator();
 
+    boolean allowMultiple();
+
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
         if (literal().isPresent()) {
@@ -203,7 +205,8 @@ public interface EnrichedObjectProperty {
             boolean fromInterface,
             boolean inline,
             boolean wrappedAliases,
-            TypeName poetTypeName) {
+            TypeName poetTypeName,
+            boolean allowMultiple) {
         Name name = objectProperty.getName().getName();
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
@@ -217,6 +220,7 @@ public interface EnrichedObjectProperty {
                 .objectProperty(objectProperty)
                 .nullableNonemptyFilterClassName(nullableNonemptyFilterClassName)
                 .generator(generator)
+                .allowMultiple(allowMultiple)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)
