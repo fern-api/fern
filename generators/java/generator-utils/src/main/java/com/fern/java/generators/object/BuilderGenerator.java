@@ -433,16 +433,19 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverridden) {
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
 
-        // Optional<List<T>> should get a T method
-        if (poetTypeName.equals(ClassName.get(Optional.class))) {
-            poetTypeName = getOnlyTypeArgumentOrThrow((ParameterizedTypeName) poetTypeName);
-        }
-
-        // List<T> should get a T method
-        // Can't get here without being of type List<T>
         Preconditions.checkState(
                 poetTypeName instanceof ParameterizedTypeName,
-                "Expected Optional<List<T>> and instead got " + enrichedProperty.enrichedObjectProperty.poetTypeName());
+                "Expected one-parameter generic and instead got " + poetTypeName);
+
+        // Optional<List<T>> should get a T method
+        if (((ParameterizedTypeName) poetTypeName).rawType.equals(ClassName.get(Optional.class))) {
+            poetTypeName = getOnlyTypeArgumentOrThrow((ParameterizedTypeName) poetTypeName);
+
+            Preconditions.checkState(
+                    poetTypeName instanceof ParameterizedTypeName,
+                    "Expected one-parameter generic and instead got " + poetTypeName);
+        }
+
         poetTypeName = getOnlyTypeArgumentOrThrow((ParameterizedTypeName) poetTypeName);
 
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;

@@ -151,7 +151,7 @@ public final class JustFileWithQueryParamsRequest {
 
         _FinalStage optionalListOfStrings(List<String> optionalListOfStrings);
 
-        _FinalStage optionalListOfStrings(List<String> optionalListOfStrings);
+        _FinalStage optionalListOfStrings(String optionalListOfStrings);
 
         _FinalStage maybeString(Optional<String> maybeString);
 
@@ -233,7 +233,7 @@ public final class JustFileWithQueryParamsRequest {
         }
 
         @java.lang.Override
-        public _FinalStage optionalListOfStrings(List<String> optionalListOfStrings) {
+        public _FinalStage optionalListOfStrings(String optionalListOfStrings) {
             this.optionalListOfStrings = Optional.of(Collections.singletonList(optionalListOfStrings));
             return this;
         }
