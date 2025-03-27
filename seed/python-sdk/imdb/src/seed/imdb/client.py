@@ -4,21 +4,21 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .types.movie_id import MovieId
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from .types.movie import Movie
-from ..core.jsonable_encoder import jsonable_encoder
-from .errors.movie_does_not_exist_error import MovieDoesNotExistError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawImdbClient, RawImdbClient
 
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class ImdbClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawImdbClient(client_wrapper=client_wrapper)
+    
+    def with_raw_response(self) -> RawImdbClient:
+        """
+        Access the raw client whenever HTTP response metadata is needed.
+        """
+        return self._raw_client
 
     def create_movie(
         self,
@@ -56,31 +56,105 @@ class ImdbClient:
             rating=1.1,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "movies/create-movie",
-            method="POST",
-            json={
-                "title": title,
-                "rating": rating,
-            },
+        return self._raw_client.create_movie(
+            title=title,
+            rating=rating,
             request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MovieId,
-                    parse_obj_as(
-                        type_=MovieId,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ).data
 
     def get_movie(
+        self,
+        movie_id: MovieId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Movie:
+        """
+        Parameters
+        ----------
+        movie_id : MovieId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Movie
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.get_movie(x
+            movie_id="movieId",
+        )
+        """
+        return self._raw_client.get_movie(
+            movie_id=movie_id,
+            request_options=request_options,
+        ).data
+
+
+
+
+
+class AsyncImdbClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawImdbClient(client_wrapper=client_wrapper)
+
+    def with_raw_response(self) -> AsyncRawImdbClient:
+        """
+        Access the raw client whenever HTTP response metadata is needed.
+        """
+        return self._raw_client
+
+    async def create_movie(
+        self,
+        *,
+        title: str,
+        rating: float,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MovieId:
+        """
+        Add a movie to the database using the movies/* /... path.
+
+        Parameters
+        ----------
+        title : str
+
+        rating : float
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MovieId
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.imdb.create_movie(
+            title="title",
+            rating=1.1,
+        )
+        """
+        response = await self._raw_client.create_movie(
+            title=title,
+            rating=rating,
+            request_options=request_options,
+        )
+        return response.data
+
+    async def get_movie(
         self,
         movie_id: MovieId,
         *,
@@ -110,171 +184,8 @@ class ImdbClient:
             movie_id="movieId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"movies/{jsonable_encoder(movie_id)}",
-            method="GET",
+        response = await self._raw_client.get_movie(
+            movie_id=movie_id,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Movie,
-                    parse_obj_as(
-                        type_=Movie,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise MovieDoesNotExistError(
-                    typing.cast(
-                        MovieId,
-                        parse_obj_as(
-                            type_=MovieId,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-class AsyncImdbClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def create_movie(
-        self,
-        *,
-        title: str,
-        rating: float,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> MovieId:
-        """
-        Add a movie to the database using the movies/* /... path.
-
-        Parameters
-        ----------
-        title : str
-
-        rating : float
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        MovieId
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.imdb.create_movie(
-                title="title",
-                rating=1.1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "movies/create-movie",
-            method="POST",
-            json={
-                "title": title,
-                "rating": rating,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MovieId,
-                    parse_obj_as(
-                        type_=MovieId,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_movie(
-        self,
-        movie_id: MovieId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Movie:
-        """
-        Parameters
-        ----------
-        movie_id : MovieId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Movie
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.imdb.get_movie(
-                movie_id="movieId",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"movies/{jsonable_encoder(movie_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Movie,
-                    parse_obj_as(
-                        type_=Movie,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise MovieDoesNotExistError(
-                    typing.cast(
-                        MovieId,
-                        parse_obj_as(
-                            type_=MovieId,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
