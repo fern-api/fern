@@ -13,7 +13,6 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
