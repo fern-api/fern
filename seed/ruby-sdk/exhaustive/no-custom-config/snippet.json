@@ -838,6 +838,28 @@
         },
         {
             "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/union",
                 "method": "POST",
                 "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
@@ -1691,6 +1713,28 @@
             },
             "snippet": {
                 "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
                 "type": "ruby"
             }
         },
