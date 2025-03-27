@@ -134,7 +134,7 @@ public final class GetPlaylistsRequest {
 
         _FinalStage optionalMultipleField(List<String> optionalMultipleField);
 
-        _FinalStage optionalMultipleField(List<String> optionalMultipleField);
+        _FinalStage optionalMultipleField(String optionalMultipleField);
 
         _FinalStage multipleField(List<String> multipleField);
 
@@ -239,7 +239,7 @@ public final class GetPlaylistsRequest {
         }
 
         @java.lang.Override
-        public _FinalStage optionalMultipleField(List<String> optionalMultipleField) {
+        public _FinalStage optionalMultipleField(String optionalMultipleField) {
             this.optionalMultipleField = Optional.of(Collections.singletonList(optionalMultipleField));
             return this;
         }

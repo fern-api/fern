@@ -156,7 +156,7 @@ public final class SendEnumListAsQueryParamRequest {
             return this;
         }
 
-        public Builder maybeOperand(List<Operand> maybeOperand) {
+        public Builder maybeOperand(Operand maybeOperand) {
             this.maybeOperand = Optional.of(Collections.singletonList(maybeOperand));
             return this;
         }
@@ -194,7 +194,7 @@ public final class SendEnumListAsQueryParamRequest {
             return this;
         }
 
-        public Builder maybeOperandOrColor(List<ColorOrOperand> maybeOperandOrColor) {
+        public Builder maybeOperandOrColor(ColorOrOperand maybeOperandOrColor) {
             this.maybeOperandOrColor = Optional.of(Collections.singletonList(maybeOperandOrColor));
             return this;
         }
