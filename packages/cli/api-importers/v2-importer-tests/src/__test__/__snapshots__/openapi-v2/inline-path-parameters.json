@@ -264,50 +264,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -1044,7 +1005,7 @@
         }
       ]
     },
-    "Organizations": {
+    "service_Organizations": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1743,7 +1704,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [],
     "errors": [],
     "subpackages": [
@@ -1773,7 +1734,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Organizations",
+            "camelCase": {
+              "unsafeName": "organizations",
+              "safeName": "organizations"
+            },
+            "snakeCase": {
+              "unsafeName": "organizations",
+              "safeName": "organizations"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ORGANIZATIONS",
+              "safeName": "ORGANIZATIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Organizations",
+              "safeName": "Organizations"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Organizations",
@@ -1795,7 +1776,7 @@
           }
         }
       },
-      "service": "Organizations",
+      "service": "service_Organizations",
       "types": [],
       "errors": [],
       "subpackages": [],

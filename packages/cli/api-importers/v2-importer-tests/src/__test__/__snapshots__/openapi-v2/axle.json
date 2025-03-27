@@ -5141,7 +5141,7 @@
     }
   },
   "services": {
-    "Ignition": {
+    "service_Ignition": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6565,7 +6565,7 @@
         }
       ]
     },
-    "Tokens": {
+    "service_Tokens": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7433,7 +7433,7 @@
         }
       ]
     },
-    "Accounts": {
+    "service_Accounts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8826,7 +8826,7 @@
         }
       ]
     },
-    "Policies": {
+    "service_Policies": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -17048,7 +17048,7 @@
         }
       ]
     },
-    "Carriers": {
+    "service_Carriers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -21455,7 +21455,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Ignition",
+            "camelCase": {
+              "unsafeName": "ignition",
+              "safeName": "ignition"
+            },
+            "snakeCase": {
+              "unsafeName": "ignition",
+              "safeName": "ignition"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "IGNITION",
+              "safeName": "IGNITION"
+            },
+            "pascalCase": {
+              "unsafeName": "Ignition",
+              "safeName": "Ignition"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Ignition",
@@ -21477,7 +21497,7 @@
           }
         }
       },
-      "service": "Ignition",
+      "service": "service_Ignition",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -21504,7 +21524,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Tokens",
+            "camelCase": {
+              "unsafeName": "tokens",
+              "safeName": "tokens"
+            },
+            "snakeCase": {
+              "unsafeName": "tokens",
+              "safeName": "tokens"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TOKENS",
+              "safeName": "TOKENS"
+            },
+            "pascalCase": {
+              "unsafeName": "Tokens",
+              "safeName": "Tokens"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Tokens",
@@ -21526,7 +21566,7 @@
           }
         }
       },
-      "service": "Tokens",
+      "service": "service_Tokens",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -21553,7 +21593,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Accounts",
+            "camelCase": {
+              "unsafeName": "accounts",
+              "safeName": "accounts"
+            },
+            "snakeCase": {
+              "unsafeName": "accounts",
+              "safeName": "accounts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ACCOUNTS",
+              "safeName": "ACCOUNTS"
+            },
+            "pascalCase": {
+              "unsafeName": "Accounts",
+              "safeName": "Accounts"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Accounts",
@@ -21575,7 +21635,7 @@
           }
         }
       },
-      "service": "Accounts",
+      "service": "service_Accounts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -21602,7 +21662,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Policies",
+            "camelCase": {
+              "unsafeName": "policies",
+              "safeName": "policies"
+            },
+            "snakeCase": {
+              "unsafeName": "policies",
+              "safeName": "policies"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POLICIES",
+              "safeName": "POLICIES"
+            },
+            "pascalCase": {
+              "unsafeName": "Policies",
+              "safeName": "Policies"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Policies",
@@ -21624,7 +21704,7 @@
           }
         }
       },
-      "service": "Policies",
+      "service": "service_Policies",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -21651,7 +21731,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Carriers",
+            "camelCase": {
+              "unsafeName": "carriers",
+              "safeName": "carriers"
+            },
+            "snakeCase": {
+              "unsafeName": "carriers",
+              "safeName": "carriers"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CARRIERS",
+              "safeName": "CARRIERS"
+            },
+            "pascalCase": {
+              "unsafeName": "Carriers",
+              "safeName": "Carriers"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Carriers",
@@ -21673,7 +21773,7 @@
           }
         }
       },
-      "service": "Carriers",
+      "service": "service_Carriers",
       "types": [],
       "errors": [],
       "subpackages": [],

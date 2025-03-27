@@ -10422,7 +10422,7 @@
     }
   },
   "services": {
-    "Upload": {
+    "service_Upload": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -19623,7 +19623,7 @@
         }
       ]
     },
-    "Groups": {
+    "service_Groups": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -21175,7 +21175,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Upload",
+            "camelCase": {
+              "unsafeName": "upload",
+              "safeName": "upload"
+            },
+            "snakeCase": {
+              "unsafeName": "upload",
+              "safeName": "upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UPLOAD",
+              "safeName": "UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "Upload",
+              "safeName": "Upload"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Upload",
@@ -21197,7 +21217,7 @@
           }
         }
       },
-      "service": "Upload",
+      "service": "service_Upload",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -21224,7 +21244,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Groups",
+            "camelCase": {
+              "unsafeName": "groups",
+              "safeName": "groups"
+            },
+            "snakeCase": {
+              "unsafeName": "groups",
+              "safeName": "groups"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GROUPS",
+              "safeName": "GROUPS"
+            },
+            "pascalCase": {
+              "unsafeName": "Groups",
+              "safeName": "Groups"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Groups",
@@ -21246,7 +21286,7 @@
           }
         }
       },
-      "service": "Groups",
+      "service": "service_Groups",
       "types": [],
       "errors": [],
       "subpackages": [],

@@ -15466,7 +15466,7 @@
   },
   "errors": {},
   "services": {
-    "files": {
+    "service_files": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -15722,7 +15722,7 @@
         }
       ]
     },
-    "transcript": {
+    "service_transcript": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -50126,7 +50126,7 @@
         }
       ]
     },
-    "realtime": {
+    "service_realtime": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -50515,7 +50515,7 @@
         }
       ]
     },
-    "lemur": {
+    "service_lemur": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -55381,7 +55381,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "files",
+            "camelCase": {
+              "unsafeName": "files",
+              "safeName": "files"
+            },
+            "snakeCase": {
+              "unsafeName": "files",
+              "safeName": "files"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILES",
+              "safeName": "FILES"
+            },
+            "pascalCase": {
+              "unsafeName": "Files",
+              "safeName": "Files"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "files",
@@ -55403,7 +55423,7 @@
           }
         }
       },
-      "service": "files",
+      "service": "service_files",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -55430,7 +55450,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "transcript",
+            "camelCase": {
+              "unsafeName": "transcript",
+              "safeName": "transcript"
+            },
+            "snakeCase": {
+              "unsafeName": "transcript",
+              "safeName": "transcript"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRANSCRIPT",
+              "safeName": "TRANSCRIPT"
+            },
+            "pascalCase": {
+              "unsafeName": "Transcript",
+              "safeName": "Transcript"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "transcript",
@@ -55452,7 +55492,7 @@
           }
         }
       },
-      "service": "transcript",
+      "service": "service_transcript",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -55479,7 +55519,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "realtime",
+            "camelCase": {
+              "unsafeName": "realtime",
+              "safeName": "realtime"
+            },
+            "snakeCase": {
+              "unsafeName": "realtime",
+              "safeName": "realtime"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "REALTIME",
+              "safeName": "REALTIME"
+            },
+            "pascalCase": {
+              "unsafeName": "Realtime",
+              "safeName": "Realtime"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "realtime",
@@ -55501,7 +55561,7 @@
           }
         }
       },
-      "service": "realtime",
+      "service": "service_realtime",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -55528,7 +55588,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "lemur",
+            "camelCase": {
+              "unsafeName": "lemur",
+              "safeName": "lemur"
+            },
+            "snakeCase": {
+              "unsafeName": "lemur",
+              "safeName": "lemur"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LEMUR",
+              "safeName": "LEMUR"
+            },
+            "pascalCase": {
+              "unsafeName": "Lemur",
+              "safeName": "Lemur"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "lemur",
@@ -55550,7 +55630,7 @@
           }
         }
       },
-      "service": "lemur",
+      "service": "service_lemur",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -55577,7 +55657,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "/{userId}",
+            "camelCase": {
+              "unsafeName": "userId",
+              "safeName": "userId"
+            },
+            "snakeCase": {
+              "unsafeName": "user_id",
+              "safeName": "user_id"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USER_ID",
+              "safeName": "USER_ID"
+            },
+            "pascalCase": {
+              "unsafeName": "UserId",
+              "safeName": "UserId"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "/{userId}",

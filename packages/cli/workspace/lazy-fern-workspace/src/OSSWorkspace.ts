@@ -106,6 +106,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             let result: IntermediateRepresentation | undefined = undefined;
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
+                    namespace: document.namespace,
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
@@ -118,6 +119,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
             } else if (document.type === "asyncapi") {
                 const converterContext = new AsyncAPIConverterContext({
+                    namespace: document.namespace,
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,

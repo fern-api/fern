@@ -19217,50 +19217,11 @@
   },
   "errors": {},
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -42056,7 +42017,7 @@
         }
       ]
     },
-    "Get Job Predictions": {
+    "service_Get Job Predictions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -46726,7 +46687,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Get Job Predictions",
+            "camelCase": {
+              "unsafeName": "getJobPredictions",
+              "safeName": "getJobPredictions"
+            },
+            "snakeCase": {
+              "unsafeName": "get_job_predictions",
+              "safeName": "get_job_predictions"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_JOB_PREDICTIONS",
+              "safeName": "GET_JOB_PREDICTIONS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetJobPredictions",
+              "safeName": "GetJobPredictions"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Get Job Predictions",
@@ -46748,7 +46729,7 @@
           }
         }
       },
-      "service": "Get Job Predictions",
+      "service": "service_Get Job Predictions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -46775,7 +46756,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "/chat",
+            "camelCase": {
+              "unsafeName": "chat",
+              "safeName": "chat"
+            },
+            "snakeCase": {
+              "unsafeName": "chat",
+              "safeName": "chat"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CHAT",
+              "safeName": "CHAT"
+            },
+            "pascalCase": {
+              "unsafeName": "Chat",
+              "safeName": "Chat"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "/chat",
@@ -47126,7 +47127,7 @@
     }
   },
   "rootPackage": {
-    "service": "",
+    "service": "service_",
     "types": [
       "BaseRequest",
       "Bcp47Tag",

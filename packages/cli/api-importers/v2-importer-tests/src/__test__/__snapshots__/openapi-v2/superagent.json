@@ -2039,7 +2039,7 @@
     }
   },
   "services": {
-    "Agent": {
+    "service_Agent": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -3713,7 +3713,7 @@
         }
       ]
     },
-    "Auth": {
+    "service_Auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4436,7 +4436,7 @@
         }
       ]
     },
-    "User": {
+    "service_User": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4721,7 +4721,7 @@
         }
       ]
     },
-    "Api token": {
+    "service_Api token": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -5374,7 +5374,7 @@
         }
       ]
     },
-    "Documents": {
+    "service_Documents": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6461,7 +6461,7 @@
         }
       ]
     },
-    "Prompts": {
+    "service_Prompts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7481,7 +7481,7 @@
         }
       ]
     },
-    "Tools": {
+    "service_Tools": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8283,7 +8283,7 @@
         }
       ]
     },
-    "Traces": {
+    "service_Traces": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8465,7 +8465,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Agent",
+            "camelCase": {
+              "unsafeName": "agent",
+              "safeName": "agent"
+            },
+            "snakeCase": {
+              "unsafeName": "agent",
+              "safeName": "agent"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AGENT",
+              "safeName": "AGENT"
+            },
+            "pascalCase": {
+              "unsafeName": "Agent",
+              "safeName": "Agent"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Agent",
@@ -8487,7 +8507,7 @@
           }
         }
       },
-      "service": "Agent",
+      "service": "service_Agent",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8514,7 +8534,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Auth",
+            "camelCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "snakeCase": {
+              "unsafeName": "auth",
+              "safeName": "auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "AUTH",
+              "safeName": "AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "Auth",
+              "safeName": "Auth"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Auth",
@@ -8536,7 +8576,7 @@
           }
         }
       },
-      "service": "Auth",
+      "service": "service_Auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8563,7 +8603,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "User",
+            "camelCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "snakeCase": {
+              "unsafeName": "user",
+              "safeName": "user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "USER",
+              "safeName": "USER"
+            },
+            "pascalCase": {
+              "unsafeName": "User",
+              "safeName": "User"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "User",
@@ -8585,7 +8645,7 @@
           }
         }
       },
-      "service": "User",
+      "service": "service_User",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8612,7 +8672,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Api token",
+            "camelCase": {
+              "unsafeName": "apiToken",
+              "safeName": "apiToken"
+            },
+            "snakeCase": {
+              "unsafeName": "api_token",
+              "safeName": "api_token"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API_TOKEN",
+              "safeName": "API_TOKEN"
+            },
+            "pascalCase": {
+              "unsafeName": "ApiToken",
+              "safeName": "ApiToken"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Api token",
@@ -8634,7 +8714,7 @@
           }
         }
       },
-      "service": "Api token",
+      "service": "service_Api token",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8661,7 +8741,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Documents",
+            "camelCase": {
+              "unsafeName": "documents",
+              "safeName": "documents"
+            },
+            "snakeCase": {
+              "unsafeName": "documents",
+              "safeName": "documents"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DOCUMENTS",
+              "safeName": "DOCUMENTS"
+            },
+            "pascalCase": {
+              "unsafeName": "Documents",
+              "safeName": "Documents"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Documents",
@@ -8683,7 +8783,7 @@
           }
         }
       },
-      "service": "Documents",
+      "service": "service_Documents",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8710,7 +8810,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Prompts",
+            "camelCase": {
+              "unsafeName": "prompts",
+              "safeName": "prompts"
+            },
+            "snakeCase": {
+              "unsafeName": "prompts",
+              "safeName": "prompts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PROMPTS",
+              "safeName": "PROMPTS"
+            },
+            "pascalCase": {
+              "unsafeName": "Prompts",
+              "safeName": "Prompts"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Prompts",
@@ -8732,7 +8852,7 @@
           }
         }
       },
-      "service": "Prompts",
+      "service": "service_Prompts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8759,7 +8879,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Tools",
+            "camelCase": {
+              "unsafeName": "tools",
+              "safeName": "tools"
+            },
+            "snakeCase": {
+              "unsafeName": "tools",
+              "safeName": "tools"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TOOLS",
+              "safeName": "TOOLS"
+            },
+            "pascalCase": {
+              "unsafeName": "Tools",
+              "safeName": "Tools"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Tools",
@@ -8781,7 +8921,7 @@
           }
         }
       },
-      "service": "Tools",
+      "service": "service_Tools",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8808,7 +8948,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "Traces",
+            "camelCase": {
+              "unsafeName": "traces",
+              "safeName": "traces"
+            },
+            "snakeCase": {
+              "unsafeName": "traces",
+              "safeName": "traces"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRACES",
+              "safeName": "TRACES"
+            },
+            "pascalCase": {
+              "unsafeName": "Traces",
+              "safeName": "Traces"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "Traces",
@@ -8830,7 +8990,7 @@
           }
         }
       },
-      "service": "Traces",
+      "service": "service_Traces",
       "types": [],
       "errors": [],
       "subpackages": [],

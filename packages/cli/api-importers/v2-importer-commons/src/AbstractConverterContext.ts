@@ -10,6 +10,7 @@ import {
     AvailabilityStatus,
     ContainerType,
     DeclaredTypeName,
+    FernFilepath,
     ObjectPropertyAccess,
     Package,
     TypeDeclaration,
@@ -28,6 +29,7 @@ export declare namespace Spec {
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
+        namespace?: string;
     }
 }
 
@@ -42,6 +44,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
     public readonly smartCasing: boolean;
     public readonly casingsGenerator: CasingsGenerator;
+    public readonly namespace?: string;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -49,6 +52,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.logger = args.logger;
         this.generationLanguage = args.generationLanguage;
         this.smartCasing = args.smartCasing;
+        this.namespace = args.namespace;
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             keywords: undefined,
@@ -119,11 +123,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
      */
     public createPackage(args: { name?: string } = {}): Package {
         return {
-            fernFilepath: {
-                allParts: [],
-                packagePath: [],
-                file: args.name != null ? this.casingsGenerator.generateName(args.name) : undefined
-            },
+            fernFilepath: this.createFernFilepath(args),
             service: undefined,
             types: [],
             errors: [],
@@ -133,6 +133,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
             websocket: undefined,
             hasEndpointsInTree: false,
             navigationConfig: undefined
+        };
+    }
+
+    /**
+     * Creates a FernFilepath object with optional name
+     * @param args Optional object containing name
+     * @returns FernFilepath object
+     */
+    public createFernFilepath(args: { name?: string } = {}): FernFilepath {
+        const packagePath = this.namespace != null ? [this.casingsGenerator.generateName(this.namespace)] : [];
+        const file = args.name != null ? this.casingsGenerator.generateName(args.name) : undefined;
+        return {
+            allParts: file ? [...packagePath, file] : packagePath,
+            packagePath,
+            file
         };
     }
 
