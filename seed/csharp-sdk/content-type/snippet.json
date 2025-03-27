@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.PatchAsync(\n    new PatchProxyRequest { Application = \"application\", RequireAuth = true }\n);\n"
+            }
+        }
+    ]
+}
