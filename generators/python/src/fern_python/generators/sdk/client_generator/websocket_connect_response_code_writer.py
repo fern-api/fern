@@ -23,7 +23,6 @@ class WebsocketConnectResponseCodeWriter:
                         status_code=AST.Expression("status_code"),
                     )
                 )
-                writer.write_line("")
             writer.write("raise ")
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(

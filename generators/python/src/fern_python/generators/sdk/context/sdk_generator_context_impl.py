@@ -15,6 +15,7 @@ from ..declaration_referencers import (
     OAuthTokenProviderDeclarationReferencer,
     RootClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
+    SubpackageAsyncSocketClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
     SubpackageSocketClientDeclarationReferencer,
 )
@@ -69,6 +70,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
+        self._subpackage_async_socket_client_declaration_referencer = SubpackageAsyncSocketClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
         self._subpackage_socket_client_declaration_referencer = SubpackageSocketClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
@@ -114,11 +118,23 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_socket_client_declaration_referencer.get_class_name(name=subpackage)
 
+    def get_async_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_socket_client_declaration_referencer.get_class_name(name=subpackage)
+
     def get_socket_class_reference_for_subpackage_service(
         self, subpackage_id: ir_types.SubpackageId
     ) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_socket_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
+
+    def get_async_socket_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_socket_client_declaration_referencer.get_class_reference(
             name=subpackage, as_request=False
         )
 

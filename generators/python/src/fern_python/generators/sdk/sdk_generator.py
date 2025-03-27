@@ -488,8 +488,10 @@ class SdkGenerator(AbstractGenerator):
             )
             SocketClientGenerator(
                 context=context,
+                subpackage_id=subpackage_id,
                 websocket=websocket,
                 class_name=context.get_socket_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_socket_class_name_for_subpackage_service(subpackage_id),
                 generated_root_client=generated_root_client,
             ).generate(source_file=socket_source_file)
             project.write_source_file(source_file=socket_source_file, filepath=socket_filepath)

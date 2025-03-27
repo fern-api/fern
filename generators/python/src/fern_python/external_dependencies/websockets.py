@@ -10,6 +10,24 @@ WEBSOCKETS_MODULE = AST.Module.external(
     ),
 )
 
+WEBSOCKETS_SYNC_CLIENT_MODULE = AST.Module.external(
+    module_path=("websockets", "sync", "client"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version="12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
+WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
+    module_path=("websockets", "sync", "connection"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version="12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
 
 def _export(*name: str) -> AST.ClassReference:
     return AST.ClassReference(
@@ -19,10 +37,17 @@ def _export(*name: str) -> AST.ClassReference:
 
 class Websockets:
     @staticmethod
-    def get_websocket_client_protocol() -> AST.ClassReference:
+    def get_async_websocket_client_protocol() -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=("WebSocketClientProtocol",),
             import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
+        )
+
+    @staticmethod
+    def get_sync_websocket_client_protocol() -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("Connection",),
+            import_=AST.ReferenceImport(module=WEBSOCKETS_SYNC_CONNECTION_MODULE, alias="websockets_sync_connection"),
         )
 
     @staticmethod
@@ -45,10 +70,10 @@ class Websockets:
             writer.write("with ")
             writer.write_reference(
                 AST.Reference(
-                    import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
-                    qualified_name_excluding_import=("sync", "client", "connect"),
+                    import_=AST.ReferenceImport(module=WEBSOCKETS_SYNC_CLIENT_MODULE, alias="websockets_sync_client"),
+                    qualified_name_excluding_import=("connect",),
                 )
             )
-            writer.write(f"({url}, extra_headers={headers}) as protocol:")
+            writer.write(f"({url}, additional_headers={headers}) as protocol:")
 
         return AST.Expression(AST.CodeWriter(write))
