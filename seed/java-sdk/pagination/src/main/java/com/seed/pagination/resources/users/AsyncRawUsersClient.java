@@ -135,7 +135,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -212,7 +213,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -299,7 +301,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -388,7 +391,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -478,7 +482,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -566,7 +571,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -652,7 +658,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -739,7 +746,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -814,7 +822,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -893,7 +902,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -969,7 +979,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -1029,7 +1040,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -1105,7 +1117,8 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

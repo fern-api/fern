@@ -6,6 +6,7 @@ package com.fern.sdk.resources.types.object.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
+import okhttp3.Response;
 
 public final class NestedObjectWithRequiredFieldError extends SeedExhaustiveApiException {
   /**
@@ -15,6 +16,12 @@ public final class NestedObjectWithRequiredFieldError extends SeedExhaustiveApiE
 
   public NestedObjectWithRequiredFieldError(NestedObjectWithRequiredField body) {
     super("NestedObjectWithRequiredFieldError", 400, body);
+    this.body = body;
+  }
+
+  public NestedObjectWithRequiredFieldError(NestedObjectWithRequiredField body,
+      Response rawResponse) {
+    super("NestedObjectWithRequiredFieldError", 400, body, rawResponse);
     this.body = body;
   }
 

@@ -3,6 +3,12 @@
  */
 package com.seed.pathParameters.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import okhttp3.Response;
+
 /**
  * This exception type will be thrown for any non-2XX API responses.
  */
@@ -17,10 +23,25 @@ public class SeedPathParametersApiException extends SeedPathParametersException 
      */
     private final Object body;
 
+    private final Map<String, List<String>> headers;
+
     public SeedPathParametersApiException(String message, int statusCode, Object body) {
         super(message);
         this.statusCode = statusCode;
         this.body = body;
+        this.headers = new HashMap<>();
+    }
+
+    public SeedPathParametersApiException(String message, int statusCode, Object body, Response rawResponse) {
+        super(message);
+        this.statusCode = statusCode;
+        this.body = body;
+        this.headers = new HashMap<>();
+        rawResponse.headers().forEach(header -> {
+            String key = header.component1();
+            String value = header.component2();
+            this.headers.computeIfAbsent(key, _str -> new ArrayList<>()).add(value);
+        });
     }
 
     /**
@@ -35,6 +56,13 @@ public class SeedPathParametersApiException extends SeedPathParametersException 
      */
     public Object body() {
         return this.body;
+    }
+
+    /**
+     * @return the headers
+     */
+    public Map<String, List<String>> headers() {
+        return this.headers;
     }
 
     @java.lang.Override

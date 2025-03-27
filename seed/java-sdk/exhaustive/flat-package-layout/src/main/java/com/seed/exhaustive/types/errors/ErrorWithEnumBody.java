@@ -5,6 +5,7 @@ package com.seed.exhaustive.types.errors;
 
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.types.types.WeatherReport;
+import okhttp3.Response;
 
 public final class ErrorWithEnumBody extends SeedExhaustiveApiException {
     /**
@@ -14,6 +15,11 @@ public final class ErrorWithEnumBody extends SeedExhaustiveApiException {
 
     public ErrorWithEnumBody(WeatherReport body) {
         super("ErrorWithEnumBody", 400, body);
+        this.body = body;
+    }
+
+    public ErrorWithEnumBody(WeatherReport body, Response rawResponse) {
+        super("ErrorWithEnumBody", 400, body, rawResponse);
         this.body = body;
     }
 

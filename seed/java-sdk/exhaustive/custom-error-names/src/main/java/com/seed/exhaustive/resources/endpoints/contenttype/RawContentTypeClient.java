@@ -69,7 +69,8 @@ public class RawContentTypeClient {
             throw new CustomApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }
@@ -117,7 +118,8 @@ public class RawContentTypeClient {
             throw new CustomApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }

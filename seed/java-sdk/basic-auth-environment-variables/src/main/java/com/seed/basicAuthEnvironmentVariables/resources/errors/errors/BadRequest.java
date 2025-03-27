@@ -4,9 +4,14 @@
 package com.seed.basicAuthEnvironmentVariables.resources.errors.errors;
 
 import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesApiException;
+import okhttp3.Response;
 
 public final class BadRequest extends SeedBasicAuthEnvironmentVariablesApiException {
     public BadRequest(Object body) {
         super("BadRequest", 400, body);
+    }
+
+    public BadRequest(Object body, Response rawResponse) {
+        super("BadRequest", 400, body, rawResponse);
     }
 }

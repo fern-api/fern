@@ -67,7 +67,8 @@ public class RawS3Client {
             throw new SeedMultiUrlEnvironmentApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e);
         }

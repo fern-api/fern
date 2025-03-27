@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Include response headers in API exceptions
+      type: feat
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.30.0
+- changelogEntry:
+    - summary: |
         Query params respect allow-multiple
       type: fix
   createdAt: '2025-03-27'
