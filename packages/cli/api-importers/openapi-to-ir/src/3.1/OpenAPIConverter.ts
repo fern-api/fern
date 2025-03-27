@@ -239,8 +239,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
         const pkg = this.getOrCreatePackage({
             context,
-            group,
-        })
+            group
+        });
 
         for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
@@ -332,8 +332,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
                     const pkg = this.getOrCreatePackage({
                         context,
-                        group: endpoint.group,
-                    })
+                        group: endpoint.group
+                    });
 
                     const allParts = [...group].map((part) => context.casingsGenerator.generateName(part));
                     const finalpart = allParts[allParts.length - 1];
@@ -359,7 +359,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                             endpoints: [],
                             transport: undefined,
                             encoding: undefined
-                        }
+                        };
                     }
                     this.ir.services[pkg.service]?.endpoints.push(endpoint.endpoint);
 
@@ -369,7 +369,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                     }
                 }
 
-                for (const webhook of convertedPath.webhooks) {                    
+                for (const webhook of convertedPath.webhooks) {
                     const group = this.getGroup({
                         groupParts: webhook.group,
                         namespace: context.namespace
@@ -378,10 +378,10 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
                     const pkg = this.getOrCreatePackage({
                         context,
-                        group: webhook.group,
-                    })
+                        group: webhook.group
+                    });
 
-                    this.ir.webhookGroups[groupId] ??= []; 
+                    this.ir.webhookGroups[groupId] ??= [];
                     this.ir.webhookGroups[groupId].push(webhook.webhook);
 
                     pkg.webhooks = groupId;
@@ -402,14 +402,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
      * @param context The converter context
      * @returns The package object
      */
-    private getOrCreatePackage({
-        context,
-        group,
-    }: {
-        context: OpenAPIConverterContext3_1;
-        group?: string[];
-    }): Package {
-
+    private getOrCreatePackage({ context, group }: { context: OpenAPIConverterContext3_1; group?: string[] }): Package {
         const groupParts = [];
         if (context.namespace != null) {
             groupParts.push(context.namespace);
@@ -420,7 +413,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             return this.ir.rootPackage;
         }
 
-        let pkg = this.ir.rootPackage
+        let pkg = this.ir.rootPackage;
         for (let i = 0; i < groupParts.length; i++) {
             const name = groupParts[i];
             const subpackageId = groupParts.slice(0, i + 1).join(".");
@@ -446,13 +439,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
      * @param namespace Optional namespace to prepend to the group
      * @returns A dot-separated string representation of the group
      */
-    private getGroup({
-        groupParts,
-        namespace
-    }: {
-        groupParts: string[] | undefined;
-        namespace?: string;
-    }): string[] {
+    private getGroup({ groupParts, namespace }: { groupParts: string[] | undefined; namespace?: string }): string[] {
         const group = [];
         if (namespace != null) {
             group.push(namespace);
