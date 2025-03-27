@@ -47,6 +47,8 @@ public final class WeirdNumber {
     } else if(this.type == 1) {
       return visitor.visit((Optional<Float>) this.value);
     } else if(this.type == 2) {
+      return visitor.visit((Optional<String>) this.value);
+    } else if(this.type == 3) {
       return visitor.visit((double) this.value);
     }
     throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -80,14 +82,20 @@ public final class WeirdNumber {
     return new WeirdNumber(value, 1);
   }
 
-  public static WeirdNumber of(double value) {
+  public static WeirdNumber of(Optional<String> value) {
     return new WeirdNumber(value, 2);
+  }
+
+  public static WeirdNumber of(double value) {
+    return new WeirdNumber(value, 3);
   }
 
   public interface Visitor<T> {
     T visit(int value);
 
     T visit(Optional<Float> value);
+
+    T visit(Optional<String> value);
 
     T visit(double value);
   }
@@ -106,6 +114,10 @@ public final class WeirdNumber {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<Float>>() {}));
+      } catch(IllegalArgumentException e) {
+      }
+      try {
+        return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<String>>() {}));
       } catch(IllegalArgumentException e) {
       }
       if (value instanceof Double) {

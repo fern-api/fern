@@ -137,6 +137,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         hasQuestionToken: true
                     };
                 }),
+                ...(this.channel.headers ?? []).map((header) => {
+                    return {
+                        name: header.name.wireValue,
+                        type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
+                        hasQuestionToken: true
+                    };
+                }),
                 {
                     name: GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
@@ -226,6 +233,27 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     ts.NodeFlags.Let
                 )
             ),
+            ...(this.channel.headers ?? []).map((header) => {
+                return ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        this.getReferenceToArg(header.name.wireValue),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock([
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createElementAccessExpression(
+                                    ts.factory.createIdentifier("headers"),
+                                    ts.factory.createStringLiteral(header.name.wireValue)
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                this.getReferenceToArg(header.name.wireValue)
+                            )
+                        )
+                    ])
+                );
+            }),
             ...(this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
                 ? [
                       ts.factory.createExpressionStatement(
