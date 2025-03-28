@@ -281,9 +281,11 @@ class ClientWrapperGenerator:
             writer.write_node(
                 self._context.core_utilities.http_client(
                     base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
-                    base_url=AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
-                    if has_base_url
-                    else None,
+                    base_url=(
+                        AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
+                        if has_base_url
+                        else None
+                    ),
                     base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=is_async,
@@ -477,9 +479,9 @@ class ClientWrapperGenerator:
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
-                    environment_variable=header_auth_scheme.header_env_var
-                    if header_auth_scheme.header_env_var is not None
-                    else None,
+                    environment_variable=(
+                        header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
+                    ),
                 )
             )
 
@@ -490,9 +492,11 @@ class ClientWrapperGenerator:
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=self._get_token_member_name(bearer_auth_scheme),
-                    type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                    if self._context.ir.sdk_config.is_auth_mandatory
-                    else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                    type_hint=(
+                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                        if self._context.ir.sdk_config.is_auth_mandatory
+                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    ),
                     instantiation=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
                     ),
@@ -500,9 +504,11 @@ class ClientWrapperGenerator:
                         name=self._get_token_getter_name(bearer_auth_scheme),
                         signature=AST.FunctionSignature(
                             parameters=[],
-                            return_type=AST.TypeHint.str_()
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else AST.TypeHint.optional(AST.TypeHint.str_()),
+                            return_type=(
+                                AST.TypeHint.str_()
+                                if self._context.ir.sdk_config.is_auth_mandatory
+                                else AST.TypeHint.optional(AST.TypeHint.str_())
+                            ),
                         ),
                         body=AST.CodeWriter(
                             self._get_required_getter_body_writer(
@@ -516,9 +522,9 @@ class ClientWrapperGenerator:
                     ),
                     header_key=ClientWrapperGenerator.AUTHORIZATION_HEADER,
                     header_prefix=ClientWrapperGenerator.BEARER_AUTH_PREFIX,
-                    environment_variable=bearer_auth_scheme.token_env_var
-                    if bearer_auth_scheme.token_env_var is not None
-                    else None,
+                    environment_variable=(
+                        bearer_auth_scheme.token_env_var if bearer_auth_scheme.token_env_var is not None else None
+                    ),
                     template=TemplateGenerator.string_template(
                         is_optional=False,
                         template_string_prefix=constructor_parameter_name,
@@ -540,9 +546,11 @@ class ClientWrapperGenerator:
             username_constructor_parameter = ConstructorParameter(
                 constructor_parameter_name=username_constructor_parameter_name,
                 private_member_name=self._get_username_member_name(basic_auth_scheme),
-                type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                if self._context.ir.sdk_config.is_auth_mandatory
-                else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                type_hint=(
+                    ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                    if self._context.ir.sdk_config.is_auth_mandatory
+                    else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                ),
                 instantiation=AST.Expression(
                     f'{username_constructor_parameter_name}="YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}"',
                 ),
@@ -550,9 +558,11 @@ class ClientWrapperGenerator:
                     name=self._get_username_getter_name(basic_auth_scheme),
                     signature=AST.FunctionSignature(
                         parameters=[],
-                        return_type=AST.TypeHint.str_()
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(AST.TypeHint.str_()),
+                        return_type=(
+                            AST.TypeHint.str_()
+                            if self._context.ir.sdk_config.is_auth_mandatory
+                            else AST.TypeHint.optional(AST.TypeHint.str_())
+                        ),
                     ),
                     body=AST.CodeWriter(
                         self._get_required_getter_body_writer(
@@ -564,9 +574,9 @@ class ClientWrapperGenerator:
                         )
                     ),
                 ),
-                environment_variable=basic_auth_scheme.username_env_var
-                if basic_auth_scheme.username_env_var is not None
-                else None,
+                environment_variable=(
+                    basic_auth_scheme.username_env_var if basic_auth_scheme.username_env_var is not None else None
+                ),
                 is_basic=True,
                 template=TemplateGenerator.string_template(
                     is_optional=False,
@@ -585,9 +595,11 @@ class ClientWrapperGenerator:
             password_constructor_parameter = ConstructorParameter(
                 constructor_parameter_name=password_constructor_parameter_name,
                 private_member_name=self._get_password_member_name(basic_auth_scheme),
-                type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                if self._context.ir.sdk_config.is_auth_mandatory
-                else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                type_hint=(
+                    ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                    if self._context.ir.sdk_config.is_auth_mandatory
+                    else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                ),
                 instantiation=AST.Expression(
                     f'{password_constructor_parameter_name}="YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}"',
                 ),
@@ -595,9 +607,11 @@ class ClientWrapperGenerator:
                     name=self._get_password_getter_name(basic_auth_scheme),
                     signature=AST.FunctionSignature(
                         parameters=[],
-                        return_type=AST.TypeHint.str_()
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(AST.TypeHint.str_()),
+                        return_type=(
+                            AST.TypeHint.str_()
+                            if self._context.ir.sdk_config.is_auth_mandatory
+                            else AST.TypeHint.optional(AST.TypeHint.str_())
+                        ),
                     ),
                     body=AST.CodeWriter(
                         self._get_required_getter_body_writer(
@@ -610,9 +624,9 @@ class ClientWrapperGenerator:
                     ),
                 ),
                 is_basic=True,
-                environment_variable=basic_auth_scheme.password_env_var
-                if basic_auth_scheme.password_env_var is not None
-                else None,
+                environment_variable=(
+                    basic_auth_scheme.password_env_var if basic_auth_scheme.password_env_var is not None else None
+                ),
                 template=TemplateGenerator.string_template(
                     is_optional=False,
                     template_string_prefix=password_constructor_parameter_name,

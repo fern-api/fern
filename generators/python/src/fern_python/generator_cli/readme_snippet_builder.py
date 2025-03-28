@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
@@ -21,6 +21,7 @@ class ReadmeSnippetBuilder:
     ASYNC_CLIENT_FEATURE_ID: generatorcli.FeatureId = "ASYNC_CLIENT"
     STREAMING_FEATURE_ID: generatorcli.FeatureId = "STREAMING"
     PAGINATION_FEATURE_ID: generatorcli.FeatureId = "PAGINATION"
+    WEBSOCKETS_FEATURE_ID: generatorcli.FeatureId = "WEBSOCKETS"
 
     NO_FEATURE_PLACEHOLDER_ID: generatorcli.FeatureId = "NO_FEATURE"
 
@@ -40,6 +41,7 @@ class ReadmeSnippetBuilder:
         api_error_reference: AST.ClassReference,
         source_file_factory: SourceFileFactory,
         pagination_enabled: Optional[bool] = False,
+        websocket_enabled: Optional[bool] = False,
     ):
         self._ir = ir
         self._package_name = package_name
@@ -48,6 +50,7 @@ class ReadmeSnippetBuilder:
         # is a recipe of disaster given how easy it is to forget to check these
         # flags and how many places need this context.
         self._pagination_enabled = pagination_enabled
+        self._websocket_enabled = websocket_enabled
 
         self._source_file_factory = source_file_factory
 
@@ -73,6 +76,9 @@ class ReadmeSnippetBuilder:
 
         if self._pagination_enabled:
             snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = self._build_pagination_snippets()
+
+        if self._websocket_enabled:
+            snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = self._build_websocket_snippets()
 
         return snippets
 
@@ -259,6 +265,68 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         except Exception as e:
             print(f"Failed to generage pagination snippets with exception {e}")
             return []
+
+    def _build_websocket_snippets(self) -> List[str]:
+        websocket_snippets = []
+        try:
+            subpackage, websocket_channel = self._get_example_websocket_channel()
+            websocket_snippets.append(
+                self._get_websocket_snippet(is_async=False, subpackage=subpackage, websocket_channel=websocket_channel)
+            )
+            websocket_snippets.append(
+                self._get_websocket_snippet(is_async=True, subpackage=subpackage, websocket_channel=websocket_channel)
+            )
+        except Exception as e:
+            print(f"Failed to generage websocket snippets with exception {e}")
+            return []
+        return websocket_snippets
+
+    def _get_websocket_snippet(
+        self, is_async: bool, subpackage: ir_types.Subpackage, websocket_channel: ir_types.WebSocketChannel
+    ) -> str:
+        def _client_writer(writer: AST.NodeWriter) -> None:
+            writer.write("client = ")
+            writer.write_node(client_instantiation, should_write_as_snippet=False)
+
+        client_instantiation = AST.ClassInstantiation(
+            class_=(
+                self._root_client.async_client.class_reference
+                if is_async
+                else self._root_client.sync_client.class_reference
+            ),
+            args=[AST.Expression("...")],
+        )
+        client_instantiation_str = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer)))
+        initial_import = "import asyncio\n\n" if is_async else "import threading\n\n"
+        snippet = f"""
+# Connect to the websocket ({"Async" if is_async else "Sync"})
+{initial_import}{client_instantiation_str}
+{"async " if is_async else ""}with client.{subpackage.name.snake_case.safe_name}.connect({"..." if websocket_channel.query_parameters else ""}) as socket:
+    # Iterate over the messages as they arrive
+    {"async for message in socket" if is_async else "for message in socket"}
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.OPEN, lambda _: print("open"))
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+    socket.on(EventType.CLOSE, lambda _: print("close"))
+    socket.on(EventType.ERROR, lambda error: print("error", error))
+
+"""
+        start_listen_snippet = f"""
+    {"# Start listening for events in an asyncio task" if is_async else "# Start the listening loop in a background thread"}
+    {"listen_task = asyncio.create_task(socket.start_listening())" if is_async else "listener_thread = threading.Thread(target=socket.start_listening, daemon=True)"}
+"""
+        start_listen_snippet += "" if is_async else "    listener_thread.start()\n"
+        snippet += start_listen_snippet
+        return snippet
+
+    def _get_example_websocket_channel(self) -> Tuple[ir_types.Subpackage, ir_types.WebSocketChannel]:
+        for subpackage_id in self._ir.subpackages.keys():
+            subpackage = self._ir.subpackages[subpackage_id]
+            if subpackage.websocket is not None:
+                return subpackage, self._ir.websocket_channels[subpackage.websocket]
+        raise ValueError("No websocket channel found")
 
     def _build_async_client_snippets(self) -> List[str]:
         try:

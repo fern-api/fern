@@ -201,10 +201,12 @@ class RootClientGenerator:
                                 ),
                                 AST.NamedFunctionParameter(
                                     name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                                    if self._environments_config.default_environment is not None
-                                    else AST.TypeHint.optional(
+                                    type_hint=(
                                         AST.TypeHint(self._context.get_reference_to_environments_class())
+                                        if self._environments_config.default_environment is not None
+                                        else AST.TypeHint.optional(
+                                            AST.TypeHint(self._context.get_reference_to_environments_class())
+                                        )
                                     ),
                                     docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
                                 ),
@@ -352,9 +354,11 @@ class RootClientGenerator:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    if environments_config.default_environment is not None
-                    else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
+                    type_hint=(
+                        AST.TypeHint(self._context.get_reference_to_environments_class())
+                        if environments_config.default_environment is not None
+                        else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class()))
+                    ),
                     private_member_name=None,
                     initializer=default_environment if default_environment is not None else None,
                     exclude_from_wrapper_construction=True,
@@ -412,27 +416,31 @@ class RootClientGenerator:
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
-                    initializer=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=AST.Reference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                qualified_name_excluding_import=("getenv",),
-                            ),
-                            args=[AST.Expression(f'"{param.environment_variable}"')],
-                        )
-                    )
-                    if param.environment_variable is not None
-                    else None,
-                    validation_check=AST.Expression(
-                        AST.CodeWriter(
-                            self._get_parameter_validation_writer(
-                                param_name=param.constructor_parameter_name,
-                                environment_variable=param.environment_variable,
+                    initializer=(
+                        AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{param.environment_variable}"')],
                             )
                         )
-                    )
-                    if add_validation and param.environment_variable is not None
-                    else None,
+                        if param.environment_variable is not None
+                        else None
+                    ),
+                    validation_check=(
+                        AST.Expression(
+                            AST.CodeWriter(
+                                self._get_parameter_validation_writer(
+                                    param_name=param.constructor_parameter_name,
+                                    environment_variable=param.environment_variable,
+                                )
+                            )
+                        )
+                        if add_validation and param.environment_variable is not None
+                        else None
+                    ),
                 )
             )
 
@@ -448,27 +456,31 @@ class RootClientGenerator:
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_id",
                         type_hint=cred_type_hint,
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                            )
-                        )
-                        if oauth.client_id_env_var is not None
-                        else None,
-                        validation_check=AST.Expression(
-                            AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name="client_id",
-                                    environment_variable=oauth.client_id_env_var,
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                                 )
                             )
-                        )
-                        if add_validation and oauth.client_id_env_var is not None
-                        else None,
+                            if oauth.client_id_env_var is not None
+                            else None
+                        ),
+                        validation_check=(
+                            AST.Expression(
+                                AST.CodeWriter(
+                                    self._get_parameter_validation_writer(
+                                        param_name="client_id",
+                                        environment_variable=oauth.client_id_env_var,
+                                    )
+                                )
+                            )
+                            if add_validation and oauth.client_id_env_var is not None
+                            else None
+                        ),
                     ),
                 )
 
@@ -481,27 +493,31 @@ class RootClientGenerator:
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_secret",
                         type_hint=sec_cred_type_hint,
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                            )
-                        )
-                        if oauth.client_secret_env_var is not None
-                        else None,
-                        validation_check=AST.Expression(
-                            AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name="client_secret",
-                                    environment_variable=oauth.client_secret_env_var,
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                                 )
                             )
-                        )
-                        if sec_add_validation and oauth.client_secret_env_var is not None
-                        else None,
+                            if oauth.client_secret_env_var is not None
+                            else None
+                        ),
+                        validation_check=(
+                            AST.Expression(
+                                AST.CodeWriter(
+                                    self._get_parameter_validation_writer(
+                                        param_name="client_secret",
+                                        environment_variable=oauth.client_secret_env_var,
+                                    )
+                                )
+                            )
+                            if sec_add_validation and oauth.client_secret_env_var is not None
+                            else None
+                        ),
                     ),
                 )
             parameters.append(
@@ -537,9 +553,7 @@ class RootClientGenerator:
                 initializer=AST.Expression(
                     "True"
                     if self._context.custom_config.follow_redirects_by_default == True
-                    else "False"
-                    if self._context.custom_config.follow_redirects_by_default == False
-                    else "None"
+                    else "False" if self._context.custom_config.follow_redirects_by_default == False else "None"
                 ),
             )
         )
@@ -547,9 +561,11 @@ class RootClientGenerator:
         parameters.append(
             RootClientConstructorParameter(
                 constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
-                type_hint=AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
-                if not is_async
-                else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT)),
+                type_hint=(
+                    AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
+                    if not is_async
+                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT))
+                ),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
                 docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
@@ -589,9 +605,11 @@ class RootClientGenerator:
                     AST.ConditionalExpression(
                         left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
                         right=AST.ConditionalExpression(
-                            left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                            if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                            else AST.Expression(AST.TypeHint.none()),
+                            left=(
+                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                                else AST.Expression(AST.TypeHint.none())
+                            ),
                             right=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}.timeout.read"
                             ),
@@ -670,7 +688,10 @@ class RootClientGenerator:
             writer.write_newline_if_last_line_not()
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
+                if subpackage.has_endpoints_in_tree or (
+                    subpackage.websocket is not None
+                    and self._context.custom_config.should_generate_websocket_clients
+                ):
                     writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
                     client_wrapper_constructor_kwargs = [
                         (param.constructor_parameter_name, AST.Expression(f"self.{param.constructor_parameter_name}"))
@@ -682,11 +703,14 @@ class RootClientGenerator:
                             AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
                         ),
                     )
+                    # TODO: This is where the referencing happens at the root client level.
                     writer.write_node(
                         AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                            if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            class_=(
+                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                if is_async
+                                else self._context.get_reference_to_subpackage_service(subpackage_id)
+                            ),
                             kwargs=[
                                 (
                                     "client_wrapper",

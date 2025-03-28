@@ -36,6 +36,7 @@ from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
+from .client_generator.socket_client_generator import SocketClientGenerator
 from .custom_config import (
     BaseDependencyCustomConfig,
     DependencyCustomConfig,
@@ -157,9 +158,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
-        ] = None
+        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
+            None
+        )
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
@@ -238,14 +239,25 @@ class SdkGenerator(AbstractGenerator):
             ],
         )
 
+        write_websocket_snippets = False
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree:
+            if subpackage.has_endpoints_in_tree or (
+                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+            ):
+                channel_websocket = (
+                    ir.websocket_channels[subpackage.websocket]
+                    if ir.websocket_channels and subpackage.websocket
+                    else None
+                )
+                if channel_websocket is not None and context.custom_config.should_generate_websocket_clients:
+                    write_websocket_snippets = True
                 self._generate_subpackage_client(
                     context=context,
                     generator_exec_wrapper=generator_exec_wrapper,
                     subpackage_id=subpackage_id,
                     subpackage=subpackage,
+                    websocket=channel_websocket,
                     project=project,
                     generated_root_client=generated_root_client,
                     snippet_registry=snippet_registry,
@@ -287,6 +299,7 @@ class SdkGenerator(AbstractGenerator):
                         snippets=snippets,
                         project=project,
                         generated_root_client=generated_root_client,
+                        write_websocket_snippets=write_websocket_snippets,
                     )
                 except Exception as e:
                     generator_exec_wrapper.send_update(
@@ -466,6 +479,7 @@ class SdkGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         subpackage_id: ir_types.SubpackageId,
         subpackage: ir_types.Subpackage,
+        websocket: Optional[ir_types.WebSocketChannel],
         project: Project,
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
@@ -473,18 +487,34 @@ class SdkGenerator(AbstractGenerator):
         endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
+        if websocket is not None and context.custom_config.should_generate_websocket_clients:
+            socket_filepath = context.get_socket_filepath_for_subpackage_service(subpackage_id)
+            socket_source_file = context.source_file_factory.create(
+                project=project, filepath=socket_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            SocketClientGenerator(
+                context=context,
+                subpackage_id=subpackage_id,
+                websocket=websocket,
+                class_name=context.get_socket_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_socket_class_name_for_subpackage_service(subpackage_id),
+                generated_root_client=generated_root_client,
+            ).generate(source_file=socket_source_file)
+            project.write_source_file(source_file=socket_source_file, filepath=socket_filepath)
         source_file = context.source_file_factory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ClientGenerator(
             context=context,
             package=subpackage,
+            subpackage_id=subpackage_id,
             class_name=context.get_class_name_of_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=websocket,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
@@ -616,6 +646,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
         generated_root_client: GeneratedRootClient,
+        write_websocket_snippets: bool,
     ) -> None:
         contents = generator_cli.generate_readme(
             snippets=snippets,
@@ -624,6 +655,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 project._github_output_mode.installation_token if project._github_output_mode is not None else None
             ),
             pagination_enabled=context.generator_config.generate_paginated_clients,
+            websocket_enabled=write_websocket_snippets,
             generated_root_client=generated_root_client,
         )
         project.add_file(
