@@ -37,6 +37,7 @@ async function createConjureFile({
         .replaceAll(/: rid(?:$|\s)/g, ": string\n")
         .replaceAll("<rid>", "<string>")
         .replaceAll("rid>", "string>")
+        .replaceAll("<rid", "<string")
         .replaceAll(": safelong", ": long")
         .replaceAll("<safelong>", "<long>")
         .replaceAll("safelong>", "long>")
