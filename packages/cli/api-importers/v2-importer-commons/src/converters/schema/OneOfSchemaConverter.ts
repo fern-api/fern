@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
+    ObjectProperty,
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
@@ -100,9 +101,42 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
+        const baseProperties: ObjectProperty[] = [];
+
+        for (const [propertyName, propertySchema] of Object.entries(this.schema.properties ?? {})) {
+            const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
+            const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
+
+            const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
+            const propertySchemaConverter = new SchemaOrReferenceConverter({
+                breadcrumbs: propertyBreadcrumbs,
+                schemaOrReference: propertySchema,
+                schemaIdOverride: propertyId,
+                wrapAsOptional: !this.schema.required?.includes(propertyName),
+                wrapAsNullable: isNullable
+            });
+            const convertedProperty = await propertySchemaConverter.convert({ context, errorCollector });
+            if (convertedProperty != null) {
+                baseProperties.push({
+                    name: context.casingsGenerator.generateNameAndWireValue({
+                        name: propertyName,
+                        wireValue: propertyName
+                    }),
+                    valueType: convertedProperty.type,
+                    docs: propertySchema.description,
+                    availability: convertedProperty.availability,
+                    propertyAccess: await context.getPropertyAccess(propertySchema)
+                });
+                inlinedTypes = {
+                    ...inlinedTypes,
+                    ...convertedProperty.inlinedTypes
+                };
+            }
+        }
+
         return {
             union: Type.union({
-                baseProperties: [],
+                baseProperties,
                 discriminant: context.casingsGenerator.generateNameAndWireValue({
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName

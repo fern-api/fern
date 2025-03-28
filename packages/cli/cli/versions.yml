@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add support for reading common properties across all oneOf variants in the new OpenAPI parser. When a schema uses `oneOf` with a discriminator, the parser now correctly extracts and includes properties defined at the root level of the schema as base properties of the discriminated union. This ensures that common fields shared by all variants are properly represented in the generated IR.
+    type: fix
+  irVersion: 57
+  version: 0.57.9
+
+- changelogEntry:
+  - summary: |
       Bump undici timeouts to make sure docs sites get published. This addresses an issue where large documentation sites were timing out during the publishing process. By increasing the timeout values for the undici HTTP client, we ensure that even complex documentation sites have enough time to complete the publishing process.
         
     type: fix
