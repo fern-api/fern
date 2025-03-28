@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Reduce CLI output from the legacy OpenAPI parser when using the experimental `openapiParserV3` option. This makes the logs cleaner and more focused on relevant information when using the newer parser.
+        
+    type: fix
+  irVersion: 57
+  version: 0.57.6
+
+- changelogEntry:
+  - summary: |
       Fix an issue where endpoint ids were not globally unique because they didn't take into account namespaces. This only affects
       the new OpenAPI -> IR parser. 
         

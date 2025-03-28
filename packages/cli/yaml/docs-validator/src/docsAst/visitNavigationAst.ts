@@ -6,7 +6,7 @@ import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { visitFilepath } from "./visitFilepath";
@@ -18,7 +18,7 @@ export declare namespace visitNavigationAst {
         visitor: Partial<DocsConfigFileAstVisitor>;
         nodePath: NodePath;
         absoluteFilepathToConfiguration: AbsoluteFilePath;
-        fernWorkspaces: FernWorkspace[];
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
         context: TaskContext;
     }
 }
@@ -26,7 +26,7 @@ export declare namespace visitNavigationAst {
 export async function visitNavigationAst({
     absolutePathToFernFolder,
     navigation,
-    fernWorkspaces,
+    apiWorkspaces,
     visitor,
     absoluteFilepathToConfiguration,
     context,
@@ -44,7 +44,7 @@ export async function visitNavigationAst({
                                 visitor,
                                 nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
                                 absoluteFilepathToConfiguration,
-                                fernWorkspaces,
+                                apiWorkspaces,
                                 context
                             });
                         })
@@ -61,7 +61,7 @@ export async function visitNavigationAst({
                     visitor,
                     nodePath: [...nodePath, `${itemIdx}`],
                     absoluteFilepathToConfiguration,
-                    fernWorkspaces,
+                    apiWorkspaces,
                     context
                 });
             })
@@ -74,7 +74,7 @@ async function visitNavigationItem({
     visitor,
     nodePath,
     absoluteFilepathToConfiguration,
-    fernWorkspaces,
+    apiWorkspaces,
     context
 }: {
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -82,7 +82,7 @@ async function visitNavigationItem({
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
@@ -142,7 +142,7 @@ async function visitNavigationItem({
                         visitor,
                         nodePath: [...nodePath, "contents", `${idx}`],
                         absoluteFilepathToConfiguration,
-                        fernWorkspaces,
+                        apiWorkspaces,
                         context
                     });
                 })
@@ -191,7 +191,7 @@ async function visitNavigationItem({
     }
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = fernWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
         if (workspace != null) {
             await visitor.apiSection?.(
                 {

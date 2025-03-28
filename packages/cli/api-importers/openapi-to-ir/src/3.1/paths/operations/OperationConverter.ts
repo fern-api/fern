@@ -84,7 +84,7 @@ export class OperationConverter extends AbstractOperationConverter {
         if (context.namespace != null) {
             endpointId.push(context.namespace);
         }
-        endpointId.push(...group ?? []);
+        endpointId.push(...(group ?? []));
         endpointId.push(method);
 
         return {
