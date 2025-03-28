@@ -239,6 +239,7 @@ class SdkGenerator(AbstractGenerator):
             ],
         )
 
+        write_websocket_snippets = False
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
             if subpackage.has_endpoints_in_tree or (
@@ -249,6 +250,8 @@ class SdkGenerator(AbstractGenerator):
                     if ir.websocket_channels and subpackage.websocket
                     else None
                 )
+                if channel_websocket is not None and context.custom_config.should_generate_websocket_clients:
+                    write_websocket_snippets = True
                 self._generate_subpackage_client(
                     context=context,
                     generator_exec_wrapper=generator_exec_wrapper,
@@ -296,6 +299,7 @@ class SdkGenerator(AbstractGenerator):
                         snippets=snippets,
                         project=project,
                         generated_root_client=generated_root_client,
+                        write_websocket_snippets=write_websocket_snippets,
                     )
                 except Exception as e:
                     generator_exec_wrapper.send_update(
@@ -642,6 +646,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
         generated_root_client: GeneratedRootClient,
+        write_websocket_snippets: bool,
     ) -> None:
         contents = generator_cli.generate_readme(
             snippets=snippets,
@@ -650,6 +655,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 project._github_output_mode.installation_token if project._github_output_mode is not None else None
             ),
             pagination_enabled=context.generator_config.generate_paginated_clients,
+            websocket_enabled=write_websocket_snippets,
             generated_root_client=generated_root_client,
         )
         project.add_file(

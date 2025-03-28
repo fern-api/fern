@@ -172,8 +172,21 @@ class SocketClientGenerator:
             name="start_listening",
             is_async=is_async,
             signature=AST.FunctionSignature(),
+            docstring=AST.CodeWriter(self._get_start_listening_docstring()),
             body=AST.CodeWriter(self._get_start_listening_method_body(is_async=is_async)),
         )
+
+    def _get_start_listening_docstring(self) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line("Start listening for messages on the websocket connection.")
+            writer.write_line("")
+            writer.write_line("Emits events in the following order:")
+            writer.write_line("- EventType.OPEN when connection is established")
+            writer.write_line("- EventType.MESSAGE for each message received")
+            writer.write_line("- EventType.ERROR if an error occurs")
+            writer.write_line("- EventType.CLOSE when connection is closed")
+
+        return _write_docstring
 
     def _get_start_listening_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_start_listening_method_body(writer: AST.NodeWriter) -> None:
@@ -229,7 +242,17 @@ class SocketClientGenerator:
                 return_type=AST.TypeHint.none(),
             ),
             body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+            docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=message_type_hint)),
         )
+
+    def _get_send_message_docstring(self, message_type: AST.TypeHint) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"Send a message to the websocket connection.")
+            writer.write("The message will be sent as a ")
+            writer.write_node(message_type)
+            writer.write_line(".")
+
+        return _write_docstring
 
     def _get_send_message_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_send_message_method_body(writer: AST.NodeWriter) -> None:
@@ -245,7 +268,14 @@ class SocketClientGenerator:
                 return_type=self._get_response_type_name(),
             ),
             body=AST.CodeWriter(self._get_recv_method_body(is_async=is_async)),
+            docstring=AST.CodeWriter(self._get_recv_method_docstring()),
         )
+
+    def _get_recv_method_docstring(self) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line("Receive a message from the websocket connection.")
+
+        return _write_docstring
 
     def _get_recv_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_recv_method_body(writer: AST.NodeWriter) -> None:
@@ -270,7 +300,14 @@ class SocketClientGenerator:
                 return_type=AST.TypeHint.none(),
             ),
             body=AST.CodeWriter(self._get_send_method_body(is_async=is_async)),
+            docstring=AST.CodeWriter(self._get_send_method_docstring()),
         )
+
+    def _get_send_method_docstring(self) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line("Send a message to the websocket connection.")
+
+        return _write_docstring
 
     def _get_send_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_send_method_body(writer: AST.NodeWriter) -> None:
@@ -297,7 +334,14 @@ class SocketClientGenerator:
                 return_type=AST.TypeHint.none(),
             ),
             body=AST.CodeWriter(self._get_send_model_method_body(is_async=is_async)),
+            docstring=AST.CodeWriter(self._get_send_model_method_docstring()),
         )
+
+    def _get_send_model_method_docstring(self) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line("Send a Pydantic model to the websocket connection.")
+
+        return _write_docstring
 
     def _get_send_model_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_send_model_method_body(writer: AST.NodeWriter) -> None:

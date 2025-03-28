@@ -284,7 +284,8 @@ class WebsocketConnectMethodGenerator:
                 writer.write_node(self._build_query_parameters(channel=websocket, parent_writer=writer))
                 writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
             writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
-            writer.write_node(self._extend_headers_with_websocket_headers(websocket=websocket))
+            if websocket.headers:
+                writer.write_node(self._extend_headers_with_websocket_headers(websocket=websocket))
             writer.write_line(
                 f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
                 + f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}:'
@@ -552,9 +553,7 @@ class WebsocketConnectMethodGenerator:
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
-        ir_headers = websocket.headers
-
-        for header in ir_headers:
+        for header in websocket.headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
                 headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
