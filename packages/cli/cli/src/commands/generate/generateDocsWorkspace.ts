@@ -48,23 +48,11 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        let fernWorkspaces: FernWorkspace[] = [];
-        if (!docsWorkspace.config.experimental?.openapiParserV3) {
-            fernWorkspaces = await Promise.all(
-                project.apiWorkspaces.map(async (workspace) => {
-                    return workspace.toFernWorkspace(
-                        { context },
-                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                    );
-                })
-            );
-        }
-
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
             logWarnings: false,
-            fernWorkspaces,
+            apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
             errorOnBrokenLinks: strictBrokenLinks,
             excludeRules: brokenLinks || strictBrokenLinks ? [] : ["valid-markdown-links"]
@@ -74,7 +62,7 @@ export async function generateDocsWorkspace({
 
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
-            fernWorkspaces,
+            apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
             docsWorkspace,
             context,

@@ -1,13 +1,13 @@
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { logViolations } from "./logViolations";
 
 export async function validateDocsWorkspaceWithoutExiting({
     workspace,
-    fernWorkspaces,
+    apiWorkspaces,
     ossWorkspaces,
     context,
     logWarnings,
@@ -16,7 +16,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     excludeRules
 }: {
     workspace: DocsWorkspace;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
@@ -28,7 +28,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     const violations = await validateDocsWorkspace(
         workspace,
         context,
-        fernWorkspaces,
+        apiWorkspaces,
         ossWorkspaces,
         false,
         excludeRules
@@ -52,7 +52,7 @@ export async function validateDocsWorkspaceWithoutExiting({
 
 export async function validateDocsWorkspaceAndLogIssues({
     workspace,
-    fernWorkspaces,
+    apiWorkspaces,
     ossWorkspaces,
     context,
     logWarnings,
@@ -60,7 +60,7 @@ export async function validateDocsWorkspaceAndLogIssues({
     excludeRules
 }: {
     workspace: DocsWorkspace;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
@@ -71,7 +71,7 @@ export async function validateDocsWorkspaceAndLogIssues({
         workspace,
         context,
         logWarnings,
-        fernWorkspaces,
+        apiWorkspaces,
         ossWorkspaces,
         errorOnBrokenLinks,
         excludeRules
