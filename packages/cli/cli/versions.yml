@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Add support for `anyOf` in the new OpenAPI parser. This allows for undiscriminated unions in the OpenAPI schema, where a type can be one of several possible types without a discriminator field. The parser now handles both `oneOf` and `anyOf` schemas in the same way, converting them to undiscriminated unions in the IR.
+        
+    type: fix
+  irVersion: 57
+  version: 0.57.7
+
+- changelogEntry:
+  - summary: |
       Reduce CLI output from the legacy OpenAPI parser when using the experimental `openapiParserV3` option. This makes the logs cleaner and more focused on relevant information when using the newer parser.
         
     type: fix
