@@ -103,6 +103,7 @@ class SocketClientGenerator:
 
         class_declaration = AST.ClassDeclaration(
             name=self._class_name if not is_async else self._async_class_name,
+            extends=[self._context.core_utilities.get_event_emitter_mixin()],
             constructor=AST.ClassConstructor(
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
@@ -111,11 +112,12 @@ class SocketClientGenerator:
             ),
         )
         class_declaration.add_method(self._get_iterator_method(is_async=is_async))
-        class_declaration.add_method(self._get_send_method(is_async=is_async))
-        class_declaration.add_method(self._get_recv_method(is_async=is_async))
+        class_declaration.add_method(self._get_start_listening_method(is_async=is_async))
         for msg in self._websocket.messages:
             if msg.origin == ir_types.WebSocketMessageOrigin.CLIENT and msg.body.get_as_union().type == "reference":
                 class_declaration.add_method(self._get_send_message_method(msg, is_async=is_async))
+        class_declaration.add_method(self._get_recv_method(is_async=is_async))
+        class_declaration.add_method(self._get_send_method(is_async=is_async))
         class_declaration.add_method(self._get_send_model_method(is_async=is_async))
         return class_declaration
 
@@ -140,6 +142,7 @@ class SocketClientGenerator:
     def _get_write_constructor_body(self) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             constructor_parameters = self._get_constructor_parameters(is_async=True)
+            writer.write_line("super().__init__()")
             for param in constructor_parameters:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
@@ -163,6 +166,95 @@ class SocketClientGenerator:
                 writer.write(f"({self._get_response_type_name()}, message)  # type: ignore")
 
         return _get_iterator_method_body
+
+    def _get_start_listening_method(self, is_async: bool) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="start_listening",
+            is_async=is_async,
+            signature=AST.FunctionSignature(),
+            body=AST.CodeWriter(self._get_start_listening_method_body(is_async=is_async)),
+        )
+
+    def _get_start_listening_method_body(self, is_async: bool) -> CodeWriterFunction:
+        def _get_start_listening_method_body(writer: AST.NodeWriter) -> None:
+            writer.write("self._emit(")
+            writer.write_reference(self._context.core_utilities.get_event_type())
+            writer.write(".OPEN, None)")
+            writer.write_line()
+            writer.write_line("try:")
+            with writer.indent():
+                writer.write_line(
+                    f"{'async ' if is_async else ''}for raw_message in self.{self.WEBSOCKET_MEMBER_NAME}:"
+                )
+                with writer.indent():
+                    writer.write("parsed = ")
+                    writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                    writer.write(f"({self._get_response_type_name()}, raw_message)  # type: ignore")
+                    writer.write_line()
+                    writer.write("self._emit(")
+                    writer.write_reference(self._context.core_utilities.get_event_type())
+                    writer.write(".MESSAGE, parsed)")
+                    writer.write_line()
+            writer.write("except ")
+            writer.write_reference(Websockets.get_websocket_exception())
+            writer.write(" as exc:")
+            writer.write_line()
+            with writer.indent():
+                writer.write("self._emit(")
+                writer.write_reference(self._context.core_utilities.get_event_type())
+                writer.write(".ERROR, exc)")
+                writer.write_line()
+            writer.write_line("finally:")
+            with writer.indent():
+                writer.write("self._emit(")
+                writer.write_reference(self._context.core_utilities.get_event_type())
+                writer.write(".CLOSE, None)")
+                writer.write_line()
+
+        return _get_start_listening_method_body
+
+    def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
+        message_type = message.body.get_as_union().body_type
+        message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
+        return AST.FunctionDeclaration(
+            name=f"send_{snake_case(message.type)}",
+            is_async=is_async,
+            signature=AST.FunctionSignature(
+                parameters=[
+                    AST.FunctionParameter(
+                        name="message",
+                        type_hint=message_type_hint,
+                    ),
+                ],
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+        )
+
+    def _get_send_message_method_body(self, is_async: bool) -> CodeWriterFunction:
+        def _get_send_message_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+
+        return _get_send_message_method_body
+
+    def _get_recv_method(self, is_async: bool) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="recv",
+            is_async=is_async,
+            signature=AST.FunctionSignature(
+                return_type=self._get_response_type_name(),
+            ),
+            body=AST.CodeWriter(self._get_recv_method_body(is_async=is_async)),
+        )
+
+    def _get_recv_method_body(self, is_async: bool) -> CodeWriterFunction:
+        def _get_recv_method_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"data = {'await ' if is_async else ''}self.{self.WEBSOCKET_MEMBER_NAME}.recv()")
+            writer.write("return ")
+            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+            writer.write(f"({self._get_response_type_name()}, data)  # type: ignore")
+
+        return _get_recv_method_body
 
     def _get_send_method(self, is_async: bool) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(
@@ -190,49 +282,6 @@ class SocketClientGenerator:
             writer.write_line(f"{'await ' if is_async else ''}self.{self.WEBSOCKET_MEMBER_NAME}.send(data)")
 
         return _get_send_method_body
-
-    def _get_recv_method(self, is_async: bool) -> AST.FunctionDeclaration:
-        return AST.FunctionDeclaration(
-            name="recv",
-            is_async=is_async,
-            signature=AST.FunctionSignature(
-                return_type=self._get_response_type_name(),
-            ),
-            body=AST.CodeWriter(self._get_recv_method_body(is_async=is_async)),
-        )
-
-    def _get_recv_method_body(self, is_async: bool) -> CodeWriterFunction:
-        def _get_recv_method_body(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"data = {'await ' if is_async else ''}self.{self.WEBSOCKET_MEMBER_NAME}.recv()")
-            writer.write("return ")
-            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-            writer.write(f"({self._get_response_type_name()}, data)  # type: ignore")
-
-        return _get_recv_method_body
-
-    def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
-        message_type = message.body.get_as_union().body_type
-        message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
-        return AST.FunctionDeclaration(
-            name=f"send_{snake_case(message.type)}",
-            is_async=is_async,
-            signature=AST.FunctionSignature(
-                parameters=[
-                    AST.FunctionParameter(
-                        name="message",
-                        type_hint=message_type_hint,
-                    ),
-                ],
-                return_type=AST.TypeHint.none(),
-            ),
-            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
-        )
-
-    def _get_send_message_method_body(self, is_async: bool) -> CodeWriterFunction:
-        def _get_send_message_method_body(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
-
-        return _get_send_message_method_body
 
     def _get_send_model_method(self, is_async: bool) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(

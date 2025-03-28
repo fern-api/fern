@@ -28,6 +28,15 @@ WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
     ),
 )
 
+WEBSOCKETS_SYNC_EXCEPTION_MODULE = AST.Module.external(
+    module_path=("websockets", "sync", "exceptions"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version="12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
 
 def _export(*name: str) -> AST.ClassReference:
     return AST.ClassReference(
@@ -48,6 +57,13 @@ class Websockets:
         return AST.ClassReference(
             qualified_name_excluding_import=("Connection",),
             import_=AST.ReferenceImport(module=WEBSOCKETS_SYNC_CONNECTION_MODULE, alias="websockets_sync_connection"),
+        )
+
+    @staticmethod
+    def get_websocket_exception() -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("WebSocketException",),
+            import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
         )
 
     @staticmethod

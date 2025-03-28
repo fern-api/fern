@@ -5,7 +5,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies import HttpX, Websockets
+from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
     WebsocketConnectResponseCodeWriter,
@@ -92,6 +92,7 @@ class WebsocketConnectMethodGenerator:
                 named_parameters=named_parameters,
                 return_type=self._get_websocket_return_type(),
             ),
+            decorators=[self._get_decorator()],
             body=(
                 self._create_websocket_body_writer(
                     websocket=self._websocket,
@@ -101,6 +102,12 @@ class WebsocketConnectMethodGenerator:
             ),
         )
         return GeneratedConnectMethod(function=function_declaration)
+
+    def _get_decorator(self) -> Optional[AST.AstNode]:
+        if self._is_async:
+            return AST.ReferenceNode(reference=Contextlib.asynccontextmanager())
+        else:
+            return AST.ReferenceNode(reference=Contextlib.contextmanager())
 
     def _get_overridden_parameter_types(self) -> List[AST.NamedFunctionParameter]:
         return self._named_parameters_raw
@@ -267,7 +274,9 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"{self.WS_URL_VARIABLE} = {self._get_environment_as_str(websocket=websocket)}")
+            writer.write_line(
+                f'{self.WS_URL_VARIABLE} = {self._get_environment_as_str(websocket=websocket)} + "{websocket.path.head}"'
+            )
             if len(parameters) > 0:
                 writer.write(f"query_params = ")
                 writer.write_node(HttpX.query_params())
@@ -526,7 +535,7 @@ class WebsocketConnectMethodGenerator:
             if environments_as_union.type == "multipleBaseUrls":
                 base_url = websocket.base_url
                 if base_url is None:
-                    raise RuntimeError("Service is missing base_url")
+                    raise RuntimeError("Channel is missing base_url")
                 url_reference = get_base_url_property_name(
                     get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
@@ -555,7 +564,7 @@ class WebsocketConnectMethodGenerator:
                 headers.append(
                     (
                         header.name.wire_value,
-                        AST.Expression(f"str({get_parameter_name(header.name.name)})"),
+                        AST.Expression(get_parameter_name(header.name.name)),
                     )
                 )
 
@@ -568,8 +577,9 @@ class WebsocketConnectMethodGenerator:
                 writer.write_node(header_value)
                 writer.write_line(" is not None:")
                 with writer.indent():
-                    writer.write(f'headers["{header_key}"] = ')
+                    writer.write(f'headers["{header_key}"] = str(')
                     writer.write_node(header_value)
+                    writer.write(")")
                     writer.write_line()
 
         return AST.Expression(AST.CodeWriter(write_headers_dict))
