@@ -121,14 +121,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
-        if ((!this.schema.oneOf && !this.schema.anyOf) || (this.schema.anyOf?.length === 0 && this.schema.oneOf?.length === 0)) {
+        if (
+            (!this.schema.oneOf && !this.schema.anyOf) ||
+            (this.schema.anyOf?.length === 0 && this.schema.oneOf?.length === 0)
+        ) {
             return undefined;
         }
 
         const unionTypes: UndiscriminatedUnionMember[] = [];
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        for (const [index, subSchema] of [...(this.schema.oneOf ?? []).entries(), ...(this.schema.anyOf ?? []).entries()]) {
+        for (const [index, subSchema] of [
+            ...(this.schema.oneOf ?? []).entries(),
+            ...(this.schema.anyOf ?? []).entries()
+        ]) {
             const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
             if (context.isReferenceObject(subSchema)) {
