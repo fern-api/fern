@@ -1,8 +1,8 @@
 [project]
-name = "fern_websocket"
+name = "fern_public-object"
 
 [tool.poetry]
-name = "fern_websocket"
+name = "fern_public-object"
 version = "0.0.1"
 description = ""
 readme = "README.md"
@@ -27,15 +27,14 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed/websocket", from = "src"}
+    { include = "seed/public_object", from = "src"}
 ]
 
 [project.urls]
-Repository = 'https://github.com/websocket/fern'
+Repository = 'https://github.com/public-object/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
 
 [tool.poetry.dev-dependencies]
