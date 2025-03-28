@@ -61,7 +61,7 @@ class ContainerClient:
         self,
         *,
         request: typing.Sequence[ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters
@@ -98,7 +98,10 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.List[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -146,7 +149,7 @@ class ContainerClient:
         self,
         *,
         request: typing.Sequence[ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters
@@ -183,7 +186,10 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.List[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -221,7 +227,9 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -231,7 +239,7 @@ class ContainerClient:
         self,
         *,
         request: typing.Dict[str, ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
         Parameters
@@ -268,7 +276,10 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Dict[str, ObjectWithRequiredField], parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Dict[str, ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -278,7 +289,7 @@ class ContainerClient:
         self,
         *,
         request: typing.Optional[ObjectWithRequiredFieldParams] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
         Parameters
@@ -313,7 +324,10 @@ class ContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Optional[ObjectWithRequiredField], parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Optional[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -374,7 +388,7 @@ class AsyncContainerClient:
         self,
         *,
         request: typing.Sequence[ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters
@@ -419,7 +433,10 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.List[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -475,7 +492,7 @@ class AsyncContainerClient:
         self,
         *,
         request: typing.Sequence[ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
         Parameters
@@ -520,7 +537,10 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[ObjectWithRequiredField], parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.List[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -566,7 +586,9 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Dict[str, str], parse_obj_as(type_=typing.Dict[str, str], object_=_response.json())
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -576,7 +598,7 @@ class AsyncContainerClient:
         self,
         *,
         request: typing.Dict[str, ObjectWithRequiredFieldParams],
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
         Parameters
@@ -621,7 +643,10 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Dict[str, ObjectWithRequiredField], parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Dict[str, ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -631,7 +656,7 @@ class AsyncContainerClient:
         self,
         *,
         request: typing.Optional[ObjectWithRequiredFieldParams] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
         Parameters
@@ -674,7 +699,10 @@ class AsyncContainerClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.Optional[ObjectWithRequiredField], parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
+                return typing.cast(
+                    typing.Optional[ObjectWithRequiredField],
+                    parse_obj_as(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()),
+                )  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -6,12 +6,12 @@ import inspect
 import logging
 import typing
 
-import fastapi
 import starlette
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
+
+import fastapi
 
 
 class AbstractServiceService(AbstractFernService):
@@ -24,8 +24,7 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def nop(self, *, nested_id: str) -> None:
-        ...
+    def nop(self, *, nested_id: str) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

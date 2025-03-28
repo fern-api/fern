@@ -1,7 +1,6 @@
 from typing import Optional
 
 import fern.ir.resources as ir_types
-
 from ...expressions import Expression
 from ...type_hint import TypeHint
 from .function_parameter import FunctionParameter

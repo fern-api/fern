@@ -6,8 +6,6 @@ import inspect
 import logging
 import typing
 
-import fastapi
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -15,6 +13,8 @@ from ..errors.movie_does_not_exist_error import MovieDoesNotExistError
 from ..types.create_movie_request import CreateMovieRequest
 from ..types.movie import Movie
 from ..types.movie_id import MovieId
+
+import fastapi
 
 
 class AbstractImdbService(AbstractFernService):
@@ -34,8 +34,7 @@ class AbstractImdbService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_movie(self, *, movie_id: str) -> Movie:
-        ...
+    def get_movie(self, *, movie_id: str) -> Movie: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

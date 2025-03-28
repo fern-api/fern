@@ -1,20 +1,22 @@
-from pydantic import BaseModel
 from typing import Optional
-from resources.types.types.cast_member import CastMember
-from resources.types.types.extended_movie import ExtendedMovie
-from resources.types.types.entity import Entity
-from resources.types.types.metadata import Metadata
-from resources.commons.resources.types.types.metadata import Metadata
-from resources.commons.resources.types.types.event_info import EventInfo
-from resources.commons.resources.types.types.data import Data
-from resources.types.types.migration import Migration
-from resources.types.types.exception import Exception
-from resources.types.types.test import Test
-from resources.types.types.node import Node
-from resources.types.types.directory import Directory
-from resources.types.types.moment import Moment
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.commons.resources.types.types.data import Data
+from resources.commons.resources.types.types.event_info import EventInfo
+from resources.commons.resources.types.types.metadata import Metadata
+from resources.types.types.cast_member import CastMember
+from resources.types.types.directory import Directory
+from resources.types.types.entity import Entity
+from resources.types.types.exception import Exception
+from resources.types.types.extended_movie import ExtendedMovie
+from resources.types.types.metadata import Metadata
+from resources.types.types.migration import Migration
+from resources.types.types.moment import Moment
+from resources.types.types.node import Node
+from resources.types.types.test import Test
+
+from pydantic import BaseModel
 
 
 class BigEntity(BaseModel):

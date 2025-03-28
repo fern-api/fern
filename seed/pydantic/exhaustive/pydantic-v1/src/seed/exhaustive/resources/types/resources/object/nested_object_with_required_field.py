@@ -2,6 +2,7 @@
 
 from .....core.pydantic_utilities import UniversalBaseModel
 from .object_with_optional_field import ObjectWithOptionalField
+
 import pydantic
 
 

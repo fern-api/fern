@@ -2,6 +2,7 @@ from typing import Callable, Optional
 from urllib import response
 
 import fern.ir.resources as ir_types
+from ..context.sdk_generator_context import SdkGeneratorContext
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.httpx_sse import HttpxSSE
@@ -18,8 +19,6 @@ from fern_python.generators.sdk.client_generator.pagination.offset import (
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
-
-from ..context.sdk_generator_context import SdkGeneratorContext
 
 
 class EndpointResponseCodeWriter:

@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from resources.users.types.user_page import UserPage
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.users.types.user_page import UserPage
+
+from pydantic import BaseModel
 
 
 class ListUsersExtendedResponse(BaseModel, UserPage):

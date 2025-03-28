@@ -6,8 +6,6 @@ import inspect
 import logging
 import typing
 
-import fastapi
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -17,6 +15,8 @@ from ..types.undiscriminated_options import UndiscriminatedOptions
 from .create_options_request import CreateOptionsRequest
 from .get_options_request import GetOptionsRequest
 from .get_undiscriminated_options_request import GetUndiscriminatedOptionsRequest
+
+import fastapi
 
 
 class AbstractLiteralService(AbstractFernService):
@@ -29,16 +29,13 @@ class AbstractLiteralService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def create_options(self, *, body: CreateOptionsRequest) -> CreateOptionsResponse:
-        ...
+    def create_options(self, *, body: CreateOptionsRequest) -> CreateOptionsResponse: ...
 
     @abc.abstractmethod
-    def get_options(self, *, body: GetOptionsRequest) -> Options:
-        ...
+    def get_options(self, *, body: GetOptionsRequest) -> Options: ...
 
     @abc.abstractmethod
-    def get_undiscriminated_options(self, *, body: GetUndiscriminatedOptionsRequest) -> UndiscriminatedOptions:
-        ...
+    def get_undiscriminated_options(self, *, body: GetUndiscriminatedOptionsRequest) -> UndiscriminatedOptions: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

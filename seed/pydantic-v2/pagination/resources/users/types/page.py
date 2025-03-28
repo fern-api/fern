@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
-from resources.users.types.next_page import NextPage
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.users.types.next_page import NextPage
+
+from pydantic import BaseModel
 
 
 class Page(BaseModel):

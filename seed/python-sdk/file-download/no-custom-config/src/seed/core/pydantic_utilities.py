@@ -6,11 +6,10 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
-
-import pydantic
-
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
+
+import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 

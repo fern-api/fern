@@ -2,7 +2,6 @@
 
 import asyncio
 import email.utils
-import json
 import re
 import time
 import typing
@@ -11,7 +10,6 @@ from contextlib import asynccontextmanager, contextmanager
 from random import random
 
 import httpx
-
 from .file import File, convert_file_dict_to_httpx_tuples
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query

@@ -1,9 +1,11 @@
-from pydantic import BaseModel
 from types.with_metadata import WithMetadata
-from resources.service.types.with_docs import WithDocs
-from resources.service.types.movie import Movie
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.service.types.movie import Movie
+from resources.service.types.with_docs import WithDocs
+
+from pydantic import BaseModel
 
 
 class Response(BaseModel, WithMetadata, WithDocs):

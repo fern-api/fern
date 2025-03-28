@@ -4,5 +4,4 @@ from . import AST
 from .class_parent import ClassParent
 
 
-class LocalClassReference(AST.ClassReference, ClassParent):
-    ...
+class LocalClassReference(AST.ClassReference, ClassParent): ...

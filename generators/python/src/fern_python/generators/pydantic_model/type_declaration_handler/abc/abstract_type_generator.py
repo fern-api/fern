@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from fern_python.codegen import SourceFile
-
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
+
+from fern_python.codegen import SourceFile
 
 
 class AbstractTypeGenerator(ABC):
@@ -23,5 +23,4 @@ class AbstractTypeGenerator(ABC):
         self._snippet = snippet
 
     @abstractmethod
-    def generate(self) -> None:
-        ...
+    def generate(self) -> None: ...

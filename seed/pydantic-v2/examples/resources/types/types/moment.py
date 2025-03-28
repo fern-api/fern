@@ -1,8 +1,10 @@
-from pydantic import BaseModel
-from uuid import UUID
 from datetime import datetime
-from dt import datetime
+from uuid import UUID
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class Moment(BaseModel):

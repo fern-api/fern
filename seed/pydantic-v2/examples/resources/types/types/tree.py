@@ -1,8 +1,10 @@
-from pydantic import BaseModel
-from typing import Optional, List
-from resources.types.types.node import Node
-from dt import datetime
+from typing import List, Optional
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.types.types.node import Node
+
+from pydantic import BaseModel
 
 
 class Tree(BaseModel):

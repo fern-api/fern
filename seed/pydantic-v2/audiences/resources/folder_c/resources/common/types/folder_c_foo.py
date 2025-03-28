@@ -1,7 +1,9 @@
-from pydantic import BaseModel
 from uuid import UUID
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class FolderCFoo(BaseModel):

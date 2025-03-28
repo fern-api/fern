@@ -1,9 +1,11 @@
-from pydantic import BaseModel
-from typing import Optional, List, Set, Dict
 from datetime import datetime
+from typing import Dict, List, Optional, Set
 from uuid import UUID
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class ObjectWithOptionalField(BaseModel):

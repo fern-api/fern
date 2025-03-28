@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
+
 from .types.user_model import UserModel
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class CreateResponse(BaseModel):

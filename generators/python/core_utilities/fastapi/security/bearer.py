@@ -1,6 +1,6 @@
-import fastapi
-
 from ..exceptions import UnauthorizedException
+
+import fastapi
 
 
 class BearerToken:

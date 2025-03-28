@@ -29,17 +29,14 @@ repos:
     rev: v1.4.0
     hooks:
       - id: yesqa
-  - repo: https://github.com/psf/black
-    rev: 22.8.0
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: 'v0.11.2'
     hooks:
-      - id: black
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
   - repo: https://github.com/python-poetry/poetry
     rev: "1.2"
     hooks:
       - id: poetry-check
-      # - id: poetry-lock
       - id: poetry-export

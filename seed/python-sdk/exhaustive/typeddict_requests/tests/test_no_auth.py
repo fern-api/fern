@@ -2,9 +2,8 @@
 
 import typing
 
-from seed import AsyncSeedExhaustive, SeedExhaustive
-
 from .utilities import validate_response
+from seed import AsyncSeedExhaustive, SeedExhaustive
 
 
 async def test_post_with_no_auth(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:

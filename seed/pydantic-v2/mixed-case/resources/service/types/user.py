@@ -1,7 +1,9 @@
-from pydantic import BaseModel
-from typing import List, Dict
-from dt import datetime
+from typing import Dict, List
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class User(BaseModel):

@@ -6,10 +6,9 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
+from .datetime_utils import serialize_datetime
 
 import pydantic
-
-from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -133,9 +132,7 @@ class UniversalBaseModel(pydantic.BaseModel):
                     # If the default values are non-null act like they've been set
                     # This effectively allows exclude_unset to work like exclude_none where
                     # the latter passes through intentionally set none values.
-                    if default is not None or (
-                        "exclude_unset" in kwargs and not kwargs["exclude_unset"]
-                    ):
+                    if default is not None or ("exclude_unset" in kwargs and not kwargs["exclude_unset"]):
                         _fields_set.add(name)
 
                         if default is not None:
@@ -175,9 +172,9 @@ else:
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -211,14 +208,10 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(
-                field_name, mode="before" if pre else "after"
-            )(func)  # type: ignore # Pydantic v2
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 

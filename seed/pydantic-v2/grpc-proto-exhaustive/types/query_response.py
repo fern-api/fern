@@ -1,10 +1,12 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import List, Optional
+
 from .types.query_result import QueryResult
 from .types.scored_column import ScoredColumn
 from .types.usage import Usage
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class QueryResponse(BaseModel):

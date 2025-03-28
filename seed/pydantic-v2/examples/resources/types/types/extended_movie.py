@@ -1,8 +1,10 @@
-from pydantic import BaseModel
-from resources.types.types.movie import Movie
 from typing import List
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.types.types.movie import Movie
+
+from pydantic import BaseModel
 
 
 class ExtendedMovie(BaseModel, Movie):

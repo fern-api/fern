@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
-from resources.reference.types.container_object import ContainerObject
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.reference.types.container_object import ContainerObject
+
+from pydantic import BaseModel
 
 
 class SendRequest(BaseModel):

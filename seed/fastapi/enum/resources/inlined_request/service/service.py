@@ -6,13 +6,13 @@ import inspect
 import logging
 import typing
 
-import fastapi
 import starlette
-
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from .send_enum_inlined_request import SendEnumInlinedRequest
+
+import fastapi
 
 
 class AbstractInlinedRequestService(AbstractFernService):
@@ -25,8 +25,7 @@ class AbstractInlinedRequestService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send(self, *, body: SendEnumInlinedRequest) -> None:
-        ...
+    def send(self, *, body: SendEnumInlinedRequest) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.

@@ -1,9 +1,11 @@
-from pydantic import BaseModel
-from typing import Optional, List
-from resources.file.types.file import File
-from resources.file.resources.directory.types.directory import Directory
-from dt import datetime
+from typing import List, Optional
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.file.resources.directory.types.directory import Directory
+from resources.file.types.file import File
+
+from pydantic import BaseModel
 
 
 class Directory(BaseModel):

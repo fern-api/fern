@@ -1,9 +1,11 @@
-from pydantic import BaseModel
-from typing import Optional, List
-from .types.metadata import Metadata
+from typing import List, Optional
+
 from .types.indexed_data import IndexedData
-from dt import datetime
+from .types.metadata import Metadata
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class ScoredColumn(BaseModel):

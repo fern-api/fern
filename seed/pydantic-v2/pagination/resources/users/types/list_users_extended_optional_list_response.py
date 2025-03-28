@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from resources.users.types.user_optional_list_page import UserOptionalListPage
-from dt import datetime
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.users.types.user_optional_list_page import UserOptionalListPage
+
+from pydantic import BaseModel
 
 
 class ListUsersExtendedOptionalListResponse(BaseModel, UserOptionalListPage):

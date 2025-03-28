@@ -10,9 +10,7 @@ class Currency(str, enum.Enum):
     USD = "USD"
     YEN = "YEN"
 
-    def visit(
-        self, usd: typing.Callable[[], T_Result], yen: typing.Callable[[], T_Result]
-    ) -> T_Result:
+    def visit(self, usd: typing.Callable[[], T_Result], yen: typing.Callable[[], T_Result]) -> T_Result:
         if self is Currency.USD:
             return usd()
         if self is Currency.YEN:

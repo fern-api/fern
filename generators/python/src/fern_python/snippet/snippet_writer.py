@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Optional
 
 import fern.ir.resources as ir_types
+from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 
 from fern_python.codegen import AST
 from fern_python.generators.context import PydanticGeneratorContext
-
-from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 
 
 class SnippetWriter:

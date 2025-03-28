@@ -2,9 +2,8 @@
 
 import typing
 
-from seed import AsyncSeedExhaustive, SeedExhaustive
-
 from ..utilities import validate_response
+from seed import AsyncSeedExhaustive, SeedExhaustive
 
 
 async def test_get_and_return_list_of_primitives(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:

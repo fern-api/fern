@@ -2,10 +2,10 @@
 
 import logging
 
-import fastapi
 import starlette
-
 from .fern_http_exception import FernHTTPException
+
+import fastapi
 
 
 def fern_http_exception_handler(

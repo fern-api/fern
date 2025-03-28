@@ -55,7 +55,9 @@ class NoAuthClient:
                 return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json())
+                    )  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -112,7 +114,9 @@ class AsyncNoAuthClient:
                 return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
                 raise BadRequestBody(
-                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                    typing.cast(
+                        BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json())
+                    )  # type: ignore
                 )
             _response_json = _response.json()
         except JSONDecodeError:

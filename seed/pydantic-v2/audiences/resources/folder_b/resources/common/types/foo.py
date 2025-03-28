@@ -1,8 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
-from resources.folder_c.resources.common.types.folder_c_foo import FolderCFoo
-from dt import datetime
+
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+from resources.folder_c.resources.common.types.folder_c_foo import FolderCFoo
+
+from pydantic import BaseModel
 
 
 class Foo(BaseModel):

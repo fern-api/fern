@@ -3,8 +3,9 @@
 import typing
 import uuid
 
-import pydantic
 from dateutil import parser
+
+import pydantic
 
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
@@ -65,9 +66,11 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
         if isinstance(contents_expectation, dict):
             json_expectation = {
                 cast_field(
-                    key, contents_expectation.get(idx)[0] if contents_expectation.get(idx) is not None else None  # type: ignore
+                    key,
+                    contents_expectation.get(idx)[0] if contents_expectation.get(idx) is not None else None,  # type: ignore
                 ): cast_field(
-                    value, contents_expectation.get(idx)[1] if contents_expectation.get(idx) is not None else None  # type: ignore
+                    value,
+                    contents_expectation.get(idx)[1] if contents_expectation.get(idx) is not None else None,  # type: ignore
                 )
                 for idx, (key, value) in enumerate(json_expectation.items())
             }

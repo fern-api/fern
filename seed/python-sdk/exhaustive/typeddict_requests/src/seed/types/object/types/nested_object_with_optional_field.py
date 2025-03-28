@@ -2,10 +2,10 @@
 
 import typing
 
-import pydantic
-
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .object_with_optional_field import ObjectWithOptionalField
+
+import pydantic
 
 
 class NestedObjectWithOptionalField(UniversalBaseModel):

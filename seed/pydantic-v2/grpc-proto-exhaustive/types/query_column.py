@@ -1,9 +1,11 @@
-from pydantic import BaseModel
 from typing import List, Optional
-from .types.metadata import Metadata
+
 from .types.indexed_data import IndexedData
-from dt import datetime
+from .types.metadata import Metadata
 from core.datetime_utils import serialize_datetime
+from dt import datetime
+
+from pydantic import BaseModel
 
 
 class QueryColumn(BaseModel):

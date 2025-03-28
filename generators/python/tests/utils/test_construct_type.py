@@ -1,14 +1,12 @@
-
-
-
-from datetime import datetime, date
-from typing import cast
 import uuid
+from datetime import date, datetime
+from typing import cast
 
-from .example_models.types.core.unchecked_base_model import construct_type
-from tests.utils.example_models.types.resources.types.square import Square
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
-from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square, Shape_Circle
+from .example_models.types.core.unchecked_base_model import construct_type
+from .example_models.types.resources.types import Circle, ObjectWithOptionalField, Shape_Circle, Shape_Square
+
+from tests.utils.example_models.types.resources.types.square import Square
 
 
 def test_construct_valid() -> None:
@@ -31,7 +29,7 @@ def test_construct_valid() -> None:
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
         "any": "something here",
-        "additional_field": "this here"
+        "additional_field": "this here",
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
@@ -61,7 +59,10 @@ def test_construct_valid() -> None:
     circle_expectation = Shape_Circle(id="another_string", radius=2.3)
     assert cast_response.second_union is not None
     assert cast_response.second_union.id == circle_expectation.id
-    assert isinstance(cast_response.second_union, Shape_Circle) and cast_response.second_union.radius == circle_expectation.radius
+    assert (
+        isinstance(cast_response.second_union, Shape_Circle)
+        and cast_response.second_union.radius == circle_expectation.radius
+    )
     assert cast_response.second_union.type == circle_expectation.type
 
     assert cast_response.undiscriminated_union is not None
@@ -148,7 +149,7 @@ def test_construct_valid() -> None:
 #     assert cast_response.map_ == "hello world"
 #     assert cast_response.enum == "bread"
 #     assert cast_response.any is None
-    
+
 #     shape_expectation = Shape_Square(id="123", length=1.1)
 #     assert cast_response.union is not None
 #     assert cast_response.union.id == shape_expectation.id
