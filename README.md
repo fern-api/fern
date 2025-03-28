@@ -19,7 +19,21 @@
 
 </div>
 
-Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
+Fern helps API providers deliver a better developer experience by automatically generating SDKs and interactive API documentation directly from your OpenAPI specification (or Fern's own [Fern Definition](https://buildwithfern.com/learn/api-definition/fern/overview)). With Fern, you make your APIs easier to adopt and use, and enable your developer customers to integrate faster and more smoothly.
+
+Core benefits:
+
+- **Generate SDKs instantly:** Quickly create consistent, high-quality SDKs in multiple languages.
+
+- **Interactive API documentation:** Provide clear, interactive documentation tailored to your brand.
+
+- **Improved developer experience:** Reduce integration friction and accelerate developer adoption by offering SDKs and documentation designed for ease of use.
+
+- **Maintain API consistency:** Keep SDKs and documentation in sync automatically as your API evolves.
+
+Fern simplifies your publishing workflow, allowing you to focus on building great APIs while Fern handles SDK and documentation generation.
+
+
 
 <div align="center">
     <a href="/fern/images/overview-dark.png" target="_blank">
@@ -33,43 +47,157 @@ Fern is a toolkit that allows you to input your API Definition and output SDKs a
 
 ## 🌿 SDKs
 
-The Fern toolkit is available via a command line interface (CLI) and requires Node 18+. To install it, run:
+Fern uses your OpenAPI definition to create SDKs in multiple languages. 
+Follow these steps to generate a TypeScript SDK using Fern.
+
+### 1. Install Fern CLI
+
+Fern requires Node.js version 18 or later. To install Fern globally, run this in your terminal:
 
 ```bash
 npm install -g fern-api
 ```
 
-Initialize Fern with your OpenAPI spec:
+### 2. Initialize Fern with your OpenAPI document
+
+Link your existing OpenAPI document (.yml or .json) to Fern:
 
 ```bash
 fern init --openapi ./path/to/openapi.yml
-# or
+```
+
+Or use an OpenAPI document from a URL:
+
+```bash
 fern init --openapi https://link.buildwithfern.com/plantstore-openapi
 ```
 
-Your directory should look like the following:
+Fern creates configuration files and a project directory:
 
 ```yaml
 fern/
-├─ fern.config.json
-├─ generators.yml # generators you're using
-└─ openapi/
-  └─ openapi.json # your openapi document
+  ├─ fern.config.json   # General configuration for your Fern project
+  └─ api/               # Your API
+     ├─ generators.yml  # Generators you're using
+     └─ openapi/
+        └─ openapi.yml  # Your provided OpenAPI document
 ```
 
-Finally, to invoke the generator, run:
+### 3. Check your Fern configuration
+
+Make sure your API definition and configuration are correct by running:
 
 ```bash
-fern generate
+fern check
 ```
 
-🎉 Once the command completes, you'll see your SDK in `/generated/sdks/typescript`.
+Resolve any errors before proceeding.
+
+### 4. Add a TypeScript SDK generator
+
+To create a TypeScript SDK, run:
+
+```bash
+fern add fern-typescript-node-sdk --group sdk
+```
+
+Fern [supports multiple languages](https://buildwithfern.com/learn/sdks/introduction/language-support) you can use.
+
+### 5. Generate the SDK
+
+To generate the SDK, run:
+
+```bash
+fern generate --group sdk
+```
+
+Fern outputs your SDK into this folder:
+
+
+```yaml
+sdks/
+  typescript/
+    src/
+      ├─ index.ts
+      ├─ Client.ts
+      ├─ api/
+      ├─ errors/
+      └─ serialization/
+```
 
 ## 🌿 API Documentation
 
-Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
+Fern can build interactive API documentation from an OpenAPI document. Follow these steps to build and publish interactive API documentation using Fern.
 
-Check out docs built with Fern:
+### 1. Install Fern CLI
+  
+Fern needs Node.js version 18 or newer. To install Fern, open a terminal and run:
+
+```bash
+npm install -g fern-api
+```
+
+### 2. Set up Fern documentation
+
+In your project directory, run:
+
+```bash
+fern init --docs
+```
+
+Fern prompts you to enter your organization's name. After setup, your directory should look like this:
+
+```yaml
+fern/
+  ├─ fern.config.json # General configuration for your Fern project
+  └─ docs.yml         # Your docs configuration file
+```
+
+### 3. Add your OpenAPI document
+
+Create an `api` folder inside the `fern` folder. Move your OpenAPI document (`.yml` or `.json`) into it:
+
+```yaml
+fern/
+  ├─ fern.config.json         # General configuration for your Fern project
+  ├─ docs.yml                 # Your docs configuration file
+  └─ api/            
+    └─ open-api-document.yml  # Your OpenAPI document
+```
+
+You can also store the OpenAPI document outside your Fern project, but for example sake we have it in the project.
+
+### 4. Link your OpenAPI document to Fern
+
+Run this command to link your OpenAPI document with Fern:
+
+```bash
+fern init --openapi ./fern/api/open-api-document.yml
+```
+
+### 5. Preview your documentation
+
+To preview your documentation locally, run:
+
+```bash
+fern docs dev
+```
+
+Visit [http://localhost:3000/](http://localhost:3000/) to see your documentation site.
+
+### 6. Publish your documentation
+
+When you're ready to publish, run:
+
+```bash
+fern generate --docs
+```
+
+Fern asks you to log in and then publishes your site.
+
+## Example sites
+
+The following are some example documentation sites built with Fern:
 
 - [docs.vellum.ai](https://docs.vellum.ai)
 - [docs.superagent.sh](https://docs.superagent.sh/)
@@ -131,15 +259,15 @@ Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
 Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://buildwithfern.com/learn/cli-api/cli-reference/commands).
 
-`fern init`: adds a new starter API to your repository.
+- `fern init`: adds a new starter API to your repository.
 
-`fern check`: validate your API definition and Fern configuration.
+- `fern check`: validate your API definition and Fern configuration.
 
-`fern generate`: run the generators specified in `generators.yml` in the cloud.
+- `fern generate`: run the generators specified in `generators.yml` in the cloud.
 
-`fern generate --local`: run the generators specified in `generators.yml` in docker locally.
+- `fern generate --local`: run the generators specified in `generators.yml` in docker locally.
 
-`fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
+- `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 
 ## Advanced
 
