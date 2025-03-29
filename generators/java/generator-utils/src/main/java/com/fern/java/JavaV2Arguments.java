@@ -12,7 +12,7 @@ public final class JavaV2Arguments {
     private final File generatorConfig;
 
     // Useful for debugging locally but makes remote jobs fail
-    private final boolean enableLogging = true;
+    private final boolean enableLogging = false;
 
     public JavaV2Arguments(String configPath) {
         this(JAVA_V2_EXECUTABLE_PATH, configPath);
