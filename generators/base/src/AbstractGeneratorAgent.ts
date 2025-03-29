@@ -23,6 +23,7 @@ export declare namespace AbstractGeneratorAgent {
 
 export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
     public README_FILENAME = "README.md";
+    public SNIPPET_FILENAME = "snippet.json";
     public REFERENCE_FILENAME = "reference.md";
 
     private logger: Logger;
