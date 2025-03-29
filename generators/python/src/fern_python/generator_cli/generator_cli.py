@@ -95,12 +95,14 @@ class GeneratorCli:
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
         pagination_enabled: Union[bool, None] = False,
+        websocket_enabled: bool = False,
     ) -> str:
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
             package_name=self._package_name,
             snippets=snippets,
             pagination_enabled=pagination_enabled,
+            websocket_enabled=websocket_enabled,
             generated_root_client=generated_root_client,
             api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,

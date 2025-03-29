@@ -228,6 +228,11 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  websocket:
+    - outputFolder: websocket-base
+    - customConfig:
+        should_generate_websocket_clients: true
+      outputFolder: websocket-with_generated_clients
 scripts:
   # Test Pydantic V2
   - docker: fernapi/python-seed

@@ -435,9 +435,11 @@ class EndpointFunctionGenerator:
 
         parameters.append(
             AST.NamedFunctionParameter(
-                name="_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
-                if has_request_options_parameter
-                else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                name=(
+                    "_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                    if has_request_options_parameter
+                    else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                ),
                 docs=request_options_docs,
                 type_hint=AST.TypeHint.optional(
                     AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())

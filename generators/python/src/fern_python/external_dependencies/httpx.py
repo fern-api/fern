@@ -32,6 +32,17 @@ class HttpX:
     )
 
     @staticmethod
+    def query_params() -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=("QueryParams",),
+                    import_=AST.ReferenceImport(module=HTTPX_MODULE),
+                ),
+            )
+        )
+
+    @staticmethod
     def make_request(
         *,
         path: Optional[AST.Expression],
