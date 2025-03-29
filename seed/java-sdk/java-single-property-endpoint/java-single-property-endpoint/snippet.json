@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "6a1ba47f",
+            "id": {
+                "method": "GET",
+                "path": "/{id}",
+                "identifier_override": "endpoint_single-property.doThing"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.singleProperty.SeedSinglePropertyClient;\nimport com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedSinglePropertyClient client = SeedSinglePropertyClient\n            .builder()\n            .build();\n\n        client.singleProperty().doThing(\n            \"id\",\n            GetThingRequest\n                .builder()\n                .includeRemoteData(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.singleProperty.SeedSinglePropertyClient;\nimport com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedSinglePropertyClient client = SeedSinglePropertyClient\n            .builder()\n            .build();\n\n        client.singleProperty().doThing(\n            \"id\",\n            GetThingRequest\n                .builder()\n                .includeRemoteData(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

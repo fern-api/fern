@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "1676d0a5",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_union.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.MyUnion;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().get(\n            MyUnion.of(\"string\")\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.MyUnion;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().get(\n            MyUnion.of(\"string\")\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ce7f971a",
+            "id": {
+                "method": "GET",
+                "path": "/metadata",
+                "identifier_override": "endpoint_union.getMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getMetadata();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getMetadata();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "76479fe8",
+            "id": {
+                "method": "GET",
+                "path": "/metadata",
+                "identifier_override": "endpoint_union.getMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getMetadata();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getMetadata();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

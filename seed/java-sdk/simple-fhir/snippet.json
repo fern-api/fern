@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "ce5d1a1d",
+            "id": {
+                "method": "GET",
+                "path": "/account/{account_id}",
+                "identifier_override": "endpoint_.getAccount"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getAccount(\"account_id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getAccount(\"account_id\");\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

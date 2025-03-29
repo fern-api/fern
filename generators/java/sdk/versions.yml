@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Generate snippet.json
+      type: feat
+  createdAt: '2025-03-29'
+  irVersion: 55
+  version: 2.32.0
+- changelogEntry:
+    - summary: |
         Apply content type to request body creation
       type: fix
   createdAt: '2025-03-27'

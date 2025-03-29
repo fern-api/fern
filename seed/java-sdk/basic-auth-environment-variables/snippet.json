@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "14b143fa",
+            "id": {
+                "method": "GET",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91843eb7",
+            "id": {
+                "method": "POST",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

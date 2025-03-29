@@ -1,3 +1,5 @@
+import { writeFile } from "fs/promises";
+
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
@@ -5,6 +7,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -49,14 +52,31 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
+            const snippetFilepath = context.config.output.snippetFilepath;
+            let endpointSnippets: Endpoint[] = [];
             try {
-                const endpointSnippets = await this.generateSnippets({ context });
+                endpointSnippets = await this.generateSnippets({ context });
+            } catch (e) {
+                context.logger.warn("Failed to generate snippets, this is OK.");
+            }
+
+            try {
                 await this.generateReadme({
                     context,
                     endpointSnippets
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+
+            try {
+                await this.generateSnippetsJson({
+                    context,
+                    endpointSnippets,
+                    snippetFilepath
+                });
+            } catch (e) {
+                context.logger.warn("Failed to generate snippets.json, this is OK");
             }
         }
 
@@ -123,6 +143,32 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private async generateSnippetsJson({
+        context,
+        endpointSnippets,
+        snippetFilepath
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
+        snippetFilepath: string;
+    }): Promise<void> {
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping snippets.json generation.");
+            return;
+        }
+
+        const snippets: FernGeneratorExec.Snippets = {
+            endpoints: endpointSnippets,
+            // TODO: Add types
+            types: {}
+        };
+
+        await writeFile(
+            snippetFilepath,
+            JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
     }
 }

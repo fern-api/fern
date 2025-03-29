@@ -1,0 +1,96 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "87ce95bf",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "87ce95bf",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getMovieDocs"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "204e83c9",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getMovieName"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "87ce95bf",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getMovieMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5a2f433d",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getOptionalMovie"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7859d659",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getOptionalMovieDocs"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "65e90467",
+            "id": {
+                "method": "POST",
+                "path": "/movie",
+                "identifier_override": "endpoint_service.getOptionalMovieName"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.responseProperty.SeedResponsePropertyClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedResponsePropertyClient client = SeedResponsePropertyClient\n            .builder()\n            .build();\n\n        client.service().getMovie(\"string\");\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
