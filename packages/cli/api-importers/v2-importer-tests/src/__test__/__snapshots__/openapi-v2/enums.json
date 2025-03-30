@@ -271,20 +271,20 @@
       "shape": {
         "aliasOf": {
           "primitive": {
-            "v1": "DOUBLE",
+            "v1": "INTEGER",
             "v2": {
               "validation": {},
-              "type": "double"
+              "type": "integer"
             }
           },
           "type": "primitive"
         },
         "resolvedType": {
           "primitive": {
-            "v1": "DOUBLE",
+            "v1": "INTEGER",
             "v2": {
               "validation": {},
-              "type": "double"
+              "type": "integer"
             }
           },
           "type": "primitive"

@@ -60,10 +60,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "validation": {},
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -100,10 +100,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "validation": {},
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -662,13 +662,13 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "DOUBLE",
+                      "v1": "INTEGER",
                       "v2": {
                         "validation": {
                           "max": 100,
                           "min": 1
                         },
-                        "type": "double"
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
