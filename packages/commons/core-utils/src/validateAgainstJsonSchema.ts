@@ -18,13 +18,17 @@ export declare namespace validateAgainstJsonSchema {
     export type ValidationResult = ValidationSuccess | ValidationFailure;
 }
 
+// TODO: remove console.logs
 export function validateAgainstJsonSchema(
     payload: unknown,
     schema: JSONSchema4
 ): validateAgainstJsonSchema.ValidationResult {
     const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
+    // console.log('schema', schema);
     const validate = ajv.compile(schema);
+    // console.log('schema.properties', schema.properties, schema.additionalProperties);
     const valid = validate(payload);
+    // console.log('validate.errors', validate.errors);
 
     if (valid) {
         return {

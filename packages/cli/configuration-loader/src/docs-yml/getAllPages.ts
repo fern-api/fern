@@ -84,6 +84,13 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                     navigation: version.navigation
                 });
             });
+        case "productgroup":
+            return navigation.products.flatMap((product) => {
+                return getAllPages({
+                    landingPage: product.landingPage,
+                    navigation: product.navigation
+                });
+            });
         default:
             assertNever(navigation);
     }
