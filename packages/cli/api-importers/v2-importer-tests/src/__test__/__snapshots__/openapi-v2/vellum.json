@@ -6345,10 +6345,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -6523,10 +6523,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -7514,12 +7514,12 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {
                     "min": 0
                   },
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -7625,10 +7625,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -8164,10 +8164,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "validation": {},
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -9174,12 +9174,12 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "validation": {
                         "min": 0
                       },
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -9646,10 +9646,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -9722,10 +9722,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "validation": {},
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -10627,10 +10627,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -10759,10 +10759,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -12907,10 +12907,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "DOUBLE",
+                "v1": "INTEGER",
                 "v2": {
                   "validation": {},
-                  "type": "double"
+                  "type": "integer"
                 }
               },
               "type": "primitive"
@@ -13345,11 +13345,11 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "DOUBLE",
+                    "v1": "INTEGER",
                     "v2": {
                       "default": 2,
                       "validation": {},
-                      "type": "double"
+                      "type": "integer"
                     }
                   },
                   "type": "primitive"
@@ -17861,10 +17861,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "DOUBLE",
+                        "v1": "INTEGER",
                         "v2": {
                           "validation": {},
-                          "type": "double"
+                          "type": "integer"
                         }
                       },
                       "type": "primitive"
@@ -28715,10 +28715,10 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "DOUBLE",
+                      "v1": "INTEGER",
                       "v2": {
                         "validation": {},
-                        "type": "double"
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
@@ -28757,10 +28757,10 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "DOUBLE",
+                      "v1": "INTEGER",
                       "v2": {
                         "validation": {},
-                        "type": "double"
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
@@ -28860,7 +28860,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "daef9c68",
+                "id": "a1300e8c",
                 "url": "/v1/documents",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -28872,7 +28872,7 @@
                   "value": {
                     "value": {
                       "jsonExample": {
-                        "count": 1.1,
+                        "count": 1,
                         "next": "next",
                         "previous": "previous",
                         "results": [
@@ -28981,25 +28981,25 @@
                                 }
                               },
                               "value": {
-                                "jsonExample": 1.1,
+                                "jsonExample": 1,
                                 "shape": {
                                   "container": {
                                     "optional": {
-                                      "jsonExample": 1.1,
+                                      "jsonExample": 1,
                                       "shape": {
                                         "primitive": {
-                                          "double": 1.1,
-                                          "type": "double"
+                                          "integer": 1,
+                                          "type": "integer"
                                         },
                                         "type": "primitive"
                                       }
                                     },
                                     "valueType": {
                                       "primitive": {
-                                        "v1": "DOUBLE",
+                                        "v1": "INTEGER",
                                         "v2": {
                                           "validation": {},
-                                          "type": "double"
+                                          "type": "integer"
                                         }
                                       },
                                       "type": "primitive"
@@ -40903,7 +40903,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "77db3c36",
+                "id": "b4e9d43d",
                 "url": "/v1/generate-stream",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -41901,9 +41901,9 @@
                     "value": {
                       "jsonExample": {
                         "delta": {
-                          "request_index": 1.1,
+                          "request_index": 1,
                           "data": {
-                            "completion_index": 1.1,
+                            "completion_index": 1,
                             "completion": {
                               "id": "id",
                               "external_id": "external_id",
@@ -41913,11 +41913,11 @@
                                 "tokens": [
                                   {
                                     "token": "token",
-                                    "text_offset": 1.1
+                                    "text_offset": 1
                                   },
                                   {
                                     "token": "token",
-                                    "text_offset": 1.1
+                                    "text_offset": 1
                                   }
                                 ],
                                 "likelihood": 1.1
@@ -41985,9 +41985,9 @@
                               },
                               "value": {
                                 "jsonExample": {
-                                  "request_index": 1.1,
+                                  "request_index": 1,
                                   "data": {
-                                    "completion_index": 1.1,
+                                    "completion_index": 1,
                                     "completion": {
                                       "id": "id",
                                       "external_id": "external_id",
@@ -41997,11 +41997,11 @@
                                         "tokens": [
                                           {
                                             "token": "token",
-                                            "text_offset": 1.1
+                                            "text_offset": 1
                                           },
                                           {
                                             "token": "token",
-                                            "text_offset": 1.1
+                                            "text_offset": 1
                                           }
                                         ],
                                         "likelihood": 1.1
@@ -42067,11 +42067,11 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1.1,
+                                          "jsonExample": 1,
                                           "shape": {
                                             "primitive": {
-                                              "double": 1.1,
-                                              "type": "double"
+                                              "integer": 1,
+                                              "type": "integer"
                                             },
                                             "type": "primitive"
                                           }
@@ -42128,7 +42128,7 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "completion_index": 1.1,
+                                            "completion_index": 1,
                                             "completion": {
                                               "id": "id",
                                               "external_id": "external_id",
@@ -42138,11 +42138,11 @@
                                                 "tokens": [
                                                   {
                                                     "token": "token",
-                                                    "text_offset": 1.1
+                                                    "text_offset": 1
                                                   },
                                                   {
                                                     "token": "token",
-                                                    "text_offset": 1.1
+                                                    "text_offset": 1
                                                   }
                                                 ],
                                                 "likelihood": 1.1
@@ -42204,11 +42204,11 @@
                                                     }
                                                   },
                                                   "value": {
-                                                    "jsonExample": 1.1,
+                                                    "jsonExample": 1,
                                                     "shape": {
                                                       "primitive": {
-                                                        "double": 1.1,
-                                                        "type": "double"
+                                                        "integer": 1,
+                                                        "type": "integer"
                                                       },
                                                       "type": "primitive"
                                                     }
@@ -42273,11 +42273,11 @@
                                                         "tokens": [
                                                           {
                                                             "token": "token",
-                                                            "text_offset": 1.1
+                                                            "text_offset": 1
                                                           },
                                                           {
                                                             "token": "token",
-                                                            "text_offset": 1.1
+                                                            "text_offset": 1
                                                           }
                                                         ],
                                                         "likelihood": 1.1
@@ -42695,11 +42695,11 @@
                                                                 "tokens": [
                                                                   {
                                                                     "token": "token",
-                                                                    "text_offset": 1.1
+                                                                    "text_offset": 1
                                                                   },
                                                                   {
                                                                     "token": "token",
-                                                                    "text_offset": 1.1
+                                                                    "text_offset": 1
                                                                   }
                                                                 ],
                                                                 "likelihood": 1.1
@@ -42711,11 +42711,11 @@
                                                                       "tokens": [
                                                                         {
                                                                           "token": "token",
-                                                                          "text_offset": 1.1
+                                                                          "text_offset": 1
                                                                         },
                                                                         {
                                                                           "token": "token",
-                                                                          "text_offset": 1.1
+                                                                          "text_offset": 1
                                                                         }
                                                                       ],
                                                                       "likelihood": 1.1
@@ -42727,11 +42727,11 @@
                                                                             "tokens": [
                                                                               {
                                                                                 "token": "token",
-                                                                                "text_offset": 1.1
+                                                                                "text_offset": 1
                                                                               },
                                                                               {
                                                                                 "token": "token",
-                                                                                "text_offset": 1.1
+                                                                                "text_offset": 1
                                                                               }
                                                                             ],
                                                                             "likelihood": 1.1
@@ -42792,11 +42792,11 @@
                                                                                     "jsonExample": [
                                                                                       {
                                                                                         "token": "token",
-                                                                                        "text_offset": 1.1
+                                                                                        "text_offset": 1
                                                                                       },
                                                                                       {
                                                                                         "token": "token",
-                                                                                        "text_offset": 1.1
+                                                                                        "text_offset": 1
                                                                                       }
                                                                                     ],
                                                                                     "shape": {
@@ -42805,7 +42805,7 @@
                                                                                           {
                                                                                             "jsonExample": {
                                                                                               "token": "token",
-                                                                                              "text_offset": 1.1
+                                                                                              "text_offset": 1
                                                                                             },
                                                                                             "shape": {
                                                                                               "shape": {
@@ -43076,11 +43076,11 @@
                                                                                                       }
                                                                                                     },
                                                                                                     "value": {
-                                                                                                      "jsonExample": 1.1,
+                                                                                                      "jsonExample": 1,
                                                                                                       "shape": {
                                                                                                         "primitive": {
-                                                                                                          "double": 1.1,
-                                                                                                          "type": "double"
+                                                                                                          "integer": 1,
+                                                                                                          "type": "integer"
                                                                                                         },
                                                                                                         "type": "primitive"
                                                                                                       }
@@ -43121,7 +43121,7 @@
                                                                                           {
                                                                                             "jsonExample": {
                                                                                               "token": "token",
-                                                                                              "text_offset": 1.1
+                                                                                              "text_offset": 1
                                                                                             },
                                                                                             "shape": {
                                                                                               "shape": {
@@ -43392,11 +43392,11 @@
                                                                                                       }
                                                                                                     },
                                                                                                     "value": {
-                                                                                                      "jsonExample": 1.1,
+                                                                                                      "jsonExample": 1,
                                                                                                       "shape": {
                                                                                                         "primitive": {
-                                                                                                          "double": 1.1,
-                                                                                                          "type": "double"
+                                                                                                          "integer": 1,
+                                                                                                          "type": "integer"
                                                                                                         },
                                                                                                         "type": "primitive"
                                                                                                       }
@@ -47348,7 +47348,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d1e6dafb",
+                "id": "3e849ce8",
                 "url": "/v1/model-versions/id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -47404,7 +47404,7 @@
                           "base_model": "base_model",
                           "sandbox_snapshot": {
                             "id": "id",
-                            "prompt_index": 1.1,
+                            "prompt_index": 1,
                             "prompt_id": "prompt_id",
                             "sandbox_id": "sandbox_id"
                           }
@@ -47412,7 +47412,7 @@
                         "exec_config": {
                           "parameters": {
                             "temperature": 1.1,
-                            "max_tokens": 1.1,
+                            "max_tokens": 1,
                             "top_p": 1.1,
                             "frequency_penalty": 1.1,
                             "presence_penalty": 1.1,
@@ -47433,7 +47433,7 @@
                           ],
                           "prompt_template": "prompt_template",
                           "prompt_block_data": {
-                            "version": 1.1,
+                            "version": 1,
                             "blocks": [
                               {
                                 "id": "id",
@@ -47465,7 +47465,7 @@
                               }
                             ]
                           },
-                          "prompt_syntax_version": 1.1
+                          "prompt_syntax_version": 1
                         },
                         "status": "CREATING"
                       },
@@ -47946,7 +47946,7 @@
                                   "base_model": "base_model",
                                   "sandbox_snapshot": {
                                     "id": "id",
-                                    "prompt_index": 1.1,
+                                    "prompt_index": 1,
                                     "prompt_id": "prompt_id",
                                     "sandbox_id": "sandbox_id"
                                   }
@@ -48068,7 +48068,7 @@
                                         "value": {
                                           "jsonExample": {
                                             "id": "id",
-                                            "prompt_index": 1.1,
+                                            "prompt_index": 1,
                                             "prompt_id": "prompt_id",
                                             "sandbox_id": "sandbox_id"
                                           },
@@ -48077,7 +48077,7 @@
                                               "optional": {
                                                 "jsonExample": {
                                                   "id": "id",
-                                                  "prompt_index": 1.1,
+                                                  "prompt_index": 1,
                                                   "prompt_id": "prompt_id",
                                                   "sandbox_id": "sandbox_id"
                                                 },
@@ -48086,7 +48086,7 @@
                                                     "nullable": {
                                                       "jsonExample": {
                                                         "id": "id",
-                                                        "prompt_index": 1.1,
+                                                        "prompt_index": 1,
                                                         "prompt_id": "prompt_id",
                                                         "sandbox_id": "sandbox_id"
                                                       },
@@ -48205,27 +48205,27 @@
                                                                 }
                                                               },
                                                               "value": {
-                                                                "jsonExample": 1.1,
+                                                                "jsonExample": 1,
                                                                 "shape": {
                                                                   "container": {
                                                                     "optional": {
-                                                                      "jsonExample": 1.1,
+                                                                      "jsonExample": 1,
                                                                       "shape": {
                                                                         "primitive": {
-                                                                          "double": 1.1,
-                                                                          "type": "double"
+                                                                          "integer": 1,
+                                                                          "type": "integer"
                                                                         },
                                                                         "type": "primitive"
                                                                       }
                                                                     },
                                                                     "valueType": {
                                                                       "primitive": {
-                                                                        "v1": "DOUBLE",
+                                                                        "v1": "INTEGER",
                                                                         "v2": {
                                                                           "validation": {
                                                                             "min": 0
                                                                           },
-                                                                          "type": "double"
+                                                                          "type": "integer"
                                                                         }
                                                                       },
                                                                       "type": "primitive"
@@ -48589,7 +48589,7 @@
                                 "jsonExample": {
                                   "parameters": {
                                     "temperature": 1.1,
-                                    "max_tokens": 1.1,
+                                    "max_tokens": 1,
                                     "top_p": 1.1,
                                     "frequency_penalty": 1.1,
                                     "presence_penalty": 1.1,
@@ -48610,7 +48610,7 @@
                                   ],
                                   "prompt_template": "prompt_template",
                                   "prompt_block_data": {
-                                    "version": 1.1,
+                                    "version": 1,
                                     "blocks": [
                                       {
                                         "id": "id",
@@ -48642,7 +48642,7 @@
                                       }
                                     ]
                                   },
-                                  "prompt_syntax_version": 1.1
+                                  "prompt_syntax_version": 1
                                 },
                                 "shape": {
                                   "shape": {
@@ -48699,7 +48699,7 @@
                                         "value": {
                                           "jsonExample": {
                                             "temperature": 1.1,
-                                            "max_tokens": 1.1,
+                                            "max_tokens": 1,
                                             "top_p": 1.1,
                                             "frequency_penalty": 1.1,
                                             "presence_penalty": 1.1,
@@ -48823,11 +48823,11 @@
                                                     }
                                                   },
                                                   "value": {
-                                                    "jsonExample": 1.1,
+                                                    "jsonExample": 1,
                                                     "shape": {
                                                       "primitive": {
-                                                        "double": 1.1,
-                                                        "type": "double"
+                                                        "integer": 1,
+                                                        "type": "integer"
                                                       },
                                                       "type": "primitive"
                                                     }
@@ -49881,7 +49881,7 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "version": 1.1,
+                                            "version": 1,
                                             "blocks": [
                                               {
                                                 "id": "id",
@@ -49966,11 +49966,11 @@
                                                     }
                                                   },
                                                   "value": {
-                                                    "jsonExample": 1.1,
+                                                    "jsonExample": 1,
                                                     "shape": {
                                                       "primitive": {
-                                                        "double": 1.1,
-                                                        "type": "double"
+                                                        "integer": 1,
+                                                        "type": "integer"
                                                       },
                                                       "type": "primitive"
                                                     }
@@ -52957,25 +52957,25 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1.1,
+                                          "jsonExample": 1,
                                           "shape": {
                                             "container": {
                                               "optional": {
-                                                "jsonExample": 1.1,
+                                                "jsonExample": 1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "double": 1.1,
-                                                    "type": "double"
+                                                    "integer": 1,
+                                                    "type": "integer"
                                                   },
                                                   "type": "primitive"
                                                 }
                                               },
                                               "valueType": {
                                                 "primitive": {
-                                                  "v1": "DOUBLE",
+                                                  "v1": "INTEGER",
                                                   "v2": {
                                                     "validation": {},
-                                                    "type": "double"
+                                                    "type": "integer"
                                                   }
                                                 },
                                                 "type": "primitive"
@@ -53361,7 +53361,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "905294c",
+                "id": "345973de",
                 "url": "/v1/model-versions/id/compile-prompt",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -53535,7 +53535,7 @@
                       "jsonExample": {
                         "prompt": {
                           "text": "text",
-                          "num_tokens": 1.1
+                          "num_tokens": 1
                         }
                       },
                       "shape": {
@@ -53593,7 +53593,7 @@
                               "value": {
                                 "jsonExample": {
                                   "text": "text",
-                                  "num_tokens": 1.1
+                                  "num_tokens": 1
                                 },
                                 "shape": {
                                   "shape": {
@@ -53710,11 +53710,11 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1.1,
+                                          "jsonExample": 1,
                                           "shape": {
                                             "primitive": {
-                                              "double": 1.1,
-                                              "type": "double"
+                                              "integer": 1,
+                                              "type": "integer"
                                             },
                                             "type": "primitive"
                                           }
@@ -54002,7 +54002,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "2b8ee735",
+                "id": "357a616a",
                 "url": "/v1/registered-prompts/register",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -54016,7 +54016,7 @@
                     "name": "x",
                     "prompt": {
                       "prompt_block_data": {
-                        "version": 1.1,
+                        "version": 1,
                         "blocks": [
                           {
                             "id": "x",
@@ -54043,7 +54043,7 @@
                     "model": "x",
                     "parameters": {
                       "temperature": 1.1,
-                      "max_tokens": 1.1,
+                      "max_tokens": 1,
                       "top_p": 1.1,
                       "frequency_penalty": 1.1,
                       "presence_penalty": 1.1
@@ -54228,7 +54228,7 @@
                           "value": {
                             "jsonExample": {
                               "prompt_block_data": {
-                                "version": 1.1,
+                                "version": 1,
                                 "blocks": [
                                   {
                                     "id": "x",
@@ -54308,11 +54308,11 @@
                                         "container": {
                                           "valueType": {
                                             "primitive": {
-                                              "v1": "DOUBLE",
+                                              "v1": "INTEGER",
                                               "v2": {
                                                 "default": 2,
                                                 "validation": {},
-                                                "type": "double"
+                                                "type": "integer"
                                               }
                                             },
                                             "type": "primitive"
@@ -54374,7 +54374,7 @@
                                     },
                                     "value": {
                                       "jsonExample": {
-                                        "version": 1.1,
+                                        "version": 1,
                                         "blocks": [
                                           {
                                             "id": "x",
@@ -54441,11 +54441,11 @@
                                                 }
                                               },
                                               "value": {
-                                                "jsonExample": 1.1,
+                                                "jsonExample": 1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "double": 1.1,
-                                                    "type": "double"
+                                                    "integer": 1,
+                                                    "type": "integer"
                                                   },
                                                   "type": "primitive"
                                                 }
@@ -57045,7 +57045,7 @@
                           "value": {
                             "jsonExample": {
                               "temperature": 1.1,
-                              "max_tokens": 1.1,
+                              "max_tokens": 1,
                               "top_p": 1.1,
                               "frequency_penalty": 1.1,
                               "presence_penalty": 1.1
@@ -57163,11 +57163,11 @@
                                       }
                                     },
                                     "value": {
-                                      "jsonExample": 1.1,
+                                      "jsonExample": 1,
                                       "shape": {
                                         "primitive": {
-                                          "double": 1.1,
-                                          "type": "double"
+                                          "integer": 1,
+                                          "type": "integer"
                                         },
                                         "type": "primitive"
                                       }
