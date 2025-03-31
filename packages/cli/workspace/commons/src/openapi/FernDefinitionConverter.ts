@@ -37,7 +37,9 @@ export class FernDefinitionConverter {
                     inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,
                     objectQueryParameters: settings?.objectQueryParameters ?? this.args.objectQueryParameters,
                     useBytesForBinaryResponse:
-                        settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse
+                        settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
+                    respectForwardCompatibleEnums:
+                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums
                 }
             }),
             authOverrides:

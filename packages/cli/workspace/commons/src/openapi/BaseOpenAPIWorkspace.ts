@@ -16,6 +16,7 @@ export declare namespace BaseOpenAPIWorkspace {
         respectNullableSchemas: boolean | undefined;
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
+        respectForwardCompatibleEnums: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -29,7 +30,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public respectNullableSchemas: boolean | undefined;
     public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
-
+    public respectForwardCompatibleEnums: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -41,6 +42,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.respectNullableSchemas = args.respectNullableSchemas;
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
+        this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -102,7 +104,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
-
+    public respectForwardCompatibleEnums: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -112,6 +114,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
+        this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.converter = new FernDefinitionConverter(args);
     }
 

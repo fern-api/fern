@@ -65,6 +65,7 @@ export interface APIDefinitionSettings {
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
     useBytesForBinaryResponse: boolean | undefined;
+    respectForwardCompatibleEnums: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;

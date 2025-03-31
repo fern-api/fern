@@ -151,7 +151,7 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                if (foundPrimitiveString) {
+                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
                         schema: {
@@ -341,7 +341,7 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                if (foundPrimitiveString) {
+                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
                         schema: {
