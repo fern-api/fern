@@ -4,7 +4,7 @@ from typing import Sequence, Tuple
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
-from .validator_generators import ValidatorGenerator
+from .validator_generators.validator_generator import ValidatorGenerator
 
 
 class ValidatorsGenerator(ABC):

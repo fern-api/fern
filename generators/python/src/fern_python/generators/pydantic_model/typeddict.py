@@ -6,17 +6,17 @@ from typing import Dict, List, Optional, Sequence, Type
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen.source_file import SourceFile
 from fern_python.codegen import AST
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.codegen.local_class_reference import LocalClassReference
+from fern_python.codegen.source_file import SourceFile
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ..context import PydanticGeneratorContext
+from ..context.pydantic_generator_context import PydanticGeneratorContext
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),

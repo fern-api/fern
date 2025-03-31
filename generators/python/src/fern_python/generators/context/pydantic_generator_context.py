@@ -7,14 +7,16 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 from ordered_set import OrderedSet
 
-from fern_python.codegen.filepath import Filepath
 from fern_python.codegen import AST
-from fern_python.declaration_referencer.abstract_declaration_referencer import AbstractDeclarationReferencer
+from fern_python.codegen.filepath import Filepath
+from fern_python.declaration_referencer.abstract_declaration_referencer import (
+    AbstractDeclarationReferencer,
+)
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-from ..core_utilities import CoreUtilities
+from ..core_utilities.core_utilities import CoreUtilities
 
 
 class PydanticGeneratorContext(ABC):

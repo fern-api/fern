@@ -9,15 +9,21 @@ from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen.project import Project
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generator_cli.generator_cli import README_FILENAME
-from fern_python.generator_cli.generator_cli import GeneratorCli
-from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
+from fern_python.codegen.project import Project
+from fern_python.generator_cli.generator_cli import (
+    README_FILENAME,
+    REFERENCE_FILENAME,
+    GeneratorCli,
+)
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
+from fern_python.generators.pydantic_model.pydantic_model_generator import (
+    PydanticModelGenerator,
+)
 from fern_python.generators.sdk import as_is_copier
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
@@ -30,9 +36,9 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet.snippet_registry import SnippetRegistry
-from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
+from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.utils.build_snippet_writer import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator
@@ -45,9 +51,11 @@ from .custom_config import (
     DependencyCustomConfig,
     SDKCustomConfig,
 )
-from .environment_generators import (
-    GeneratedEnvironment,
+from .environment_generators.generated_environment import GeneratedEnvironment
+from .environment_generators.multiple_base_urls_environment_generator import (
     MultipleBaseUrlsEnvironmentGenerator,
+)
+from .environment_generators.single_base_url_environment_generator import (
     SingleBaseUrlEnvironmentGenerator,
 )
 from .error_generator.error_generator import ErrorGenerator
@@ -161,9 +169,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
-            None
-        )
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments

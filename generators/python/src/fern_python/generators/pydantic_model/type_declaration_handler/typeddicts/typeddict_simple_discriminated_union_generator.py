@@ -2,18 +2,20 @@ from typing import List, Optional, Union
 
 import fern.ir.resources as ir_types
 
+from fern_python.codegen import AST
 from fern_python.codegen.local_class_reference import LocalClassReference
 from fern_python.codegen.source_file import SourceFile
-from fern_python.codegen import AST
 from fern_python.generators.pydantic_model.typeddict import (
     FernTypedDict,
     SimpleObjectProperty,
 )
-from fern_python.pydantic_codegen.pydantic_field import PydanticField
-from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
+from fern_python.pydantic_codegen.pydantic_field import (
+    FernAwarePydanticField,
+    PydanticField,
+)
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ....context import PydanticGeneratorContext
+from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractDiscriminatedUnionSnippetGenerator,

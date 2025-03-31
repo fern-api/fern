@@ -3,10 +3,10 @@ from typing import Sequence
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
-from .validator_generators import (
+from .validator_generators.pydantic_v1_custom_root_type_validator_generator import (
     PydanticV1CustomRootTypeValidatorGenerator,
-    ValidatorGenerator,
 )
+from .validator_generators.validator_generator import ValidatorGenerator
 from .validators_generator import ValidatorsGenerator
 
 

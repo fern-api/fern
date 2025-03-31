@@ -4,22 +4,31 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen.project import Project
 from fern_python.codegen import AST
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
-from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
+from fern_python.codegen.project import Project
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
+from fern_python.generators.pydantic_model.custom_config import (
+    PydanticModelCustomConfig,
+)
+from fern_python.generators.pydantic_model.pydantic_model_generator import (
+    PydanticModelGenerator,
+)
 from fern_python.snippet.snippet_registry import SnippetRegistry
 from fern_python.utils.build_snippet_writer import build_snippet_writer
 
-from .auth import SecurityFileGenerator
-from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
+from .auth.security_file_generator import SecurityFileGenerator
+from .context.fastapi_generator_context import FastApiGeneratorContext
+from .context.fastapi_generator_context_impl import FastApiGeneratorContextImpl
 from .custom_config import FastAPICustomConfig
-from .error_generator import ErrorGenerator
-from .fern_http_exception import FernHTTPExceptionGenerator
-from .inlined_request_generator import InlinedRequestGenerator
-from .register import RegisterFileGenerator
-from .service_generator import ServiceGenerator
+from .error_generator.error_generator import ErrorGenerator
+from .fern_http_exception.fern_http_exception_generator import (
+    FernHTTPExceptionGenerator,
+)
+from .inlined_request_generator.inlined_request_generator import InlinedRequestGenerator
+from .register.register_file_generator import RegisterFileGenerator
+from .service_generator.service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):

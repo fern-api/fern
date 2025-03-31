@@ -5,15 +5,18 @@ from fern.generator_exec.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen.project import Project
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_registry import SnippetRegistry
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
+from ..context.pydantic_generator_context import PydanticGeneratorContext
+from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
-from .type_declaration_handler import (
-    TypeDeclarationHandler,
+from .type_declaration_handler.type_declaration_handler import TypeDeclarationHandler
+from .type_declaration_handler.type_declaration_snippet_generator_builder import (
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer

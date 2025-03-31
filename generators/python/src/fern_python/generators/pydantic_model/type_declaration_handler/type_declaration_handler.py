@@ -3,14 +3,16 @@ from typing import Callable, Optional, Tuple
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen.source_file import SourceFile
 from fern_python.codegen import AST
+from fern_python.codegen.source_file import SourceFile
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ...context import PydanticGeneratorContext
+from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abc.abstract_type_generator import AbstractTypeGenerator
-from .discriminated_union import DiscriminatedUnionWithUtilsGenerator
+from .discriminated_union.discriminated_union_with_utils_generator import (
+    DiscriminatedUnionWithUtilsGenerator,
+)
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectProperty
 from .pydantic_models.pydantic_model_alias_generator import PydanticModelAliasGenerator

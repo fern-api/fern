@@ -12,7 +12,7 @@ from fern_python.generators.sdk.declaration_referencers.root_client_declaration_
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-from ...context import PydanticGeneratorContextImpl
+from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
 from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (

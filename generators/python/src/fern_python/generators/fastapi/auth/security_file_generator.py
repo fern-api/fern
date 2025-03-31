@@ -1,10 +1,12 @@
+from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.project import Project
-from fern_python.codegen import AST
 from fern_python.external_dependencies.fastapi import FastAPI
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
 
-from ..context import FastApiGeneratorContext
+from ..context.fastapi_generator_context import FastApiGeneratorContext
 from .basic_auth_generator import BasicAuthGenerator
 from .bearer_auth_generator import BearerAuthGenerator
 from .header_auth_generator import HeaderAuthGenerator

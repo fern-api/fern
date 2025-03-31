@@ -5,8 +5,8 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies.httpx import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
@@ -35,11 +35,19 @@ from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient
-from .request_body_parameters import (
+from .request_body_parameters.abstract_request_body_parameters import (
     AbstractRequestBodyParameters,
+)
+from .request_body_parameters.bytes_request_body_parameters import (
     BytesRequestBodyParameters,
+)
+from .request_body_parameters.file_upload_request_body_parameters import (
     FileUploadRequestBodyParameters,
+)
+from .request_body_parameters.inlined_request_body_parameters import (
     InlinedRequestBodyParameters,
+)
+from .request_body_parameters.referenced_request_body_parameters import (
     ReferencedRequestBodyParameters,
 )
 

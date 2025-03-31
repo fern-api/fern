@@ -22,11 +22,9 @@ from fern_python.snippet.snippet_registry import SnippetRegistry
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import (
-    GeneratedEnvironment,
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
+from ..environment_generators.generated_environment import GeneratedEnvironment
+from ..environment_generators.multiple_base_urls_environment_generator import MultipleBaseUrlsEnvironmentGenerator
+from ..environment_generators.single_base_url_environment_generator import SingleBaseUrlEnvironmentGenerator
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient

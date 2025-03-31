@@ -1,15 +1,19 @@
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
-from fern_python.codegen.filepath import Filepath
 from fern_python.codegen import AST
+from fern_python.codegen.filepath import Filepath
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 
-from ..declaration_referencers import (
+from ..declaration_referencers.error_declaration_referencer import (
     ErrorDeclarationReferencer,
+)
+from ..declaration_referencers.inlined_request_declaration_referencer import (
     InlinedRequestDeclarationReferencer,
-    ServiceDeclarationReferencer,
     ServiceNameAndInlinedRequestBody,
+)
+from ..declaration_referencers.service_declaration_referencer import (
+    ServiceDeclarationReferencer,
 )
 from .fastapi_generator_context import FastApiGeneratorContext
 

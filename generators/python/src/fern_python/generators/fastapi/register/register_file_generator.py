@@ -1,13 +1,15 @@
 import fern.ir.resources as ir_types
 
+from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.project import Project
-from fern_python.codegen import AST
 from fern_python.external_dependencies.fastapi import FastAPI
 from fern_python.external_dependencies.starlette import Starlette
-from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
+    GeneratorExecWrapper,
+)
 
-from ..context import FastApiGeneratorContext
+from ..context.fastapi_generator_context import FastApiGeneratorContext
 from .service_initializer import ServiceInitializer
 
 FAST_API_REGISTRATION_ARGS = [("dependencies", AST.TypeHint.optional(AST.TypeHint.sequence(FastAPI.DependsType)))]

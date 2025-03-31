@@ -3,14 +3,16 @@ from abc import ABC, abstractmethod
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
-from fern_python.codegen.filepath import Filepath
 from fern_python.codegen import AST
+from fern_python.codegen.filepath import Filepath
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-from ...context import PydanticGeneratorContextImpl
-from ..core_utilities import CoreUtilities
-from ..declaration_referencers import TypeDeclarationReferencer
+from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
+from ..core_utilities.core_utilities import CoreUtilities
+from ..declaration_referencers.type_declaration_referencer import (
+    TypeDeclarationReferencer,
+)
 
 
 class FastApiGeneratorContext(ABC):

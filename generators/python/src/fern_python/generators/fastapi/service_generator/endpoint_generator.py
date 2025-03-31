@@ -10,15 +10,17 @@ from fern_python.generators.fastapi.service_generator.endpoint_parameters.reques
     FileUploadRequestEndpointParameters,
 )
 
-from ..context import FastApiGeneratorContext
+from ..context.fastapi_generator_context import FastApiGeneratorContext
 from ..custom_config import FastAPICustomConfig
-from .endpoint_parameters import (
-    AuthEndpointParameter,
-    EndpointParameter,
-    HeaderEndpointParameter,
+from .endpoint_parameters.auth_endpoint_parameter import AuthEndpointParameter
+from .endpoint_parameters.endpoint_parameter import EndpointParameter
+from .endpoint_parameters.header_endpoint_parameter import HeaderEndpointParameter
+from .endpoint_parameters.path_endpoint_parameter import PathEndpointParameter
+from .endpoint_parameters.query_endpoint_parameter import QueryEndpointParameter
+from .endpoint_parameters.request.inlined_request_endpoint_parameter import (
     InlinedRequestEndpointParameter,
-    PathEndpointParameter,
-    QueryEndpointParameter,
+)
+from .endpoint_parameters.request.referenced_request_endpoint_parameter import (
     ReferencedRequestEndpointParameter,
 )
 

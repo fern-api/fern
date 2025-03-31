@@ -6,7 +6,7 @@ from fern_python.codegen import AST
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 
-from ...context import PydanticGeneratorContext
+from ...context.pydantic_generator_context import PydanticGeneratorContext
 from .enum_generator import EnumSnippetGenerator
 from .pydantic_models.pydantic_model_alias_generator import (
     PydanticModelAliasSnippetGenerator,

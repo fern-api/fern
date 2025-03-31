@@ -2,7 +2,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 
-from ....context import FastApiGeneratorContext
+from ....context.fastapi_generator_context import FastApiGeneratorContext
 from .request_endpoint_parameter import RequestEndpointParameter
 
 
