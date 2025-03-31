@@ -36,7 +36,7 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
         ) {
             return CONTINUE;
         }
-
+        
         visit(node, "element", function (subNode) {
             if (
                 subNode.tagName !== "a" ||
@@ -47,8 +47,15 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
                 return CONTINUE;
             }
             const title = findTitle(subNode);
+            const tabTitle = title || getTitleFromLink(subNode.properties.href);
+
+            // Skip if title is "Recipes"
+            if (tabTitle === "Recipes") {
+                return CONTINUE;
+            }
+            
             links.push({
-                name: title || getTitleFromLink(subNode.properties.href),
+                name: tabTitle,
                 url: subNode.properties.href
             });
             return CONTINUE;

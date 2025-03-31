@@ -7,6 +7,7 @@ import { unified } from "unified";
 
 import { TaskContext } from "@fern-api/task-context";
 
+import { CONTINUE, EXIT, visit } from "unist-util-visit";
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -56,7 +57,13 @@ export async function parsePage(
     if (opts.externalLink) {
         const filename = html;
         const filenameWithExt = `${filename}.mdx`;
-        writePage(filenameWithExt, "", "", "", urlObj.toString());
+        writePage({
+            filename: filenameWithExt,
+            title: "",
+            description: "",
+            markdown: "",
+            url: urlObj.toString()
+        });
         return { success: true, data: [urlObj.toString(), filename] };
     }
 
@@ -104,8 +111,45 @@ export async function parsePage(
 
     await downloadImagesFromFile(mdastTree, url);
 
-    const title = getTitleFromHeading(mdastTree);
-    const description = getDescriptionFromRoot(mdastTree);
+    // First try to get title and description from HTML
+    let title = "";
+    let description = "";
+    
+    // Try to extract title from HTML
+    visit(hast, "element", function(node) {
+        if (node.tagName === "title") {
+            visit(node, "text", function(textNode) {
+                title = textNode.value.trim();
+                return EXIT;
+            });
+            return title ? EXIT : CONTINUE;
+        }
+        return CONTINUE;
+    });
+    
+    // Try to extract description from meta tags
+    visit(hast, "element", function(node) {
+        if (node.tagName === "meta" && 
+            node.properties && 
+            node.properties.name === "description" && 
+            node.properties.content) {
+            description = node.properties.content.toString();
+            return EXIT;
+        }
+        return CONTINUE;
+    });
+    
+    // Fall back to extracting from mdast if not found in HTML
+    if (!title) {
+        title = getTitleFromHeading(mdastTree);
+    }
+    
+    if (!description) {
+        description = getDescriptionFromRoot(mdastTree);
+    }
+    
+    const slug = normalizePath(urlObj.pathname);
+    
 
     try {
         const mdxContent = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify).stringify(mdastTree);
@@ -117,8 +161,13 @@ export async function parsePage(
             urlObj = new URL("home", new URL(urlObj).origin);
         }
 
-        writePage(url, title, description, resultStr);
-        context.logger.debug(`Successfully parsed page ${urlStr}`);
+        writePage({
+            filename: url,
+            title,
+            description,
+            markdown: resultStr,
+            slug
+        });
         return {
             success: true,
             data: opts.rootPath ? [normalizePath(new URL(urlStr).pathname), opts.rootPath] : undefined

@@ -3,8 +3,7 @@ import { join } from "path";
 import traverse from "traverse";
 
 import { docsYml } from "@fern-api/configuration";
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
-import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
+import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { isReadmeDeployment } from "./assert";
@@ -74,9 +73,6 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         for (const tab of scrapeData.tabs ?? []) {
             const tabSlug = removeLeadingSlash(tab.url);
-            if (tab.name === "API Reference") {
-                continue;
-            }
             this.tabUrlToInfo[tabSlug] = {
                 name: tab.name,
                 url: tabSlug,
@@ -123,9 +119,6 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const results = await Promise.all(
             links.map(async (tabEntry) => {
-                if (tabEntry.url.startsWith("/reference")) {
-                    return { success: false, data: undefined };
-                }
                 const newUrl = new URL(url);
                 newUrl.pathname = tabEntry.url;
                 try {
@@ -313,7 +306,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                     });
                 }
             };
-
+            
             cleanNavigation(navItems);
 
             const browser = await startPuppeteer();
@@ -353,9 +346,6 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
     }): Promise<FernDocsNavigationBuilder> {
         if (Object.keys(this.tabUrlToInfo).length > 0) {
             const tabUrl = getFirstTabFromNavigationGroup({ navItem });
-            if (tabUrl === "reference") {
-                return builder.getNavigationBuilder();
-            }
             if (tabUrl == null) {
                 return this.context.failAndThrow(`Failed to assign navigation item to a tab group: ${navItem.group}`);
             }
