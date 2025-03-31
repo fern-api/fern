@@ -6,6 +6,9 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.external_dependencies.json import Json
+from fern_python.external_dependencies.websockets import Websockets
+from fern_python.generators.core_utilities.core_utilities import CoreUtilities
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
 )
@@ -13,10 +16,7 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
     EndpointResponseCodeWriter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from src.fern_python.external_dependencies.json import Json
-from src.fern_python.external_dependencies.websockets import Websockets
-from src.fern_python.generators.core_utilities.core_utilities import CoreUtilities
-from src.fern_python.utils import snake_case
+from fern_python.utils import snake_case
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -74,11 +74,17 @@ class SocketClientGenerator:
         return f"{self._context.get_socket_class_name_for_subpackage_service(self._subpackage_id)}Response"
 
     def _create_response_type_declaration(self) -> AST.TypeAliasDeclaration:
-        receive_message_types = [
-            msg.body.get_as_union().body_type
-            for msg in self._websocket.messages
-            if msg.origin == ir_types.WebSocketMessageOrigin.SERVER and msg.body.get_as_union().type == "reference"
-        ]
+        receive_message_types = []
+        if self._websocket and self._websocket.messages:
+            for msg in self._websocket.messages:
+                body_union = msg.body.get_as_union()
+                if (
+                    msg.origin == ir_types.WebSocketMessageOrigin.SERVER
+                    and body_union.type == "reference"
+                    and hasattr(body_union, "body_type")
+                ):
+                    receive_message_types.append(body_union.body_type)
+
         return AST.TypeAliasDeclaration(
             name=self._get_response_type_name(),
             type_hint=AST.TypeHint.union(
@@ -113,9 +119,15 @@ class SocketClientGenerator:
         )
         class_declaration.add_method(self._get_iterator_method(is_async=is_async))
         class_declaration.add_method(self._get_start_listening_method(is_async=is_async))
-        for msg in self._websocket.messages:
-            if msg.origin == ir_types.WebSocketMessageOrigin.CLIENT and msg.body.get_as_union().type == "reference":
-                class_declaration.add_method(self._get_send_message_method(msg, is_async=is_async))
+        if self._websocket and self._websocket.messages:
+            for msg in self._websocket.messages:
+                union = msg.body.get_as_union()
+                if (
+                    msg.origin == ir_types.WebSocketMessageOrigin.CLIENT
+                    and union.type == "reference"
+                    and hasattr(union, "body_type")
+                ):
+                    class_declaration.add_method(self._get_send_message_method(msg, is_async=is_async))
         class_declaration.add_method(self._get_recv_method(is_async=is_async))
         class_declaration.add_method(self._get_send_method(is_async=is_async))
         class_declaration.add_method(self._get_send_model_method(is_async=is_async))
@@ -227,7 +239,26 @@ class SocketClientGenerator:
         return _get_start_listening_method_body
 
     def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
-        message_type = message.body.get_as_union().body_type
+        union = message.body.get_as_union()
+        if not hasattr(union, "body_type"):
+            # Create a fallback for non-reference messages
+            return AST.FunctionDeclaration(
+                name=f"send_{snake_case(message.type)}",
+                is_async=is_async,
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(
+                            name="message",
+                            type_hint=AST.TypeHint.any(),
+                        ),
+                    ],
+                    return_type=AST.TypeHint.none(),
+                ),
+                body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+                docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=AST.TypeHint.any())),
+            )
+
+        message_type = union.body_type
         message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
         return AST.FunctionDeclaration(
             name=f"send_{snake_case(message.type)}",
