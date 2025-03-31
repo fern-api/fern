@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Improve parameter parsing in v3 AsyncAPI specs to enable broader support for OpenAPI extensions.
+    type: fix
+  irVersion: 57
+  version: 0.57.11
+
+- changelogEntry:
+  - summary: |
       Add support for `respect-forward-compatible-enums` configuration option to specify whether to respect forward compatible enums in OpenAPI specifications.
     type: fix
   irVersion: 57
