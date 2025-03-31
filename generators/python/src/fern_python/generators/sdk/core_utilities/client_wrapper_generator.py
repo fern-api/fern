@@ -15,7 +15,7 @@ from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtiliti
 from fern_python.snippet.template_utils import TemplateGenerator
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import GeneratedEnvironment
+from ..environment_generators.generated_environment import GeneratedEnvironment
 
 
 @dataclass
