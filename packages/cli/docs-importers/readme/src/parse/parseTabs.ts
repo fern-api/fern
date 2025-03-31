@@ -36,7 +36,7 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
         ) {
             return CONTINUE;
         }
-        
+
         visit(node, "element", function (subNode) {
             if (
                 subNode.tagName !== "a" ||
@@ -53,7 +53,7 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
             if (tabTitle === "Recipes") {
                 return CONTINUE;
             }
-            
+
             links.push({
                 name: tabTitle,
                 url: subNode.properties.href

@@ -62,13 +62,16 @@ export function writePage({
 
     try {
         mkdirSync(dirname(writePath), { recursive: true });
-        write(writePath, formatPageWithFrontmatter({
-            title,
-            description,
-            markdown,
-            url,
-            slug
-        }));
+        write(
+            writePath,
+            formatPageWithFrontmatter({
+                title,
+                description,
+                markdown,
+                url,
+                slug
+            })
+        );
     } catch (error) {
         throw new Error(`${cleanedWritePath}: failed to download to disk`);
     }

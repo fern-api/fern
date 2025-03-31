@@ -3,7 +3,13 @@ import { join } from "path";
 import traverse from "traverse";
 
 import { docsYml } from "@fern-api/configuration";
-import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
+import {
+    DEFAULT_LAYOUT,
+    DocsImporter,
+    FernDocsBuilder,
+    FernDocsNavigationBuilder,
+    TabInfo
+} from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { isReadmeDeployment } from "./assert";
@@ -306,7 +312,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                     });
                 }
             };
-            
+
             cleanNavigation(navItems);
 
             const browser = await startPuppeteer();
