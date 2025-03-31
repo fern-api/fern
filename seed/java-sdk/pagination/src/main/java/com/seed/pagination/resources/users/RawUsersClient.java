@@ -112,10 +112,9 @@ public class RawUsersClient {
                         .build();
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
-                        new SyncPagingIterable<User>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithCursorPagination(nextRequest, requestOptions)),
+                        new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> listWithCursorPagination(
+                                        nextRequest, requestOptions)
+                                .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -173,9 +172,9 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                !startingAfter.isEmpty(),
-                                result,
-                                () -> listWithMixedTypeCursorPagination(nextRequest, requestOptions)),
+                                !startingAfter.isEmpty(), result, () -> listWithMixedTypeCursorPagination(
+                                                nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -241,9 +240,9 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithBodyCursorPagination(nextRequest, requestOptions)),
+                                startingAfter.isPresent(), result, () -> listWithBodyCursorPagination(
+                                                nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -312,7 +311,8 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                true, result, () -> listWithOffsetPagination(nextRequest, requestOptions)),
+                                true, result, () -> listWithOffsetPagination(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -381,7 +381,8 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                true, result, () -> listWithDoubleOffsetPagination(nextRequest, requestOptions)),
+                                true, result, () -> listWithDoubleOffsetPagination(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -449,7 +450,8 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                true, result, () -> listWithBodyOffsetPagination(nextRequest, requestOptions)),
+                                true, result, () -> listWithBodyOffsetPagination(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -514,7 +516,8 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                true, result, () -> listWithOffsetStepPagination(nextRequest, requestOptions)),
+                                true, result, () -> listWithOffsetStepPagination(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -580,7 +583,8 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                true, result, () -> listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)),
+                                true, result, () -> listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -635,10 +639,9 @@ public class RawUsersClient {
                         .build();
                 List<User> result = parsedResponse.getData().getUsers();
                 return new SeedPaginationHttpResponse<>(
-                        new SyncPagingIterable<User>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithExtendedResults(nextRequest, requestOptions)),
+                        new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> listWithExtendedResults(
+                                        nextRequest, requestOptions)
+                                .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -695,9 +698,9 @@ public class RawUsersClient {
                 List<User> result = parsedResponse.getData().getUsers().orElse(Collections.emptyList());
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                startingAfter.isPresent(),
-                                result,
-                                () -> listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)),
+                                startingAfter.isPresent(), result, () -> listWithExtendedResultsAndOptionalData(
+                                                nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -752,7 +755,8 @@ public class RawUsersClient {
                 List<String> result = parsedResponse.getCursor().getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions)),
+                                startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -853,7 +857,8 @@ public class RawUsersClient {
                 List<String> result = parsedResponse.getResults();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                true, result, () -> listWithGlobalConfig(nextRequest, requestOptions)),
+                                true, result, () -> listWithGlobalConfig(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
