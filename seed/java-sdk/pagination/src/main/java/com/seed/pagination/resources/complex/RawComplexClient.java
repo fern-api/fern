@@ -84,7 +84,8 @@ public class RawComplexClient {
                 List<Conversation> result = parsedResponse.getConversations();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<Conversation>(
-                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)),
+                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

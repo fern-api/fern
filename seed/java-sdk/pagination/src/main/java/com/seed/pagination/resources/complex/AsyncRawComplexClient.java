@@ -96,7 +96,8 @@ public class AsyncRawComplexClient {
                                 new SyncPagingIterable<Conversation>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return search(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
