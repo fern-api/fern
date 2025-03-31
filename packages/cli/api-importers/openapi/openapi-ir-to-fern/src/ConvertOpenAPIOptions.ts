@@ -40,6 +40,11 @@ export interface ConvertOpenAPIOptions {
      * If true, the converter will use the `bytes` type for binary responses.
      */
     useBytesForBinaryResponse: boolean;
+
+    /**
+     * If true, the converter will respect forward compatible enums during generation.
+     */
+    respectForwardCompatibleEnums: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -50,7 +55,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
-    useBytesForBinaryResponse: false
+    useBytesForBinaryResponse: false,
+    respectForwardCompatibleEnums: false
 };
 
 export function getConvertOptions({
@@ -92,6 +98,10 @@ export function getConvertOptions({
         useBytesForBinaryResponse:
             overrides?.useBytesForBinaryResponse ??
             options?.useBytesForBinaryResponse ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse,
+        respectForwardCompatibleEnums:
+            overrides?.respectForwardCompatibleEnums ??
+            options?.respectForwardCompatibleEnums ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums
     };
 }

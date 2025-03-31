@@ -36,6 +36,8 @@ export interface ParseOpenAPIOptions {
     defaultFormParameterEncoding: "form" | "json" | undefined;
     /* Whether or not to use the `bytes` type for binary responses. */
     useBytesForBinaryResponse: boolean;
+    /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
+    respectForwardCompatibleEnums: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -66,7 +68,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
     defaultFormParameterEncoding: "json",
-    useBytesForBinaryResponse: false
+    useBytesForBinaryResponse: false,
+    respectForwardCompatibleEnums: false
 };
 
 export function getParseOptions({
@@ -131,6 +134,10 @@ export function getParseOptions({
             DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
         exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
         defaultFormParameterEncoding:
-            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
+        respectForwardCompatibleEnums:
+            overrides?.respectForwardCompatibleEnums ??
+            options?.respectForwardCompatibleEnums ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums
     };
 }

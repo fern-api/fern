@@ -1463,6 +1463,16 @@
             }
           ]
         },
+        "respect-forward-compatible-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "use-bytes-for-binary-response": {
           "oneOf": [
             {
