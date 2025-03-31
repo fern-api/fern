@@ -123,7 +123,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return listWithCursorPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -201,7 +202,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(!startingAfter.isEmpty(), result, () -> {
                                     try {
                                         return listWithMixedTypeCursorPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -289,7 +291,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return listWithBodyCursorPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -379,7 +382,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, () -> {
                                     try {
                                         return listWithOffsetPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -470,7 +474,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, () -> {
                                     try {
                                         return listWithDoubleOffsetPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -559,7 +564,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, () -> {
                                     try {
                                         return listWithBodyOffsetPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -646,7 +652,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, () -> {
                                     try {
                                         return listWithOffsetStepPagination(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -734,7 +741,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, () -> {
                                     try {
                                         return listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -810,7 +818,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return listWithExtendedResults(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -890,7 +899,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -967,7 +977,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return listUsernames(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -1105,7 +1116,8 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<String>(true, result, () -> {
                                     try {
                                         return listWithGlobalConfig(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }

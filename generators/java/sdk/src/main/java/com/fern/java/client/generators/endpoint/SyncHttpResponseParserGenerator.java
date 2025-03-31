@@ -158,6 +158,6 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public CodeBlock getNextPageGetter(String endpointName, String methodParameters) {
-        return CodeBlock.of("() -> $L($L)", endpointName, methodParameters);
+        return CodeBlock.of("() -> $L($L).body()", endpointName, methodParameters);
     }
 }

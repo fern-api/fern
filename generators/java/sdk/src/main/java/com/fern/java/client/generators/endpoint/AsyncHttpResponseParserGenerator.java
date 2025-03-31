@@ -214,7 +214,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 .add("() -> {\n")
                 .indent()
                 .beginControlFlow("try")
-                .add("return $L($L).get();\n", endpointName, methodParameters)
+                .add("return $L($L).get().body();\n", endpointName, methodParameters)
                 .endControlFlow()
                 .beginControlFlow("catch ($T | $T e)", InterruptedException.class, ExecutionException.class)
                 .add("throw new $T(e);\n", RuntimeException.class)
