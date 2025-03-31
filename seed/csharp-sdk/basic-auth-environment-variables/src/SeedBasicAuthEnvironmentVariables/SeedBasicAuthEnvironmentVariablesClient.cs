@@ -42,21 +42,9 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public BasicAuthClient BasicAuth { get; }
 
-    public ErrorsClient Errors { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ErrorsClient Errors { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

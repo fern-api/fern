@@ -42,13 +42,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ServiceClient Service { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

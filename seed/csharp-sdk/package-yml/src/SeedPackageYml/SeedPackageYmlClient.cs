@@ -32,13 +32,7 @@ public partial class SeedPackageYmlClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ServiceClient Service { get; }
 
     /// <example><code>
     /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });

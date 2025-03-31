@@ -45,83 +45,23 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public V2Client V2 { get; }
 
-    public AdminClient Admin { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public AdminClient Admin { get; }
 
-    public CommonsClient Commons { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public CommonsClient Commons { get; }
 
-    public HomepageClient Homepage { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public HomepageClient Homepage { get; }
 
-    public LangServerClient LangServer { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public LangServerClient LangServer { get; }
 
-    public MigrationClient Migration { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public MigrationClient Migration { get; }
 
-    public PlaylistClient Playlist { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public PlaylistClient Playlist { get; }
 
-    public ProblemClient Problem { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ProblemClient Problem { get; }
 
-    public SubmissionClient Submission { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public SubmissionClient Submission { get; }
 
-    public SyspropClient Sysprop { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public SyspropClient Sysprop { get; }
 }

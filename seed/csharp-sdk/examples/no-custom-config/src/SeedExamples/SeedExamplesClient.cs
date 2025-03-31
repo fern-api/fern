@@ -41,45 +41,15 @@ public partial class SeedExamplesClient
         Types = new TypesClient(_client);
     }
 
-    public CommonsClient Commons { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public CommonsClient Commons { get; }
 
-    public FileClient File { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public FileClient File { get; }
 
-    public HealthClient Health { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public HealthClient Health { get; }
 
-    public ServiceClient Service { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ServiceClient Service { get; }
 
-    public TypesClient Types { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public TypesClient Types { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");

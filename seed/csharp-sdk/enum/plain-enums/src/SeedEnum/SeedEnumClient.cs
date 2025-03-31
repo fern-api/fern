@@ -32,35 +32,11 @@ public partial class SeedEnumClient
         Unknown = new UnknownClient(_client);
     }
 
-    public InlinedRequestClient InlinedRequest { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public InlinedRequestClient InlinedRequest { get; }
 
-    public PathParamClient PathParam { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public PathParamClient PathParam { get; }
 
-    public QueryParamClient QueryParam { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public QueryParamClient QueryParam { get; }
 
-    public UnknownClient Unknown { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UnknownClient Unknown { get; }
 }

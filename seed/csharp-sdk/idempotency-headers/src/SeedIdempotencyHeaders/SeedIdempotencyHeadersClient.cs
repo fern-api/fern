@@ -30,11 +30,5 @@ public partial class SeedIdempotencyHeadersClient
         Payment = new PaymentClient(_client);
     }
 
-    public PaymentClient Payment { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public PaymentClient Payment { get; }
 }

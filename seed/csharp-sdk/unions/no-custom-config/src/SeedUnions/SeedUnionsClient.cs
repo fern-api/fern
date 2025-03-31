@@ -31,27 +31,9 @@ public partial class SeedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public BigunionClient Bigunion { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public BigunionClient Bigunion { get; }
 
-    public TypesClient Types { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public TypesClient Types { get; }
 
-    public UnionClient Union { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UnionClient Union { get; }
 }

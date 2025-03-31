@@ -44,21 +44,9 @@ public partial class SeedAnyAuthClient
         User = new UserClient(_client);
     }
 
-    public AuthClient Auth { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public AuthClient Auth { get; }
 
-    public UserClient User { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UserClient User { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

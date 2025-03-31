@@ -29,11 +29,5 @@ public partial class SeedApiClient
         Userservice = new UserserviceClient(_client);
     }
 
-    public UserserviceClient Userservice { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UserserviceClient Userservice { get; }
 }

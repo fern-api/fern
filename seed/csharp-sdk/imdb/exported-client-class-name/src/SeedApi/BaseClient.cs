@@ -30,11 +30,5 @@ public partial class BaseClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ImdbClient Imdb { get; }
 }

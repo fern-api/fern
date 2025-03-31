@@ -29,11 +29,5 @@ public partial class SeedMixedCaseClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ServiceClient Service { get; }
 }

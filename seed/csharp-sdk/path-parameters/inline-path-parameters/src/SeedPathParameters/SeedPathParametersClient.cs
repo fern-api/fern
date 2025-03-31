@@ -30,19 +30,7 @@ public partial class SeedPathParametersClient
         User = new UserClient(_client);
     }
 
-    public OrganizationsClient Organizations { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public OrganizationsClient Organizations { get; }
 
-    public UserClient User { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UserClient User { get; }
 }

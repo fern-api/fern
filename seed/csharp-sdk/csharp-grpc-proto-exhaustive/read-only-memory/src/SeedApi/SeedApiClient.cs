@@ -29,11 +29,5 @@ public partial class SeedApiClient
         Dataservice = new DataserviceClient(_client);
     }
 
-    public DataserviceClient Dataservice { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public DataserviceClient Dataservice { get; }
 }

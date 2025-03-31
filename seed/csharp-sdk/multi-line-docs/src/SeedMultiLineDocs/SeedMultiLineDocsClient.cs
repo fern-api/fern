@@ -29,11 +29,5 @@ public partial class SeedMultiLineDocsClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public UserClient User { get; }
 }

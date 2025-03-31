@@ -29,11 +29,5 @@ public partial class SeedObjectsWithImportsClient
         Optional = new OptionalClient(_client);
     }
 
-    public OptionalClient Optional { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public OptionalClient Optional { get; }
 }

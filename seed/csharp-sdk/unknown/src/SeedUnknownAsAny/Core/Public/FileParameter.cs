@@ -13,35 +13,17 @@ public record FileParameter : IDisposable
     /// <summary>
     /// The name of the file to be uploaded.
     /// </summary>
-    public string? FileName { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public string? FileName { get; set; }
 
     /// <summary>
     /// The content type of the file to be uploaded.
     /// </summary>
-    public string? ContentType { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public string? ContentType { get; set; }
 
     /// <summary>
     /// The content of the file to be uploaded.
     /// </summary>
-    public required Stream Stream { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public required Stream Stream { get; set; }
 
     /// <inheritdoc/>
     public void Dispose()

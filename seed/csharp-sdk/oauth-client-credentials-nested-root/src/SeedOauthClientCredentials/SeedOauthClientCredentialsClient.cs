@@ -42,11 +42,5 @@ public partial class SeedOauthClientCredentialsClient
         Auth = new AuthClient(_client);
     }
 
-    public AuthClient Auth { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public AuthClient Auth { get; }
 }

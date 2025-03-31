@@ -30,19 +30,7 @@ public partial class SeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public ErrorsClient Errors { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public ErrorsClient Errors { get; }
 
-    public PropertyBasedErrorClient PropertyBasedError { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public PropertyBasedErrorClient PropertyBasedError { get; }
 }

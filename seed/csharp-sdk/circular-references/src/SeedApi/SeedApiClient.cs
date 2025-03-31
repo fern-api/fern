@@ -30,19 +30,7 @@ public partial class SeedApiClient
         Ast = new AstClient(_client);
     }
 
-    public AClient A { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public AClient A { get; }
 
-    public AstClient Ast { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    }
+    public AstClient Ast { get; }
 }
