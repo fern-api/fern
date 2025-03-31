@@ -13,17 +13,17 @@ public record FileParameter : IDisposable
     /// <summary>
     /// The name of the file to be uploaded.
     /// </summary>
-    public string? FileName { get; init; }
+    public string? FileName { get; set; }
 
     /// <summary>
     /// The content type of the file to be uploaded.
     /// </summary>
-    public string? ContentType { get; init; }
+    public string? ContentType { get; set; }
 
     /// <summary>
     /// The content of the file to be uploaded.
     /// </summary>
-    public required Stream Stream { get; init; }
+    public required Stream Stream { get; set; }
 
     /// <inheritdoc/>
     public void Dispose()

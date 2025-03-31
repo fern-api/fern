@@ -30,5 +30,5 @@ public partial class SeedApiClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get; init; }
+    public ImdbClient Imdb { get; }
 }

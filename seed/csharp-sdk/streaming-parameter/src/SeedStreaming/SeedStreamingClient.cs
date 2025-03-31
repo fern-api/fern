@@ -29,5 +29,5 @@ public partial class SeedStreamingClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; init; }
+    public DummyClient Dummy { get; }
 }

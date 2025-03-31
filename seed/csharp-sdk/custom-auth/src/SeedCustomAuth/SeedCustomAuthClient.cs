@@ -34,7 +34,7 @@ public partial class SeedCustomAuthClient
         Errors = new ErrorsClient(_client);
     }
 
-    public CustomAuthClient CustomAuth { get; init; }
+    public CustomAuthClient CustomAuth { get; }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get; }
 }

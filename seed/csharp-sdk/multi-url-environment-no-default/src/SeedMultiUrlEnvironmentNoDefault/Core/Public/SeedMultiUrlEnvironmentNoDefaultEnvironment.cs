@@ -19,10 +19,22 @@ public class SeedMultiUrlEnvironmentNoDefaultEnvironment
     /// <summary>
     /// URL for the ec2 service
     /// </summary>
-    public string Ec2 { get; init; }
+    public string Ec2 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// URL for the s3 service
     /// </summary>
-    public string S3 { get; init; }
+    public string S3 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

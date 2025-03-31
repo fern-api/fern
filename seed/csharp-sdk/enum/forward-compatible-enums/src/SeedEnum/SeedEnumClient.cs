@@ -32,11 +32,11 @@ public partial class SeedEnumClient
         Unknown = new UnknownClient(_client);
     }
 
-    public InlinedRequestClient InlinedRequest { get; init; }
+    public InlinedRequestClient InlinedRequest { get; }
 
-    public PathParamClient PathParam { get; init; }
+    public PathParamClient PathParam { get; }
 
-    public QueryParamClient QueryParam { get; init; }
+    public QueryParamClient QueryParam { get; }
 
-    public UnknownClient Unknown { get; init; }
+    public UnknownClient Unknown { get; }
 }
