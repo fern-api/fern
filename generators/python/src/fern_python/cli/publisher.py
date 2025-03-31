@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
 
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class Publisher:

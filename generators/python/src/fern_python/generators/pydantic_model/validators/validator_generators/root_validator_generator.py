@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 from .validator_generator import ValidatorGenerator
 

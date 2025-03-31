@@ -1,6 +1,7 @@
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 
 from ..context import FastApiGeneratorContext
 

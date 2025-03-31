@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from fern_python.codegen import SourceFile
+from fern_python.codegen.source_file import SourceFile
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig

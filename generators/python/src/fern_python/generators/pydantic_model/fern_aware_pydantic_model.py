@@ -5,9 +5,12 @@ from typing import List, Optional, Sequence, Tuple, Type
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen.local_class_reference import LocalClassReference
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
-from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig

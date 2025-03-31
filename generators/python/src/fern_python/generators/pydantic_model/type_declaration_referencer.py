@@ -2,8 +2,9 @@ from typing import Dict, Tuple
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import ExportStrategy, Filepath
-from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.codegen.filepath import ExportStrategy
+from fern_python.codegen.filepath import Filepath
+from fern_python.declaration_referencer.abstract_declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 
 

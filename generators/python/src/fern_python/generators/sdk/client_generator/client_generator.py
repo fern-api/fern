@@ -4,7 +4,8 @@ from typing import List, Optional
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
@@ -12,7 +13,8 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
-from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_registry import SnippetRegistry
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE

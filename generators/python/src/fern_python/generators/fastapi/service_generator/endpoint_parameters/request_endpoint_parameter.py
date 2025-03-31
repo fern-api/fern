@@ -1,7 +1,7 @@
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
-from fern_python.external_dependencies import FastAPI
+from fern_python.external_dependencies.fastapi import FastAPI
 
 from ...context import FastApiGeneratorContext
 from .endpoint_parameter import EndpointParameter

@@ -16,7 +16,7 @@ from fern.generator_exec.config import (
 
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 
 from .publisher import Publisher
 

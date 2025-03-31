@@ -3,7 +3,9 @@ from typing import Callable, Generic, Optional, Tuple, TypeVar
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, ExportStrategy, Filepath
+from fern_python.codegen.filepath import ExportStrategy
+from fern_python.codegen.filepath import Filepath
+from fern_python.codegen import AST
 
 T = TypeVar("T")
 

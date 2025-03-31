@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Tuple
 
-from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 
 class ValidatorGenerator(ABC):

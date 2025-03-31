@@ -3,11 +3,12 @@ from typing import Optional
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
     AbstractTypeSnippetGenerator,
 )
-from fern_python.snippet import SnippetWriter
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig

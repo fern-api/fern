@@ -3,16 +3,19 @@ from typing import Callable, List, Optional, Sequence, Set
 import fern.ir.resources as ir_types
 from typing_extensions import Never
 
-from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen.local_class_reference import LocalClassReference
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import (
     ClassDeclaration,
 )
-from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
     declared_type_name_to_named_type,
 )
-from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig

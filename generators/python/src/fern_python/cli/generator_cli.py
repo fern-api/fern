@@ -11,7 +11,7 @@ from fern.generator_exec.logging import (
     SuccessfulStatusUpdate,
 )
 
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 
 from .abstract_generator import AbstractGenerator
 

@@ -1,4 +1,4 @@
-from fern_python.utils import pascal_case
+from fern_python.utils.pascal_case import pascal_case
 
 
 def test_pascal_case() -> None:

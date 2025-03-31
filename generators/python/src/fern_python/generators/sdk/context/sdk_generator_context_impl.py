@@ -6,7 +6,7 @@ from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
-from fern_python.utils import pascal_case
+from fern_python.utils.pascal_case import pascal_case
 
 from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (

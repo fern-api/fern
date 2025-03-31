@@ -3,7 +3,8 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
-from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
+from fern_python.snippet.snippet_writer import SnippetWriter
+from fern_python.snippet.type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 
 from ...context import PydanticGeneratorContext
 from .enum_generator import EnumSnippetGenerator

@@ -5,7 +5,9 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies import Contextlib, HttpX, Websockets
+from fern_python.external_dependencies.contextlib import Contextlib
+from fern_python.external_dependencies.httpx import HttpX
+from fern_python.external_dependencies.websockets import Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     EndpointFunctionGenerator,

@@ -2,14 +2,15 @@ from typing import Optional
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
 from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
     declared_type_name_to_named_type,
 )
-from fern_python.snippet import SnippetWriter
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig

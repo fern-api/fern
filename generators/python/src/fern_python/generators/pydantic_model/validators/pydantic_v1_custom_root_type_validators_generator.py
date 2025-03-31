@@ -1,7 +1,7 @@
 from typing import Sequence
 
 from fern_python.codegen import AST
-from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 from .validator_generators import (
     PydanticV1CustomRootTypeValidatorGenerator,

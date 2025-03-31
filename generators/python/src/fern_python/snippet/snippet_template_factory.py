@@ -28,7 +28,7 @@ from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.type_declaration_handler.enum_generator import (
     EnumSnippetGenerator,
 )

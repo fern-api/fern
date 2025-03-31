@@ -3,7 +3,8 @@ from abc import ABC, abstractmethod
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
-from fern_python.codegen import AST, Filepath
+from fern_python.codegen.filepath import Filepath
+from fern_python.codegen import AST
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 

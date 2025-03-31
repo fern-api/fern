@@ -5,7 +5,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
-from fern_python.external_dependencies import HttpX
+from fern_python.external_dependencies.httpx import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -31,7 +31,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.snippet import SnippetWriter
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient

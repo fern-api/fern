@@ -4,14 +4,13 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import AST, Project
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model import (
-    PydanticModelCustomConfig,
-    PydanticModelGenerator,
-)
-from fern_python.snippet import SnippetRegistry
-from fern_python.utils import build_snippet_writer
+from fern_python.codegen.project import Project
+from fern_python.codegen import AST
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
+from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
+from fern_python.snippet.snippet_registry import SnippetRegistry
+from fern_python.utils.build_snippet_writer import build_snippet_writer
 
 from .auth import SecurityFileGenerator
 from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl

@@ -1,8 +1,8 @@
-from fern_python.generators.context import PydanticGeneratorContext
+from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
 from fern_python.generators.pydantic_model.type_declaration_handler import (
     TypeDeclarationSnippetGeneratorBuilder,
 )
-from fern_python.snippet import SnippetWriter
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 
 def build_snippet_writer(

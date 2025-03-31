@@ -4,10 +4,11 @@ import fern.ir.resources as ir_types
 from fern.generator_exec.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.codegen.project import Project
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
-from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_registry import SnippetRegistry
+from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig

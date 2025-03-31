@@ -4,8 +4,9 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 from ordered_set import OrderedSet
 
-from fern_python.codegen import AST, Filepath
-from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.codegen.filepath import Filepath
+from fern_python.codegen import AST
+from fern_python.declaration_referencer.abstract_declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility

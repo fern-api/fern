@@ -6,7 +6,8 @@ from typing import Dict, List, Optional, Sequence, Type
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.codegen.local_class_reference import LocalClassReference
 from fern_python.external_dependencies.typing_extensions import (

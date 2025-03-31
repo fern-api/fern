@@ -1,10 +1,14 @@
 from fern.ir.resources import NameAndWireValue
 
-from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
-from fern_python.external_dependencies import FastAPI
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.codegen.local_class_reference import LocalClassReference
+from fern_python.codegen.project import Project
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
+from fern_python.external_dependencies.fastapi import FastAPI
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
-from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
+from fern_python.pydantic_codegen.pydantic_model import PydanticModel
 
 from ..context import FastApiGeneratorContext
 
