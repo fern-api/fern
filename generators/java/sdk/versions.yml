@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix pagination in raw clients
+      type: fix
+  createdAt: '2025-03-31'
+  irVersion: 55
+  version: 2.33.0
+- changelogEntry:
+    - summary: |
         Generate snippet.json
       type: feat
   createdAt: '2025-03-29'
