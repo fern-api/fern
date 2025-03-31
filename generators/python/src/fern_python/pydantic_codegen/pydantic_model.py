@@ -4,12 +4,11 @@ import dataclasses
 from types import TracebackType
 from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
+from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
-
-from .pydantic_field import PydanticField
 
 # these are the properties that BaseModel already has
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
@@ -369,7 +368,8 @@ class PydanticModel:
                     writer.write_node(self._is_pydantic_v2)
                     writer.write_line(":")
                     with writer.indent():
-                        non_none_config: AST.AstNode = v1_config_class if v1_config_class is not None else v2_model_config  # type: ignore  # this is not None, by pyright says otherwise
+                        non_none_config = v1_config_class if v1_config_class is not None else v2_model_config
+                        assert non_none_config is not None
                         writer.write_node(non_none_config)
             elif self._version == PydanticVersionCompatibility.V1_ON_V2:
                 if v1_config_class is not None:

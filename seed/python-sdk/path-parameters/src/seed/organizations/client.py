@@ -17,11 +17,7 @@ class OrganizationsClient:
         self._client_wrapper = client_wrapper
 
     def get_organization(
-        self,
-        tenant_id: str,
-        organization_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
         Parameters
@@ -189,11 +185,7 @@ class AsyncOrganizationsClient:
         self._client_wrapper = client_wrapper
 
     async def get_organization(
-        self,
-        tenant_id: str,
-        organization_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
         Parameters

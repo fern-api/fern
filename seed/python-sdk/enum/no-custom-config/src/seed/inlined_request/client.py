@@ -64,14 +64,10 @@ class InlinedRequestClient:
                 "operand": operand,
                 "maybeOperand": maybe_operand,
                 "operandOrColor": convert_and_respect_annotation_metadata(
-                    object_=operand_or_color,
-                    annotation=ColorOrOperand,
-                    direction="write",
+                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
                 ),
                 "maybeOperandOrColor": convert_and_respect_annotation_metadata(
-                    object_=maybe_operand_or_color,
-                    annotation=ColorOrOperand,
-                    direction="write",
+                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
                 ),
             },
             request_options=request_options,
@@ -144,14 +140,10 @@ class AsyncInlinedRequestClient:
                 "operand": operand,
                 "maybeOperand": maybe_operand,
                 "operandOrColor": convert_and_respect_annotation_metadata(
-                    object_=operand_or_color,
-                    annotation=ColorOrOperand,
-                    direction="write",
+                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
                 ),
                 "maybeOperandOrColor": convert_and_respect_annotation_metadata(
-                    object_=maybe_operand_or_color,
-                    annotation=ColorOrOperand,
-                    direction="write",
+                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
                 ),
             },
             request_options=request_options,

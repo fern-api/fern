@@ -9,18 +9,8 @@ from ..utilities import validate_response
 async def test_add(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = {
         "errors": [
-            {
-                "category": "API_ERROR",
-                "code": "INTERNAL_SERVER_ERROR",
-                "detail": "detail",
-                "field": "field",
-            },
-            {
-                "category": "API_ERROR",
-                "code": "INTERNAL_SERVER_ERROR",
-                "detail": "detail",
-                "field": "field",
-            },
+            {"category": "API_ERROR", "code": "INTERNAL_SERVER_ERROR", "detail": "detail", "field": "field"},
+            {"category": "API_ERROR", "code": "INTERNAL_SERVER_ERROR", "detail": "detail", "field": "field"},
         ]
     }
     expected_types: typing.Any = {

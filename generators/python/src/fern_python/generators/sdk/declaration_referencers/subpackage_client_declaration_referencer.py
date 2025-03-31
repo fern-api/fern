@@ -1,11 +1,7 @@
-from typing import Callable, Optional
+from .sdk_declaration_referencer import SdkDeclarationReferencer
+from fern_python.codegen import Filepath
 
 import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST, Filepath
-from fern_python.codegen.ast.references import ClassReference
-
-from .sdk_declaration_referencer import SdkDeclarationReferencer
 
 
 class SubpackageClientDeclarationReferencer(SdkDeclarationReferencer[ir_types.Subpackage]):

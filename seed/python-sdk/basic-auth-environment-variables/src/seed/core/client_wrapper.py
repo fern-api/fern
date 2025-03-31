@@ -58,12 +58,7 @@ class SyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            username=username,
-            access_token=access_token,
-            base_url=base_url,
-            timeout=timeout,
-        )
+        super().__init__(username=username, access_token=access_token, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -82,12 +77,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            username=username,
-            access_token=access_token,
-            base_url=base_url,
-            timeout=timeout,
-        )
+        super().__init__(username=username, access_token=access_token, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

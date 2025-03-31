@@ -7,10 +7,7 @@ from ..utilities import validate_response
 
 
 async def test_list_events(client: SeedMixedFileDirectory, async_client: AsyncSeedMixedFileDirectory) -> None:
-    expected_response: typing.Any = [
-        {"id": "id", "name": "name"},
-        {"id": "id", "name": "name"},
-    ]
+    expected_response: typing.Any = [{"id": "id", "name": "name"}, {"id": "id", "name": "name"}]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {0: {"id": None, "name": None}, 1: {"id": None, "name": None}},

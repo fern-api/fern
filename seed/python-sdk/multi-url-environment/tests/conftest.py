@@ -12,8 +12,7 @@ def client() -> SeedMultiUrlEnvironment:
     return SeedMultiUrlEnvironment(
         token=os.getenv("ENV_TOKEN", "token"),
         environment=SeedMultiUrlEnvironmentEnvironment(
-            ec_2=os.getenv("TESTS_BASE_URL", "base_url"),
-            s_3=os.getenv("TESTS_BASE_URL", "base_url"),
+            ec_2=os.getenv("TESTS_BASE_URL", "base_url"), s_3=os.getenv("TESTS_BASE_URL", "base_url")
         ),
     )
 
@@ -23,7 +22,6 @@ def async_client() -> AsyncSeedMultiUrlEnvironment:
     return AsyncSeedMultiUrlEnvironment(
         token=os.getenv("ENV_TOKEN", "token"),
         environment=SeedMultiUrlEnvironmentEnvironment(
-            ec_2=os.getenv("TESTS_BASE_URL", "base_url"),
-            s_3=os.getenv("TESTS_BASE_URL", "base_url"),
+            ec_2=os.getenv("TESTS_BASE_URL", "base_url"), s_3=os.getenv("TESTS_BASE_URL", "base_url")
         ),
     )

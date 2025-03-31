@@ -121,12 +121,7 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def just_file(
-        self,
-        *,
-        file: core.File,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -255,13 +250,7 @@ class ServiceClient:
                 "file": core.with_content_type(file=file, default_content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
                 **(
-                    {
-                        "foo_bar": (
-                            None,
-                            json.dumps(jsonable_encoder(foo_bar)),
-                            "application/json",
-                        )
-                    }
+                    {"foo_bar": (None, json.dumps(jsonable_encoder(foo_bar)), "application/json")}
                     if foo_bar is not OMIT
                     else {}
                 ),
@@ -278,12 +267,7 @@ class ServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def with_form_encoding(
-        self,
-        *,
-        file: core.File,
-        foo: str,
-        bar: MyObject,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -452,13 +436,7 @@ class ServiceClient:
             files={
                 "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
                 **(
-                    {
-                        "request": (
-                            None,
-                            json.dumps(jsonable_encoder(request)),
-                            "application/json; charset=utf-8",
-                        )
-                    }
+                    {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
                     if request is not OMIT
                     else {}
                 ),
@@ -581,12 +559,7 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def just_file(
-        self,
-        *,
-        file: core.File,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -715,13 +688,7 @@ class AsyncServiceClient:
                 "file": core.with_content_type(file=file, default_content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
                 **(
-                    {
-                        "foo_bar": (
-                            None,
-                            json.dumps(jsonable_encoder(foo_bar)),
-                            "application/json",
-                        )
-                    }
+                    {"foo_bar": (None, json.dumps(jsonable_encoder(foo_bar)), "application/json")}
                     if foo_bar is not OMIT
                     else {}
                 ),
@@ -738,12 +705,7 @@ class AsyncServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def with_form_encoding(
-        self,
-        *,
-        file: core.File,
-        foo: str,
-        bar: MyObject,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -912,13 +874,7 @@ class AsyncServiceClient:
             files={
                 "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
                 **(
-                    {
-                        "request": (
-                            None,
-                            json.dumps(jsonable_encoder(request)),
-                            "application/json; charset=utf-8",
-                        )
-                    }
+                    {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
                     if request is not OMIT
                     else {}
                 ),

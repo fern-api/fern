@@ -42,16 +42,14 @@ class Shape(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:

@@ -61,12 +61,7 @@ class SeedExtends:
         )
 
     def extended_inline_request_body(
-        self,
-        *,
-        unique: str,
-        name: str,
-        docs: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -164,12 +159,7 @@ class AsyncSeedExtends:
         )
 
     async def extended_inline_request_body(
-        self,
-        *,
-        unique: str,
-        name: str,
-        docs: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters

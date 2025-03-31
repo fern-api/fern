@@ -16,10 +16,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     {"resource_type": "Account", "name": "name"},
                     {"resource_type": "Account", "name": "name"},
                 ],
-                "memo": {
-                    "description": "description",
-                    "account": {"resource_type": "Account", "name": "name"},
-                },
+                "memo": {"description": "description", "account": {"resource_type": "Account", "name": "name"}},
                 "resource_type": "Account",
                 "name": "name",
                 "patient": {
@@ -47,10 +44,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     {"resource_type": "Account", "name": "name"},
                     {"resource_type": "Account", "name": "name"},
                 ],
-                "memo": {
-                    "description": "description",
-                    "account": {"resource_type": "Account", "name": "name"},
-                },
+                "memo": {"description": "description", "account": {"resource_type": "Account", "name": "name"}},
                 "resource_type": "Account",
                 "name": "name",
                 "patient": {
@@ -81,10 +75,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     {"resource_type": "Account", "name": "name"},
                     {"resource_type": "Account", "name": "name"},
                 ],
-                "memo": {
-                    "description": "description",
-                    "account": {"resource_type": "Account", "name": "name"},
-                },
+                "memo": {"description": "description", "account": {"resource_type": "Account", "name": "name"}},
                 "resource_type": "Account",
                 "name": "name",
                 "patient": {
@@ -118,11 +109,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
                 {
@@ -131,11 +118,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
             ],
@@ -147,11 +130,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
             },
@@ -164,10 +143,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         {"resource_type": "Account", "name": "name"},
                         {"resource_type": "Account", "name": "name"},
                     ],
-                    "memo": {
-                        "description": "description",
-                        "account": {"resource_type": "Account", "name": "name"},
-                    },
+                    "memo": {"description": "description", "account": {"resource_type": "Account", "name": "name"}},
                     "resource_type": "Script",
                     "name": "name",
                 },
@@ -177,10 +153,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         {"resource_type": "Account", "name": "name"},
                         {"resource_type": "Account", "name": "name"},
                     ],
-                    "memo": {
-                        "description": "description",
-                        "account": {"resource_type": "Account", "name": "name"},
-                    },
+                    "memo": {"description": "description", "account": {"resource_type": "Account", "name": "name"}},
                     "resource_type": "Script",
                     "name": "name",
                 },
@@ -195,11 +168,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
                 {
@@ -208,11 +177,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
             ],
@@ -224,11 +189,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": "description"},
                     "resource_type": "Account",
                     "name": "name",
-                    "patient": {
-                        "resource_type": "Patient",
-                        "name": "name",
-                        "scripts": [],
-                    },
+                    "patient": {"resource_type": "Patient", "name": "name", "scripts": []},
                     "practitioner": {"resource_type": "Practitioner", "name": "name"},
                 },
             },
@@ -246,28 +207,13 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "related_resources": (
                         "list",
                         {
-                            0: {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
-                            1: {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
+                            0: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
+                            1: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                         },
                     ),
                     "memo": {
                         "description": None,
-                        "account": {
-                            "resource_type": None,
-                            "name": None,
-                            "patient": None,
-                            "practitioner": None,
-                        },
+                        "account": {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                     },
                     "resource_type": None,
                     "name": None,
@@ -279,10 +225,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "name": None,
                         "scripts": (
                             "list",
-                            {
-                                0: {"resource_type": None, "name": None},
-                                1: {"resource_type": None, "name": None},
-                            },
+                            {0: {"resource_type": None, "name": None}, 1: {"resource_type": None, "name": None}},
                         ),
                     },
                     "practitioner": {
@@ -298,28 +241,13 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "related_resources": (
                         "list",
                         {
-                            0: {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
-                            1: {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
+                            0: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
+                            1: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                         },
                     ),
                     "memo": {
                         "description": None,
-                        "account": {
-                            "resource_type": None,
-                            "name": None,
-                            "patient": None,
-                            "practitioner": None,
-                        },
+                        "account": {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                     },
                     "resource_type": None,
                     "name": None,
@@ -331,10 +259,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "name": None,
                         "scripts": (
                             "list",
-                            {
-                                0: {"resource_type": None, "name": None},
-                                1: {"resource_type": None, "name": None},
-                            },
+                            {0: {"resource_type": None, "name": None}, 1: {"resource_type": None, "name": None}},
                         ),
                     },
                     "practitioner": {
@@ -354,28 +279,13 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                 "related_resources": (
                     "list",
                     {
-                        0: {
-                            "resource_type": None,
-                            "name": None,
-                            "patient": None,
-                            "practitioner": None,
-                        },
-                        1: {
-                            "resource_type": None,
-                            "name": None,
-                            "patient": None,
-                            "practitioner": None,
-                        },
+                        0: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
+                        1: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                     },
                 ),
                 "memo": {
                     "description": None,
-                    "account": {
-                        "resource_type": None,
-                        "name": None,
-                        "patient": None,
-                        "practitioner": None,
-                    },
+                    "account": {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                 },
                 "resource_type": None,
                 "name": None,
@@ -387,10 +297,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "name": None,
                     "scripts": (
                         "list",
-                        {
-                            0: {"resource_type": None, "name": None},
-                            1: {"resource_type": None, "name": None},
-                        },
+                        {0: {"resource_type": None, "name": None}, 1: {"resource_type": None, "name": None}},
                     ),
                 },
                 "practitioner": {
@@ -415,11 +322,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "memo": {"description": None, "account": None},
                         "resource_type": None,
                         "name": None,
-                        "patient": {
-                            "resource_type": None,
-                            "name": None,
-                            "scripts": ("list", {}),
-                        },
+                        "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                         "practitioner": {"resource_type": None, "name": None},
                     },
                     1: {
@@ -428,11 +331,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "memo": {"description": None, "account": None},
                         "resource_type": None,
                         "name": None,
-                        "patient": {
-                            "resource_type": None,
-                            "name": None,
-                            "scripts": ("list", {}),
-                        },
+                        "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                         "practitioner": {"resource_type": None, "name": None},
                     },
                 },
@@ -445,11 +344,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": None, "account": None},
                     "resource_type": None,
                     "name": None,
-                    "patient": {
-                        "resource_type": None,
-                        "name": None,
-                        "scripts": ("list", {}),
-                    },
+                    "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                     "practitioner": {"resource_type": None, "name": None},
                 },
             },
@@ -463,28 +358,13 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "related_resources": (
                             "list",
                             {
-                                0: {
-                                    "resource_type": None,
-                                    "name": None,
-                                    "patient": None,
-                                    "practitioner": None,
-                                },
-                                1: {
-                                    "resource_type": None,
-                                    "name": None,
-                                    "patient": None,
-                                    "practitioner": None,
-                                },
+                                0: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
+                                1: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                             },
                         ),
                         "memo": {
                             "description": None,
-                            "account": {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
+                            "account": {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                         },
                         "resource_type": None,
                         "name": None,
@@ -494,28 +374,13 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "related_resources": (
                             "list",
                             {
-                                0: {
-                                    "resource_type": None,
-                                    "name": None,
-                                    "patient": None,
-                                    "practitioner": None,
-                                },
-                                1: {
-                                    "resource_type": None,
-                                    "name": None,
-                                    "patient": None,
-                                    "practitioner": None,
-                                },
+                                0: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
+                                1: {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                             },
                         ),
                         "memo": {
                             "description": None,
-                            "account": {
-                                "resource_type": None,
-                                "name": None,
-                                "patient": None,
-                                "practitioner": None,
-                            },
+                            "account": {"resource_type": None, "name": None, "patient": None, "practitioner": None},
                         },
                         "resource_type": None,
                         "name": None,
@@ -534,11 +399,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "memo": {"description": None, "account": None},
                         "resource_type": None,
                         "name": None,
-                        "patient": {
-                            "resource_type": None,
-                            "name": None,
-                            "scripts": ("list", {}),
-                        },
+                        "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                         "practitioner": {"resource_type": None, "name": None},
                     },
                     1: {
@@ -547,11 +408,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                         "memo": {"description": None, "account": None},
                         "resource_type": None,
                         "name": None,
-                        "patient": {
-                            "resource_type": None,
-                            "name": None,
-                            "scripts": ("list", {}),
-                        },
+                        "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                         "practitioner": {"resource_type": None, "name": None},
                     },
                 },
@@ -564,11 +421,7 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
                     "memo": {"description": None, "account": None},
                     "resource_type": None,
                     "name": None,
-                    "patient": {
-                        "resource_type": None,
-                        "name": None,
-                        "scripts": ("list", {}),
-                    },
+                    "patient": {"resource_type": None, "name": None, "scripts": ("list", {})},
                     "practitioner": {"resource_type": None, "name": None},
                 },
             },

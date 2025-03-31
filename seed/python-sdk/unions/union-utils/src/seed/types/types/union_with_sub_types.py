@@ -46,23 +46,17 @@ class UnionWithSubTypes(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
+        def get_as_union(self) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
+        def get_as_union(self) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

@@ -7,8 +7,7 @@ from .utilities import validate_response
 
 
 async def test_get_with_api_key(
-    client: SeedAuthEnvironmentVariables,
-    async_client: AsyncSeedAuthEnvironmentVariables,
+    client: SeedAuthEnvironmentVariables, async_client: AsyncSeedAuthEnvironmentVariables
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None
@@ -20,8 +19,7 @@ async def test_get_with_api_key(
 
 
 async def test_get_with_header(
-    client: SeedAuthEnvironmentVariables,
-    async_client: AsyncSeedAuthEnvironmentVariables,
+    client: SeedAuthEnvironmentVariables, async_client: AsyncSeedAuthEnvironmentVariables
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None

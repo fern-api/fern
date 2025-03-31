@@ -9,14 +9,12 @@ from seed import AsyncSeedSingleUrlEnvironmentDefault
 @pytest.fixture
 def client() -> SeedSingleUrlEnvironmentDefault:
     return SeedSingleUrlEnvironmentDefault(
-        token=os.getenv("ENV_TOKEN", "token"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedSingleUrlEnvironmentDefault:
     return AsyncSeedSingleUrlEnvironmentDefault(
-        token=os.getenv("ENV_TOKEN", "token"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )

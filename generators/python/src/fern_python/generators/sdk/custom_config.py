@@ -1,9 +1,8 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import pydantic
-from fern_python.codegen import pyproject_toml
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generators.pydantic_model import PydanticModelCustomConfig
+from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
 class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):

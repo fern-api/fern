@@ -1,1 +1,4 @@
 npx lint-staged
+
+# Run pre-commit for Python code in generators/python
+cd generators/python && poetry run pre-commit run

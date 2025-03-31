@@ -1,22 +1,20 @@
 from collections import defaultdict
 from typing import DefaultDict, Set
 
-from ordered_set import OrderedSet
-
-from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
-
 from . import AST
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
+from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
+from ordered_set import OrderedSet
 
 
 class ImportsManager:
     def __init__(self, module_path: AST.ModulePath) -> None:
         self._module_path = module_path
 
-        self._import_to_statements_that_must_precede_it: DefaultDict[
-            AST.ReferenceImport, OrderedSet[StatementId]
-        ] = defaultdict(OrderedSet)
+        self._import_to_statements_that_must_precede_it: DefaultDict[AST.ReferenceImport, OrderedSet[StatementId]] = (
+            defaultdict(OrderedSet)
+        )
 
         self._bottom_imports: DefaultDict[AST.ReferenceImport, OrderedSet[None]] = defaultdict(OrderedSet)
         self._if_type_checking_imports: DefaultDict[AST.ReferenceImport, OrderedSet[None]] = defaultdict(OrderedSet)

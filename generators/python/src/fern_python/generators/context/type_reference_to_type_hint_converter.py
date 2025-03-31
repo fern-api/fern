@@ -1,11 +1,10 @@
 from typing import Callable, Optional, cast
 
-import fern.ir.resources as ir_types
-
+from .pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
-from .pydantic_generator_context import PydanticGeneratorContext
+import fern.ir.resources as ir_types
 
 
 class TypeReferenceToTypeHintConverter:
