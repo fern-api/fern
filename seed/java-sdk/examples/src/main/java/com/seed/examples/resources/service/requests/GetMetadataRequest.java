@@ -99,7 +99,7 @@ public final class GetMetadataRequest {
 
         _FinalStage tag(List<String> tag);
 
-        _FinalStage tag(List<String> tag);
+        _FinalStage tag(String tag);
 
         _FinalStage shallow(Optional<Boolean> shallow);
 
@@ -148,7 +148,7 @@ public final class GetMetadataRequest {
         }
 
         @java.lang.Override
-        public _FinalStage tag(List<String> tag) {
+        public _FinalStage tag(String tag) {
             this.tag = Optional.of(Collections.singletonList(tag));
             return this;
         }

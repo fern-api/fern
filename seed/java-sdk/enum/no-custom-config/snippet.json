@@ -1,0 +1,96 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "cb240506",
+            "id": {
+                "method": "POST",
+                "path": "/inlined",
+                "identifier_override": "endpoint_inlined-request.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.inlinedRequest().send(\n            SendEnumInlinedRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.inlinedRequest().send(\n            SendEnumInlinedRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "bb6f04fc",
+            "id": {
+                "method": "POST",
+                "path": "/inlined",
+                "identifier_override": "endpoint_inlined-request.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.inlinedRequest().send(\n            SendEnumInlinedRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .maybeOperandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.inlinedRequest().send(\n            SendEnumInlinedRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .maybeOperandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1369b7ab",
+            "id": {
+                "method": "POST",
+                "path": "/path/{operand}/{operandOrColor}",
+                "identifier_override": "endpoint_path-param.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.ofColor(Color.RED)\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.ofColor(Color.RED)\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "50729478",
+            "id": {
+                "method": "POST",
+                "path": "/path/{operand}/{operandOrColor}",
+                "identifier_override": "endpoint_path-param.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.ofColor(Color.RED)\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.ofColor(Color.RED)\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7003718c",
+            "id": {
+                "method": "POST",
+                "path": "/query",
+                "identifier_override": "endpoint_query-param.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().send(\n            SendEnumAsQueryParamRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().send(\n            SendEnumAsQueryParamRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c913f281",
+            "id": {
+                "method": "POST",
+                "path": "/query",
+                "identifier_override": "endpoint_query-param.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().send(\n            SendEnumAsQueryParamRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .maybeOperandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().send(\n            SendEnumAsQueryParamRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .maybeOperandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7351f0cd",
+            "id": {
+                "method": "POST",
+                "path": "/query-list",
+                "identifier_override": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumListAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().sendList(\n            SendEnumListAsQueryParamRequest\n                .builder()\n                .operand(\n                    new ArrayList<Operand>(\n                        Arrays.asList(Operand.GREATER_THAN)\n                    )\n                )\n                .maybeOperand(\n                    new ArrayList<Optional<Operand>>(\n                        Arrays.asList(Operand.GREATER_THAN)\n                    )\n                )\n                .operandOrColor(\n                    new ArrayList<ColorOrOperand>(\n                        Arrays.asList(\n                            ColorOrOperand.ofColor(Color.RED)\n                        )\n                    )\n                )\n                .maybeOperandOrColor(\n                    new ArrayList<Optional<ColorOrOperand>>(\n                        Arrays.asList(\n                            ColorOrOperand.ofColor(Color.RED)\n                        )\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.queryparam.requests.SendEnumListAsQueryParamRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.queryParam().sendList(\n            SendEnumListAsQueryParamRequest\n                .builder()\n                .operand(\n                    new ArrayList<Operand>(\n                        Arrays.asList(Operand.GREATER_THAN)\n                    )\n                )\n                .maybeOperand(\n                    new ArrayList<Optional<Operand>>(\n                        Arrays.asList(Operand.GREATER_THAN)\n                    )\n                )\n                .operandOrColor(\n                    new ArrayList<ColorOrOperand>(\n                        Arrays.asList(\n                            ColorOrOperand.ofColor(Color.RED)\n                        )\n                    )\n                )\n                .maybeOperandOrColor(\n                    new ArrayList<Optional<ColorOrOperand>>(\n                        Arrays.asList(\n                            ColorOrOperand.ofColor(Color.RED)\n                        )\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

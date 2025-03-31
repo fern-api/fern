@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.license.SeedLicenseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLicenseClient client = SeedLicenseClient\n            .builder()\n            .build();\n\n        client.get();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.license.SeedLicenseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLicenseClient client = SeedLicenseClient\n            .builder()\n            .build();\n\n        client.get();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
