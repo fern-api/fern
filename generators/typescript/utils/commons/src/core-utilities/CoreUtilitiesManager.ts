@@ -31,6 +31,7 @@ import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
 import { WebsocketImpl } from "./websocket/WebsocketImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
+import { RawResponseImpl } from "./RawResponse/RawResponseImpl";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -59,7 +60,8 @@ export class CoreUtilitiesManager {
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
             promiseUtils: new PromiseUtilsImpl({ getReferenceToExport }),
-            websocket: new WebsocketImpl({ getReferenceToExport })
+            websocket: new WebsocketImpl({ getReferenceToExport }),
+            RawResponse: new RawResponseImpl({ getReferenceToExport })
         };
     }
 

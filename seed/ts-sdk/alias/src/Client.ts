@@ -37,7 +37,30 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    public async get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): Promise<void> {
+    public async get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): core.WithRawResponse<SeedAliasClient["__get"], SeedAliasClient["__getWithRawResponse"]> {
+        return Object.assign(this.__get.bind(this), {
+            withRawResponse: this.__getWithRawResponse.bind(this),
+        });
+    }
+
+    /**
+     * @param {SeedAlias.TypeId} typeId
+     * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.get("typeId")
+     */
+    private async __getWithRawResponse(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): Promise<
+        {
+            data: void;
+        } & core.RawResponse
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -84,5 +107,17 @@ export class SeedAliasClient {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    /**
+     * @param {SeedAlias.TypeId} typeId
+     * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.get("typeId")
+     */
+    private async __get(...args: Parameters<SeedAliasClient["__getWithRawResponse"]>): Promise<void> {
+        const { data } = await this.__getWithRawResponse(...args);
+        return data;
     }
 }

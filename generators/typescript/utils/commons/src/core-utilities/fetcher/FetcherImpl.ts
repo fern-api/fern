@@ -88,13 +88,15 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("FailedStatusCodeError"),
             _reasonLiteralValue: "status-code",
             statusCode: "statusCode",
-            body: "body"
+            body: "body",
+            rawResponse: "rawResponse"
         },
         NonJsonError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("NonJsonError"),
             _reasonLiteralValue: "non-json",
             statusCode: "statusCode",
-            rawBody: "rawBody"
+            rawBody: "rawBody",
+            rawResponse: "rawResponse"
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
@@ -229,7 +231,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     true
                 ),
             body: "body",
-            headers: "headers"
+            headers: "headers",
+            rawResponse: "rawResponse"
         },
 
         FailedResponse: {

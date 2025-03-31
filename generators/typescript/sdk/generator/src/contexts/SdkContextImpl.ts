@@ -66,6 +66,7 @@ import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
 import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
+import { RawResponseDeclarationReferencer } from "../declaration-referencers/RawResponseDeclarationReferencer";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 
@@ -84,6 +85,7 @@ export declare namespace SdkContextImpl {
         versionGenerator: VersionGenerator;
         versionDeclarationReferencer: VersionDeclarationReferencer;
         jsonDeclarationReferencer: JsonDeclarationReferencer;
+        rawResponseReferencer: RawResponseDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -150,6 +152,7 @@ export class SdkContextImpl implements SdkContext {
 
     public readonly versionContext: VersionContextImpl;
     public readonly jsonContext: JsonContext;
+    public readonly rawResponseReferencer: RawResponseDeclarationReferencer;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -180,6 +183,7 @@ export class SdkContextImpl implements SdkContext {
         versionGenerator,
         versionDeclarationReferencer,
         jsonDeclarationReferencer,
+        rawResponseReferencer,
         typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
@@ -245,6 +249,7 @@ export class SdkContextImpl implements SdkContext {
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
         this.neverThrowErrors = neverThrowErrors;
+        this.rawResponseReferencer = rawResponseReferencer;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

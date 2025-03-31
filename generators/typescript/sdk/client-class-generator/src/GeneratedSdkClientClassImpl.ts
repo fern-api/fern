@@ -697,19 +697,79 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isIdempotent = true;
             }
 
-            const statements = endpoint.getStatements(context);
-            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+            const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
+            const internalMethodName = `__${publicMethodName}`;
+            const withRawMethodName = `${internalMethodName}WithRawResponse`;
 
-            const method: MethodDeclarationStructure = {
+            const publicStatements = [
+                ts.factory.createReturnStatement(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("assign")
+                        ),
+                        undefined,
+                        [
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createThis(),
+                                        ts.factory.createIdentifier(internalMethodName)
+                                    ),
+                                    ts.factory.createIdentifier("bind")
+                                ),
+                                undefined,
+                                [ts.factory.createThis()]
+                            ),
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("withRawResponse"),
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    ts.factory.createThis(),
+                                                    ts.factory.createIdentifier(withRawMethodName)
+                                                ),
+                                                ts.factory.createIdentifier("bind")
+                                            ),
+                                            undefined,
+                                            [ts.factory.createThis()]
+                                        )
+                                    )
+                                ],
+                                true
+                            )
+                        ]
+                    )
+                )
+            ];
+            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+            const publicMethod: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
-                name: endpoint.endpoint.name.camelCase.unsafeName,
+                name: publicMethodName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                    context.coreUtilities.RawResponse.WithRawResponse.create([
+                        ts.factory.createIndexedAccessTypeNode(
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createIdentifier(this.serviceClassName),
+                                undefined
+                            ),
+                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(internalMethodName))
+                        ),
+                        ts.factory.createIndexedAccessTypeNode(
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createIdentifier(this.serviceClassName),
+                                undefined
+                            ),
+                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(withRawMethodName))
+                        )
+                    ])
                 ),
                 scope: Scope.Public,
                 isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
-                statements: statements.map(getTextOfTsNode),
+                statements: publicStatements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
@@ -718,11 +778,110 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 }))
             };
-            serviceClass.methods.push(method);
 
             if (overloads.length === 0) {
-                maybeAddDocsStructure(method, docs);
+                maybeAddDocsStructure(publicMethod, docs);
             }
+
+            serviceClass.methods.push(publicMethod);
+
+            const withRawResponseStatements = endpoint.getStatements(context);
+            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+            const withRawMethod: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
+                name: withRawMethodName,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [
+                        ts.factory.createIntersectionTypeNode([
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    ts.factory.createIdentifier("data"),
+                                    undefined,
+                                    signature.returnTypeWithoutPromise
+                                )
+                            ]),
+                            context.coreUtilities.RawResponse.RawResponse._getReferenceToType()
+                        ])
+                    ])
+                ),
+                scope: Scope.Private,
+                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
+                statements: withRawResponseStatements.map(getTextOfTsNode),
+                overloads: overloads.map((overload, index) => ({
+                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
+                    parameters: overload.parameters,
+                    returnType: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                    )
+                }))
+            };
+
+            if (overloads.length === 0) {
+                maybeAddDocsStructure(withRawMethod, docs);
+            }
+
+            serviceClass.methods.push(withRawMethod);
+
+            const internalMethodStatements: ts.Statement[] = [
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createObjectBindingPattern([
+                                ts.factory.createBindingElement(
+                                    undefined,
+                                    undefined,
+                                    ts.factory.createIdentifier("data"),
+                                    undefined
+                                )
+                            ]),
+                            undefined,
+                            undefined,
+                            ts.factory.createAwaitExpression(
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createThis(),
+                                        ts.factory.createIdentifier("__getWithRawResponse")
+                                    ),
+                                    undefined,
+                                    [ts.factory.createSpreadElement(factory.createIdentifier("args"))]
+                                )
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const |
+                        ts.NodeFlags.AwaitContext |
+                        ts.NodeFlags.ContextFlags |
+                        ts.NodeFlags.TypeExcludesFlags
+                ),
+                ts.factory.createReturnStatement(ts.factory.createIdentifier("data"))
+            ];
+
+            const internalMethod: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
+                name: internalMethodName,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                ),
+                scope: Scope.Private,
+                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
+                statements: internalMethodStatements.map(getTextOfTsNode),
+                overloads: overloads.map((overload, index) => ({
+                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
+                    parameters: overload.parameters,
+                    returnType: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                    )
+                }))
+            };
+
+            if (overloads.length === 0) {
+                maybeAddDocsStructure(internalMethod, docs);
+            }
+
+            serviceClass.methods.push(internalMethod);
         }
 
         if (this.generatedWebsocketImplementation != null) {

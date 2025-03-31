@@ -5,6 +5,7 @@ import { Fetcher } from "./fetcher/Fetcher";
 import { FormDataUtils } from "./form-data-utils/FormDataUtils";
 import { Pagination } from "./pagination/Pagination";
 import { PromiseUtils } from "./promise/PromiseUtils";
+import { RawResponse } from "./RawResponse/RawResponse";
 import { Runtime } from "./runtime/Runtime";
 import { StreamUtils } from "./stream-utils/StreamUtils";
 import { Utils } from "./utils/Utils";
@@ -24,4 +25,5 @@ export interface CoreUtilities {
     utils: Utils;
     promiseUtils: PromiseUtils;
     websocket: Websocket;
+    RawResponse: RawResponse;
 }
