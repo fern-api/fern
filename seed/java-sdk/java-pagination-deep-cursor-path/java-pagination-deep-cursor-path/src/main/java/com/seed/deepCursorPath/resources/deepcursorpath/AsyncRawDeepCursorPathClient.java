@@ -105,7 +105,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThing(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -188,7 +189,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThingRequired(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -281,7 +283,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThingInline(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
