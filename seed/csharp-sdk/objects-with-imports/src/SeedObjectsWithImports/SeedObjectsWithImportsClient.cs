@@ -31,7 +31,7 @@ public partial class SeedObjectsWithImportsClient
         File = new FileClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public FileClient File { get; init; }
+    public FileClient File { get; }
 }

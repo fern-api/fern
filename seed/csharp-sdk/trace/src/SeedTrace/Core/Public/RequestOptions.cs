@@ -16,12 +16,24 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string? BaseUrl { get; init; }
+    public string? BaseUrl { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    public HttpClient? HttpClient { get; init; }
+    public HttpClient? HttpClient { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// Additional headers to be sent with the request.
@@ -30,17 +42,35 @@ public partial class RequestOptions : IRequestOptions
     public IEnumerable<System.Collections.Generic.KeyValuePair<
         string,
         string?
-    >> AdditionalHeaders { get; init; } = [];
+    >> AdditionalHeaders { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = [];
 
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    public int? MaxRetries { get; init; }
+    public int? MaxRetries { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// The timeout for the request.
     /// </summary>
-    public TimeSpan? Timeout { get; init; }
+    public TimeSpan? Timeout { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// Additional query parameters sent with the request.
@@ -48,12 +78,23 @@ public partial class RequestOptions : IRequestOptions
     public IEnumerable<System.Collections.Generic.KeyValuePair<
         string,
         string
-    >> AdditionalQueryParameters { get; init; } =
-        Enumerable.Empty<System.Collections.Generic.KeyValuePair<string, string>>();
+    >> AdditionalQueryParameters { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = Enumerable.Empty<System.Collections.Generic.KeyValuePair<string, string>>();
 
     /// <summary>
     /// Additional body properties sent with the request.
     /// This is only applied to JSON requests.
     /// </summary>
-    public object? AdditionalBodyProperties { get; init; }
+    public object? AdditionalBodyProperties { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

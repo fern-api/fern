@@ -49,7 +49,7 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
         Auth = new AuthClient(_client);
     }
 
-    public AuthClient Auth { get; init; }
+    public AuthClient Auth { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

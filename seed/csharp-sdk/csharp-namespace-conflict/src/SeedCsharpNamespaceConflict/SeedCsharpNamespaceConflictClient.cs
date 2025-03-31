@@ -33,9 +33,9 @@ public partial class SeedCsharpNamespaceConflictClient
         Tasktest = new TasktestClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get; }
 
-    public BClient B { get; init; }
+    public BClient B { get; }
 
-    public TasktestClient Tasktest { get; init; }
+    public TasktestClient Tasktest { get; }
 }

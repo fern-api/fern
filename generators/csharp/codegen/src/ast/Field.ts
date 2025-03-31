@@ -208,10 +208,27 @@ export class Field extends AstNode {
                 writer.write("get; ");
             }
             if (this.init) {
-                if (!this.hasSameAccess(this.init)) {
-                    writer.write(`${this.init} `);
+                // if init is accessible to the end user (public, or protected through inheritance),
+                // we should not expose init to the user on .NET Framework
+                const needsFallback =
+                    (this.access === Access.Public || this.access === Access.Protected) &&
+                    (this.init === true || this.init === Access.Public || this.init === Access.Protected);
+                if (needsFallback) {
+                    writer.writeLine();
+                    writer.writeNoIndent("#if NET5_0_OR_GREATER\n");
+                    if (!this.hasSameAccess(this.init)) {
+                        writer.write(`${this.init} `);
+                    }
+                    writer.writeTextStatement("init");
+                    writer.writeNoIndent("#else\n");
+                    writer.writeTextStatement("set");
+                    writer.writeNoIndent("#endif\n");
+                } else {
+                    if (!this.hasSameAccess(this.init)) {
+                        writer.write(`${this.init} `);
+                    }
+                    writer.write("init; ");
                 }
-                writer.write("init; ");
             }
             if (this.set) {
                 if (!this.hasSameAccess(this.set)) {

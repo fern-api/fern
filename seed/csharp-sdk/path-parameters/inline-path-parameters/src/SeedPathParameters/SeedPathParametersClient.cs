@@ -30,7 +30,7 @@ public partial class SeedPathParametersClient
         User = new UserClient(_client);
     }
 
-    public OrganizationsClient Organizations { get; init; }
+    public OrganizationsClient Organizations { get; }
 
-    public UserClient User { get; init; }
+    public UserClient User { get; }
 }

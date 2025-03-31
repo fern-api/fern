@@ -29,5 +29,5 @@ public partial class SeedNullableClient
         Nullable = new NullableClient(_client);
     }
 
-    public NullableClient Nullable { get; init; }
+    public NullableClient Nullable { get; }
 }
