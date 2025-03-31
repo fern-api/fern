@@ -619,7 +619,9 @@ class CoreUtilities:
     def get_event_type(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path, "events"), named_import="EventType"),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "events"), named_import="EventType"
+            ),
         )
 
     def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:
