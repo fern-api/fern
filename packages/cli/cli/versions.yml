@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+    Add support for handling integer types without a specified format in the new OpenAPI parser. When a schema defines a property with `type: integer` but doesn't specify a format (like int32, int64, etc.), the parser now defaults to treating it as a standard integer type. This ensures consistent behavior for integer fields regardless of whether a format is explicitly provided.
+    type: fix
+  irVersion: 57
+  version: 0.57.10
+
+- changelogEntry:
+  - summary: |
       Add support for reading common properties across all oneOf variants in the new OpenAPI parser. When a schema uses `oneOf` with a discriminator, the parser now correctly extracts and includes properties defined at the root level of the schema as base properties of the discriminated union. This ensures that common fields shared by all variants are properly represented in the generated IR.
     type: fix
   irVersion: 57

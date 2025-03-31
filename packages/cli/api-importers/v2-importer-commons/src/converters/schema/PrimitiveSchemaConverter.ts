@@ -50,7 +50,6 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
             case "integer":
                 switch (this.schema.format) {
                     case "double":
-                    case undefined:
                         return TypeReference.primitive({
                             v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
