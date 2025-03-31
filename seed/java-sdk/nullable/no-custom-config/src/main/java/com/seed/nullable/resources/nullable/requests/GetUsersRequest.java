@@ -165,7 +165,7 @@ public final class GetUsersRequest {
             return this;
         }
 
-        public Builder usernames(List<String> usernames) {
+        public Builder usernames(String usernames) {
             this.usernames = Optional.of(Collections.singletonList(usernames));
             return this;
         }
@@ -181,7 +181,7 @@ public final class GetUsersRequest {
             return this;
         }
 
-        public Builder activated(List<Boolean> activated) {
+        public Builder activated(Boolean activated) {
             this.activated = Optional.of(Collections.singletonList(activated));
             return this;
         }
@@ -208,7 +208,7 @@ public final class GetUsersRequest {
             return this;
         }
 
-        public Builder tags(List<String> tags) {
+        public Builder tags(String tags) {
             this.tags = Optional.of(Collections.singletonList(tags));
             return this;
         }
