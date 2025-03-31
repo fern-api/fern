@@ -30,7 +30,19 @@ public partial class SeedMixedFileDirectoryClient
         User = new UserClient(_client);
     }
 
-    public OrganizationClient Organization { get; init; }
+    public OrganizationClient Organization { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public UserClient User { get; init; }
+    public UserClient User { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

@@ -35,9 +35,21 @@ public partial class SeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FolderClient Folder { get; init; }
+    public FolderClient Folder { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <example><code>
     /// await client.FooAsync();

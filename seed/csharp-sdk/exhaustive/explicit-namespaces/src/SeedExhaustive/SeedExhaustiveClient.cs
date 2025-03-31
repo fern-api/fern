@@ -43,17 +43,59 @@ public partial class SeedExhaustiveClient
         Types = new TypesClient(_client);
     }
 
-    public EndpointsClient Endpoints { get; init; }
+    public EndpointsClient Endpoints { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public GeneralErrorsClient GeneralErrors { get; init; }
+    public GeneralErrorsClient GeneralErrors { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public InlinedRequestsClient InlinedRequests { get; init; }
+    public InlinedRequestsClient InlinedRequests { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public NoAuthClient NoAuth { get; init; }
+    public NoAuthClient NoAuth { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public NoReqBodyClient NoReqBody { get; init; }
+    public NoReqBodyClient NoReqBody { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public ReqWithHeadersClient ReqWithHeaders { get; init; }
+    public ReqWithHeadersClient ReqWithHeaders { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public TypesClient Types { get; init; }
+    public TypesClient Types { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

@@ -14,17 +14,38 @@ public record FileParameter :
     /// <summary>
     /// The name of the file to be uploaded.
     /// </summary>
-    public string? FileName { get; init; }
+    public string? FileName {
+        get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// The content type of the file to be uploaded.
     /// </summary>
-    public string? ContentType { get; init; }
+    public string? ContentType {
+        get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// The content of the file to be uploaded.
     /// </summary>
-    public required Stream Stream { get; init; }
+    public required Stream Stream {
+        get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <inheritdoc/>
     public void Dispose()

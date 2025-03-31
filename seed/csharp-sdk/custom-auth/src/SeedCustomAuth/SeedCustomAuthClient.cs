@@ -34,7 +34,19 @@ public partial class SeedCustomAuthClient
         Errors = new ErrorsClient(_client);
     }
 
-    public CustomAuthClient CustomAuth { get; init; }
+    public CustomAuthClient CustomAuth { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

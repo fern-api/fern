@@ -38,15 +38,51 @@ public partial class SeedCrossPackageTypeNamesClient
         Foo = new FooClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FolderAClient FolderA { get; init; }
+    public FolderAClient FolderA { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FolderBClient FolderB { get; init; }
+    public FolderBClient FolderB { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FolderCClient FolderC { get; init; }
+    public FolderCClient FolderC { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FolderDClient FolderD { get; init; }
+    public FolderDClient FolderD { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public FooClient Foo { get; init; }
+    public FooClient Foo { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

@@ -29,5 +29,11 @@ public partial class SeedUnknownAsAnyClient
         Unknown = new UnknownClient(_client);
     }
 
-    public UnknownClient Unknown { get; init; }
+    public UnknownClient Unknown { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

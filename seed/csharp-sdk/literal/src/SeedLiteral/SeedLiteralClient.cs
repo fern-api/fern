@@ -43,13 +43,43 @@ public partial class SeedLiteralClient
         Reference = new ReferenceClient(_client);
     }
 
-    public HeadersClient Headers { get; init; }
+    public HeadersClient Headers { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public InlinedClient Inlined { get; init; }
+    public InlinedClient Inlined { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public PathClient Path { get; init; }
+    public PathClient Path { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public QueryClient Query { get; init; }
+    public QueryClient Query { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public ReferenceClient Reference { get; init; }
+    public ReferenceClient Reference { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

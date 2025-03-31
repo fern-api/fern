@@ -34,7 +34,19 @@ public partial class SeedBasicAuthClient
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; init; }
+    public BasicAuthClient BasicAuth { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

@@ -29,5 +29,11 @@ public partial class SeedNurseryApiClient
         Package = new PackageClient(_client);
     }
 
-    public PackageClient Package { get; init; }
+    public PackageClient Package { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

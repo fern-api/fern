@@ -29,5 +29,11 @@ public partial class SeedServerSentEventsClient
         Completions = new CompletionsClient(_client);
     }
 
-    public CompletionsClient Completions { get; init; }
+    public CompletionsClient Completions { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }
