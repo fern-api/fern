@@ -51,6 +51,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.useBytesForBinaryResponse),
+            respectForwardCompatibleEnums: specs
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
+
+                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
+                .some((spec) => spec.settings?.respectForwardCompatibleEnums),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
