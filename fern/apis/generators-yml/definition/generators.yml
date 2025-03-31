@@ -262,6 +262,9 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      respect-forward-compatible-enums:
+        type: optional<boolean>
+        docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.
       use-bytes-for-binary-response:
         type: optional<boolean>
         docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.

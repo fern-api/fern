@@ -89,7 +89,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     filter: definition.settings?.filter,
                     exampleGeneration: undefined,
                     defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false
+                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false
                 }
             });
             continue;
@@ -143,7 +144,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 filter: definition.settings?.filter,
                 exampleGeneration: definition.settings?.exampleGeneration,
                 defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false
+                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false
             },
             source: {
                 type: "openapi",
