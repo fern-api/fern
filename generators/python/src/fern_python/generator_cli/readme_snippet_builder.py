@@ -322,11 +322,13 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         return snippet
 
     def _get_example_websocket_channel(self) -> Tuple[ir_types.Subpackage, ir_types.WebSocketChannel]:
+        if self._ir.websocket_channels is None:
+            raise ValueError("No websocket channels found")
         for subpackage_id in self._ir.subpackages.keys():
             subpackage = self._ir.subpackages[subpackage_id]
-            if subpackage.websocket is not None:
+            if subpackage.websocket is not None and subpackage.websocket in self._ir.websocket_channels:
                 return subpackage, self._ir.websocket_channels[subpackage.websocket]
-        raise ValueError("No websocket channel found")
+        raise ValueError("No websocket channel found in any subpackage")
 
     def _build_async_client_snippets(self) -> List[str]:
         try:

@@ -3,7 +3,7 @@ from typing import Callable, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, Filepath
-from src.fern_python.codegen.ast.references import ClassReference
+from fern_python.codegen.ast.references import ClassReference
 
 from .sdk_declaration_referencer import SdkDeclarationReferencer
 

@@ -7,6 +7,9 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
+    EndpointFunctionGenerator,
+)
 from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
     WebsocketConnectResponseCodeWriter,
 )
@@ -14,9 +17,6 @@ from fern_python.generators.sdk.context.sdk_generator_context import SdkGenerato
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
     get_base_url_property_name,
-)
-from src.fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    EndpointFunctionGenerator,
 )
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
@@ -92,7 +92,7 @@ class WebsocketConnectMethodGenerator:
                 named_parameters=named_parameters,
                 return_type=self._get_websocket_return_type(),
             ),
-            decorators=[self._get_decorator()],
+            decorators=[decorator for decorator in [self._get_decorator()] if decorator is not None],
             body=(
                 self._create_websocket_body_writer(
                     websocket=self._websocket,
@@ -114,21 +114,15 @@ class WebsocketConnectMethodGenerator:
 
     def _get_websocket_return_type(self) -> AST.TypeHint:
         if self._is_async:
-            return AST.TypeHint.async_iterator(
-                wrapped_type=AST.TypeHint(
-                    type=self._context.get_async_socket_class_reference_for_subpackage_service(
-                        subpackage_id=self._subpackage_id
-                    )
-                )
+            reference = self._context.get_async_socket_class_reference_for_subpackage_service(
+                subpackage_id=self._subpackage_id
             )
+            return AST.TypeHint.async_iterator(wrapped_type=AST.TypeHint(type=reference))
         else:
-            return AST.TypeHint.iterator(
-                wrapped_type=AST.TypeHint(
-                    type=self._context.get_socket_class_reference_for_subpackage_service(
-                        subpackage_id=self._subpackage_id
-                    )
-                )
+            reference = self._context.get_socket_class_reference_for_subpackage_service(
+                subpackage_id=self._subpackage_id
             )
+            return AST.TypeHint.iterator(wrapped_type=AST.TypeHint(type=reference))
 
     def deconflict_parameter_name(self, name: str, used_names: List[str]) -> str:
         while name in used_names:
@@ -232,7 +226,7 @@ class WebsocketConnectMethodGenerator:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self._path_parameter_names[path_parameter.name]
                 parameters.append(
-                    AST.FunctionParameter(
+                    AST.NamedFunctionParameter(
                         name=name,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                             path_parameter.value_type,
@@ -281,11 +275,14 @@ class WebsocketConnectMethodGenerator:
                 writer.write(f"query_params = ")
                 writer.write_node(HttpX.query_params())
                 writer.write_line()
-                writer.write_node(self._build_query_parameters(channel=websocket, parent_writer=writer))
+                query_params_expr = self._build_query_parameters(channel=websocket, parent_writer=writer)
+                if query_params_expr is not None:
+                    writer.write_node(query_params_expr)
                 writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
             writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
-            if websocket.headers:
-                writer.write_node(self._extend_headers_with_websocket_headers(websocket=websocket))
+            headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
+            if websocket.headers and headers_expr is not None:
+                writer.write_node(headers_expr)
             writer.write_line(
                 f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
                 + f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}:'
