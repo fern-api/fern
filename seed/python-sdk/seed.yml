@@ -271,4 +271,4 @@ allowedFailures:
   - pagination
   - simple-fhir
   - trace
-  - websocket
+  - websocket:websocket-with_generated_clients
