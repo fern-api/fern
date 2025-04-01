@@ -7,6 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { identity } from "lodash-es";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -41,10 +42,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
-        this.defaultEndpointId =
-            this.context.ir.readmeConfig?.defaultEndpoint != null
-                ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId();
+        this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
         this.rootPackageClientName = this.getRootPackageClientName();
     }
 
@@ -481,6 +479,48 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getRootPackageClientName(): string {
         return "client";
+    }
+
+    private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
+        if (endpointSnippets.length > 0) {
+            return this.context.ir.readmeConfig?.defaultEndpoint != null
+                    ? this.context.ir.readmeConfig.defaultEndpoint
+                    : this.getDefaultEndpointId();
+        }
+
+        const dynamicIr = this.context.ir.dynamic;
+
+        if (dynamicIr == null) {
+            throw new Error("Cannot generate README without dynamic IR");
+        }
+
+        const endpoints = Object.entries(dynamicIr.endpoints);
+
+        if (endpoints.length == 0) {
+            throw new Error("Cannot generate README without endpoints.");
+        }
+
+        // Prefer endpoints with a request body.
+        const endpointsWithReferencedRequestBody = endpoints.filter((entry) => {
+            const [_id, endpoint] = entry;
+
+            if (endpoint.request.body == null) {
+                return false;
+            }
+
+            return endpoint.request.body.type === "referenced";
+        });
+
+        if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
+            return endpointsWithReferencedRequestBody[0][0];
+        }
+
+        // Need this check for the linter
+        if (endpoints[0] == null) {
+            throw new Error("Cannot generate README with null endpoint.");
+        }
+
+        return endpoints[0][0];
     }
 
     /**
