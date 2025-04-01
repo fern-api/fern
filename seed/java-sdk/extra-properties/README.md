@@ -115,7 +115,7 @@ import com.seed.extraProperties.core.RequestOptions;
 // Client level
 SeedExtraPropertiesClient client = SeedExtraPropertiesClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

@@ -113,7 +113,7 @@ import com.seed.serverSentEvents.core.RequestOptions;
 // Client level
 SeedServerSentEventsClient client = SeedServerSentEventsClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

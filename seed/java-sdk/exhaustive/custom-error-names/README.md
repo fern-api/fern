@@ -114,7 +114,7 @@ import com.seed.exhaustive.core.RequestOptions;
 // Client level
 SeedExhaustiveClient client = SeedExhaustiveClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

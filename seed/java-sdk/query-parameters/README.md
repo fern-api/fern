@@ -214,7 +214,7 @@ import com.seed.queryParameters.core.RequestOptions;
 // Client level
 SeedQueryParametersClient client = SeedQueryParametersClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

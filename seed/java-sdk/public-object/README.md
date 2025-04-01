@@ -103,7 +103,7 @@ import com.seed.publicObject.core.RequestOptions;
 // Client level
 SeedPublicObjectClient client = SeedPublicObjectClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

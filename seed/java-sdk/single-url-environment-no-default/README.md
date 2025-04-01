@@ -122,7 +122,7 @@ import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
 // Client level
 SeedSingleUrlEnvironmentNoDefaultClient client = SeedSingleUrlEnvironmentNoDefaultClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level
