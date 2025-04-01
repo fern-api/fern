@@ -47,6 +47,11 @@ export interface ParseOpenAPIOptions {
     asyncApiNaming: "v1" | "v2";
 
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+
+    /**
+     * Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
+     */
+    additionalPropertiesDefaultsTo: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -69,7 +74,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     exampleGeneration: undefined,
     defaultFormParameterEncoding: "json",
     useBytesForBinaryResponse: false,
-    respectForwardCompatibleEnums: false
+    respectForwardCompatibleEnums: false,
+    additionalPropertiesDefaultsTo: false
 };
 
 export function getParseOptions({
@@ -138,6 +144,10 @@ export function getParseOptions({
         respectForwardCompatibleEnums:
             overrides?.respectForwardCompatibleEnums ??
             options?.respectForwardCompatibleEnums ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums,
+        additionalPropertiesDefaultsTo:
+            overrides?.additionalPropertiesDefaultsTo ??
+            options?.additionalPropertiesDefaultsTo ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo
     };
 }

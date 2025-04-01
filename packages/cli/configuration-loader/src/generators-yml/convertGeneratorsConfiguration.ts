@@ -26,7 +26,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectForwardCompatibleEnums: undefined,
     filter: undefined,
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: undefined
+    defaultFormParameterEncoding: undefined,
+    additionalPropertiesDefaultsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -101,7 +102,8 @@ function parseOpenApiDefinitionSettingsSchema(
         exampleGeneration: settings?.["example-generation"],
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
-        respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"]
+        respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"]
     };
 }
 

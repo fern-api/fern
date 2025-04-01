@@ -277,6 +277,10 @@ types:
       example-generation:
         type: optional<OpenAPIExampleGenerationSchema>
         docs: Fine-tune your example generation
+      additional-properties-defaults-to:
+        type: optional<boolean>
+        docs: Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
+        default: false
 
   FormParameterEncoding:
     enum:
