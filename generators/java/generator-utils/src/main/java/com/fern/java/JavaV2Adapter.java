@@ -50,7 +50,7 @@ public class JavaV2Adapter {
             if (exitCode == 0) {
                 log.info("Successfully ran Java V2 generator");
                 execClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
-                        .level(LogLevel.DEBUG)
+                        .level(LogLevel.INFO)
                         .message("Successfully ran Java V2 generator")
                         .build()));
             } else {
