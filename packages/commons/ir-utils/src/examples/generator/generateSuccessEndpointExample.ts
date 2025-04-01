@@ -3,18 +3,13 @@ import {
     ErrorDeclaration,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
-    ExampleHeader,
     ExampleInlinedRequestBodyProperty,
-    ExamplePathParameter,
-    ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
     HttpEndpoint,
-    HttpHeader,
     HttpService,
     IntermediateRepresentation,
-    PathParameter,
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     TypeDeclaration,
@@ -24,6 +19,11 @@ import {
 
 import { hashJSON } from "../../hashJSON";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import {
+    generateHeaderExamples,
+    generatePathParameterExamples,
+    generateQueryParameterExamples
+} from "./generateParameterExamples";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 import { isOptional } from "./isTypeReferenceOptional";
@@ -49,11 +49,6 @@ export declare namespace generateEndpointExample {
     interface ErrorResponseType {
         type: "error";
         declaration: ErrorDeclaration;
-    }
-
-    interface ParameterGroup<T, K> {
-        params: T[];
-        add: (example: K) => void;
     }
 }
 
@@ -86,104 +81,53 @@ export function generateEndpointExample({
         docs: undefined
     };
 
-    const pathParameterGroups: generateEndpointExample.ParameterGroup<PathParameter, ExamplePathParameter>[] = [
-        {
-            params: endpoint.pathParameters,
-            add: (example: ExamplePathParameter) => result.endpointPathParameters.push(example)
-        },
-        {
-            params: service.pathParameters,
-            add: (example: ExamplePathParameter) => result.servicePathParameters.push(example)
-        },
-        {
-            params: ir.pathParameters,
-            add: (example: ExamplePathParameter) => result.rootPathParameters.push(example)
-        }
-    ];
+    const endpointPathResult = generatePathParameterExamples(endpoint.pathParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (endpointPathResult.type === "failure") {return endpointPathResult;}
+    result.endpointPathParameters = endpointPathResult.example;
 
-    for (const group of pathParameterGroups) {
-        for (const pathParameter of group.params) {
-            const generatedExample = generateTypeReferenceExample({
-                fieldName: pathParameter.name.originalName,
-                currentDepth: 0,
-                maxDepth: 1,
-                typeDeclarations,
-                typeReference: pathParameter.valueType,
-                skipOptionalProperties: skipOptionalRequestProperties
-            });
-            if (generatedExample.type === "failure") {
-                return generatedExample;
-            }
-            const { example } = generatedExample;
-            group.add({
-                name: pathParameter.name,
-                value: example
-            });
-        }
-    }
+    const servicePathResult = generatePathParameterExamples(service.pathParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (servicePathResult.type === "failure") {return servicePathResult;}
+    result.servicePathParameters = servicePathResult.example;
 
-    for (const queryParameter of endpoint.queryParameters) {
-        if (
-            skipOptionalRequestProperties &&
-            isOptional({ typeDeclarations, typeReference: queryParameter.valueType })
-        ) {
-            continue;
-        }
-        const generatedExample = generateTypeReferenceExample({
-            fieldName: queryParameter.name.name.originalName,
-            currentDepth: 0,
-            maxDepth: 10,
-            typeDeclarations,
-            typeReference: queryParameter.valueType,
-            skipOptionalProperties: skipOptionalRequestProperties
-        });
-        if (generatedExample.type === "failure") {
-            return generatedExample;
-        }
-        const { example } = generatedExample;
-        result.queryParameters.push({
-            name: queryParameter.name,
-            shape: queryParameter.allowMultiple
-                ? ExampleQueryParameterShape.exploded()
-                : ExampleQueryParameterShape.single(),
-            value: example
-        });
-    }
+    const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (rootPathResult.type === "failure") {return rootPathResult;}
+    result.rootPathParameters = rootPathResult.example;
 
-    const headerGroup: generateEndpointExample.ParameterGroup<HttpHeader, ExampleHeader>[] = [
-        {
-            params: endpoint.headers,
-            add: (example: ExampleHeader) => result.endpointHeaders.push(example)
-        },
-        {
-            params: service.headers,
-            add: (example: ExampleHeader) => result.serviceHeaders.push(example)
-        }
-    ];
+    const queryParamsResult = generateQueryParameterExamples(endpoint.queryParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 10
+    });
+    if (queryParamsResult.type === "failure") {return queryParamsResult;}
+    result.queryParameters = queryParamsResult.example;
 
-    for (const group of headerGroup) {
-        for (const header of group.params) {
-            if (skipOptionalRequestProperties && isOptional({ typeDeclarations, typeReference: header.valueType })) {
-                continue;
-            }
-            const generatedExample = generateTypeReferenceExample({
-                fieldName: header.name.name.originalName,
-                currentDepth: 0,
-                maxDepth: 1,
-                typeDeclarations,
-                typeReference: header.valueType,
-                skipOptionalProperties: skipOptionalRequestProperties
-            });
-            if (generatedExample.type === "failure") {
-                return generatedExample;
-            }
-            const { example } = generatedExample;
-            group.add({
-                name: header.name,
-                value: example
-            });
-        }
-    }
+    const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (endpointHeadersResult.type === "failure") {return endpointHeadersResult;}
+    result.endpointHeaders = endpointHeadersResult.example;
+
+    const serviceHeadersResult = generateHeaderExamples(service.headers, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (serviceHeadersResult.type === "failure") {return serviceHeadersResult;}
+    result.serviceHeaders = serviceHeadersResult.example;
 
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {

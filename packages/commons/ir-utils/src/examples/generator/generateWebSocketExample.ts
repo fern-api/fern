@@ -1,12 +1,7 @@
 import {
-    ExampleHeader,
-    ExamplePathParameter,
-    ExampleQueryParameterShape,
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
-    HttpHeader,
     IntermediateRepresentation,
-    PathParameter,
     TypeDeclaration,
     TypeId,
     WebSocketChannel,
@@ -14,8 +9,12 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import {
+    generateHeaderExamples,
+    generatePathParameterExamples,
+    generateQueryParameterExamples
+} from "./generateParameterExamples";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { isOptional } from "./isTypeReferenceOptional";
 
 export declare namespace generateWebSocketExample {
     interface Args {
@@ -23,11 +22,6 @@ export declare namespace generateWebSocketExample {
         channel: WebSocketChannel;
         typeDeclarations: Record<TypeId, TypeDeclaration>;
         skipOptionalRequestProperties: boolean;
-    }
-
-    interface ParameterGroup<T, K> {
-        params: T[];
-        add: (example: K) => void;
     }
 }
 
@@ -46,104 +40,47 @@ export function generateWebSocketExample({
         docs: undefined
     };
 
-    const pathParameterGroups: generateWebSocketExample.ParameterGroup<PathParameter, ExamplePathParameter>[] = [
-        {
-            params: channel.pathParameters,
-            add: (example: ExamplePathParameter) => result.pathParameters.push(example)
-        },
-        {
-            params: channel.pathParameters,
-            add: (example: ExamplePathParameter) => result.pathParameters.push(example)
-        },
-        {
-            params: ir.pathParameters,
-            add: (example: ExamplePathParameter) => result.pathParameters.push(example)
-        }
-    ];
+    const channelPathResult = generatePathParameterExamples(channel.pathParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (channelPathResult.type === "failure") {return channelPathResult;}
+    result.pathParameters.push(...channelPathResult.example);
 
-    for (const group of pathParameterGroups) {
-        for (const pathParameter of group.params) {
-            const generatedExample = generateTypeReferenceExample({
-                fieldName: pathParameter.name.originalName,
-                currentDepth: 0,
-                maxDepth: 1,
-                typeDeclarations,
-                typeReference: pathParameter.valueType,
-                skipOptionalProperties: skipOptionalRequestProperties
-            });
-            if (generatedExample.type === "failure") {
-                return generatedExample;
-            }
-            const { example } = generatedExample;
-            group.add({
-                name: pathParameter.name,
-                value: example
-            });
-        }
-    }
+    const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (rootPathResult.type === "failure") {return rootPathResult;}
+    result.pathParameters.push(...rootPathResult.example);
 
-    for (const queryParameter of channel.queryParameters) {
-        if (
-            skipOptionalRequestProperties &&
-            isOptional({ typeDeclarations, typeReference: queryParameter.valueType })
-        ) {
-            continue;
-        }
-        const generatedExample = generateTypeReferenceExample({
-            fieldName: queryParameter.name.name.originalName,
-            currentDepth: 0,
-            maxDepth: 10,
-            typeDeclarations,
-            typeReference: queryParameter.valueType,
-            skipOptionalProperties: skipOptionalRequestProperties
-        });
-        if (generatedExample.type === "failure") {
-            return generatedExample;
-        }
-        const { example } = generatedExample;
-        result.queryParameters.push({
-            name: queryParameter.name,
-            shape: queryParameter.allowMultiple
-                ? ExampleQueryParameterShape.exploded()
-                : ExampleQueryParameterShape.single(),
-            value: example
-        });
-    }
+    // QUERY PARAMETERS
+    const queryParamsResult = generateQueryParameterExamples(channel.queryParameters, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 10
+    });
+    if (queryParamsResult.type === "failure") {return queryParamsResult;}
+    result.queryParameters = queryParamsResult.example;
 
-    const headerGroup: generateWebSocketExample.ParameterGroup<HttpHeader, ExampleHeader>[] = [
-        {
-            params: channel.headers,
-            add: (example: ExampleHeader) => result.headers.push(example)
-        },
-        {
-            params: ir.headers,
-            add: (example: ExampleHeader) => result.headers.push(example)
-        }
-    ];
+    // HEADERS
+    const channelHeaderResult = generateHeaderExamples(channel.headers, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (channelHeaderResult.type === "failure") {return channelHeaderResult;}
+    result.headers.push(...channelHeaderResult.example);
 
-    for (const group of headerGroup) {
-        for (const header of group.params) {
-            if (skipOptionalRequestProperties && isOptional({ typeDeclarations, typeReference: header.valueType })) {
-                continue;
-            }
-            const generatedExample = generateTypeReferenceExample({
-                fieldName: header.name.name.originalName,
-                currentDepth: 0,
-                maxDepth: 1,
-                typeDeclarations,
-                typeReference: header.valueType,
-                skipOptionalProperties: skipOptionalRequestProperties
-            });
-            if (generatedExample.type === "failure") {
-                return generatedExample;
-            }
-            const { example } = generatedExample;
-            group.add({
-                name: header.name,
-                value: example
-            });
-        }
-    }
+    const irHeaderResult = generateHeaderExamples(ir.headers, {
+        typeDeclarations,
+        skipOptionalRequestProperties,
+        maxDepth: 1
+    });
+    if (irHeaderResult.type === "failure") {return irHeaderResult;}
+    result.headers.push(...irHeaderResult.example);
 
     const sendMessages = channel.messages.filter((message) => message.origin === "client");
     const sendMessage = sendMessages[0];
