@@ -304,6 +304,30 @@
                   }
                 }
               ]
+            },
+            {
+              "path": "/realtime/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "send",
+                  "body": {
+                    "sendText": "sendText",
+                    "sendParam": 1
+                  }
+                },
+                {
+                  "type": "receive",
+                  "body": {
+                    "alpha": "alpha",
+                    "beta": 1
+                  }
+                }
+              ]
             }
           ]
         }

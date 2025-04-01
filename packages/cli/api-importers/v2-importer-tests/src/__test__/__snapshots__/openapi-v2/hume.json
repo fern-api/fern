@@ -57241,7 +57241,736 @@
           }
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "config_id",
+                  "camelCase": {
+                    "unsafeName": "configId",
+                    "safeName": "configId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "config_id",
+                    "safeName": "config_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONFIG_ID",
+                    "safeName": "CONFIG_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConfigId",
+                    "safeName": "ConfigId"
+                  }
+                },
+                "wireValue": "config_id"
+              },
+              "shape": {
+                "type": "single"
+              },
+              "value": {
+                "jsonExample": "config_id",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "config_id"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "config_version",
+                  "camelCase": {
+                    "unsafeName": "configVersion",
+                    "safeName": "configVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "config_version",
+                    "safeName": "config_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CONFIG_VERSION",
+                    "safeName": "CONFIG_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ConfigVersion",
+                    "safeName": "ConfigVersion"
+                  }
+                },
+                "wireValue": "config_version"
+              },
+              "shape": {
+                "type": "single"
+              },
+              "value": {
+                "jsonExample": 1,
+                "shape": {
+                  "primitive": {
+                    "integer": 1,
+                    "type": "integer"
+                  },
+                  "type": "primitive"
+                }
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "resumed_chat_group_id",
+                  "camelCase": {
+                    "unsafeName": "resumedChatGroupId",
+                    "safeName": "resumedChatGroupId"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "resumed_chat_group_id",
+                    "safeName": "resumed_chat_group_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "RESUMED_CHAT_GROUP_ID",
+                    "safeName": "RESUMED_CHAT_GROUP_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ResumedChatGroupId",
+                    "safeName": "ResumedChatGroupId"
+                  }
+                },
+                "wireValue": "resumed_chat_group_id"
+              },
+              "shape": {
+                "type": "single"
+              },
+              "value": {
+                "jsonExample": "resumed_chat_group_id",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "resumed_chat_group_id"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "verbose_transcription",
+                  "camelCase": {
+                    "unsafeName": "verboseTranscription",
+                    "safeName": "verboseTranscription"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "verbose_transcription",
+                    "safeName": "verbose_transcription"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VERBOSE_TRANSCRIPTION",
+                    "safeName": "VERBOSE_TRANSCRIPTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "VerboseTranscription",
+                    "safeName": "VerboseTranscription"
+                  }
+                },
+                "wireValue": "verbose_transcription"
+              },
+              "shape": {
+                "type": "single"
+              },
+              "value": {
+                "jsonExample": true,
+                "shape": {
+                  "primitive": {
+                    "boolean": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "access_token",
+                  "camelCase": {
+                    "unsafeName": "accessToken",
+                    "safeName": "accessToken"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "access_token",
+                    "safeName": "access_token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACCESS_TOKEN",
+                    "safeName": "ACCESS_TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AccessToken",
+                    "safeName": "AccessToken"
+                  }
+                },
+                "wireValue": "access_token"
+              },
+              "shape": {
+                "type": "single"
+              },
+              "value": {
+                "jsonExample": "access_token",
+                "shape": {
+                  "primitive": {
+                    "string": {
+                      "original": "access_token"
+                    },
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "type": "publishEvent",
+              "body": {
+                "jsonExample": {
+                  "type": "audio_input",
+                  "data": "data"
+                },
+                "shape": {
+                  "shape": {
+                    "index": 0,
+                    "singleUnionType": {
+                      "jsonExample": {
+                        "type": "audio_input",
+                        "data": "data"
+                      },
+                      "shape": {
+                        "shape": {
+                          "properties": [
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "type",
+                                  "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                  }
+                                },
+                                "wireValue": "type"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "audio_input",
+                                "shape": {
+                                  "container": {
+                                    "literal": {
+                                      "string": {
+                                        "original": "audio_input"
+                                      },
+                                      "type": "string"
+                                    },
+                                    "type": "literal"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "custom_session_id",
+                                  "camelCase": {
+                                    "unsafeName": "customSessionId",
+                                    "safeName": "customSessionId"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "custom_session_id",
+                                    "safeName": "custom_session_id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CUSTOM_SESSION_ID",
+                                    "safeName": "CUSTOM_SESSION_ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "CustomSessionId",
+                                    "safeName": "CustomSessionId"
+                                  }
+                                },
+                                "wireValue": "custom_session_id"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "shape": {
+                                  "container": {
+                                    "valueType": {
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": []
+                                      },
+                                      "name": {
+                                        "originalName": "AudioInputCustomSessionId",
+                                        "camelCase": {
+                                          "unsafeName": "audioInputCustomSessionId",
+                                          "safeName": "audioInputCustomSessionId"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "audio_input_custom_session_id",
+                                          "safeName": "audio_input_custom_session_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "AUDIO_INPUT_CUSTOM_SESSION_ID",
+                                          "safeName": "AUDIO_INPUT_CUSTOM_SESSION_ID"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "AudioInputCustomSessionId",
+                                          "safeName": "AudioInputCustomSessionId"
+                                        }
+                                      },
+                                      "typeId": "AudioInputCustomSessionId",
+                                      "inline": false,
+                                      "type": "named"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "data",
+                                  "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                  }
+                                },
+                                "wireValue": "data"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "data",
+                                "shape": {
+                                  "primitive": {
+                                    "string": {
+                                      "original": "data"
+                                    },
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              }
+                            }
+                          ],
+                          "type": "object"
+                        },
+                        "typeName": {
+                          "typeId": "AudioInput",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "AudioInput",
+                            "camelCase": {
+                              "unsafeName": "audioInput",
+                              "safeName": "audioInput"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "audio_input",
+                              "safeName": "audio_input"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "AUDIO_INPUT",
+                              "safeName": "AUDIO_INPUT"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AudioInput",
+                              "safeName": "AudioInput"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    },
+                    "type": "undiscriminatedUnion"
+                  },
+                  "typeName": {
+                    "typeId": "publishEvent",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "publishEvent",
+                      "camelCase": {
+                        "unsafeName": "publishEvent",
+                        "safeName": "publishEvent"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "publish_event",
+                        "safeName": "publish_event"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "PUBLISH_EVENT",
+                        "safeName": "PUBLISH_EVENT"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "PublishEvent",
+                        "safeName": "PublishEvent"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            },
+            {
+              "type": "subscribeEvent",
+              "body": {
+                "jsonExample": {
+                  "type": "assistant_end"
+                },
+                "shape": {
+                  "shape": {
+                    "index": 0,
+                    "singleUnionType": {
+                      "jsonExample": {
+                        "type": "assistant_end"
+                      },
+                      "shape": {
+                        "shape": {
+                          "properties": [
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "type",
+                                  "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                  }
+                                },
+                                "wireValue": "type"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AssistantEnd",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AssistantEnd",
+                                  "camelCase": {
+                                    "unsafeName": "assistantEnd",
+                                    "safeName": "assistantEnd"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "assistant_end",
+                                    "safeName": "assistant_end"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ASSISTANT_END",
+                                    "safeName": "ASSISTANT_END"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AssistantEnd",
+                                    "safeName": "AssistantEnd"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "assistant_end",
+                                "shape": {
+                                  "container": {
+                                    "literal": {
+                                      "string": {
+                                        "original": "assistant_end"
+                                      },
+                                      "type": "string"
+                                    },
+                                    "type": "literal"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "custom_session_id",
+                                  "camelCase": {
+                                    "unsafeName": "customSessionId",
+                                    "safeName": "customSessionId"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "custom_session_id",
+                                    "safeName": "custom_session_id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CUSTOM_SESSION_ID",
+                                    "safeName": "CUSTOM_SESSION_ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "CustomSessionId",
+                                    "safeName": "CustomSessionId"
+                                  }
+                                },
+                                "wireValue": "custom_session_id"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AssistantEnd",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AssistantEnd",
+                                  "camelCase": {
+                                    "unsafeName": "assistantEnd",
+                                    "safeName": "assistantEnd"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "assistant_end",
+                                    "safeName": "assistant_end"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ASSISTANT_END",
+                                    "safeName": "ASSISTANT_END"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AssistantEnd",
+                                    "safeName": "AssistantEnd"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "shape": {
+                                  "container": {
+                                    "valueType": {
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": []
+                                      },
+                                      "name": {
+                                        "originalName": "AssistantEndCustomSessionId",
+                                        "camelCase": {
+                                          "unsafeName": "assistantEndCustomSessionId",
+                                          "safeName": "assistantEndCustomSessionId"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "assistant_end_custom_session_id",
+                                          "safeName": "assistant_end_custom_session_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "ASSISTANT_END_CUSTOM_SESSION_ID",
+                                          "safeName": "ASSISTANT_END_CUSTOM_SESSION_ID"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "AssistantEndCustomSessionId",
+                                          "safeName": "AssistantEndCustomSessionId"
+                                        }
+                                      },
+                                      "typeId": "AssistantEndCustomSessionId",
+                                      "inline": false,
+                                      "type": "named"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            }
+                          ],
+                          "type": "object"
+                        },
+                        "typeName": {
+                          "typeId": "AssistantEnd",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "AssistantEnd",
+                            "camelCase": {
+                              "unsafeName": "assistantEnd",
+                              "safeName": "assistantEnd"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "assistant_end",
+                              "safeName": "assistant_end"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ASSISTANT_END",
+                              "safeName": "ASSISTANT_END"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AssistantEnd",
+                              "safeName": "AssistantEnd"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    },
+                    "type": "undiscriminatedUnion"
+                  },
+                  "typeName": {
+                    "typeId": "subscribeEvent",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "subscribeEvent",
+                      "camelCase": {
+                        "unsafeName": "subscribeEvent",
+                        "safeName": "subscribeEvent"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "subscribe_event",
+                        "safeName": "subscribe_event"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "SUBSCRIBE_EVENT",
+                        "safeName": "SUBSCRIBE_EVENT"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "SubscribeEvent",
+                        "safeName": "SubscribeEvent"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/chat"
+        }
+      ],
       "docs": "Chat with Empathic Voice Interface (EVI)"
     }
   },
