@@ -33,12 +33,17 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         let typeId: string | undefined;
 
         const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
-        const messageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
+        const messageMatch = reference.$ref.match(/^.*\/channels\/([^/]+)\/messages\/(.+)$/);
+        const simpleMessageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
 
         if (schemaMatch && schemaMatch[1]) {
             typeId = schemaMatch[1];
-        } else if (messageMatch && messageMatch[1]) {
-            typeId = messageMatch[1];
+        } else if (messageMatch && messageMatch[2]) {
+            const channelPath = messageMatch[1];
+            const messageId = messageMatch[2];
+            typeId = `${channelPath}_${messageId}`;
+        } else if (simpleMessageMatch && simpleMessageMatch[1]) {
+            typeId = simpleMessageMatch[1];
         }
 
         if (typeId == null) {

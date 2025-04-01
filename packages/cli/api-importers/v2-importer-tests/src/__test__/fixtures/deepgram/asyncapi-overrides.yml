@@ -1,7 +1,6 @@
 channels:
   speak:
     x-fern-sdk-group-name: textToSpeech
-    # Sets API Playground parameters to optional
     parameters:
       encoding:
         x-fern-optional: true
@@ -9,7 +8,6 @@ channels:
         x-fern-optional: true
       sample_rate:
         x-fern-optional: true
-    # Defines examples for the API Playground
     # x-fern-examples:
     #   - name: Text-to-Speech Example
     #     summary: This is an example of a text-to-speech session
@@ -32,7 +30,6 @@ channels:
     #         value: Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ==
   listen:
     x-fern-sdk-group-name: speechToText
-    # Sets API Playground parameters to optional
     parameters:
       callback:
         x-fern-optional: true
@@ -90,7 +87,6 @@ channels:
         x-fern-optional: true
       version:
         x-fern-optional: true
-    # Defines examples for the API Playground
     # x-fern-examples:
     #   - name: Speech-to-Text Example
     #     summary: This is an example of a speech-to-text session
