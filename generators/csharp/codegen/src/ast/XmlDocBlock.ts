@@ -8,6 +8,7 @@ export declare namespace XmlDocBlock {
         codeExample?: XmlDocNode;
         exceptions?: Map<string | AstNode, XmlDocNode>;
         inheritdoc?: InheritdocNode;
+        remarks?: XmlDocNode;
     };
     type Arg = XmlDocProps | XmlDocNode;
     type XmlDocNode = string | ((writer: XmlDocWriter) => void) | null | undefined;
@@ -95,6 +96,16 @@ export class XmlDocBlock extends AstNode {
             }
             docWriter.write(" />");
 
+            docWriter.writeNewLineIfLastLineNot();
+        }
+        if (this.arg.remarks) {
+            docWriter.writePrefix();
+            docWriter.writeOpenXmlNode("remarks");
+            docWriter.writeLine();
+            this.writeXmlDocNodeWithEscaping(docWriter, this.arg.remarks);
+            docWriter.writeNewLineIfLastLineNot();
+            docWriter.writePrefix();
+            docWriter.writeCloseXmlNode("remarks");
             docWriter.writeNewLineIfLastLineNot();
         }
     }
