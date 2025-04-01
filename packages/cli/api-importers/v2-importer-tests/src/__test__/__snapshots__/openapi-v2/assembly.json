@@ -10497,15 +10497,51 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE_TIME",
                 "v2": {
-                  "validation": {
-                    "pattern": "^(?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))$"
-                  },
-                  "type": "string"
+                  "type": "dateTime"
                 }
               },
               "type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "completed",
+                "camelCase": {
+                  "unsafeName": "completed",
+                  "safeName": "completed"
+                },
+                "snakeCase": {
+                  "unsafeName": "completed",
+                  "safeName": "completed"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMPLETED",
+                  "safeName": "COMPLETED"
+                },
+                "pascalCase": {
+                  "unsafeName": "Completed",
+                  "safeName": "Completed"
+                }
+              },
+              "wireValue": "completed"
+            },
+            "valueType": {
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DATE_TIME",
+                    "v2": {
+                      "type": "dateTime"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              },
+              "type": "container"
             }
           },
           {
@@ -13564,12 +13600,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE_TIME",
                 "v2": {
-                  "validation": {
-                    "pattern": "^(?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))$"
-                  },
-                  "type": "string"
+                  "type": "dateTime"
                 }
               },
               "type": "primitive"
@@ -14874,12 +14907,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE_TIME",
                 "v2": {
-                  "validation": {
-                    "pattern": "^(?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))$"
-                  },
-                  "type": "string"
+                  "type": "dateTime"
                 }
               },
               "type": "primitive"
@@ -55760,20 +55790,14 @@
           },
           "docs": "Authenticate using your AssemblyAI API key.",
           "valueType": {
-            "container": {
-              "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "type": "optional"
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "validation": {},
+                "type": "string"
+              }
             },
-            "type": "container"
+            "type": "primitive"
           }
         }
       ],
@@ -55803,20 +55827,14 @@
           },
           "docs": "The ID of the user.",
           "valueType": {
-            "container": {
-              "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "type": "optional"
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "validation": {},
+                "type": "string"
+              }
             },
-            "type": "container"
+            "type": "primitive"
           },
           "allowMultiple": false
         },
@@ -55845,20 +55863,14 @@
           },
           "docs": "The sample rate of the streamed audio.",
           "valueType": {
-            "container": {
-              "optional": {
-                "primitive": {
-                  "v1": "INTEGER",
-                  "v2": {
-                    "validation": {},
-                    "type": "integer"
-                  }
-                },
-                "type": "primitive"
-              },
-              "type": "optional"
+            "primitive": {
+              "v1": "INTEGER",
+              "v2": {
+                "validation": {},
+                "type": "integer"
+              }
             },
-            "type": "container"
+            "type": "primitive"
           },
           "allowMultiple": false
         },
@@ -55887,20 +55899,14 @@
           },
           "docs": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
           "valueType": {
-            "container": {
-              "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "type": "optional"
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "validation": {},
+                "type": "string"
+              }
             },
-            "type": "container"
+            "type": "primitive"
           },
           "allowMultiple": false
         },
@@ -55929,20 +55935,14 @@
           },
           "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
           "valueType": {
-            "container": {
-              "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {},
-                    "type": "string"
-                  }
-                },
-                "type": "primitive"
-              },
-              "type": "optional"
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "validation": {},
+                "type": "string"
+              }
             },
-            "type": "container"
+            "type": "primitive"
           },
           "allowMultiple": false
         }

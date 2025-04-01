@@ -4,3 +4,4 @@ api:
       settings:
         respect-forward-compatible-enums: true
     - asyncapi: ../asyncapi.yml
+      overrides: ../asyncapi-overrides.yml
