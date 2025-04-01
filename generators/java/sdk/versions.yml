@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add fallback snippet renderer for readme generation
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.2
+- changelogEntry:
+    - summary: |
         Fix pagination in raw clients
       type: fix
   createdAt: '2025-03-31'
