@@ -178,8 +178,7 @@ export class ChannelConverter3_0 extends AbstractConverter<AsyncAPIConverterCont
                 parameter: {
                     ...parameterObject,
                     name: parameterKey,
-                    in: type,
-                    required: true
+                    in: type
                 }
             });
             const convertedParameter = await parameterConverter.convert({ context, errorCollector });

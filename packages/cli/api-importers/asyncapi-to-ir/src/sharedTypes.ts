@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { MessageV2 } from "./2.x/types";
 import { MessageV3 } from "./3.0/types";
@@ -21,4 +21,9 @@ export interface ServerContext {
 
 export interface ChannelContext {
     messages?: Record<string, MessageV3>;
+}
+
+export interface AsyncAPIParameter extends OpenAPIV3_1.ParameterObject {
+    enum?: string[];
+    default?: string;
 }
