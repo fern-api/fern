@@ -3,7 +3,7 @@
       Updates parameter parsing in asyncapi-to-ir to correctly handle enum parameters, along with native support for the x-fern-optional and x-fern-type extensions
     type: chore
   irVersion: 57
-  version: 0.57.12
+  version: 0.57.13
 
 - changelogEntry:
   - summary: |
