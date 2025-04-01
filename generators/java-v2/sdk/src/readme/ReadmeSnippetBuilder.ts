@@ -41,10 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
-        this.defaultEndpointId =
-            this.context.ir.readmeConfig?.defaultEndpoint != null
-                ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId();
+        this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
         this.rootPackageClientName = this.getRootPackageClientName();
     }
 
@@ -52,10 +49,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const prerenderedSnippetsConfig: Record<
             FernGeneratorCli.FeatureId,
             {
+                backupRenderer: (endpoint: EndpointWithFilepath) => string;
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [FernGeneratorCli.StructuredFeatureId.Usage]: {}
+            [FernGeneratorCli.StructuredFeatureId.Usage]: {
+                backupRenderer: this.renderUsageSnippet.bind(this)
+            }
         };
 
         const templatedSnippetsConfig: Record<
@@ -92,8 +92,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippetsByFeatureId: Record<FernGeneratorCli.FeatureId, string[]> = {};
 
-        for (const [featureId, { predicate }] of Object.entries(prerenderedSnippetsConfig)) {
-            snippetsByFeatureId[featureId] = this.getPrerenderedSnippetsForFeature(featureId, predicate);
+        for (const [featureId, { predicate, backupRenderer }] of Object.entries(prerenderedSnippetsConfig)) {
+            snippetsByFeatureId[featureId] = this.getPrerenderedSnippetsForFeature(
+                featureId,
+                predicate,
+                backupRenderer
+            );
         }
 
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
@@ -105,17 +109,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getPrerenderedSnippetsForFeature(
         featureId: FernGeneratorCli.FeatureId,
-        predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
+        predicate: (endpoint: EndpointWithFilepath) => boolean = () => true,
+        backupRenderer: (endpoint: EndpointWithFilepath) => string
     ): string[] {
         return this.getEndpointsForFeature(featureId)
             .filter(predicate)
             .map((endpoint) => {
-                const endpointId = endpoint.endpoint.id;
-                const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
-                if (snippet == null) {
-                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
-                }
-                return snippet;
+                const prerendered = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
+                return prerendered ?? backupRenderer(endpoint);
             });
     }
 
@@ -125,6 +126,27 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
     ): string[] {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
+    }
+
+    private renderUsageSnippet(endpoint: EndpointWithFilepath): string {
+        const clientClassReference = this.context.getRootClientClassReference();
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
+
+        const clientBuilder = java.TypeLiteral.builder({ classReference: clientClassReference, parameters: [] });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(" client = ");
+            writer.writeNodeStatement(clientBuilder);
+            writer.newLine();
+            writer.newLine();
+            writer.writeNodeStatement(endpointMethodInvocation);
+        });
+
+        return snippet.toString({
+            packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
+            customConfig: this.context.customConfig
+        });
     }
 
     private renderEnvironmentsSnippet(_endpoint: EndpointWithFilepath): string {
@@ -239,7 +261,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippet = java.codeblock((writer) => {
             writer.writeNodeStatement(okHttpClientAssignment);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeNodeStatement(clientWithCustomClient);
         });
 
@@ -306,7 +329,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippet = java.codeblock((writer) => {
             writer.writeLine("// Client level");
             writer.writeNodeStatement(clientWithTimeout);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Request level");
             writer.writeNodeStatement(endpointMethodInvocation);
         });
@@ -359,19 +383,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.getRootPackageClientName()} = `);
             writer.writeNodeStatement(clientInitialization);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeNode(paginationClassReference);
             writer.write(" response = ");
             writer.writeNodeStatement(endpointMethodCall);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Iterator");
             writer.controlFlow("for", java.codeblock("item : response"));
             writer.writeLine("// Do something with item");
             writer.endControlFlow();
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Streaming");
             writer.writeNodeStatement(mapMethodCall);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Manual pagination");
             writer.writeNode(manualPaginationSnippet);
         });
@@ -457,6 +485,49 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getRootPackageClientName(): string {
         return "client";
+    }
+
+    private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
+        if (endpointSnippets.length > 0) {
+            return this.context.ir.readmeConfig?.defaultEndpoint != null
+                ? this.context.ir.readmeConfig.defaultEndpoint
+                : this.getDefaultEndpointId();
+        }
+
+        const dynamicIr = this.context.ir.dynamic;
+
+        if (dynamicIr == null) {
+            throw new Error("Cannot generate README without dynamic IR");
+        }
+
+        const endpoints = Object.entries(dynamicIr.endpoints);
+
+        if (endpoints.length == 0) {
+            throw new Error("Cannot generate README without endpoints.");
+        }
+
+        // Prefer endpoints with a request body.
+        const endpointsWithReferencedRequestBody = endpoints.filter((entry) => {
+            const [_id, endpoint] = entry;
+
+            if (endpoint.request.body == null) {
+                return false;
+            }
+
+            return endpoint.request.body.type === "referenced";
+        });
+
+        if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
+            // Return the EndpointId of the first Endpoint
+            return endpointsWithReferencedRequestBody[0][0];
+        }
+
+        // Need this check for the linter
+        if (endpoints[0] == null) {
+            throw new Error("Cannot generate README with null endpoint.");
+        }
+
+        return endpoints[0][0];
     }
 
     /**
