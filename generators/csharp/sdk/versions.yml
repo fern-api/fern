@@ -7,6 +7,14 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.13
+  createdAt: "2025-04-01"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: |
+        Mark `AdditionalProperties` property as experiment using XML docs.
+
 - version: 1.15.12
   createdAt: "2025-03-31"
   irVersion: 57
