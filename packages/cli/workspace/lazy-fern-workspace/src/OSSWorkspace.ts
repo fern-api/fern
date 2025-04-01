@@ -32,6 +32,7 @@ export declare namespace OSSWorkspace {
 }
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
+    public type: string = "oss";
     public specs: Spec[];
     public sources: IdentifiableSource[];
 

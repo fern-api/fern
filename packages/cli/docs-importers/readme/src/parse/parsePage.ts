@@ -188,13 +188,20 @@ export async function parsePage(
         // If so, remove that paragraph to avoid duplication
         if (description) {
             const firstParagraphPattern = /^([^#\n][^\n]*\n)/m;
-            
+
             const firstParagraph = mdxContentNoDuplicateTitleSubtitle.match(firstParagraphPattern)?.[1]?.trim();
-            
-            if (firstParagraph && (firstParagraph === description || firstParagraph.replace(/\s+/g, ' ') === description.replace(/\s+/g, ' '))) {
+
+            if (
+                firstParagraph &&
+                (firstParagraph === description ||
+                    firstParagraph.replace(/\s+/g, " ") === description.replace(/\s+/g, " "))
+            ) {
                 // Remove the first paragraph if it matches the description
                 // This handles cases where the description might have different whitespace formatting
-                const mdxContentWithoutDescription = mdxContentNoDuplicateTitleSubtitle.replace(firstParagraphPattern, "");
+                const mdxContentWithoutDescription = mdxContentNoDuplicateTitleSubtitle.replace(
+                    firstParagraphPattern,
+                    ""
+                );
                 mdxContentNoDuplicateTitleSubtitle = mdxContentWithoutDescription;
             }
         }
