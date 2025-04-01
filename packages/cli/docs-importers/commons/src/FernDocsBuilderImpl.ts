@@ -165,7 +165,9 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
 
         await writeFile(
             join(absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-            yaml.dump(docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml))
+            yaml.dump(
+                docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml, { omitUndefined: true })
+            )
         );
 
         await Promise.all(

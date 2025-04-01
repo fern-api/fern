@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import type { Result } from "../types/result.js";
@@ -27,8 +28,8 @@ export async function parsePageGroup(
             chunk.map(async (url, index) => {
                 try {
                     if (opts.externalLinks) {
-                        taskContext.logger.debug(`Scraping external link with URL: ${url}...`);
-                        return parsePage(taskContext, `external-link-${index}`, url, { externalLink: true });
+                        return undefined;
+                        // pass
                     } else {
                         const html = await fetchPageHtml({ url });
                         taskContext.logger.debug(`Scraping internal link with URL: ${url}...`);
@@ -42,7 +43,7 @@ export async function parsePageGroup(
                 }
             })
         );
-        allResults.push(...result);
+        allResults.push(...result.filter(isNonNullish));
     }
     return allResults;
 }

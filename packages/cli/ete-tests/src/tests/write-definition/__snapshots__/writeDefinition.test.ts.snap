@@ -754,7 +754,7 @@ service:
         "contents": "imports:
   streamRoot: __package__.yml
 types:
-  MarketDataV1Symbol:
+  Symbol:
     docs: >
       Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
       are in CCY1. To read more click
@@ -841,7 +841,7 @@ channel:
         Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-      type: MarketDataV1Symbol
+      type: Symbol
   url: public
 ",
         "name": "marketDataV1.yml",

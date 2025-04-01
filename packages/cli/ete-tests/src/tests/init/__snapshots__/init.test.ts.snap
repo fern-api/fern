@@ -144,9 +144,7 @@ colors:
   accent-primary:
     dark: '#0050B4'
     light: '#4D9CFF'
-  background:
-    dark: null
-    light: null
+  background: {}
 layout:
   searchbar-placement: header
   page-width: full

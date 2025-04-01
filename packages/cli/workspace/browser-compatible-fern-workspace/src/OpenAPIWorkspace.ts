@@ -36,6 +36,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
 
+    public type = "openapi";
+
     constructor({ spec, generatorsConfiguration }: OpenAPIWorkspace.Args) {
         super({
             ...DEFAULT_WORKSPACE_ARGS,
