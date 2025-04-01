@@ -1,5 +1,5 @@
 from fern_python.codegen import AST
-from fern_python.source_file_factory import SourceFileFactory
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 def test_snippet_generator() -> None:

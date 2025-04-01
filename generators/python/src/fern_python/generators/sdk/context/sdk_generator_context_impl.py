@@ -6,17 +6,31 @@ from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
-from fern_python.utils import pascal_case
+from fern_python.utils.pascal_case import pascal_case
 
 from ..custom_config import SDKCustomConfig
-from ..declaration_referencers import (
+from ..declaration_referencers.environments_enum_declaration_referencer import (
     EnvironmentsEnumDeclarationReferencer,
+)
+from ..declaration_referencers.error_declaration_referencer import (
     ErrorDeclarationReferencer,
+)
+from ..declaration_referencers.oauth_token_provider_declaration_referencer import (
     OAuthTokenProviderDeclarationReferencer,
+)
+from ..declaration_referencers.root_client_declaration_referencer import (
     RootClientDeclarationReferencer,
+)
+from ..declaration_referencers.subpackage_async_client_declaration_referencer import (
     SubpackageAsyncClientDeclarationReferencer,
+)
+from ..declaration_referencers.subpackage_async_socket_client_declaration_referencer import (
     SubpackageAsyncSocketClientDeclarationReferencer,
+)
+from ..declaration_referencers.subpackage_client_declaration_referencer import (
     SubpackageClientDeclarationReferencer,
+)
+from ..declaration_referencers.subpackage_socket_client_declaration_referencer import (
     SubpackageSocketClientDeclarationReferencer,
 )
 from .sdk_generator_context import SdkGeneratorContext

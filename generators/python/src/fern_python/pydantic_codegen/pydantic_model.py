@@ -4,8 +4,12 @@ import dataclasses
 from types import TracebackType
 from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
-from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
-from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
+from fern_python.codegen.class_parent import ClassParent
+from fern_python.codegen.local_class_reference import LocalClassReference
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
+from fern_python.external_dependencies.pydantic import Pydantic
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
 

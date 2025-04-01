@@ -1,14 +1,17 @@
 import os
 from typing import List, Optional, Set, Tuple
 
-from fern_python.codegen import AST, ExportStrategy, Filepath, Project
+from fern_python.codegen.filepath import ExportStrategy
+from fern_python.codegen.filepath import Filepath
+from fern_python.codegen.project import Project
+from fern_python.codegen import AST
 from fern_python.external_dependencies.pydantic import (
     PYDANTIC_CORE_DEPENDENCY,
     PydanticVersionCompatibility,
 )
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
-from fern_python.source_file_factory import SourceFileFactory
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class FernHTTPException:

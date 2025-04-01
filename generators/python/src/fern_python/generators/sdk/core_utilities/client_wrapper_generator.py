@@ -6,14 +6,16 @@ from typing import List, Optional
 import fern.ir.resources as ir_types
 from fdr import PayloadInput, Template, TemplateInput
 
-from fern_python.codegen import AST, Project, SourceFile
+from fern_python.codegen.project import Project
+from fern_python.codegen.source_file import SourceFile
+from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import GeneratedEnvironment
+from ..environment_generators.generated_environment import GeneratedEnvironment
 
 
 @dataclass

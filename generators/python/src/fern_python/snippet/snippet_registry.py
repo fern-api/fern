@@ -7,7 +7,7 @@ from typing_extensions import assert_never
 
 from fern_python.codegen import AST
 from fern_python.snippet.snippet_endpoint_expression import EndpointExpression
-from fern_python.source_file_factory import SourceFileFactory
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class SnippetRegistry:

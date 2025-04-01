@@ -10,11 +10,11 @@ import fern.ir.resources as ir_types
 import generatorcli
 import yaml  # type: ignore
 
-from fern_python.codegen import ProjectConfig
+from fern_python.codegen.project import ProjectConfig
 from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
 from fern_python.generator_cli.reference_config_builder import ReferenceConfigBuilder
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
 )

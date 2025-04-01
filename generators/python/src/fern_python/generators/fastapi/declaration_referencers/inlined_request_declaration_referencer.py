@@ -2,7 +2,8 @@ from dataclasses import dataclass
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import ExportStrategy, Filepath
+from fern_python.codegen.filepath import ExportStrategy
+from fern_python.codegen.filepath import Filepath
 
 from .fastapi_declaration_referencer import FastApiDeclarationReferencer
 from .service_declaration_referencer import ServiceDeclarationReferencer

@@ -6,8 +6,8 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
-from fern_python.generators.sdk.environment_generators import GeneratedEnvironment
-from fern_python.source_file_factory import SourceFileFactory
+from fern_python.generators.sdk.environment_generators.generated_environment import GeneratedEnvironment
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 def test_generated_root_client_builder() -> None:

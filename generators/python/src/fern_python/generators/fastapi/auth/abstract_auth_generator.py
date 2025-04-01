@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from fern_python.codegen import AST
 
-from ..context import FastApiGeneratorContext
+from ..context.fastapi_generator_context import FastApiGeneratorContext
 
 
 class AbstractAuthGenerator(ABC):

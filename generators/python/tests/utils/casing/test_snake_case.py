@@ -1,4 +1,4 @@
-from fern_python.utils import snake_case
+from fern_python.utils.snake_case import snake_case
 
 
 def test_snake_case() -> None:

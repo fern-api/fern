@@ -4,12 +4,13 @@ from typing import Optional, Set
 
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
-from fern_python.codegen import Filepath, SourceFile
+from fern_python.codegen.filepath import Filepath
+from fern_python.codegen.source_file import SourceFile
 from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.project import Project
 from fern_python.codegen.reference_resolver_impl import ReferenceResolverImpl
 from fern_python.codegen.source_file import SourceFileImpl
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class SourceFileFactory:

@@ -3,7 +3,7 @@ from typing import Callable, Optional, cast
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
-from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.declaration_referencer.abstract_declaration_referencer import AbstractDeclarationReferencer
 
 from .pydantic_generator_context import PydanticGeneratorContext
 

@@ -2,7 +2,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 
-from ...auth import SecurityFileGenerator
+from ...auth.security_file_generator import SecurityFileGenerator
 from .endpoint_parameter import EndpointParameter
 
 

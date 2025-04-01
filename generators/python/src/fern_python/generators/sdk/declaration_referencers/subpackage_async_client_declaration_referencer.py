@@ -1,6 +1,6 @@
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import Filepath
+from fern_python.codegen.filepath import Filepath
 
 from .sdk_declaration_referencer import SdkDeclarationReferencer
 
