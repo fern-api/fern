@@ -38,10 +38,10 @@ python = "^3.8"
 httpx = ">=0.21.2"
 pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
-typing_extensions = ">= 4.0.0"
+typing_extensions = ">= 4.11.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+mypy = "1.14.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
