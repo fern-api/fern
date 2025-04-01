@@ -32,6 +32,17 @@ class HttpX:
     )
 
     @staticmethod
+    def query_params() -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=("QueryParams",),
+                    import_=AST.ReferenceImport(module=HTTPX_MODULE),
+                ),
+            )
+        )
+
+    @staticmethod
     def make_request(
         *,
         path: Optional[AST.Expression],
@@ -96,7 +107,7 @@ class HttpX:
             if is_async:
                 writer.write("await ")
             writer.write_node(reference_to_client)
-            writer.write_line(f".request(")
+            writer.write_line(".request(")
 
             with writer.indent():
                 if path is not None:
@@ -115,7 +126,7 @@ class HttpX:
                 writer.write("async ")
             writer.write("with ")
             writer.write_node(reference_to_client)
-            writer.write(f".stream(")
+            writer.write(".stream(")
 
             with writer.indent():
                 if path is not None:

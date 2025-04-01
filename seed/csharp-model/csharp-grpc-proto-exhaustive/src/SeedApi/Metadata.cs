@@ -30,6 +30,7 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
         return result;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

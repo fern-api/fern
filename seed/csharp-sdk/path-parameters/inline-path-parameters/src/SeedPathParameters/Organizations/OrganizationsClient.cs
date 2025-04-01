@@ -26,12 +26,15 @@ public partial class OrganizationsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -78,12 +81,16 @@ public partial class OrganizationsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(request.TenantId)}/organizations/{JsonUtils.SerializeAsString(request.OrganizationId)}/users/{JsonUtils.SerializeAsString(request.UserId)}",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/users/{2}",
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.OrganizationId),
+                        ValueConvert.ToPathParameterString(request.UserId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -134,12 +141,15 @@ public partial class OrganizationsClient
         }
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/organizations/{JsonUtils.SerializeAsString(organizationId)}/search",
+                    Path = string.Format(
+                        "/{0}/organizations/{1}/search",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(organizationId)
+                    ),
                     Query = _query,
                     Options = options,
                 },

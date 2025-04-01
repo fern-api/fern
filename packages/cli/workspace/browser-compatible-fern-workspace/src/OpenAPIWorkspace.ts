@@ -36,6 +36,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
 
+    public type = "openapi";
+
     constructor({ spec, generatorsConfiguration }: OpenAPIWorkspace.Args) {
         super({
             ...DEFAULT_WORKSPACE_ARGS,
@@ -45,7 +47,9 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,
-            exampleGeneration: spec.settings?.exampleGeneration
+            exampleGeneration: spec.settings?.exampleGeneration,
+            useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

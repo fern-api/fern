@@ -32,7 +32,7 @@ public partial class SeedPackageYmlClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
     /// <example><code>
     /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
@@ -46,11 +46,11 @@ public partial class SeedPackageYmlClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(id)}/",
+                    Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
                     Body = request,
                     Options = options,
                 },

@@ -63,7 +63,7 @@ public class ExtendedMovieTest
             Revenue = 1000000,
         };
         var deserializedObject = JsonUtils.Deserialize<ExtendedMovie>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

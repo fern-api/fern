@@ -30,11 +30,11 @@ public partial class UserClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format("users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Options = options,
                 },
                 cancellationToken
@@ -69,7 +69,7 @@ public partial class UserClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

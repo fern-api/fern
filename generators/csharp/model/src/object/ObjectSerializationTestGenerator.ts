@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -57,7 +58,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                         })
                     );
                     writer.writeTextStatement(
-                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer())"
+                        "Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults())"
                     );
                 }),
                 isAsync: false

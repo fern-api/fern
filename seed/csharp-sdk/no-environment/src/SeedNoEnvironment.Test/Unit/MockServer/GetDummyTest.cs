@@ -23,7 +23,7 @@ public class GetDummyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Dummy.GetDummyAsync(RequestOptions);
+        var response = await Client.Dummy.GetDummyAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

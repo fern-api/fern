@@ -36,12 +36,11 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
-            new GetEventMetadataRequest { Id = "id" },
-            RequestOptions
+            new GetEventMetadataRequest { Id = "id" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
         );
     }
 }

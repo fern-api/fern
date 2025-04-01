@@ -41,12 +41,11 @@ public class GetOrganizationUserTest : BaseMockServerTest
                 TenantId = "tenant_id",
                 OrganizationId = "organization_id",
                 UserId = "user_id",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

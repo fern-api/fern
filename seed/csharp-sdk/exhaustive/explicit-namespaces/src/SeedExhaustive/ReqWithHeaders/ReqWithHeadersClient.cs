@@ -26,7 +26,7 @@ public partial class ReqWithHeadersClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
-        ReqWithHeaders request,
+        SeedExhaustive.ReqWithHeaders.ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -40,7 +40,7 @@ public partial class ReqWithHeadersClient
         );
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

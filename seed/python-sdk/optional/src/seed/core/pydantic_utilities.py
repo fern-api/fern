@@ -5,10 +5,8 @@ import datetime as dt
 import typing
 from collections import defaultdict
 
-import typing_extensions
-
 import pydantic
-
+import typing_extensions
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
 

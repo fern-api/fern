@@ -25,11 +25,11 @@ public partial class ServiceClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(endpointParam)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
                     Options = options,
                 },
                 cancellationToken

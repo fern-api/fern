@@ -66,7 +66,7 @@ export class FilePropertyMapper {
         if (fileValue == null) {
             return csharp.TypeLiteral.nop();
         }
-        return this.context.getMemoryStreamForString(fileValue);
+        return this.context.getFileParameterForString(fileValue);
     }
 
     private getArrayFileProperty({
@@ -81,8 +81,8 @@ export class FilePropertyMapper {
             return csharp.TypeLiteral.nop();
         }
         return csharp.TypeLiteral.list({
-            valueType: csharp.Type.reference(this.context.getMemoryStreamClassReference()),
-            values: fileValues.map((value) => this.context.getMemoryStreamForString(value))
+            valueType: csharp.Type.reference(this.context.getFileParameterClassReference()),
+            values: fileValues.map((value) => this.context.getFileParameterForString(value))
         });
     }
 

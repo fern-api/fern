@@ -27,7 +27,7 @@ public class TypeTest
             Shape = Shape.Square,
         };
         var deserializedObject = JsonUtils.Deserialize<Type>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

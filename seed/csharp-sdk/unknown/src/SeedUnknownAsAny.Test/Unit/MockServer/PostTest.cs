@@ -43,13 +43,11 @@ public class PostTest : BaseMockServerTest
             );
 
         var response = await Client.Unknown.PostAsync(
-            new Dictionary<object, object?>() { { "key", "value" } },
-            RequestOptions
+            new Dictionary<object, object?>() { { "key", "value" } }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<object>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<object>>(mockResponse)).UsingDefaults()
         );
     }
 }

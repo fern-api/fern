@@ -3,9 +3,8 @@
 import typing
 import uuid
 
-from dateutil import parser
-
 import pydantic
+from dateutil import parser
 
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:

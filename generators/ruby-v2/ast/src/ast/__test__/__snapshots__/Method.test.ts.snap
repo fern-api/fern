@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Method > type definitions > writes type definition for method with keyword splat parameter 1`] = `"def valid_name?: (**untyped) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with no parameters and typed return 1`] = `"def foobar: () -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with no parameters and untyped return type 1`] = `"def foobar: () -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with positional splat parameter 1`] = `"def valid_name?: (*String) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with typed (but optional) positional parameters 1`] = `"def foobar: (?String, ?Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with typed keyword parameters 1`] = `"def foobar: (biz: String, baz: Integer) -> bool"`;
+
+exports[`Method > type definitions > writes type definition for method with typed positional parameters 1`] = `"def foobar: (String, Integer) -> untyped"`;
+
+exports[`Method > type definitions > writes type definition for method with untyped positional parameters 1`] = `"def foobar: (untyped) -> untyped"`;
+
+exports[`Method > writes method with all parameter types 1`] = `
+"def fizzbuzz(one, two:, *three, **four, &five); end
+"
+`;
+
+exports[`Method > writes method with docstring 1`] = `
+"# This is a method
+# that does nothing
+def bizbuzz; end
+"
+`;
+
+exports[`Method > writes method with double splat parameter 1`] = `
+"def fizzbuzz(**one); end
+"
+`;
+
+exports[`Method > writes method with empty parameter arrays 1`] = `
+"def fizzbuzz; end
+"
+`;
+
+exports[`Method > writes method with keyword parameters 1`] = `
+"def fizzbuzz(one:, two:); end
+"
+`;
+
+exports[`Method > writes method with mix of positional and keyword parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:); end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and double-splat parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, **double_splatted); end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and single-splat parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, *splatted); end
+"
+`;
+
+exports[`Method > writes method with mix of positional, keyword, and yield parameters 1`] = `
+"def fizzbuzz(one, two, three:, four:, &block); end
+"
+`;
+
+exports[`Method > writes method with no parameters 1`] = `
+"def fizzbuzz; end
+"
+`;
+
+exports[`Method > writes method with positional parameters 1`] = `
+"def fizzbuzz(one, two); end
+"
+`;
+
+exports[`Method > writes method with single splat parameter 1`] = `
+"def fizzbuzz(*one); end
+"
+`;
+
+exports[`Method > writes method with special characters in name 1`] = `
+"def fizz_buzz!; end
+"
+`;
+
+exports[`Method > writes method with yield parameter 1`] = `
+"def fizzbuzz(&one); end
+"
+`;
+
+exports[`Method > writes private class methods 1`] = `
+"private_class_method def self.foobar; end
+"
+`;
+
+exports[`Method > writes private instance methods 1`] = `
+"private def foobar; end
+"
+`;
+
+exports[`Method > writes protected class methods 1`] = `
+"protected_class_method def self.foobar; end
+"
+`;
+
+exports[`Method > writes protected instance methods 1`] = `
+"protected def foobar; end
+"
+`;

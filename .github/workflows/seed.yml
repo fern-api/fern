@@ -206,7 +206,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-sdk
-          generator-path: generators/java
+          generator-path: generators/java generators/java-v2
 
   java-model:
     runs-on: Seed

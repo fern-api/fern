@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Optional
 
-import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST
-from fern_python.generators.context import PydanticGeneratorContext
-
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
+from fern_python.codegen import AST
+from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
+
+import fern.ir.resources as ir_types
 
 
 class SnippetWriter:
@@ -245,6 +244,14 @@ class SnippetWriter:
                 in_typeddict=in_typeddict,
             )
             if optional.optional is not None
+            else None,
+            nullable=lambda nullable: self.get_snippet_for_example_type_reference(
+                example_type_reference=nullable.nullable,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
+                in_typeddict=in_typeddict,
+            )
+            if nullable.nullable is not None
             else None,
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map.map_,

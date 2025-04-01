@@ -7,7 +7,10 @@ from .utilities import validate_response
 
 
 async def test_get_attempted_migrations(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
-    expected_response: typing.Any = [{"name": "name", "status": "RUNNING"}, {"name": "name", "status": "RUNNING"}]
+    expected_response: typing.Any = [
+        {"name": "name", "status": "RUNNING"},
+        {"name": "name", "status": "RUNNING"},
+    ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {0: {"name": None, "status": None}, 1: {"name": None, "status": None}},

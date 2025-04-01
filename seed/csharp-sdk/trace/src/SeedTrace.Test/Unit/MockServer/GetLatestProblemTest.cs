@@ -320,14 +320,10 @@ public class GetLatestProblemTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetLatestProblemAsync(
-            "problemId",
-            RequestOptions
-        );
+        var response = await Client.V2.V3.Problem.GetLatestProblemAsync("problemId");
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
     }
 }

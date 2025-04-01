@@ -18,7 +18,7 @@ public class FileTest
             """;
         var expectedObject = new File { Name = "file.txt", Contents = "..." };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]
@@ -47,7 +47,7 @@ public class FileTest
             """;
         var expectedObject = new File { Name = "another_file.txt", Contents = "..." };
         var deserializedObject = JsonUtils.Deserialize<File>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

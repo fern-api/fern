@@ -29,5 +29,5 @@ public partial class SeedVersionClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; init; }
+    public UserClient User { get; }
 }

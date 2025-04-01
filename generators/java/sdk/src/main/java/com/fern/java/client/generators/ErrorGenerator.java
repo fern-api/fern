@@ -11,10 +11,12 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
+import okhttp3.Response;
 
 public class ErrorGenerator extends AbstractFileGenerator {
     private static final String BODY_FIELD_NAME = "body";
@@ -58,14 +60,41 @@ public class ErrorGenerator extends AbstractFileGenerator {
                                     "super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
                             .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
                             .build())
+                    .addMethod(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(typeName, BODY_FIELD_NAME)
+                            .addParameter(ParameterSpec.builder(Response.class, "rawResponse")
+                                    .build())
+                            .addStatement(
+                                    "super($S, $L, $L, $L)",
+                                    errorName,
+                                    errorDeclaration.getStatusCode(),
+                                    BODY_FIELD_NAME,
+                                    "rawResponse")
+                            .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
+                            .build())
                     .addMethod(createGetter(bodyFieldSpec, ClassName.get("", "java.lang.Override")));
         });
         if (bodyTypeName.isEmpty()) {
-            errorTypeSpecBuilder.addMethod(MethodSpec.constructorBuilder()
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(Object.class, BODY_FIELD_NAME)
-                    .addStatement("super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
-                    .build());
+            errorTypeSpecBuilder
+                    .addMethod(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(Object.class, BODY_FIELD_NAME)
+                            .addStatement(
+                                    "super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
+                            .build())
+                    .addMethod(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(Object.class, BODY_FIELD_NAME)
+                            .addParameter(ParameterSpec.builder(Response.class, "rawResponse")
+                                    .build())
+                            .addStatement(
+                                    "super($S, $L, $L, $L)",
+                                    errorName,
+                                    errorDeclaration.getStatusCode(),
+                                    BODY_FIELD_NAME,
+                                    "rawResponse")
+                            .build());
         }
         TypeSpec errorTypeSpec = errorTypeSpecBuilder.build();
         JavaFile javaFile =

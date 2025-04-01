@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedAliasExtends;
-using SeedAliasExtends.Core;
 
 namespace Usage;
 

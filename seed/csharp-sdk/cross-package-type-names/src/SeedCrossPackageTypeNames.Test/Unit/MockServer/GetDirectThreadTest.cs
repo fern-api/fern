@@ -29,11 +29,10 @@ public class GetDirectThreadTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.FolderD.Service.GetDirectThreadAsync(RequestOptions);
+        var response = await Client.FolderD.Service.GetDirectThreadAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<FolderD.Response>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<FolderD.Response>(mockResponse)).UsingDefaults()
         );
     }
 }

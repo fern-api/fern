@@ -6,9 +6,15 @@ from .ast import (
     ContainerValue,
     FieldName,
     FieldValue,
+    FirstUnion,
+    FirstUnionFirstElement,
+    FirstUnionSecondElement,
     ObjectFieldValue,
     ObjectValue,
     PrimitiveValue,
+    SecondUnion,
+    SecondUnionFirstElement,
+    SecondUnionSecondElement,
 )
 
 __all__ = [
@@ -16,9 +22,15 @@ __all__ = [
     "ContainerValue",
     "FieldName",
     "FieldValue",
+    "FirstUnion",
+    "FirstUnionFirstElement",
+    "FirstUnionSecondElement",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
+    "SecondUnion",
+    "SecondUnionFirstElement",
+    "SecondUnionSecondElement",
     "a",
     "ast",
 ]

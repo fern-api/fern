@@ -611,11 +611,11 @@ public class GetProblemsTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetProblemsAsync(RequestOptions);
+        var response = await Client.V2.V3.Problem.GetProblemsAsync();
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<V2.V3.ProblemInfoV2>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

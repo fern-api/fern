@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/apiKey",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"<token>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"<token>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

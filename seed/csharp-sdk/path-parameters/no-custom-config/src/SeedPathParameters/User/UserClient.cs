@@ -27,12 +27,15 @@ public partial class UserClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format(
+                        "/{0}/user/{1}",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -80,11 +83,14 @@ public partial class UserClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/{JsonUtils.SerializeAsString(tenantId)}/user/",
+                    Path = string.Format(
+                        "/{0}/user/",
+                        ValueConvert.ToPathParameterString(tenantId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -138,12 +144,15 @@ public partial class UserClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format(
+                        "/{0}/user/{1}",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Body = request.Body,
                     Options = options,
                 },
@@ -191,12 +200,15 @@ public partial class UserClient
         }
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"/{JsonUtils.SerializeAsString(tenantId)}/user/{JsonUtils.SerializeAsString(userId)}/search",
+                    Path = string.Format(
+                        "/{0}/user/{1}/search",
+                        ValueConvert.ToPathParameterString(tenantId),
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Query = _query,
                     Options = options,
                 },

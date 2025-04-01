@@ -1,8 +1,15 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import fern.ir.resources as ir_types
-
+from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .generated_root_client import GeneratedRootClient
+from .request_body_parameters import (
+    AbstractRequestBodyParameters,
+    BytesRequestBodyParameters,
+    FileUploadRequestBodyParameters,
+    InlinedRequestBodyParameters,
+    ReferencedRequestBodyParameters,
+)
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
@@ -33,15 +40,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.snippet import SnippetWriter
 
-from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-from .generated_root_client import GeneratedRootClient
-from .request_body_parameters import (
-    AbstractRequestBodyParameters,
-    BytesRequestBodyParameters,
-    FileUploadRequestBodyParameters,
-    InlinedRequestBodyParameters,
-    ReferencedRequestBodyParameters,
-)
+import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -426,9 +425,20 @@ class EndpointFunctionGenerator:
         else:
             request_options_docs = "Request-specific configuration."
 
+        # Check if any existing parameters have the same name as REQUEST_OPTIONS_VARIABLE
+        has_request_options_parameter = False
+        for param in parameters:
+            if param.name == EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE:
+                has_request_options_parameter = True
+                break
+
         parameters.append(
             AST.NamedFunctionParameter(
-                name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                name=(
+                    "_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                    if has_request_options_parameter
+                    else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                ),
                 docs=request_options_docs,
                 type_hint=AST.TypeHint.optional(
                     AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
@@ -519,6 +529,12 @@ class EndpointFunctionGenerator:
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
             ) -> AST.Expression:
+                # Get the request_options variable name from the last parameter if it exists
+                request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                if named_parameters and len(named_parameters) > 0:
+                    last_param = named_parameters[-1]
+                    request_options_variable_name = last_param.name
+
                 return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
@@ -532,7 +548,7 @@ class EndpointFunctionGenerator:
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=files,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
-                    request_options_variable_name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                    request_options_variable_name=request_options_variable_name,
                     headers=self._get_headers_for_endpoint(
                         service=service,
                         endpoint=endpoint,
@@ -928,6 +944,7 @@ class EndpointFunctionGenerator:
                     list_=lambda item_type: item_type,
                     set_=lambda item_type: item_type,
                     optional=lambda item_type: self._unwrap_container_types(item_type),
+                    nullable=lambda item_type: self._unwrap_container_types(item_type),
                     map_=lambda _: None,
                     literal=lambda _: None,
                 )
@@ -949,11 +966,15 @@ class EndpointFunctionGenerator:
     def _get_non_streaming_response_body_type(
         self, non_stream_response: ir_types.NonStreamHttpResponseBody, is_async: bool
     ) -> AST.TypeHint:
-        return non_stream_response.visit(
+        result = non_stream_response.visit(
             file_download=lambda _: self._get_file_download_response_body_type(is_async),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
+            bytes=lambda _: AST.TypeHint.bytes(),
         )
+        if result is None:
+            return AST.TypeHint.none()
+        return result
 
     def _get_file_download_response_body_type(self, is_async: bool) -> AST.TypeHint:
         return (
@@ -995,7 +1016,11 @@ class EndpointFunctionGenerator:
             stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
                 stream_param_response=stream_param_response, is_async=is_async, streaming_parameter=streaming_parameter
             ),
+            bytes=lambda _: AST.TypeHint.bytes(),
         )
+
+        if response_type is None:
+            return AST.TypeHint.none()
 
         return response_type if not self.is_paginated else self._get_pagination_results_type(response_type)
 
@@ -1029,6 +1054,7 @@ class EndpointFunctionGenerator:
                 ),
                 text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
                 stream_parameter=lambda _: None,
+                bytes=lambda _: self._write_standard_return(writer, response_hint, None),
             )
         else:
             writer.write_line("Returns")
@@ -1328,6 +1354,13 @@ class EndpointFunctionGenerator:
                     allow_optional=True,
                     allow_enum=allow_enum,
                 ),
+                nullable=lambda item_type: allow_optional
+                and self._does_type_reference_match_primitives(
+                    item_type,
+                    expected=expected,
+                    allow_optional=True,
+                    allow_enum=allow_enum,
+                ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(
                     boolean=lambda x: ir_types.PrimitiveTypeV1.BOOLEAN in expected,
@@ -1352,7 +1385,10 @@ class EndpointFunctionGenerator:
         self, query_parameter: ir_types.QueryParameter, query_parameter_type_hint: AST.TypeHint
     ) -> AST.TypeHint:
         value_type = query_parameter.value_type.get_as_union()
-        is_optional = value_type.type == "container" and value_type.container.get_as_union().type == "optional"
+        is_optional = value_type.type == "container" and (
+            value_type.container.get_as_union().type == "optional"
+            or value_type.container.get_as_union().type == "nullable"
+        )
         if is_optional and query_parameter.allow_multiple:
             return AST.TypeHint.optional(
                 AST.TypeHint.union(
@@ -1415,7 +1451,10 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
     if union.type == "reference":
         request_body = union.request_body_type.get_as_union()
         if request_body.type == "container":
-            return request_body.container.get_as_union().type == "optional"
+            return (
+                request_body.container.get_as_union().type == "optional"
+                or request_body.container.get_as_union().type == "nullable"
+            )
     return False
 
 
@@ -1712,9 +1751,14 @@ class EndpointFunctionSnippetGenerator:
             td_shape = td.shape.get_as_union()
             if td_shape.type == "alias":
                 resolved_type = td_shape.resolved_type.get_as_union()
-                return resolved_type.type == "container" and resolved_type.container.get_as_union().type == "optional"
+                return resolved_type.type == "container" and (
+                    resolved_type.container.get_as_union().type == "optional"
+                    or resolved_type.container.get_as_union().type == "nullable"
+                )
 
-        return union.type == "container" and union.container.get_as_union().type == "optional"
+        return union.type == "container" and (
+            union.container.get_as_union().type == "optional" or union.container.get_as_union().type == "nullable"
+        )
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
@@ -1737,4 +1781,6 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         container_as_union = type_as_union.container.get_as_union()
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
+        if container_as_union.type == "nullable":
+            return unwrap_optional_type(container_as_union.nullable)
     return type_reference

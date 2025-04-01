@@ -41,6 +41,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-dependencies")
     Optional<List<String>> customDependencies();
 
+    @JsonProperty("inline-file-properties")
+    @Value.Default
+    default boolean inlineFileProperties() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

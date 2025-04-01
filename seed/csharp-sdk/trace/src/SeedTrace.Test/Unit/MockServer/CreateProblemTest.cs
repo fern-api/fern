@@ -182,12 +182,11 @@ public class CreateProblemTest : BaseMockServerTest
                     },
                 },
                 MethodName = "methodName",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -48,13 +48,12 @@ public class SearchOrganizationsTest : BaseMockServerTest
         var response = await Client.Organizations.SearchOrganizationsAsync(
             "tenant_id",
             "organization_id",
-            new SearchOrganizationsRequest { Limit = 1 },
-            RequestOptions
+            new SearchOrganizationsRequest { Limit = 1 }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Organization>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

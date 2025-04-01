@@ -39,13 +39,12 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
+            new ObjectWithRequiredField { String = "string" }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField?>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

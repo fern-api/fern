@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from types import TracebackType
 from typing import Dict, List, Optional, Sequence, Type
 
-import fern.ir.resources as ir_types
-
+from ..context.pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.codegen.local_class_reference import LocalClassReference
@@ -15,7 +14,7 @@ from fern_python.external_dependencies.typing_extensions import (
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ..context import PydanticGeneratorContext
+import fern.ir.resources as ir_types
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),
@@ -157,6 +156,9 @@ class FernTypedDict:
             container_reference_unioned = type_reference_unioned.container.get_as_union()
             if container_reference_unioned.type == "optional":
                 type_reference = container_reference_unioned.optional
+                is_optional = True
+            if container_reference_unioned.type == "nullable":
+                type_reference = container_reference_unioned.nullable
                 is_optional = True
 
         type_hint = self._get_type_hint_for_type_reference(type_reference, as_if_type_checking)

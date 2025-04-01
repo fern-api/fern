@@ -38,6 +38,7 @@ class CoreUtilities:
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
+        self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -182,6 +183,17 @@ class CoreUtilities:
                 exports={"UncheckedBaseModel", "UnionMetadata", "construct_type"},
             )
 
+        if self._should_generate_websocket_clients:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="events.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="events"),
+                ),
+                exports={"EventType", "EventEmitterMixin"},
+            )
+
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         if self._version == PydanticVersionCompatibility.V1:
             project.add_dependency(PYDANTIC_V1_DEPENDENCY)
@@ -299,7 +311,7 @@ class CoreUtilities:
                 kwargs=[
                     ("object_", object_),
                     ("annotation", AST.Expression(annotation)),
-                    ("direction", AST.Expression(expression=f'"write"')),
+                    ("direction", AST.Expression(expression='"write"')),
                 ],
             )
         )
@@ -594,6 +606,22 @@ class CoreUtilities:
                     module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
                 ),
             )
+        )
+
+    def get_event_emitter_mixin(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "events"), named_import="EventEmitterMixin"
+            ),
+        )
+
+    def get_event_type(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "events"), named_import="EventType"
+            ),
         )
 
     def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:

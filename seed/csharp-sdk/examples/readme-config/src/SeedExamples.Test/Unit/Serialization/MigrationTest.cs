@@ -19,7 +19,7 @@ public class MigrationTest
             """;
         var expectedObject = new Migration { Name = "001_init", Status = MigrationStatus.Running };
         var deserializedObject = JsonUtils.Deserialize<Migration>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

@@ -509,7 +509,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
     /// The <see cref="CancellationToken"/> used for requests made while
     /// enumerating asynchronously.
     /// </param>
-    /// <returns>An async sequence of <see cref="TItem"/>s.</returns>
+    /// <returns>An async sequence of <see cref="!:TItem"/>s.</returns>
     public async IAsyncEnumerator<TItem> GetAsyncEnumerator(
         CancellationToken cancellationToken = default
     )

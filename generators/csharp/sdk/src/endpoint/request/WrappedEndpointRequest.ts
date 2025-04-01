@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 
 import {
@@ -173,8 +174,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             case "reference":
             case "inlinedRequestBody":
                 return "json";
+            case "fileUpload":
+                return "multipartform";
+            default:
+                assertNever(this.endpoint.requestBody);
         }
-        return undefined;
     }
 
     private stringify({

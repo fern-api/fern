@@ -5,9 +5,12 @@ import { GoProject } from "@fern-api/go-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 
+import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
+    public readonly generatorAgent: GoGeneratorAgent;
     public readonly project: GoProject;
 
     public constructor(
@@ -18,5 +21,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.project = new GoProject({ context: this });
+        this.generatorAgent = new GoGeneratorAgent({
+            logger: this.logger,
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder()
+        });
     }
 }

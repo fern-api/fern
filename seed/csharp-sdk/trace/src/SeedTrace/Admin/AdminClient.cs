@@ -29,12 +29,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-test-submission-status/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-test-submission-status/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -74,12 +76,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-test-submission-status-v2/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-test-submission-status-v2/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -115,12 +119,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-workspace-submission-status/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-workspace-submission-status/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -160,12 +166,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-workspace-submission-status-v2/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-workspace-submission-status-v2/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -274,12 +282,15 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-test-trace/submission/{JsonUtils.SerializeAsString(submissionId)}/testCase/{JsonUtils.SerializeAsString(testCaseId)}",
+                    Path = string.Format(
+                        "/admin/store-test-trace/submission/{0}/testCase/{1}",
+                        ValueConvert.ToPathParameterString(submissionId),
+                        ValueConvert.ToPathParameterString(testCaseId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -377,12 +388,15 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-test-trace-v2/submission/{JsonUtils.SerializeAsString(submissionId)}/testCase/{JsonUtils.SerializeAsString(testCaseId)}",
+                    Path = string.Format(
+                        "/admin/store-test-trace-v2/submission/{0}/testCase/{1}",
+                        ValueConvert.ToPathParameterString(submissionId),
+                        ValueConvert.ToPathParameterString(testCaseId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -495,12 +509,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-workspace-trace/submission/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-workspace-trace/submission/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -596,12 +612,14 @@ public partial class AdminClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/admin/store-workspace-trace-v2/submission/{JsonUtils.SerializeAsString(submissionId)}",
+                    Path = string.Format(
+                        "/admin/store-workspace-trace-v2/submission/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
                     Body = request,
                     Options = options,
                 },

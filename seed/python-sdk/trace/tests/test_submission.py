@@ -13,7 +13,12 @@ async def test_create_execution_session(client: SeedTrace, async_client: AsyncSe
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
-    expected_types: typing.Any = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
+    expected_types: typing.Any = {
+        "sessionId": None,
+        "executionSessionUrl": None,
+        "language": None,
+        "status": None,
+    }
     response = client.submission.create_execution_session(language="JAVA")
     validate_response(response, expected_response, expected_types)
 
@@ -28,7 +33,12 @@ async def test_get_execution_session(client: SeedTrace, async_client: AsyncSeedT
         "language": "JAVA",
         "status": "CREATING_CONTAINER",
     }
-    expected_types: typing.Any = {"sessionId": None, "executionSessionUrl": None, "language": None, "status": None}
+    expected_types: typing.Any = {
+        "sessionId": None,
+        "executionSessionUrl": None,
+        "language": None,
+        "status": None,
+    }
     response = client.submission.get_execution_session(session_id="sessionId")
     validate_response(response, expected_response, expected_types)
 

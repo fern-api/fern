@@ -375,14 +375,14 @@ export class ReconnectingWebSocket {
         this._wait()
             .then(() => this._getNextUrl(this._url))
             .then((url) => {
-                // close could be called before creating the ws
                 if (this._closeCalled) {
                     return;
                 }
-                this._debug("connect", { url, protocols: this._protocols });
-                this._ws = this._protocols
-                    ? new WebSocket(url, this._protocols, { headers: this._headers })
-                    : new WebSocket(url, undefined, { headers: this._headers });
+                const options: Record<string, unknown> = {};
+                if (this._headers) {
+                    options.headers = this._headers;
+                }
+                this._ws = new WebSocket(url, this._protocols, options);
                 this._ws!.binaryType = this._binaryType;
                 this._connectLock = false;
                 this._addListeners();

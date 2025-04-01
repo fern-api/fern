@@ -1,9 +1,6 @@
 from typing import List, Optional
 
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
 import generatorcli
-
 from fern_python.codegen import AST
 from fern_python.codegen.project import Project
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -12,6 +9,9 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
     ParameterMetadata,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 
 
 class ReferenceSectionBuilder:
@@ -51,6 +51,7 @@ class ReferenceSectionBuilder:
                 list_=lambda tr: self._visit_type_reference(tr),
                 map_=lambda _: None,
                 optional=lambda tr: self._visit_type_reference(tr),
+                nullable=lambda tr: self._visit_type_reference(tr),
                 set_=lambda tr: self._visit_type_reference(tr),
                 literal=lambda _: None,
             ),

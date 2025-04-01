@@ -31,6 +31,7 @@ def retrieve_pagination_default(type_reference: ir_types.TypeReference) -> int:
             literal=lambda _: None,
             list_=lambda _: None,
             set_=lambda _: None,
+            nullable=lambda nullable: retrieve_pagination_default(nullable),
             optional=lambda opt: retrieve_pagination_default(opt),
             map_=lambda _: None,
         )

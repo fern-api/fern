@@ -25,7 +25,7 @@ public class TestGetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.HttpMethods.TestGetAsync("id", RequestOptions);
+        var response = await Client.Endpoints.HttpMethods.TestGetAsync("id");
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

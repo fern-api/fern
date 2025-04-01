@@ -1,13 +1,13 @@
 import re
 from typing import Dict, List, Optional
 
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
-from typing_extensions import assert_never
-
 from fern_python.codegen import AST
 from fern_python.snippet.snippet_endpoint_expression import EndpointExpression
 from fern_python.source_file_factory import SourceFileFactory
+from typing_extensions import assert_never
+
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 
 
 class SnippetRegistry:

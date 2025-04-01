@@ -10,7 +10,7 @@ public record Directory
     public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; set; }
+    public IEnumerable<SeedObjectsWithImports.File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
     public IEnumerable<Directory>? Directories { get; set; }
@@ -18,10 +18,14 @@ public record Directory
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

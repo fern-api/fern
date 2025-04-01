@@ -13,7 +13,7 @@ public class BaseMockServerTest
 
     protected static SeedSingleUrlEnvironmentDefaultClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = null!;
+    protected static RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()
@@ -24,9 +24,10 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedSingleUrlEnvironmentDefaultClient("TOKEN");
-
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        Client = new SeedSingleUrlEnvironmentDefaultClient(
+            "TOKEN",
+            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+        );
     }
 
     [OneTimeTearDown]

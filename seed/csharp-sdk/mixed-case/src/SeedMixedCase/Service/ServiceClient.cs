@@ -25,11 +25,14 @@ public partial class ServiceClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/resource/{JsonUtils.SerializeAsString(resourceId)}",
+                    Path = string.Format(
+                        "/resource/{0}",
+                        ValueConvert.ToPathParameterString(resourceId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -74,7 +77,7 @@ public partial class ServiceClient
         _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,

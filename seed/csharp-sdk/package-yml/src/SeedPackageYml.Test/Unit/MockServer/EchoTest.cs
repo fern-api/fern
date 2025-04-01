@@ -37,11 +37,7 @@ public class EchoTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.EchoAsync(
-            "id",
-            new EchoRequest { Name = "name", Size = 1 },
-            RequestOptions
-        );
+        var response = await Client.EchoAsync("id", new EchoRequest { Name = "name", Size = 1 });
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 
@@ -76,8 +72,7 @@ public class EchoTest : BaseMockServerTest
 
         var response = await Client.EchoAsync(
             "id-ksfd9c1",
-            new EchoRequest { Name = "Hello world!", Size = 20 },
-            RequestOptions
+            new EchoRequest { Name = "Hello world!", Size = 20 }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

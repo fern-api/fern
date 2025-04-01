@@ -82,13 +82,12 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
                 },
                 OutputType = "no-properties-union",
                 MethodName = "methodName",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

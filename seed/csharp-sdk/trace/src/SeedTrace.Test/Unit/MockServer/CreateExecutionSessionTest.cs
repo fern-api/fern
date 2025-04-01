@@ -34,14 +34,11 @@ public class CreateExecutionSessionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.CreateExecutionSessionAsync(
-            Language.Java,
-            RequestOptions
-        );
+        var response = await Client.Submission.CreateExecutionSessionAsync(Language.Java);
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

@@ -27,12 +27,15 @@ public partial class SyspropClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path =
-                        $"/sysprop/num-warm-instances/{JsonUtils.SerializeAsString(language)}/{JsonUtils.SerializeAsString(numWarmInstances)}",
+                    Path = string.Format(
+                        "/sysprop/num-warm-instances/{0}/{1}",
+                        ValueConvert.ToPathParameterString(language),
+                        ValueConvert.ToPathParameterString(numWarmInstances)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -62,7 +65,7 @@ public partial class SyspropClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,

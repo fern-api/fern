@@ -27,13 +27,13 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
+        var response = await Client.Union.GetMetadataAsync();
         Assert.That(
             response,
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 
@@ -57,13 +57,13 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
+        var response = await Client.Union.GetMetadataAsync();
         Assert.That(
             response,
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

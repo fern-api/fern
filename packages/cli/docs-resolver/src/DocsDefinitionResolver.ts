@@ -28,7 +28,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -92,7 +92,7 @@ export class DocsDefinitionResolver {
         private domain: string,
         private docsWorkspace: DocsWorkspace,
         private ossWorkspaces: OSSWorkspace[],
-        private fernWorkspaces: FernWorkspace[],
+        private apiWorkspaces: AbstractAPIWorkspace<unknown>[],
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
@@ -129,7 +129,13 @@ export class DocsDefinitionResolver {
                     apiSection: async ({ workspace }) => {
                         const fernWorkspace = await workspace.toFernWorkspace(
                             { context: this.taskContext },
-                            { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                            {
+                                enableUniqueErrorsPerEndpoint: true,
+                                detectGlobalHeaders: false,
+                                objectQueryParameters: true,
+                                respectReadonlySchemas: true,
+                                respectNullableSchemas: true
+                            }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
@@ -137,7 +143,7 @@ export class DocsDefinitionResolver {
                         });
                     }
                 },
-                fernWorkspaces: this.fernWorkspaces,
+                apiWorkspaces: this.apiWorkspaces,
                 context: this.taskContext
             });
         }
@@ -364,6 +370,13 @@ export class DocsDefinitionResolver {
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const root = await this.toRootNode();
         const config: DocsV1Write.DocsConfig = {
+            aiChatConfig:
+                this.parsedDocsConfig.aiChatConfig != null
+                    ? {
+                          model: this.parsedDocsConfig.aiChatConfig.model,
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                      }
+                    : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
@@ -440,15 +453,17 @@ export class DocsDefinitionResolver {
         return config;
     }
 
-    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): FernWorkspace {
-        if (this.fernWorkspaces.length === 1 && this.fernWorkspaces[0] != null) {
-            return this.fernWorkspaces[0];
+    private getFernWorkspaceForApiSection(
+        apiSection: docsYml.DocsNavigationItem.ApiSection
+    ): AbstractAPIWorkspace<unknown> {
+        if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
+            return this.apiWorkspaces[0];
         } else if (apiSection.apiName != null) {
-            const fernWorkspace = this.fernWorkspaces.find((workspace) => {
+            const apiWorkspace = this.apiWorkspaces.find((workspace) => {
                 return workspace.workspaceName === apiSection.apiName;
             });
-            if (fernWorkspace != null) {
-                return fernWorkspace;
+            if (apiWorkspace != null) {
+                return apiWorkspace;
             }
         }
         throw new Error("Failed to load API Definition referenced in docs");
@@ -680,13 +695,15 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenRPC document");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 apiName: item.apiName,
                 snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 undefined,
                 this.docsWorkspace,
@@ -707,13 +724,15 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 workspace,
                 this.docsWorkspace,
@@ -734,7 +753,16 @@ export class DocsDefinitionResolver {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
         } else {
-            workspace = this.getFernWorkspaceForApiSection(item);
+            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    respectReadonlySchemas: true,
+                    respectNullableSchemas: true
+                }
+            );
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,

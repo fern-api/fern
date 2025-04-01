@@ -51,12 +51,11 @@ public class CreateUserTest : BaseMockServerTest
                 Name = "name",
                 Email = "email",
                 Password = "password",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

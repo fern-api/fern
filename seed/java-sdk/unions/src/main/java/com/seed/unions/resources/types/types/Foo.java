@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
-public final class Foo {
+public final class Foo implements IFoo {
     private final String name;
 
     private final Map<String, Object> additionalProperties;
@@ -29,6 +29,7 @@ public final class Foo {
     }
 
     @JsonProperty("name")
+    @java.lang.Override
     public String getName() {
         return name;
     }

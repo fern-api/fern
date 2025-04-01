@@ -15,6 +15,10 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
+    /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
+    "respect-forward-compatible-enums"?: boolean;
+    /** Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream. */
+    "use-bytes-for-binary-response"?: boolean;
     /** The default encoding of form parameters. Defaults to JSON. */
     "default-form-parameter-encoding"?: FernDefinition.FormParameterEncoding;
     /** Filter to apply to the OpenAPI specification. */

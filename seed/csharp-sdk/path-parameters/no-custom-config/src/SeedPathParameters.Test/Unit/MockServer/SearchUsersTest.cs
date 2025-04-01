@@ -48,13 +48,11 @@ public class SearchUsersTest : BaseMockServerTest
         var response = await Client.User.SearchUsersAsync(
             "tenant_id",
             "user_id",
-            new SearchUsersRequest { Limit = 1 },
-            RequestOptions
+            new SearchUsersRequest { Limit = 1 }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
         );
     }
 }

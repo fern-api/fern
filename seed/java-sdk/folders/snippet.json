@@ -1,0 +1,83 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_a/b.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_a/c.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_folder.foo"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.foo();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/service",
+                "identifier_override": "endpoint_folder/service.endpoint"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.folder().service().endpoint();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.folder().service().endpoint();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f7429229",
+            "id": {
+                "method": "POST",
+                "path": "/service",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.folder().service().unknownRequest(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.folder().service().unknownRequest(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

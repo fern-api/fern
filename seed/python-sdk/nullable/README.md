@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import datetime
 
 from seed import SeedNullable
-from seed.nullable import Metadata
+from seed.nullable import Metadata, Status
 
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
@@ -40,6 +40,7 @@ client.nullable.create_user(
         ),
         avatar="avatar",
         activated=True,
+        status=Status(),
     ),
     avatar="avatar",
 )
@@ -54,7 +55,7 @@ import asyncio
 import datetime
 
 from seed import AsyncSeedNullable
-from seed.nullable import Metadata
+from seed.nullable import Metadata, Status
 
 client = AsyncSeedNullable(
     base_url="https://yourhost.com/path/to/api",
@@ -74,6 +75,7 @@ async def main() -> None:
             ),
             avatar="avatar",
             activated=True,
+            status=Status(),
         ),
         avatar="avatar",
     )
@@ -143,6 +145,7 @@ client.nullable.create_user(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedNullable

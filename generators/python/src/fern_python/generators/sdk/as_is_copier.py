@@ -47,7 +47,7 @@ def copy_to_project(*, project: Project) -> None:
             to="tests/utils/test_serialization",
             replacements={
                 ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
-                ".typeddict_models.types": f".assets.models",
+                ".typeddict_models.types": ".assets.models",
             },
         ),
         AsIsFile(
@@ -55,7 +55,7 @@ def copy_to_project(*, project: Project) -> None:
             to="tests/utils/assets/models/color",
             replacements={
                 ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
-                ".typeddict_models.types": f".assets.models",
+                ".typeddict_models.types": ".assets.models",
             },
         ),
     ]

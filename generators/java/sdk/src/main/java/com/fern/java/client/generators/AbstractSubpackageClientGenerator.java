@@ -29,6 +29,7 @@ import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import java.util.Map;
 
@@ -68,6 +69,8 @@ public abstract class AbstractSubpackageClientGenerator extends AbstractFileGene
 
     protected abstract AbstractClientGeneratorUtils clientGeneratorUtils();
 
+    protected abstract ClassName rawClientImplName(ClassName implClientName);
+
     @Override
     public GeneratedClient generateFile() {
         AbstractClientGeneratorUtils abstractClientGeneratorUtils = clientGeneratorUtils();
@@ -77,6 +80,11 @@ public abstract class AbstractSubpackageClientGenerator extends AbstractFileGene
                 .javaFile(JavaFile.builder(
                                 className.packageName(), result.getClientImpl().build())
                         .build())
+                .rawClient(result.getRawClientImpl().map(rawClient -> GeneratedJavaFile.builder()
+                        .className(rawClientImplName(className))
+                        .javaFile(JavaFile.builder(className.packageName(), rawClient.build())
+                                .build())
+                        .build()))
                 .addAllWrappedRequests(result.getGeneratedWrappedRequests())
                 .build();
     }

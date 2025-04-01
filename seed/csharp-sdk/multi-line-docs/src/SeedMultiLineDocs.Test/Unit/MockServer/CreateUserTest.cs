@@ -42,12 +42,11 @@ public class CreateUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.CreateUserAsync(
-            new CreateUserRequest { Name = "name", Age = 1 },
-            RequestOptions
+            new CreateUserRequest { Name = "name", Age = 1 }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

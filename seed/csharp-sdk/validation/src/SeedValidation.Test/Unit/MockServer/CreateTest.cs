@@ -51,12 +51,11 @@ public class CreateTest : BaseMockServerTest
                 Even = 100,
                 Name = "foo",
                 Shape = Shape.Square,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
         );
     }
 }

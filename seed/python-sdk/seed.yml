@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -21,17 +21,18 @@ buildScripts:
 publish:
   workingDirectory: generators/python
   preBuildCommands:
+    - pnpm --filter @fern-api/python-sdk dist:cli
     - pip install poetry
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
     file: ./generators/python/sdk/Dockerfile
     image: fernapi/fern-python-sdk
-    context: ./generators/python
+    context: .
 test:
   docker:
     image: fernapi/fern-python-sdk:latest
-    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+    command: pnpm --filter @fern-api/python-sdk dist:cli && docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
   local:
     workingDirectory: generators/python
     buildCommand:
@@ -227,6 +228,11 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  websocket:
+    - outputFolder: websocket-base
+    - customConfig:
+        should_generate_websocket_clients: true
+      outputFolder: websocket-with_generated_clients
 scripts:
   # Test Pydantic V2
   - docker: fernapi/python-seed

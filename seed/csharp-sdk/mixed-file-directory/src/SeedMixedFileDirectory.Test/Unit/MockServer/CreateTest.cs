@@ -52,12 +52,11 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Organization.CreateAsync(
-            new CreateOrganizationRequest { Name = "name" },
-            RequestOptions
+            new CreateOrganizationRequest { Name = "name" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
         );
     }
 }

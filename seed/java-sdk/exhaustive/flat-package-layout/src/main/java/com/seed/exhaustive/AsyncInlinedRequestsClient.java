@@ -3,41 +3,34 @@
  */
 package com.seed.exhaustive;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
-import com.seed.exhaustive.core.MediaTypes;
-import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiException;
-import com.seed.exhaustive.core.SeedExhaustiveException;
-import com.seed.exhaustive.errors.BadRequestBody;
-import com.seed.exhaustive.types.BadObjectRequestInfo;
+import com.seed.exhaustive.types.PostWithObjectBody;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncInlinedRequestsClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawInlinedRequestsClient rawClient;
+
     public AsyncInlinedRequestsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawInlinedRequestsClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawInlinedRequestsClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * POST with custom object in request body, response is an object
      */
     public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(PostWithObjectBody request) {
-        return postWithObjectBodyandResponse(request, null);
+        return this.rawClient.postWithObjectBodyandResponse(request).thenApply(response -> response.body());
     }
 
     /**
@@ -45,65 +38,8 @@ public class AsyncInlinedRequestsClient {
      */
     public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("req-bodies")
-                .addPathSegments("object")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedExhaustiveException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<ObjectWithOptionalField> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ObjectWithOptionalField.class));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    try {
-                        if (response.code() == 400) {
-                            future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(
-                                    responseBodyString, BadObjectRequestInfo.class)));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    future.completeExceptionally(new SeedExhaustiveApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedExhaustiveException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient
+                .postWithObjectBodyandResponse(request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

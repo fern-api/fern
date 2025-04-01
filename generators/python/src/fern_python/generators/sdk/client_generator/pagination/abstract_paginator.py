@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+
+import fern.ir.resources as ir_types
 
 
 # Duplicative of snippets,
@@ -47,28 +47,22 @@ class Paginator:
         self._config = config
 
     @abstractmethod
-    def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def get_next_none_safe_condition(self) -> Optional[str]:
-        ...
+    def get_next_none_safe_condition(self) -> Optional[str]: ...
 
     @abstractmethod
-    def init_has_next(self) -> str:
-        ...
+    def init_has_next(self) -> str: ...
 
     @abstractmethod
-    def init_get_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_get_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def get_results_property(self) -> ir_types.ResponseProperty:
-        ...
+    def get_results_property(self) -> ir_types.ResponseProperty: ...
 
     def init_parsed_response(self, writer: AST.NodeWriter) -> None:
         writer.write(f"{Paginator.PARSED_RESPONSE_VARIABLE} = ")

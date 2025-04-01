@@ -62,13 +62,11 @@ public class GetPlaylistsTest : BaseMockServerTest
                 MultiLineDocs = "multiLineDocs",
                 OptionalMultipleField = ["optionalMultipleField"],
                 MultipleField = ["multipleField"],
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Playlist>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Playlist>>(mockResponse)).UsingDefaults()
         );
     }
 }

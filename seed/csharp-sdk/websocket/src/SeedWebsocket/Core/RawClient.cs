@@ -8,7 +8,7 @@ namespace SeedWebsocket.Core;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-internal class RawClient(ClientOptions clientOptions)
+internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     internal int BaseRetryDelay { get; set; } = 1000;
@@ -19,16 +19,16 @@ internal class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<ApiResponse> MakeRequestAsync(
-        BaseApiRequest request,
+    internal Task<SeedWebsocket.Core.ApiResponse> MakeRequestAsync(
+        SeedWebsocket.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<ApiResponse> SendRequestAsync(
-        BaseApiRequest request,
+    internal async Task<SeedWebsocket.Core.ApiResponse> SendRequestAsync(
+        SeedWebsocket.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<ApiResponse> SendRequestAsync(
+    internal async Task<SeedWebsocket.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -58,11 +58,45 @@ internal class RawClient(ClientOptions clientOptions)
         return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
     }
 
-    private static HttpRequestMessage CloneRequest(HttpRequestMessage request)
+    private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
         clonedRequest.Version = request.Version;
-        clonedRequest.Content = request.Content;
+        switch (request.Content)
+        {
+            case MultipartContent oldMultipartFormContent:
+                var originalBoundary =
+                    oldMultipartFormContent
+                        .Headers.ContentType?.Parameters.First(p =>
+                            p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Value?.Trim('"') ?? Guid.NewGuid().ToString();
+                var newMultipartContent = oldMultipartFormContent switch
+                {
+                    MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
+                    _ => new MultipartContent(),
+                };
+                foreach (var content in oldMultipartFormContent)
+                {
+                    var ms = new MemoryStream();
+                    await content.CopyToAsync(ms).ConfigureAwait(false);
+                    ms.Position = 0;
+                    var newPart = new StreamContent(ms);
+                    foreach (var header in oldMultipartFormContent.Headers)
+                    {
+                        newPart.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    }
+
+                    newMultipartContent.Add(newPart);
+                }
+
+                clonedRequest.Content = newMultipartContent;
+                break;
+            default:
+                clonedRequest.Content = request.Content;
+                break;
+        }
+
         foreach (var header in request.Headers)
         {
             clonedRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
@@ -71,50 +105,11 @@ internal class RawClient(ClientOptions clientOptions)
         return clonedRequest;
     }
 
-    internal record BaseApiRequest
-    {
-        internal required string BaseUrl { get; init; }
-
-        internal required HttpMethod Method { get; init; }
-
-        internal required string Path { get; init; }
-
-        internal string? ContentType { get; init; }
-
-        internal Dictionary<string, object> Query { get; init; } = new();
-
-        internal Headers Headers { get; init; } = new();
-
-        internal IRequestOptions? Options { get; init; }
-    }
-
     /// <summary>
-    /// The request object to be sent for streaming uploads.
+    /// Sends the request with retries, unless the request content is not retryable,
+    /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    internal record StreamApiRequest : BaseApiRequest
-    {
-        internal Stream? Body { get; init; }
-    }
-
-    /// <summary>
-    /// The request object to be sent for JSON APIs.
-    /// </summary>
-    internal record JsonApiRequest : BaseApiRequest
-    {
-        internal object? Body { get; init; }
-    }
-
-    /// <summary>
-    /// The response object returned from the API.
-    /// </summary>
-    internal record ApiResponse
-    {
-        internal required int StatusCode { get; init; }
-
-        internal required HttpResponseMessage Raw { get; init; }
-    }
-
-    private async Task<ApiResponse> SendWithRetriesAsync(
+    private async Task<SeedWebsocket.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -127,7 +122,11 @@ internal class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+            return new SeedWebsocket.Core.ApiResponse
+            {
+                StatusCode = (int)response.StatusCode,
+                Raw = response,
+            };
         }
 
         for (var i = 0; i < maxRetries; i++)
@@ -139,13 +138,17 @@ internal class RawClient(ClientOptions clientOptions)
 
             var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-            using var retryRequest = CloneRequest(request);
+            using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
             response = await httpClient
                 .SendAsync(retryRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
 
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        return new SeedWebsocket.Core.ApiResponse
+        {
+            StatusCode = (int)response.StatusCode,
+            Raw = response,
+        };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
@@ -158,60 +161,42 @@ internal class RawClient(ClientOptions clientOptions)
     {
         return request.Content switch
         {
-            StreamContent or MultipartContent => false,
+            IIsRetryableContent c => c.IsRetryable,
+            StreamContent => false,
+            MultipartContent content => !content.Any(c => c is StreamContent),
             _ => true,
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(BaseApiRequest request)
+    internal HttpRequestMessage CreateHttpRequest(SeedWebsocket.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
-        switch (request)
-        {
-            // Add the request body to the request.
-            case JsonApiRequest jsonRequest:
-            {
-                if (jsonRequest.Body != null)
-                {
-                    httpRequest.Content = new StringContent(
-                        JsonUtils.Serialize(jsonRequest.Body),
-                        Encoding.UTF8,
-                        "application/json"
-                    );
-                }
+        httpRequest.Content = request.CreateContent();
+        var mergedHeaders = new Dictionary<string, List<string>>();
+        MergeHeaders(mergedHeaders, Options.Headers);
+        MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
+        MergeHeaders(mergedHeaders, request.Headers);
+        MergeHeaders(mergedHeaders, request.Options?.Headers);
 
-                break;
-            }
-            case StreamApiRequest { Body: not null } streamRequest:
-                httpRequest.Content = new StreamContent(streamRequest.Body);
-                break;
-        }
-
-        if (request.ContentType != null)
-        {
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
-                request.ContentType
-            );
-        }
-
-        SetHeaders(httpRequest, Options.Headers);
-        SetHeaders(httpRequest, request.Headers);
-        SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
-
+        MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
+        SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;
     }
 
-    private static string BuildUrl(BaseApiRequest request)
+    private static string BuildUrl(SeedWebsocket.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (request.Query.Count <= 0)
+
+        var queryParameters = GetQueryParameters(request);
+        if (!queryParameters.Any())
             return url;
+
         url += "?";
-        url = request.Query.Aggregate(
+        url = queryParameters.Aggregate(
             url,
             (current, queryItem) =>
             {
@@ -242,15 +227,183 @@ internal class RawClient(ClientOptions clientOptions)
         return url;
     }
 
-    private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    private static List<KeyValuePair<string, string>> GetQueryParameters(
+        SeedWebsocket.Core.BaseRequest request
+    )
     {
+        var result = TransformToKeyValuePairs(request.Query);
+        if (
+            request.Options?.AdditionalQueryParameters is null
+            || !request.Options.AdditionalQueryParameters.Any()
+        )
+        {
+            return result;
+        }
+
+        var additionalKeys = request
+            .Options.AdditionalQueryParameters.Select(p => p.Key)
+            .Distinct();
+        foreach (var key in additionalKeys)
+        {
+            result.RemoveAll(kv => kv.Key == key);
+        }
+
+        result.AddRange(request.Options.AdditionalQueryParameters);
+        return result;
+    }
+
+    private static List<KeyValuePair<string, string>> TransformToKeyValuePairs(
+        Dictionary<string, object> inputDict
+    )
+    {
+        var result = new List<KeyValuePair<string, string>>();
+        foreach (var kvp in inputDict)
+        {
+            switch (kvp.Value)
+            {
+                case string str:
+                    result.Add(new KeyValuePair<string, string>(kvp.Key, str));
+                    break;
+                case IEnumerable<string> strList:
+                {
+                    foreach (var value in strList)
+                    {
+                        result.Add(new KeyValuePair<string, string>(kvp.Key, value));
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static void MergeHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        Headers? headers
+    )
+    {
+        if (headers is null)
+        {
+            return;
+        }
+
         foreach (var header in headers)
         {
             var value = header.Value?.Match(str => str, func => func.Invoke());
             if (value != null)
             {
-                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+                mergedHeaders[header.Key] = [value];
             }
         }
     }
+
+    private static void MergeAdditionalHeaders(
+        Dictionary<string, List<string>> mergedHeaders,
+        IEnumerable<KeyValuePair<string, string?>>? headers
+    )
+    {
+        if (headers is null)
+        {
+            return;
+        }
+
+        var usedKeys = new HashSet<string>();
+        foreach (var header in headers)
+        {
+            if (header.Value is null)
+            {
+                mergedHeaders.Remove(header.Key);
+                usedKeys.Remove(header.Key);
+                continue;
+            }
+
+            if (usedKeys.Contains(header.Key))
+            {
+                mergedHeaders[header.Key].Add(header.Value);
+            }
+            else
+            {
+                mergedHeaders[header.Key] = [header.Value];
+                usedKeys.Add(header.Key);
+            }
+        }
+    }
+
+    private void SetHeaders(
+        HttpRequestMessage httpRequest,
+        Dictionary<string, List<string>> mergedHeaders
+    )
+    {
+        foreach (var kv in mergedHeaders)
+        {
+            foreach (var header in kv.Value)
+            {
+                if (header is null)
+                {
+                    continue;
+                }
+
+                httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
+            }
+        }
+    }
+
+    private static (Encoding encoding, string? charset, string mediaType) ParseContentTypeOrDefault(
+        string? contentType,
+        Encoding encodingFallback,
+        string mediaTypeFallback
+    )
+    {
+        var encoding = encodingFallback;
+        var mediaType = mediaTypeFallback;
+        string? charset = null;
+        if (string.IsNullOrEmpty(contentType))
+        {
+            return (encoding, charset, mediaType);
+        }
+
+        if (!MediaTypeHeaderValue.TryParse(contentType, out var mediaTypeHeaderValue))
+        {
+            return (encoding, charset, mediaType);
+        }
+
+        if (!string.IsNullOrEmpty(mediaTypeHeaderValue.CharSet))
+        {
+            charset = mediaTypeHeaderValue.CharSet;
+            encoding = Encoding.GetEncoding(mediaTypeHeaderValue.CharSet);
+        }
+
+        if (!string.IsNullOrEmpty(mediaTypeHeaderValue.MediaType))
+        {
+            mediaType = mediaTypeHeaderValue.MediaType;
+        }
+
+        return (encoding, charset, mediaType);
+    }
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.ApiResponse instead.")]
+    internal record ApiResponse : SeedWebsocket.Core.ApiResponse;
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : SeedWebsocket.Core.BaseRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : SeedWebsocket.Core.EmptyRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : SeedWebsocket.Core.JsonRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : SeedWebsocket.Core.MultipartFormRequest;
+
+    /// <inheritdoc />
+    [Obsolete("Use SeedWebsocket.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : SeedWebsocket.Core.StreamRequest;
 }

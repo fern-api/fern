@@ -31,6 +31,7 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
@@ -68,6 +69,7 @@ import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
+import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
@@ -190,6 +192,7 @@ export class SdkGenerator {
     private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private requestWrapperGenerator: RequestWrapperGenerator;
     private sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
+    private websocketTypeSchemaGenerator: WebsocketTypeSchemaGenerator;
     private sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
     private sdkClientClassGenerator: SdkClientClassGenerator;
@@ -203,7 +206,7 @@ export class SdkGenerator {
     private FdrClient: FdrSnippetTemplateClient | undefined;
     private readonly asIsManager: AsIsManager;
     private websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
-
+    private websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
     constructor({
         namespaceExport,
         intermediateRepresentation,
@@ -396,6 +399,10 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             omitUndefined: config.omitUndefined
         });
+        this.websocketTypeSchemaGenerator = new WebsocketTypeSchemaGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+            omitUndefined: config.omitUndefined
+        });
         this.jestTestGenerator = new JestTestGenerator({
             ir: intermediateRepresentation,
             dependencyManager: this.dependencyManager,
@@ -426,6 +433,12 @@ export class SdkGenerator {
             useBigInt: config.useBigInt
         });
 
+        this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+            namespaceExport,
+            packageResolver: this.packageResolver
+        });
+
         this.websocketSocketDeclarationReferencer = new WebsocketSocketDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
@@ -441,6 +454,10 @@ export class SdkGenerator {
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
         if (this.shouldGenerateWebsocketClients) {
+            if (this.config.includeSerdeLayer) {
+                this.generateUnionedResponseSchemas();
+                this.context.logger.debug("Generated unioned response schemas");
+            }
             this.generateWebsocketSockets();
             this.context.logger.debug("Generated websocket clients");
         }
@@ -660,7 +677,9 @@ export class SdkGenerator {
                     filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        context.websocket.getGeneratedWebsocketSocketClass(subpackageId, channel)?.writeToFile(context);
+                        context.websocket
+                            .getGeneratedWebsocketSocketClass(packageId, subpackageId, channel)
+                            ?.writeToFile(context);
                     }
                 });
             }
@@ -754,6 +773,35 @@ export class SdkGenerator {
                 }
             }
         });
+    }
+
+    private generateUnionedResponseSchemas(): { generated: boolean } {
+        let generated = false;
+        if (!this.config.includeSerdeLayer) {
+            return { generated };
+        }
+        this.forPackageChannel((channel, packageId) => {
+            const receiveMessages = channel.messages
+                .filter((message) => message.origin === "server")
+                .map((message) => message.body)
+                .filter((message) => message.type === "reference");
+            this.withSourceFile({
+                filepath: this.websocketTypeSchemaDeclarationReferencer.getExportedFilepath({
+                    packageId,
+                    channel
+                }),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.websocketTypeSchema
+                        .getGeneratedWebsocketResponseTypeSchema(packageId, channel, receiveMessages)
+                        .writeToFile(context);
+                    if (!generated) {
+                        generated = true;
+                    }
+                }
+            });
+        });
+        return { generated };
     }
 
     private generateInlinedRequestBodySchemas(): { generated: boolean } {
@@ -1358,6 +1406,8 @@ export class SdkGenerator {
             requestWrapperGenerator: this.requestWrapperGenerator,
             sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,
             sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
+            websocketTypeSchemaGenerator: this.websocketTypeSchemaGenerator,
+            websocketTypeSchemaDeclarationReferencer: this.websocketTypeSchemaDeclarationReferencer,
             websocketSocketDeclarationReferencer: this.websocketSocketDeclarationReferencer,
             websocketGenerator: this.websocketGenerator,
             typeGenerator: this.typeGenerator,

@@ -44,8 +44,7 @@ public class SendTestSubmissionUpdateTest : BaseMockServerTest
                             DateTimeStyles.AdjustToUniversal
                         ),
                         UpdateInfo = RunningSubmissionState.QueueingSubmission,
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

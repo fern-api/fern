@@ -146,14 +146,10 @@ export class Class extends AstNode {
         }
 
         writer.writeNode(this.doc);
-        if (this.annotations.length > 0) {
-            writer.write("[");
-            this.annotations.forEach((annotation) => {
-                annotation.write(writer);
-            });
-            writer.write("]");
-            writer.writeNewLineIfLastLineNot();
-        }
+        this.annotations.forEach((annotation) => {
+            annotation.write(writer);
+        });
+        writer.writeNewLineIfLastLineNot();
         writer.write(`${this.access}`);
         if (this.static_) {
             writer.write(" static");
@@ -361,7 +357,9 @@ export class Class extends AstNode {
         if (operator.type === Class.CastOperator.Type.Explicit || operator.type === Class.CastOperator.Type.Implicit) {
             writer.write(`${operator.type} `);
             writer.write("operator ");
-            writer.write(`${this.name}(`);
+            const to = operator.to ?? this.reference;
+            writer.writeNode(to);
+            writer.write("(");
             operator.parameter.write(writer);
         } else {
             const normalOperator = operator as Class.NormalOperator;
@@ -444,6 +442,7 @@ export namespace Class {
     export interface CastOperator {
         parameter: Parameter;
         type: CastOperator.Type;
+        to?: Type;
         body: CodeBlock;
         useExpressionBody?: boolean;
     }

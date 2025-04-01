@@ -6,31 +6,69 @@ channel:
   path-parameters:
     id: string
   query-parameters:
-    model: optional<Model>
+    model: optional<string>
     temperature: optional<integer>
   messages:
     send:
-      display-name: "Send"
+      display-name: Send
       origin: client
-      body: string
-
+      body: SendEvent
+    send2:
+      display-name: Send2
+      origin: client
+      body: SendEvent2
     receive:
-      display-name: "Receive"
+      display-name: Receive
       origin: server
-      body:
-        name: ReceiveEvent
-        properties:
-          text: string
-
+      body: ReceiveEvent
+    receive2:
+      display-name: Receive2
+      origin: server
+      body: ReceiveEvent2
+    receive3:
+      display-name: Receive3
+      origin: server
+      body: ReceiveEvent3
   examples:
     - name: Default example
       path-parameters:
         id: doc_123
       messages:
         - type: send
-          body: "uvxcdv12344412b"
+          body:
+            sendText: "uvxcdv12344412b"
+            sendParam: 123
         - type: receive
           body:
-            text: "The weather for today..."
-        - type: send
-          body: "uvxcdv12344412b"
+            alpha: "The weather for today..."
+            beta: 123
+        - type: send2
+          body:
+            sendText2: "uvxcdv12344412b"
+            sendParam2: true
+        - type: receive2
+          body:
+            gamma: "The weather for today..."
+            delta: 123
+            epsilon: true
+types:
+  SendEvent:
+    properties:
+      sendText: string
+      sendParam: integer
+  ReceiveEvent:
+    properties:
+      alpha: string
+      beta: integer
+  SendEvent2:
+    properties:
+      sendText2: string
+      sendParam2: boolean
+  ReceiveEvent2:
+    properties:
+      gamma: string
+      delta: integer
+      epsilon: boolean
+  ReceiveEvent3:
+    properties:
+      receiveText3: string

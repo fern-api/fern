@@ -104,6 +104,19 @@ export class AbstractWriter {
     }
 
     /**
+     * Starts a control flow block
+     * @param prefix
+     * @param statement
+     */
+    public controlFlowWithoutStatement(prefix: string): void {
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
      * Ends a control flow block
      */
     public endControlFlow(): void {

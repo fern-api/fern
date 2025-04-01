@@ -27,11 +27,14 @@ public partial class HttpMethodsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -71,7 +74,7 @@ public partial class HttpMethodsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -120,11 +123,14 @@ public partial class HttpMethodsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -184,11 +190,14 @@ public partial class HttpMethodsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -229,11 +238,14 @@ public partial class HttpMethodsClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/http-methods/{JsonUtils.SerializeAsString(id)}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Options = options,
                 },
                 cancellationToken

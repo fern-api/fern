@@ -115,7 +115,11 @@ class HttpMethodsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_put(
-        self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        string: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
         Parameters
@@ -454,7 +458,11 @@ class AsyncHttpMethodsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_put(
-        self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        string: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
         Parameters

@@ -34,6 +34,10 @@ export interface ParseOpenAPIOptions {
     shouldUseIdiomaticRequestNames: boolean;
     /* What the default encoding should be for form data parameters. */
     defaultFormParameterEncoding: "form" | "json" | undefined;
+    /* Whether or not to use the `bytes` type for binary responses. */
+    useBytesForBinaryResponse: boolean;
+    /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
+    respectForwardCompatibleEnums: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -63,7 +67,9 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     filter: undefined,
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: "json"
+    defaultFormParameterEncoding: "json",
+    useBytesForBinaryResponse: false,
+    respectForwardCompatibleEnums: false
 };
 
 export function getParseOptions({
@@ -122,8 +128,16 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
         exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
         defaultFormParameterEncoding:
-            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
+        respectForwardCompatibleEnums:
+            overrides?.respectForwardCompatibleEnums ??
+            options?.respectForwardCompatibleEnums ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums
     };
 }

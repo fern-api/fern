@@ -24,7 +24,6 @@ public final class KeyWordUtils {
             "extends",
             "package",
             "void",
-            "object",
             "short",
             "class",
             "abstract",

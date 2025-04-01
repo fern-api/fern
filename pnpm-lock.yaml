@@ -23,7 +23,7 @@ importers:
         version: link:packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.816
-        version: 0.0.816
+        version: 0.0.816(encoding@0.1.13)
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
@@ -232,7 +232,7 @@ importers:
         version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -259,20 +259,74 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  generators/csharp/codegen:
-    dependencies:
+  generators/csharp/base:
+    devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
+      '@fern-fern/ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.25.0)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/csharp/codegen:
+    dependencies:
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -318,10 +372,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -377,6 +431,46 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/csharp/formatter:
+    dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   generators/csharp/model:
     devDependencies:
       '@fern-api/base-generator':
@@ -388,9 +482,15 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/csharp-formatter':
+        specifier: workspace:*
+        version: link:../formatter
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -408,13 +508,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -445,9 +545,15 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/csharp-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-api/csharp-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/csharp-formatter':
+        specifier: workspace:*
+        version: link:../formatter
       '@fern-api/fern-csharp-model':
         specifier: workspace:*
         version: link:../model
@@ -462,7 +568,7 @@ importers:
         version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -480,13 +586,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -572,9 +678,6 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -586,13 +689,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -613,10 +716,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -719,13 +822,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -750,18 +853,36 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
       '@fern-api/go-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/go-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.17
+        version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -773,13 +894,16 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
+      dedent:
+        specifier: ^1.5.1
+        version: 1.5.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -792,6 +916,9 @@ importers:
       typescript:
         specifier: 5.7.2
         version: 5.7.2
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
@@ -839,20 +966,62 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/java-v2/base:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/java-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-fern/ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   generators/java-v2/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -868,6 +1037,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -877,6 +1049,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -885,6 +1060,72 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/java-v2/sdk:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/java-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-api/java-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/java-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.17
+        version: 0.0.17
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
+      '@fern-fern/ir-sdk':
+        specifier: ^57.0.0
+        version: 57.0.0
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      tsup:
+        specifier: ^8.0.2
         version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
@@ -927,13 +1168,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -996,13 +1237,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1065,10 +1306,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -1155,13 +1396,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1206,7 +1447,7 @@ importers:
         version: link:../model
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -1224,13 +1465,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1272,7 +1513,7 @@ importers:
         version: 53.9.0
       '@fern-fern/postman-sdk':
         specifier: 0.1.1
-        version: 0.1.1
+        version: 0.1.1(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1287,7 +1528,7 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1295,8 +1536,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1374,8 +1615,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: 53.7.0
-        version: 53.7.0
+        specifier: 57.0.0
+        version: 57.0.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1424,13 +1665,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1452,9 +1693,6 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
-      '@fern-api/base-python-generator':
-        specifier: workspace:*
-        version: link:../base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -1467,12 +1705,15 @@ importers:
       '@fern-api/python-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-api/python-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
-        specifier: 53.7.0
-        version: 53.7.0
+        specifier: 57.0.0
+        version: 57.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1481,13 +1722,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1496,6 +1737,57 @@ importers:
         version: 3.4.2
       tsup:
         specifier: ^8.3.5
+        version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.4
+        version: 3.23.8
+
+  generators/python-v2/sdk:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/python-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
+      '@fern-fern/ir-sdk':
+        specifier: 57.0.0
+        version: 57.0.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.25.0)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      tsup:
+        specifier: ^8.0.2
         version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
@@ -1606,7 +1898,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -1673,7 +1965,7 @@ importers:
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -1688,13 +1980,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1703,7 +1995,7 @@ importers:
         version: 3.4.2
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@5.7.2)(webpack@5.94.0(esbuild@0.24.0))
+        version: 9.5.1(typescript@5.7.2)(webpack@5.94.0(esbuild@0.25.0))
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3)
@@ -1742,7 +2034,7 @@ importers:
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -1757,13 +2049,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1809,13 +2101,13 @@ importers:
         version: 18.15.3
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1885,13 +2177,13 @@ importers:
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
@@ -1915,7 +2207,7 @@ importers:
         version: link:../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1924,13 +2216,13 @@ importers:
         version: 4.17.12
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^9.16.0
         version: 9.16.0
@@ -1954,10 +2246,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -2057,7 +2349,7 @@ importers:
         version: link:../../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
@@ -2870,7 +3162,7 @@ importers:
         version: 3.7.7
       node-fetch:
         specifier: 2.7.0
-        version: 2.7.0
+        version: 2.7.0(encoding@0.1.13)
       qs:
         specifier: 6.12.1
         version: 6.12.1
@@ -3025,6 +3317,9 @@ importers:
       '@fern-typescript/resolvers':
         specifier: workspace:*
         version: link:../../utils/resolvers
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
@@ -3041,6 +3336,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -3174,13 +3472,13 @@ importers:
         version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
       '@fern-fern/snippet-sdk':
         specifier: ^0.0.5526
-        version: 0.0.5526
+        version: 0.0.5526(encoding@0.1.13)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3229,6 +3527,9 @@ importers:
       '@fern-typescript/type-schema-generator':
         specifier: workspace:*
         version: link:../../model/type-schema-generator
+      '@fern-typescript/websocket-type-schema-generator':
+        specifier: workspace:*
+        version: link:../websocket-type-schema-generator
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -3567,6 +3868,52 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/typescript/sdk/websocket-type-schema-generator:
+    dependencies:
+      '@fern-fern/ir-sdk':
+        specifier: 57.0.0
+        version: 57.0.0
+      '@fern-typescript/abstract-schema-generator':
+        specifier: workspace:*
+        version: link:../../utils/abstract-schema-generator
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
+      '@fern-typescript/contexts':
+        specifier: workspace:*
+        version: link:../../utils/contexts
+      ts-morph:
+        specifier: ^15.1.0
+        version: 15.1.0
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
       '@fern-typescript/commons':
@@ -3620,7 +3967,7 @@ importers:
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
@@ -3812,7 +4159,7 @@ importers:
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
@@ -3964,7 +4311,7 @@ importers:
         version: 6.0.3
       node-fetch:
         specifier: 2.7.0
-        version: 2.7.0
+        version: 2.7.0(encoding@0.1.13)
       qs:
         specifier: 6.12.1
         version: 6.12.1
@@ -4151,6 +4498,46 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/api-importers/asyncapi-to-ir:
+    dependencies:
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../v2-importer-commons
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/api-importers/commons:
     dependencies:
       '@fern-api/configuration':
@@ -4313,6 +4700,58 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/api-importers/openapi-to-ir:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../v2-importer-commons
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
       lodash-es:
@@ -4372,7 +4811,7 @@ importers:
         version: link:../../../task-context
       '@redocly/openapi-core':
         specifier: ^1.4.1
-        version: 1.4.1
+        version: 1.4.1(encoding@0.1.13)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4493,15 +4932,9 @@ importers:
         specifier: ^12.1.3
         version: 12.1.3
     devDependencies:
-      '@fern-api/cli-source-resolver':
-        specifier: workspace:*
-        version: link:../../../cli-source-resolver
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../configs
-      '@fern-api/ir-generator':
-        specifier: workspace:*
-        version: link:../../../generation/ir-generator
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4527,32 +4960,66 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/api-importers/openapi/openapi-v2-importer:
+  packages/cli/api-importers/openrpc-to-ir:
+    dependencies:
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../v2-importer-commons
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/api-importers/v2-importer-commons:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../../workspace/commons
+        version: link:../../workspace/commons
       '@fern-api/casings-generator':
         specifier: workspace:*
-        version: link:../../../../commons/casings-generator
+        version: link:../../../commons/casings-generator
       '@fern-api/cli-logger':
         specifier: workspace:*
-        version: link:../../../cli-logger
+        version: link:../../cli-logger
       '@fern-api/configuration':
         specifier: workspace:*
-        version: link:../../../configuration
+        version: link:../../configuration
       '@fern-api/core-utils':
         specifier: workspace:*
-        version: link:../../../../commons/core-utils
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
-        version: link:../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/ir-utils
+        version: link:../../../ir-sdk
       '@fern-api/logger':
         specifier: workspace:*
-        version: link:../../../logger
+        version: link:../../logger
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -4571,7 +5038,7 @@ importers:
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../../configs
+        version: link:../../../configs
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -4581,6 +5048,52 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/api-importers/v2-importer-tests:
+    dependencies:
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../../workspace/lazy-fern-workspace
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace/loader
+    devDependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -4616,7 +5129,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 0.10.2
-        version: 0.10.2
+        version: 0.10.2(encoding@0.1.13)
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -4776,16 +5289,16 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 0.10.2
-        version: 0.10.2
+        version: 0.10.2(encoding@0.1.13)
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74(encoding@0.1.13)
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -4847,8 +5360,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -5075,11 +5588,11 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -5130,14 +5643,14 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74(encoding@0.1.13)
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5215,8 +5728,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -5270,8 +5783,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5319,8 +5832,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5332,7 +5845,7 @@ importers:
         version: 3.2.0
       puppeteer:
         specifier: ^19.7.2
-        version: 19.11.1(typescript@5.7.2)
+        version: 19.11.1(encoding@0.1.13)(typescript@5.7.2)
       rehype-parse:
         specifier: ^9.0.0
         version: 9.0.1
@@ -5401,8 +5914,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5492,8 +6005,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805(typescript@5.7.2)
+        specifier: 0.134.1-03ab42853
+        version: 0.134.1-03ab42853(encoding@0.1.13)(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5607,8 +6120,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805(typescript@5.7.2)
+        specifier: 0.134.1-03ab42853
+        version: 0.134.1-03ab42853(encoding@0.1.13)(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5695,8 +6208,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -5711,7 +6224,7 @@ importers:
         version: 4.1.0
       node-fetch:
         specifier: 2.7.0
-        version: 2.7.0
+        version: 2.7.0(encoding@0.1.13)
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
@@ -6455,6 +6968,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../../ir-sdk
+      '@fern-api/java-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/java-v2/dynamic-snippets
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
@@ -6463,7 +6979,7 @@ importers:
         version: link:../../../../../generators/php/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
-        version: 0.12.3
+        version: 0.12.3(encoding@0.1.13)
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
@@ -6475,10 +6991,10 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -6577,11 +7093,11 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       axios:
         specifier: ^1.8.2
         version: 1.8.2
@@ -7083,8 +7599,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7268,7 +7784,7 @@ importers:
         version: link:../../task-context
       '@redocly/openapi-core':
         specifier: ^1.4.1
-        version: 1.4.1
+        version: 1.4.1(encoding@0.1.13)
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -7318,6 +7834,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../commons
+      '@fern-api/asyncapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/asyncapi-to-ir
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../../cli-logger
@@ -7357,21 +7876,24 @@ importers:
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir-parser
-      '@fern-api/openapi-v2-parser':
+      '@fern-api/openapi-to-ir':
         specifier: workspace:*
-        version: link:../../api-importers/openapi/openapi-v2-importer
+        version: link:../../api-importers/openapi-to-ir
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/v2-importer-commons':
+        specifier: workspace:*
+        version: link:../../api-importers/v2-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@redocly/openapi-core':
         specifier: ^1.4.1
-        version: 1.4.1
+        version: 1.4.1(encoding@0.1.13)
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -7395,7 +7917,7 @@ importers:
         version: 12.1.3
       swagger2openapi:
         specifier: 7.0.8
-        version: 7.0.8
+        version: 7.0.8(encoding@0.1.13)
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -7592,8 +8114,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805(typescript@5.7.2)
+        specifier: 0.134.1-03ab42853
+        version: 0.134.1-03ab42853(encoding@0.1.13)(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7947,6 +8469,9 @@ importers:
 
   packages/commons/ir-utils:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../casings-generator
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
@@ -8086,19 +8611,19 @@ importers:
     dependencies:
       '@fern-api/venus-api-sdk':
         specifier: 0.10.2
-        version: 0.10.2
+        version: 0.10.2(encoding@0.1.13)
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.132.0-26ae3d805
-        version: 0.132.0-26ae3d805
+        specifier: 0.134.1-b63da7113
+        version: 0.134.1-b63da7113(encoding@0.1.13)
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
-        version: 0.0.5297
+        version: 0.0.5297(encoding@0.1.13)
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74(encoding@0.1.13)
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -8246,13 +8771,13 @@ importers:
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584
+        version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
-        version: 0.0.1021
+        version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -8279,7 +8804,7 @@ importers:
         version: 17.0.33
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
-        version: 3.0.0-rc.14(esbuild@0.24.0)
+        version: 3.0.0-rc.14(esbuild@0.25.0)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -8290,8 +8815,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       esbuild:
-        specifier: ^0.24.0
-        version: 0.24.0
+        specifier: ^0.25.0
+        version: 0.25.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -8336,10 +8861,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.24.0)
+        version: 0.2.3(esbuild@0.25.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.24.0)
+        version: 0.2.2(esbuild@0.25.0)
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../cli/workspace/commons
@@ -9293,8 +9818,14 @@ packages:
     cpu: [ppc64]
     os: [aix]
 
-  '@esbuild/aix-ppc64@0.24.0':
-    resolution: {integrity: sha512-WtKdFM7ls47zkKHFVzMz8opM7LkcsIp9amDUBIAWirg70RM71WRSjdILPsY5Uv1D42ZpUfaPILDlfactHgsRkw==}
+  '@esbuild/aix-ppc64@0.24.2':
+    resolution: {integrity: sha512-thpVCb/rhxE/BnMLQ7GReQLLN8q9qbHmI55F4489/ByVg2aQaQ6kbcLb6FHkocZzQhxc4gx0sCk0tJkKBFzDhA==}
+    engines: {node: '>=18'}
+    cpu: [ppc64]
+    os: [aix]
+
+  '@esbuild/aix-ppc64@0.25.0':
+    resolution: {integrity: sha512-O7vun9Sf8DFjH2UtqK8Ku3LkquL9SZL8OLY1T5NZkA34+wG3OQF7cl4Ql8vdNzM6fzBbYfLaiRLIOZ+2FOCgBQ==}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [aix]
@@ -9305,8 +9836,14 @@ packages:
     cpu: [arm64]
     os: [android]
 
-  '@esbuild/android-arm64@0.24.0':
-    resolution: {integrity: sha512-Vsm497xFM7tTIPYK9bNTYJyF/lsP590Qc1WxJdlB6ljCbdZKU9SY8i7+Iin4kyhV/KV5J2rOKsBQbB77Ab7L/w==}
+  '@esbuild/android-arm64@0.24.2':
+    resolution: {integrity: sha512-cNLgeqCqV8WxfcTIOeL4OAtSmL8JjcN6m09XIgro1Wi7cF4t/THaWEa7eL5CMoMBdjoHOTh/vwTO/o2TRXIyzg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [android]
+
+  '@esbuild/android-arm64@0.25.0':
+    resolution: {integrity: sha512-grvv8WncGjDSyUBjN9yHXNt+cq0snxXbDxy5pJtzMKGmmpPxeAmAhWxXI+01lU5rwZomDgD3kJwulEnhTRUd6g==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [android]
@@ -9317,8 +9854,14 @@ packages:
     cpu: [arm]
     os: [android]
 
-  '@esbuild/android-arm@0.24.0':
-    resolution: {integrity: sha512-arAtTPo76fJ/ICkXWetLCc9EwEHKaeya4vMrReVlEIUCAUncH7M4bhMQ+M9Vf+FFOZJdTNMXNBrWwW+OXWpSew==}
+  '@esbuild/android-arm@0.24.2':
+    resolution: {integrity: sha512-tmwl4hJkCfNHwFB3nBa8z1Uy3ypZpxqxfTQOcHX+xRByyYgunVbZ9MzUUfb0RxaHIMnbHagwAxuTL+tnNM+1/Q==}
+    engines: {node: '>=18'}
+    cpu: [arm]
+    os: [android]
+
+  '@esbuild/android-arm@0.25.0':
+    resolution: {integrity: sha512-PTyWCYYiU0+1eJKmw21lWtC+d08JDZPQ5g+kFyxP0V+es6VPPSUhM6zk8iImp2jbV6GwjX4pap0JFbUQN65X1g==}
     engines: {node: '>=18'}
     cpu: [arm]
     os: [android]
@@ -9329,8 +9872,14 @@ packages:
     cpu: [x64]
     os: [android]
 
-  '@esbuild/android-x64@0.24.0':
-    resolution: {integrity: sha512-t8GrvnFkiIY7pa7mMgJd7p8p8qqYIz1NYiAoKc75Zyv73L3DZW++oYMSHPRarcotTKuSs6m3hTOa5CKHaS02TQ==}
+  '@esbuild/android-x64@0.24.2':
+    resolution: {integrity: sha512-B6Q0YQDqMx9D7rvIcsXfmJfvUYLoP722bgfBlO5cGvNVb5V/+Y7nhBE3mHV9OpxBf4eAS2S68KZztiPaWq4XYw==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [android]
+
+  '@esbuild/android-x64@0.25.0':
+    resolution: {integrity: sha512-m/ix7SfKG5buCnxasr52+LI78SQ+wgdENi9CqyCXwjVR2X4Jkz+BpC3le3AoBPYTC9NHklwngVXvbJ9/Akhrfg==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [android]
@@ -9341,8 +9890,14 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@esbuild/darwin-arm64@0.24.0':
-    resolution: {integrity: sha512-CKyDpRbK1hXwv79soeTJNHb5EiG6ct3efd/FTPdzOWdbZZfGhpbcqIpiD0+vwmpu0wTIL97ZRPZu8vUt46nBSw==}
+  '@esbuild/darwin-arm64@0.24.2':
+    resolution: {integrity: sha512-kj3AnYWc+CekmZnS5IPu9D+HWtUI49hbnyqk0FLEJDbzCIQt7hg7ucF1SQAilhtYpIujfaHr6O0UHlzzSPdOeA==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@esbuild/darwin-arm64@0.25.0':
+    resolution: {integrity: sha512-mVwdUb5SRkPayVadIOI78K7aAnPamoeFR2bT5nszFUZ9P8UpK4ratOdYbZZXYSqPKMHfS1wdHCJk1P1EZpRdvw==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [darwin]
@@ -9353,8 +9908,14 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@esbuild/darwin-x64@0.24.0':
-    resolution: {integrity: sha512-rgtz6flkVkh58od4PwTRqxbKH9cOjaXCMZgWD905JOzjFKW+7EiUObfd/Kav+A6Gyud6WZk9w+xu6QLytdi2OA==}
+  '@esbuild/darwin-x64@0.24.2':
+    resolution: {integrity: sha512-WeSrmwwHaPkNR5H3yYfowhZcbriGqooyu3zI/3GGpF8AyUdsrrP0X6KumITGA9WOyiJavnGZUwPGvxvwfWPHIA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@esbuild/darwin-x64@0.25.0':
+    resolution: {integrity: sha512-DgDaYsPWFTS4S3nWpFcMn/33ZZwAAeAFKNHNa1QN0rI4pUjgqf0f7ONmXf6d22tqTY+H9FNdgeaAa+YIFUn2Rg==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [darwin]
@@ -9365,8 +9926,14 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
-  '@esbuild/freebsd-arm64@0.24.0':
-    resolution: {integrity: sha512-6Mtdq5nHggwfDNLAHkPlyLBpE5L6hwsuXZX8XNmHno9JuL2+bg2BX5tRkwjyfn6sKbxZTq68suOjgWqCicvPXA==}
+  '@esbuild/freebsd-arm64@0.24.2':
+    resolution: {integrity: sha512-UN8HXjtJ0k/Mj6a9+5u6+2eZ2ERD7Edt1Q9IZiB5UZAIdPnVKDoG7mdTVGhHJIeEml60JteamR3qhsr1r8gXvg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [freebsd]
+
+  '@esbuild/freebsd-arm64@0.25.0':
+    resolution: {integrity: sha512-VN4ocxy6dxefN1MepBx/iD1dH5K8qNtNe227I0mnTRjry8tj5MRk4zprLEdG8WPyAPb93/e4pSgi1SoHdgOa4w==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [freebsd]
@@ -9377,8 +9944,14 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
-  '@esbuild/freebsd-x64@0.24.0':
-    resolution: {integrity: sha512-D3H+xh3/zphoX8ck4S2RxKR6gHlHDXXzOf6f/9dbFt/NRBDIE33+cVa49Kil4WUjxMGW0ZIYBYtaGCa2+OsQwQ==}
+  '@esbuild/freebsd-x64@0.24.2':
+    resolution: {integrity: sha512-TvW7wE/89PYW+IevEJXZ5sF6gJRDY/14hyIGFXdIucxCsbRmLUcjseQu1SyTko+2idmCw94TgyaEZi9HUSOe3Q==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@esbuild/freebsd-x64@0.25.0':
+    resolution: {integrity: sha512-mrSgt7lCh07FY+hDD1TxiTyIHyttn6vnjesnPoVDNmDfOmggTLXRv8Id5fNZey1gl/V2dyVK1VXXqVsQIiAk+A==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [freebsd]
@@ -9389,8 +9962,14 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@esbuild/linux-arm64@0.24.0':
-    resolution: {integrity: sha512-TDijPXTOeE3eaMkRYpcy3LarIg13dS9wWHRdwYRnzlwlA370rNdZqbcp0WTyyV/k2zSxfko52+C7jU5F9Tfj1g==}
+  '@esbuild/linux-arm64@0.24.2':
+    resolution: {integrity: sha512-7HnAD6074BW43YvvUmE/35Id9/NB7BeX5EoNkK9obndmZBUk8xmJJeU7DwmUeN7tkysslb2eSl6CTrYz6oEMQg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@esbuild/linux-arm64@0.25.0':
+    resolution: {integrity: sha512-9QAQjTWNDM/Vk2bgBl17yWuZxZNQIF0OUUuPZRKoDtqF2k4EtYbpyiG5/Dk7nqeK6kIJWPYldkOcBqjXjrUlmg==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [linux]
@@ -9401,8 +9980,14 @@ packages:
     cpu: [arm]
     os: [linux]
 
-  '@esbuild/linux-arm@0.24.0':
-    resolution: {integrity: sha512-gJKIi2IjRo5G6Glxb8d3DzYXlxdEj2NlkixPsqePSZMhLudqPhtZ4BUrpIuTjJYXxvF9njql+vRjB2oaC9XpBw==}
+  '@esbuild/linux-arm@0.24.2':
+    resolution: {integrity: sha512-n0WRM/gWIdU29J57hJyUdIsk0WarGd6To0s+Y+LwvlC55wt+GT/OgkwoXCXvIue1i1sSNWblHEig00GBWiJgfA==}
+    engines: {node: '>=18'}
+    cpu: [arm]
+    os: [linux]
+
+  '@esbuild/linux-arm@0.25.0':
+    resolution: {integrity: sha512-vkB3IYj2IDo3g9xX7HqhPYxVkNQe8qTK55fraQyTzTX/fxaDtXiEnavv9geOsonh2Fd2RMB+i5cbhu2zMNWJwg==}
     engines: {node: '>=18'}
     cpu: [arm]
     os: [linux]
@@ -9413,8 +9998,14 @@ packages:
     cpu: [ia32]
     os: [linux]
 
-  '@esbuild/linux-ia32@0.24.0':
-    resolution: {integrity: sha512-K40ip1LAcA0byL05TbCQ4yJ4swvnbzHscRmUilrmP9Am7//0UjPreh4lpYzvThT2Quw66MhjG//20mrufm40mA==}
+  '@esbuild/linux-ia32@0.24.2':
+    resolution: {integrity: sha512-sfv0tGPQhcZOgTKO3oBE9xpHuUqguHvSo4jl+wjnKwFpapx+vUDcawbwPNuBIAYdRAvIDBfZVvXprIj3HA+Ugw==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [linux]
+
+  '@esbuild/linux-ia32@0.25.0':
+    resolution: {integrity: sha512-43ET5bHbphBegyeqLb7I1eYn2P/JYGNmzzdidq/w0T8E2SsYL1U6un2NFROFRg1JZLTzdCoRomg8Rvf9M6W6Gg==}
     engines: {node: '>=18'}
     cpu: [ia32]
     os: [linux]
@@ -9425,8 +10016,14 @@ packages:
     cpu: [loong64]
     os: [linux]
 
-  '@esbuild/linux-loong64@0.24.0':
-    resolution: {integrity: sha512-0mswrYP/9ai+CU0BzBfPMZ8RVm3RGAN/lmOMgW4aFUSOQBjA31UP8Mr6DDhWSuMwj7jaWOT0p0WoZ6jeHhrD7g==}
+  '@esbuild/linux-loong64@0.24.2':
+    resolution: {integrity: sha512-CN9AZr8kEndGooS35ntToZLTQLHEjtVB5n7dl8ZcTZMonJ7CCfStrYhrzF97eAecqVbVJ7APOEe18RPI4KLhwQ==}
+    engines: {node: '>=18'}
+    cpu: [loong64]
+    os: [linux]
+
+  '@esbuild/linux-loong64@0.25.0':
+    resolution: {integrity: sha512-fC95c/xyNFueMhClxJmeRIj2yrSMdDfmqJnyOY4ZqsALkDrrKJfIg5NTMSzVBr5YW1jf+l7/cndBfP3MSDpoHw==}
     engines: {node: '>=18'}
     cpu: [loong64]
     os: [linux]
@@ -9437,8 +10034,14 @@ packages:
     cpu: [mips64el]
     os: [linux]
 
-  '@esbuild/linux-mips64el@0.24.0':
-    resolution: {integrity: sha512-hIKvXm0/3w/5+RDtCJeXqMZGkI2s4oMUGj3/jM0QzhgIASWrGO5/RlzAzm5nNh/awHE0A19h/CvHQe6FaBNrRA==}
+  '@esbuild/linux-mips64el@0.24.2':
+    resolution: {integrity: sha512-iMkk7qr/wl3exJATwkISxI7kTcmHKE+BlymIAbHO8xanq/TjHaaVThFF6ipWzPHryoFsesNQJPE/3wFJw4+huw==}
+    engines: {node: '>=18'}
+    cpu: [mips64el]
+    os: [linux]
+
+  '@esbuild/linux-mips64el@0.25.0':
+    resolution: {integrity: sha512-nkAMFju7KDW73T1DdH7glcyIptm95a7Le8irTQNO/qtkoyypZAnjchQgooFUDQhNAy4iu08N79W4T4pMBwhPwQ==}
     engines: {node: '>=18'}
     cpu: [mips64el]
     os: [linux]
@@ -9449,8 +10052,14 @@ packages:
     cpu: [ppc64]
     os: [linux]
 
-  '@esbuild/linux-ppc64@0.24.0':
-    resolution: {integrity: sha512-HcZh5BNq0aC52UoocJxaKORfFODWXZxtBaaZNuN3PUX3MoDsChsZqopzi5UupRhPHSEHotoiptqikjN/B77mYQ==}
+  '@esbuild/linux-ppc64@0.24.2':
+    resolution: {integrity: sha512-shsVrgCZ57Vr2L8mm39kO5PPIb+843FStGt7sGGoqiiWYconSxwTiuswC1VJZLCjNiMLAMh34jg4VSEQb+iEbw==}
+    engines: {node: '>=18'}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@esbuild/linux-ppc64@0.25.0':
+    resolution: {integrity: sha512-NhyOejdhRGS8Iwv+KKR2zTq2PpysF9XqY+Zk77vQHqNbo/PwZCzB5/h7VGuREZm1fixhs4Q/qWRSi5zmAiO4Fw==}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [linux]
@@ -9461,8 +10070,14 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
-  '@esbuild/linux-riscv64@0.24.0':
-    resolution: {integrity: sha512-bEh7dMn/h3QxeR2KTy1DUszQjUrIHPZKyO6aN1X4BCnhfYhuQqedHaa5MxSQA/06j3GpiIlFGSsy1c7Gf9padw==}
+  '@esbuild/linux-riscv64@0.24.2':
+    resolution: {integrity: sha512-4eSFWnU9Hhd68fW16GD0TINewo1L6dRrB+oLNNbYyMUAeOD2yCK5KXGK1GH4qD/kT+bTEXjsyTCiJGHPZ3eM9Q==}
+    engines: {node: '>=18'}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@esbuild/linux-riscv64@0.25.0':
+    resolution: {integrity: sha512-5S/rbP5OY+GHLC5qXp1y/Mx//e92L1YDqkiBbO9TQOvuFXM+iDqUNG5XopAnXoRH3FjIUDkeGcY1cgNvnXp/kA==}
     engines: {node: '>=18'}
     cpu: [riscv64]
     os: [linux]
@@ -9473,8 +10088,14 @@ packages:
     cpu: [s390x]
     os: [linux]
 
-  '@esbuild/linux-s390x@0.24.0':
-    resolution: {integrity: sha512-ZcQ6+qRkw1UcZGPyrCiHHkmBaj9SiCD8Oqd556HldP+QlpUIe2Wgn3ehQGVoPOvZvtHm8HPx+bH20c9pvbkX3g==}
+  '@esbuild/linux-s390x@0.24.2':
+    resolution: {integrity: sha512-S0Bh0A53b0YHL2XEXC20bHLuGMOhFDO6GN4b3YjRLK//Ep3ql3erpNcPlEFed93hsQAjAQDNsvcK+hV90FubSw==}
+    engines: {node: '>=18'}
+    cpu: [s390x]
+    os: [linux]
+
+  '@esbuild/linux-s390x@0.25.0':
+    resolution: {integrity: sha512-XM2BFsEBz0Fw37V0zU4CXfcfuACMrppsMFKdYY2WuTS3yi8O1nFOhil/xhKTmE1nPmVyvQJjJivgDT+xh8pXJA==}
     engines: {node: '>=18'}
     cpu: [s390x]
     os: [linux]
@@ -9485,11 +10106,29 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@esbuild/linux-x64@0.24.0':
-    resolution: {integrity: sha512-vbutsFqQ+foy3wSSbmjBXXIJ6PL3scghJoM8zCL142cGaZKAdCZHyf+Bpu/MmX9zT9Q0zFBVKb36Ma5Fzfa8xA==}
+  '@esbuild/linux-x64@0.24.2':
+    resolution: {integrity: sha512-8Qi4nQcCTbLnK9WoMjdC9NiTG6/E38RNICU6sUNqK0QFxCYgoARqVqxdFmWkdonVsvGqWhmm7MO0jyTqLqwj0Q==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [linux]
+
+  '@esbuild/linux-x64@0.25.0':
+    resolution: {integrity: sha512-9yl91rHw/cpwMCNytUDxwj2XjFpxML0y9HAOH9pNVQDpQrBxHy01Dx+vaMu0N1CKa/RzBD2hB4u//nfc+Sd3Cw==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [linux]
+
+  '@esbuild/netbsd-arm64@0.24.2':
+    resolution: {integrity: sha512-wuLK/VztRRpMt9zyHSazyCVdCXlpHkKm34WUyinD2lzK07FAHTq0KQvZZlXikNWkDGoT6x3TD51jKQ7gMVpopw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [netbsd]
+
+  '@esbuild/netbsd-arm64@0.25.0':
+    resolution: {integrity: sha512-RuG4PSMPFfrkH6UwCAqBzauBWTygTvb1nxWasEJooGSJ/NwRw7b2HOwyRTQIU97Hq37l3npXoZGYMy3b3xYvPw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [netbsd]
 
   '@esbuild/netbsd-x64@0.21.5':
     resolution: {integrity: sha512-Woi2MXzXjMULccIwMnLciyZH4nCIMpWQAs049KEeMvOcNADVxo0UBIQPfSmxB3CWKedngg7sWZdLvLczpe0tLg==}
@@ -9497,14 +10136,26 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
-  '@esbuild/netbsd-x64@0.24.0':
-    resolution: {integrity: sha512-hjQ0R/ulkO8fCYFsG0FZoH+pWgTTDreqpqY7UnQntnaKv95uP5iW3+dChxnx7C3trQQU40S+OgWhUVwCjVFLvg==}
+  '@esbuild/netbsd-x64@0.24.2':
+    resolution: {integrity: sha512-VefFaQUc4FMmJuAxmIHgUmfNiLXY438XrL4GDNV1Y1H/RW3qow68xTwjZKfj/+Plp9NANmzbH5R40Meudu8mmw==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [netbsd]
 
-  '@esbuild/openbsd-arm64@0.24.0':
-    resolution: {integrity: sha512-MD9uzzkPQbYehwcN583yx3Tu5M8EIoTD+tUgKF982WYL9Pf5rKy9ltgD0eUgs8pvKnmizxjXZyLt0z6DC3rRXg==}
+  '@esbuild/netbsd-x64@0.25.0':
+    resolution: {integrity: sha512-jl+qisSB5jk01N5f7sPCsBENCOlPiS/xptD5yxOx2oqQfyourJwIKLRA2yqWdifj3owQZCL2sn6o08dBzZGQzA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [netbsd]
+
+  '@esbuild/openbsd-arm64@0.24.2':
+    resolution: {integrity: sha512-YQbi46SBct6iKnszhSvdluqDmxCJA+Pu280Av9WICNwQmMxV7nLRHZfjQzwbPs3jeWnuAhE9Jy0NrnJ12Oz+0A==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [openbsd]
+
+  '@esbuild/openbsd-arm64@0.25.0':
+    resolution: {integrity: sha512-21sUNbq2r84YE+SJDfaQRvdgznTD8Xc0oc3p3iW/a1EVWeNj/SdUCbm5U0itZPQYRuRTW20fPMWMpcrciH2EJw==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [openbsd]
@@ -9515,8 +10166,14 @@ packages:
     cpu: [x64]
     os: [openbsd]
 
-  '@esbuild/openbsd-x64@0.24.0':
-    resolution: {integrity: sha512-4ir0aY1NGUhIC1hdoCzr1+5b43mw99uNwVzhIq1OY3QcEwPDO3B7WNXBzaKY5Nsf1+N11i1eOfFcq+D/gOS15Q==}
+  '@esbuild/openbsd-x64@0.24.2':
+    resolution: {integrity: sha512-+iDS6zpNM6EnJyWv0bMGLWSWeXGN/HTaF/LXHXHwejGsVi+ooqDfMCCTerNFxEkM3wYVcExkeGXNqshc9iMaOA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [openbsd]
+
+  '@esbuild/openbsd-x64@0.25.0':
+    resolution: {integrity: sha512-2gwwriSMPcCFRlPlKx3zLQhfN/2WjJ2NSlg5TKLQOJdV0mSxIcYNTMhk3H3ulL/cak+Xj0lY1Ym9ysDV1igceg==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [openbsd]
@@ -9527,8 +10184,14 @@ packages:
     cpu: [x64]
     os: [sunos]
 
-  '@esbuild/sunos-x64@0.24.0':
-    resolution: {integrity: sha512-jVzdzsbM5xrotH+W5f1s+JtUy1UWgjU0Cf4wMvffTB8m6wP5/kx0KiaLHlbJO+dMgtxKV8RQ/JvtlFcdZ1zCPA==}
+  '@esbuild/sunos-x64@0.24.2':
+    resolution: {integrity: sha512-hTdsW27jcktEvpwNHJU4ZwWFGkz2zRJUz8pvddmXPtXDzVKTTINmlmga3ZzwcuMpUvLw7JkLy9QLKyGpD2Yxig==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [sunos]
+
+  '@esbuild/sunos-x64@0.25.0':
+    resolution: {integrity: sha512-bxI7ThgLzPrPz484/S9jLlvUAHYMzy6I0XiU1ZMeAEOBcS0VePBFxh1JjTQt3Xiat5b6Oh4x7UC7IwKQKIJRIg==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [sunos]
@@ -9539,8 +10202,14 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@esbuild/win32-arm64@0.24.0':
-    resolution: {integrity: sha512-iKc8GAslzRpBytO2/aN3d2yb2z8XTVfNV0PjGlCxKo5SgWmNXx82I/Q3aG1tFfS+A2igVCY97TJ8tnYwpUWLCA==}
+  '@esbuild/win32-arm64@0.24.2':
+    resolution: {integrity: sha512-LihEQ2BBKVFLOC9ZItT9iFprsE9tqjDjnbulhHoFxYQtQfai7qfluVODIYxt1PgdoyQkz23+01rzwNwYfutxUQ==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@esbuild/win32-arm64@0.25.0':
+    resolution: {integrity: sha512-ZUAc2YK6JW89xTbXvftxdnYy3m4iHIkDtK3CLce8wg8M2L+YZhIvO1DKpxrd0Yr59AeNNkTiic9YLf6FTtXWMw==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [win32]
@@ -9551,8 +10220,14 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@esbuild/win32-ia32@0.24.0':
-    resolution: {integrity: sha512-vQW36KZolfIudCcTnaTpmLQ24Ha1RjygBo39/aLkM2kmjkWmZGEJ5Gn9l5/7tzXA42QGIoWbICfg6KLLkIw6yw==}
+  '@esbuild/win32-ia32@0.24.2':
+    resolution: {integrity: sha512-q+iGUwfs8tncmFC9pcnD5IvRHAzmbwQ3GPS5/ceCyHdjXubwQWI12MKWSNSMYLJMq23/IUCvJMS76PDqXe1fxA==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@esbuild/win32-ia32@0.25.0':
+    resolution: {integrity: sha512-eSNxISBu8XweVEWG31/JzjkIGbGIJN/TrRoiSVZwZ6pkC6VX4Im/WV2cz559/TXLcYbcrDN8JtKgd9DJVIo8GA==}
     engines: {node: '>=18'}
     cpu: [ia32]
     os: [win32]
@@ -9563,8 +10238,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@esbuild/win32-x64@0.24.0':
-    resolution: {integrity: sha512-7IAFPrjSQIJrGsK6flwg7NFmwBoSTyF3rl7If0hNUFQU4ilTsEPL6GuMuU9BfIWVVGuRnuIidkSMC+c0Otu8IA==}
+  '@esbuild/win32-x64@0.24.2':
+    resolution: {integrity: sha512-7VTgWzgMGvup6aSqDPLiW5zHaxYJGTO4OokMjIlrCtf+VpEL+cXKtCvg723iguPYI5oaUNdS+/V7OU2gvXVWEg==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [win32]
+
+  '@esbuild/win32-x64@0.25.0':
+    resolution: {integrity: sha512-ZENoHJBxA20C2zFzh6AI4fT6RraMzjYw4xKWemRTRmRVtN9c5DcH9r/f2ihEkMjOW5eGgrwCslG/+Y/3bL+DHQ==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
@@ -9623,8 +10304,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@57.0.0':
     resolution: {integrity: sha512-l0maf2uPPTuFWrPG+Rh7kWKF6smwO3vwZ7JdwmJeB4F8T7uNR/gMwIr/EpzmwJp4/CiyPGkO4KJfm23X2GTjNw==}
 
-  '@fern-api/fdr-sdk@0.132.0-26ae3d805':
-    resolution: {integrity: sha512-uX0rfMPFAoyRVeGToOpsAS/9ERANvrXCfilpfdIM26Xp24197Yxi0AQkASqVYt8vZcvLaN/MQUIAkAuH0WInFw==}
+  '@fern-api/fdr-sdk@0.134.1-03ab42853':
+    resolution: {integrity: sha512-HaGVpUTSYF7N651LuR/QVu+vwYdshJ3HMnp143qTqv6UVLcPk6W7U1DHFMr/5sqX4G8RcOdFNjwAtyorSX3QzA==}
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -9641,8 +10322,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.132.0-26ae3d805':
-    resolution: {integrity: sha512-lKswzrwzYPSUv2G+EgiWZP8IXvMmFQRT/pNwzQKyty8BTqnSowUZTmFB6OJWuYPyhrz+/b/7J9BZ15yklmBHIg==}
+  '@fern-api/ui-core-utils@0.134.1-03ab42853':
+    resolution: {integrity: sha512-5fE5b9ng4H3Re2MaCwo9xGu3Cbg1qWKKi9e54NliOT8PmolzWdyt3dkeW73KXges2FC5JUKPGVOSXmXIh+Mwjw==}
 
   '@fern-api/venus-api-sdk@0.10.2':
     resolution: {integrity: sha512-BD18ZNJeWYvztRXSUWY2lfZ8jFUbNAfHWctvIsWyXgI7C8EL3N0+CWUGD5cZ1QqRnq42nm6XJdWRKhny3yrz4g==}
@@ -9650,8 +10331,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.132.0-26ae3d805':
-    resolution: {integrity: sha512-veef2LbZsK0hVwifJ8xSzixDsq+G2DLxDc/i46hY2GabRblvIdEO77+Q5dcDXE+r+Sd30vKDfrBCM8gbdZ0kMw==}
+  '@fern-fern/fdr-cjs-sdk@0.134.1-b63da7113':
+    resolution: {integrity: sha512-MTffK9ENsBH5bjiWAG7uxynHgFYeRss/JSJ4TLh3ZOsg4iVVkN1EcO64TuShYNK1KYlPnFAgWlNAOuxr2Q3tnw==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -9673,9 +10354,6 @@ packages:
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
-
-  '@fern-fern/ir-sdk@53.7.0':
-    resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
 
   '@fern-fern/ir-sdk@53.9.0':
     resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
@@ -10533,6 +11211,9 @@ packages:
   '@types/graceful-fs@4.1.5':
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==}
 
+  '@types/har-format@1.2.16':
+    resolution: {integrity: sha512-fluxdy7ryD3MV6h8pTfTYpy/xQzCFC7m89nOH9y94cNqJ1mDIDPut7MnRHI3F6qRmh/cT2fUjG1MLdCNb4hE9A==}
+
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
@@ -11289,10 +11970,6 @@ packages:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
 
-  call-bind-apply-helpers@1.0.1:
-    resolution: {integrity: sha512-BhYE+WDaywFg2TBWYNXAE+8B1ATnThNBqXHP5nQu0jWJdVvY2hvkpyB3qOmtmDePiS5/BDQ8wASEWGMWRG148g==}
-    engines: {node: '>= 0.4'}
-
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -11956,6 +12633,9 @@ packages:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
 
+  encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
@@ -12041,6 +12721,9 @@ packages:
   es-toolkit@1.30.1:
     resolution: {integrity: sha512-ZXflqanzH8BpHkDhFa10bBf6ONDCe84EPUm7SSICGzuuROSluT2ynTPtwn9PcRelMtorCRozSknI/U0MNYp0Uw==}
 
+  es-toolkit@1.33.0:
+    resolution: {integrity: sha512-X13Q/ZSc+vsO1q600bvNK4bxgXMkHcf//RxCmYDaRY5DAcT+eoXjY5hoAPGMdRnWQjvyLEcyauG3b6hz76LNqg==}
+
   es6-promise@3.3.1:
     resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
 
@@ -12049,8 +12732,13 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
-  esbuild@0.24.0:
-    resolution: {integrity: sha512-FuLPevChGDshgSicjisSooU0cemp/sGXR841D5LHMB7mTVOmsEHcAxaH3irL53+8YDIeVNQEySh4DaYU/iuPqQ==}
+  esbuild@0.24.2:
+    resolution: {integrity: sha512-+9egpBW8I3CD5XPe0n6BfT5fxLzxrlDzqydF3aviG+9ni1lDC/OvMHcxqEFV0+LANZG5R1bFMWfUrjVsdwxJvA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  esbuild@0.25.0:
+    resolution: {integrity: sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -12461,6 +13149,10 @@ packages:
     resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
     engines: {node: '>= 6'}
 
+  formdata-node@4.4.1:
+    resolution: {integrity: sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==}
+    engines: {node: '>= 12.20'}
+
   formdata-node@6.0.3:
     resolution: {integrity: sha512-8e1++BCiTzUno9v5IZ2J6bv4RU+3UKDmqWUQD0MIMVCd9AdhWkO1gw57oo1mNEX1dMq2EGI+FbWz4B92pscSQg==}
     engines: {node: '>= 18'}
@@ -12525,13 +13217,12 @@ packages:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
     engines: {node: '>= 0.4'}
 
-  get-intrinsic@1.2.7:
-    resolution: {integrity: sha512-VW6Pxhsrk0KAOqs3WEd0klDiF/+V7gQOpAvY1jVU/LHmaD/kQO4523aiJuikX/QAKYiW6x8Jh+RJej1almdtCA==}
-    engines: {node: '>= 0.4'}
-
   get-intrinsic@1.3.0:
     resolution: {integrity: sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==}
     engines: {node: '>= 0.4'}
+
+  get-own-enumerable-property-symbols@3.0.2:
+    resolution: {integrity: sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==}
 
   get-package-type@0.1.0:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
@@ -12801,6 +13492,10 @@ packages:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
     engines: {node: '>= 6'}
 
+  httpsnippet-lite@3.0.5:
+    resolution: {integrity: sha512-So4qTXY5iFj5XtFDwyz2PicUu+8NWrI8e8h+ZeZoVtMNcFQp4FFIntBHUE+JPUG6QQU8o1VHCy+X4ETRDwt9CA==}
+    engines: {node: '>=14.13'}
+
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
@@ -13049,6 +13744,10 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
 
+  is-obj@1.0.1:
+    resolution: {integrity: sha512-l4RyHgRqGN4Y3+9JHVrNqO+tN0rV5My76uW5/nuO4K1b6vw5G8d/cmFjP9tRfEsdhZNt0IFdZuK/c2Vr4Nb+Qg==}
+    engines: {node: '>=0.10.0'}
+
   is-path-inside@3.0.3:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
@@ -13078,6 +13777,10 @@ packages:
   is-regex@1.2.1:
     resolution: {integrity: sha512-MjYsKHO5O7mCsmRGxWcLWheFqN9DJ/2TmngvjKXihe6efViPqc274+Fx/4fYj/r03+ESvBdTXK0V6tA3rgez1g==}
     engines: {node: '>= 0.4'}
+
+  is-regexp@1.0.0:
+    resolution: {integrity: sha512-7zjFAPO4/gwyQAAgRRmqeEeyIICSdmCqa3tsVHMdBzaXXRiqopZL4Cyghg/XulGWrtABTpbnYYzzIRffLkP4oA==}
+    engines: {node: '>=0.10.0'}
 
   is-set@2.0.3:
     resolution: {integrity: sha512-iPAjerrse27/ygGLxw+EBR9agv9Y6uLeYVJMu+QNCoouJ1/1ri0mGrcWpfCqFZuzzx3WjtwxG098X+n4OuRkPg==}
@@ -14008,6 +14711,10 @@ packages:
     peerDependencies:
       react: '>=16'
 
+  node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
+
   node-fetch-h2@2.3.0:
     resolution: {integrity: sha512-ofRW94Ab0T4AOh5Fk8t0h8OBWrmjb0SSB20xh1H8YnPV9EJ+f5AMoYSUQ2zgJ4Iq2HAK0I2l5/Nequ8YzFS3Hg==}
     engines: {node: 4.x || >=6.0.0}
@@ -14547,6 +15254,10 @@ packages:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
     engines: {node: '>=0.6'}
 
+  qs@6.14.0:
+    resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
+    engines: {node: '>=0.6'}
+
   querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
 
@@ -14955,10 +15666,6 @@ packages:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
     engines: {node: '>= 0.4'}
 
-  side-channel@1.0.6:
-    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
-    engines: {node: '>= 0.4'}
-
   side-channel@1.1.0:
     resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
     engines: {node: '>= 0.4'}
@@ -15121,6 +15828,10 @@ packages:
 
   stringify-entities@4.0.3:
     resolution: {integrity: sha512-BP9nNHMhhfcMbiuQKCqMjhDP5yBCAxsPu4pHFFzJ6Alo9dZgY4VLDPutXqIjpRiMoKdp7Av85Gr73Q5uH9k7+g==}
+
+  stringify-object@3.3.0:
+    resolution: {integrity: sha512-rHqiFh1elqCQ9WPLIC8I0Q/g/wj5J1eMkyoiD6eoQApWHP0FtlK7rqnhmabL5VUY9JQCcqwwvlOaSuutekgyrw==}
+    engines: {node: '>=4'}
 
   strip-ansi@6.0.1:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
@@ -15987,6 +16698,10 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+
+  web-streams-polyfill@4.0.0-beta.3:
+    resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
+    engines: {node: '>= 14'}
 
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
@@ -17236,155 +17951,233 @@ snapshots:
     dependencies:
       postcss-selector-parser: 6.0.15
 
-  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.24.0)':
+  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.25.0)':
     dependencies:
-      esbuild: 0.24.0
+      esbuild: 0.25.0
 
-  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.24.0)':
+  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.25.0)':
     dependencies:
-      esbuild: 0.24.0
+      esbuild: 0.25.0
       escape-string-regexp: 4.0.0
       rollup-plugin-node-polyfills: 0.2.1
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
-  '@esbuild/aix-ppc64@0.24.0':
+  '@esbuild/aix-ppc64@0.24.2':
+    optional: true
+
+  '@esbuild/aix-ppc64@0.25.0':
     optional: true
 
   '@esbuild/android-arm64@0.21.5':
     optional: true
 
-  '@esbuild/android-arm64@0.24.0':
+  '@esbuild/android-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/android-arm64@0.25.0':
     optional: true
 
   '@esbuild/android-arm@0.21.5':
     optional: true
 
-  '@esbuild/android-arm@0.24.0':
+  '@esbuild/android-arm@0.24.2':
+    optional: true
+
+  '@esbuild/android-arm@0.25.0':
     optional: true
 
   '@esbuild/android-x64@0.21.5':
     optional: true
 
-  '@esbuild/android-x64@0.24.0':
+  '@esbuild/android-x64@0.24.2':
+    optional: true
+
+  '@esbuild/android-x64@0.25.0':
     optional: true
 
   '@esbuild/darwin-arm64@0.21.5':
     optional: true
 
-  '@esbuild/darwin-arm64@0.24.0':
+  '@esbuild/darwin-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/darwin-arm64@0.25.0':
     optional: true
 
   '@esbuild/darwin-x64@0.21.5':
     optional: true
 
-  '@esbuild/darwin-x64@0.24.0':
+  '@esbuild/darwin-x64@0.24.2':
+    optional: true
+
+  '@esbuild/darwin-x64@0.25.0':
     optional: true
 
   '@esbuild/freebsd-arm64@0.21.5':
     optional: true
 
-  '@esbuild/freebsd-arm64@0.24.0':
+  '@esbuild/freebsd-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/freebsd-arm64@0.25.0':
     optional: true
 
   '@esbuild/freebsd-x64@0.21.5':
     optional: true
 
-  '@esbuild/freebsd-x64@0.24.0':
+  '@esbuild/freebsd-x64@0.24.2':
+    optional: true
+
+  '@esbuild/freebsd-x64@0.25.0':
     optional: true
 
   '@esbuild/linux-arm64@0.21.5':
     optional: true
 
-  '@esbuild/linux-arm64@0.24.0':
+  '@esbuild/linux-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/linux-arm64@0.25.0':
     optional: true
 
   '@esbuild/linux-arm@0.21.5':
     optional: true
 
-  '@esbuild/linux-arm@0.24.0':
+  '@esbuild/linux-arm@0.24.2':
+    optional: true
+
+  '@esbuild/linux-arm@0.25.0':
     optional: true
 
   '@esbuild/linux-ia32@0.21.5':
     optional: true
 
-  '@esbuild/linux-ia32@0.24.0':
+  '@esbuild/linux-ia32@0.24.2':
+    optional: true
+
+  '@esbuild/linux-ia32@0.25.0':
     optional: true
 
   '@esbuild/linux-loong64@0.21.5':
     optional: true
 
-  '@esbuild/linux-loong64@0.24.0':
+  '@esbuild/linux-loong64@0.24.2':
+    optional: true
+
+  '@esbuild/linux-loong64@0.25.0':
     optional: true
 
   '@esbuild/linux-mips64el@0.21.5':
     optional: true
 
-  '@esbuild/linux-mips64el@0.24.0':
+  '@esbuild/linux-mips64el@0.24.2':
+    optional: true
+
+  '@esbuild/linux-mips64el@0.25.0':
     optional: true
 
   '@esbuild/linux-ppc64@0.21.5':
     optional: true
 
-  '@esbuild/linux-ppc64@0.24.0':
+  '@esbuild/linux-ppc64@0.24.2':
+    optional: true
+
+  '@esbuild/linux-ppc64@0.25.0':
     optional: true
 
   '@esbuild/linux-riscv64@0.21.5':
     optional: true
 
-  '@esbuild/linux-riscv64@0.24.0':
+  '@esbuild/linux-riscv64@0.24.2':
+    optional: true
+
+  '@esbuild/linux-riscv64@0.25.0':
     optional: true
 
   '@esbuild/linux-s390x@0.21.5':
     optional: true
 
-  '@esbuild/linux-s390x@0.24.0':
+  '@esbuild/linux-s390x@0.24.2':
+    optional: true
+
+  '@esbuild/linux-s390x@0.25.0':
     optional: true
 
   '@esbuild/linux-x64@0.21.5':
     optional: true
 
-  '@esbuild/linux-x64@0.24.0':
+  '@esbuild/linux-x64@0.24.2':
+    optional: true
+
+  '@esbuild/linux-x64@0.25.0':
+    optional: true
+
+  '@esbuild/netbsd-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/netbsd-arm64@0.25.0':
     optional: true
 
   '@esbuild/netbsd-x64@0.21.5':
     optional: true
 
-  '@esbuild/netbsd-x64@0.24.0':
+  '@esbuild/netbsd-x64@0.24.2':
     optional: true
 
-  '@esbuild/openbsd-arm64@0.24.0':
+  '@esbuild/netbsd-x64@0.25.0':
+    optional: true
+
+  '@esbuild/openbsd-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/openbsd-arm64@0.25.0':
     optional: true
 
   '@esbuild/openbsd-x64@0.21.5':
     optional: true
 
-  '@esbuild/openbsd-x64@0.24.0':
+  '@esbuild/openbsd-x64@0.24.2':
+    optional: true
+
+  '@esbuild/openbsd-x64@0.25.0':
     optional: true
 
   '@esbuild/sunos-x64@0.21.5':
     optional: true
 
-  '@esbuild/sunos-x64@0.24.0':
+  '@esbuild/sunos-x64@0.24.2':
+    optional: true
+
+  '@esbuild/sunos-x64@0.25.0':
     optional: true
 
   '@esbuild/win32-arm64@0.21.5':
     optional: true
 
-  '@esbuild/win32-arm64@0.24.0':
+  '@esbuild/win32-arm64@0.24.2':
+    optional: true
+
+  '@esbuild/win32-arm64@0.25.0':
     optional: true
 
   '@esbuild/win32-ia32@0.21.5':
     optional: true
 
-  '@esbuild/win32-ia32@0.24.0':
+  '@esbuild/win32-ia32@0.24.2':
+    optional: true
+
+  '@esbuild/win32-ia32@0.25.0':
     optional: true
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
-  '@esbuild/win32-x64@0.24.0':
+  '@esbuild/win32-x64@0.24.2':
+    optional: true
+
+  '@esbuild/win32-x64@0.25.0':
     optional: true
 
   '@eslint-community/eslint-utils@4.4.0(eslint@8.56.0)':
@@ -17476,20 +18269,20 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@57.0.0': {}
 
-  '@fern-api/fdr-sdk@0.132.0-26ae3d805(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.134.1-03ab42853(encoding@0.1.13)(typescript@5.7.2)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.132.0-26ae3d805
+      '@fern-api/ui-core-utils': 0.134.1-03ab42853
       '@ungap/structured-clone': 1.2.0
       dayjs: 1.11.11
-      es-toolkit: 1.30.1
+      es-toolkit: 1.33.0
+      escape-string-regexp: 5.0.0
       fast-deep-equal: 3.1.3
       form-data: 4.0.0
-      formdata-node: 6.0.3
+      httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.12.0
       tinycolor2: 1.6.0
-      title: 3.5.3
       ts-essentials: 10.0.4(typescript@5.7.2)
       url-join: 5.0.0
     transitivePeerDependencies:
@@ -17501,13 +18294,13 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.4.1
 
-  '@fern-api/sdk@0.12.3':
+  '@fern-api/sdk@0.12.3(encoding@0.1.13)':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -17531,7 +18324,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.37
 
-  '@fern-api/ui-core-utils@0.132.0-26ae3d805':
+  '@fern-api/ui-core-utils@0.134.1-03ab42853':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -17539,12 +18332,12 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.37
 
-  '@fern-api/venus-api-sdk@0.10.2':
+  '@fern-api/venus-api-sdk@0.10.2(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       readable-stream: 4.5.2
       url-join: 4.0.1
@@ -17553,32 +18346,33 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.132.0-26ae3d805':
+  '@fern-fern/fdr-cjs-sdk@0.134.1-b63da7113(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0(encoding@0.1.13)
+      qs: 6.14.0
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/fdr-test-sdk@0.0.5297(encoding@0.1.13)':
+    dependencies:
+      form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fdr-test-sdk@0.0.5297':
+  '@fern-fern/fiddle-sdk@0.0.584(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/fiddle-sdk@0.0.584':
-    dependencies:
-      form-data: 4.0.0
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -17586,30 +18380,30 @@ snapshots:
 
   '@fern-fern/generator-cli-sdk@0.0.17': {}
 
-  '@fern-fern/generator-exec-sdk@0.0.1021':
+  '@fern-fern/generator-exec-sdk@0.0.1021(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-exec-sdk@0.0.816':
+  '@fern-fern/generator-exec-sdk@0.0.816(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.114.0-5745f9e74':
+  '@fern-fern/generators-sdk@0.114.0-5745f9e74(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       readable-stream: 4.5.2
       url-join: 4.0.1
@@ -17617,8 +18411,6 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@39.0.0': {}
-
-  '@fern-fern/ir-sdk@53.7.0': {}
 
   '@fern-fern/ir-sdk@53.9.0': {}
 
@@ -17738,21 +18530,21 @@ snapshots:
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
-  '@fern-fern/postman-sdk@0.1.1':
+  '@fern-fern/postman-sdk@0.1.1(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.0.5526':
+  '@fern-fern/snippet-sdk@0.0.5526(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -18184,7 +18976,7 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  '@redocly/openapi-core@1.4.1':
+  '@redocly/openapi-core@1.4.1(encoding@0.1.13)':
     dependencies:
       '@redocly/ajv': 8.11.0
       '@types/node': 14.18.63
@@ -18193,7 +18985,7 @@ snapshots:
       js-yaml: 4.1.0
       lodash.isequal: 4.5.0
       minimatch: 5.1.0
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
     transitivePeerDependencies:
@@ -18516,6 +19308,8 @@ snapshots:
   '@types/graceful-fs@4.1.5':
     dependencies:
       '@types/node': 18.15.3
+
+  '@types/har-format@1.2.16': {}
 
   '@types/hast@3.0.4':
     dependencies:
@@ -19022,9 +19816,9 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14(esbuild@0.24.0)':
+  '@yarnpkg/esbuild-plugin-pnp@3.0.0-rc.14(esbuild@0.25.0)':
     dependencies:
-      esbuild: 0.24.0
+      esbuild: 0.25.0
       tslib: 1.14.1
 
   abab@2.0.6: {}
@@ -19154,7 +19948,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-object-atoms: 1.0.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-string: 1.0.7
 
   array-timsort@1.0.3: {}
@@ -19208,7 +20002,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-array-buffer: 3.0.4
       is-shared-array-buffer: 1.0.3
 
@@ -19219,7 +20013,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.9
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-array-buffer: 3.0.5
 
   arrify@1.0.1: {}
@@ -19432,9 +20226,9 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bundle-require@5.0.0(esbuild@0.24.0):
+  bundle-require@5.0.0(esbuild@0.24.2):
     dependencies:
-      esbuild: 0.24.0
+      esbuild: 0.24.2
       load-tsconfig: 0.2.5
 
   busboy@1.6.0:
@@ -19444,11 +20238,6 @@ snapshots:
   bytes@3.1.2: {}
 
   cac@6.7.14: {}
-
-  call-bind-apply-helpers@1.0.1:
-    dependencies:
-      es-errors: 1.3.0
-      function-bind: 1.1.2
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -19465,15 +20254,15 @@ snapshots:
 
   call-bind@1.0.8:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
+      call-bind-apply-helpers: 1.0.2
       es-define-property: 1.0.1
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       set-function-length: 1.2.2
 
   call-bound@1.0.3:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
-      get-intrinsic: 1.2.7
+      call-bind-apply-helpers: 1.0.2
+      get-intrinsic: 1.3.0
 
   call-me-maybe@1.0.2: {}
 
@@ -19756,9 +20545,9 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-fetch@3.1.5:
+  cross-fetch@3.1.5(encoding@0.1.13):
     dependencies:
-      node-fetch: 2.6.7
+      node-fetch: 2.6.7(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
 
@@ -20107,7 +20896,7 @@ snapshots:
 
   dunder-proto@1.0.1:
     dependencies:
-      call-bind-apply-helpers: 1.0.1
+      call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
 
@@ -20136,6 +20925,11 @@ snapshots:
   encodeurl@1.0.2: {}
 
   encodeurl@2.0.0: {}
+
+  encoding@0.1.13:
+    dependencies:
+      iconv-lite: 0.6.3
+    optional: true
 
   end-of-stream@1.4.4:
     dependencies:
@@ -20223,11 +21017,11 @@ snapshots:
       data-view-byte-offset: 1.0.1
       es-define-property: 1.0.1
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       es-set-tostringtag: 2.1.0
       es-to-primitive: 1.3.0
       function.prototype.name: 1.1.8
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       get-proto: 1.0.1
       get-symbol-description: 1.1.0
       globalthis: 1.0.4
@@ -20267,7 +21061,7 @@ snapshots:
 
   es-define-property@1.0.0:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   es-define-property@1.0.1: {}
 
@@ -20281,7 +21075,7 @@ snapshots:
       es-errors: 1.3.0
       es-set-tostringtag: 2.0.3
       function-bind: 1.1.2
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       globalthis: 1.0.4
       gopd: 1.2.0
       has-property-descriptors: 1.0.2
@@ -20305,7 +21099,7 @@ snapshots:
 
   es-set-tostringtag@2.0.3:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
@@ -20333,6 +21127,8 @@ snapshots:
       is-symbol: 1.0.4
 
   es-toolkit@1.30.1: {}
+
+  es-toolkit@1.33.0: {}
 
   es6-promise@3.3.1: {}
 
@@ -20362,32 +21158,61 @@ snapshots:
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
 
-  esbuild@0.24.0:
+  esbuild@0.24.2:
     optionalDependencies:
-      '@esbuild/aix-ppc64': 0.24.0
-      '@esbuild/android-arm': 0.24.0
-      '@esbuild/android-arm64': 0.24.0
-      '@esbuild/android-x64': 0.24.0
-      '@esbuild/darwin-arm64': 0.24.0
-      '@esbuild/darwin-x64': 0.24.0
-      '@esbuild/freebsd-arm64': 0.24.0
-      '@esbuild/freebsd-x64': 0.24.0
-      '@esbuild/linux-arm': 0.24.0
-      '@esbuild/linux-arm64': 0.24.0
-      '@esbuild/linux-ia32': 0.24.0
-      '@esbuild/linux-loong64': 0.24.0
-      '@esbuild/linux-mips64el': 0.24.0
-      '@esbuild/linux-ppc64': 0.24.0
-      '@esbuild/linux-riscv64': 0.24.0
-      '@esbuild/linux-s390x': 0.24.0
-      '@esbuild/linux-x64': 0.24.0
-      '@esbuild/netbsd-x64': 0.24.0
-      '@esbuild/openbsd-arm64': 0.24.0
-      '@esbuild/openbsd-x64': 0.24.0
-      '@esbuild/sunos-x64': 0.24.0
-      '@esbuild/win32-arm64': 0.24.0
-      '@esbuild/win32-ia32': 0.24.0
-      '@esbuild/win32-x64': 0.24.0
+      '@esbuild/aix-ppc64': 0.24.2
+      '@esbuild/android-arm': 0.24.2
+      '@esbuild/android-arm64': 0.24.2
+      '@esbuild/android-x64': 0.24.2
+      '@esbuild/darwin-arm64': 0.24.2
+      '@esbuild/darwin-x64': 0.24.2
+      '@esbuild/freebsd-arm64': 0.24.2
+      '@esbuild/freebsd-x64': 0.24.2
+      '@esbuild/linux-arm': 0.24.2
+      '@esbuild/linux-arm64': 0.24.2
+      '@esbuild/linux-ia32': 0.24.2
+      '@esbuild/linux-loong64': 0.24.2
+      '@esbuild/linux-mips64el': 0.24.2
+      '@esbuild/linux-ppc64': 0.24.2
+      '@esbuild/linux-riscv64': 0.24.2
+      '@esbuild/linux-s390x': 0.24.2
+      '@esbuild/linux-x64': 0.24.2
+      '@esbuild/netbsd-arm64': 0.24.2
+      '@esbuild/netbsd-x64': 0.24.2
+      '@esbuild/openbsd-arm64': 0.24.2
+      '@esbuild/openbsd-x64': 0.24.2
+      '@esbuild/sunos-x64': 0.24.2
+      '@esbuild/win32-arm64': 0.24.2
+      '@esbuild/win32-ia32': 0.24.2
+      '@esbuild/win32-x64': 0.24.2
+
+  esbuild@0.25.0:
+    optionalDependencies:
+      '@esbuild/aix-ppc64': 0.25.0
+      '@esbuild/android-arm': 0.25.0
+      '@esbuild/android-arm64': 0.25.0
+      '@esbuild/android-x64': 0.25.0
+      '@esbuild/darwin-arm64': 0.25.0
+      '@esbuild/darwin-x64': 0.25.0
+      '@esbuild/freebsd-arm64': 0.25.0
+      '@esbuild/freebsd-x64': 0.25.0
+      '@esbuild/linux-arm': 0.25.0
+      '@esbuild/linux-arm64': 0.25.0
+      '@esbuild/linux-ia32': 0.25.0
+      '@esbuild/linux-loong64': 0.25.0
+      '@esbuild/linux-mips64el': 0.25.0
+      '@esbuild/linux-ppc64': 0.25.0
+      '@esbuild/linux-riscv64': 0.25.0
+      '@esbuild/linux-s390x': 0.25.0
+      '@esbuild/linux-x64': 0.25.0
+      '@esbuild/netbsd-arm64': 0.25.0
+      '@esbuild/netbsd-x64': 0.25.0
+      '@esbuild/openbsd-arm64': 0.25.0
+      '@esbuild/openbsd-x64': 0.25.0
+      '@esbuild/sunos-x64': 0.25.0
+      '@esbuild/win32-arm64': 0.25.0
+      '@esbuild/win32-ia32': 0.25.0
+      '@esbuild/win32-x64': 0.25.0
 
   escalade@3.1.2: {}
 
@@ -20980,6 +21805,11 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  formdata-node@4.4.1:
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 4.0.0-beta.3
+
   formdata-node@6.0.3: {}
 
   forwarded@0.2.0: {}
@@ -21039,19 +21869,6 @@ snapshots:
       has-symbols: 1.0.3
       hasown: 2.0.2
 
-  get-intrinsic@1.2.7:
-    dependencies:
-      call-bind-apply-helpers: 1.0.1
-      es-define-property: 1.0.1
-      es-errors: 1.3.0
-      es-object-atoms: 1.0.0
-      function-bind: 1.1.2
-      get-proto: 1.0.1
-      gopd: 1.2.0
-      has-symbols: 1.1.0
-      hasown: 2.0.2
-      math-intrinsics: 1.1.0
-
   get-intrinsic@1.3.0:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -21065,6 +21882,8 @@ snapshots:
       hasown: 2.0.2
       math-intrinsics: 1.1.0
 
+  get-own-enumerable-property-symbols@3.0.2: {}
+
   get-package-type@0.1.0: {}
 
   get-port@7.1.0: {}
@@ -21072,7 +21891,7 @@ snapshots:
   get-proto@1.0.1:
     dependencies:
       dunder-proto: 1.0.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   get-stdin@9.0.0: {}
 
@@ -21093,13 +21912,13 @@ snapshots:
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   get-symbol-description@1.1.0:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   glob-parent@5.1.2:
     dependencies:
@@ -21446,6 +22265,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  httpsnippet-lite@3.0.5:
+    dependencies:
+      '@types/har-format': 1.2.16
+      formdata-node: 4.4.1
+      stringify-object: 3.3.0
+
   human-signals@2.1.0: {}
 
   human-signals@4.3.1: {}
@@ -21547,13 +22372,13 @@ snapshots:
   is-array-buffer@3.0.4:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   is-array-buffer@3.0.5:
     dependencies:
       call-bind: 1.0.8
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   is-arrayish@0.2.1: {}
 
@@ -21604,7 +22429,7 @@ snapshots:
   is-data-view@1.0.2:
     dependencies:
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       is-typed-array: 1.1.15
 
   is-date-object@1.0.5:
@@ -21669,6 +22494,8 @@ snapshots:
 
   is-number@7.0.0: {}
 
+  is-obj@1.0.1: {}
+
   is-path-inside@3.0.3: {}
 
   is-plain-obj@1.1.0: {}
@@ -21694,6 +22521,8 @@ snapshots:
       gopd: 1.2.0
       has-tostringtag: 1.0.2
       hasown: 2.0.2
+
+  is-regexp@1.0.0: {}
 
   is-set@2.0.3: {}
 
@@ -21813,7 +22642,7 @@ snapshots:
   iterator.prototype@1.1.3:
     dependencies:
       define-properties: 1.2.1
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       reflect.getprototypeof: 1.0.6
       set-function-name: 2.0.2
@@ -23103,17 +23932,23 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  node-domexception@1.0.0: {}
+
   node-fetch-h2@2.3.0:
     dependencies:
       http2-client: 1.3.5
 
-  node-fetch@2.6.7:
+  node-fetch@2.6.7(encoding@0.1.13):
     dependencies:
       whatwg-url: 14.1.0
+    optionalDependencies:
+      encoding: 0.1.13
 
-  node-fetch@2.7.0:
+  node-fetch@2.7.0(encoding@0.1.13):
     dependencies:
       whatwg-url: 14.1.0
+    optionalDependencies:
+      encoding: 0.1.13
 
   node-int64@0.4.0: {}
 
@@ -23204,7 +24039,7 @@ snapshots:
       call-bind: 1.0.8
       call-bound: 1.0.3
       define-properties: 1.2.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       has-symbols: 1.1.0
       object-keys: 1.1.1
 
@@ -23296,7 +24131,7 @@ snapshots:
 
   own-keys@1.0.1:
     dependencies:
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
@@ -23587,11 +24422,11 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@19.11.1(typescript@5.7.2):
+  puppeteer-core@19.11.1(encoding@0.1.13)(typescript@5.7.2):
     dependencies:
       '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
       chromium-bidi: 0.4.7(devtools-protocol@0.0.1107588)
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
       debug: 4.3.4
       devtools-protocol: 0.0.1107588
       extract-zip: 2.0.1
@@ -23608,14 +24443,14 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer@19.11.1(typescript@5.7.2):
+  puppeteer@19.11.1(encoding@0.1.13)(typescript@5.7.2):
     dependencies:
       '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
       cosmiconfig: 8.1.3
       https-proxy-agent: 5.0.1
       progress: 2.0.3
       proxy-from-env: 1.1.0
-      puppeteer-core: 19.11.1(typescript@5.7.2)
+      puppeteer-core: 19.11.1(encoding@0.1.13)(typescript@5.7.2)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -23635,11 +24470,15 @@ snapshots:
 
   qs@6.12.1:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   qs@6.13.0:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
+
+  qs@6.14.0:
+    dependencies:
+      side-channel: 1.1.0
 
   querystringify@2.2.0: {}
 
@@ -23749,7 +24588,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.9
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
       which-builtin-type: 1.2.1
@@ -23760,7 +24599,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.23.5
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       globalthis: 1.0.4
       which-builtin-type: 1.1.3
 
@@ -24039,7 +24878,7 @@ snapshots:
   safe-array-concat@1.1.2:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       isarray: 2.0.5
 
@@ -24047,7 +24886,7 @@ snapshots:
     dependencies:
       call-bind: 1.0.8
       call-bound: 1.0.3
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       has-symbols: 1.1.0
       isarray: 2.0.5
 
@@ -24153,7 +24992,7 @@ snapshots:
       define-data-property: 1.1.4
       es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       gopd: 1.2.0
       has-property-descriptors: 1.0.2
 
@@ -24168,7 +25007,7 @@ snapshots:
     dependencies:
       dunder-proto: 1.0.1
       es-errors: 1.3.0
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   setprototypeof@1.2.0: {}
 
@@ -24213,23 +25052,16 @@ snapshots:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.3
 
   side-channel-weakmap@1.0.2:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.3
       side-channel-map: 1.0.1
-
-  side-channel@1.0.6:
-    dependencies:
-      call-bind: 1.0.7
-      es-errors: 1.3.0
-      get-intrinsic: 1.2.4
-      object-inspect: 1.13.3
 
   side-channel@1.1.0:
     dependencies:
@@ -24356,7 +25188,7 @@ snapshots:
       es-abstract: 1.23.5
       es-errors: 1.3.0
       es-object-atoms: 1.0.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       gopd: 1.2.0
       has-symbols: 1.1.0
       internal-slot: 1.0.7
@@ -24387,7 +25219,7 @@ snapshots:
       define-data-property: 1.1.4
       define-properties: 1.2.1
       es-abstract: 1.23.9
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
       has-property-descriptors: 1.0.2
 
   string.prototype.trim@1.2.9:
@@ -24408,7 +25240,7 @@ snapshots:
       call-bind: 1.0.8
       call-bound: 1.0.3
       define-properties: 1.2.1
-      es-object-atoms: 1.0.0
+      es-object-atoms: 1.1.1
 
   string.prototype.trimstart@1.0.8:
     dependencies:
@@ -24428,6 +25260,12 @@ snapshots:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
+
+  stringify-object@3.3.0:
+    dependencies:
+      get-own-enumerable-property-symbols: 3.0.2
+      is-obj: 1.0.1
+      is-regexp: 1.0.0
 
   strip-ansi@6.0.1:
     dependencies:
@@ -24645,10 +25483,10 @@ snapshots:
 
   svg-tags@1.0.0: {}
 
-  swagger2openapi@7.0.8:
+  swagger2openapi@7.0.8(encoding@0.1.13):
     dependencies:
       call-me-maybe: 1.0.2
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       node-fetch-h2: 2.3.0
       node-readfiles: 0.2.0
       oas-kit-common: 1.0.8
@@ -24740,16 +25578,16 @@ snapshots:
       ansi-escapes: 5.0.0
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.24.0)(webpack@5.94.0(esbuild@0.24.0)):
+  terser-webpack-plugin@5.3.10(esbuild@0.25.0)(webpack@5.94.0(esbuild@0.25.0)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.94.0(esbuild@0.24.0)
+      webpack: 5.94.0(esbuild@0.25.0)
     optionalDependencies:
-      esbuild: 0.24.0
+      esbuild: 0.25.0
 
   terser-webpack-plugin@5.3.10(webpack@5.94.0):
     dependencies:
@@ -24915,7 +25753,7 @@ snapshots:
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.26.0)
 
-  ts-loader@9.5.1(typescript@5.7.2)(webpack@5.94.0(esbuild@0.24.0)):
+  ts-loader@9.5.1(typescript@5.7.2)(webpack@5.94.0(esbuild@0.25.0)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.17.1
@@ -24923,7 +25761,7 @@ snapshots:
       semver: 7.6.3
       source-map: 0.7.4
       typescript: 5.7.2
-      webpack: 5.94.0(esbuild@0.24.0)
+      webpack: 5.94.0(esbuild@0.25.0)
 
   ts-loader@9.5.1(typescript@5.7.2)(webpack@5.94.0):
     dependencies:
@@ -24975,12 +25813,12 @@ snapshots:
 
   tsup@8.3.5(postcss@8.5.1)(typescript@5.7.2)(yaml@2.3.3):
     dependencies:
-      bundle-require: 5.0.0(esbuild@0.24.0)
+      bundle-require: 5.0.0(esbuild@0.24.2)
       cac: 6.7.14
       chokidar: 4.0.1
       consola: 3.2.3
       debug: 4.4.0
-      esbuild: 0.24.0
+      esbuild: 0.24.2
       joycon: 3.1.1
       picocolors: 1.1.1
       postcss-load-config: 6.0.1(postcss@8.5.1)(yaml@2.3.3)
@@ -25455,6 +26293,8 @@ snapshots:
 
   web-namespaces@2.0.1: {}
 
+  web-streams-polyfill@4.0.0-beta.3: {}
+
   webidl-conversions@4.0.2: {}
 
   webidl-conversions@7.0.0: {}
@@ -25491,7 +26331,7 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.94.0(esbuild@0.24.0):
+  webpack@5.94.0(esbuild@0.25.0):
     dependencies:
       '@types/estree': 1.0.6
       '@webassemblyjs/ast': 1.12.1
@@ -25513,7 +26353,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.24.0)(webpack@5.94.0(esbuild@0.24.0))
+      terser-webpack-plugin: 5.3.10(esbuild@0.25.0)(webpack@5.94.0(esbuild@0.25.0))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:

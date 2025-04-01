@@ -99,6 +99,28 @@ func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+type EnumWithCustom string
+
+const (
+	EnumWithCustomSafe   EnumWithCustom = "safe"
+	EnumWithCustomCustom EnumWithCustom = "Custom"
+)
+
+func NewEnumWithCustomFromString(s string) (EnumWithCustom, error) {
+	switch s {
+	case "safe":
+		return EnumWithCustomSafe, nil
+	case "Custom":
+		return EnumWithCustomCustom, nil
+	}
+	var t EnumWithCustom
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EnumWithCustom) Ptr() *EnumWithCustom {
+	return &e
+}
+
 // Tests enum name and value can be
 // different.
 type Operand string

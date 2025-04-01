@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
@@ -84,6 +85,19 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
+        });
+    }
+
+    public generateSnippet(baseUrlValues?: csharp.AstNode): csharp.ClassInstantiation {
+        const arguments_ = this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
+            const name = baseUrl.name.pascalCase.safeName;
+            const value = baseUrlValues ?? `<${baseUrl.id} URL>`;
+            return { name, assignment: value };
+        });
+
+        return csharp.instantiateClass({
+            classReference: this.context.getEnvironmentsClassReference(),
+            arguments_
         });
     }
 

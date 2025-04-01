@@ -17,6 +17,7 @@ public record CreateUserRequest
     [JsonPropertyName("avatar")]
     public string? Avatar { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

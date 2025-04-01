@@ -42,11 +42,11 @@ public partial class SeedAliasClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{JsonUtils.SerializeAsString(typeId)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
                     Options = options,
                 },
                 cancellationToken

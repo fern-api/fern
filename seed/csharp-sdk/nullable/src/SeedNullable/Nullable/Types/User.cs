@@ -23,15 +23,25 @@ public record User
     public string? Email { get; set; }
 
     [JsonPropertyName("favorite-number")]
-    public required OneOf<int, float?, double> FavoriteNumber { get; set; }
+    public required OneOf<int, float?, string?, double> FavoriteNumber { get; set; }
+
+    [JsonPropertyName("numbers")]
+    public IEnumerable<int>? Numbers { get; set; }
+
+    [JsonPropertyName("strings")]
+    public object? Strings { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

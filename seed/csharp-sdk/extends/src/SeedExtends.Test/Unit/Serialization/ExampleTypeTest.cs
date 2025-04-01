@@ -23,7 +23,7 @@ public class ExampleTypeTest
             Name = "Example",
         };
         var deserializedObject = JsonUtils.Deserialize<ExampleType>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

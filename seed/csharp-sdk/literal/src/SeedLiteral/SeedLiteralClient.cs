@@ -19,6 +19,7 @@ public partial class SeedLiteralClient
                 { "User-Agent", "Fernliteral/0.0.1" },
             }
         );
+        clientOptions ??= new ClientOptions();
         if (clientOptions.Version != null)
         {
             defaultHeaders["X-API-Version"] = clientOptions.Version;
@@ -27,7 +28,6 @@ public partial class SeedLiteralClient
         {
             defaultHeaders["X-API-Enable-Audit-Logging"] = clientOptions.AuditLogging.ToString();
         }
-        clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
@@ -43,13 +43,13 @@ public partial class SeedLiteralClient
         Reference = new ReferenceClient(_client);
     }
 
-    public HeadersClient Headers { get; init; }
+    public HeadersClient Headers { get; }
 
-    public InlinedClient Inlined { get; init; }
+    public InlinedClient Inlined { get; }
 
-    public PathClient Path { get; init; }
+    public PathClient Path { get; }
 
-    public QueryClient Query { get; init; }
+    public QueryClient Query { get; }
 
-    public ReferenceClient Reference { get; init; }
+    public ReferenceClient Reference { get; }
 }

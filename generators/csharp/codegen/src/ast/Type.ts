@@ -43,6 +43,7 @@ type InternalType =
     | CoreReference
     | Action
     | Func
+    | FileParameter
     | CsharpType;
 
 interface Integer {
@@ -170,6 +171,11 @@ interface Func {
     type: "func";
     typeParameters: (Type | TypeParameter)[];
     returnType: Type | TypeParameter;
+}
+
+interface FileParameter {
+    type: "fileParam";
+    value: ClassReference;
 }
 
 interface CsharpType {
@@ -350,6 +356,9 @@ export class Type extends AstNode {
             case "csharpType":
                 writer.write("global::System.Type");
                 break;
+            case "fileParam":
+                writer.writeNode(this.internalType.value);
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -381,16 +390,18 @@ export class Type extends AstNode {
     }
 
     public isCollection(): boolean {
-        return ["list", "set", "map"].includes(this.internalType.type);
+        return ["list", "listType", "set", "map", "array"].includes(this.internalType.type);
     }
 
-    public getCollectionValueType(): Type | undefined {
+    public getCollectionItemType(): Type | undefined {
         switch (this.internalType.type) {
             case "list":
+            case "listType":
             case "set":
+            case "array":
                 return this.internalType.value;
             case "map":
-                return this.internalType.valueType;
+                return Type.keyValuePair(this.internalType.keyType, this.internalType.valueType);
             default:
                 return undefined;
         }
@@ -425,6 +436,7 @@ export class Type extends AstNode {
             case "oneOfBase":
             case "csharpType":
             case "idictionary":
+            case "fileParam":
                 return true;
             case "reference":
             case "coreReference":
@@ -663,6 +675,13 @@ export class Type extends AstNode {
     public static csharpType(): Type {
         return new this({
             type: "csharpType"
+        });
+    }
+
+    public static fileParam(classReference: ClassReference): Type {
+        return new this({
+            type: "fileParam",
+            value: classReference
         });
     }
 

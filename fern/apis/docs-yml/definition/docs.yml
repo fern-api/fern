@@ -137,6 +137,8 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      "ai-chat": optional<AIChatConfig>
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
@@ -159,6 +161,22 @@ types:
       js: optional<JsConfig>
 
   TabId: string
+
+  AIChatConfig: 
+    properties: 
+      model: optional<AIChatModel>
+      "system-prompt": 
+        type: optional<string>
+        docs: This is a system prompt that acts as context given to the LLM for AI chat. 
+    
+  AIChatModel: 
+    enum: 
+      - value: "claude-3.5"
+        name: claude_3_5
+      - value: "claude-3.7"
+        name: claude_3_7
+      - value: command-r-plus
+        name: command_r_plus
 
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]

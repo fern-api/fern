@@ -58,13 +58,11 @@ public class TestPostTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
+            new ObjectWithRequiredField { String = "string" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
         );
     }
 }

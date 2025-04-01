@@ -4,6 +4,7 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../ir-sdk" },
-    { "path": "../core-utils" }
+    { "path": "../core-utils" },
+    { "path": "../casings-generator" }
   ]
 }

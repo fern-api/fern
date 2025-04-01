@@ -5,6 +5,7 @@ package com.seed.exhaustive.types.errors;
 
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
+import okhttp3.Response;
 
 public final class ObjectWithRequiredFieldError extends SeedExhaustiveApiException {
     /**
@@ -14,6 +15,11 @@ public final class ObjectWithRequiredFieldError extends SeedExhaustiveApiExcepti
 
     public ObjectWithRequiredFieldError(ObjectWithRequiredField body) {
         super("ObjectWithRequiredFieldError", 400, body);
+        this.body = body;
+    }
+
+    public ObjectWithRequiredFieldError(ObjectWithRequiredField body, Response rawResponse) {
+        super("ObjectWithRequiredFieldError", 400, body, rawResponse);
         this.body = body;
     }
 

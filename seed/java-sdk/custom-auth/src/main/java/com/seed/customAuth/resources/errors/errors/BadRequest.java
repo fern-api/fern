@@ -4,9 +4,14 @@
 package com.seed.customAuth.resources.errors.errors;
 
 import com.seed.customAuth.core.SeedCustomAuthApiException;
+import okhttp3.Response;
 
 public final class BadRequest extends SeedCustomAuthApiException {
     public BadRequest(Object body) {
         super("BadRequest", 400, body);
+    }
+
+    public BadRequest(Object body, Response rawResponse) {
+        super("BadRequest", 400, body, rawResponse);
     }
 }

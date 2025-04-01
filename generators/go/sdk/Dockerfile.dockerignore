@@ -1,4 +1,5 @@
 *
+!generators/go-v2/sdk/features.yml
 !generators/go-v2/sdk/dist/cli.cjs
 !generators/go/go.mod
 !generators/go/go.sum

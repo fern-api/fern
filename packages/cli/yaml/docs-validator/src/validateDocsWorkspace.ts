@@ -2,7 +2,7 @@ import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -14,7 +14,7 @@ import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
     context: TaskContext,
-    fernWorkspaces: FernWorkspace[],
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[],
     ossWorkspaces: OSSWorkspace[],
     onlyCheckBrokenLinks?: boolean,
     excludeRules?: string[]
@@ -22,7 +22,7 @@ export async function validateDocsWorkspace(
     // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
     // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
     const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
-    return runRulesOnDocsWorkspace({ workspace, rules, context, fernWorkspaces, ossWorkspaces });
+    return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
 }
 
 // exported for testing
@@ -30,19 +30,19 @@ export async function runRulesOnDocsWorkspace({
     workspace,
     rules,
     context,
-    fernWorkspaces,
+    apiWorkspaces,
     ossWorkspaces
 }: {
     workspace: DocsWorkspace;
     rules: Rule[];
     context: TaskContext;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
     const allRuleVisitors = await Promise.all(
-        rules.map((rule) => rule.create({ workspace, fernWorkspaces, ossWorkspaces, logger: context.logger }))
+        rules.map((rule) => rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger }))
     );
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
@@ -62,7 +62,7 @@ export async function runRulesOnDocsWorkspace({
         ),
         absolutePathToFernFolder: workspace.absoluteFilePath,
         context,
-        fernWorkspaces
+        apiWorkspaces
     });
 
     return violations;

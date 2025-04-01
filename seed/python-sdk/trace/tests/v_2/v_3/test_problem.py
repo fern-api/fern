@@ -50,7 +50,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
         {
             "problemId": "problemId",
             "problemDescription": {
-                "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                "boards": [
+                    {"type": "html", "value": "boards"},
+                    {"type": "html", "value": "boards"},
+                ]
             },
             "problemName": "problemName",
             "problemVersion": 1,
@@ -60,8 +63,16 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                 "methodName": "methodName",
                 "signature": {
                     "parameters": [
-                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
-                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                        {
+                            "parameterId": "parameterId",
+                            "name": "name",
+                            "variableType": {"type": "integerType"},
+                        },
+                        {
+                            "parameterId": "parameterId",
+                            "name": "name",
+                            "variableType": {"type": "integerType"},
+                        },
                     ],
                     "returnType": {"type": "integerType"},
                 },
@@ -87,7 +98,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "templateId": "templateId",
                     "name": "name",
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "expectedValueParameterId": "expectedValueParameterId",
                 },
@@ -154,7 +168,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "name": "name",
                     "implementation": {
                         "description": {
-                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                            "boards": [
+                                {"type": "html", "value": "boards"},
+                                {"type": "html", "value": "boards"},
+                            ]
                         },
                         "function": {
                             "type": "withActualResult",
@@ -188,7 +205,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "name": "name",
                     "implementation": {
                         "description": {
-                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                            "boards": [
+                                {"type": "html", "value": "boards"},
+                                {"type": "html", "value": "boards"},
+                            ]
                         },
                         "function": {
                             "type": "withActualResult",
@@ -237,7 +257,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
         {
             "problemId": "problemId",
             "problemDescription": {
-                "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                "boards": [
+                    {"type": "html", "value": "boards"},
+                    {"type": "html", "value": "boards"},
+                ]
             },
             "problemName": "problemName",
             "problemVersion": 1,
@@ -247,8 +270,16 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                 "methodName": "methodName",
                 "signature": {
                     "parameters": [
-                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
-                        {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                        {
+                            "parameterId": "parameterId",
+                            "name": "name",
+                            "variableType": {"type": "integerType"},
+                        },
+                        {
+                            "parameterId": "parameterId",
+                            "name": "name",
+                            "variableType": {"type": "integerType"},
+                        },
                     ],
                     "returnType": {"type": "integerType"},
                 },
@@ -274,7 +305,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "templateId": "templateId",
                     "name": "name",
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "expectedValueParameterId": "expectedValueParameterId",
                 },
@@ -341,7 +375,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "name": "name",
                     "implementation": {
                         "description": {
-                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                            "boards": [
+                                {"type": "html", "value": "boards"},
+                                {"type": "html", "value": "boards"},
+                            ]
                         },
                         "function": {
                             "type": "withActualResult",
@@ -375,7 +412,10 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                     "name": "name",
                     "implementation": {
                         "description": {
-                            "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                            "boards": [
+                                {"type": "html", "value": "boards"},
+                                {"type": "html", "value": "boards"},
+                            ]
                         },
                         "function": {
                             "type": "withActualResult",
@@ -522,7 +562,12 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "templateId": None,
                             "name": None,
                             "implementation": {
-                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "description": {
+                                    "boards": (
+                                        "list",
+                                        {0: "no_validate", 1: "no_validate"},
+                                    )
+                                },
                                 "function": "no_validate",
                             },
                         },
@@ -530,7 +575,12 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "templateId": None,
                             "name": None,
                             "implementation": {
-                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "description": {
+                                    "boards": (
+                                        "list",
+                                        {0: "no_validate", 1: "no_validate"},
+                                    )
+                                },
                                 "function": "no_validate",
                             },
                         },
@@ -652,7 +702,12 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "templateId": None,
                             "name": None,
                             "implementation": {
-                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "description": {
+                                    "boards": (
+                                        "list",
+                                        {0: "no_validate", 1: "no_validate"},
+                                    )
+                                },
                                 "function": "no_validate",
                             },
                         },
@@ -660,7 +715,12 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                             "templateId": None,
                             "name": None,
                             "implementation": {
-                                "description": {"boards": ("list", {0: "no_validate", 1: "no_validate"})},
+                                "description": {
+                                    "boards": (
+                                        "list",
+                                        {0: "no_validate", 1: "no_validate"},
+                                    )
+                                },
                                 "function": "no_validate",
                             },
                         },
@@ -697,7 +757,12 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
 async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
         "problemId": "problemId",
-        "problemDescription": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+        "problemDescription": {
+            "boards": [
+                {"type": "html", "value": "boards"},
+                {"type": "html", "value": "boards"},
+            ]
+        },
         "problemName": "problemName",
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
@@ -706,23 +771,46 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
             "methodName": "methodName",
             "signature": {
                 "parameters": [
-                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
-                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    {
+                        "parameterId": "parameterId",
+                        "name": "name",
+                        "variableType": {"type": "integerType"},
+                    },
+                    {
+                        "parameterId": "parameterId",
+                        "name": "name",
+                        "variableType": {"type": "integerType"},
+                    },
                 ],
                 "returnType": {"type": "integerType"},
             },
             "additionalFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "basicTestCaseTemplate": {
                 "templateId": "templateId",
                 "name": "name",
-                "description": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+                "description": {
+                    "boards": [
+                        {"type": "html", "value": "boards"},
+                        {"type": "html", "value": "boards"},
+                    ]
+                },
                 "expectedValueParameterId": "expectedValueParameterId",
             },
         },
@@ -730,24 +818,54 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
             "generatedTestCaseFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "generatedTemplateFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "other": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
@@ -758,7 +876,10 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                 "name": "name",
                 "implementation": {
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "function": {
                         "type": "withActualResult",
@@ -792,7 +913,10 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                 "name": "name",
                 "implementation": {
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "function": {
                         "type": "withActualResult",
@@ -855,8 +979,18 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },
@@ -872,8 +1006,18 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },
@@ -889,8 +1033,18 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },
@@ -948,7 +1102,12 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
 async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     expected_response: typing.Any = {
         "problemId": "problemId",
-        "problemDescription": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+        "problemDescription": {
+            "boards": [
+                {"type": "html", "value": "boards"},
+                {"type": "html", "value": "boards"},
+            ]
+        },
         "problemName": "problemName",
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
@@ -957,23 +1116,46 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
             "methodName": "methodName",
             "signature": {
                 "parameters": [
-                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
-                    {"parameterId": "parameterId", "name": "name", "variableType": {"type": "integerType"}},
+                    {
+                        "parameterId": "parameterId",
+                        "name": "name",
+                        "variableType": {"type": "integerType"},
+                    },
+                    {
+                        "parameterId": "parameterId",
+                        "name": "name",
+                        "variableType": {"type": "integerType"},
+                    },
                 ],
                 "returnType": {"type": "integerType"},
             },
             "additionalFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "basicTestCaseTemplate": {
                 "templateId": "templateId",
                 "name": "name",
-                "description": {"boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]},
+                "description": {
+                    "boards": [
+                        {"type": "html", "value": "boards"},
+                        {"type": "html", "value": "boards"},
+                    ]
+                },
                 "expectedValueParameterId": "expectedValueParameterId",
             },
         },
@@ -981,24 +1163,54 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
             "generatedTestCaseFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "generatedTemplateFiles": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
             "other": {
                 "JAVA": {
                     "files": [
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
-                        {"filename": "filename", "directory": "directory", "contents": "contents", "editable": True},
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
+                        {
+                            "filename": "filename",
+                            "directory": "directory",
+                            "contents": "contents",
+                            "editable": True,
+                        },
                     ]
                 }
             },
@@ -1009,7 +1221,10 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                 "name": "name",
                 "implementation": {
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "function": {
                         "type": "withActualResult",
@@ -1043,7 +1258,10 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                 "name": "name",
                 "implementation": {
                     "description": {
-                        "boards": [{"type": "html", "value": "boards"}, {"type": "html", "value": "boards"}]
+                        "boards": [
+                            {"type": "html", "value": "boards"},
+                            {"type": "html", "value": "boards"},
+                        ]
                     },
                     "function": {
                         "type": "withActualResult",
@@ -1106,8 +1324,18 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },
@@ -1123,8 +1351,18 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },
@@ -1140,8 +1378,18 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                             "files": (
                                 "list",
                                 {
-                                    0: {"filename": None, "directory": None, "contents": None, "editable": None},
-                                    1: {"filename": None, "directory": None, "contents": None, "editable": None},
+                                    0: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
+                                    1: {
+                                        "filename": None,
+                                        "directory": None,
+                                        "contents": None,
+                                        "editable": None,
+                                    },
                                 },
                             )
                         },

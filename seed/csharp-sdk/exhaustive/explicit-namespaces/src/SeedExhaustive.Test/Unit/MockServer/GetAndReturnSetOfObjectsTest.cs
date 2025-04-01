@@ -46,13 +46,12 @@ public class GetAndReturnSetOfObjectsTest : BaseMockServerTest
             new HashSet<ObjectWithRequiredField>()
             {
                 new ObjectWithRequiredField { String = "string" },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

@@ -1,7 +1,7 @@
-import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/base-python-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
+import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/python-base";
 
 import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 
@@ -107,6 +107,7 @@ export class WrappedAliasGenerator {
                     map: () => "get_as_map",
                     set: () => "get_as_set",
                     optional: (opt) => this.getGetterName(opt),
+                    nullable: (nullable) => this.getGetterName(nullable),
                     literal: () => "get_as_string",
                     _other: () => "get_value"
                 }),
@@ -198,6 +199,7 @@ export class WrappedAliasGenerator {
                     map: () => "from_map",
                     set: () => "from_set",
                     optional: (opt) => this.getBuilderName(opt),
+                    nullable: (nullable) => this.getBuilderName(nullable),
                     literal: () => "from_string",
                     _other: () => "from_value"
                 }),
