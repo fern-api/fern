@@ -114,7 +114,7 @@ import com.seed.singleProperty.core.RequestOptions;
 // Client level
 SeedSinglePropertyClient client = SeedSinglePropertyClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

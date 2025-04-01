@@ -115,7 +115,7 @@ import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
 // Client level
 SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

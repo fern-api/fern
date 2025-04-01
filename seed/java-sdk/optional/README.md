@@ -117,7 +117,7 @@ import com.seed.objectsWithImports.core.RequestOptions;
 // Client level
 SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

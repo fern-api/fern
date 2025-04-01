@@ -114,7 +114,7 @@ import com.seed.exhaustive.core.RequestOptions;
 // Client level
 Best client = Best
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

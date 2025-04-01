@@ -108,7 +108,7 @@ import com.seed.noEnvironment.core.RequestOptions;
 // Client level
 SeedNoEnvironmentClient client = SeedNoEnvironmentClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

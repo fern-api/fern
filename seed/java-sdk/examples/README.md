@@ -122,7 +122,7 @@ import com.seed.examples.core.RequestOptions;
 // Client level
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

@@ -165,7 +165,7 @@ import com.seed.deepCursorPath.core.RequestOptions;
 // Client level
 SeedDeepCursorPathClient client = SeedDeepCursorPathClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

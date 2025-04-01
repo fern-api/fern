@@ -103,7 +103,7 @@ import com.seed.fileUpload.core.RequestOptions;
 // Client level
 SeedFileUploadClient client = SeedFileUploadClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

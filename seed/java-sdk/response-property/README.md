@@ -107,7 +107,7 @@ import com.seed.responseProperty.core.RequestOptions;
 // Client level
 SeedResponsePropertyClient client = SeedResponsePropertyClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

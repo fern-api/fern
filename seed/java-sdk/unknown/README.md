@@ -110,7 +110,7 @@ import com.seed.unknownAsAny.core.RequestOptions;
 // Client level
 SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

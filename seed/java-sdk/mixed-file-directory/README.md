@@ -113,7 +113,7 @@ import com.seed.mixedFileDirectory.core.RequestOptions;
 // Client level
 SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

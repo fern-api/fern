@@ -115,7 +115,7 @@ import com.seed.extends.core.RequestOptions;
 // Client level
 SeedExtendsClient client = SeedExtendsClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

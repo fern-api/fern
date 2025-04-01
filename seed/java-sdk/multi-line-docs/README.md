@@ -114,7 +114,7 @@ import com.seed.multiLineDocs.core.RequestOptions;
 // Client level
 SeedMultiLineDocsClient client = SeedMultiLineDocsClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

@@ -108,7 +108,7 @@ import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
 // Client level
 SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

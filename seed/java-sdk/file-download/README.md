@@ -103,7 +103,7 @@ import com.seed.fileDownload.core.RequestOptions;
 // Client level
 SeedFileDownloadClient client = SeedFileDownloadClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

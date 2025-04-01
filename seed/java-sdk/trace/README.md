@@ -127,7 +127,7 @@ import com.seed.trace.core.RequestOptions;
 // Client level
 SeedTraceClient client = SeedTraceClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

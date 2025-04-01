@@ -107,7 +107,7 @@ import com.seed.plainText.core.RequestOptions;
 // Client level
 SeedPlainTextClient client = SeedPlainTextClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

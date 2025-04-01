@@ -120,7 +120,7 @@ import com.seed.pathParameters.core.RequestOptions;
 // Client level
 SeedPathParametersClient client = SeedPathParametersClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

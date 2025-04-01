@@ -108,7 +108,7 @@ import com.seed.accept.core.RequestOptions;
 // Client level
 SeedAcceptClient client = SeedAcceptClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

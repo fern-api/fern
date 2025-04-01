@@ -117,7 +117,7 @@ import com.seed.validation.core.RequestOptions;
 // Client level
 SeedValidationClient client = SeedValidationClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

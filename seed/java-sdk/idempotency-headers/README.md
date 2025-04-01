@@ -116,7 +116,7 @@ import com.seed.idempotencyHeaders.core.RequestOptions;
 // Client level
 SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

@@ -114,7 +114,7 @@ import com.seed.streaming.core.RequestOptions;
 // Client level
 SeedStreamingClient client = SeedStreamingClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

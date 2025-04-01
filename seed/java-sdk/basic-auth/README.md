@@ -111,7 +111,7 @@ import com.seed.basicAuth.core.RequestOptions;
 // Client level
 SeedBasicAuthClient client = SeedBasicAuthClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

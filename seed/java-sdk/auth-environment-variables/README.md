@@ -108,7 +108,7 @@ import com.seed.authEnvironmentVariables.core.RequestOptions;
 // Client level
 SeedAuthEnvironmentVariablesClient client = SeedAuthEnvironmentVariablesClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

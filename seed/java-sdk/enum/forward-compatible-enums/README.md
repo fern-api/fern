@@ -123,7 +123,7 @@ import com.seed.enum.core.RequestOptions;
 // Client level
 SeedEnumClient client = SeedEnumClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

@@ -115,7 +115,7 @@ import com.seed.api.core.RequestOptions;
 // Client level
 SeedApiClient client = SeedApiClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

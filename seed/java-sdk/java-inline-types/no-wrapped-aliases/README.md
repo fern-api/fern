@@ -120,7 +120,7 @@ import com.seed.object.core.RequestOptions;
 // Client level
 SeedObjectClient client = SeedObjectClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

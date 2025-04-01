@@ -107,7 +107,7 @@ import com.seed.license.core.RequestOptions;
 // Client level
 SeedLicenseClient client = SeedLicenseClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

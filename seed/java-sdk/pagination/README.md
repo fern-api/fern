@@ -168,7 +168,7 @@ import com.seed.pagination.core.RequestOptions;
 // Client level
 SeedPaginationClient client = SeedPaginationClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

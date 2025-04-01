@@ -114,7 +114,7 @@ import com.seed.packageYml.core.RequestOptions;
 // Client level
 SeedPackageYmlClient client = SeedPackageYmlClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

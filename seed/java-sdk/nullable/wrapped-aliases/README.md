@@ -136,7 +136,7 @@ import com.seed.nullable.core.RequestOptions;
 // Client level
 SeedNullableClient client = SeedNullableClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level

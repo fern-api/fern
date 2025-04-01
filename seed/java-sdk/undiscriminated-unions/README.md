@@ -110,7 +110,7 @@ import com.seed.undiscriminatedUnions.core.RequestOptions;
 // Client level
 SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
     .builder()
-    .timeout(10)
+    .tiemout(10)
     .build();
 
 // Request level
