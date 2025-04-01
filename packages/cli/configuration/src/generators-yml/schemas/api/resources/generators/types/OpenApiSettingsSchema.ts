@@ -25,4 +25,6 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
     filter?: FernDefinition.OpenApiFilterSchema;
     /** Fine-tune your example generation */
     "example-generation"?: FernDefinition.OpenApiExampleGenerationSchema;
+    /** Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`. */
+    "additional-properties-defaults-to"?: boolean;
 }

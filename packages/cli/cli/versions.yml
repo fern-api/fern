@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Add `additional-properties-defaults-to` setting for OpenAPI specs in generators.yml.
+      This setting lets you change the default value for the `additionalProperties` field in the generated IR.
+    type: feat
+  irVersion: 57
+  version: 0.57.12
+
+- changelogEntry:
+  - summary: |
       Improve parameter parsing in v3 AsyncAPI specs to enable broader support for OpenAPI extensions.
     type: fix
   irVersion: 57

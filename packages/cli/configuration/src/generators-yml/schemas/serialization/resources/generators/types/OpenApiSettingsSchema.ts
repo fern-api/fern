@@ -25,6 +25,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "default-form-parameter-encoding": FormParameterEncoding.optional(),
         filter: OpenApiFilterSchema.optional(),
         "example-generation": OpenApiExampleGenerationSchema.optional(),
+        "additional-properties-defaults-to": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -40,5 +41,6 @@ export declare namespace OpenApiSettingsSchema {
         "default-form-parameter-encoding"?: FormParameterEncoding.Raw | null;
         filter?: OpenApiFilterSchema.Raw | null;
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;
+        "additional-properties-defaults-to"?: boolean | null;
     }
 }
