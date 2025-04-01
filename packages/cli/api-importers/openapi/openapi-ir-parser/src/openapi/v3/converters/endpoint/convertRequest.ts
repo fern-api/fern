@@ -260,7 +260,7 @@ export function convertRequest({
             fullExamples: jsonMediaObject.examples,
             additionalProperties:
                 !isReferenceObject(jsonMediaObject.schema) &&
-                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties, context.options),
             source
         });
     }

@@ -11,6 +11,7 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 
+import { ParseOpenAPIOptions } from "../options";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertSchema } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -35,7 +36,7 @@ export function convertAdditionalProperties({
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
-    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    additionalProperties: undefined | boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     availability: Availability | undefined;
     wrapAsNullable: boolean;
@@ -46,7 +47,11 @@ export function convertAdditionalProperties({
     source: Source;
     namespace: string | undefined;
 }): SchemaWithExample {
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
+    if (additionalProperties === undefined) {
+        additionalProperties = context.options.additionalPropertiesDefaultsTo;
+    }
+
+    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -222,10 +227,11 @@ export function wrapMap({
 }
 
 export function isAdditionalPropertiesAny(
-    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined,
+    options: ParseOpenAPIOptions
 ): boolean {
     if (additionalProperties == null) {
-        return false;
+        return options.additionalPropertiesDefaultsTo;
     }
     if (typeof additionalProperties === "boolean") {
         return additionalProperties;

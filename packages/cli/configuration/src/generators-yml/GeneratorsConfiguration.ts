@@ -69,6 +69,7 @@ export interface APIDefinitionSettings {
     filter: OpenApiFilterSchema | undefined;
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    additionalPropertiesDefaultsTo: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

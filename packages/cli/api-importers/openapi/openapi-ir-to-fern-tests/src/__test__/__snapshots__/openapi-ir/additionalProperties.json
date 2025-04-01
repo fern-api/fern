@@ -1,0 +1,1126 @@
+{
+  "title": "Test spec for `description` settings defined in anyOf.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "with-additional-properties-explicit",
+      "tags": [
+        "additionalPropertiesDefaultsToTrue"
+      ],
+      "namespace": "additionalPropertiesDefaultsToTrue",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "WithAdditionalPropertiesExplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "WithAdditionalPropertiesExplicitRequest",
+          "schema": "RequestWithAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "WithAdditionalPropertiesExplicitResponse",
+          "schema": "ResponseWithAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/with-additional-properties-explicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-true.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "without-additional-properties-explicit",
+      "tags": [
+        "additionalPropertiesDefaultsToTrue"
+      ],
+      "namespace": "additionalPropertiesDefaultsToTrue",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "WithoutAdditionalPropertiesExplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "WithoutAdditionalPropertiesExplicitRequest",
+          "schema": "RequestWithoutAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
+          "schema": "ResponseWithoutAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/without-additional-properties-explicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-true.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "implicit",
+      "tags": [
+        "additionalPropertiesDefaultsToTrue"
+      ],
+      "namespace": "additionalPropertiesDefaultsToTrue",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ImplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ImplicitRequest",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "ImplicitResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-true.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/implicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-true.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "with-additional-properties-explicit",
+      "tags": [
+        "additionalPropertiesDefaultsToFalse"
+      ],
+      "namespace": "additionalPropertiesDefaultsToFalse",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "WithAdditionalPropertiesExplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "WithAdditionalPropertiesExplicitRequest",
+          "schema": "RequestWithAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "WithAdditionalPropertiesExplicitResponse",
+          "schema": "ResponseWithAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/with-additional-properties-explicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-false.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "without-additional-properties-explicit",
+      "tags": [
+        "additionalPropertiesDefaultsToFalse"
+      ],
+      "namespace": "additionalPropertiesDefaultsToFalse",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "WithoutAdditionalPropertiesExplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "WithoutAdditionalPropertiesExplicitRequest",
+          "schema": "RequestWithoutAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "WithoutAdditionalPropertiesExplicitResponse",
+          "schema": "ResponseWithoutAdditionalPropertiesExplicit",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/without-additional-properties-explicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-false.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "implicit",
+      "tags": [
+        "additionalPropertiesDefaultsToFalse"
+      ],
+      "namespace": "additionalPropertiesDefaultsToFalse",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ImplicitRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ImplicitRequest",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "ImplicitResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi-additional-properties-defaults-to-false.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/implicit",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi-additional-properties-defaults-to-false.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "additionalPropertiesDefaultsToTrue": {
+        "RequestWithAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestWithAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestWithAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestWithAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "RequestWithAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "RequestWithoutAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "RequestWithoutAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "Request": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Request",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "ResponseWithAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseWithAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseWithAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResponseWithAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "ResponseWithoutAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResponseWithoutAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "Response": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToTrue"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToTrue"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Response",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToTrue"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-true.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "additionalPropertiesDefaultsToFalse": {
+        "RequestWithAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestWithAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestWithAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestWithAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "RequestWithAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "RequestWithoutAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "RequestWithoutAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "Request": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "requestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "requestId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Request",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "ResponseWithAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseWithAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseWithAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResponseWithAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "ResponseWithoutAdditionalPropertiesExplicit": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResponseWithoutAdditionalPropertiesExplicit",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "Response": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "responseId",
+              "key": "id",
+              "schema": {
+                "generatedName": "responseId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ResponseId",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "additionalPropertiesDefaultsToFalse"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "additionalPropertiesDefaultsToFalse"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Response",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "additionalPropertiesDefaultsToFalse"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi-additional-properties-defaults-to-false.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
