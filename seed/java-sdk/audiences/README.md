@@ -129,7 +129,7 @@ import com.seed.audiences.core.RequestOptions;
 // Client level
 SeedAudiencesClient client = SeedAudiencesClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

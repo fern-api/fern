@@ -115,7 +115,7 @@ import com.seed.literal.core.RequestOptions;
 // Client level
 SeedLiteralClient client = SeedLiteralClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

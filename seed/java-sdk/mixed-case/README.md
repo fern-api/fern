@@ -107,7 +107,7 @@ import com.seed.mixedCase.core.RequestOptions;
 // Client level
 SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

@@ -111,7 +111,7 @@ import com.seed.customAuth.core.RequestOptions;
 // Client level
 SeedCustomAuthClient client = SeedCustomAuthClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

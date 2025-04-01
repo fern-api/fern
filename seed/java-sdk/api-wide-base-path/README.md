@@ -107,7 +107,7 @@ import com.seed.apiWideBasePath.core.RequestOptions;
 // Client level
 SeedApiWideBasePathClient client = SeedApiWideBasePathClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

@@ -115,7 +115,7 @@ import com.seed.crossPackageTypeNames.core.RequestOptions;
 // Client level
 SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

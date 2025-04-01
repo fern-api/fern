@@ -107,7 +107,7 @@ import com.seed.alias.core.RequestOptions;
 // Client level
 SeedAliasClient client = SeedAliasClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

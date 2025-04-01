@@ -114,7 +114,7 @@ import com.seed.contentTypes.core.RequestOptions;
 // Client level
 SeedContentTypesClient client = SeedContentTypesClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

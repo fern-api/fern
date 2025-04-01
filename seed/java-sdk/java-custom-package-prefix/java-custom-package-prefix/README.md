@@ -115,7 +115,7 @@ import com.customprefix.core.RequestOptions;
 // Client level
 SeedApiClient client = SeedApiClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

@@ -107,7 +107,7 @@ import com.seed.unions.core.RequestOptions;
 // Client level
 SeedUnionsClient client = SeedUnionsClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

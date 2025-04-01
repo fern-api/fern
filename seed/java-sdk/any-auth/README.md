@@ -118,7 +118,7 @@ import com.seed.anyAuth.core.RequestOptions;
 // Client level
 SeedAnyAuthClient client = SeedAnyAuthClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level
