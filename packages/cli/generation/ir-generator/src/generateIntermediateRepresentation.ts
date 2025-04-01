@@ -96,6 +96,12 @@ export function generateIntermediateRepresentation({
     disableDynamicExamples,
     dynamicGeneratorConfig
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
+    exampleGeneration = {
+        ...exampleGeneration,
+        disabled: true,
+    };
+    disableDynamicExamples = true;
+
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
