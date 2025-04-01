@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix typos in README generator
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.4
+- changelogEntry:
+    - summary: |
         Add logging for Java v2 generator call
       type: fix
   createdAt: '2025-04-01'

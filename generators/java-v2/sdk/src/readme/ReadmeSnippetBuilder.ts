@@ -312,7 +312,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: "tiemout",
+                    name: "timeout",
                     value: java.TypeLiteral.raw(java.codeblock("10"))
                 }
             ]
