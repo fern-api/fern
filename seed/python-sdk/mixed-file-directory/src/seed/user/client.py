@@ -18,10 +18,7 @@ class UserClient:
         self.events = EventsClient(client_wrapper=self._client_wrapper)
 
     def list(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
         List all users.
@@ -78,10 +75,7 @@ class AsyncUserClient:
         self.events = AsyncEventsClient(client_wrapper=self._client_wrapper)
 
     async def list(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
         List all users.

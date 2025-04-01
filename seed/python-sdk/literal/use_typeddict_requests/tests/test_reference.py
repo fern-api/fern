@@ -7,22 +7,12 @@ from .utilities import validate_response
 
 
 async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None:
-    expected_response: typing.Any = {
-        "message": "The weather is sunny",
-        "status": 200,
-        "success": True,
-    }
+    expected_response: typing.Any = {"message": "The weather is sunny", "status": 200, "success": True}
     expected_types: typing.Any = {"message": None, "status": "integer", "success": None}
     response = client.reference.send(
         query="What is the weather today",
         container_object={
-            "nested_objects": [
-                {
-                    "literal_1": "literal1",
-                    "literal_2": "literal2",
-                    "str_prop": "strProp",
-                }
-            ]
+            "nested_objects": [{"literal_1": "literal1", "literal_2": "literal2", "str_prop": "strProp"}]
         },
     )
     validate_response(response, expected_response, expected_types)
@@ -30,13 +20,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
     async_response = await async_client.reference.send(
         query="What is the weather today",
         container_object={
-            "nested_objects": [
-                {
-                    "literal_1": "literal1",
-                    "literal_2": "literal2",
-                    "str_prop": "strProp",
-                }
-            ]
+            "nested_objects": [{"literal_1": "literal1", "literal_2": "literal2", "str_prop": "strProp"}]
         },
     )
     validate_response(async_response, expected_response, expected_types)

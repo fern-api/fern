@@ -2,8 +2,15 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
+from ..environment_generators import (
+    GeneratedEnvironment,
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
+from .endpoint_function_generator import EndpointFunctionGenerator
+from .generated_root_client import GeneratedRootClient, RootClient
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -19,15 +26,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import (
-    GeneratedEnvironment,
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
-from .constants import DEFAULT_BODY_PARAMETER_VALUE
-from .endpoint_function_generator import EndpointFunctionGenerator
-from .generated_root_client import GeneratedRootClient, RootClient
+import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -112,7 +111,7 @@ class RootClientGenerator:
                         constructor_parameter_name="client_id",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_id",
-                        instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
+                        instantiation=AST.Expression('client_id="YOUR_CLIENT_ID"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -133,7 +132,7 @@ class RootClientGenerator:
                         constructor_parameter_name="client_secret",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_secret",
-                        instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
+                        instantiation=AST.Expression('client_secret="YOUR_CLIENT_SECRET"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -649,11 +648,11 @@ class RootClientGenerator:
                         kwargs=[
                             (
                                 "client_id",
-                                AST.Expression(f"client_id"),
+                                AST.Expression("client_id"),
                             ),
                             (
                                 "client_secret",
-                                AST.Expression(f"client_secret"),
+                                AST.Expression("client_secret"),
                             ),
                             (
                                 "client_wrapper",

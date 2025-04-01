@@ -9,16 +9,8 @@ from .utilities import validate_response
 async def test_get_token_with_client_credentials(
     client: SeedOauthClientCredentials, async_client: AsyncSeedOauthClientCredentials
 ) -> None:
-    expected_response: typing.Any = {
-        "access_token": "access_token",
-        "expires_in": 1,
-        "refresh_token": "refresh_token",
-    }
-    expected_types: typing.Any = {
-        "access_token": None,
-        "expires_in": "integer",
-        "refresh_token": None,
-    }
+    expected_response: typing.Any = {"access_token": "access_token", "expires_in": 1, "refresh_token": "refresh_token"}
+    expected_types: typing.Any = {"access_token": None, "expires_in": "integer", "refresh_token": None}
     response = client.auth.get_token_with_client_credentials(
         cid="cid", csr="csr", scp="scp", entity_id="entity_id", scope="scope"
     )
@@ -31,28 +23,14 @@ async def test_get_token_with_client_credentials(
 
 
 async def test_refresh_token(client: SeedOauthClientCredentials, async_client: AsyncSeedOauthClientCredentials) -> None:
-    expected_response: typing.Any = {
-        "access_token": "access_token",
-        "expires_in": 1,
-        "refresh_token": "refresh_token",
-    }
-    expected_types: typing.Any = {
-        "access_token": None,
-        "expires_in": "integer",
-        "refresh_token": None,
-    }
+    expected_response: typing.Any = {"access_token": "access_token", "expires_in": 1, "refresh_token": "refresh_token"}
+    expected_types: typing.Any = {"access_token": None, "expires_in": "integer", "refresh_token": None}
     response = client.auth.refresh_token(
-        client_id="client_id",
-        client_secret="client_secret",
-        refresh_token="refresh_token",
-        scope="scope",
+        client_id="client_id", client_secret="client_secret", refresh_token="refresh_token", scope="scope"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.auth.refresh_token(
-        client_id="client_id",
-        client_secret="client_secret",
-        refresh_token="refresh_token",
-        scope="scope",
+        client_id="client_id", client_secret="client_secret", refresh_token="refresh_token", scope="scope"
     )
     validate_response(async_response, expected_response, expected_types)

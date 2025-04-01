@@ -7,14 +7,7 @@ from .http_client import AsyncHttpClient
 
 
 class BaseClientWrapper:
-    def __init__(
-        self,
-        *,
-        x_another_header: str,
-        api_key: str,
-        base_url: str,
-        timeout: typing.Optional[float] = None,
-    ):
+    def __init__(self, *, x_another_header: str, api_key: str, base_url: str, timeout: typing.Optional[float] = None):
         self._x_another_header = x_another_header
         self.api_key = api_key
         self._base_url = base_url
@@ -48,12 +41,7 @@ class SyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            x_another_header=x_another_header,
-            api_key=api_key,
-            base_url=base_url,
-            timeout=timeout,
-        )
+        super().__init__(x_another_header=x_another_header, api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -72,12 +60,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            x_another_header=x_another_header,
-            api_key=api_key,
-            base_url=base_url,
-            timeout=timeout,
-        )
+        super().__init__(x_another_header=x_another_header, api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

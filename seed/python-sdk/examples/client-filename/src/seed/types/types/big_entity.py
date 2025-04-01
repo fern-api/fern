@@ -11,9 +11,7 @@ from ...core.serialization import FieldMetadata
 from .extended_movie import ExtendedMovie
 from .entity import Entity
 from .metadata import Metadata as types_types_metadata_Metadata
-from ...commons.types.types.metadata import (
-    Metadata as commons_types_types_metadata_Metadata,
-)
+from ...commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
 from ...commons.types.types.event_info import EventInfo
 from ...commons.types.types.data import Data
 from .migration import Migration
@@ -32,8 +30,7 @@ class BigEntity(UniversalBaseModel):
     entity: typing.Optional[Entity] = None
     metadata: typing.Optional[types_types_metadata_Metadata] = None
     common_metadata: typing_extensions.Annotated[
-        typing.Optional[commons_types_types_metadata_Metadata],
-        FieldMetadata(alias="commonMetadata"),
+        typing.Optional[commons_types_types_metadata_Metadata], FieldMetadata(alias="commonMetadata")
     ] = None
     event_info: typing_extensions.Annotated[typing.Optional[EventInfo], FieldMetadata(alias="eventInfo")] = None
     data: typing.Optional[Data] = None

@@ -3,10 +3,8 @@ import datetime as dt
 import typing
 from collections import defaultdict
 
-import typing_extensions
-
 import pydantic
-
+import typing_extensions
 from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
@@ -191,9 +189,9 @@ else:
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -230,9 +228,7 @@ def universal_root_validator(
 def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(field_name, mode="before" if pre else "after")(
-                func
-            )  # type: ignore # Pydantic v2
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 

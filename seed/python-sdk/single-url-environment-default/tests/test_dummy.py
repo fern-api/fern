@@ -7,8 +7,7 @@ from .utilities import validate_response
 
 
 async def test_get_dummy(
-    client: SeedSingleUrlEnvironmentDefault,
-    async_client: AsyncSeedSingleUrlEnvironmentDefault,
+    client: SeedSingleUrlEnvironmentDefault, async_client: AsyncSeedSingleUrlEnvironmentDefault
 ) -> None:
     expected_response: typing.Any = "string"
     expected_types: typing.Any = None

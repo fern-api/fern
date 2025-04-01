@@ -1,11 +1,10 @@
 from typing import cast
 
-import fern.ir.resources as ir_types
+from ...context import FastApiGeneratorContext
+from fern_python.codegen import AST
 from typing_extensions import assert_never
 
-from fern_python.codegen import AST
-
-from ...context import FastApiGeneratorContext
+import fern.ir.resources as ir_types
 
 
 def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.TypeReference) -> AST.TypeHint:

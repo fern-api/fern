@@ -311,7 +311,7 @@ class CoreUtilities:
                 kwargs=[
                     ("object_", object_),
                     ("annotation", AST.Expression(annotation)),
-                    ("direction", AST.Expression(expression=f'"write"')),
+                    ("direction", AST.Expression(expression='"write"')),
                 ],
             )
         )

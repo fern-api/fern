@@ -9,14 +9,12 @@ from seed import AsyncSeedIdempotencyHeaders
 @pytest.fixture
 def client() -> SeedIdempotencyHeaders:
     return SeedIdempotencyHeaders(
-        token=os.getenv("ENV_TOKEN", "token"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedIdempotencyHeaders:
     return AsyncSeedIdempotencyHeaders(
-        token=os.getenv("ENV_TOKEN", "token"),
-        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+        token=os.getenv("ENV_TOKEN", "token"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
     )

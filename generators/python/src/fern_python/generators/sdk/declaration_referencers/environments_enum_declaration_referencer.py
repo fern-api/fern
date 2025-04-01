@@ -1,6 +1,5 @@
-from fern_python.codegen import Filepath
-
 from .sdk_declaration_referencer import SdkDeclarationReferencer
+from fern_python.codegen import Filepath
 
 
 class EnvironmentsEnumDeclarationReferencer(SdkDeclarationReferencer[None]):

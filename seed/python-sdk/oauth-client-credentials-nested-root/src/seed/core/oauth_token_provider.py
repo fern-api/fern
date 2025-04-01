@@ -25,8 +25,7 @@ class OAuthTokenProvider:
         token_response = self._auth_client.get_token(client_id=self._client_id, client_secret=self._client_secret)
         self._access_token = token_response.access_token
         self._expires_at = self._get_expires_at(
-            expires_in_seconds=token_response.expires_in,
-            buffer_in_minutes=self.BUFFER_IN_MINUTES,
+            expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES
         )
         return self._access_token
 

@@ -7,13 +7,7 @@ from .http_client import AsyncHttpClient
 
 
 class BaseClientWrapper:
-    def __init__(
-        self,
-        *,
-        custom_auth_scheme: str,
-        base_url: str,
-        timeout: typing.Optional[float] = None,
-    ):
+    def __init__(self, *, custom_auth_scheme: str, base_url: str, timeout: typing.Optional[float] = None):
         self.custom_auth_scheme = custom_auth_scheme
         self._base_url = base_url
         self._timeout = timeout

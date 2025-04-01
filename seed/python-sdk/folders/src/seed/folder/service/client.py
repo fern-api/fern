@@ -51,10 +51,7 @@ class ServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def unknown_request(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -151,10 +148,7 @@ class AsyncServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def unknown_request(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters

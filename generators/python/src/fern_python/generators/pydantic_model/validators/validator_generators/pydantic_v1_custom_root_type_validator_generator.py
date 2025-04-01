@@ -1,9 +1,8 @@
 from typing import Tuple
 
+from .validator_generator import ValidatorGenerator
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
-
-from .validator_generator import ValidatorGenerator
 
 
 class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
@@ -92,7 +91,6 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         )
 
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
-
         reference_to_decorator = ".".join(
             (*self._reference_to_validators_class, PydanticV1CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
         )

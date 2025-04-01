@@ -5,6 +5,11 @@ import re
 from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
+from .publisher import Publisher
+from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig, PypiMetadata
 from fern.generator_exec.config import (
@@ -13,12 +18,6 @@ from fern.generator_exec.config import (
     OutputMode,
     PypiGithubPublishInfo,
 )
-
-from fern_python.codegen.project import Project, ProjectConfig
-from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
-from .publisher import Publisher
 
 
 class AbstractGenerator(ABC):
@@ -195,7 +194,7 @@ poetry.toml
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
     def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
-        workflow_yaml = f"""name: ci
+        workflow_yaml = """name: ci
 
 on: [push]
 jobs:
@@ -288,8 +287,7 @@ def test_client() -> None:
 """
 
     @abstractmethod
-    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
-        ...
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]: ...
 
     @abstractmethod
     def run(
@@ -299,16 +297,14 @@ def test_client() -> None:
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project: Project,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     def should_format_files(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
     def get_relative_path_to_project_for_publish(
@@ -316,17 +312,14 @@ def test_client() -> None:
         *,
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
-    ) -> Tuple[str, ...]:
-        ...
+    ) -> Tuple[str, ...]: ...
 
     @abstractmethod
     def is_flat_layout(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
-    def get_sorted_modules(self) -> Optional[Sequence[str]]:
-        ...
+    def get_sorted_modules(self) -> Optional[Sequence[str]]: ...

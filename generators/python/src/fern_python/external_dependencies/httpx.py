@@ -107,7 +107,7 @@ class HttpX:
             if is_async:
                 writer.write("await ")
             writer.write_node(reference_to_client)
-            writer.write_line(f".request(")
+            writer.write_line(".request(")
 
             with writer.indent():
                 if path is not None:
@@ -126,7 +126,7 @@ class HttpX:
                 writer.write("async ")
             writer.write("with ")
             writer.write_node(reference_to_client)
-            writer.write(f".stream(")
+            writer.write(".stream(")
 
             with writer.indent():
                 if path is not None:

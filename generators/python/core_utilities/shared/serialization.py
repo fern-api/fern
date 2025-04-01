@@ -2,9 +2,8 @@ import collections
 import inspect
 import typing
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 
 
 class FieldMetadata:
@@ -179,9 +178,9 @@ def _convert_mapping(
                 object_=value, annotation=type_, direction=direction
             )
         else:
-            converted_object[
-                _alias_key(key, type_, direction, aliases_to_field_names)
-            ] = convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
+                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            )
     return converted_object
 
 

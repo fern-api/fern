@@ -1,8 +1,7 @@
-import fern.ir.resources as ir_types
-
+from .sdk_declaration_referencer import SdkDeclarationReferencer
 from fern_python.codegen import Filepath
 
-from .sdk_declaration_referencer import SdkDeclarationReferencer
+import fern.ir.resources as ir_types
 
 
 class SubpackageAsyncClientDeclarationReferencer(SdkDeclarationReferencer[ir_types.Subpackage]):

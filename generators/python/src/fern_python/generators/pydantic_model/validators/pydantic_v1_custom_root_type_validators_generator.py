@@ -1,13 +1,12 @@
 from typing import Sequence
 
-from fern_python.codegen import AST
-from fern_python.pydantic_codegen import PydanticModel
-
 from .validator_generators import (
     PydanticV1CustomRootTypeValidatorGenerator,
     ValidatorGenerator,
 )
 from .validators_generator import ValidatorsGenerator
+from fern_python.codegen import AST
+from fern_python.pydantic_codegen import PydanticModel
 
 
 class PydanticV1CustomRootTypeValidatorsGenerator(ValidatorsGenerator):

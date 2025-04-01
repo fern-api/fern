@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Sequence, Tuple
 
+from .validator_generators import ValidatorGenerator
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
-
-from .validator_generators import ValidatorGenerator
 
 
 class ValidatorsGenerator(ABC):
@@ -34,16 +33,13 @@ class ValidatorsGenerator(ABC):
         self._write_examples_for_docstring(writer=writer)
 
     @abstractmethod
-    def _populate_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
-        ...
+    def _populate_validators_class(self, validators_class: AST.ClassDeclaration) -> None: ...
 
     @abstractmethod
-    def _get_validator_generators(self) -> Sequence[ValidatorGenerator]:
-        ...
+    def _get_validator_generators(self) -> Sequence[ValidatorGenerator]: ...
 
     @abstractmethod
-    def _write_examples_for_docstring(self, writer: AST.NodeWriter) -> None:
-        ...
+    def _write_examples_for_docstring(self, writer: AST.NodeWriter) -> None: ...
 
     def _finish(self) -> None:
         pass

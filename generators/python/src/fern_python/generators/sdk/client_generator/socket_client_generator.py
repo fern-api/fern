@@ -2,27 +2,16 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
+from .generated_root_client import GeneratedRootClient
+from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.websockets import Websockets
-from fern_python.generators.core_utilities.core_utilities import CoreUtilities
-from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
-    EndpointMetadataCollector,
-)
-from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
-    EndpointResponseCodeWriter,
-)
-from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.utils import snake_case
 
-from ..context.sdk_generator_context import SdkGeneratorContext
-from .constants import DEFAULT_BODY_PARAMETER_VALUE
-from .endpoint_function_generator import EndpointFunctionGenerator
-from .generated_root_client import GeneratedRootClient
-from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
+import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -278,7 +267,7 @@ class SocketClientGenerator:
 
     def _get_send_message_docstring(self, message_type: AST.TypeHint) -> CodeWriterFunction:
         def _write_docstring(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"Send a message to the websocket connection.")
+            writer.write_line("Send a message to the websocket connection.")
             writer.write("The message will be sent as a ")
             writer.write_node(message_type)
             writer.write_line(".")

@@ -87,12 +87,7 @@ class PaymentClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self,
-        payment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -211,12 +206,7 @@ class AsyncPaymentClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self,
-        payment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------

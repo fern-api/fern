@@ -1,12 +1,11 @@
 from typing import List, Optional, Tuple
 
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
+from .client_generator import ConstructorParameter
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 
-from ..context.sdk_generator_context import SdkGeneratorContext
-from .client_generator import ConstructorParameter
+import fern.ir.resources as ir_types
 
 
 class OAuthTokenProviderGenerator:
@@ -294,7 +293,7 @@ class OAuthTokenProviderGenerator:
     ) -> AST.FunctionDeclaration:
         def _write_refresh_body(writer: AST.NodeWriter) -> None:
             # TODO: Add better support for the refresh token endpoint.
-            writer.write(f"token_response = ")
+            writer.write("token_response = ")
             writer.write_node(self._get_refresh_function_invocation(client_credentials))
             writer.write_newline_if_last_line_not()
 
