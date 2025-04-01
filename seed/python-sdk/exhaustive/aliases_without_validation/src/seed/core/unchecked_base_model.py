@@ -5,11 +5,8 @@ import inspect
 import typing
 import uuid
 
-import typing_extensions
-from pydantic_core import PydanticUndefined
-
 import pydantic
-
+import typing_extensions
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     ModelField,
@@ -23,6 +20,7 @@ from .pydantic_utilities import (
     parse_obj_as,
 )
 from .serialization import get_field_to_alias_mapping
+from pydantic_core import PydanticUndefined
 
 
 class UnionMetadata:

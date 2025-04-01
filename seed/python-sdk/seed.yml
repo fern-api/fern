@@ -62,6 +62,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        include_legacy_wire_tests: true
+      outputFolder: legacy-wire-tests
+    - customConfig:
         client:
           filename: base_client.py
           class_name: BaseSeedExhaustive
@@ -245,7 +248,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -256,7 +259,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
 allowedFailures:
   # This is the only one that should always fail
   - exhaustive:additional_init_exports

@@ -358,7 +358,7 @@ class SdkGenerator(AbstractGenerator):
         )
 
         # Only write unit tests if specified in config
-        if generator_config.write_unit_tests:
+        if context.custom_config.include_legacy_wire_tests and generator_config.write_unit_tests:
             self._write_snippet_tests(
                 snippet_test_factory=test_fac,
                 snippet_writer=snippet_writer,

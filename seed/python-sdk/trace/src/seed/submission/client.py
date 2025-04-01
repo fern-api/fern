@@ -18,10 +18,7 @@ class SubmissionClient:
         self._client_wrapper = client_wrapper
 
     def create_execution_session(
-        self,
-        language: Language,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
@@ -69,10 +66,7 @@ class SubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
@@ -120,10 +114,7 @@ class SubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stop_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Stops execution session.
@@ -212,10 +203,7 @@ class AsyncSubmissionClient:
         self._client_wrapper = client_wrapper
 
     async def create_execution_session(
-        self,
-        language: Language,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
@@ -271,10 +259,7 @@ class AsyncSubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
@@ -330,10 +315,7 @@ class AsyncSubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stop_execution_session(
-        self,
-        session_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Stops execution session.
