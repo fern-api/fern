@@ -138,7 +138,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNode(clientClassReference);
             writer.write(" client = ");
             writer.writeNodeStatement(clientBuilder);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeNodeStatement(endpointMethodInvocation);
         });
 
@@ -260,7 +261,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippet = java.codeblock((writer) => {
             writer.writeNodeStatement(okHttpClientAssignment);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeNodeStatement(clientWithCustomClient);
         });
 
@@ -327,7 +329,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippet = java.codeblock((writer) => {
             writer.writeLine("// Client level");
             writer.writeNodeStatement(clientWithTimeout);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Request level");
             writer.writeNodeStatement(endpointMethodInvocation);
         });
@@ -380,19 +383,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.getRootPackageClientName()} = `);
             writer.writeNodeStatement(clientInitialization);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeNode(paginationClassReference);
             writer.write(" response = ");
             writer.writeNodeStatement(endpointMethodCall);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Iterator");
             writer.controlFlow("for", java.codeblock("item : response"));
             writer.writeLine("// Do something with item");
             writer.endControlFlow();
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Streaming");
             writer.writeNodeStatement(mapMethodCall);
-            writer.writeLine("\n");
+            writer.newLine();
+            writer.newLine();
             writer.writeLine("// Manual pagination");
             writer.writeNode(manualPaginationSnippet);
         });
