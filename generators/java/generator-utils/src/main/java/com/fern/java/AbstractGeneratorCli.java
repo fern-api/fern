@@ -146,6 +146,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                 }
             });
+            JavaV2Adapter.run(generatorExecClient, new JavaV2Arguments(args[0]));
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
