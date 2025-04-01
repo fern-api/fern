@@ -7,7 +7,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { identity } from "lodash-es";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -484,8 +483,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
         if (endpointSnippets.length > 0) {
             return this.context.ir.readmeConfig?.defaultEndpoint != null
-                    ? this.context.ir.readmeConfig.defaultEndpoint
-                    : this.getDefaultEndpointId();
+                ? this.context.ir.readmeConfig.defaultEndpoint
+                : this.getDefaultEndpointId();
         }
 
         const dynamicIr = this.context.ir.dynamic;
@@ -512,7 +511,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
-            // Return the EndpointId of the first Endpoint 
+            // Return the EndpointId of the first Endpoint
             return endpointsWithReferencedRequestBody[0][0];
         }
 
