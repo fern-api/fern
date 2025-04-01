@@ -3,12 +3,8 @@
 from ......core.abstract_fern_service import AbstractFernService
 from ......security import ApiAuth
 import abc
-from .....types.resources.object.types.object_with_required_field import (
-    ObjectWithRequiredField,
-)
-from .....types.resources.object.types.object_with_optional_field import (
-    ObjectWithOptionalField,
-)
+from .....types.resources.object.types.object_with_required_field import ObjectWithRequiredField
+from .....types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 import fastapi
 import inspect
 import typing
@@ -32,19 +28,13 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def test_get(self, *, id: str, auth: ApiAuth) -> str: ...
 
     @abc.abstractmethod
-    def test_post(
-        self, *, body: ObjectWithRequiredField, auth: ApiAuth
-    ) -> ObjectWithOptionalField: ...
+    def test_post(self, *, body: ObjectWithRequiredField, auth: ApiAuth) -> ObjectWithOptionalField: ...
 
     @abc.abstractmethod
-    def test_put(
-        self, *, body: ObjectWithRequiredField, id: str, auth: ApiAuth
-    ) -> ObjectWithOptionalField: ...
+    def test_put(self, *, body: ObjectWithRequiredField, id: str, auth: ApiAuth) -> ObjectWithOptionalField: ...
 
     @abc.abstractmethod
-    def test_patch(
-        self, *, body: ObjectWithOptionalField, id: str, auth: ApiAuth
-    ) -> ObjectWithOptionalField: ...
+    def test_patch(self, *, body: ObjectWithOptionalField, id: str, auth: ApiAuth) -> ObjectWithOptionalField: ...
 
     @abc.abstractmethod
     def test_delete(self, *, id: str, auth: ApiAuth) -> bool: ...
@@ -66,24 +56,16 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def __init_test_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_get)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.test_get,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.test_get, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.test_get)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -112,24 +94,16 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def __init_test_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_post)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.test_post,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.test_post, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.test_post)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
@@ -158,9 +132,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def __init_test_put(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_put)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -168,16 +140,10 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             elif parameter_name == "id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.test_put,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.test_put, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.test_put)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
@@ -206,9 +172,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def __init_test_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_patch)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -216,16 +180,10 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             elif parameter_name == "id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.test_patch,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.test_patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.test_patch)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
@@ -254,24 +212,16 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     def __init_test_delete(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_delete)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.test_delete,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.test_delete, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.test_delete)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:

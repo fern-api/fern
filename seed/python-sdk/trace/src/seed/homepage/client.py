@@ -60,10 +60,7 @@ class HomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def set_homepage_problems(
-        self,
-        *,
-        request: typing.Sequence[ProblemId],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
@@ -160,10 +157,7 @@ class AsyncHomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def set_homepage_problems(
-        self,
-        *,
-        request: typing.Sequence[ProblemId],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters

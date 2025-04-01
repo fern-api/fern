@@ -2,9 +2,7 @@
 
 from ....core.abstract_fern_service import AbstractFernService
 from .post_with_object_body import PostWithObjectBody
-from ...types.resources.object.types.object_with_optional_field import (
-    ObjectWithOptionalField,
-)
+from ...types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 import abc
 import fastapi
 import inspect
@@ -26,9 +24,7 @@ class AbstractInlinedRequestsService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def post_with_object_bodyand_response(
-        self, *, body: PostWithObjectBody
-    ) -> ObjectWithOptionalField:
+    def post_with_object_bodyand_response(self, *, body: PostWithObjectBody) -> ObjectWithOptionalField:
         """
         POST with custom object in request body, response is an object
         """
@@ -44,14 +40,10 @@ class AbstractInlinedRequestsService(AbstractFernService):
         cls.__init_post_with_object_bodyand_response(router=router)
 
     @classmethod
-    def __init_post_with_object_bodyand_response(
-        cls, router: fastapi.APIRouter
-    ) -> None:
+    def __init_post_with_object_bodyand_response(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_object_bodyand_response)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -59,9 +51,7 @@ class AbstractInlinedRequestsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(
-            cls.post_with_object_bodyand_response,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
+            cls.post_with_object_bodyand_response, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
         @functools.wraps(cls.post_with_object_bodyand_response)
@@ -86,7 +76,5 @@ class AbstractInlinedRequestsService(AbstractFernService):
             path="/req-bodies/object",
             response_model=ObjectWithOptionalField,
             description=AbstractInlinedRequestsService.post_with_object_bodyand_response.__doc__,
-            **get_route_args(
-                cls.post_with_object_bodyand_response, default_tag="inlined_requests"
-            ),
+            **get_route_args(cls.post_with_object_bodyand_response, default_tag="inlined_requests"),
         )(wrapper)

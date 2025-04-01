@@ -16,31 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def hidden(self, value: TestCaseHiddenGrade) -> TestCaseGrade:
         if IS_PYDANTIC_V2:
-            return TestCaseGrade(
-                root=_TestCaseGrade.Hidden(
-                    **value.dict(exclude_unset=True), type="hidden"
-                )
-            )  # type: ignore
+            return TestCaseGrade(root=_TestCaseGrade.Hidden(**value.dict(exclude_unset=True), type="hidden"))  # type: ignore
         else:
-            return TestCaseGrade(
-                __root__=_TestCaseGrade.Hidden(
-                    **value.dict(exclude_unset=True), type="hidden"
-                )
-            )  # type: ignore
+            return TestCaseGrade(__root__=_TestCaseGrade.Hidden(**value.dict(exclude_unset=True), type="hidden"))  # type: ignore
 
     def non_hidden(self, value: TestCaseNonHiddenGrade) -> TestCaseGrade:
         if IS_PYDANTIC_V2:
-            return TestCaseGrade(
-                root=_TestCaseGrade.NonHidden(
-                    **value.dict(exclude_unset=True), type="nonHidden"
-                )
-            )  # type: ignore
+            return TestCaseGrade(root=_TestCaseGrade.NonHidden(**value.dict(exclude_unset=True), type="nonHidden"))  # type: ignore
         else:
-            return TestCaseGrade(
-                __root__=_TestCaseGrade.NonHidden(
-                    **value.dict(exclude_unset=True), type="nonHidden"
-                )
-            )  # type: ignore
+            return TestCaseGrade(__root__=_TestCaseGrade.NonHidden(**value.dict(exclude_unset=True), type="nonHidden"))  # type: ignore
 
 
 class TestCaseGrade(UniversalRootModel):
@@ -48,23 +32,17 @@ class TestCaseGrade(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
+        def get_as_union(self) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
+        def get_as_union(self) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -80,17 +58,9 @@ class TestCaseGrade(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "hidden":
-            return hidden(
-                TestCaseHiddenGrade(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return hidden(TestCaseHiddenGrade(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "nonHidden":
-            return non_hidden(
-                TestCaseNonHiddenGrade(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return non_hidden(TestCaseNonHiddenGrade(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseGrade:

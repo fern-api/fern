@@ -16,32 +16,18 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithSubTypes:
         if IS_PYDANTIC_V2:
-            return UnionWithSubTypes(
-                root=_UnionWithSubTypes.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
-            )  # type: ignore
+            return UnionWithSubTypes(root=_UnionWithSubTypes.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
         else:
-            return UnionWithSubTypes(
-                __root__=_UnionWithSubTypes.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
-            )  # type: ignore
+            return UnionWithSubTypes(__root__=_UnionWithSubTypes.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
 
-    def foo_extended(
-        self, value: resources_types_types_foo_extended_FooExtended
-    ) -> UnionWithSubTypes:
+    def foo_extended(self, value: resources_types_types_foo_extended_FooExtended) -> UnionWithSubTypes:
         if IS_PYDANTIC_V2:
             return UnionWithSubTypes(
-                root=_UnionWithSubTypes.FooExtended(
-                    **value.dict(exclude_unset=True), type="fooExtended"
-                )
+                root=_UnionWithSubTypes.FooExtended(**value.dict(exclude_unset=True), type="fooExtended")
             )  # type: ignore
         else:
             return UnionWithSubTypes(
-                __root__=_UnionWithSubTypes.FooExtended(
-                    **value.dict(exclude_unset=True), type="fooExtended"
-                )
+                __root__=_UnionWithSubTypes.FooExtended(**value.dict(exclude_unset=True), type="fooExtended")
             )  # type: ignore
 
 
@@ -60,23 +46,17 @@ class UnionWithSubTypes(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
+        def get_as_union(self) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
+        def get_as_union(self) -> typing.Union[_UnionWithSubTypes.Foo, _UnionWithSubTypes.FooExtended]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -88,17 +68,11 @@ class UnionWithSubTypes(UniversalRootModel):
     def visit(
         self,
         foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
-        foo_extended: typing.Callable[
-            [resources_types_types_foo_extended_FooExtended], T_Result
-        ],
+        foo_extended: typing.Callable[[resources_types_types_foo_extended_FooExtended], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                resources_types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "fooExtended":
             return foo_extended(
                 resources_types_types_foo_extended_FooExtended(

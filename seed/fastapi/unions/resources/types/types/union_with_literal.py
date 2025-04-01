@@ -13,13 +13,9 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def fern(self, value: typing.Literal["fern"]) -> UnionWithLiteral:
         if IS_PYDANTIC_V2:
-            return UnionWithLiteral(
-                root=_UnionWithLiteral.Fern(type="fern", value=value)
-            )  # type: ignore
+            return UnionWithLiteral(root=_UnionWithLiteral.Fern(type="fern", value=value))  # type: ignore
         else:
-            return UnionWithLiteral(
-                __root__=_UnionWithLiteral.Fern(type="fern", value=value)
-            )  # type: ignore
+            return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))  # type: ignore
 
 
 class UnionWithLiteral(UniversalRootModel):
@@ -50,9 +46,7 @@ class UnionWithLiteral(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]
-    ) -> T_Result:
+    def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "fern":
             return fern(unioned_value.value)

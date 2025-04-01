@@ -8,14 +8,10 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DoubleOptional(UniversalBaseModel):
-    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(
-        alias="optionalAlias", default=None
-    )
+    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(alias="optionalAlias", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

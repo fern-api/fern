@@ -5,10 +5,8 @@ import datetime as dt
 import typing
 from collections import defaultdict
 
-import typing_extensions
-
 import pydantic
-
+import typing_extensions
 from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")

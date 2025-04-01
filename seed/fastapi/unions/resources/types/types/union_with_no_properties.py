@@ -16,27 +16,17 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithNoProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithNoProperties(
-                root=_UnionWithNoProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
-            )  # type: ignore
+            return UnionWithNoProperties(root=_UnionWithNoProperties.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
         else:
             return UnionWithNoProperties(
-                __root__=_UnionWithNoProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                __root__=_UnionWithNoProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
 
     def empty(self) -> UnionWithNoProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithNoProperties(
-                root=_UnionWithNoProperties.Empty(type="empty")
-            )  # type: ignore
+            return UnionWithNoProperties(root=_UnionWithNoProperties.Empty(type="empty"))  # type: ignore
         else:
-            return UnionWithNoProperties(
-                __root__=_UnionWithNoProperties.Empty(type="empty")
-            )  # type: ignore
+            return UnionWithNoProperties(__root__=_UnionWithNoProperties.Empty(type="empty"))  # type: ignore
 
 
 class UnionWithNoProperties(UniversalRootModel):
@@ -54,23 +44,17 @@ class UnionWithNoProperties(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
+        def get_as_union(self) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
+        def get_as_union(self) -> typing.Union[_UnionWithNoProperties.Foo, _UnionWithNoProperties.Empty]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -80,17 +64,11 @@ class UnionWithNoProperties(UniversalRootModel):
             return self.__root__.dict(**kwargs)
 
     def visit(
-        self,
-        foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
-        empty: typing.Callable[[], T_Result],
+        self, foo: typing.Callable[[resources_types_types_foo_Foo], T_Result], empty: typing.Callable[[], T_Result]
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                resources_types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "empty":
             return empty()
 

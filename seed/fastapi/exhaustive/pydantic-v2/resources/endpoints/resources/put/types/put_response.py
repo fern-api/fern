@@ -9,6 +9,4 @@ import pydantic
 class PutResponse(UniversalBaseModel):
     errors: typing.Optional[typing.List[Error]] = None
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-        extra="forbid"
-    )  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

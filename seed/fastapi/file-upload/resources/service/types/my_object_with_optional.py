@@ -8,14 +8,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 class MyObjectWithOptional(UniversalBaseModel):
     prop: str
-    optional_prop: typing.Optional[str] = pydantic.Field(
-        alias="optionalProp", default=None
-    )
+    optional_prop: typing.Optional[str] = pydantic.Field(alias="optionalProp", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

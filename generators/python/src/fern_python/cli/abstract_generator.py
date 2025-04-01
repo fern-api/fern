@@ -79,12 +79,19 @@ class AbstractGenerator(ABC):
 
             project.add_dev_dependency(dependency=RUFF_DEPENDENCY)
 
+            include_legacy_wire_tests = (
+                generator_config.custom_config is not None
+                and generator_config.custom_config.get("include_legacy_wire_tests", False)
+            )
+
             generator_config.output.mode.visit(
                 download_files=lambda: None,
                 github=lambda github_output_mode: self._write_files_for_github_repo(
                     project=project,
                     output_mode=github_output_mode,
-                    write_unit_tests=(self.project_type() == "sdk" and generator_config.write_unit_tests),
+                    write_unit_tests=(
+                        self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
+                    ),
                 ),
                 publish=lambda x: None,
             )

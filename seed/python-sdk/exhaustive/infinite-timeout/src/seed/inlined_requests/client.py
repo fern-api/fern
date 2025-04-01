@@ -91,9 +91,7 @@ class InlinedRequestsClient:
                 "string": string,
                 "integer": integer,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object,
-                    annotation=ObjectWithOptionalField,
-                    direction="write",
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,
@@ -206,9 +204,7 @@ class AsyncInlinedRequestsClient:
                 "string": string,
                 "integer": integer,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object,
-                    annotation=ObjectWithOptionalField,
-                    direction="write",
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,

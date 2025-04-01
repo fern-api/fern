@@ -19,10 +19,7 @@ class UnionClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_union(
-        self,
-        *,
-        request: Animal,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
         Parameters
@@ -79,10 +76,7 @@ class AsyncUnionClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_union(
-        self,
-        *,
-        request: Animal,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
         Parameters

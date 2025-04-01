@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
-from ...types.resources.object.types.object_with_optional_field import (
-    ObjectWithOptionalField,
-)
+from ...types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 import pydantic
 import typing
 from ....core.pydantic_utilities import universal_root_validator
@@ -38,24 +36,12 @@ class PostWithObjectBody(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators._RootValidator]
-        ] = []
-        _string_pre_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators.PreStringValidator]
-        ] = []
-        _string_post_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators.StringValidator]
-        ] = []
-        _integer_pre_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators.PreIntegerValidator]
-        ] = []
-        _integer_post_validators: typing.ClassVar[
-            typing.List[PostWithObjectBody.Validators.IntegerValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators._RootValidator]] = []
+        _string_pre_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators.PreStringValidator]] = []
+        _string_post_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators.StringValidator]] = []
+        _integer_pre_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators.PreIntegerValidator]] = []
+        _integer_post_validators: typing.ClassVar[typing.List[PostWithObjectBody.Validators.IntegerValidator]] = []
         _nested_object_pre_validators: typing.ClassVar[
             typing.List[PostWithObjectBody.Validators.PreNestedObjectValidator]
         ] = []
@@ -68,16 +54,14 @@ class PostWithObjectBody(UniversalBaseModel):
         def root(
             cls, *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators._RootValidator],
-            PostWithObjectBody.Validators._RootValidator,
+            [PostWithObjectBody.Validators._RootValidator], PostWithObjectBody.Validators._RootValidator
         ]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators._PreRootValidator],
-            PostWithObjectBody.Validators._PreRootValidator,
+            [PostWithObjectBody.Validators._PreRootValidator], PostWithObjectBody.Validators._PreRootValidator
         ]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
@@ -95,46 +79,33 @@ class PostWithObjectBody(UniversalBaseModel):
         def field(
             cls, field_name: typing.Literal["string"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators.PreStringValidator],
-            PostWithObjectBody.Validators.PreStringValidator,
+            [PostWithObjectBody.Validators.PreStringValidator], PostWithObjectBody.Validators.PreStringValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["string"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["string"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators.StringValidator],
-            PostWithObjectBody.Validators.StringValidator,
+            [PostWithObjectBody.Validators.StringValidator], PostWithObjectBody.Validators.StringValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["integer"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators.PreIntegerValidator],
-            PostWithObjectBody.Validators.PreIntegerValidator,
+            [PostWithObjectBody.Validators.PreIntegerValidator], PostWithObjectBody.Validators.PreIntegerValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["integer"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["integer"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators.IntegerValidator],
-            PostWithObjectBody.Validators.IntegerValidator,
+            [PostWithObjectBody.Validators.IntegerValidator], PostWithObjectBody.Validators.IntegerValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["nested_object"],
-            *,
-            pre: typing.Literal[True],
+            cls, field_name: typing.Literal["nested_object"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
             [PostWithObjectBody.Validators.PreNestedObjectValidator],
             PostWithObjectBody.Validators.PreNestedObjectValidator,
@@ -142,13 +113,9 @@ class PostWithObjectBody(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["nested_object"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["nested_object"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [PostWithObjectBody.Validators.NestedObjectValidator],
-            PostWithObjectBody.Validators.NestedObjectValidator,
+            [PostWithObjectBody.Validators.NestedObjectValidator], PostWithObjectBody.Validators.NestedObjectValidator
         ]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
@@ -173,29 +140,19 @@ class PostWithObjectBody(UniversalBaseModel):
             return decorator
 
         class PreStringValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: PostWithObjectBody.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: PostWithObjectBody.Partial) -> typing.Any: ...
 
         class StringValidator(typing.Protocol):
-            def __call__(
-                self, __v: str, __values: PostWithObjectBody.Partial
-            ) -> str: ...
+            def __call__(self, __v: str, __values: PostWithObjectBody.Partial) -> str: ...
 
         class PreIntegerValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: PostWithObjectBody.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: PostWithObjectBody.Partial) -> typing.Any: ...
 
         class IntegerValidator(typing.Protocol):
-            def __call__(
-                self, __v: int, __values: PostWithObjectBody.Partial
-            ) -> int: ...
+            def __call__(self, __v: int, __values: PostWithObjectBody.Partial) -> int: ...
 
         class PreNestedObjectValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: PostWithObjectBody.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: PostWithObjectBody.Partial) -> typing.Any: ...
 
         class NestedObjectValidator(typing.Protocol):
             def __call__(
@@ -206,22 +163,16 @@ class PostWithObjectBody(UniversalBaseModel):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
 
         class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: PostWithObjectBody.Partial
-            ) -> PostWithObjectBody.Partial: ...
+            def __call__(self, __values: PostWithObjectBody.Partial) -> PostWithObjectBody.Partial: ...
 
     @universal_root_validator(pre=True)
-    def _pre_validate(
-        cls, values: PostWithObjectBody.Partial
-    ) -> PostWithObjectBody.Partial:
+    def _pre_validate(cls, values: PostWithObjectBody.Partial) -> PostWithObjectBody.Partial:
         for validator in PostWithObjectBody.Validators._pre_validators:
             values = validator(values)
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate(
-        cls, values: PostWithObjectBody.Partial
-    ) -> PostWithObjectBody.Partial:
+    def _post_validate(cls, values: PostWithObjectBody.Partial) -> PostWithObjectBody.Partial:
         for validator in PostWithObjectBody.Validators._post_validators:
             values = validator(values)
         return values
@@ -267,9 +218,7 @@ class PostWithObjectBody(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

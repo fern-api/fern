@@ -26,35 +26,21 @@ class PutResponse(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[PutResponse.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[PutResponse.Validators._RootValidator]
-        ] = []
-        _errors_pre_validators: typing.ClassVar[
-            typing.List[PutResponse.Validators.PreErrorsValidator]
-        ] = []
-        _errors_post_validators: typing.ClassVar[
-            typing.List[PutResponse.Validators.ErrorsValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[PutResponse.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[PutResponse.Validators._RootValidator]] = []
+        _errors_pre_validators: typing.ClassVar[typing.List[PutResponse.Validators.PreErrorsValidator]] = []
+        _errors_post_validators: typing.ClassVar[typing.List[PutResponse.Validators.ErrorsValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [PutResponse.Validators._RootValidator],
-            PutResponse.Validators._RootValidator,
-        ]: ...
+        ) -> typing.Callable[[PutResponse.Validators._RootValidator], PutResponse.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [PutResponse.Validators._PreRootValidator],
-            PutResponse.Validators._PreRootValidator,
-        ]: ...
+        ) -> typing.Callable[[PutResponse.Validators._PreRootValidator], PutResponse.Validators._PreRootValidator]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -71,20 +57,13 @@ class PutResponse(UniversalBaseModel):
         def field(
             cls, field_name: typing.Literal["errors"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [PutResponse.Validators.PreErrorsValidator],
-            PutResponse.Validators.PreErrorsValidator,
+            [PutResponse.Validators.PreErrorsValidator], PutResponse.Validators.PreErrorsValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["errors"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [PutResponse.Validators.ErrorsValidator],
-            PutResponse.Validators.ErrorsValidator,
-        ]: ...
+            cls, field_name: typing.Literal["errors"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[PutResponse.Validators.ErrorsValidator], PutResponse.Validators.ErrorsValidator]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -98,37 +77,27 @@ class PutResponse(UniversalBaseModel):
             return decorator
 
         class PreErrorsValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: PutResponse.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: PutResponse.Partial) -> typing.Any: ...
 
         class ErrorsValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[typing.List[Error]],
-                __values: PutResponse.Partial,
+                self, __v: typing.Optional[typing.List[Error]], __values: PutResponse.Partial
             ) -> typing.Optional[typing.List[Error]]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
 
         class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: PutResponse.Partial
-            ) -> PutResponse.Partial: ...
+            def __call__(self, __values: PutResponse.Partial) -> PutResponse.Partial: ...
 
     @universal_root_validator(pre=True)
-    def _pre_validate_endpoints_put_response(
-        cls, values: PutResponse.Partial
-    ) -> PutResponse.Partial:
+    def _pre_validate_endpoints_put_response(cls, values: PutResponse.Partial) -> PutResponse.Partial:
         for validator in PutResponse.Validators._pre_validators:
             values = validator(values)
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_endpoints_put_response(
-        cls, values: PutResponse.Partial
-    ) -> PutResponse.Partial:
+    def _post_validate_endpoints_put_response(cls, values: PutResponse.Partial) -> PutResponse.Partial:
         for validator in PutResponse.Validators._post_validators:
             values = validator(values)
         return values
@@ -150,9 +119,7 @@ class PutResponse(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

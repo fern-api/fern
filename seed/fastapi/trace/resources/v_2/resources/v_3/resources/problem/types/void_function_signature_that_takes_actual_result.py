@@ -13,9 +13,7 @@ class VoidFunctionSignatureThatTakesActualResult(UniversalBaseModel):
     actual_result_type: VariableType = pydantic.Field(alias="actualResultType")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

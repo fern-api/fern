@@ -18,20 +18,14 @@ class _Factory:
     def template_id(self, value: TestCaseTemplateId) -> TestCaseImplementationReference:
         if IS_PYDANTIC_V2:
             return TestCaseImplementationReference(
-                root=_TestCaseImplementationReference.TemplateId(
-                    type="templateId", value=value
-                )
+                root=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
             )  # type: ignore
         else:
             return TestCaseImplementationReference(
-                __root__=_TestCaseImplementationReference.TemplateId(
-                    type="templateId", value=value
-                )
+                __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
             )  # type: ignore
 
-    def implementation(
-        self, value: TestCaseImplementation
-    ) -> TestCaseImplementationReference:
+    def implementation(self, value: TestCaseImplementation) -> TestCaseImplementationReference:
         if IS_PYDANTIC_V2:
             return TestCaseImplementationReference(
                 root=_TestCaseImplementationReference.Implementation(
@@ -51,35 +45,23 @@ class TestCaseImplementationReference(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[
-                _TestCaseImplementationReference.TemplateId,
-                _TestCaseImplementationReference.Implementation,
-            ],
+            typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
             pydantic.Field(discriminator="type"),
         ]
 
         def get_as_union(
             self,
-        ) -> typing.Union[
-            _TestCaseImplementationReference.TemplateId,
-            _TestCaseImplementationReference.Implementation,
-        ]:
+        ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[
-                _TestCaseImplementationReference.TemplateId,
-                _TestCaseImplementationReference.Implementation,
-            ],
+            typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
             pydantic.Field(discriminator="type"),
         ]
 
         def get_as_union(
             self,
-        ) -> typing.Union[
-            _TestCaseImplementationReference.TemplateId,
-            _TestCaseImplementationReference.Implementation,
-        ]:
+        ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -97,11 +79,7 @@ class TestCaseImplementationReference(UniversalRootModel):
         if unioned_value.type == "templateId":
             return template_id(unioned_value.value)
         if unioned_value.type == "implementation":
-            return implementation(
-                TestCaseImplementation(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return implementation(TestCaseImplementation(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseImplementationReference:

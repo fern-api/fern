@@ -1,4 +1,17 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.6.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for generating legacy wire tests, and disable them by default. These tests will be restored and improved in the future.
+        Users can opt-in to generating legacy wire tests by setting the `include_legacy_wire_tests` flag to `true` in their configuration.
+
+        ```yaml
+        config:
+          include_legacy_wire_tests: true
+        ```
+
 - version: 4.5.0
   irVersion: 57
   changelogEntry:

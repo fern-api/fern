@@ -32,18 +32,14 @@ class AbstractV2V3ProblemService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_problems(
-        self, *, x_random_header: typing.Optional[str] = None
-    ) -> typing.Sequence[ProblemInfoV2]:
+    def get_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.Sequence[ProblemInfoV2]:
         """
         Returns latest versions of all problems
         """
         ...
 
     @abc.abstractmethod
-    def get_latest_problem(
-        self, *, problem_id: str, x_random_header: typing.Optional[str] = None
-    ) -> ProblemInfoV2:
+    def get_latest_problem(self, *, problem_id: str, x_random_header: typing.Optional[str] = None) -> ProblemInfoV2:
         """
         Returns latest version of a problem
         """
@@ -51,11 +47,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def get_problem_version(
-        self,
-        *,
-        problem_id: str,
-        problem_version: int,
-        x_random_header: typing.Optional[str] = None,
+        self, *, problem_id: str, problem_version: int, x_random_header: typing.Optional[str] = None
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem
@@ -78,29 +70,17 @@ class AbstractV2V3ProblemService(AbstractFernService):
     def __init_get_lightweight_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_lightweight_problems)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_lightweight_problems,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_lightweight_problems)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[LightweightProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[LightweightProblemInfoV2]:
             try:
                 return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -119,38 +99,24 @@ class AbstractV2V3ProblemService(AbstractFernService):
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.Sequence[LightweightProblemInfoV2],
             description=AbstractV2V3ProblemService.get_lightweight_problems.__doc__,
-            **get_route_args(
-                cls.get_lightweight_problems, default_tag="v_2.v_3.problem"
-            ),
+            **get_route_args(cls.get_lightweight_problems, default_tag="v_2.v_3.problem"),
         )(wrapper)
 
     @classmethod
     def __init_get_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_problems)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_problems,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_problems)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[ProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ProblemInfoV2]:
             try:
                 return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -176,26 +142,16 @@ class AbstractV2V3ProblemService(AbstractFernService):
     def __init_get_latest_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_latest_problem)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_latest_problem,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_latest_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_latest_problem)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ProblemInfoV2:
@@ -224,9 +180,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
     def __init_get_problem_version(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_problem_version)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
@@ -234,18 +188,10 @@ class AbstractV2V3ProblemService(AbstractFernService):
             elif parameter_name == "problem_version":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_problem_version,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_problem_version, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_problem_version)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ProblemInfoV2:

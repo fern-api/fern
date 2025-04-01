@@ -15,50 +15,34 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer_1(self, value: int) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithDuplicatePrimitive(
-                root=_UnionWithDuplicatePrimitive.Integer1(type="integer1", value=value)
-            )  # type: ignore
+            return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.Integer1(type="integer1", value=value))  # type: ignore
         else:
             return UnionWithDuplicatePrimitive(
-                __root__=_UnionWithDuplicatePrimitive.Integer1(
-                    type="integer1", value=value
-                )
+                __root__=_UnionWithDuplicatePrimitive.Integer1(type="integer1", value=value)
             )  # type: ignore
 
     def integer_2(self, value: int) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithDuplicatePrimitive(
-                root=_UnionWithDuplicatePrimitive.Integer2(type="integer2", value=value)
-            )  # type: ignore
+            return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.Integer2(type="integer2", value=value))  # type: ignore
         else:
             return UnionWithDuplicatePrimitive(
-                __root__=_UnionWithDuplicatePrimitive.Integer2(
-                    type="integer2", value=value
-                )
+                __root__=_UnionWithDuplicatePrimitive.Integer2(type="integer2", value=value)
             )  # type: ignore
 
     def string_1(self, value: str) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithDuplicatePrimitive(
-                root=_UnionWithDuplicatePrimitive.String1(type="string1", value=value)
-            )  # type: ignore
+            return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.String1(type="string1", value=value))  # type: ignore
         else:
             return UnionWithDuplicatePrimitive(
-                __root__=_UnionWithDuplicatePrimitive.String1(
-                    type="string1", value=value
-                )
+                __root__=_UnionWithDuplicatePrimitive.String1(type="string1", value=value)
             )  # type: ignore
 
     def string_2(self, value: str) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithDuplicatePrimitive(
-                root=_UnionWithDuplicatePrimitive.String2(type="string2", value=value)
-            )  # type: ignore
+            return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.String2(type="string2", value=value))  # type: ignore
         else:
             return UnionWithDuplicatePrimitive(
-                __root__=_UnionWithDuplicatePrimitive.String2(
-                    type="string2", value=value
-                )
+                __root__=_UnionWithDuplicatePrimitive.String2(type="string2", value=value)
             )  # type: ignore
 
 

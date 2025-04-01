@@ -43,65 +43,35 @@ class _Factory:
         else:
             return VariableType(__root__=_VariableType.CharType(type="charType"))  # type: ignore
 
-    def list_type(
-        self, value: resources_commons_types_list_type_ListType
-    ) -> VariableType:
+    def list_type(self, value: resources_commons_types_list_type_ListType) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(
-                root=_VariableType.ListType(
-                    **value.dict(exclude_unset=True), type="listType"
-                )
-            )  # type: ignore
+            return VariableType(root=_VariableType.ListType(**value.dict(exclude_unset=True), type="listType"))  # type: ignore
         else:
-            return VariableType(
-                __root__=_VariableType.ListType(
-                    **value.dict(exclude_unset=True), type="listType"
-                )
-            )  # type: ignore
+            return VariableType(__root__=_VariableType.ListType(**value.dict(exclude_unset=True), type="listType"))  # type: ignore
 
     def map_type(self, value: resources_commons_types_map_type_MapType) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(
-                root=_VariableType.MapType(
-                    **value.dict(exclude_unset=True), type="mapType"
-                )
-            )  # type: ignore
+            return VariableType(root=_VariableType.MapType(**value.dict(exclude_unset=True), type="mapType"))  # type: ignore
         else:
-            return VariableType(
-                __root__=_VariableType.MapType(
-                    **value.dict(exclude_unset=True), type="mapType"
-                )
-            )  # type: ignore
+            return VariableType(__root__=_VariableType.MapType(**value.dict(exclude_unset=True), type="mapType"))  # type: ignore
 
     def binary_tree_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(
-                root=_VariableType.BinaryTreeType(type="binaryTreeType")
-            )  # type: ignore
+            return VariableType(root=_VariableType.BinaryTreeType(type="binaryTreeType"))  # type: ignore
         else:
-            return VariableType(
-                __root__=_VariableType.BinaryTreeType(type="binaryTreeType")
-            )  # type: ignore
+            return VariableType(__root__=_VariableType.BinaryTreeType(type="binaryTreeType"))  # type: ignore
 
     def singly_linked_list_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(
-                root=_VariableType.SinglyLinkedListType(type="singlyLinkedListType")
-            )  # type: ignore
+            return VariableType(root=_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))  # type: ignore
         else:
-            return VariableType(
-                __root__=_VariableType.SinglyLinkedListType(type="singlyLinkedListType")
-            )  # type: ignore
+            return VariableType(__root__=_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))  # type: ignore
 
     def doubly_linked_list_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(
-                root=_VariableType.DoublyLinkedListType(type="doublyLinkedListType")
-            )  # type: ignore
+            return VariableType(root=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))  # type: ignore
         else:
-            return VariableType(
-                __root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType")
-            )  # type: ignore
+            return VariableType(__root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))  # type: ignore
 
 
 class VariableType(UniversalRootModel):
@@ -185,12 +155,8 @@ class VariableType(UniversalRootModel):
         boolean_type: typing.Callable[[], T_Result],
         string_type: typing.Callable[[], T_Result],
         char_type: typing.Callable[[], T_Result],
-        list_type: typing.Callable[
-            ["resources_commons_types_list_type_ListType"], T_Result
-        ],
-        map_type: typing.Callable[
-            ["resources_commons_types_map_type_MapType"], T_Result
-        ],
+        list_type: typing.Callable[["resources_commons_types_list_type_ListType"], T_Result],
+        map_type: typing.Callable[["resources_commons_types_map_type_MapType"], T_Result],
         binary_tree_type: typing.Callable[[], T_Result],
         singly_linked_list_type: typing.Callable[[], T_Result],
         doubly_linked_list_type: typing.Callable[[], T_Result],
@@ -208,15 +174,11 @@ class VariableType(UniversalRootModel):
             return char_type()
         if unioned_value.type == "listType":
             return list_type(
-                resources_commons_types_list_type_ListType(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_list_type_ListType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
         if unioned_value.type == "mapType":
             return map_type(
-                resources_commons_types_map_type_MapType(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_map_type_MapType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
         if unioned_value.type == "binaryTreeType":
             return binary_tree_type()

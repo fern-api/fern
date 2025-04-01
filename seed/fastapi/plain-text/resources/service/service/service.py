@@ -36,18 +36,12 @@ class AbstractServiceService(AbstractFernService):
     def __init_get_text(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_text)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_text,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_text, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_text)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

@@ -30,9 +30,7 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return Status(root=_Status.SoftDeleted(type="soft-deleted", value=value))  # type: ignore
         else:
-            return Status(
-                __root__=_Status.SoftDeleted(type="soft-deleted", value=value)
-            )  # type: ignore
+            return Status(__root__=_Status.SoftDeleted(type="soft-deleted", value=value))  # type: ignore
 
 
 class Status(UniversalRootModel):
@@ -40,23 +38,17 @@ class Status(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted]:
+        def get_as_union(self) -> typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted]:
+        def get_as_union(self) -> typing.Union[_Status.Active, _Status.Archived, _Status.SoftDeleted]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

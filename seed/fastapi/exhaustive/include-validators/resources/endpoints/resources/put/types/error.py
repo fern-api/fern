@@ -42,51 +42,27 @@ class Error(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[Error.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[Error.Validators._RootValidator]
-        ] = []
-        _category_pre_validators: typing.ClassVar[
-            typing.List[Error.Validators.PreCategoryValidator]
-        ] = []
-        _category_post_validators: typing.ClassVar[
-            typing.List[Error.Validators.CategoryValidator]
-        ] = []
-        _code_pre_validators: typing.ClassVar[
-            typing.List[Error.Validators.PreCodeValidator]
-        ] = []
-        _code_post_validators: typing.ClassVar[
-            typing.List[Error.Validators.CodeValidator]
-        ] = []
-        _detail_pre_validators: typing.ClassVar[
-            typing.List[Error.Validators.PreDetailValidator]
-        ] = []
-        _detail_post_validators: typing.ClassVar[
-            typing.List[Error.Validators.DetailValidator]
-        ] = []
-        _field_pre_validators: typing.ClassVar[
-            typing.List[Error.Validators.PreFieldValidator]
-        ] = []
-        _field_post_validators: typing.ClassVar[
-            typing.List[Error.Validators.FieldValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[Error.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Error.Validators._RootValidator]] = []
+        _category_pre_validators: typing.ClassVar[typing.List[Error.Validators.PreCategoryValidator]] = []
+        _category_post_validators: typing.ClassVar[typing.List[Error.Validators.CategoryValidator]] = []
+        _code_pre_validators: typing.ClassVar[typing.List[Error.Validators.PreCodeValidator]] = []
+        _code_post_validators: typing.ClassVar[typing.List[Error.Validators.CodeValidator]] = []
+        _detail_pre_validators: typing.ClassVar[typing.List[Error.Validators.PreDetailValidator]] = []
+        _detail_post_validators: typing.ClassVar[typing.List[Error.Validators.DetailValidator]] = []
+        _field_pre_validators: typing.ClassVar[typing.List[Error.Validators.PreFieldValidator]] = []
+        _field_post_validators: typing.ClassVar[typing.List[Error.Validators.FieldValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [Error.Validators._RootValidator], Error.Validators._RootValidator
-        ]: ...
+        ) -> typing.Callable[[Error.Validators._RootValidator], Error.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Error.Validators._PreRootValidator], Error.Validators._PreRootValidator
-        ]: ...
+        ) -> typing.Callable[[Error.Validators._PreRootValidator], Error.Validators._PreRootValidator]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -102,71 +78,42 @@ class Error(UniversalBaseModel):
         @classmethod
         def field(
             cls, field_name: typing.Literal["category"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Error.Validators.PreCategoryValidator],
-            Error.Validators.PreCategoryValidator,
-        ]: ...
+        ) -> typing.Callable[[Error.Validators.PreCategoryValidator], Error.Validators.PreCategoryValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["category"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Error.Validators.CategoryValidator], Error.Validators.CategoryValidator
-        ]: ...
+            cls, field_name: typing.Literal["category"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Error.Validators.CategoryValidator], Error.Validators.CategoryValidator]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["code"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Error.Validators.PreCodeValidator], Error.Validators.PreCodeValidator
-        ]: ...
+        ) -> typing.Callable[[Error.Validators.PreCodeValidator], Error.Validators.PreCodeValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["code"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Error.Validators.CodeValidator], Error.Validators.CodeValidator
-        ]: ...
+            cls, field_name: typing.Literal["code"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Error.Validators.CodeValidator], Error.Validators.CodeValidator]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["detail"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Error.Validators.PreDetailValidator], Error.Validators.PreDetailValidator
-        ]: ...
+        ) -> typing.Callable[[Error.Validators.PreDetailValidator], Error.Validators.PreDetailValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["detail"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Error.Validators.DetailValidator], Error.Validators.DetailValidator
-        ]: ...
+            cls, field_name: typing.Literal["detail"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Error.Validators.DetailValidator], Error.Validators.DetailValidator]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["field"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Error.Validators.PreFieldValidator], Error.Validators.PreFieldValidator
-        ]: ...
+        ) -> typing.Callable[[Error.Validators.PreFieldValidator], Error.Validators.PreFieldValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["field"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Error.Validators.FieldValidator], Error.Validators.FieldValidator
-        ]: ...
+            cls, field_name: typing.Literal["field"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Error.Validators.FieldValidator], Error.Validators.FieldValidator]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -195,44 +142,28 @@ class Error(UniversalBaseModel):
             return decorator
 
         class PreCategoryValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Error.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Error.Partial) -> typing.Any: ...
 
         class CategoryValidator(typing.Protocol):
-            def __call__(
-                self, __v: ErrorCategory, __values: Error.Partial
-            ) -> ErrorCategory: ...
+            def __call__(self, __v: ErrorCategory, __values: Error.Partial) -> ErrorCategory: ...
 
         class PreCodeValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Error.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Error.Partial) -> typing.Any: ...
 
         class CodeValidator(typing.Protocol):
-            def __call__(
-                self, __v: ErrorCode, __values: Error.Partial
-            ) -> ErrorCode: ...
+            def __call__(self, __v: ErrorCode, __values: Error.Partial) -> ErrorCode: ...
 
         class PreDetailValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Error.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Error.Partial) -> typing.Any: ...
 
         class DetailValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Optional[str], __values: Error.Partial
-            ) -> typing.Optional[str]: ...
+            def __call__(self, __v: typing.Optional[str], __values: Error.Partial) -> typing.Optional[str]: ...
 
         class PreFieldValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Error.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Error.Partial) -> typing.Any: ...
 
         class FieldValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Optional[str], __values: Error.Partial
-            ) -> typing.Optional[str]: ...
+            def __call__(self, __v: typing.Optional[str], __values: Error.Partial) -> typing.Optional[str]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -253,17 +184,13 @@ class Error(UniversalBaseModel):
         return values
 
     @universal_field_validator("category", pre=True)
-    def _pre_validate_category(
-        cls, v: ErrorCategory, values: Error.Partial
-    ) -> ErrorCategory:
+    def _pre_validate_category(cls, v: ErrorCategory, values: Error.Partial) -> ErrorCategory:
         for validator in Error.Validators._category_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("category", pre=False)
-    def _post_validate_category(
-        cls, v: ErrorCategory, values: Error.Partial
-    ) -> ErrorCategory:
+    def _post_validate_category(cls, v: ErrorCategory, values: Error.Partial) -> ErrorCategory:
         for validator in Error.Validators._category_post_validators:
             v = validator(v, values)
         return v
@@ -281,41 +208,31 @@ class Error(UniversalBaseModel):
         return v
 
     @universal_field_validator("detail", pre=True)
-    def _pre_validate_detail(
-        cls, v: typing.Optional[str], values: Error.Partial
-    ) -> typing.Optional[str]:
+    def _pre_validate_detail(cls, v: typing.Optional[str], values: Error.Partial) -> typing.Optional[str]:
         for validator in Error.Validators._detail_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("detail", pre=False)
-    def _post_validate_detail(
-        cls, v: typing.Optional[str], values: Error.Partial
-    ) -> typing.Optional[str]:
+    def _post_validate_detail(cls, v: typing.Optional[str], values: Error.Partial) -> typing.Optional[str]:
         for validator in Error.Validators._detail_post_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("field", pre=True)
-    def _pre_validate_field(
-        cls, v: typing.Optional[str], values: Error.Partial
-    ) -> typing.Optional[str]:
+    def _pre_validate_field(cls, v: typing.Optional[str], values: Error.Partial) -> typing.Optional[str]:
         for validator in Error.Validators._field_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("field", pre=False)
-    def _post_validate_field(
-        cls, v: typing.Optional[str], values: Error.Partial
-    ) -> typing.Optional[str]:
+    def _post_validate_field(cls, v: typing.Optional[str], values: Error.Partial) -> typing.Optional[str]:
         for validator in Error.Validators._field_post_validators:
             v = validator(v, values)
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

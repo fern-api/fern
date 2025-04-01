@@ -84,6 +84,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
     default_bytes_stream_chunk_size: Optional[int] = None
 
+    # Whether or not to include legacy wire tests in the generated SDK.
+    include_legacy_wire_tests: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 

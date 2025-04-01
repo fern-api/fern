@@ -42,18 +42,12 @@ class AbstractFolderServiceService(AbstractFernService):
     def __init_endpoint(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.endpoint)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.endpoint,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.endpoint, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.endpoint)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -83,20 +77,14 @@ class AbstractFolderServiceService(AbstractFernService):
     def __init_unknown_request(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.unknown_request)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.unknown_request,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.unknown_request, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.unknown_request)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

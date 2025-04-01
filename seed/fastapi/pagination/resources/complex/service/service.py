@@ -25,9 +25,7 @@ class AbstractComplexService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def search(
-        self, *, body: SearchRequest, auth: ApiAuth
-    ) -> PaginatedConversationResponse: ...
+    def search(self, *, body: SearchRequest, auth: ApiAuth) -> PaginatedConversationResponse: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -42,29 +40,19 @@ class AbstractComplexService(AbstractFernService):
     def __init_search(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.search,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.search, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.search)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> PaginatedConversationResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> PaginatedConversationResponse:
             try:
                 return cls.search(*args, **kwargs)
             except FernHTTPException as e:

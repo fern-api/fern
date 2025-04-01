@@ -62,6 +62,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        include_legacy_wire_tests: true
+      outputFolder: legacy-wire-tests
+    - customConfig:
         client:
           filename: base_client.py
           class_name: BaseSeedExhaustive
@@ -245,7 +248,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -256,50 +259,16 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
 allowedFailures:
-  # This is the only one that should always fail
+  - any-auth
+  - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
-  # This should only succeed in Pydantic V1 tests
   - exhaustive:pydantic-v1-wrapped
   - exhaustive:pydantic-v1-with-utils
-
-  # TODO(FER-1837): Address this list
-  - websocket
-  - exhaustive:union-utils
-  - extra-properties
-  - trace
-
-  # Remove the following fixtures soon as a CLI is released with
-  # default enum value support, the latest primitive types, and gRPC
-  # configuration. This otherwise causes a 'fern check' issue when
-  # 'fern test' is run.
-  - grpc-proto-exhaustive
-  - grpc-proto
-  - object
-  - validation:no-custom-config
-  - validation:with-defaults
-  # === Allowed failures due to unit testing ===
+  - file-upload
+  - oauth-client-credentials-custom
   - pagination
-  # ===========================================
-  # We are not currently generating the examples correctly,
-  # so the mock server and the expectations in the unit
-  # tests are not correct (`status` on `Resource_User`).
-  - mixed-case
-  # We are not generating the correct snippets for union-utils
-  # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
-  - unions:union-utils
-
-  # Complex circular refs
   - simple-fhir
-
-  # TODO(FER-2946): Support deep object query parameter arrays in the mock
-  # server the mock server today doesn't take into account the shape of the
-  # request from the IR and so doesn't know the shape to explicitly coerce
-  # the query string into
-  - query-parameters
-
-  - any-auth
-
-  - cross-package-type-names
-  - audiences
+  - trace
+  - websocket:websocket-with_generated_clients

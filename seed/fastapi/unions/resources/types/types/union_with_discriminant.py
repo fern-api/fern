@@ -17,23 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithDiscriminant:
         if IS_PYDANTIC_V2:
-            return UnionWithDiscriminant(
-                root=_UnionWithDiscriminant.Foo(type="foo", foo=value)
-            )  # type: ignore
+            return UnionWithDiscriminant(root=_UnionWithDiscriminant.Foo(type="foo", foo=value))  # type: ignore
         else:
-            return UnionWithDiscriminant(
-                __root__=_UnionWithDiscriminant.Foo(type="foo", foo=value)
-            )  # type: ignore
+            return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Foo(type="foo", foo=value))  # type: ignore
 
     def bar(self, value: resources_types_types_bar_Bar) -> UnionWithDiscriminant:
         if IS_PYDANTIC_V2:
-            return UnionWithDiscriminant(
-                root=_UnionWithDiscriminant.Bar(type="bar", bar=value)
-            )  # type: ignore
+            return UnionWithDiscriminant(root=_UnionWithDiscriminant.Bar(type="bar", bar=value))  # type: ignore
         else:
-            return UnionWithDiscriminant(
-                __root__=_UnionWithDiscriminant.Bar(type="bar", bar=value)
-            )  # type: ignore
+            return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Bar(type="bar", bar=value))  # type: ignore
 
 
 class UnionWithDiscriminant(UniversalRootModel):
@@ -41,23 +33,17 @@ class UnionWithDiscriminant(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

@@ -41,6 +41,5 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
 
 
 TestCaseImplementationReference = typing.Union[
-    TestCaseImplementationReference_TemplateId,
-    TestCaseImplementationReference_Implementation,
+    TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]

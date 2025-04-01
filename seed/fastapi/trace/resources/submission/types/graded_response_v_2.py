@@ -11,14 +11,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 class GradedResponseV2(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(
-        alias="testCases"
-    )
+    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
