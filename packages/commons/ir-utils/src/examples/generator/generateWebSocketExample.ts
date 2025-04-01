@@ -45,7 +45,9 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (channelPathResult.type === "failure") {return channelPathResult;}
+    if (channelPathResult.type === "failure") {
+        return channelPathResult;
+    }
     result.pathParameters.push(...channelPathResult.example);
 
     const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
@@ -53,7 +55,9 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (rootPathResult.type === "failure") {return rootPathResult;}
+    if (rootPathResult.type === "failure") {
+        return rootPathResult;
+    }
     result.pathParameters.push(...rootPathResult.example);
 
     // QUERY PARAMETERS
@@ -62,7 +66,9 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 10
     });
-    if (queryParamsResult.type === "failure") {return queryParamsResult;}
+    if (queryParamsResult.type === "failure") {
+        return queryParamsResult;
+    }
     result.queryParameters = queryParamsResult.example;
 
     // HEADERS
@@ -71,7 +77,9 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (channelHeaderResult.type === "failure") {return channelHeaderResult;}
+    if (channelHeaderResult.type === "failure") {
+        return channelHeaderResult;
+    }
     result.headers.push(...channelHeaderResult.example);
 
     const irHeaderResult = generateHeaderExamples(ir.headers, {
@@ -79,7 +87,9 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (irHeaderResult.type === "failure") {return irHeaderResult;}
+    if (irHeaderResult.type === "failure") {
+        return irHeaderResult;
+    }
     result.headers.push(...irHeaderResult.example);
 
     const sendMessages = channel.messages.filter((message) => message.origin === "client");

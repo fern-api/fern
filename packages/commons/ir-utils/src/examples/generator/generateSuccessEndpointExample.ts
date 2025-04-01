@@ -86,7 +86,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (endpointPathResult.type === "failure") {return endpointPathResult;}
+    if (endpointPathResult.type === "failure") {
+        return endpointPathResult;
+    }
     result.endpointPathParameters = endpointPathResult.example;
 
     const servicePathResult = generatePathParameterExamples(service.pathParameters, {
@@ -94,7 +96,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (servicePathResult.type === "failure") {return servicePathResult;}
+    if (servicePathResult.type === "failure") {
+        return servicePathResult;
+    }
     result.servicePathParameters = servicePathResult.example;
 
     const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
@@ -102,7 +106,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (rootPathResult.type === "failure") {return rootPathResult;}
+    if (rootPathResult.type === "failure") {
+        return rootPathResult;
+    }
     result.rootPathParameters = rootPathResult.example;
 
     const queryParamsResult = generateQueryParameterExamples(endpoint.queryParameters, {
@@ -110,7 +116,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 10
     });
-    if (queryParamsResult.type === "failure") {return queryParamsResult;}
+    if (queryParamsResult.type === "failure") {
+        return queryParamsResult;
+    }
     result.queryParameters = queryParamsResult.example;
 
     const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
@@ -118,7 +126,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (endpointHeadersResult.type === "failure") {return endpointHeadersResult;}
+    if (endpointHeadersResult.type === "failure") {
+        return endpointHeadersResult;
+    }
     result.endpointHeaders = endpointHeadersResult.example;
 
     const serviceHeadersResult = generateHeaderExamples(service.headers, {
@@ -126,7 +136,9 @@ export function generateEndpointExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     });
-    if (serviceHeadersResult.type === "failure") {return serviceHeadersResult;}
+    if (serviceHeadersResult.type === "failure") {
+        return serviceHeadersResult;
+    }
     result.serviceHeaders = serviceHeadersResult.example;
 
     if (endpoint.requestBody != null) {
