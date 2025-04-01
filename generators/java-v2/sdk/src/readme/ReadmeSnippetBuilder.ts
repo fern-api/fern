@@ -512,6 +512,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
+            // Return the EndpointId of the first Endpoint 
             return endpointsWithReferencedRequestBody[0][0];
         }
 
