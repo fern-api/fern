@@ -7,16 +7,12 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class CreateUserRequest(UniversalBaseModel):
-    type: typing.Literal["CreateUserRequest"] = pydantic.Field(
-        alias="_type", default="CreateUserRequest"
-    )
+    type: typing.Literal["CreateUserRequest"] = pydantic.Field(alias="_type", default="CreateUserRequest")
     version: typing.Literal["v1"] = pydantic.Field(alias="_version", default="v1")
     name: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -11,9 +11,7 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DoubleOptional(UniversalBaseModel):
-    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(
-        alias="optionalAlias", default=None
-    )
+    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(alias="optionalAlias", default=None)
 
     class Validators:
         """
@@ -28,12 +26,8 @@ class DoubleOptional(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[DoubleOptional.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[DoubleOptional.Validators._RootValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[DoubleOptional.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[DoubleOptional.Validators._RootValidator]] = []
         _optional_alias_pre_validators: typing.ClassVar[
             typing.List[DoubleOptional.Validators.PreOptionalAliasValidator]
         ] = []
@@ -45,17 +39,13 @@ class DoubleOptional(UniversalBaseModel):
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [DoubleOptional.Validators._RootValidator],
-            DoubleOptional.Validators._RootValidator,
-        ]: ...
+        ) -> typing.Callable[[DoubleOptional.Validators._RootValidator], DoubleOptional.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [DoubleOptional.Validators._PreRootValidator],
-            DoubleOptional.Validators._PreRootValidator,
+            [DoubleOptional.Validators._PreRootValidator], DoubleOptional.Validators._PreRootValidator
         ]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
@@ -71,24 +61,16 @@ class DoubleOptional(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["optional_alias"],
-            *,
-            pre: typing.Literal[True],
+            cls, field_name: typing.Literal["optional_alias"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [DoubleOptional.Validators.PreOptionalAliasValidator],
-            DoubleOptional.Validators.PreOptionalAliasValidator,
+            [DoubleOptional.Validators.PreOptionalAliasValidator], DoubleOptional.Validators.PreOptionalAliasValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["optional_alias"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["optional_alias"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [DoubleOptional.Validators.OptionalAliasValidator],
-            DoubleOptional.Validators.OptionalAliasValidator,
+            [DoubleOptional.Validators.OptionalAliasValidator], DoubleOptional.Validators.OptionalAliasValidator
         ]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
@@ -103,37 +85,27 @@ class DoubleOptional(UniversalBaseModel):
             return decorator
 
         class PreOptionalAliasValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: DoubleOptional.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: DoubleOptional.Partial) -> typing.Any: ...
 
         class OptionalAliasValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[OptionalAlias],
-                __values: DoubleOptional.Partial,
+                self, __v: typing.Optional[OptionalAlias], __values: DoubleOptional.Partial
             ) -> typing.Optional[OptionalAlias]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
 
         class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: DoubleOptional.Partial
-            ) -> DoubleOptional.Partial: ...
+            def __call__(self, __values: DoubleOptional.Partial) -> DoubleOptional.Partial: ...
 
     @universal_root_validator(pre=True)
-    def _pre_validate_types_double_optional(
-        cls, values: DoubleOptional.Partial
-    ) -> DoubleOptional.Partial:
+    def _pre_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._pre_validators:
             values = validator(values)
         return values
 
     @universal_root_validator(pre=False)
-    def _post_validate_types_double_optional(
-        cls, values: DoubleOptional.Partial
-    ) -> DoubleOptional.Partial:
+    def _post_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._post_validators:
             values = validator(values)
         return values
@@ -155,9 +127,7 @@ class DoubleOptional(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

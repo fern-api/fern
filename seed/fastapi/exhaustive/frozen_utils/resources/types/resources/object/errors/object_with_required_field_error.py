@@ -6,6 +6,4 @@ from ..types.object_with_required_field import ObjectWithRequiredField
 
 class ObjectWithRequiredFieldError(FernHTTPException):
     def __init__(self, error: ObjectWithRequiredField):
-        super().__init__(
-            status_code=400, name="ObjectWithRequiredFieldError", content=error
-        )
+        super().__init__(status_code=400, name="ObjectWithRequiredFieldError", content=error)

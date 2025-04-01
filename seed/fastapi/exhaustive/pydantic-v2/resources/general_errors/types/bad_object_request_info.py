@@ -8,6 +8,4 @@ import pydantic
 class BadObjectRequestInfo(UniversalBaseModel):
     message: str
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-        extra="forbid"
-    )  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

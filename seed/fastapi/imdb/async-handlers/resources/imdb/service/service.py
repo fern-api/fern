@@ -48,20 +48,14 @@ class AbstractImdbService(AbstractFernService):
     def __init_create_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_movie)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_movie,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_movie)
         async def wrapper(*args: typing.Any, **kwargs: typing.Any) -> MovieId:
@@ -90,20 +84,14 @@ class AbstractImdbService(AbstractFernService):
     def __init_get_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_movie)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "movie_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_movie,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_movie)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Movie:

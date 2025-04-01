@@ -10,19 +10,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetSubmissionStateResponse(UniversalBaseModel):
-    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(
-        alias="timeSubmitted", default=None
-    )
+    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted", default=None)
     submission: str
     language: Language
-    submission_type_state: SubmissionTypeState = pydantic.Field(
-        alias="submissionTypeState"
-    )
+    submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

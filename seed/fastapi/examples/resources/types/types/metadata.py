@@ -39,16 +39,14 @@ class Metadata(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Metadata.Html, _Metadata.Markdown],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Metadata.Html, _Metadata.Markdown]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Metadata.Html, _Metadata.Markdown],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Metadata.Html, _Metadata.Markdown]:
@@ -60,11 +58,7 @@ class Metadata(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self,
-        html: typing.Callable[[str], T_Result],
-        markdown: typing.Callable[[str], T_Result],
-    ) -> T_Result:
+    def visit(self, html: typing.Callable[[str], T_Result], markdown: typing.Callable[[str], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "html":
             return html(unioned_value.value)

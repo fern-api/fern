@@ -10,14 +10,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 class RecordedResponseNotification(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
-    test_case_id: typing.Optional[str] = pydantic.Field(
-        alias="testCaseId", default=None
-    )
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -40,9 +40,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     def get_and_return_bool(self, *, body: bool, auth: ApiAuth) -> bool: ...
 
     @abc.abstractmethod
-    def get_and_return_datetime(
-        self, *, body: dt.datetime, auth: ApiAuth
-    ) -> dt.datetime: ...
+    def get_and_return_datetime(self, *, body: dt.datetime, auth: ApiAuth) -> dt.datetime: ...
 
     @abc.abstractmethod
     def get_and_return_date(self, *, body: dt.date, auth: ApiAuth) -> dt.date: ...
@@ -74,24 +72,16 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     def __init_get_and_return_string(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_string)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_string,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_string, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_string)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -113,33 +103,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/string",
             response_model=str,
             description=AbstractEndpointsPrimitiveService.get_and_return_string.__doc__,
-            **get_route_args(
-                cls.get_and_return_string, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_string, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_int(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_int)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_int,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_int, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_int)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> int:
@@ -168,24 +148,16 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     def __init_get_and_return_long(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_long)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_long,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_long, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_long)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> int:
@@ -207,33 +179,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/long",
             response_model=int,
             description=AbstractEndpointsPrimitiveService.get_and_return_long.__doc__,
-            **get_route_args(
-                cls.get_and_return_long, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_long, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_double(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_double)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_double,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_double, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_double)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> float:
@@ -255,33 +217,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/double",
             response_model=float,
             description=AbstractEndpointsPrimitiveService.get_and_return_double.__doc__,
-            **get_route_args(
-                cls.get_and_return_double, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_double, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_bool(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_bool)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_bool,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_bool, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_bool)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
@@ -303,33 +255,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/boolean",
             response_model=bool,
             description=AbstractEndpointsPrimitiveService.get_and_return_bool.__doc__,
-            **get_route_args(
-                cls.get_and_return_bool, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_bool, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_datetime(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_datetime)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_datetime,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_datetime, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_datetime)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> dt.datetime:
@@ -351,33 +293,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/datetime",
             response_model=dt.datetime,
             description=AbstractEndpointsPrimitiveService.get_and_return_datetime.__doc__,
-            **get_route_args(
-                cls.get_and_return_datetime, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_datetime, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_date(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_date)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_date,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_date, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_date)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> dt.date:
@@ -399,33 +331,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/date",
             response_model=dt.date,
             description=AbstractEndpointsPrimitiveService.get_and_return_date.__doc__,
-            **get_route_args(
-                cls.get_and_return_date, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_date, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_uuid(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_uuid)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_uuid,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_uuid, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_uuid)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> uuid.UUID:
@@ -447,33 +369,23 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/uuid",
             response_model=uuid.UUID,
             description=AbstractEndpointsPrimitiveService.get_and_return_uuid.__doc__,
-            **get_route_args(
-                cls.get_and_return_uuid, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_uuid, default_tag="endpoints.primitive"),
         )(wrapper)
 
     @classmethod
     def __init_get_and_return_base_64(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_base_64)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_base_64,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_and_return_base_64, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_and_return_base_64)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -495,7 +407,5 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             path="/primitive/base64",
             response_model=str,
             description=AbstractEndpointsPrimitiveService.get_and_return_base_64.__doc__,
-            **get_route_args(
-                cls.get_and_return_base_64, default_tag="endpoints.primitive"
-            ),
+            **get_route_args(cls.get_and_return_base_64, default_tag="endpoints.primitive"),
         )(wrapper)

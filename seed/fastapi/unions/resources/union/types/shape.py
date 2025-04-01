@@ -16,23 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def circle(self, value: resources_union_types_circle_Circle) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(
-                root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle")
-            )  # type: ignore
+            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
         else:
-            return Shape(
-                __root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle")
-            )  # type: ignore
+            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
 
     def square(self, value: resources_union_types_square_Square) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(
-                root=_Shape.Square(**value.dict(exclude_unset=True), type="square")
-            )  # type: ignore
+            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
         else:
-            return Shape(
-                __root__=_Shape.Square(**value.dict(exclude_unset=True), type="square")
-            )  # type: ignore
+            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
 
 
 class Shape(UniversalRootModel):
@@ -50,16 +42,14 @@ class Shape(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
@@ -79,15 +69,11 @@ class Shape(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "circle":
             return circle(
-                resources_union_types_circle_Circle(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_union_types_circle_Circle(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
         if unioned_value.type == "square":
             return square(
-                resources_union_types_square_Square(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_union_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 

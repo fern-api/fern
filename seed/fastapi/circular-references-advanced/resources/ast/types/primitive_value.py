@@ -10,11 +10,7 @@ class PrimitiveValue(str, enum.Enum):
     STRING = "STRING"
     NUMBER = "NUMBER"
 
-    def visit(
-        self,
-        string: typing.Callable[[], T_Result],
-        number: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, string: typing.Callable[[], T_Result], number: typing.Callable[[], T_Result]) -> T_Result:
         if self is PrimitiveValue.STRING:
             return string()
         if self is PrimitiveValue.NUMBER:

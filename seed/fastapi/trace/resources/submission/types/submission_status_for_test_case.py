@@ -19,41 +19,29 @@ class _Factory:
     def graded(self, value: TestCaseResultWithStdout) -> SubmissionStatusForTestCase:
         if IS_PYDANTIC_V2:
             return SubmissionStatusForTestCase(
-                root=_SubmissionStatusForTestCase.Graded(
-                    **value.dict(exclude_unset=True), type="graded"
-                )
+                root=_SubmissionStatusForTestCase.Graded(**value.dict(exclude_unset=True), type="graded")
             )  # type: ignore
         else:
             return SubmissionStatusForTestCase(
-                __root__=_SubmissionStatusForTestCase.Graded(
-                    **value.dict(exclude_unset=True), type="graded"
-                )
+                __root__=_SubmissionStatusForTestCase.Graded(**value.dict(exclude_unset=True), type="graded")
             )  # type: ignore
 
     def graded_v_2(self, value: TestCaseGrade) -> SubmissionStatusForTestCase:
         if IS_PYDANTIC_V2:
-            return SubmissionStatusForTestCase(
-                root=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value)
-            )  # type: ignore
+            return SubmissionStatusForTestCase(root=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value))  # type: ignore
         else:
             return SubmissionStatusForTestCase(
-                __root__=_SubmissionStatusForTestCase.GradedV2(
-                    type="gradedV2", value=value
-                )
+                __root__=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value)
             )  # type: ignore
 
     def traced(self, value: TracedTestCase) -> SubmissionStatusForTestCase:
         if IS_PYDANTIC_V2:
             return SubmissionStatusForTestCase(
-                root=_SubmissionStatusForTestCase.Traced(
-                    **value.dict(exclude_unset=True), type="traced"
-                )
+                root=_SubmissionStatusForTestCase.Traced(**value.dict(exclude_unset=True), type="traced")
             )  # type: ignore
         else:
             return SubmissionStatusForTestCase(
-                __root__=_SubmissionStatusForTestCase.Traced(
-                    **value.dict(exclude_unset=True), type="traced"
-                )
+                __root__=_SubmissionStatusForTestCase.Traced(**value.dict(exclude_unset=True), type="traced")
             )  # type: ignore
 
 
@@ -111,19 +99,11 @@ class SubmissionStatusForTestCase(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "graded":
-            return graded(
-                TestCaseResultWithStdout(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return graded(TestCaseResultWithStdout(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "gradedV2":
             return graded_v_2(unioned_value.value)
         if unioned_value.type == "traced":
-            return traced(
-                TracedTestCase(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return traced(TracedTestCase(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _SubmissionStatusForTestCase:

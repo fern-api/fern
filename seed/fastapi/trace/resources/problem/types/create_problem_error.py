@@ -15,15 +15,11 @@ class _Factory:
     def generic(self, value: GenericCreateProblemError) -> CreateProblemError:
         if IS_PYDANTIC_V2:
             return CreateProblemError(
-                root=_CreateProblemError.Generic(
-                    **value.dict(exclude_unset=True), error_type="generic"
-                )
+                root=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
             )  # type: ignore
         else:
             return CreateProblemError(
-                __root__=_CreateProblemError.Generic(
-                    **value.dict(exclude_unset=True), error_type="generic"
-                )
+                __root__=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
             )  # type: ignore
 
 
@@ -47,23 +43,15 @@ class CreateProblemError(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self, generic: typing.Callable[[GenericCreateProblemError], T_Result]
-    ) -> T_Result:
+    def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.error_type == "generic":
-            return generic(
-                GenericCreateProblemError(
-                    **unioned_value.dict(exclude_unset=True, exclude={"_type"})
-                )
-            )
+            return generic(GenericCreateProblemError(**unioned_value.dict(exclude_unset=True, exclude={"_type"})))
 
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing.Literal["generic"] = pydantic.Field(
-            alias="_type", default="generic"
-        )
+        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
 
 
 update_forward_refs(CreateProblemError)

@@ -2,13 +2,11 @@
 
 # nopycln: file
 import datetime as dt
-import os
 import typing
 from collections import defaultdict
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -91,9 +89,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
                 # If the default values are non-null act like they've been set
                 # This effectively allows exclude_unset to work like exclude_none where
                 # the latter passes through intentionally set none values.
-                if default is not None or (
-                    "exclude_unset" in kwargs and not kwargs["exclude_unset"]
-                ):
+                if default is not None or ("exclude_unset" in kwargs and not kwargs["exclude_unset"]):
                     _fields_set.add(name)
 
                     if default is not None:
@@ -118,9 +114,7 @@ def _union_list_of_pydantic_dicts(
         if isinstance(item, dict):
             converted_list.append(deep_union_pydantic_dicts(item, destination_value))
         elif isinstance(item, list):
-            converted_list.append(
-                _union_list_of_pydantic_dicts(item, destination_value)
-            )
+            converted_list.append(_union_list_of_pydantic_dicts(item, destination_value))
         else:
             converted_list.append(item)
     return converted_list
@@ -148,9 +142,9 @@ UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ig
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -178,9 +172,7 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         return pydantic.v1.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 

@@ -11,21 +11,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 class RecordingResponseNotification(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_case_id: typing.Optional[str] = pydantic.Field(
-        alias="testCaseId", default=None
-    )
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
     line_number: int = pydantic.Field(alias="lineNumber")
-    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(
-        alias="lightweightStackInfo"
-    )
-    traced_file: typing.Optional[TracedFile] = pydantic.Field(
-        alias="tracedFile", default=None
-    )
+    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(alias="lightweightStackInfo")
+    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

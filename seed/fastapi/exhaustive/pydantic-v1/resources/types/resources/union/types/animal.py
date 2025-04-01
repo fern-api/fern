@@ -13,14 +13,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def dog(self, value: resources_types_resources_union_types_dog_Dog) -> Animal:
-        return Animal(
-            __root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-        )  # type: ignore
+        return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))  # type: ignore
 
     def cat(self, value: resources_types_resources_union_types_cat_Cat) -> Animal:
-        return Animal(
-            __root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-        )  # type: ignore
+        return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
 
 
 class Animal(pydantic.BaseModel):

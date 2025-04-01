@@ -9,9 +9,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ExecutionSessionState(UniversalBaseModel):
-    last_time_contacted: typing.Optional[str] = pydantic.Field(
-        alias="lastTimeContacted", default=None
-    )
+    last_time_contacted: typing.Optional[str] = pydantic.Field(alias="lastTimeContacted", default=None)
     session_id: str = pydantic.Field(alias="sessionId")
     """
     The auto-generated session id. Formatted as a uuid.
@@ -23,9 +21,7 @@ class ExecutionSessionState(UniversalBaseModel):
     status: ExecutionSessionStatus
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -41,27 +41,18 @@ class AbstractUserService(AbstractFernService):
     def __init_list_(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The maximum number of results to return.",
-                        )
+                        default=fastapi.Query(default=None, description="The maximum number of results to return.")
                     )
                 )
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.list_,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.list_, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.list_)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[User]:

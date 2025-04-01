@@ -17,23 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def dog(self, value: resources_types_resources_union_types_dog_Dog) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(
-                root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )  # type: ignore
+            return Animal(root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))  # type: ignore
         else:
-            return Animal(
-                __root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )  # type: ignore
+            return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))  # type: ignore
 
     def cat(self, value: resources_types_resources_union_types_cat_Cat) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(
-                root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )  # type: ignore
+            return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
         else:
-            return Animal(
-                __root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )  # type: ignore
+            return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
 
 
 class Animal(UniversalRootModel):
@@ -41,16 +33,14 @@ class Animal(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat],
-            pydantic.Field(discriminator="animal"),
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat],
-            pydantic.Field(discriminator="animal"),
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
@@ -90,27 +80,19 @@ class Animal(UniversalRootModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[Animal.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[Animal.Validators._RootValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[Animal.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Animal.Validators._RootValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [Animal.Validators._RootValidator], Animal.Validators._RootValidator
-        ]: ...
+        ) -> typing.Callable[[Animal.Validators._RootValidator], Animal.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Animal.Validators._PreRootValidator], Animal.Validators._PreRootValidator
-        ]: ...
+        ) -> typing.Callable[[Animal.Validators._PreRootValidator], Animal.Validators._PreRootValidator]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:

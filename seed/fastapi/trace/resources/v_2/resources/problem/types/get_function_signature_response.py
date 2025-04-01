@@ -8,14 +8,10 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetFunctionSignatureResponse(UniversalBaseModel):
-    function_by_language: typing.Dict[Language, str] = pydantic.Field(
-        alias="functionByLanguage"
-    )
+    function_by_language: typing.Dict[Language, str] = pydantic.Field(alias="functionByLanguage")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

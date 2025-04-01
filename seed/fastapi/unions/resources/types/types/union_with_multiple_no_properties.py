@@ -14,41 +14,27 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def foo(
-        self, value: resources_types_types_foo_Foo
-    ) -> UnionWithMultipleNoProperties:
+    def foo(self, value: resources_types_types_foo_Foo) -> UnionWithMultipleNoProperties:
         if IS_PYDANTIC_V2:
             return UnionWithMultipleNoProperties(
-                root=_UnionWithMultipleNoProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                root=_UnionWithMultipleNoProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
         else:
             return UnionWithMultipleNoProperties(
-                __root__=_UnionWithMultipleNoProperties.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                __root__=_UnionWithMultipleNoProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
 
     def empty_1(self) -> UnionWithMultipleNoProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithMultipleNoProperties(
-                root=_UnionWithMultipleNoProperties.Empty1(type="empty1")
-            )  # type: ignore
+            return UnionWithMultipleNoProperties(root=_UnionWithMultipleNoProperties.Empty1(type="empty1"))  # type: ignore
         else:
-            return UnionWithMultipleNoProperties(
-                __root__=_UnionWithMultipleNoProperties.Empty1(type="empty1")
-            )  # type: ignore
+            return UnionWithMultipleNoProperties(__root__=_UnionWithMultipleNoProperties.Empty1(type="empty1"))  # type: ignore
 
     def empty_2(self) -> UnionWithMultipleNoProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithMultipleNoProperties(
-                root=_UnionWithMultipleNoProperties.Empty2(type="empty2")
-            )  # type: ignore
+            return UnionWithMultipleNoProperties(root=_UnionWithMultipleNoProperties.Empty2(type="empty2"))  # type: ignore
         else:
-            return UnionWithMultipleNoProperties(
-                __root__=_UnionWithMultipleNoProperties.Empty2(type="empty2")
-            )  # type: ignore
+            return UnionWithMultipleNoProperties(__root__=_UnionWithMultipleNoProperties.Empty2(type="empty2"))  # type: ignore
 
 
 class UnionWithMultipleNoProperties(UniversalRootModel):
@@ -115,11 +101,7 @@ class UnionWithMultipleNoProperties(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                resources_types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "empty1":
             return empty_1()
         if unioned_value.type == "empty2":

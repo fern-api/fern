@@ -10,9 +10,7 @@ class MultipleFilterSearchRequestOperator(str, enum.Enum):
     AND = "AND"
     OR = "OR"
 
-    def visit(
-        self, and_: typing.Callable[[], T_Result], or_: typing.Callable[[], T_Result]
-    ) -> T_Result:
+    def visit(self, and_: typing.Callable[[], T_Result], or_: typing.Callable[[], T_Result]) -> T_Result:
         if self is MultipleFilterSearchRequestOperator.AND:
             return and_()
         if self is MultipleFilterSearchRequestOperator.OR:

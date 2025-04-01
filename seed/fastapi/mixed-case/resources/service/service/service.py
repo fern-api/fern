@@ -26,9 +26,7 @@ class AbstractServiceService(AbstractFernService):
     def get_resource(self, *, resource_id: str) -> Resource: ...
 
     @abc.abstractmethod
-    def list_resources(
-        self, *, page_limit: int, before_date: dt.date
-    ) -> typing.Sequence[Resource]: ...
+    def list_resources(self, *, page_limit: int, before_date: dt.date) -> typing.Sequence[Resource]: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -44,20 +42,14 @@ class AbstractServiceService(AbstractFernService):
     def __init_get_resource(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_resource)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "resource_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_resource,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_resource, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_resource)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Resource:
@@ -86,33 +78,19 @@ class AbstractServiceService(AbstractFernService):
     def __init_list_resources(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_resources)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page_limit":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "before_date":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=..., alias="beforeDate")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="beforeDate")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.list_resources,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.list_resources, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.list_resources)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[Resource]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[Resource]:
             try:
                 return cls.list_resources(*args, **kwargs)
             except FernHTTPException as e:

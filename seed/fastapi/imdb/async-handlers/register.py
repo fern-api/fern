@@ -25,9 +25,7 @@ def register(
     _app.include_router(__register_service(imdb), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
-    _app.add_exception_handler(
-        starlette.exceptions.HTTPException, http_exception_handler
-    )  # type: ignore
+    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore
     _app.add_exception_handler(Exception, default_exception_handler)  # type: ignore
 
 
@@ -39,9 +37,7 @@ def __register_service(service: AbstractFernService) -> fastapi.APIRouter:
 
 def register_validators(module: types.ModuleType) -> None:
     validators_directory: str = os.path.dirname(module.__file__)  # type: ignore
-    for path in glob.glob(
-        os.path.join(validators_directory, "**/*.py"), recursive=True
-    ):
+    for path in glob.glob(os.path.join(validators_directory, "**/*.py"), recursive=True):
         if os.path.isfile(path):
             relative_path = os.path.relpath(path, start=validators_directory)
             module_path = ".".join([module.__name__] + relative_path[:-3].split("/"))

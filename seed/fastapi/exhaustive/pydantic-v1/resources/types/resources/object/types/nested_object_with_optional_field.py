@@ -8,9 +8,7 @@ import pydantic
 
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(
-        alias="NestedObject", default=None
-    )
+    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
 
     class Config:
         extra = pydantic.Extra.forbid

@@ -10,11 +10,7 @@ class ResourceStatus(str, enum.Enum):
     ACTIVE = "ACTIVE"
     INACTIVE = "INACTIVE"
 
-    def visit(
-        self,
-        active: typing.Callable[[], T_Result],
-        inactive: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, active: typing.Callable[[], T_Result], inactive: typing.Callable[[], T_Result]) -> T_Result:
         if self is ResourceStatus.ACTIVE:
             return active()
         if self is ResourceStatus.INACTIVE:

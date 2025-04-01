@@ -16,35 +16,21 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def html(self, value: str) -> ProblemDescriptionBoard:
         if IS_PYDANTIC_V2:
-            return ProblemDescriptionBoard(
-                root=_ProblemDescriptionBoard.Html(type="html", value=value)
-            )  # type: ignore
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.Html(type="html", value=value))  # type: ignore
         else:
-            return ProblemDescriptionBoard(
-                __root__=_ProblemDescriptionBoard.Html(type="html", value=value)
-            )  # type: ignore
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", value=value))  # type: ignore
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
         if IS_PYDANTIC_V2:
-            return ProblemDescriptionBoard(
-                root=_ProblemDescriptionBoard.Variable(type="variable", value=value)
-            )  # type: ignore
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.Variable(type="variable", value=value))  # type: ignore
         else:
-            return ProblemDescriptionBoard(
-                __root__=_ProblemDescriptionBoard.Variable(type="variable", value=value)
-            )  # type: ignore
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", value=value))  # type: ignore
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
         if IS_PYDANTIC_V2:
-            return ProblemDescriptionBoard(
-                root=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value)
-            )  # type: ignore
+            return ProblemDescriptionBoard(root=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))  # type: ignore
         else:
-            return ProblemDescriptionBoard(
-                __root__=_ProblemDescriptionBoard.TestCaseId(
-                    type="testCaseId", value=value
-                )
-            )  # type: ignore
+            return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))  # type: ignore
 
 
 class ProblemDescriptionBoard(UniversalRootModel):
@@ -53,9 +39,7 @@ class ProblemDescriptionBoard(UniversalRootModel):
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
             typing.Union[
-                _ProblemDescriptionBoard.Html,
-                _ProblemDescriptionBoard.Variable,
-                _ProblemDescriptionBoard.TestCaseId,
+                _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -63,17 +47,13 @@ class ProblemDescriptionBoard(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _ProblemDescriptionBoard.Html,
-            _ProblemDescriptionBoard.Variable,
-            _ProblemDescriptionBoard.TestCaseId,
+            _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
         ]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
             typing.Union[
-                _ProblemDescriptionBoard.Html,
-                _ProblemDescriptionBoard.Variable,
-                _ProblemDescriptionBoard.TestCaseId,
+                _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
             ],
             pydantic.Field(discriminator="type"),
         ]
@@ -81,9 +61,7 @@ class ProblemDescriptionBoard(UniversalRootModel):
         def get_as_union(
             self,
         ) -> typing.Union[
-            _ProblemDescriptionBoard.Html,
-            _ProblemDescriptionBoard.Variable,
-            _ProblemDescriptionBoard.TestCaseId,
+            _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
         ]:
             return self.__root__
 
