@@ -17,7 +17,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a method invocation with one positional arg", async () => {
@@ -29,7 +29,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a method invocation with one positional arg and one kwarg", async () => {
@@ -44,7 +44,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a method invocation with multiple positional and kwarg args", async () => {
@@ -61,7 +61,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a method invocation with a parent", async () => {
@@ -76,7 +76,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a method invocation with a reference argument", async () => {
@@ -95,7 +95,7 @@ describe("MethodInvocation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(invocation.getReferences()).toHaveLength(2);
     });
 });

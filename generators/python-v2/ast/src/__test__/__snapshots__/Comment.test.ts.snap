@@ -12,7 +12,7 @@ exports[`Comment > toString > Writes a multi-line comment 1`] = `
 `;
 
 exports[`Comment > toString > Writes an empty comment for an string 1`] = `
-"#
+"# 
 "
 `;
 
