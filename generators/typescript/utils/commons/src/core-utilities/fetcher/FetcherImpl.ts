@@ -222,11 +222,31 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         ok: "ok",
 
         SuccessfulResponse: {
-            _build: (body: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (
+                body: ts.Expression,
+                headers?: ts.Expression,
+                rawResponse?: ts.Expression
+            ): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createTrue()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body)
+                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body),
+                        ...(headers
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.headers,
+                                      headers
+                                  )
+                              ]
+                            : []),
+                        ...(rawResponse
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.rawResponse,
+                                      rawResponse
+                                  )
+                              ]
+                            : [])
                     ],
                     true
                 ),

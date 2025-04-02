@@ -1,5 +1,5 @@
 import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -69,30 +69,48 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return this.response.getPaginationInfo(context) != null;
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignatures[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignatures {
         const paginationInfo = this.response.getPaginationInfo(context);
-        return {
+        const mainReturnType =
+            paginationInfo != null
+                ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
+                : this.response.getReturnType(context).mainMethod;
+        const withRawResponseReturnType =
+            paginationInfo != null
+                ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
+                : this.response.getReturnType(context).withRawResponseMethod;
+        const mainMethod = {
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
                     requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
                 })
             ],
-            returnTypeWithoutPromise:
-                paginationInfo != null
-                    ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
-                    : this.response.getReturnType(context)
+            returnTypeWithoutPromise: mainReturnType
+        };
+        return {
+            mainMethod,
+            withRawResponseMethod: {
+                ...mainMethod,
+                returnTypeWithoutPromise: withRawResponseReturnType
+            }
         };
     }
 
-    public getDocs(context: SdkContext): string | undefined {
-        const groups: string[] = [];
+    public getDocs(context: SdkContext): GeneratedEndpointImplementation.Docs {
+        const docs: GeneratedEndpointImplementation.Docs = {
+            getter: "",
+            mainMethod: "",
+            withRawResponseMethod: ""
+        };
         if (this.endpoint.docs != null) {
-            groups.push(this.endpoint.docs);
+            docs.getter += `${this.endpoint.docs}\n\n`;
+            docs.mainMethod += `${this.endpoint.docs}\n\n`;
+            docs.withRawResponseMethod += `${this.endpoint.docs}\n\n`;
         }
 
         const params: string[] = [];
@@ -117,17 +135,24 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         params.push(
             `@param {${requestOptionsType}} ${REQUEST_OPTIONS_PARAMETER_NAME} - Request-specific configuration.`
         );
-        groups.push(params.join("\n"));
+
+        if (params.length > 0) {
+            const paramsJoined = params.join("\n");
+            docs.mainMethod += `${paramsJoined}\n\n`;
+            docs.withRawResponseMethod += `${paramsJoined}\n\n`;
+        }
 
         const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
             exceptions.push(`@throws {@link ${errorName}}`);
         }
         if (exceptions.length > 0) {
-            groups.push(exceptions.join("\n"));
+            const exceptionsJoined = exceptions.join("\n");
+            docs.mainMethod += `${exceptionsJoined}\n\n`;
+            docs.withRawResponseMethod += `${exceptionsJoined}\n\n`;
         }
 
-        const examples: string[] = [];
+        const mainExamples: string[] = [];
         for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
@@ -141,16 +166,39 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
             exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             // Only add if it doesn't already exist
-            if (!examples.includes(exampleStr)) {
-                examples.push(exampleStr);
+            if (!mainExamples.includes(exampleStr)) {
+                mainExamples.push(exampleStr);
+                docs.getter += `${exampleStr}}\n\n`;
+                docs.mainMethod += `${exampleStr}}\n\n`;
             }
         }
-        if (examples.length > 0) {
-            // Each example is its own group.
-            groups.push(...examples);
+
+        const withRawResponseExamples: string[] = [];
+        for (const example of getExampleEndpointCalls(this.endpoint)) {
+            const generatedExample = this.getWithRawResponseExample({
+                context,
+                example,
+                opts: { isForComment: true },
+                clientReference: context.sdkInstanceReferenceForSnippet
+            });
+            if (generatedExample == null) {
+                continue;
+            }
+            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+            // Only add if it doesn't already exist
+            if (!withRawResponseExamples.includes(exampleStr)) {
+                withRawResponseExamples.push(exampleStr);
+                docs.getter += `${exampleStr}\n\n`;
+                docs.withRawResponseMethod += `${exampleStr}\n\n`;
+            }
         }
 
-        return groups.join("\n\n");
+        docs.getter = docs.getter?.trim();
+        docs.mainMethod = docs.mainMethod?.trim();
+        docs.withRawResponseMethod = docs.withRawResponseMethod?.trim();
+
+        return docs;
     }
 
     public getExample(args: {
@@ -174,6 +222,37 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         referenceToRootClient: args.clientReference
                     }),
                     ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                ),
+                undefined,
+                exampleParameters
+            )
+        );
+    }
+
+    private getWithRawResponseExample(args: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
+    }): ts.Expression | undefined {
+        const exampleParameters = this.request.getExampleEndpointParameters({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
+        if (exampleParameters == null) {
+            return undefined;
+        }
+        return ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        this.generatedSdkClientClass.accessFromRootClient({
+                            referenceToRootClient: args.clientReference
+                        }),
+                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                    ),
+                    ts.factory.createIdentifier("withRawResponse")
                 ),
                 undefined,
                 exampleParameters
@@ -296,6 +375,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const requestParameter = this.request.getRequestParameter(context);
         const paginationInfo = this.response.getPaginationInfo(context);
+        const responseReturnTypes = this.response.getReturnType(context);
         if (paginationInfo != null && requestParameter != null) {
             const listFn = ts.factory.createVariableDeclarationList(
                 [
@@ -317,7 +397,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     undefined
                                 )
                             ],
-                            ts.factory.createTypeReferenceNode("Promise", [this.response.getReturnType(context)]),
+                            ts.factory.createTypeReferenceNode("Promise", [responseReturnTypes.mainMethod]),
                             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                             ts.factory.createBlock(body, undefined)
                         )
@@ -331,21 +411,37 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
             statements.push(
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.pagination.Pageable._construct({
-                        responseType: paginationInfo.responseType,
-                        itemType: paginationInfo.itemType,
-                        response: ts.factory.createAwaitExpression(
-                            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                                ts.factory.createIdentifier("request")
-                            ])
-                        ),
-                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
-                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
-                        loadPage: this.createLambdaWithResponse({
-                            body: ts.factory.createBlock(paginationInfo.loadPage),
-                            ignoreResponse: paginationInfo.type === "offset"
-                        })
-                    })
+                    ts.factory.createObjectLiteralExpression(
+                        [
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("data"),
+                                context.coreUtilities.pagination.Pageable._construct({
+                                    responseType: paginationInfo.responseType,
+                                    itemType: paginationInfo.itemType,
+                                    response: ts.factory.createAwaitExpression(
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createIdentifier("list"),
+                                            undefined,
+                                            [ts.factory.createIdentifier("request")]
+                                        )
+                                    ),
+                                    hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                                    getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                                    loadPage: this.createLambdaWithResponse({
+                                        body: ts.factory.createBlock(paginationInfo.loadPage),
+                                        ignoreResponse: paginationInfo.type === "offset"
+                                    })
+                                })
+                            ),
+                            ts.factory.createSpreadAssignment(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("_response"),
+                                    ts.factory.createIdentifier("rawResponse")
+                                )
+                            )
+                        ],
+                        false
+                    )
                 )
             );
             return statements;

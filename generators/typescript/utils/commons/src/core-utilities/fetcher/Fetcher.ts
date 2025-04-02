@@ -59,7 +59,11 @@ export interface Fetcher {
         ok: string;
 
         SuccessfulResponse: {
-            _build: (body: ts.Expression) => ts.ObjectLiteralExpression;
+            _build: (
+                body: ts.Expression,
+                headers?: ts.Expression,
+                rawResponse?: ts.Expression
+            ) => ts.ObjectLiteralExpression;
             body: string;
             headers: string;
             rawResponse: string;

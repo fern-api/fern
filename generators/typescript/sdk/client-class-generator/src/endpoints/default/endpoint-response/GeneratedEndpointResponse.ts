@@ -22,10 +22,17 @@ export interface OffsetPaginationResponseInfo {
     loadPage: ts.Statement[];
 }
 
+export namespace GeneratedEndpointResponse {
+    export interface ReturnTypes {
+        mainMethod: ts.TypeNode;
+        withRawResponseMethod: ts.TypeNode;
+    }
+}
+
 export interface GeneratedEndpointResponse {
     getPaginationInfo: (context: SdkContext) => PaginationResponseInfo | undefined;
     getResponseVariableName: () => string;
     getReturnResponseStatements: (context: SdkContext) => ts.Statement[];
-    getReturnType: (context: SdkContext) => ts.TypeNode;
+    getReturnType: (context: SdkContext) => GeneratedEndpointResponse.ReturnTypes;
     getNamesOfThrownExceptions: (context: SdkContext) => string[];
 }

@@ -1,5 +1,5 @@
 import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -103,37 +103,55 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return undefined;
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignatures[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
-        return {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignatures {
+        const returnTypes = this.response.getReturnType(context);
+        const mainMethod = {
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
                     requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
                 })
             ],
-            returnTypeWithoutPromise: this.response.getReturnType(context)
+            returnTypeWithoutPromise: returnTypes.mainMethod
+        };
+        return {
+            mainMethod,
+            withRawResponseMethod: {
+                ...mainMethod,
+                returnTypeWithoutPromise: returnTypes.withRawResponseMethod
+            }
         };
     }
 
-    public getDocs(context: SdkContext): string | undefined {
-        const lines: string[] = [];
+    public getDocs(context: SdkContext): GeneratedEndpointImplementation.Docs {
+        const docs: GeneratedEndpointImplementation.Docs = {
+            getter: undefined,
+            mainMethod: "",
+            withRawResponseMethod: undefined
+        };
         if (this.endpoint.docs != null) {
-            lines.push(this.endpoint.docs);
+            docs.mainMethod += `${this.endpoint.docs}\n`;
         }
 
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            lines.push(`@throws {@link ${errorName}}`);
+            docs.mainMethod += `@throws {@link ${errorName}}\n`;
         }
 
-        if (lines.length === 0) {
-            return undefined;
+        if (docs.getter?.length === 0) {
+            docs.getter = undefined;
+        }
+        if (docs.mainMethod?.length === 0) {
+            docs.mainMethod = undefined;
+        }
+        if (docs.withRawResponseMethod?.length === 0) {
+            docs.withRawResponseMethod = undefined;
         }
 
-        return lines.join("\n");
+        return docs;
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
