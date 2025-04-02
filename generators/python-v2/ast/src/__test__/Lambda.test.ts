@@ -16,7 +16,7 @@ describe("Lambda", () => {
                 body: python.TypeInstantiation.bool(true)
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -30,7 +30,7 @@ describe("Lambda", () => {
                 })
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(2);
         });
 
@@ -50,7 +50,7 @@ describe("Lambda", () => {
                 })
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(2);
         });
     });
