@@ -9,55 +9,11 @@ The MCP generator is in development. Interested in offering a MCP Server for you
 
 [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open protocol developed by Anthropic that allows you to provide tools to AI agents. MCP is in the early days of adoption with clients like Cursor, Claude Desktop App, and Windsurf. Our MCP generator allows you to augment your TypeScript SDK with an MCP server that's included in the generated SDK.
 
-## Features
+## Example: Webflow
 
-- **Built into Existing SDK**: The MCP server is automatically included in your TypeScript SDK
-- **Official MCP Submission**: Your MCP server will be listed on the [official integrations](https://modelcontextprotocol.io/examples#official-integrations) list
-- **Comprehensive Documentation**: Full getting-started guide and API reference
-- **Developer Resources**: Ready-to-use announcement assets for social media and email
+Check out Webflow's MCP Server on [GitHub](https://github.com/webflow/mcp-server) and [NPM](https://www.npmjs.com/package/webflow-mcp-server). The Webflow MCP Server is built [leveraging Webflow's TypeScript SDK](https://github.com/webflow/mcp-server/blob/992b242fc1244f6ebb4099dc01e6cca8a228733d/src/index.ts#L28-L34).
 
-## Configuration 
-
-The MCP generator is configured in your `generators.yml` file. 
-
-```yaml
-generators:
-  groups:
-    ts-sdk:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.48.7
-        config:
-          enableMcpServer: true
-```
-
-The MCP server will be included in your generated TypeScript SDK under the `src/mcp-server` directory.
-
-## Cursor Installation Steps
-
-### 1. Configure Cursor
-
-1. Open Cursor Settings
-2. Navigate to Cursor Settings > Features > MCP
-3. Click the "+ Add New MCP Server" button
-4. Configure the Server:
-   - Name: Give your server a nickname
-   - Type: Select the transport type (stdio)
-
-### 2. Start the MCP Server
-
-To start the MCP server:
-
-```bash
-npx your-sdk-name mcp start
-```
-
-<Note>
-The MCP server will provide tools for:
-- Generating code examples
-- Explaining API endpoints
-- Creating test cases
-- Documenting API responses
-</Note>
+Read the announcement from [Webflow's CTO on X](https://x.com/leinwand/status/1907463599762870383).
 
 ## Developer Resources
 
