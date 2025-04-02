@@ -17,7 +17,7 @@ describe("Method", () => {
                 type: ClassMethodType.STATIC
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -28,7 +28,7 @@ describe("Method", () => {
                 type: ClassMethodType.INSTANCE
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -39,7 +39,7 @@ describe("Method", () => {
                 type: ClassMethodType.CLASS
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -49,7 +49,7 @@ describe("Method", () => {
                 parameters: [python.parameter({ name: "arg1", type: python.Type.str() })]
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -59,7 +59,7 @@ describe("Method", () => {
                 parameters: [python.parameter({ name: "arg1", type: undefined })]
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -72,7 +72,7 @@ describe("Method", () => {
                 ]
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -83,7 +83,7 @@ describe("Method", () => {
                 return_: python.Type.bool()
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -93,7 +93,7 @@ describe("Method", () => {
                 parameters: []
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -104,7 +104,7 @@ describe("Method", () => {
             });
             method.addStatement(python.codeBlock("return True"));
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -114,7 +114,7 @@ describe("Method", () => {
                 parameters: []
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -125,7 +125,7 @@ describe("Method", () => {
                 docstring: "This is a docstring"
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -135,7 +135,7 @@ describe("Method", () => {
                 parameters: []
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(0);
         });
 
@@ -153,7 +153,7 @@ describe("Method", () => {
                 ]
             });
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(1);
         });
 
@@ -184,7 +184,7 @@ describe("Method", () => {
             method.addStatement(python.codeBlock("return ChildClass()"));
 
             method.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(method.getReferences().length).toBe(1);
         });
     });
