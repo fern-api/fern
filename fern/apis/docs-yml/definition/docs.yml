@@ -175,8 +175,8 @@ types:
         name: claude_3_5
       - value: "claude-3.7"
         name: claude_3_7
-      - value: command-r-plus
-        name: command_r_plus
+      - value: command-a
+        name: command_a
 
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]
