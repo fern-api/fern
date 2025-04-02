@@ -5,9 +5,7 @@ from ...commons.types.language import Language
 import typing
 from ..types.execution_session_response import ExecutionSessionResponse
 import abc
-from ..types.get_execution_session_state_response import (
-    GetExecutionSessionStateResponse,
-)
+from ..types.get_execution_session_state_response import GetExecutionSessionStateResponse
 import fastapi
 import inspect
 from ....core.exceptions.fern_http_exception import FernHTTPException
@@ -45,9 +43,7 @@ class AbstractSubmissionService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def stop_execution_session(
-        self, *, session_id: str, x_random_header: typing.Optional[str] = None
-    ) -> None:
+    def stop_execution_session(self, *, session_id: str, x_random_header: typing.Optional[str] = None) -> None:
         """
         Stops execution session.
         """
@@ -74,31 +70,19 @@ class AbstractSubmissionService(AbstractFernService):
     def __init_create_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_execution_session,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_execution_session)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> ExecutionSessionResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ExecutionSessionResponse:
             try:
                 return cls.create_execution_session(*args, **kwargs)
             except FernHTTPException as e:
@@ -124,31 +108,19 @@ class AbstractSubmissionService(AbstractFernService):
     def __init_get_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_execution_session,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_execution_session)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Optional[ExecutionSessionResponse]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[ExecutionSessionResponse]:
             try:
                 return cls.get_execution_session(*args, **kwargs)
             except FernHTTPException as e:
@@ -174,26 +146,16 @@ class AbstractSubmissionService(AbstractFernService):
     def __init_stop_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.stop_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.stop_execution_session,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.stop_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.stop_execution_session)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -223,29 +185,17 @@ class AbstractSubmissionService(AbstractFernService):
     def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_sessions_state)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_execution_sessions_state,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_execution_sessions_state, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_execution_sessions_state)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> GetExecutionSessionStateResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> GetExecutionSessionStateResponse:
             try:
                 return cls.get_execution_sessions_state(*args, **kwargs)
             except FernHTTPException as e:
@@ -264,7 +214,5 @@ class AbstractSubmissionService(AbstractFernService):
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
             description=AbstractSubmissionService.get_execution_sessions_state.__doc__,
-            **get_route_args(
-                cls.get_execution_sessions_state, default_tag="submission"
-            ),
+            **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)

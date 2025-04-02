@@ -62,7 +62,9 @@ async function runCli() {
 
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(new Agent({ connect: { timeout: 10_000 }, bodyTimeout: 0, headersTimeout: 600_000 }));
+        setGlobalDispatcher(
+            new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
+        );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises

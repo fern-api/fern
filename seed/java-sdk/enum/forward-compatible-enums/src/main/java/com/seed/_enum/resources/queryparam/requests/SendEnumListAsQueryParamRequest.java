@@ -14,30 +14,32 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.types.ColorOrOperand;
 import com.seed._enum.types.Operand;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendEnumListAsQueryParamRequest.Builder.class)
 public final class SendEnumListAsQueryParamRequest {
-    private final Operand operand;
+    private final List<Operand> operand;
 
-    private final Optional<Operand> maybeOperand;
+    private final Optional<List<Operand>> maybeOperand;
 
-    private final ColorOrOperand operandOrColor;
+    private final List<ColorOrOperand> operandOrColor;
 
-    private final Optional<ColorOrOperand> maybeOperandOrColor;
+    private final Optional<List<ColorOrOperand>> maybeOperandOrColor;
 
     private final Map<String, Object> additionalProperties;
 
     private SendEnumListAsQueryParamRequest(
-            Operand operand,
-            Optional<Operand> maybeOperand,
-            ColorOrOperand operandOrColor,
-            Optional<ColorOrOperand> maybeOperandOrColor,
+            List<Operand> operand,
+            Optional<List<Operand>> maybeOperand,
+            List<ColorOrOperand> operandOrColor,
+            Optional<List<ColorOrOperand>> maybeOperandOrColor,
             Map<String, Object> additionalProperties) {
         this.operand = operand;
         this.maybeOperand = maybeOperand;
@@ -47,22 +49,22 @@ public final class SendEnumListAsQueryParamRequest {
     }
 
     @JsonProperty("operand")
-    public Operand getOperand() {
+    public List<Operand> getOperand() {
         return operand;
     }
 
     @JsonProperty("maybeOperand")
-    public Optional<Operand> getMaybeOperand() {
+    public Optional<List<Operand>> getMaybeOperand() {
         return maybeOperand;
     }
 
     @JsonProperty("operandOrColor")
-    public ColorOrOperand getOperandOrColor() {
+    public List<ColorOrOperand> getOperandOrColor() {
         return operandOrColor;
     }
 
     @JsonProperty("maybeOperandOrColor")
-    public Optional<ColorOrOperand> getMaybeOperandOrColor() {
+    public Optional<List<ColorOrOperand>> getMaybeOperandOrColor() {
         return maybeOperandOrColor;
     }
 
@@ -94,48 +96,25 @@ public final class SendEnumListAsQueryParamRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static OperandStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface OperandStage {
-        OperandOrColorStage operand(@NotNull Operand operand);
-
-        Builder from(SendEnumListAsQueryParamRequest other);
-    }
-
-    public interface OperandOrColorStage {
-        _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor);
-    }
-
-    public interface _FinalStage {
-        SendEnumListAsQueryParamRequest build();
-
-        _FinalStage maybeOperand(Optional<Operand> maybeOperand);
-
-        _FinalStage maybeOperand(Operand maybeOperand);
-
-        _FinalStage maybeOperandOrColor(Optional<ColorOrOperand> maybeOperandOrColor);
-
-        _FinalStage maybeOperandOrColor(ColorOrOperand maybeOperandOrColor);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements OperandStage, OperandOrColorStage, _FinalStage {
-        private Operand operand;
+    public static final class Builder {
+        private List<Operand> operand = new ArrayList<>();
 
-        private ColorOrOperand operandOrColor;
+        private Optional<List<Operand>> maybeOperand = Optional.empty();
 
-        private Optional<ColorOrOperand> maybeOperandOrColor = Optional.empty();
+        private List<ColorOrOperand> operandOrColor = new ArrayList<>();
 
-        private Optional<Operand> maybeOperand = Optional.empty();
+        private Optional<List<ColorOrOperand>> maybeOperandOrColor = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(SendEnumListAsQueryParamRequest other) {
             operand(other.getOperand());
             maybeOperand(other.getMaybeOperand());
@@ -144,47 +123,82 @@ public final class SendEnumListAsQueryParamRequest {
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("operand")
-        public OperandOrColorStage operand(@NotNull Operand operand) {
-            this.operand = Objects.requireNonNull(operand, "operand must not be null");
+        @JsonSetter(value = "operand", nulls = Nulls.SKIP)
+        public Builder operand(List<Operand> operand) {
+            this.operand.clear();
+            this.operand.addAll(operand);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("operandOrColor")
-        public _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor) {
-            this.operandOrColor = Objects.requireNonNull(operandOrColor, "operandOrColor must not be null");
+        public Builder addOperand(Operand operand) {
+            this.operand.add(operand);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage maybeOperandOrColor(ColorOrOperand maybeOperandOrColor) {
-            this.maybeOperandOrColor = Optional.ofNullable(maybeOperandOrColor);
+        public Builder addAllOperand(List<Operand> operand) {
+            this.operand.addAll(operand);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter(value = "maybeOperandOrColor", nulls = Nulls.SKIP)
-        public _FinalStage maybeOperandOrColor(Optional<ColorOrOperand> maybeOperandOrColor) {
-            this.maybeOperandOrColor = maybeOperandOrColor;
+        public Builder operand(Operand operand) {
+            this.operand = Collections.singletonList(operand);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage maybeOperand(Operand maybeOperand) {
-            this.maybeOperand = Optional.ofNullable(maybeOperand);
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter(value = "maybeOperand", nulls = Nulls.SKIP)
-        public _FinalStage maybeOperand(Optional<Operand> maybeOperand) {
+        public Builder maybeOperand(Optional<List<Operand>> maybeOperand) {
             this.maybeOperand = maybeOperand;
             return this;
         }
 
-        @java.lang.Override
+        public Builder maybeOperand(List<Operand> maybeOperand) {
+            this.maybeOperand = Optional.ofNullable(maybeOperand);
+            return this;
+        }
+
+        public Builder maybeOperand(Operand maybeOperand) {
+            this.maybeOperand = Optional.of(Collections.singletonList(maybeOperand));
+            return this;
+        }
+
+        @JsonSetter(value = "operandOrColor", nulls = Nulls.SKIP)
+        public Builder operandOrColor(List<ColorOrOperand> operandOrColor) {
+            this.operandOrColor.clear();
+            this.operandOrColor.addAll(operandOrColor);
+            return this;
+        }
+
+        public Builder addOperandOrColor(ColorOrOperand operandOrColor) {
+            this.operandOrColor.add(operandOrColor);
+            return this;
+        }
+
+        public Builder addAllOperandOrColor(List<ColorOrOperand> operandOrColor) {
+            this.operandOrColor.addAll(operandOrColor);
+            return this;
+        }
+
+        public Builder operandOrColor(ColorOrOperand operandOrColor) {
+            this.operandOrColor = Collections.singletonList(operandOrColor);
+            return this;
+        }
+
+        @JsonSetter(value = "maybeOperandOrColor", nulls = Nulls.SKIP)
+        public Builder maybeOperandOrColor(Optional<List<ColorOrOperand>> maybeOperandOrColor) {
+            this.maybeOperandOrColor = maybeOperandOrColor;
+            return this;
+        }
+
+        public Builder maybeOperandOrColor(List<ColorOrOperand> maybeOperandOrColor) {
+            this.maybeOperandOrColor = Optional.ofNullable(maybeOperandOrColor);
+            return this;
+        }
+
+        public Builder maybeOperandOrColor(ColorOrOperand maybeOperandOrColor) {
+            this.maybeOperandOrColor = Optional.of(Collections.singletonList(maybeOperandOrColor));
+            return this;
+        }
+
         public SendEnumListAsQueryParamRequest build() {
             return new SendEnumListAsQueryParamRequest(
                     operand, maybeOperand, operandOrColor, maybeOperandOrColor, additionalProperties);

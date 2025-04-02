@@ -17,11 +17,7 @@ class ServiceClient:
         self._client_wrapper = client_wrapper
 
     def get_file(
-        self,
-        filename: str,
-        *,
-        x_file_api_version: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
         This endpoint returns a file by its name.
@@ -92,11 +88,7 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def get_file(
-        self,
-        filename: str,
-        *,
-        x_file_api_version: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, filename: str, *, x_file_api_version: str, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
         This endpoint returns a file by its name.

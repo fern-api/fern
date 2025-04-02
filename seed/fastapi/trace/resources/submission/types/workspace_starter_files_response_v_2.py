@@ -9,14 +9,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WorkspaceStarterFilesResponseV2(UniversalBaseModel):
-    files_by_language: typing.Dict[Language, Files] = pydantic.Field(
-        alias="filesByLanguage"
-    )
+    files_by_language: typing.Dict[Language, Files] = pydantic.Field(alias="filesByLanguage")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

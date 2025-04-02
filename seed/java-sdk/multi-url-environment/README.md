@@ -128,7 +128,7 @@ import com.seed.multiUrlEnvironment.core.RequestOptions;
 // Client level
 SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

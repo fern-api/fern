@@ -6,7 +6,6 @@ package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
-import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.SeedExhaustiveApiException;
@@ -23,6 +22,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -54,7 +54,7 @@ public class AsyncRawContentTypeClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -79,7 +79,7 @@ public class AsyncRawContentTypeClient {
             return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
           return;
         }
         catch (IOException e) {
@@ -112,7 +112,7 @@ public class AsyncRawContentTypeClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -137,7 +137,7 @@ public class AsyncRawContentTypeClient {
             return;
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
           return;
         }
         catch (IOException e) {

@@ -17,23 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def success(self, value: ProblemId) -> CreateProblemResponse:
         if IS_PYDANTIC_V2:
-            return CreateProblemResponse(
-                root=_CreateProblemResponse.Success(type="success", value=value)
-            )  # type: ignore
+            return CreateProblemResponse(root=_CreateProblemResponse.Success(type="success", value=value))  # type: ignore
         else:
-            return CreateProblemResponse(
-                __root__=_CreateProblemResponse.Success(type="success", value=value)
-            )  # type: ignore
+            return CreateProblemResponse(__root__=_CreateProblemResponse.Success(type="success", value=value))  # type: ignore
 
     def error(self, value: CreateProblemError) -> CreateProblemResponse:
         if IS_PYDANTIC_V2:
-            return CreateProblemResponse(
-                root=_CreateProblemResponse.Error(type="error", value=value)
-            )  # type: ignore
+            return CreateProblemResponse(root=_CreateProblemResponse.Error(type="error", value=value))  # type: ignore
         else:
-            return CreateProblemResponse(
-                __root__=_CreateProblemResponse.Error(type="error", value=value)
-            )  # type: ignore
+            return CreateProblemResponse(__root__=_CreateProblemResponse.Error(type="error", value=value))  # type: ignore
 
 
 class CreateProblemResponse(UniversalRootModel):
@@ -45,9 +37,7 @@ class CreateProblemResponse(UniversalRootModel):
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
+        def get_as_union(self) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
@@ -55,9 +45,7 @@ class CreateProblemResponse(UniversalRootModel):
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
+        def get_as_union(self) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -67,9 +55,7 @@ class CreateProblemResponse(UniversalRootModel):
             return self.__root__.dict(**kwargs)
 
     def visit(
-        self,
-        success: typing.Callable[[ProblemId], T_Result],
-        error: typing.Callable[[CreateProblemError], T_Result],
+        self, success: typing.Callable[[ProblemId], T_Result], error: typing.Callable[[CreateProblemError], T_Result]
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "success":

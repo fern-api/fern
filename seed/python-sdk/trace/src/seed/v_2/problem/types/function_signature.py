@@ -58,7 +58,5 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 
 
 FunctionSignature = typing.Union[
-    FunctionSignature_Void,
-    FunctionSignature_NonVoid,
-    FunctionSignature_VoidThatTakesActualResult,
+    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]

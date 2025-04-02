@@ -2,8 +2,11 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
+from .endpoint_function_generator import EndpointFunctionGenerator
+from .generated_root_client import GeneratedRootClient
+from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -14,10 +17,7 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-from ..context.sdk_generator_context import SdkGeneratorContext
-from .constants import DEFAULT_BODY_PARAMETER_VALUE
-from .endpoint_function_generator import EndpointFunctionGenerator
-from .generated_root_client import GeneratedRootClient
+import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -50,15 +50,18 @@ class ClientGenerator:
         *,
         context: SdkGeneratorContext,
         package: ir_types.Package,
+        subpackage_id: ir_types.SubpackageId,
         class_name: str,
         async_class_name: str,
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
+        websocket: Optional[ir_types.WebSocketChannel],
     ):
         self._context = context
         self._package = package
+        self._subpackage_id = subpackage_id
         self._class_name = class_name
         self._async_class_name = async_class_name
         self._generated_root_client = generated_root_client
@@ -66,6 +69,7 @@ class ClientGenerator:
         self._snippet_writer = snippet_writer
         self._is_default_body_parameter_used = False
         self._endpoint_metadata_collector = endpoint_metadata_collector
+        self._websocket = websocket
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
@@ -135,7 +139,17 @@ class ClientGenerator:
                             self._snippet_registry.register_sync_client_endpoint_snippet(
                                 endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                             )
-
+        if self._websocket is not None and self._context.custom_config.should_generate_websocket_clients:
+            websocket_connect_method_generator = WebsocketConnectMethodGenerator(
+                context=self._context,
+                package=self._package,
+                subpackage_id=self._subpackage_id,
+                websocket=self._websocket,
+                client_wrapper_member_name=self._get_client_wrapper_member_name(),
+                is_async=is_async,
+            )
+            generated_connect_method = websocket_connect_method_generator.generate()
+            class_declaration.add_method(generated_connect_method.function)
         return class_declaration
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
@@ -170,9 +184,11 @@ class ClientGenerator:
                     ]
                     writer.write_node(
                         AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                            if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            class_=(
+                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                if is_async
+                                else self._context.get_reference_to_subpackage_service(subpackage_id)
+                            ),
                             kwargs=kwargs,
                         )
                     )

@@ -345,50 +345,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -399,7 +360,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getAuthUser",
+          "id": "getAuthUser",
           "method": "GET",
           "name": {
             "originalName": "getAuthUser",
@@ -1037,7 +998,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "UserId",
       "PersonId",

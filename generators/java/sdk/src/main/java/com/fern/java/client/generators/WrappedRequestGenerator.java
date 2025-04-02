@@ -99,6 +99,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     public GeneratedWrappedRequest generateFile() {
         List<ObjectProperty> headerObjectProperties = new ArrayList<>();
         List<ObjectProperty> queryParameterObjectProperties = new ArrayList<>();
+        List<ObjectProperty> queryParameterAllowMultipleObjectProperties = new ArrayList<>();
         List<ObjectProperty> pathParameterObjectProperties = new ArrayList<>();
         List<ObjectProperty> fileObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
@@ -117,11 +118,19 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .build());
         });
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
-            queryParameterObjectProperties.add(ObjectProperty.builder()
-                    .name(queryParameter.getName())
-                    .valueType(queryParameter.getValueType())
-                    .docs(queryParameter.getDocs())
-                    .build());
+            if (queryParameter.getAllowMultiple()) {
+                queryParameterAllowMultipleObjectProperties.add(ObjectProperty.builder()
+                        .name(queryParameter.getName())
+                        .valueType(queryParameter.getValueType())
+                        .docs(queryParameter.getDocs())
+                        .build());
+            } else {
+                queryParameterObjectProperties.add(ObjectProperty.builder()
+                        .name(queryParameter.getName())
+                        .valueType(queryParameter.getValueType())
+                        .docs(queryParameter.getDocs())
+                        .build());
+            }
         });
 
         if (inlinePathParams) {
@@ -221,7 +230,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 className,
                 Set.of(className.simpleName()),
                 true,
-                fileObjectProperties);
+                fileObjectProperties,
+                queryParameterAllowMultipleObjectProperties);
         GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
@@ -240,6 +250,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .addAllQueryParams(queryParameterObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
+                        .collect(Collectors.toList()))
+                .addAllQueryParams(queryParameterAllowMultipleObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))

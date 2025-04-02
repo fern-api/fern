@@ -65,18 +65,11 @@ class AbstractServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def with_content_type(
-        self,
-        *,
-        file: fastapi.UploadFile,
-        foo: str,
-        bar: MyObject,
-        foo_bar: typing.Optional[MyObject] = None,
+        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject, foo_bar: typing.Optional[MyObject] = None
     ) -> None: ...
 
     @abc.abstractmethod
-    def with_form_encoding(
-        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject
-    ) -> None: ...
+    def with_form_encoding(self, *, file: fastapi.UploadFile, foo: str, bar: MyObject) -> None: ...
 
     @abc.abstractmethod
     def with_form_encoded_containers(
@@ -127,9 +120,7 @@ class AbstractServiceService(AbstractFernService):
     def __init_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
@@ -139,19 +130,11 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
-                new_parameters.append(
-                    parameter.replace(default=typing.List[fastapi.UploadFile])
-                )
+                new_parameters.append(parameter.replace(default=typing.List[fastapi.UploadFile]))
             elif parameter_name == "maybe_file":
-                new_parameters.append(
-                    parameter.replace(default=typing.Union[fastapi.UploadFile, None])
-                )
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
             elif parameter_name == "maybe_file_list":
-                new_parameters.append(
-                    parameter.replace(
-                        default=typing.Optional[typing.List[fastapi.UploadFile]]
-                    )
-                )
+                new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
             elif parameter_name == "maybe_integer":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_list_of_strings":
@@ -172,11 +155,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -206,20 +185,14 @@ class AbstractServiceService(AbstractFernService):
     def __init_just_file(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.just_file,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.just_file, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.just_file)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -249,50 +222,26 @@ class AbstractServiceService(AbstractFernService):
     def __init_just_file_with_query_params(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file_with_query_params)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "maybe_string":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=None, alias="maybeString")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeString")))
             elif parameter_name == "integer":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=None, alias="maybeInteger")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeInteger")))
             elif parameter_name == "list_of_strings":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=[], alias="listOfStrings")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=[], alias="listOfStrings")))
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(
-                            default=None, alias="optionalListOfStrings"
-                        )
-                    )
+                    parameter.replace(default=fastapi.Query(default=None, alias="optionalListOfStrings"))
                 )
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.just_file_with_query_params,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.just_file_with_query_params, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.just_file_with_query_params)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -322,9 +271,7 @@ class AbstractServiceService(AbstractFernService):
     def __init_with_content_type(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_content_type)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
@@ -337,11 +284,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.with_content_type,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.with_content_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.with_content_type)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -371,9 +314,7 @@ class AbstractServiceService(AbstractFernService):
     def __init_with_form_encoding(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_form_encoding)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
@@ -384,11 +325,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.with_form_encoding,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.with_form_encoding, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.with_form_encoding)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -418,9 +355,7 @@ class AbstractServiceService(AbstractFernService):
     def __init_with_form_encoded_containers(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_form_encoded_containers)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
@@ -430,19 +365,11 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
-                new_parameters.append(
-                    parameter.replace(default=typing.List[fastapi.UploadFile])
-                )
+                new_parameters.append(parameter.replace(default=typing.List[fastapi.UploadFile]))
             elif parameter_name == "maybe_file":
-                new_parameters.append(
-                    parameter.replace(default=typing.Union[fastapi.UploadFile, None])
-                )
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
             elif parameter_name == "maybe_file_list":
-                new_parameters.append(
-                    parameter.replace(
-                        default=typing.Optional[typing.List[fastapi.UploadFile]]
-                    )
-                )
+                new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
             elif parameter_name == "maybe_integer":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_list_of_strings":
@@ -465,11 +392,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.with_form_encoded_containers,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.with_form_encoded_containers, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.with_form_encoded_containers)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -499,24 +422,16 @@ class AbstractServiceService(AbstractFernService):
     def __init_optional_args(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.optional_args)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "image_file":
-                new_parameters.append(
-                    parameter.replace(default=typing.Union[fastapi.UploadFile, None])
-                )
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
             elif parameter_name == "request":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.optional_args,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.optional_args, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.optional_args)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

@@ -170,10 +170,13 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public createAdditionalPropertiesField(): csharp.Field {
         return csharp.field({
+            doc: {
+                summary: "Additional properties received from the response, if any.",
+                remarks: "[EXPERIMENTAL] This API is experimental and may change in future releases."
+            },
             name: "AdditionalProperties",
             type: this.getAdditionalPropertiesType(),
             access: csharp.Access.Public,
-            summary: "Additional properties received from the response, if any.",
             set: csharp.Access.Internal,
             get: csharp.Access.Public,
             initializer: csharp.codeblock((writer) =>
@@ -744,10 +747,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getCustomPagerName(): string {
-        return (
-            this.customConfig["custom-pager-name"] ??
-            `${this.getPackageId().replaceAll("-", "").replaceAll("_", "").replaceAll(".", "")}Pager`
-        );
+        return this.customConfig["custom-pager-name"] ?? `${stripNonAlphanumeric(this.getPackageId())}Pager`;
     }
 
     public abstract getRawAsIsFiles(): string[];
@@ -767,4 +767,8 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
     public abstract getExtraDependencies(): Record<string, string>;
+}
+
+function stripNonAlphanumeric(str: string): string {
+    return str.replace(/[^a-zA-Z0-9]/g, "");
 }

@@ -84,14 +84,16 @@ public class RawComplexClient {
                 List<Conversation> result = parsedResponse.getConversations();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<Conversation>(
-                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)),
+                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)
+                                        .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }

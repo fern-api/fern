@@ -1,5 +1,61 @@
 - changelogEntry:
     - summary: |
+        Fix typos in README generator
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.4
+- changelogEntry:
+    - summary: |
+        Add logging for Java v2 generator call
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.3
+- changelogEntry:
+    - summary: |
+        Add fallback snippet renderer for readme generation
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.2
+- changelogEntry:
+    - summary: |
+        Fix pagination in raw clients
+      type: fix
+  createdAt: '2025-03-31'
+  irVersion: 55
+  version: 2.32.1
+- changelogEntry:
+    - summary: |
+        Generate snippet.json
+      type: feat
+  createdAt: '2025-03-29'
+  irVersion: 55
+  version: 2.32.0
+- changelogEntry:
+    - summary: |
+        Apply content type to request body creation
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.31.0
+- changelogEntry:
+    - summary: |
+        Include response headers in API exceptions
+      type: feat
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.30.0
+- changelogEntry:
+    - summary: |
+        Query params respect allow-multiple
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.29.0
+- changelogEntry:
+    - summary: |
         Expose response headers
       type: feat
   createdAt: '2025-03-26'

@@ -15,7 +15,8 @@ import {
     SdkClientClassContext,
     SdkContext,
     SdkInlinedRequestBodySchemaContext,
-    TimeoutSdkErrorContext
+    TimeoutSdkErrorContext,
+    WebsocketTypeSchemaContext
 } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
@@ -30,6 +31,7 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
@@ -50,6 +52,7 @@ import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "../declaration-referencers/WebsocketSocketDeclarationReferencer";
+import { WebsocketTypeSchemaDeclarationReferencer } from "../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
@@ -65,6 +68,7 @@ import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorC
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
+import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/WebsocketTypeSchemaImpl";
 import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
 import { RawResponseDeclarationReferencer } from "../declaration-referencers/RawResponseDeclarationReferencer";
 
@@ -103,11 +107,13 @@ export declare namespace SdkContextImpl {
         requestWrapperGenerator: RequestWrapperGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
+        websocketTypeSchemaGenerator: WebsocketTypeSchemaGenerator;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         sdkClientClassGenerator: SdkClientClassGenerator;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
+        websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
         websocketGenerator: WebsocketClassGenerator;
         packageResolver: PackageResolver;
         environmentsGenerator: EnvironmentsGenerator;
@@ -160,6 +166,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
     public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextImpl;
     public readonly sdkClientClass: SdkClientClassContext;
+    public readonly websocketTypeSchema: WebsocketTypeSchemaContext;
     public readonly websocket: WebsocketContextImpl;
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
@@ -203,11 +210,13 @@ export class SdkContextImpl implements SdkContext {
         requestWrapperGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         sdkInlinedRequestBodySchemaGenerator,
+        websocketTypeSchemaGenerator,
         websocketSocketDeclarationReferencer,
         websocketGenerator,
         packageResolver,
         sdkClientClassDeclarationReferencer,
         sdkClientClassGenerator,
+        websocketTypeSchemaDeclarationReferencer,
         environmentsGenerator,
         environmentsDeclarationReferencer,
         genericAPISdkErrorDeclarationReferencer,
@@ -361,6 +370,13 @@ export class SdkContextImpl implements SdkContext {
             sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator,
             packageResolver
+        });
+        this.websocketTypeSchema = new WebsocketTypeSchemaContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager,
+            websocketTypeSchemaGenerator,
+            packageResolver,
+            websocketTypeSchemaDeclarationReferencer
         });
         this.websocket = new WebsocketContextImpl({
             sourceFile: this.sourceFile,

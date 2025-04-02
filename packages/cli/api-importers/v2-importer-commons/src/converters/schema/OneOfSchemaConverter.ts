@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
+    ObjectProperty,
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
@@ -100,9 +101,42 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
+        const baseProperties: ObjectProperty[] = [];
+
+        for (const [propertyName, propertySchema] of Object.entries(this.schema.properties ?? {})) {
+            const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
+            const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
+
+            const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
+            const propertySchemaConverter = new SchemaOrReferenceConverter({
+                breadcrumbs: propertyBreadcrumbs,
+                schemaOrReference: propertySchema,
+                schemaIdOverride: propertyId,
+                wrapAsOptional: !this.schema.required?.includes(propertyName),
+                wrapAsNullable: isNullable
+            });
+            const convertedProperty = await propertySchemaConverter.convert({ context, errorCollector });
+            if (convertedProperty != null) {
+                baseProperties.push({
+                    name: context.casingsGenerator.generateNameAndWireValue({
+                        name: propertyName,
+                        wireValue: propertyName
+                    }),
+                    valueType: convertedProperty.type,
+                    docs: propertySchema.description,
+                    availability: convertedProperty.availability,
+                    propertyAccess: await context.getPropertyAccess(propertySchema)
+                });
+                inlinedTypes = {
+                    ...inlinedTypes,
+                    ...convertedProperty.inlinedTypes
+                };
+            }
+        }
+
         return {
             union: Type.union({
-                baseProperties: [],
+                baseProperties,
                 discriminant: context.casingsGenerator.generateNameAndWireValue({
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName
@@ -121,14 +155,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
-        if (!this.schema.oneOf || this.schema.oneOf.length === 0) {
+        if (
+            (!this.schema.oneOf && !this.schema.anyOf) ||
+            (this.schema.anyOf?.length === 0 && this.schema.oneOf?.length === 0)
+        ) {
             return undefined;
         }
 
         const unionTypes: UndiscriminatedUnionMember[] = [];
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        for (const [index, subSchema] of this.schema.oneOf.entries()) {
+        for (const [index, subSchema] of [
+            ...(this.schema.oneOf ?? []).entries(),
+            ...(this.schema.anyOf ?? []).entries()
+        ]) {
             const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
 
             if (context.isReferenceObject(subSchema)) {

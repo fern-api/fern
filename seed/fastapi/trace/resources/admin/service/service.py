@@ -31,38 +31,22 @@ class AbstractAdminService(AbstractFernService):
 
     @abc.abstractmethod
     def update_test_submission_status(
-        self,
-        *,
-        body: TestSubmissionStatus,
-        submission_id: uuid.UUID,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: TestSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     @abc.abstractmethod
     def send_test_submission_update(
-        self,
-        *,
-        body: TestSubmissionUpdate,
-        submission_id: uuid.UUID,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     @abc.abstractmethod
     def update_workspace_submission_status(
-        self,
-        *,
-        body: WorkspaceSubmissionStatus,
-        submission_id: uuid.UUID,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     @abc.abstractmethod
     def send_workspace_submission_update(
-        self,
-        *,
-        body: WorkspaceSubmissionUpdate,
-        submission_id: uuid.UUID,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     @abc.abstractmethod
@@ -123,9 +107,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_update_test_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_test_submission_status)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -133,17 +115,11 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
-            cls.update_test_submission_status,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
+            cls.update_test_submission_status, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
         @functools.wraps(cls.update_test_submission_status)
@@ -174,9 +150,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_send_test_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_test_submission_update)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -184,18 +158,10 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.send_test_submission_update,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.send_test_submission_update)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -222,14 +188,10 @@ class AbstractAdminService(AbstractFernService):
         )(wrapper)
 
     @classmethod
-    def __init_update_workspace_submission_status(
-        cls, router: fastapi.APIRouter
-    ) -> None:
+    def __init_update_workspace_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_workspace_submission_status)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -237,11 +199,7 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -271,18 +229,14 @@ class AbstractAdminService(AbstractFernService):
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_workspace_submission_status.__doc__,
-            **get_route_args(
-                cls.update_workspace_submission_status, default_tag="admin"
-            ),
+            **get_route_args(cls.update_workspace_submission_status, default_tag="admin"),
         )(wrapper)
 
     @classmethod
     def __init_send_workspace_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_workspace_submission_update)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -290,17 +244,11 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
-            cls.send_workspace_submission_update,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
+            cls.send_workspace_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
         @functools.wraps(cls.send_workspace_submission_update)
@@ -331,9 +279,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_store_traced_test_case(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -343,18 +289,10 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "test_case_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.store_traced_test_case,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_test_case)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -384,9 +322,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_store_traced_test_case_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case_v_2)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -396,18 +332,10 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "test_case_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.store_traced_test_case_v_2,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_test_case_v_2)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -437,9 +365,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_store_traced_workspace(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -447,18 +373,10 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.store_traced_workspace,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_workspace)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -488,9 +406,7 @@ class AbstractAdminService(AbstractFernService):
     def __init_store_traced_workspace_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace_v_2)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -498,18 +414,10 @@ class AbstractAdminService(AbstractFernService):
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.store_traced_workspace_v_2,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_workspace_v_2)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

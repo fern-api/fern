@@ -98,7 +98,8 @@ public class AsyncRawPlaylistClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
@@ -141,7 +142,7 @@ public class AsyncRawPlaylistClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalMultipleField",
-                    request.getOptionalMultipleField().get(),
+                    request.getOptionalMultipleField().get().toString(),
                     false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), false);
@@ -172,7 +173,8 @@ public class AsyncRawPlaylistClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
@@ -230,7 +232,8 @@ public class AsyncRawPlaylistClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
@@ -312,7 +315,8 @@ public class AsyncRawPlaylistClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
@@ -367,7 +371,8 @@ public class AsyncRawPlaylistClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));

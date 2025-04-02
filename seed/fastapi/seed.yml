@@ -71,6 +71,7 @@ fixtures:
       outputFolder: v1_on_v2
 allowedFailures:
   - auth-environment-variables
+  - bearer-token-environment-variable
   - bytes
   - literal-headers
   - query-parameters

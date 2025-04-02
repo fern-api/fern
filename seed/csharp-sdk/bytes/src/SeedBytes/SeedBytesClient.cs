@@ -29,5 +29,5 @@ public partial class SeedBytesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

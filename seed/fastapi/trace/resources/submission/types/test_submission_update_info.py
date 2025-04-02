@@ -19,40 +19,26 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def running(self, value: RunningSubmissionState) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return TestSubmissionUpdateInfo(
-                root=_TestSubmissionUpdateInfo.Running(type="running", value=value)
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(root=_TestSubmissionUpdateInfo.Running(type="running", value=value))  # type: ignore
         else:
-            return TestSubmissionUpdateInfo(
-                __root__=_TestSubmissionUpdateInfo.Running(type="running", value=value)
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Running(type="running", value=value))  # type: ignore
 
     def stopped(self) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return TestSubmissionUpdateInfo(
-                root=_TestSubmissionUpdateInfo.Stopped(type="stopped")
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(root=_TestSubmissionUpdateInfo.Stopped(type="stopped"))  # type: ignore
         else:
-            return TestSubmissionUpdateInfo(
-                __root__=_TestSubmissionUpdateInfo.Stopped(type="stopped")
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Stopped(type="stopped"))  # type: ignore
 
     def errored(self, value: ErrorInfo) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return TestSubmissionUpdateInfo(
-                root=_TestSubmissionUpdateInfo.Errored(type="errored", value=value)
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(root=_TestSubmissionUpdateInfo.Errored(type="errored", value=value))  # type: ignore
         else:
-            return TestSubmissionUpdateInfo(
-                __root__=_TestSubmissionUpdateInfo.Errored(type="errored", value=value)
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Errored(type="errored", value=value))  # type: ignore
 
     def graded_test_case(self, value: GradedTestCaseUpdate) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
-                root=_TestSubmissionUpdateInfo.GradedTestCase(
-                    **value.dict(exclude_unset=True), type="gradedTestCase"
-                )
+                root=_TestSubmissionUpdateInfo.GradedTestCase(**value.dict(exclude_unset=True), type="gradedTestCase")
             )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
@@ -61,9 +47,7 @@ class _Factory:
                 )
             )  # type: ignore
 
-    def recorded_test_case(
-        self, value: RecordedTestCaseUpdate
-    ) -> TestSubmissionUpdateInfo:
+    def recorded_test_case(self, value: RecordedTestCaseUpdate) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
                 root=_TestSubmissionUpdateInfo.RecordedTestCase(
@@ -79,13 +63,9 @@ class _Factory:
 
     def finished(self) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return TestSubmissionUpdateInfo(
-                root=_TestSubmissionUpdateInfo.Finished(type="finished")
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(root=_TestSubmissionUpdateInfo.Finished(type="finished"))  # type: ignore
         else:
-            return TestSubmissionUpdateInfo(
-                __root__=_TestSubmissionUpdateInfo.Finished(type="finished")
-            )  # type: ignore
+            return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Finished(type="finished"))  # type: ignore
 
 
 class TestSubmissionUpdateInfo(UniversalRootModel):
@@ -163,16 +143,10 @@ class TestSubmissionUpdateInfo(UniversalRootModel):
         if unioned_value.type == "errored":
             return errored(unioned_value.value)
         if unioned_value.type == "gradedTestCase":
-            return graded_test_case(
-                GradedTestCaseUpdate(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return graded_test_case(GradedTestCaseUpdate(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "recordedTestCase":
             return recorded_test_case(
-                RecordedTestCaseUpdate(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                RecordedTestCaseUpdate(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
         if unioned_value.type == "finished":
             return finished()

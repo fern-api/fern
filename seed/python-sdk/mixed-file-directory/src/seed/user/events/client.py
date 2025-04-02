@@ -18,10 +18,7 @@ class EventsClient:
         self.metadata = MetadataClient(client_wrapper=self._client_wrapper)
 
     def list_events(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Event]:
         """
         List all user events.
@@ -78,10 +75,7 @@ class AsyncEventsClient:
         self.metadata = AsyncMetadataClient(client_wrapper=self._client_wrapper)
 
     async def list_events(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Event]:
         """
         List all user events.

@@ -44,7 +44,7 @@ public partial class SeedAuthEnvironmentVariablesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

@@ -6,6 +6,76 @@ import java.util.Optional;
 
 public class TypeReferenceUtils {
 
+    public static class IsCollectionType implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> context;
+
+        public IsCollectionType(AbstractGeneratorContext<?, ?> context) {
+            this.context = context;
+        }
+
+        @Override
+        public Boolean visitContainer(ContainerType containerType) {
+            return containerType.visit(this);
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType namedType) {
+            TypeDeclaration declaration = context.getTypeDeclaration(namedType.getTypeId());
+            if (declaration.getShape().isAlias()) {
+                ResolvedTypeReference resolved =
+                        declaration.getShape().getAlias().get().getResolvedType();
+                return resolved.isContainer() && resolved.getContainer().get().visit(this);
+            }
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitiveType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitList(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitMap(MapType mapType) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitNullable(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitOptional(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitSet(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitLiteral(Literal literal) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object o) {
+            return false;
+        }
+    }
+
     public static Optional<ContainerTypeEnum> toContainerType(TypeReference typeReference) {
         return typeReference.getContainer().map(containerType -> containerType.visit(new ToContainerTypeEnum()));
     }

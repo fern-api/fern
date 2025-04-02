@@ -113,7 +113,7 @@ import com.seed.nurseryApi.core.RequestOptions;
 // Client level
 SeedNurseryApiClient client = SeedNurseryApiClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

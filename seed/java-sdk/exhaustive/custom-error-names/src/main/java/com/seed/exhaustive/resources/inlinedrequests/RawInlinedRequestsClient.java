@@ -78,7 +78,8 @@ public class RawInlinedRequestsClient {
             try {
                 if (response.code() == 400) {
                     throw new BadRequestBody(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class),
+                            response);
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
@@ -86,7 +87,8 @@ public class RawInlinedRequestsClient {
             throw new CustomApiException(
                     "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }

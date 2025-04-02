@@ -29,5 +29,5 @@ public partial class SeedApiClient
         Dataservice = new DataserviceClient(_client);
     }
 
-    public DataserviceClient Dataservice { get; init; }
+    public DataserviceClient Dataservice { get; }
 }

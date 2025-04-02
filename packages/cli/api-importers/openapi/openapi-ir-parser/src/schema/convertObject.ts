@@ -260,7 +260,8 @@ export function convertObject({
         fullExamples,
         additionalProperties,
         availability,
-        source
+        source,
+        context
     });
 }
 
@@ -277,7 +278,8 @@ export function wrapObject({
     fullExamples,
     additionalProperties,
     availability,
-    source
+    source,
+    context
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -292,6 +294,7 @@ export function wrapObject({
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
     source: Source;
+    context: SchemaParserContext;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -308,7 +311,7 @@ export function wrapObject({
                 allOfPropertyConflicts,
                 groupName,
                 fullExamples,
-                additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+                additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
                 availability: undefined,
                 source,
                 inline: undefined
@@ -329,7 +332,7 @@ export function wrapObject({
         allOfPropertyConflicts,
         groupName,
         fullExamples,
-        additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+        additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
         source,
         inline: undefined

@@ -86,50 +86,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -140,7 +101,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".testUpload",
+          "id": "testUpload",
           "displayName": "Test upload",
           "method": "POST",
           "name": {
@@ -430,7 +391,7 @@
           ]
         },
         {
-          "id": ".testWithDualContentTypeRequestTypes",
+          "id": "testWithDualContentTypeRequestTypes",
           "displayName": "Test with dual Content-Type request types",
           "method": "POST",
           "name": {
@@ -799,7 +760,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [],
     "errors": [],
     "subpackages": [],

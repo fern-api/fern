@@ -16,10 +16,7 @@ class ServiceClient:
         self._client_wrapper = client_wrapper
 
     def get_exception(
-        self,
-        notification_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, notification_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Exception:
         """
         Parameters
@@ -71,10 +68,7 @@ class AsyncServiceClient:
         self._client_wrapper = client_wrapper
 
     async def get_exception(
-        self,
-        notification_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, notification_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Exception:
         """
         Parameters

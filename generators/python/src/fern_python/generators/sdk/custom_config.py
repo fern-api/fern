@@ -1,9 +1,8 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import pydantic
-from fern_python.codegen import pyproject_toml
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generators.pydantic_model import PydanticModelCustomConfig
+from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
 class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
@@ -62,6 +61,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # Feature flag that enables generation of Python websocket clients
+    should_generate_websocket_clients: bool = False
+
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
     # deprecated, use client config instead
@@ -81,6 +83,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
     default_bytes_stream_chunk_size: Optional[int] = None
+
+    # Whether or not to include legacy wire tests in the generated SDK.
+    include_legacy_wire_tests: bool = False
 
     class Config:
         extra = pydantic.Extra.forbid

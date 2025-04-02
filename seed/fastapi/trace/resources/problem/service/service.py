@@ -28,10 +28,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def create_problem(
-        self,
-        *,
-        body: CreateProblemRequest,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: CreateProblemRequest, x_random_header: typing.Optional[str] = None
     ) -> CreateProblemResponse:
         """
         Creates a problem
@@ -40,11 +37,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def update_problem(
-        self,
-        *,
-        body: CreateProblemRequest,
-        problem_id: str,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: CreateProblemRequest, problem_id: str, x_random_header: typing.Optional[str] = None
     ) -> UpdateProblemResponse:
         """
         Updates a problem
@@ -52,9 +45,7 @@ class AbstractProblemService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def delete_problem(
-        self, *, problem_id: str, x_random_header: typing.Optional[str] = None
-    ) -> None:
+    def delete_problem(self, *, problem_id: str, x_random_header: typing.Optional[str] = None) -> None:
         """
         Soft deletes a problem
         """
@@ -62,10 +53,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def get_default_starter_files(
-        self,
-        *,
-        body: GetDefaultStarterFilesRequest,
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: GetDefaultStarterFilesRequest, x_random_header: typing.Optional[str] = None
     ) -> GetDefaultStarterFilesResponse:
         """
         Returns default starter files for problem
@@ -88,26 +76,16 @@ class AbstractProblemService(AbstractFernService):
     def __init_create_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_problem)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_problem,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_problem)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> CreateProblemResponse:
@@ -136,9 +114,7 @@ class AbstractProblemService(AbstractFernService):
     def __init_update_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_problem)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -146,18 +122,10 @@ class AbstractProblemService(AbstractFernService):
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.update_problem,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.update_problem)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UpdateProblemResponse:
@@ -186,26 +154,16 @@ class AbstractProblemService(AbstractFernService):
     def __init_delete_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete_problem)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.delete_problem,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.delete_problem)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -235,31 +193,19 @@ class AbstractProblemService(AbstractFernService):
     def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_default_starter_files)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_default_starter_files,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_default_starter_files)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> GetDefaultStarterFilesResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> GetDefaultStarterFilesResponse:
             try:
                 return cls.get_default_starter_files(*args, **kwargs)
             except FernHTTPException as e:

@@ -16,27 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithoutKey:
         if IS_PYDANTIC_V2:
-            return UnionWithoutKey(
-                root=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo")
-            )  # type: ignore
+            return UnionWithoutKey(root=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
         else:
-            return UnionWithoutKey(
-                __root__=_UnionWithoutKey.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
-            )  # type: ignore
+            return UnionWithoutKey(__root__=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
 
     def bar(self, value: resources_types_types_bar_Bar) -> UnionWithoutKey:
         if IS_PYDANTIC_V2:
-            return UnionWithoutKey(
-                root=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar")
-            )  # type: ignore
+            return UnionWithoutKey(root=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))  # type: ignore
         else:
-            return UnionWithoutKey(
-                __root__=_UnionWithoutKey.Bar(
-                    **value.dict(exclude_unset=True), type="bar"
-                )
-            )  # type: ignore
+            return UnionWithoutKey(__root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))  # type: ignore
 
 
 class UnionWithoutKey(UniversalRootModel):
@@ -54,23 +42,17 @@ class UnionWithoutKey(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
+        def get_as_union(self) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -86,17 +68,9 @@ class UnionWithoutKey(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                resources_types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "bar":
-            return bar(
-                resources_types_types_bar_Bar(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return bar(resources_types_types_bar_Bar(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithoutKey:

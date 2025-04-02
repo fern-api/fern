@@ -22,20 +22,14 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BigEntity(UniversalBaseModel):
-    cast_member: typing.Optional[CastMember] = pydantic.Field(
-        alias="castMember", default=None
-    )
-    extended_movie: typing.Optional[ExtendedMovie] = pydantic.Field(
-        alias="extendedMovie", default=None
-    )
+    cast_member: typing.Optional[CastMember] = pydantic.Field(alias="castMember", default=None)
+    extended_movie: typing.Optional[ExtendedMovie] = pydantic.Field(alias="extendedMovie", default=None)
     entity: typing.Optional[Entity] = None
     metadata: typing.Optional[resources_types_types_metadata_Metadata] = None
-    common_metadata: typing.Optional[
-        resources_commons_resources_types_types_metadata_Metadata
-    ] = pydantic.Field(alias="commonMetadata", default=None)
-    event_info: typing.Optional[EventInfo] = pydantic.Field(
-        alias="eventInfo", default=None
+    common_metadata: typing.Optional[resources_commons_resources_types_types_metadata_Metadata] = pydantic.Field(
+        alias="commonMetadata", default=None
     )
+    event_info: typing.Optional[EventInfo] = pydantic.Field(alias="eventInfo", default=None)
     data: typing.Optional[Data] = None
     migration: typing.Optional[Migration] = None
     exception: typing.Optional[Exception] = None
@@ -45,9 +39,7 @@ class BigEntity(UniversalBaseModel):
     moment: typing.Optional[Moment] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

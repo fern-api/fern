@@ -1,12 +1,11 @@
-from fern.ir.resources import NameAndWireValue
-
+from ..context import FastApiGeneratorContext
 from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from ..context import FastApiGeneratorContext
+from fern.ir.resources import NameAndWireValue
 
 
 class FernHTTPExceptionGenerator:
@@ -182,7 +181,7 @@ class FernHTTPExceptionGenerator:
                     ],
                 )
             )
-            writer.write_line(),
+            (writer.write_line(),)
 
             writer.write(f"{CONTENT_VARIABLE_NAME} = ")
             writer.write_node(FastAPI.jsonable_encoder(AST.Expression(BODY_VARIABLE_NAME), exclude_none=True))

@@ -4,9 +4,7 @@ from .....core.pydantic_utilities import UniversalBaseModel
 from .....commons.types.list_type import ListType
 from .....commons.types.map_type import MapType
 from .non_void_function_signature import NonVoidFunctionSignature
-from .function_implementation_for_multiple_languages import (
-    FunctionImplementationForMultipleLanguages,
-)
+from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic

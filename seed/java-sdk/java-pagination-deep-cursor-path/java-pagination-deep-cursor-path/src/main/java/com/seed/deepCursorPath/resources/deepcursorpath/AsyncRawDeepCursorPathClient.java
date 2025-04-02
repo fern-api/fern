@@ -105,7 +105,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThing(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -117,7 +118,8 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -187,7 +189,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThingRequired(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -199,7 +202,8 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -279,7 +283,8 @@ public class AsyncRawDeepCursorPathClient {
                                 new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
                                     try {
                                         return doThingInline(nextRequest, requestOptions)
-                                                .get();
+                                                .get()
+                                                .body();
                                     } catch (InterruptedException | ExecutionException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -291,7 +296,8 @@ public class AsyncRawDeepCursorPathClient {
                     future.completeExceptionally(new SeedDeepCursorPathApiException(
                             "Error with status code " + response.code(),
                             response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

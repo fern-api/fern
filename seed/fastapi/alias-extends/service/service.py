@@ -38,20 +38,14 @@ class AbstractRootService(AbstractFernService):
     def __init_extended_inline_request_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.extended_inline_request_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.extended_inline_request_body,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.extended_inline_request_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.extended_inline_request_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

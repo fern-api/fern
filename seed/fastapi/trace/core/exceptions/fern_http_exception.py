@@ -12,10 +12,7 @@ import http
 
 class FernHTTPException(abc.ABC, fastapi.HTTPException):
     def __init__(
-        self,
-        status_code: int,
-        name: typing.Optional[str] = None,
-        content: typing.Optional[typing.Any] = None,
+        self, status_code: int, name: typing.Optional[str] = None, content: typing.Optional[typing.Any] = None
     ):
         super().__init__(status_code=status_code)
         self.name = name
@@ -23,20 +20,13 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.content = content
 
     class Body(UniversalBaseModel):
-        error_name: typing.Optional[str] = pydantic.Field(
-            alias="errorName", default=None
-        )
-        error_instance_id: uuid.UUID = pydantic.Field(
-            alias="errorInstanceId", default_factory=uuid.uuid4
-        )
+        error_name: typing.Optional[str] = pydantic.Field(alias="errorName", default=None)
+        error_instance_id: uuid.UUID = pydantic.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any] = None
 
     def to_json_response(self) -> fastapi.responses.JSONResponse:
         body = FernHTTPException.Body(
-            error_name=self.name,
-            content=self.content or http.HTTPStatus(self.status_code).phrase,
+            error_name=self.name, content=self.content or http.HTTPStatus(self.status_code).phrase
         )
         content = fastapi.encoders.jsonable_encoder(body, exclude_none=True)
-        return fastapi.responses.JSONResponse(
-            content=content, status_code=self.status_code
-        )
+        return fastapi.responses.JSONResponse(content=content, status_code=self.status_code)

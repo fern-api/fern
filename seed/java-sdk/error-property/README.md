@@ -107,7 +107,7 @@ import com.seed.errorProperty.core.RequestOptions;
 // Client level
 SeedErrorPropertyClient client = SeedErrorPropertyClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

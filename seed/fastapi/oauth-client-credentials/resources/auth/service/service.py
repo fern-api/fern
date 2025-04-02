@@ -24,9 +24,7 @@ class AbstractAuthService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_token_with_client_credentials(
-        self, *, body: GetTokenRequest
-    ) -> TokenResponse: ...
+    def get_token_with_client_credentials(self, *, body: GetTokenRequest) -> TokenResponse: ...
 
     @abc.abstractmethod
     def refresh_token(self, *, body: RefreshTokenRequest) -> TokenResponse: ...
@@ -42,14 +40,10 @@ class AbstractAuthService(AbstractFernService):
         cls.__init_refresh_token(router=router)
 
     @classmethod
-    def __init_get_token_with_client_credentials(
-        cls, router: fastapi.APIRouter
-    ) -> None:
+    def __init_get_token_with_client_credentials(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_token_with_client_credentials)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -57,9 +51,7 @@ class AbstractAuthService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(
-            cls.get_token_with_client_credentials,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
+            cls.get_token_with_client_credentials, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
         @functools.wraps(cls.get_token_with_client_credentials)
@@ -89,20 +81,14 @@ class AbstractAuthService(AbstractFernService):
     def __init_refresh_token(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.refresh_token)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.refresh_token,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.refresh_token, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.refresh_token)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> TokenResponse:

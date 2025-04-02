@@ -10580,7 +10580,7 @@ channel:
                   },
                   "model": {
                     "docs": "AI model used to process submitted audio",
-                    "type": "optional<ListenRequestModel>",
+                    "type": "optional<ListenRequestModelOrString>",
                   },
                   "multichannel": {
                     "default": false,
@@ -10657,7 +10657,7 @@ channel:
                   },
                   "version": {
                     "docs": "Version of an AI model to use",
-                    "type": "optional<ListenRequestVersion>",
+                    "type": "optional<ListenRequestVersionOrString>",
                   },
                 },
               },
@@ -10951,6 +10951,17 @@ channel:
               "video",
             ],
           },
+          "ListenRequestModelOrString": {
+            "discriminated": false,
+            "union": [
+              {
+                "type": "string",
+              },
+              {
+                "type": "optional<ListenRequestModel>",
+              },
+            ],
+          },
           "ListenRequestSummarize": {
             "enum": [
               "v2",
@@ -10960,6 +10971,17 @@ channel:
           "ListenRequestVersion": {
             "enum": [
               "latest",
+            ],
+          },
+          "ListenRequestVersionOrString": {
+            "discriminated": false,
+            "union": [
+              {
+                "type": "string",
+              },
+              {
+                "type": "optional<ListenRequestVersion>",
+              },
             ],
           },
         },
@@ -11132,6 +11154,11 @@ channel:
       - conversationalai
       - voicemail
       - video
+  ListenRequestModelOrString:
+    discriminated: false
+    union:
+      - type: string
+      - type: optional<ListenRequestModel>
   ListenRequestSummarize:
     enum:
       - v2
@@ -11139,6 +11166,11 @@ channel:
   ListenRequestVersion:
     enum:
       - latest
+  ListenRequestVersionOrString:
+    discriminated: false
+    union:
+      - type: string
+      - type: optional<ListenRequestVersion>
 imports:
   root: __package__.yml
 service:
@@ -11263,7 +11295,7 @@ service:
               Spoken measurements will be converted to their corresponding
               abbreviations
           model:
-            type: optional<ListenRequestModel>
+            type: optional<ListenRequestModelOrString>
             docs: AI model used to process submitted audio
           multichannel:
             type: optional<boolean>
@@ -11334,7 +11366,7 @@ service:
               Seconds to wait before detecting a pause between words in
               submitted audio
           version:
-            type: optional<ListenRequestVersion>
+            type: optional<ListenRequestVersionOrString>
             docs: Version of an AI model to use
         body:
           properties:

@@ -48,7 +48,5 @@ class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
 
 
 ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html,
-    ProblemDescriptionBoard_Variable,
-    ProblemDescriptionBoard_TestCaseId,
+    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]

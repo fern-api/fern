@@ -32,9 +32,7 @@ class AbstractCustomAuthService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def post_with_custom_auth(
-        self, *, body: typing.Optional[typing.Any] = None, auth: ApiAuth
-    ) -> bool:
+    def post_with_custom_auth(self, *, body: typing.Optional[typing.Any] = None, auth: ApiAuth) -> bool:
         """
         POST request with custom auth scheme
         """
@@ -54,22 +52,14 @@ class AbstractCustomAuthService(AbstractFernService):
     def __init_get_with_custom_auth(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_custom_auth)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_with_custom_auth,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_with_custom_auth, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_with_custom_auth)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
@@ -100,24 +90,16 @@ class AbstractCustomAuthService(AbstractFernService):
     def __init_post_with_custom_auth(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_custom_auth)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post_with_custom_auth,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post_with_custom_auth, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post_with_custom_auth)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:

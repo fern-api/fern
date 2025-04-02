@@ -73,10 +73,7 @@ class BasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_with_basic_auth(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme
@@ -205,10 +202,7 @@ class AsyncBasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_with_basic_auth(
-        self,
-        *,
-        request: typing.Optional[typing.Any] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme

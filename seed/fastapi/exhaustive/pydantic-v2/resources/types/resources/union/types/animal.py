@@ -22,9 +22,7 @@ class _Factory:
 class Animal(pydantic.RootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    root: typing_extensions.Annotated[
-        typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
-    ]
+    root: typing_extensions.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]
 
     def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
         return self.root

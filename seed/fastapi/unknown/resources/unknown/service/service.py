@@ -22,14 +22,10 @@ class AbstractUnknownService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def post(
-        self, *, body: typing.Optional[typing.Any] = None
-    ) -> typing.Sequence[typing.Optional[typing.Any]]: ...
+    def post(self, *, body: typing.Optional[typing.Any] = None) -> typing.Sequence[typing.Optional[typing.Any]]: ...
 
     @abc.abstractmethod
-    def post_object(
-        self, *, body: MyObject
-    ) -> typing.Sequence[typing.Optional[typing.Any]]: ...
+    def post_object(self, *, body: MyObject) -> typing.Sequence[typing.Optional[typing.Any]]: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -45,25 +41,17 @@ class AbstractUnknownService(AbstractFernService):
     def __init_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[typing.Optional[typing.Any]]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[typing.Optional[typing.Any]]:
             try:
                 return cls.post(*args, **kwargs)
             except FernHTTPException as e:
@@ -89,25 +77,17 @@ class AbstractUnknownService(AbstractFernService):
     def __init_post_object(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_object)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post_object,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post_object, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post_object)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[typing.Optional[typing.Any]]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[typing.Optional[typing.Any]]:
             try:
                 return cls.post_object(*args, **kwargs)
             except FernHTTPException as e:

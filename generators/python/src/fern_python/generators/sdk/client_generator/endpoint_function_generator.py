@@ -1,8 +1,15 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import fern.ir.resources as ir_types
-
+from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .generated_root_client import GeneratedRootClient
+from .request_body_parameters import (
+    AbstractRequestBodyParameters,
+    BytesRequestBodyParameters,
+    FileUploadRequestBodyParameters,
+    InlinedRequestBodyParameters,
+    ReferencedRequestBodyParameters,
+)
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
@@ -33,15 +40,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.snippet import SnippetWriter
 
-from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-from .generated_root_client import GeneratedRootClient
-from .request_body_parameters import (
-    AbstractRequestBodyParameters,
-    BytesRequestBodyParameters,
-    FileUploadRequestBodyParameters,
-    InlinedRequestBodyParameters,
-    ReferencedRequestBodyParameters,
-)
+import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -435,9 +434,11 @@ class EndpointFunctionGenerator:
 
         parameters.append(
             AST.NamedFunctionParameter(
-                name="_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
-                if has_request_options_parameter
-                else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
+                name=(
+                    "_" + EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                    if has_request_options_parameter
+                    else EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+                ),
                 docs=request_options_docs,
                 type_hint=AST.TypeHint.optional(
                     AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())

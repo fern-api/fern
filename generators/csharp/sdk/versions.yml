@@ -7,6 +7,23 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.13
+  createdAt: "2025-04-01"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: |
+        Mark `AdditionalProperties` property as experiment using XML docs.
+
+- version: 1.15.12
+  createdAt: "2025-03-31"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fallback from `init` to `set` on .NET Framework & .NET Standard 2.0 for public and protected properties.
+        This ensures the properties can be set on older TFMs without compilation errors.
+
 - version: 1.15.11
   createdAt: "2025-03-25"
   irVersion: 57

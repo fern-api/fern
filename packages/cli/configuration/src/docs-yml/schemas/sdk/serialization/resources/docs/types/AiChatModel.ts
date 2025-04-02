@@ -7,8 +7,8 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const AiChatModel: core.serialization.Schema<serializers.AiChatModel.Raw, FernDocsConfig.AiChatModel> =
-    core.serialization.enum_(["claude-3.5", "claude-3.7"]);
+    core.serialization.enum_(["claude-3.5", "claude-3.7", "command-r-plus"]);
 
 export declare namespace AiChatModel {
-    export type Raw = "claude-3.5" | "claude-3.7";
+    export type Raw = "claude-3.5" | "claude-3.7" | "command-r-plus";
 }

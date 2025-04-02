@@ -2,9 +2,7 @@
 
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
-from .test_case_implementation_description_board import (
-    TestCaseImplementationDescriptionBoard,
-)
+from .test_case_implementation_description_board import TestCaseImplementationDescriptionBoard
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 

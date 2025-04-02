@@ -1,13 +1,6 @@
 import typing
 from typing import Optional
 
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
-
-from fern_python.codegen import AST
-from fern_python.codegen.filepath import Filepath
-from fern_python.utils import pascal_case
-
 from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
@@ -15,9 +8,17 @@ from ..declaration_referencers import (
     OAuthTokenProviderDeclarationReferencer,
     RootClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
+    SubpackageAsyncSocketClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
+    SubpackageSocketClientDeclarationReferencer,
 )
 from .sdk_generator_context import SdkGeneratorContext
+from fern_python.codegen import AST
+from fern_python.codegen.filepath import Filepath
+from fern_python.utils import pascal_case
+
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorConfig
 
 
 class SdkGeneratorContextImpl(SdkGeneratorContext):
@@ -68,6 +69,12 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
+        self._subpackage_async_socket_client_declaration_referencer = SubpackageAsyncSocketClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
+        self._subpackage_socket_client_declaration_referencer = SubpackageSocketClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
         self._oauth_generated_client_declaration_referencer = OAuthTokenProviderDeclarationReferencer(
             client_class_name=client_class_name,
             client_filename=client_filename,
@@ -98,9 +105,37 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_filepath(name=subpackage)
 
+    def get_socket_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_socket_client_declaration_referencer.get_filepath(name=subpackage)
+
     def get_class_name_of_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_socket_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_async_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_socket_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_socket_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_socket_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
+
+    def get_async_socket_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_socket_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)

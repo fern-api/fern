@@ -2,7 +2,4 @@
 
 import typing
 
-ErrorCategory = typing.Union[
-    typing.Literal["API_ERROR", "AUTHENTICATION_ERROR", "INVALID_REQUEST_ERROR"],
-    typing.Any,
-]
+ErrorCategory = typing.Union[typing.Literal["API_ERROR", "AUTHENTICATION_ERROR", "INVALID_REQUEST_ERROR"], typing.Any]

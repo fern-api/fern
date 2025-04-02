@@ -3,6 +3,4 @@
 from __future__ import annotations
 import typing
 
-JsonLike = typing.Union[
-    typing.List["JsonLike"], typing.Dict[str, "JsonLike"], str, int, bool
-]
+JsonLike = typing.Union[typing.List["JsonLike"], typing.Dict[str, "JsonLike"], str, int, bool]

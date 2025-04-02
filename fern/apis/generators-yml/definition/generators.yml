@@ -262,6 +262,9 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      respect-forward-compatible-enums:
+        type: optional<boolean>
+        docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.
       use-bytes-for-binary-response:
         type: optional<boolean>
         docs: Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream.
@@ -274,6 +277,10 @@ types:
       example-generation:
         type: optional<OpenAPIExampleGenerationSchema>
         docs: Fine-tune your example generation
+      additional-properties-defaults-to:
+        type: optional<boolean>
+        docs: Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
+        default: false
 
   FormParameterEncoding:
     enum:

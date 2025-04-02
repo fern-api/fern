@@ -39,16 +39,14 @@ class Data(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Data.String, _Data.Base64],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Data.String, _Data.Base64], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Data.String, _Data.Base64]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Data.String, _Data.Base64],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Data.String, _Data.Base64], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Data.String, _Data.Base64]:
@@ -60,11 +58,7 @@ class Data(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self,
-        string: typing.Callable[[str], T_Result],
-        base_64: typing.Callable[[str], T_Result],
-    ) -> T_Result:
+    def visit(self, string: typing.Callable[[str], T_Result], base_64: typing.Callable[[str], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "string":
             return string(unioned_value.value)

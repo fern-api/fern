@@ -13,14 +13,10 @@ class BasicTestCaseTemplate(UniversalBaseModel):
     template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
     name: str
     description: TestCaseImplementationDescription
-    expected_value_parameter_id: ParameterId = pydantic.Field(
-        alias="expectedValueParameterId"
-    )
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

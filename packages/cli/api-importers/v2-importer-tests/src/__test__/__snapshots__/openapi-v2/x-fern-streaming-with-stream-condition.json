@@ -368,50 +368,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -422,7 +383,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".chat",
+          "id": "chat",
           "displayName": "Start a chat",
           "method": "POST",
           "name": {
@@ -480,12 +441,12 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "DOUBLE",
+                      "v1": "INTEGER",
                       "v2": {
                         "validation": {
                           "min": 1
                         },
-                        "type": "double"
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
@@ -523,12 +484,12 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "DOUBLE",
+                      "v1": "INTEGER",
                       "v2": {
                         "validation": {
                           "min": 1
                         },
-                        "type": "double"
+                        "type": "integer"
                       }
                     },
                     "type": "primitive"
@@ -1146,7 +1107,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "ChatRequest",
       "ChatFullResponse",

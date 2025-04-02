@@ -1,8 +1,6 @@
 import typer
-
-from fern_python.cli.generator_cli import GeneratorCli
-
 from .fastapi_generator import FastApiGenerator
+from fern_python.cli.generator_cli import GeneratorCli
 
 
 def main(path_to_config_json: str) -> None:

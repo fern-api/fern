@@ -5,7 +5,10 @@ exports[`validate > docs 1`] = `
 [docs]: ✓ All checks passed"
 `;
 
-exports[`validate > no-api 1`] = `"[docs]:Missing file: api.yml"`;
+exports[`validate > no-api 1`] = `
+"[docs]:✓ All checks passed
+[api]: Missing file: api.yml"
+`;
 
 exports[`validate > no-generator 1`] = `"Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"`;
 

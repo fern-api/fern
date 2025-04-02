@@ -147,9 +147,7 @@ class UserClient:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list,
-                    annotation=typing.Sequence[User],
-                    direction="write",
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,
@@ -321,9 +319,7 @@ class AsyncUserClient:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list,
-                    annotation=typing.Sequence[User],
-                    direction="write",
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,

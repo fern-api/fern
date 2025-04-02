@@ -1,5 +1,116 @@
 - changelogEntry:
   - summary: |
+      Updates parameter parsing in asyncapi-to-ir to correctly handle enum parameters, along with native support for the x-fern-optional and x-fern-type extensions
+    type: chore
+  irVersion: 57
+  version: 0.57.13
+
+- changelogEntry:
+  - summary: |
+      Add `additional-properties-defaults-to` setting for OpenAPI specs in generators.yml.
+      This setting lets you change the default value for the `additionalProperties` field in the generated IR.
+    type: feat
+  irVersion: 57
+  version: 0.57.12
+
+- changelogEntry:
+  - summary: |
+      Improve parameter parsing in v3 AsyncAPI specs to enable broader support for OpenAPI extensions.
+    type: fix
+  irVersion: 57
+  version: 0.57.11
+
+- changelogEntry:
+  - summary: |
+      Add support for `respect-forward-compatible-enums` configuration option to specify whether to respect forward compatible enums in OpenAPI specifications.
+    type: fix
+  irVersion: 57
+  version: 0.57.11
+
+- changelogEntry:
+  - summary: |
+      Add support for handling integer types without a specified format in the new OpenAPI parser. When a schema defines a property with `type: integer` but doesn't specify a format (like int32, int64, etc.), the parser now defaults to treating it as a standard integer type. This ensures consistent behavior for integer fields regardless of whether a format is explicitly provided.
+    type: fix
+  irVersion: 57
+  version: 0.57.10
+
+- changelogEntry:
+  - summary: |
+      Add support for reading common properties across all oneOf variants in the new OpenAPI parser. When a schema uses `oneOf` with a discriminator, the parser now correctly extracts and includes properties defined at the root level of the schema as base properties of the discriminated union. This ensures that common fields shared by all variants are properly represented in the generated IR.
+    type: fix
+  irVersion: 57
+  version: 0.57.9
+
+- changelogEntry:
+  - summary: |
+      Bump undici timeouts to make sure docs sites get published. This addresses an issue where large documentation sites were timing out during the publishing process. By increasing the timeout values for the undici HTTP client, we ensure that even complex documentation sites have enough time to complete the publishing process.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.8
+
+- changelogEntry:
+  - summary: |
+      Add support for `anyOf` in the new OpenAPI parser. This allows for undiscriminated unions in the OpenAPI schema, where a type can be one of several possible types without a discriminator field. The parser now handles both `oneOf` and `anyOf` schemas in the same way, converting them to undiscriminated unions in the IR.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.7
+
+- changelogEntry:
+  - summary: |
+      Reduce CLI output from the legacy OpenAPI parser when using the experimental `openapiParserV3` option. This makes the logs cleaner and more focused on relevant information when using the newer parser.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.6
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where endpoint ids were not globally unique because they didn't take into account namespaces. This only affects
+      the new OpenAPI -> IR parser.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.5
+
+- changelogEntry:
+  - summary: |
+      Add support for namespaces in OpenAPI imports. This allows for organizing multiple OpenAPI specs into different namespaces within a single API definition. Example:
+
+      ```yml
+      api:
+        specs:
+          - namespace: petsV1
+            openapi: ./openapi-v1.json
+          - namespace: petsV2
+            openapi: ./openapi-v2.json
+      ```
+
+      Each namespace creates a separate package in the generated IR, allowing for clear separation between different versions or components of your API.
+
+    type: feat
+  irVersion: 57
+  version: 0.57.4
+
+- changelogEntry:
+  - summary: |
+      Add support for Cohere's Command R+ model in AI chat - model ID: command-r-plus
+    type: feat
+  irVersion: 57
+  version: 0.57.3
+
+- changelogEntry:
+  - summary: |
+      Add support for parsing `type: enum` in OpenAPI schemas. This allows for proper conversion of enum types that use the
+      non-standard `type: enum` format instead of the standard `type: string` with `enum` values.
+
+    type: feat
+  irVersion: 57
+  version: 0.57.2
+
+- changelogEntry:
+  - summary: |
       Add AI chat config block to docs.yml for model/system prompt customization. Example:
 
       ai-chat:
@@ -8,7 +119,7 @@
         You are an AI assistant.
         Only respond to questions using information from the documents.
         Include markdown footnotes to the sources of your information.
-        
+
     type: feat
   irVersion: 57
   version: 0.57.1
@@ -114,8 +225,8 @@
 
 - changelogEntry:
   - summary: |
-      The `fern init --openapi` command now references the OpenAPI file in 
-      place using the new `specs` syntax in generators.yml instead of copying the file into the 
+      The `fern init --openapi` command now references the OpenAPI file in
+      place using the new `specs` syntax in generators.yml instead of copying the file into the
       Fern directory. This makes it easier to maintain the source OpenAPI file separately from the Fern configuration.
     type: fix
   irVersion: 57
@@ -238,8 +349,8 @@
 
 - changelogEntry:
   - summary: |
-      Updated the CLI to gracefully handle unsupported security schemes (e.g. cookie-based auth) by skipping them 
-      instead of throwing an error. This allows the CLI to continue processing the rest of the API definition even when 
+      Updated the CLI to gracefully handle unsupported security schemes (e.g. cookie-based auth) by skipping them
+      instead of throwing an error. This allows the CLI to continue processing the rest of the API definition even when
       it encounters security schemes it cannot convert.
     type: fix
   irVersion: 56
@@ -284,14 +395,14 @@
     type: fix
   irVersion: 56
   version: 0.56.0
-  
+
 - changelogEntry:
   - summary: |
-      Hidden sections are now removed from the docs sitemap. 
+      Hidden sections are now removed from the docs sitemap.
     type: fix
   irVersion: 56
   version: 0.56.0-rc6
-  
+
 - changelogEntry:
   - summary: |
       Fixed duplicate validation messages in docs validation by deduplicating violations

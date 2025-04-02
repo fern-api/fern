@@ -9,6 +9,5 @@ from ...core.serialization import FieldMetadata
 
 class ContainerObjectParams(typing_extensions.TypedDict):
     nested_objects: typing_extensions.Annotated[
-        typing.Sequence[NestedObjectWithLiteralsParams],
-        FieldMetadata(alias="nestedObjects"),
+        typing.Sequence[NestedObjectWithLiteralsParams], FieldMetadata(alias="nestedObjects")
     ]

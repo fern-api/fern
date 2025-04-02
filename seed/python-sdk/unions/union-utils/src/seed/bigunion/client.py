@@ -62,12 +62,7 @@ class BigunionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update(
-        self,
-        *,
-        request: BigUnion,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> bool:
+    def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters
         ----------
@@ -115,10 +110,7 @@ class BigunionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_many(
-        self,
-        *,
-        request: typing.Sequence[BigUnion],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[BigUnion], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, bool]:
         """
         Parameters
@@ -230,12 +222,7 @@ class AsyncBigunionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update(
-        self,
-        *,
-        request: BigUnion,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> bool:
+    async def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         Parameters
         ----------
@@ -291,10 +278,7 @@ class AsyncBigunionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_many(
-        self,
-        *,
-        request: typing.Sequence[BigUnion],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, request: typing.Sequence[BigUnion], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, bool]:
         """
         Parameters

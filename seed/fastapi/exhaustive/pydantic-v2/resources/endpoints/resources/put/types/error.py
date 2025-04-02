@@ -13,6 +13,4 @@ class Error(UniversalBaseModel):
     detail: typing.Optional[str] = None
     field: typing.Optional[str] = None
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-        extra="forbid"
-    )  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

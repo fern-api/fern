@@ -5,6 +5,7 @@ package com.seed.exhaustive.types.errors;
 
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.types.types.Animal;
+import okhttp3.Response;
 
 public final class ErrorWithUnionBody extends SeedExhaustiveApiException {
     /**
@@ -14,6 +15,11 @@ public final class ErrorWithUnionBody extends SeedExhaustiveApiException {
 
     public ErrorWithUnionBody(Animal body) {
         super("ErrorWithUnionBody", 400, body);
+        this.body = body;
+    }
+
+    public ErrorWithUnionBody(Animal body, Response rawResponse) {
+        super("ErrorWithUnionBody", 400, body, rawResponse);
         this.body = body;
     }
 

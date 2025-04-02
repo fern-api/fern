@@ -15,10 +15,7 @@ class MigrationClient:
         self._client_wrapper = client_wrapper
 
     def get_attempted_migrations(
-        self,
-        *,
-        admin_key_header: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Migration]:
         """
         Parameters
@@ -72,10 +69,7 @@ class AsyncMigrationClient:
         self._client_wrapper = client_wrapper
 
     async def get_attempted_migrations(
-        self,
-        *,
-        admin_key_header: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Migration]:
         """
         Parameters

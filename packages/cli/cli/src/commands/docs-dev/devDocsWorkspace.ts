@@ -3,7 +3,6 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { validateAPIWorkspaceWithoutExiting } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
@@ -48,35 +47,20 @@ export async function previewDocsWorkspace({
                         context,
                         logWarnings: true,
                         logSummary: false,
-                        fernWorkspaces: [],
+                        apiWorkspaces: [],
                         ossWorkspaces: await filterOssWorkspaces(project),
                         excludeRules
                     });
                 } else {
-                    const fernWorkspaces = await Promise.all(
-                        project.apiWorkspaces.map(async (workspace) => {
-                            return workspace.toFernWorkspace({ context });
-                        })
-                    );
                     await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
                         context,
                         logWarnings: true,
                         logSummary: false,
-                        fernWorkspaces,
+                        apiWorkspaces: project.apiWorkspaces,
                         ossWorkspaces: await filterOssWorkspaces(project),
                         excludeRules
                     });
-                    for (const fernWorkspace of fernWorkspaces) {
-                        await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
-                            await validateAPIWorkspaceWithoutExiting({
-                                workspace: fernWorkspace,
-                                context: apiWorkspaceContext,
-                                logWarnings: false,
-                                logSummary: false
-                            });
-                        });
-                    }
                 }
             },
             context,

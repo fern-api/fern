@@ -24,17 +24,11 @@ class AbstractSyspropService(AbstractFernService):
 
     @abc.abstractmethod
     def set_num_warm_instances(
-        self,
-        *,
-        language: Language,
-        num_warm_instances: int,
-        x_random_header: typing.Optional[str] = None,
+        self, *, language: Language, num_warm_instances: int, x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     @abc.abstractmethod
-    def get_num_warm_instances(
-        self, *, x_random_header: typing.Optional[str] = None
-    ) -> typing.Dict[Language, int]: ...
+    def get_num_warm_instances(self, *, x_random_header: typing.Optional[str] = None) -> typing.Dict[Language, int]: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -50,9 +44,7 @@ class AbstractSyspropService(AbstractFernService):
     def __init_set_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.set_num_warm_instances)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
@@ -60,18 +52,10 @@ class AbstractSyspropService(AbstractFernService):
             elif parameter_name == "num_warm_instances":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.set_num_warm_instances,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.set_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.set_num_warm_instances)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -101,29 +85,17 @@ class AbstractSyspropService(AbstractFernService):
     def __init_get_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_num_warm_instances)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_num_warm_instances,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_num_warm_instances)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Dict[Language, int]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Dict[Language, int]:
             try:
                 return cls.get_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:

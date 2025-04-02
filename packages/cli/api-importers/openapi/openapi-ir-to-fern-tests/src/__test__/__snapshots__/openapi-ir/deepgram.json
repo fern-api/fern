@@ -22588,12 +22588,15 @@
             "name": "Authorization",
             "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
+              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
               "schema": {
                 "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Authorization",
+              "nameOverride": "SpeakApiKey",
               "title": "SpeakApiKey",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -22608,7 +22611,9 @@
             "description": "Encoding allows you to specify the expected encoding of your audio output",
             "schema": {
               "description": "Encoding allows you to specify the expected encoding of your audio output",
-              "generatedName": "SpeakEncoding",
+              "generatedName": "Encoding",
+              "nameOverride": "SpeakEncoding",
+              "title": "SpeakEncoding",
               "values": [
                 {
                   "generatedName": "linear16",
@@ -22651,6 +22656,7 @@
                 "value": "mp3",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -22667,7 +22673,9 @@
             "description": "AI model used to process submitted text",
             "schema": {
               "description": "AI model used to process submitted text",
-              "generatedName": "SpeakModel",
+              "generatedName": "Model",
+              "nameOverride": "SpeakModel",
+              "title": "SpeakModel",
               "values": [
                 {
                   "generatedName": "AuraAsteriaEn",
@@ -22735,6 +22743,7 @@
                 "value": "aura-asteria-en",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -22751,7 +22760,9 @@
             "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
             "schema": {
               "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-              "generatedName": "SpeakSampleRate",
+              "generatedName": "SampleRate",
+              "nameOverride": "SpeakSampleRate",
+              "title": "SpeakSampleRate",
               "values": [
                 {
                   "nameOverride": "EightThousand",
@@ -22790,6 +22801,7 @@
                 "value": "24000",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23151,12 +23163,15 @@
             "name": "Authorization",
             "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
+              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
               "schema": {
                 "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Authorization",
+              "nameOverride": "ListenApiKey",
               "title": "ListenApiKey",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23170,12 +23185,15 @@
             "name": "callback",
             "description": "URL to which we'll make the callback request",
             "schema": {
+              "description": "URL to which we'll make the callback request",
               "schema": {
                 "example": "https://example.com",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Callback",
+              "nameOverride": "ListenCallback",
               "title": "ListenCallback",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23188,7 +23206,9 @@
             "description": "HTTP method by which the callback request will be made",
             "schema": {
               "description": "HTTP method by which the callback request will be made",
-              "generatedName": "ListenCallbackMethod",
+              "generatedName": "CallbackMethod",
+              "nameOverride": "ListenCallbackMethod",
+              "title": "ListenCallbackMethod",
               "values": [
                 {
                   "generatedName": "POST",
@@ -23216,6 +23236,7 @@
                 "value": "POST",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23231,13 +23252,16 @@
             "name": "channels",
             "description": "The number of channels in the submitted audio",
             "schema": {
+              "description": "The number of channels in the submitted audio",
               "schema": {
                 "default": "1",
                 "example": "1",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Channels",
+              "nameOverride": "ListenChannels",
               "title": "ListenChannels",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23250,7 +23274,9 @@
             "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
             "schema": {
               "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
-              "generatedName": "ListenDiarize",
+              "generatedName": "Diarize",
+              "nameOverride": "ListenDiarize",
+              "title": "ListenDiarize",
               "values": [
                 {
                   "generatedName": "true",
@@ -23268,6 +23294,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23283,13 +23310,16 @@
             "name": "diarize_version",
             "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
             "schema": {
+              "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
               "schema": {
                 "default": "v2",
                 "example": "v1",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "DiarizeVersion",
+              "nameOverride": "ListenDiarizeVersion",
               "title": "ListenDiarizeVersion",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23302,7 +23332,9 @@
             "description": "Identify and extract key entities from content in submitted audio",
             "schema": {
               "description": "Identify and extract key entities from content in submitted audio",
-              "generatedName": "ListenDictation",
+              "generatedName": "Dictation",
+              "nameOverride": "ListenDictation",
+              "title": "ListenDictation",
               "values": [
                 {
                   "generatedName": "true",
@@ -23320,6 +23352,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23336,7 +23369,9 @@
             "description": "Specify the expected encoding of your submitted audio",
             "schema": {
               "description": "Specify the expected encoding of your submitted audio",
-              "generatedName": "ListenEncoding",
+              "generatedName": "Encoding",
+              "nameOverride": "ListenEncoding",
+              "title": "ListenEncoding",
               "values": [
                 {
                   "generatedName": "linear16",
@@ -23379,6 +23414,7 @@
                   "casing": {}
                 }
               ],
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23394,13 +23430,16 @@
             "name": "endpointing",
             "description": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
             "schema": {
+              "description": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
               "schema": {
                 "default": "10",
                 "example": "300",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Endpointing",
+              "nameOverride": "ListenEndpointing",
               "title": "ListenEndpointing",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23412,12 +23451,15 @@
             "name": "extra",
             "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
             "schema": {
+              "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
               "schema": {
                 "example": "key:value",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Extra",
+              "nameOverride": "ListenExtra",
               "title": "ListenExtra",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23430,7 +23472,9 @@
             "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
             "schema": {
               "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
-              "generatedName": "ListenFillerWords",
+              "generatedName": "FillerWords",
+              "nameOverride": "ListenFillerWords",
+              "title": "ListenFillerWords",
               "values": [
                 {
                   "generatedName": "true",
@@ -23448,6 +23492,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23464,7 +23509,9 @@
             "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
             "schema": {
               "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-              "generatedName": "ListenInterimResults",
+              "generatedName": "InterimResults",
+              "nameOverride": "ListenInterimResults",
+              "title": "ListenInterimResults",
               "values": [
                 {
                   "generatedName": "true",
@@ -23482,6 +23529,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23497,12 +23545,15 @@
             "name": "keyterm",
             "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
             "schema": {
+              "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
               "schema": {
                 "example": "Snuffleupagus",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Keyterm",
+              "nameOverride": "ListenKeyterm",
               "title": "ListenKeyterm",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23514,12 +23565,15 @@
             "name": "keywords",
             "description": "Keywords can boost or suppress specialized terminology and brands",
             "schema": {
+              "description": "Keywords can boost or suppress specialized terminology and brands",
               "schema": {
                 "example": "Twilio:2",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Keywords",
+              "nameOverride": "ListenKeywords",
               "title": "ListenKeywords",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -23532,7 +23586,9 @@
             "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
             "schema": {
               "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-              "generatedName": "ListenLanguage",
+              "generatedName": "Language",
+              "nameOverride": "ListenLanguage",
+              "title": "ListenLanguage",
               "values": [
                 {
                   "generatedName": "bg",
@@ -23820,6 +23876,7 @@
                 "value": "en",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -23836,7 +23893,9 @@
             "description": "AI model to use for the transcription",
             "schema": {
               "description": "AI model to use for the transcription",
-              "generatedName": "ListenModel",
+              "generatedName": "Model",
+              "nameOverride": "ListenModel",
+              "title": "ListenModel",
               "values": [
                 {
                   "generatedName": "Nova3",
@@ -23989,6 +24048,7 @@
                   "casing": {}
                 }
               ],
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24005,7 +24065,9 @@
             "description": "Transcribe each audio channel independently",
             "schema": {
               "description": "Transcribe each audio channel independently",
-              "generatedName": "ListenMultichannel",
+              "generatedName": "Multichannel",
+              "nameOverride": "ListenMultichannel",
+              "title": "ListenMultichannel",
               "values": [
                 {
                   "generatedName": "true",
@@ -24023,6 +24085,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24039,7 +24102,9 @@
             "description": "Convert numbers from written format to numerical format",
             "schema": {
               "description": "Convert numbers from written format to numerical format",
-              "generatedName": "ListenNumerals",
+              "generatedName": "Numerals",
+              "nameOverride": "ListenNumerals",
+              "title": "ListenNumerals",
               "values": [
                 {
                   "generatedName": "true",
@@ -24057,6 +24122,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24073,7 +24139,9 @@
             "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
             "schema": {
               "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-              "generatedName": "ListenProfanityFilter",
+              "generatedName": "ProfanityFilter",
+              "nameOverride": "ListenProfanityFilter",
+              "title": "ListenProfanityFilter",
               "values": [
                 {
                   "generatedName": "true",
@@ -24091,6 +24159,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24107,7 +24176,9 @@
             "description": "Add punctuation and capitalization to the transcript",
             "schema": {
               "description": "Add punctuation and capitalization to the transcript",
-              "generatedName": "ListenPunctuate",
+              "generatedName": "Punctuate",
+              "nameOverride": "ListenPunctuate",
+              "title": "ListenPunctuate",
               "values": [
                 {
                   "generatedName": "true",
@@ -24125,6 +24196,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24141,7 +24213,9 @@
             "description": "Redaction removes sensitive information from your transcripts",
             "schema": {
               "description": "Redaction removes sensitive information from your transcripts",
-              "generatedName": "ListenRedact",
+              "generatedName": "Redact",
+              "nameOverride": "ListenRedact",
+              "title": "ListenRedact",
               "values": [
                 {
                   "generatedName": "true",
@@ -24179,6 +24253,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24194,12 +24269,15 @@
             "name": "replace",
             "description": "Search for terms or phrases in submitted audio and replaces them",
             "schema": {
+              "description": "Search for terms or phrases in submitted audio and replaces them",
               "schema": {
                 "example": "monika:Monica",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Replace",
+              "nameOverride": "ListenReplace",
               "title": "ListenReplace",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -24211,12 +24289,15 @@
             "name": "sample_rate",
             "description": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
             "schema": {
+              "description": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
               "schema": {
                 "example": "8000",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "SampleRate",
+              "nameOverride": "ListenSampleRate",
               "title": "ListenSampleRate",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -24228,12 +24309,15 @@
             "name": "search",
             "description": "Search for terms or phrases in submitted audio",
             "schema": {
+              "description": "Search for terms or phrases in submitted audio",
               "schema": {
                 "example": "Deepgram",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Search",
+              "nameOverride": "ListenSearch",
               "title": "ListenSearch",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -24246,7 +24330,9 @@
             "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
             "schema": {
               "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-              "generatedName": "ListenSmartFormat",
+              "generatedName": "SmartFormat",
+              "nameOverride": "ListenSmartFormat",
+              "title": "ListenSmartFormat",
               "values": [
                 {
                   "generatedName": "true",
@@ -24264,6 +24350,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24279,12 +24366,15 @@
             "name": "tag",
             "description": "Label your requests for the purpose of identification during usage reporting",
             "schema": {
+              "description": "Label your requests for the purpose of identification during usage reporting",
               "schema": {
                 "example": "my-team",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Tag",
+              "nameOverride": "ListenTag",
               "title": "ListenTag",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -24296,12 +24386,15 @@
             "name": "utterance_end",
             "description": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
             "schema": {
+              "description": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
               "schema": {
                 "example": "1000",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "UtteranceEnd",
+              "nameOverride": "ListenUtteranceEnd",
               "title": "ListenUtteranceEnd",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -24314,7 +24407,9 @@
             "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
             "schema": {
               "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-              "generatedName": "ListenVadEvents",
+              "generatedName": "VadEvents",
+              "nameOverride": "ListenVadEvents",
+              "title": "ListenVadEvents",
               "values": [
                 {
                   "generatedName": "true",
@@ -24332,6 +24427,7 @@
                 "value": "false",
                 "casing": {}
               },
+              "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
@@ -24347,13 +24443,16 @@
             "name": "version",
             "description": "Version of an AI model to use",
             "schema": {
+              "description": "Version of an AI model to use",
               "schema": {
                 "default": "latest",
                 "example": "MODEL_VERSION",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Version",
+              "nameOverride": "ListenVersion",
               "title": "ListenVersion",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {
@@ -25470,12 +25569,15 @@
             "name": "Authorization",
             "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
             "schema": {
+              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>",
               "schema": {
                 "example": "token YOUR_DEEPGRAM_API_KEY",
                 "type": "string"
               },
-              "generatedName": "",
+              "generatedName": "Authorization",
+              "nameOverride": "AgentApiKey",
               "title": "AgentApiKey",
+              "groupName": [],
               "type": "primitive"
             },
             "source": {

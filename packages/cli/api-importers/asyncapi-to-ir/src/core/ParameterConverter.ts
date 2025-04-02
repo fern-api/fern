@@ -10,13 +10,14 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
+import { AsyncAPIParameter } from "../sharedTypes";
 
 export declare namespace ParameterConverter {
     export interface Args extends AbstractConverter.Args {
-        parameter: OpenAPIV3_1.ParameterObject;
+        parameter: AsyncAPIParameter;
     }
     export interface BaseParameterOutput {
         inlinedTypes?: Record<TypeId, TypeDeclaration>;
@@ -51,7 +52,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
 
     public static OPTIONAL_STRING = TypeReference.container(ContainerType.optional(ParameterConverter.STRING));
 
-    private readonly parameter: OpenAPIV3_1.ParameterObject;
+    private readonly parameter: AsyncAPIParameter;
 
     constructor({ breadcrumbs, parameter }: ParameterConverter.Args) {
         super({ breadcrumbs });
@@ -65,22 +66,39 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<ParameterConverter.Output | undefined> {
+        const fernOptionalExtension = new Extensions.FernOptionalExtension({
+            breadcrumbs: this.breadcrumbs,
+            parameter: this.parameter
+        });
+        const fernOptional = fernOptionalExtension.convert({ context, errorCollector });
+        const parameterIsOptional = fernOptional ?? this.parameter.required ?? false;
+        let maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined =
+            this.parameter.schema;
+        if (maybeParameterSchema == null) {
+            maybeParameterSchema = {
+                ...this.parameter,
+                type: "string",
+                enum: this.parameter.enum,
+                default: this.parameter.default,
+                example: this.parameter.examples?.[0],
+                examples: undefined,
+                required: undefined
+            };
+        }
+
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
-
-        if (this.parameter.schema != null) {
-            const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, "schema"],
-                schemaOrReference: this.parameter.schema,
-                wrapAsOptional: this.parameter.required == null || !this.parameter.required
-            });
-            const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
-            if (converted != null) {
-                typeReference = converted.type;
-                inlinedTypes = converted.inlinedTypes ?? {};
-            }
+        const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+            breadcrumbs: [...this.breadcrumbs, "schema"],
+            schemaIdOverride: this.parameter.name,
+            schemaOrReference: maybeParameterSchema,
+            wrapAsOptional: parameterIsOptional
+        });
+        const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        if (converted != null) {
+            typeReference = converted.type;
+            inlinedTypes = converted.inlinedTypes ?? {};
         }
-        // TODO (Eden): Correctly handle enum parameters
 
         const availability = await context.getAvailability({
             node: this.parameter,
@@ -100,7 +118,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                         docs: this.parameter.description,
                         valueType:
                             typeReference ??
-                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
+                            (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         allowMultiple: this.parameter.explode ?? false,
                         availability
                     },
@@ -117,7 +135,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                         docs: this.parameter.description,
                         valueType:
                             typeReference ??
-                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
+                            (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         env: undefined,
                         availability
                     },
@@ -131,7 +149,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                         docs: this.parameter.description,
                         valueType:
                             typeReference ??
-                            (this.parameter.required ? ParameterConverter.STRING : ParameterConverter.OPTIONAL_STRING),
+                            (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         location: "ENDPOINT",
                         variable: undefined
                     },

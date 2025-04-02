@@ -111,7 +111,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.field({
                     access: csharp.Access.Public,
                     get: true,
-                    init: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })

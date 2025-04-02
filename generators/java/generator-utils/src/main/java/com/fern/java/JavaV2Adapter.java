@@ -1,8 +1,12 @@
 package com.fern.java;
 
+import com.fern.generator.exec.model.logging.GeneratorUpdate;
+import com.fern.generator.exec.model.logging.LogLevel;
+import com.fern.generator.exec.model.logging.LogUpdate;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +22,17 @@ public class JavaV2Adapter {
      *
      * @param args Arguments to invoke the Java V2 generator.
      */
-    public static void run(JavaV2Arguments args) {
+    public static void run(DefaultGeneratorExecClient execClient, JavaV2Arguments args) {
+        log(execClient, "Starting java v2 sdk generation");
         try {
+            log(execClient, "Generating command for java v2 sdk generation");
             String[] command = new String[] {
                 NODE, args.executable().toString(), args.generatorConfig().toString()
             };
+            log(execClient, "Generated command for java v2 sdk generation: " + Arrays.asList(command));
+            log(execClient, "Calling java v2 generator");
             Process v2 = Runtime.getRuntime().exec(command);
+            log(execClient, "Called java v2 generator");
 
             if (args.enableLogging()) {
                 try (InputStream v2Result = v2.getInputStream()) {
@@ -35,14 +44,29 @@ public class JavaV2Adapter {
                 }
             }
 
+            log(execClient, "Awaiting java v2 generator");
             int exitCode = v2.waitFor();
+            log(execClient, "Got exit code from java v2 generator: " + exitCode);
             if (exitCode == 0) {
                 log.info("Successfully ran Java V2 generator");
+                execClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
+                        .level(LogLevel.INFO)
+                        .message("Successfully ran Java V2 generator")
+                        .build()));
             } else {
+                execClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
+                        .level(LogLevel.ERROR)
+                        .message("Java V2 generator exited with code " + exitCode)
+                        .build()));
                 throw new RuntimeException("Java V2 generator exited with code " + exitCode);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void log(DefaultGeneratorExecClient execClient, String message) {
+        execClient.sendUpdate(GeneratorUpdate.log(
+                LogUpdate.builder().level(LogLevel.DEBUG).message(message).build()));
     }
 }

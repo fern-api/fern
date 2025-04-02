@@ -1,16 +1,17 @@
+from __future__ import annotations
+
 from typing import Callable, Dict, List, Optional, Set
-
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
-from ordered_set import OrderedSet
-
-from fern_python.codegen import AST, Filepath
-from fern_python.declaration_referencer import AbstractDeclarationReferencer
-from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
+from fern_python.codegen import AST, Filepath
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
+from ordered_set import OrderedSet
+
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorConfig
 
 
 class PydanticGeneratorContextImpl(PydanticGeneratorContext):
@@ -59,9 +60,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             ):
                 self._non_union_self_referencing_type_ids.add(id)
 
-        self._types_with_non_union_self_referencing_dependencies: Dict[
-            ir_types.TypeId, OrderedSet[ir_types.TypeId]
-        ] = dict()
+        self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
+            dict()
+        )
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
             for referenced_id in ordered_reference_types:

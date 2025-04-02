@@ -13,7 +13,7 @@ describe("class", () => {
             name: "Car"
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("fields with annotation and initializer", async () => {
@@ -29,7 +29,7 @@ describe("class", () => {
             })
         );
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("inherits from one parent class", async () => {
@@ -38,7 +38,7 @@ describe("class", () => {
             extends_: [python.reference({ name: "Car" })]
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("inherits from two parent classes", async () => {
@@ -47,7 +47,7 @@ describe("class", () => {
             extends_: [python.reference({ name: "ElectricCar" }), python.reference({ name: "GasCar" })]
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("inherits from a parent class imported from another module", async () => {
@@ -61,7 +61,7 @@ describe("class", () => {
             ]
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("class with a decorator", async () => {
@@ -74,7 +74,7 @@ describe("class", () => {
             ]
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(clazz.getReferences().length).toBe(1);
     });
 
@@ -102,7 +102,7 @@ describe("class", () => {
         clazz.add(innerClassDef);
 
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("class with generic parent reference", async () => {
@@ -122,7 +122,7 @@ describe("class", () => {
             ]
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
 
         expect(clazz.getReferences().length).toBe(2);
     });
@@ -172,7 +172,7 @@ describe("class", () => {
         );
 
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Renders docs correctly", async () => {
@@ -181,7 +181,7 @@ describe("class", () => {
             docs: "This is a class"
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Renders docs with multi-line strings correctly", async () => {
@@ -190,6 +190,6 @@ describe("class", () => {
             docs: "This is a class.\nI'm on a new line.\nSo am I."
         });
         clazz.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 });

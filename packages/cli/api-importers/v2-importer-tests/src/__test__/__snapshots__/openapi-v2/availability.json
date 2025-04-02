@@ -346,50 +346,11 @@
     }
   },
   "services": {
-    "": {
+    "service_": {
       "name": {
         "fernFilepath": {
-          "allParts": [
-            {
-              "originalName": "",
-              "camelCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "snakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "",
-                "safeName": ""
-              },
-              "pascalCase": {
-                "unsafeName": "",
-                "safeName": ""
-              }
-            }
-          ],
-          "packagePath": [],
-          "file": {
-            "originalName": "",
-            "camelCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "snakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "",
-              "safeName": ""
-            },
-            "pascalCase": {
-              "unsafeName": "",
-              "safeName": ""
-            }
-          }
+          "allParts": [],
+          "packagePath": []
         }
       },
       "basePath": {
@@ -400,7 +361,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": ".getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
+          "id": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "method": "GET",
           "name": {
             "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
@@ -1625,7 +1586,7 @@
           ]
         },
         {
-          "id": ".postSuccessRef",
+          "id": "postSuccessRef",
           "method": "POST",
           "name": {
             "originalName": "postSuccessRef",
@@ -2043,7 +2004,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".postSuccessInlinePropertyDeprecation",
+          "id": "postSuccessInlinePropertyDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlinePropertyDeprecation",
@@ -2454,7 +2415,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".postSuccessInlineObjectDeprecation",
+          "id": "postSuccessInlineObjectDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineObjectDeprecation",
@@ -2785,7 +2746,7 @@
           "allPathParameters": []
         },
         {
-          "id": ".postSuccessInlineBetaBody",
+          "id": "postSuccessInlineBetaBody",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineBetaBody",
@@ -3133,7 +3094,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "",
+    "service": "service_",
     "types": [
       "DeprecatedParam",
       "Settings",

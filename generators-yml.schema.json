@@ -1463,6 +1463,16 @@
             }
           ]
         },
+        "respect-forward-compatible-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "use-bytes-for-binary-response": {
           "oneOf": [
             {
@@ -1497,6 +1507,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional-properties-defaults-to": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

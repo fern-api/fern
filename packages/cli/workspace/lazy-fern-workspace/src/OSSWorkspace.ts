@@ -32,6 +32,7 @@ export declare namespace OSSWorkspace {
 }
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
+    public type: string = "oss";
     public specs: Spec[];
     public sources: IdentifiableSource[];
 
@@ -50,6 +51,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.useBytesForBinaryResponse),
+            respectForwardCompatibleEnums: specs
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
+
+                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
+                .some((spec) => spec.settings?.respectForwardCompatibleEnums),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -106,6 +112,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             let result: IntermediateRepresentation | undefined = undefined;
             if (document.type === "openapi") {
                 const converterContext = new OpenAPIConverterContext3_1({
+                    namespace: document.namespace,
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
@@ -118,6 +125,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
             } else if (document.type === "asyncapi") {
                 const converterContext = new AsyncAPIConverterContext({
+                    namespace: document.namespace,
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,

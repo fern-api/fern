@@ -111,7 +111,7 @@ import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
 // Client level
 SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

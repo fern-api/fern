@@ -17,19 +17,13 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return ContainerValue(root=_ContainerValue.List(type="list", value=value))  # type: ignore
         else:
-            return ContainerValue(
-                __root__=_ContainerValue.List(type="list", value=value)
-            )  # type: ignore
+            return ContainerValue(__root__=_ContainerValue.List(type="list", value=value))  # type: ignore
 
     def optional(self, value: typing.Optional[FieldValue]) -> ContainerValue:
         if IS_PYDANTIC_V2:
-            return ContainerValue(
-                root=_ContainerValue.Optional(type="optional", value=value)
-            )  # type: ignore
+            return ContainerValue(root=_ContainerValue.Optional(type="optional", value=value))  # type: ignore
         else:
-            return ContainerValue(
-                __root__=_ContainerValue.Optional(type="optional", value=value)
-            )  # type: ignore
+            return ContainerValue(__root__=_ContainerValue.Optional(type="optional", value=value))  # type: ignore
 
 
 class ContainerValue(UniversalRootModel):
@@ -37,23 +31,17 @@ class ContainerValue(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_ContainerValue.List, _ContainerValue.Optional],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
+        def get_as_union(self) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_ContainerValue.List, _ContainerValue.Optional],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic.Field(discriminator="type")
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
+        def get_as_union(self) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

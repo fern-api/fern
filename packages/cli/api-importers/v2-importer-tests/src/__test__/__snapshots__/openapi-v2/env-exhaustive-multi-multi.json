@@ -585,7 +585,7 @@
   },
   "errors": {},
   "services": {
-    "alpha": {
+    "service_alpha": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -732,7 +732,7 @@
         }
       ]
     },
-    "beta": {
+    "service_beta": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -903,7 +903,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "alpha",
+            "camelCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "snakeCase": {
+              "unsafeName": "alpha",
+              "safeName": "alpha"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ALPHA",
+              "safeName": "ALPHA"
+            },
+            "pascalCase": {
+              "unsafeName": "Alpha",
+              "safeName": "Alpha"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "alpha",
@@ -925,7 +945,7 @@
           }
         }
       },
-      "service": "alpha",
+      "service": "service_alpha",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -952,7 +972,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel",
+            "camelCase": {
+              "unsafeName": "testChannel",
+              "safeName": "testChannel"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel",
+              "safeName": "test_channel"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL",
+              "safeName": "TEST_CHANNEL"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel",
+              "safeName": "TestChannel"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel",
@@ -1001,7 +1041,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannel2",
+            "camelCase": {
+              "unsafeName": "testChannel2",
+              "safeName": "testChannel2"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channel_2",
+              "safeName": "test_channel_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNEL_2",
+              "safeName": "TEST_CHANNEL_2"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannel2",
+              "safeName": "TestChannel2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannel2",
@@ -1050,7 +1110,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "beta",
+            "camelCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "snakeCase": {
+              "unsafeName": "beta",
+              "safeName": "beta"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BETA",
+              "safeName": "BETA"
+            },
+            "pascalCase": {
+              "unsafeName": "Beta",
+              "safeName": "Beta"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "beta",
@@ -1072,7 +1152,7 @@
           }
         }
       },
-      "service": "beta",
+      "service": "service_beta",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1099,7 +1179,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannels",
+            "camelCase": {
+              "unsafeName": "testChannels",
+              "safeName": "testChannels"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channels",
+              "safeName": "test_channels"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNELS",
+              "safeName": "TEST_CHANNELS"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannels",
+              "safeName": "TestChannels"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannels",
@@ -1148,7 +1248,27 @@
         }
       },
       "fernFilepath": {
-        "allParts": [],
+        "allParts": [
+          {
+            "originalName": "testChannels2",
+            "camelCase": {
+              "unsafeName": "testChannels2",
+              "safeName": "testChannels2"
+            },
+            "snakeCase": {
+              "unsafeName": "test_channels_2",
+              "safeName": "test_channels_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_CHANNELS_2",
+              "safeName": "TEST_CHANNELS_2"
+            },
+            "pascalCase": {
+              "unsafeName": "TestChannels2",
+              "safeName": "TestChannels2"
+            }
+          }
+        ],
         "packagePath": [],
         "file": {
           "originalName": "testChannels2",
@@ -1220,25 +1340,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "sendMessage",
+                "originalName": "testChannel_sendMessage",
                 "camelCase": {
-                  "unsafeName": "sendMessage",
-                  "safeName": "sendMessage"
+                  "unsafeName": "testChannelSendMessage",
+                  "safeName": "testChannelSendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "send_message",
-                  "safeName": "send_message"
+                  "unsafeName": "test_channel_send_message",
+                  "safeName": "test_channel_send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "SEND_MESSAGE",
-                  "safeName": "SEND_MESSAGE"
+                  "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
+                  "safeName": "TEST_CHANNEL_SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "SendMessage",
-                  "safeName": "SendMessage"
+                  "unsafeName": "TestChannelSendMessage",
+                  "safeName": "TestChannelSendMessage"
                 }
               },
-              "typeId": "sendMessage",
+              "typeId": "testChannel_sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -1246,7 +1366,67 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send",
+              "body": {
+                "jsonExample": "string",
+                "shape": {
+                  "shape": {
+                    "value": {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "alias"
+                  },
+                  "typeName": {
+                    "typeId": "testChannel_sendMessage",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "testChannel_sendMessage",
+                      "camelCase": {
+                        "unsafeName": "testChannelSendMessage",
+                        "safeName": "testChannelSendMessage"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "test_channel_send_message",
+                        "safeName": "test_channel_send_message"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
+                        "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TestChannelSendMessage",
+                        "safeName": "TestChannelSendMessage"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/test"
+        }
+      ]
     },
     "testChannel2": {
       "name": {
@@ -1290,25 +1470,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "sendMessage",
+                "originalName": "testChannel2_sendMessage",
                 "camelCase": {
-                  "unsafeName": "sendMessage",
-                  "safeName": "sendMessage"
+                  "unsafeName": "testChannel2SendMessage",
+                  "safeName": "testChannel2SendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "send_message",
-                  "safeName": "send_message"
+                  "unsafeName": "test_channel_2_send_message",
+                  "safeName": "test_channel_2_send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "SEND_MESSAGE",
-                  "safeName": "SEND_MESSAGE"
+                  "unsafeName": "TEST_CHANNEL_2_SEND_MESSAGE",
+                  "safeName": "TEST_CHANNEL_2_SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "SendMessage",
-                  "safeName": "SendMessage"
+                  "unsafeName": "TestChannel2SendMessage",
+                  "safeName": "TestChannel2SendMessage"
                 }
               },
-              "typeId": "sendMessage",
+              "typeId": "testChannel2_sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -1316,7 +1496,67 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send2",
+              "body": {
+                "jsonExample": "string",
+                "shape": {
+                  "shape": {
+                    "value": {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "alias"
+                  },
+                  "typeName": {
+                    "typeId": "testChannel2_sendMessage",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "testChannel2_sendMessage",
+                      "camelCase": {
+                        "unsafeName": "testChannel2SendMessage",
+                        "safeName": "testChannel2SendMessage"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "test_channel_2_send_message",
+                        "safeName": "test_channel_2_send_message"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TEST_CHANNEL_2_SEND_MESSAGE",
+                        "safeName": "TEST_CHANNEL_2_SEND_MESSAGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TestChannel2SendMessage",
+                        "safeName": "TestChannel2SendMessage"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/test2"
+        }
+      ]
     },
     "testChannels": {
       "name": {
@@ -1360,25 +1600,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "sendMessage",
+                "originalName": "testChannels_sendMessage",
                 "camelCase": {
-                  "unsafeName": "sendMessage",
-                  "safeName": "sendMessage"
+                  "unsafeName": "testChannelsSendMessage",
+                  "safeName": "testChannelsSendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "send_message",
-                  "safeName": "send_message"
+                  "unsafeName": "test_channels_send_message",
+                  "safeName": "test_channels_send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "SEND_MESSAGE",
-                  "safeName": "SEND_MESSAGE"
+                  "unsafeName": "TEST_CHANNELS_SEND_MESSAGE",
+                  "safeName": "TEST_CHANNELS_SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "SendMessage",
-                  "safeName": "SendMessage"
+                  "unsafeName": "TestChannelsSendMessage",
+                  "safeName": "TestChannelsSendMessage"
                 }
               },
-              "typeId": "sendMessage",
+              "typeId": "testChannels_sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -1386,7 +1626,67 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send",
+              "body": {
+                "jsonExample": "string",
+                "shape": {
+                  "shape": {
+                    "value": {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "alias"
+                  },
+                  "typeName": {
+                    "typeId": "testChannels_sendMessage",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "testChannels_sendMessage",
+                      "camelCase": {
+                        "unsafeName": "testChannelsSendMessage",
+                        "safeName": "testChannelsSendMessage"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "test_channels_send_message",
+                        "safeName": "test_channels_send_message"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TEST_CHANNELS_SEND_MESSAGE",
+                        "safeName": "TEST_CHANNELS_SEND_MESSAGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TestChannelsSendMessage",
+                        "safeName": "TestChannelsSendMessage"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/test"
+        }
+      ]
     },
     "testChannels2": {
       "name": {
@@ -1430,25 +1730,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "sendMessage",
+                "originalName": "testChannels2_sendMessage",
                 "camelCase": {
-                  "unsafeName": "sendMessage",
-                  "safeName": "sendMessage"
+                  "unsafeName": "testChannels2SendMessage",
+                  "safeName": "testChannels2SendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "send_message",
-                  "safeName": "send_message"
+                  "unsafeName": "test_channels_2_send_message",
+                  "safeName": "test_channels_2_send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "SEND_MESSAGE",
-                  "safeName": "SEND_MESSAGE"
+                  "unsafeName": "TEST_CHANNELS_2_SEND_MESSAGE",
+                  "safeName": "TEST_CHANNELS_2_SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "SendMessage",
-                  "safeName": "SendMessage"
+                  "unsafeName": "TestChannels2SendMessage",
+                  "safeName": "TestChannels2SendMessage"
                 }
               },
-              "typeId": "sendMessage",
+              "typeId": "testChannels2_sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -1456,7 +1756,67 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send2",
+              "body": {
+                "jsonExample": "string",
+                "shape": {
+                  "shape": {
+                    "value": {
+                      "jsonExample": "string",
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "string"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "alias"
+                  },
+                  "typeName": {
+                    "typeId": "testChannels2_sendMessage",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "testChannels2_sendMessage",
+                      "camelCase": {
+                        "unsafeName": "testChannels2SendMessage",
+                        "safeName": "testChannels2SendMessage"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "test_channels_2_send_message",
+                        "safeName": "test_channels_2_send_message"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TEST_CHANNELS_2_SEND_MESSAGE",
+                        "safeName": "TEST_CHANNELS_2_SEND_MESSAGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TestChannels2SendMessage",
+                        "safeName": "TestChannels2SendMessage"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/test2"
+        }
+      ]
     }
   },
   "rootPackage": {

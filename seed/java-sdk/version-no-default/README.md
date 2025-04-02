@@ -107,7 +107,7 @@ import com.seed.version.core.RequestOptions;
 // Client level
 SeedVersionClient client = SeedVersionClient
     .builder()
-    .tiemout(10)
+    .timeout(10)
     .build();
 
 // Request level

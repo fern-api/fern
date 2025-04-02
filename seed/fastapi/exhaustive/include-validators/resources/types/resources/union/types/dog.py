@@ -30,39 +30,23 @@ class Dog(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[Dog.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[Dog.Validators._RootValidator]
-        ] = []
-        _name_pre_validators: typing.ClassVar[
-            typing.List[Dog.Validators.PreNameValidator]
-        ] = []
-        _name_post_validators: typing.ClassVar[
-            typing.List[Dog.Validators.NameValidator]
-        ] = []
-        _likes_to_woof_pre_validators: typing.ClassVar[
-            typing.List[Dog.Validators.PreLikesToWoofValidator]
-        ] = []
-        _likes_to_woof_post_validators: typing.ClassVar[
-            typing.List[Dog.Validators.LikesToWoofValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[Dog.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Dog.Validators._RootValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Dog.Validators.PreNameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[Dog.Validators.NameValidator]] = []
+        _likes_to_woof_pre_validators: typing.ClassVar[typing.List[Dog.Validators.PreLikesToWoofValidator]] = []
+        _likes_to_woof_post_validators: typing.ClassVar[typing.List[Dog.Validators.LikesToWoofValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [Dog.Validators._RootValidator], Dog.Validators._RootValidator
-        ]: ...
+        ) -> typing.Callable[[Dog.Validators._RootValidator], Dog.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Dog.Validators._PreRootValidator], Dog.Validators._PreRootValidator
-        ]: ...
+        ) -> typing.Callable[[Dog.Validators._PreRootValidator], Dog.Validators._PreRootValidator]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -78,40 +62,22 @@ class Dog(UniversalBaseModel):
         @classmethod
         def field(
             cls, field_name: typing.Literal["name"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Dog.Validators.PreNameValidator], Dog.Validators.PreNameValidator
-        ]: ...
+        ) -> typing.Callable[[Dog.Validators.PreNameValidator], Dog.Validators.PreNameValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["name"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Dog.Validators.NameValidator], Dog.Validators.NameValidator
-        ]: ...
+            cls, field_name: typing.Literal["name"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Dog.Validators.NameValidator], Dog.Validators.NameValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["likes_to_woof"],
-            *,
-            pre: typing.Literal[True],
-        ) -> typing.Callable[
-            [Dog.Validators.PreLikesToWoofValidator],
-            Dog.Validators.PreLikesToWoofValidator,
-        ]: ...
+            cls, field_name: typing.Literal["likes_to_woof"], *, pre: typing.Literal[True]
+        ) -> typing.Callable[[Dog.Validators.PreLikesToWoofValidator], Dog.Validators.PreLikesToWoofValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["likes_to_woof"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Dog.Validators.LikesToWoofValidator], Dog.Validators.LikesToWoofValidator
-        ]: ...
+            cls, field_name: typing.Literal["likes_to_woof"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Dog.Validators.LikesToWoofValidator], Dog.Validators.LikesToWoofValidator]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -130,17 +96,13 @@ class Dog(UniversalBaseModel):
             return decorator
 
         class PreNameValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Dog.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Dog.Partial) -> typing.Any: ...
 
         class NameValidator(typing.Protocol):
             def __call__(self, __v: str, __values: Dog.Partial) -> str: ...
 
         class PreLikesToWoofValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Dog.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Dog.Partial) -> typing.Any: ...
 
         class LikesToWoofValidator(typing.Protocol):
             def __call__(self, __v: bool, __values: Dog.Partial) -> bool: ...
@@ -188,9 +150,7 @@ class Dog(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

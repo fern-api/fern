@@ -1,5 +1,141 @@
 {
-  "types": {},
+  "types": {
+    "type_realtime:SendEvent": {
+      "name": "SendEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "sendText",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "sendParam",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:ReceiveEvent": {
+      "name": "ReceiveEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "alpha",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "beta",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:SendEvent2": {
+      "name": "SendEvent2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "sendText2",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "sendParam2",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:ReceiveEvent2": {
+      "name": "ReceiveEvent2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "gamma",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "delta",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "epsilon",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:ReceiveEvent3": {
+      "name": "ReceiveEvent3",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "receiveText3",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
   "subpackages": {
     "subpackage_realtime": {
       "subpackageId": "subpackage_realtime",
@@ -46,8 +182,10 @@
               "type": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "type_realtime:Model"
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -72,10 +210,20 @@
               "body": {
                 "type": "reference",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "id",
+                  "value": "type_realtime:SendEvent"
+                }
+              }
+            },
+            {
+              "type": "send2",
+              "displayName": "Send2",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:SendEvent2"
                 }
               }
             },
@@ -84,19 +232,35 @@
               "displayName": "Receive",
               "origin": "server",
               "body": {
-                "type": "object",
-                "extends": [],
-                "properties": [
-                  {
-                    "key": "text",
-                    "valueType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                ]
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:ReceiveEvent"
+                }
+              }
+            },
+            {
+              "type": "receive2",
+              "displayName": "Receive2",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:ReceiveEvent2"
+                }
+              }
+            },
+            {
+              "type": "receive3",
+              "displayName": "Receive3",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:ReceiveEvent3"
+                }
               }
             }
           ],
@@ -112,24 +276,69 @@
               "messages": [
                 {
                   "type": "send",
-                  "body": "uvxcdv12344412b"
+                  "body": {
+                    "sendText": "uvxcdv12344412b",
+                    "sendParam": 123
+                  }
                 },
                 {
                   "type": "receive",
                   "body": {
-                    "text": "The weather for today..."
+                    "alpha": "The weather for today...",
+                    "beta": 123
                   }
                 },
                 {
+                  "type": "send2",
+                  "body": {
+                    "sendText2": "uvxcdv12344412b",
+                    "sendParam2": true
+                  }
+                },
+                {
+                  "type": "receive2",
+                  "body": {
+                    "gamma": "The weather for today...",
+                    "delta": 123,
+                    "epsilon": true
+                  }
+                }
+              ]
+            },
+            {
+              "path": "/realtime/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
                   "type": "send",
-                  "body": "uvxcdv12344412b"
+                  "body": {
+                    "sendText": "sendText",
+                    "sendParam": 1
+                  }
+                },
+                {
+                  "type": "receive",
+                  "body": {
+                    "alpha": "alpha",
+                    "beta": 1
+                  }
                 }
               ]
             }
           ]
         }
       ],
-      "types": [],
+      "types": [
+        "type_realtime:SendEvent",
+        "type_realtime:ReceiveEvent",
+        "type_realtime:SendEvent2",
+        "type_realtime:ReceiveEvent2",
+        "type_realtime:ReceiveEvent3"
+      ],
       "subpackages": []
     }
   },
