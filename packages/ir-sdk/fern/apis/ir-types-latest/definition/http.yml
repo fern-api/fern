@@ -8,6 +8,7 @@ imports:
   types: types.yml
   variables: variables.yml
   dynamicSnippets: dynamic/snippets.yml
+
 types:
   HttpService:
     properties:
@@ -20,6 +21,7 @@ types:
       pathParameters: list<PathParameter>
       encoding: optional<types.Encoding>
       transport: optional<Transport>
+
   DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
