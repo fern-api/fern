@@ -12,11 +12,11 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV3 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { ChannelConverter } from "../../converters/ChannelConverter";
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
 
 export declare namespace ChannelConverter3_0 {
-    export interface Args extends ChannelConverter.Args<AsyncAPIV3.ChannelV3> {
+    export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
         operations: Record<string, AsyncAPIV3.Operation>;
     }
 }
@@ -30,7 +30,7 @@ const LOCATION_PREFIX = "$message.";
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
 const SERVER_REFERENCE_PREFIX = "#/servers/";
 
-export class ChannelConverter3_0 extends ChannelConverter<AsyncAPIV3.ChannelV3> {
+export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.ChannelV3> {
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
@@ -45,7 +45,7 @@ export class ChannelConverter3_0 extends ChannelConverter<AsyncAPIV3.ChannelV3> 
     }: {
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): Promise<ChannelConverter.Output | undefined> {
+    }): Promise<AbstractChannelConverter.Output | undefined> {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];

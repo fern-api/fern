@@ -13,14 +13,14 @@ import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { ChannelConverter } from "../../converters/ChannelConverter";
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
 
 export declare namespace ChannelConverter2_X {
-    export interface Args extends ChannelConverter.Args<AsyncAPIV2.ChannelV2> {}
+    export interface Args extends AbstractChannelConverter.Args<AsyncAPIV2.ChannelV2> {}
 }
 
-export class ChannelConverter2_X extends ChannelConverter<AsyncAPIV2.ChannelV2> {
+export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
     constructor({ breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
@@ -33,7 +33,7 @@ export class ChannelConverter2_X extends ChannelConverter<AsyncAPIV2.ChannelV2> 
     }: {
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): Promise<ChannelConverter.Output | undefined> {
+    }): Promise<AbstractChannelConverter.Output | undefined> {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];

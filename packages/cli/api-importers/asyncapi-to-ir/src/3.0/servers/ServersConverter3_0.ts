@@ -1,63 +1,24 @@
-import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
 
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter";
 import { ServerV3 } from "../types";
 
-export declare namespace ServersConverter {
-    export interface Args extends AbstractConverter.Args {
-        servers?: Record<string, ServerV3>;
-    }
-}
-
-export class ServersConverter3_0 extends AbstractConverter<AsyncAPIConverterContext, EnvironmentsConfig | undefined> {
-    private readonly servers?: Record<string, ServerV3>;
-
-    constructor({ breadcrumbs, servers }: ServersConverter.Args) {
-        super({ breadcrumbs });
-        this.servers = servers;
+export class ServersConverter3_0 extends AbstractServerConverter<ServerV3> {
+    constructor({ breadcrumbs, servers }: AbstractServerConverter.Args<ServerV3>) {
+        super({ breadcrumbs, servers });
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AsyncAPIConverterContext;
-        errorCollector: ErrorCollector;
-    }): EnvironmentsConfig | undefined {
-        if (this.servers == null || Object.keys(this.servers).length === 0) {
-            return undefined;
-        }
-
-        const environments: SingleBaseUrlEnvironment[] = [];
-        let defaultEnvironmentId: string | undefined;
-
-        for (const [serverId, server] of Object.entries(this.servers)) {
-            const environment: SingleBaseUrlEnvironment = {
-                id: serverId,
-                name: context.casingsGenerator.generateName(serverId),
-                url: this.constructServerUrl(server.protocol, server.host),
-                docs: undefined
-            };
-            environments.push(environment);
-
-            if (defaultEnvironmentId == null) {
-                defaultEnvironmentId = environment.id;
-            }
-        }
-
+    public buildSingleBaseUrlEnvironment(
+        context: AsyncAPIConverterContext,
+        serverId: string,
+        server: ServerV3
+    ): SingleBaseUrlEnvironment {
         return {
-            defaultEnvironment: defaultEnvironmentId,
-            environments: Environments.singleBaseUrl({
-                environments
-            })
+            id: serverId,
+            name: context.casingsGenerator.generateName(serverId),
+            url: this.constructServerUrl(server.protocol, server.host),
+            docs: undefined
         };
-    }
-
-    private constructServerUrl(protocol: string, host: string): string {
-        if (host.includes("://")) {
-            return host;
-        }
-        return `${protocol}://${host}`;
     }
 }

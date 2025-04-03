@@ -3175,32 +3175,38 @@
               "wireValue": "options"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetSpeechOptionsRequest",
+                    "camelCase": {
+                      "unsafeName": "getSpeechOptionsRequest",
+                      "safeName": "getSpeechOptionsRequest"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_speech_options_request",
+                      "safeName": "get_speech_options_request"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
+                      "safeName": "GET_SPEECH_OPTIONS_REQUEST"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetSpeechOptionsRequest",
+                      "safeName": "GetSpeechOptionsRequest"
+                    }
+                  },
+                  "typeId": "GetSpeechOptionsRequest",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetSpeechOptionsRequest",
-                "camelCase": {
-                  "unsafeName": "getSpeechOptionsRequest",
-                  "safeName": "getSpeechOptionsRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_speech_options_request",
-                  "safeName": "get_speech_options_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
-                  "safeName": "GET_SPEECH_OPTIONS_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetSpeechOptionsRequest",
-                  "safeName": "GetSpeechOptionsRequest"
-                }
-              },
-              "typeId": "GetSpeechOptionsRequest",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -3583,32 +3589,38 @@
               "wireValue": "speech_marks"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SpeechMarks",
+                    "camelCase": {
+                      "unsafeName": "speechMarks",
+                      "safeName": "speechMarks"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "speech_marks",
+                      "safeName": "speech_marks"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SPEECH_MARKS",
+                      "safeName": "SPEECH_MARKS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SpeechMarks",
+                      "safeName": "SpeechMarks"
+                    }
+                  },
+                  "typeId": "SpeechMarks",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "SpeechMarks",
-                "camelCase": {
-                  "unsafeName": "speechMarks",
-                  "safeName": "speechMarks"
-                },
-                "snakeCase": {
-                  "unsafeName": "speech_marks",
-                  "safeName": "speech_marks"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SPEECH_MARKS",
-                  "safeName": "SPEECH_MARKS"
-                },
-                "pascalCase": {
-                  "unsafeName": "SpeechMarks",
-                  "safeName": "SpeechMarks"
-                }
-              },
-              "typeId": "SpeechMarks",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -4050,32 +4062,38 @@
               "wireValue": "options"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetStreamOptionsRequest",
+                    "camelCase": {
+                      "unsafeName": "getStreamOptionsRequest",
+                      "safeName": "getStreamOptionsRequest"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_stream_options_request",
+                      "safeName": "get_stream_options_request"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
+                      "safeName": "GET_STREAM_OPTIONS_REQUEST"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetStreamOptionsRequest",
+                      "safeName": "GetStreamOptionsRequest"
+                    }
+                  },
+                  "typeId": "GetStreamOptionsRequest",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "GetStreamOptionsRequest",
-                "camelCase": {
-                  "unsafeName": "getStreamOptionsRequest",
-                  "safeName": "getStreamOptionsRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_stream_options_request",
-                  "safeName": "get_stream_options_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
-                  "safeName": "GET_STREAM_OPTIONS_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetStreamOptionsRequest",
-                  "safeName": "GetStreamOptionsRequest"
-                }
-              },
-              "typeId": "GetStreamOptionsRequest",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           },
           {
@@ -6723,7 +6741,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "c9b110a4",
+                "id": "16ccfe11",
                 "url": "/v1/audio/speech",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -6734,7 +6752,6 @@
                 "request": {
                   "jsonExample": {
                     "input": "input",
-                    "options": {},
                     "voice_id": "voice_id"
                   },
                   "shape": {
@@ -7092,108 +7109,39 @@
                             }
                           },
                           "value": {
-                            "jsonExample": {},
                             "shape": {
-                              "shape": {
-                                "properties": [
-                                  {
-                                    "name": {
-                                      "name": {
-                                        "originalName": "loudness_normalization",
-                                        "camelCase": {
-                                          "unsafeName": "loudnessNormalization",
-                                          "safeName": "loudnessNormalization"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "loudness_normalization",
-                                          "safeName": "loudness_normalization"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "LOUDNESS_NORMALIZATION",
-                                          "safeName": "LOUDNESS_NORMALIZATION"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "LoudnessNormalization",
-                                          "safeName": "LoudnessNormalization"
-                                        }
-                                      },
-                                      "wireValue": "loudness_normalization"
+                              "container": {
+                                "valueType": {
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": []
+                                  },
+                                  "name": {
+                                    "originalName": "GetSpeechOptionsRequest",
+                                    "camelCase": {
+                                      "unsafeName": "getSpeechOptionsRequest",
+                                      "safeName": "getSpeechOptionsRequest"
                                     },
-                                    "originalTypeDeclaration": {
-                                      "typeId": "GetSpeechOptionsRequest",
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                      },
-                                      "name": {
-                                        "originalName": "GetSpeechOptionsRequest",
-                                        "camelCase": {
-                                          "unsafeName": "getSpeechOptionsRequest",
-                                          "safeName": "getSpeechOptionsRequest"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "get_speech_options_request",
-                                          "safeName": "get_speech_options_request"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
-                                          "safeName": "GET_SPEECH_OPTIONS_REQUEST"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "GetSpeechOptionsRequest",
-                                          "safeName": "GetSpeechOptionsRequest"
-                                        }
-                                      }
+                                    "snakeCase": {
+                                      "unsafeName": "get_speech_options_request",
+                                      "safeName": "get_speech_options_request"
                                     },
-                                    "value": {
-                                      "shape": {
-                                        "container": {
-                                          "valueType": {
-                                            "primitive": {
-                                              "v1": "BOOLEAN",
-                                              "v2": {
-                                                "default": true,
-                                                "type": "boolean"
-                                              }
-                                            },
-                                            "type": "primitive"
-                                          },
-                                          "type": "optional"
-                                        },
-                                        "type": "container"
-                                      }
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
+                                      "safeName": "GET_SPEECH_OPTIONS_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "GetSpeechOptionsRequest",
+                                      "safeName": "GetSpeechOptionsRequest"
                                     }
-                                  }
-                                ],
-                                "type": "object"
-                              },
-                              "typeName": {
-                                "typeId": "GetSpeechOptionsRequest",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
+                                  },
+                                  "typeId": "GetSpeechOptionsRequest",
+                                  "inline": false,
+                                  "type": "named"
                                 },
-                                "name": {
-                                  "originalName": "GetSpeechOptionsRequest",
-                                  "camelCase": {
-                                    "unsafeName": "getSpeechOptionsRequest",
-                                    "safeName": "getSpeechOptionsRequest"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "get_speech_options_request",
-                                    "safeName": "get_speech_options_request"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "GET_SPEECH_OPTIONS_REQUEST",
-                                    "safeName": "GET_SPEECH_OPTIONS_REQUEST"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "GetSpeechOptionsRequest",
-                                    "safeName": "GetSpeechOptionsRequest"
-                                  }
-                                }
+                                "type": "optional"
                               },
-                              "type": "named"
+                              "type": "container"
                             }
                           }
                         },
@@ -7430,7 +7378,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "f2563096",
+                "id": "2398a657",
                 "url": "/v1/audio/stream",
                 "endpointHeaders": [
                   {
@@ -7523,7 +7471,6 @@
                 "request": {
                   "jsonExample": {
                     "input": "input",
-                    "options": {},
                     "voice_id": "voice_id"
                   },
                   "shape": {
@@ -7795,108 +7742,39 @@
                             }
                           },
                           "value": {
-                            "jsonExample": {},
                             "shape": {
-                              "shape": {
-                                "properties": [
-                                  {
-                                    "name": {
-                                      "name": {
-                                        "originalName": "loudness_normalization",
-                                        "camelCase": {
-                                          "unsafeName": "loudnessNormalization",
-                                          "safeName": "loudnessNormalization"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "loudness_normalization",
-                                          "safeName": "loudness_normalization"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "LOUDNESS_NORMALIZATION",
-                                          "safeName": "LOUDNESS_NORMALIZATION"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "LoudnessNormalization",
-                                          "safeName": "LoudnessNormalization"
-                                        }
-                                      },
-                                      "wireValue": "loudness_normalization"
+                              "container": {
+                                "valueType": {
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": []
+                                  },
+                                  "name": {
+                                    "originalName": "GetStreamOptionsRequest",
+                                    "camelCase": {
+                                      "unsafeName": "getStreamOptionsRequest",
+                                      "safeName": "getStreamOptionsRequest"
                                     },
-                                    "originalTypeDeclaration": {
-                                      "typeId": "GetStreamOptionsRequest",
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                      },
-                                      "name": {
-                                        "originalName": "GetStreamOptionsRequest",
-                                        "camelCase": {
-                                          "unsafeName": "getStreamOptionsRequest",
-                                          "safeName": "getStreamOptionsRequest"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "get_stream_options_request",
-                                          "safeName": "get_stream_options_request"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
-                                          "safeName": "GET_STREAM_OPTIONS_REQUEST"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "GetStreamOptionsRequest",
-                                          "safeName": "GetStreamOptionsRequest"
-                                        }
-                                      }
+                                    "snakeCase": {
+                                      "unsafeName": "get_stream_options_request",
+                                      "safeName": "get_stream_options_request"
                                     },
-                                    "value": {
-                                      "shape": {
-                                        "container": {
-                                          "valueType": {
-                                            "primitive": {
-                                              "v1": "BOOLEAN",
-                                              "v2": {
-                                                "default": true,
-                                                "type": "boolean"
-                                              }
-                                            },
-                                            "type": "primitive"
-                                          },
-                                          "type": "optional"
-                                        },
-                                        "type": "container"
-                                      }
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
+                                      "safeName": "GET_STREAM_OPTIONS_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "GetStreamOptionsRequest",
+                                      "safeName": "GetStreamOptionsRequest"
                                     }
-                                  }
-                                ],
-                                "type": "object"
-                              },
-                              "typeName": {
-                                "typeId": "GetStreamOptionsRequest",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
+                                  },
+                                  "typeId": "GetStreamOptionsRequest",
+                                  "inline": false,
+                                  "type": "named"
                                 },
-                                "name": {
-                                  "originalName": "GetStreamOptionsRequest",
-                                  "camelCase": {
-                                    "unsafeName": "getStreamOptionsRequest",
-                                    "safeName": "getStreamOptionsRequest"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "get_stream_options_request",
-                                    "safeName": "get_stream_options_request"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "GET_STREAM_OPTIONS_REQUEST",
-                                    "safeName": "GET_STREAM_OPTIONS_REQUEST"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "GetStreamOptionsRequest",
-                                    "safeName": "GetStreamOptionsRequest"
-                                  }
-                                }
+                                "type": "optional"
                               },
-                              "type": "named"
+                              "type": "container"
                             }
                           }
                         },
