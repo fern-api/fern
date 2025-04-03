@@ -315,9 +315,9 @@ class ClientWrapperGenerator:
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
             writer.write_line("= {")
-            writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
             if self._context.ir.sdk_config.platform_headers.user_agent is not None:
                 writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.user_agent.header}": "{self._context.ir.sdk_config.platform_headers.user_agent.value}",')
+            writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
             if project._project_config is not None:
                 writer.write_line(
                     f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
