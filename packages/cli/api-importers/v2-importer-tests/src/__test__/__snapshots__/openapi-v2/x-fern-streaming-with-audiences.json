@@ -101,14 +101,13 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "container": {
-                    "literal": {
-                      "boolean": false,
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
                       "type": "boolean"
-                    },
-                    "type": "literal"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
                 "type": "optional"
               },
@@ -223,14 +222,13 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "container": {
-                    "literal": {
-                      "boolean": true,
+                  "primitive": {
+                    "v1": "BOOLEAN",
+                    "v2": {
                       "type": "boolean"
-                    },
-                    "type": "literal"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
                 "type": "optional"
               },
