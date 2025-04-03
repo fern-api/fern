@@ -1,44 +1,30 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import {
-    FernIr,
     HttpHeader,
     PathParameter,
     QueryParameter,
     TypeDeclaration,
-    WebSocketChannel,
-    WebSocketMessage
+    TypeReference,
+    WebSocketMessage,
+    WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { ParameterConverter } from "../../core/ParameterConverter";
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
+import { ParameterConverter } from "../../converters/ParameterConverter";
 
 export declare namespace ChannelConverter2_X {
-    export interface Args extends AbstractConverter.Args {
-        channel: AsyncAPIV2.ChannelV2;
-        channelPath: string;
-        group: string[] | undefined;
-    }
-
-    export interface Output {
-        channel: WebSocketChannel;
-        inlinedTypes: Record<string, TypeDeclaration>;
-    }
+    export interface Args extends AbstractChannelConverter.Args<AsyncAPIV2.ChannelV2> {}
 }
 
-export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterContext, ChannelConverter2_X.Output> {
-    private readonly channel: AsyncAPIV2.ChannelV2;
-    private readonly channelPath: string;
-    private readonly group: string[] | undefined;
+export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
     constructor({ breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
-        super({ breadcrumbs });
-        this.channel = channel;
-        this.channelPath = channelPath;
-        this.group = group;
+        super({ breadcrumbs, channel, channelPath, group });
     }
 
     public async convert({
@@ -47,7 +33,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
     }: {
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): Promise<ChannelConverter2_X.Output | undefined> {
+    }): Promise<AbstractChannelConverter.Output | undefined> {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
@@ -124,7 +110,6 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 queryParameters,
                 pathParameters,
                 messages,
-                // TODO: Add examples
                 examples: [],
                 availability: await context.getAvailability({
                     node: this.channel,
@@ -213,7 +198,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
         if (convertedSchema != null) {
             const convertedTypeDeclaration = convertedSchema;
 
-            const typeReference = FernIr.TypeReference.named({
+            const typeReference = TypeReference.named({
                 fernFilepath: context.createFernFilepath(),
                 name: convertedTypeDeclaration.name.name,
                 typeId: convertedTypeDeclaration.name.typeId,
@@ -221,7 +206,7 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 inline: false
             });
 
-            const body = FernIr.WebSocketMessageBody.reference({
+            const body = WebSocketMessageBody.reference({
                 bodyType: typeReference,
                 docs: operation.description
             });
@@ -362,12 +347,5 @@ export class ChannelConverter2_X extends AbstractConverter<AsyncAPIConverterCont
                 }
             }
         }
-    }
-
-    private transformToValidPath(path: string): string {
-        if (!path.startsWith("/")) {
-            return "/" + path;
-        }
-        return path;
     }
 }

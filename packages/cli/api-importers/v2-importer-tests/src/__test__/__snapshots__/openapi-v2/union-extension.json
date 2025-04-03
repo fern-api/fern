@@ -241,32 +241,44 @@
               "wireValue": "other"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "container": {
+                    "nullable": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "Other",
+                        "camelCase": {
+                          "unsafeName": "other",
+                          "safeName": "other"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "other",
+                          "safeName": "other"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "OTHER",
+                          "safeName": "OTHER"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Other",
+                          "safeName": "Other"
+                        }
+                      },
+                      "typeId": "Other",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "container"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "Other",
-                "camelCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "snakeCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OTHER",
-                  "safeName": "OTHER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Other",
-                  "safeName": "Other"
-                }
-              },
-              "typeId": "Other",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
