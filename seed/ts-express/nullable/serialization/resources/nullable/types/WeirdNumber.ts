@@ -10,9 +10,10 @@ export const WeirdNumber: core.serialization.Schema<serializers.WeirdNumber.Raw,
     core.serialization.undiscriminatedUnion([
         core.serialization.number(),
         core.serialization.number().optional(),
+        core.serialization.string().optional(),
         core.serialization.number(),
     ]);
 
 export declare namespace WeirdNumber {
-    export type Raw = number | (number | null | undefined) | number;
+    export type Raw = number | (number | null | undefined) | (string | null | undefined) | number;
 }
