@@ -57009,14 +57009,20 @@
           },
           "docs": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
           "valueType": {
-            "primitive": {
-              "v1": "STRING",
-              "v2": {
-                "validation": {},
-                "type": "string"
-              }
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "allowMultiple": false
         },
@@ -57045,14 +57051,20 @@
           },
           "docs": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
           "valueType": {
-            "primitive": {
-              "v1": "INTEGER",
-              "v2": {
-                "validation": {},
-                "type": "integer"
-              }
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "validation": {},
+                    "type": "integer"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "allowMultiple": false
         },
@@ -57081,14 +57093,20 @@
           },
           "docs": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
           "valueType": {
-            "primitive": {
-              "v1": "STRING",
-              "v2": {
-                "validation": {},
-                "type": "string"
-              }
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "allowMultiple": false
         },
@@ -57117,14 +57135,20 @@
           },
           "docs": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
           "valueType": {
-            "primitive": {
-              "v1": "BOOLEAN",
-              "v2": {
-                "default": false,
-                "type": "boolean"
-              }
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "allowMultiple": false
         },
@@ -57153,15 +57177,21 @@
           },
           "docs": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
           "valueType": {
-            "primitive": {
-              "v1": "STRING",
-              "v2": {
-                "default": "",
-                "validation": {},
-                "type": "string"
-              }
+            "container": {
+              "optional": {
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "default": "",
+                    "validation": {},
+                    "type": "string"
+                  }
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "allowMultiple": false
         }
@@ -57241,736 +57271,7 @@
           }
         }
       ],
-      "examples": [
-        {
-          "pathParameters": [],
-          "headers": [],
-          "queryParameters": [
-            {
-              "name": {
-                "name": {
-                  "originalName": "config_id",
-                  "camelCase": {
-                    "unsafeName": "configId",
-                    "safeName": "configId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "config_id",
-                    "safeName": "config_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "CONFIG_ID",
-                    "safeName": "CONFIG_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ConfigId",
-                    "safeName": "ConfigId"
-                  }
-                },
-                "wireValue": "config_id"
-              },
-              "shape": {
-                "type": "single"
-              },
-              "value": {
-                "jsonExample": "config_id",
-                "shape": {
-                  "primitive": {
-                    "string": {
-                      "original": "config_id"
-                    },
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "config_version",
-                  "camelCase": {
-                    "unsafeName": "configVersion",
-                    "safeName": "configVersion"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "config_version",
-                    "safeName": "config_version"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "CONFIG_VERSION",
-                    "safeName": "CONFIG_VERSION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ConfigVersion",
-                    "safeName": "ConfigVersion"
-                  }
-                },
-                "wireValue": "config_version"
-              },
-              "shape": {
-                "type": "single"
-              },
-              "value": {
-                "jsonExample": 1,
-                "shape": {
-                  "primitive": {
-                    "integer": 1,
-                    "type": "integer"
-                  },
-                  "type": "primitive"
-                }
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "resumed_chat_group_id",
-                  "camelCase": {
-                    "unsafeName": "resumedChatGroupId",
-                    "safeName": "resumedChatGroupId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "resumed_chat_group_id",
-                    "safeName": "resumed_chat_group_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "RESUMED_CHAT_GROUP_ID",
-                    "safeName": "RESUMED_CHAT_GROUP_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ResumedChatGroupId",
-                    "safeName": "ResumedChatGroupId"
-                  }
-                },
-                "wireValue": "resumed_chat_group_id"
-              },
-              "shape": {
-                "type": "single"
-              },
-              "value": {
-                "jsonExample": "resumed_chat_group_id",
-                "shape": {
-                  "primitive": {
-                    "string": {
-                      "original": "resumed_chat_group_id"
-                    },
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "verbose_transcription",
-                  "camelCase": {
-                    "unsafeName": "verboseTranscription",
-                    "safeName": "verboseTranscription"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "verbose_transcription",
-                    "safeName": "verbose_transcription"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "VERBOSE_TRANSCRIPTION",
-                    "safeName": "VERBOSE_TRANSCRIPTION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "VerboseTranscription",
-                    "safeName": "VerboseTranscription"
-                  }
-                },
-                "wireValue": "verbose_transcription"
-              },
-              "shape": {
-                "type": "single"
-              },
-              "value": {
-                "jsonExample": true,
-                "shape": {
-                  "primitive": {
-                    "boolean": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                }
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "access_token",
-                  "camelCase": {
-                    "unsafeName": "accessToken",
-                    "safeName": "accessToken"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "access_token",
-                    "safeName": "access_token"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ACCESS_TOKEN",
-                    "safeName": "ACCESS_TOKEN"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AccessToken",
-                    "safeName": "AccessToken"
-                  }
-                },
-                "wireValue": "access_token"
-              },
-              "shape": {
-                "type": "single"
-              },
-              "value": {
-                "jsonExample": "access_token",
-                "shape": {
-                  "primitive": {
-                    "string": {
-                      "original": "access_token"
-                    },
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                }
-              }
-            }
-          ],
-          "messages": [
-            {
-              "type": "publishEvent",
-              "body": {
-                "jsonExample": {
-                  "type": "audio_input",
-                  "data": "data"
-                },
-                "shape": {
-                  "shape": {
-                    "index": 0,
-                    "singleUnionType": {
-                      "jsonExample": {
-                        "type": "audio_input",
-                        "data": "data"
-                      },
-                      "shape": {
-                        "shape": {
-                          "properties": [
-                            {
-                              "name": {
-                                "name": {
-                                  "originalName": "type",
-                                  "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type_"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type_"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                  }
-                                },
-                                "wireValue": "type"
-                              },
-                              "originalTypeDeclaration": {
-                                "typeId": "AudioInput",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
-                                },
-                                "name": {
-                                  "originalName": "AudioInput",
-                                  "camelCase": {
-                                    "unsafeName": "audioInput",
-                                    "safeName": "audioInput"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "audio_input",
-                                    "safeName": "audio_input"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "AUDIO_INPUT",
-                                    "safeName": "AUDIO_INPUT"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "AudioInput",
-                                    "safeName": "AudioInput"
-                                  }
-                                }
-                              },
-                              "value": {
-                                "jsonExample": "audio_input",
-                                "shape": {
-                                  "container": {
-                                    "literal": {
-                                      "string": {
-                                        "original": "audio_input"
-                                      },
-                                      "type": "string"
-                                    },
-                                    "type": "literal"
-                                  },
-                                  "type": "container"
-                                }
-                              }
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "originalName": "custom_session_id",
-                                  "camelCase": {
-                                    "unsafeName": "customSessionId",
-                                    "safeName": "customSessionId"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "custom_session_id",
-                                    "safeName": "custom_session_id"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "CUSTOM_SESSION_ID",
-                                    "safeName": "CUSTOM_SESSION_ID"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "CustomSessionId",
-                                    "safeName": "CustomSessionId"
-                                  }
-                                },
-                                "wireValue": "custom_session_id"
-                              },
-                              "originalTypeDeclaration": {
-                                "typeId": "AudioInput",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
-                                },
-                                "name": {
-                                  "originalName": "AudioInput",
-                                  "camelCase": {
-                                    "unsafeName": "audioInput",
-                                    "safeName": "audioInput"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "audio_input",
-                                    "safeName": "audio_input"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "AUDIO_INPUT",
-                                    "safeName": "AUDIO_INPUT"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "AudioInput",
-                                    "safeName": "AudioInput"
-                                  }
-                                }
-                              },
-                              "value": {
-                                "shape": {
-                                  "container": {
-                                    "valueType": {
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                      },
-                                      "name": {
-                                        "originalName": "AudioInputCustomSessionId",
-                                        "camelCase": {
-                                          "unsafeName": "audioInputCustomSessionId",
-                                          "safeName": "audioInputCustomSessionId"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "audio_input_custom_session_id",
-                                          "safeName": "audio_input_custom_session_id"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "AUDIO_INPUT_CUSTOM_SESSION_ID",
-                                          "safeName": "AUDIO_INPUT_CUSTOM_SESSION_ID"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "AudioInputCustomSessionId",
-                                          "safeName": "AudioInputCustomSessionId"
-                                        }
-                                      },
-                                      "typeId": "AudioInputCustomSessionId",
-                                      "inline": false,
-                                      "type": "named"
-                                    },
-                                    "type": "optional"
-                                  },
-                                  "type": "container"
-                                }
-                              }
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "originalName": "data",
-                                  "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                  }
-                                },
-                                "wireValue": "data"
-                              },
-                              "originalTypeDeclaration": {
-                                "typeId": "AudioInput",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
-                                },
-                                "name": {
-                                  "originalName": "AudioInput",
-                                  "camelCase": {
-                                    "unsafeName": "audioInput",
-                                    "safeName": "audioInput"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "audio_input",
-                                    "safeName": "audio_input"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "AUDIO_INPUT",
-                                    "safeName": "AUDIO_INPUT"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "AudioInput",
-                                    "safeName": "AudioInput"
-                                  }
-                                }
-                              },
-                              "value": {
-                                "jsonExample": "data",
-                                "shape": {
-                                  "primitive": {
-                                    "string": {
-                                      "original": "data"
-                                    },
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              }
-                            }
-                          ],
-                          "type": "object"
-                        },
-                        "typeName": {
-                          "typeId": "AudioInput",
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "name": {
-                            "originalName": "AudioInput",
-                            "camelCase": {
-                              "unsafeName": "audioInput",
-                              "safeName": "audioInput"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "audio_input",
-                              "safeName": "audio_input"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "AUDIO_INPUT",
-                              "safeName": "AUDIO_INPUT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AudioInput",
-                              "safeName": "AudioInput"
-                            }
-                          }
-                        },
-                        "type": "named"
-                      }
-                    },
-                    "type": "undiscriminatedUnion"
-                  },
-                  "typeName": {
-                    "typeId": "publishEvent",
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "name": {
-                      "originalName": "publishEvent",
-                      "camelCase": {
-                        "unsafeName": "publishEvent",
-                        "safeName": "publishEvent"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "publish_event",
-                        "safeName": "publish_event"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "PUBLISH_EVENT",
-                        "safeName": "PUBLISH_EVENT"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "PublishEvent",
-                        "safeName": "PublishEvent"
-                      }
-                    }
-                  },
-                  "type": "named"
-                },
-                "type": "reference"
-              }
-            },
-            {
-              "type": "subscribeEvent",
-              "body": {
-                "jsonExample": {
-                  "type": "assistant_end"
-                },
-                "shape": {
-                  "shape": {
-                    "index": 0,
-                    "singleUnionType": {
-                      "jsonExample": {
-                        "type": "assistant_end"
-                      },
-                      "shape": {
-                        "shape": {
-                          "properties": [
-                            {
-                              "name": {
-                                "name": {
-                                  "originalName": "type",
-                                  "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type_"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type_"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                  }
-                                },
-                                "wireValue": "type"
-                              },
-                              "originalTypeDeclaration": {
-                                "typeId": "AssistantEnd",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
-                                },
-                                "name": {
-                                  "originalName": "AssistantEnd",
-                                  "camelCase": {
-                                    "unsafeName": "assistantEnd",
-                                    "safeName": "assistantEnd"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "assistant_end",
-                                    "safeName": "assistant_end"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "ASSISTANT_END",
-                                    "safeName": "ASSISTANT_END"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "AssistantEnd",
-                                    "safeName": "AssistantEnd"
-                                  }
-                                }
-                              },
-                              "value": {
-                                "jsonExample": "assistant_end",
-                                "shape": {
-                                  "container": {
-                                    "literal": {
-                                      "string": {
-                                        "original": "assistant_end"
-                                      },
-                                      "type": "string"
-                                    },
-                                    "type": "literal"
-                                  },
-                                  "type": "container"
-                                }
-                              }
-                            },
-                            {
-                              "name": {
-                                "name": {
-                                  "originalName": "custom_session_id",
-                                  "camelCase": {
-                                    "unsafeName": "customSessionId",
-                                    "safeName": "customSessionId"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "custom_session_id",
-                                    "safeName": "custom_session_id"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "CUSTOM_SESSION_ID",
-                                    "safeName": "CUSTOM_SESSION_ID"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "CustomSessionId",
-                                    "safeName": "CustomSessionId"
-                                  }
-                                },
-                                "wireValue": "custom_session_id"
-                              },
-                              "originalTypeDeclaration": {
-                                "typeId": "AssistantEnd",
-                                "fernFilepath": {
-                                  "allParts": [],
-                                  "packagePath": []
-                                },
-                                "name": {
-                                  "originalName": "AssistantEnd",
-                                  "camelCase": {
-                                    "unsafeName": "assistantEnd",
-                                    "safeName": "assistantEnd"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "assistant_end",
-                                    "safeName": "assistant_end"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "ASSISTANT_END",
-                                    "safeName": "ASSISTANT_END"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "AssistantEnd",
-                                    "safeName": "AssistantEnd"
-                                  }
-                                }
-                              },
-                              "value": {
-                                "shape": {
-                                  "container": {
-                                    "valueType": {
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                      },
-                                      "name": {
-                                        "originalName": "AssistantEndCustomSessionId",
-                                        "camelCase": {
-                                          "unsafeName": "assistantEndCustomSessionId",
-                                          "safeName": "assistantEndCustomSessionId"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "assistant_end_custom_session_id",
-                                          "safeName": "assistant_end_custom_session_id"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "ASSISTANT_END_CUSTOM_SESSION_ID",
-                                          "safeName": "ASSISTANT_END_CUSTOM_SESSION_ID"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "AssistantEndCustomSessionId",
-                                          "safeName": "AssistantEndCustomSessionId"
-                                        }
-                                      },
-                                      "typeId": "AssistantEndCustomSessionId",
-                                      "inline": false,
-                                      "type": "named"
-                                    },
-                                    "type": "optional"
-                                  },
-                                  "type": "container"
-                                }
-                              }
-                            }
-                          ],
-                          "type": "object"
-                        },
-                        "typeName": {
-                          "typeId": "AssistantEnd",
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "name": {
-                            "originalName": "AssistantEnd",
-                            "camelCase": {
-                              "unsafeName": "assistantEnd",
-                              "safeName": "assistantEnd"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "assistant_end",
-                              "safeName": "assistant_end"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ASSISTANT_END",
-                              "safeName": "ASSISTANT_END"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AssistantEnd",
-                              "safeName": "AssistantEnd"
-                            }
-                          }
-                        },
-                        "type": "named"
-                      }
-                    },
-                    "type": "undiscriminatedUnion"
-                  },
-                  "typeName": {
-                    "typeId": "subscribeEvent",
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "name": {
-                      "originalName": "subscribeEvent",
-                      "camelCase": {
-                        "unsafeName": "subscribeEvent",
-                        "safeName": "subscribeEvent"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "subscribe_event",
-                        "safeName": "subscribe_event"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "SUBSCRIBE_EVENT",
-                        "safeName": "SUBSCRIBE_EVENT"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "SubscribeEvent",
-                        "safeName": "SubscribeEvent"
-                      }
-                    }
-                  },
-                  "type": "named"
-                },
-                "type": "reference"
-              }
-            }
-          ],
-          "url": "/chat"
-        }
-      ],
+      "examples": [],
       "docs": "Chat with Empathic Voice Interface (EVI)"
     }
   },

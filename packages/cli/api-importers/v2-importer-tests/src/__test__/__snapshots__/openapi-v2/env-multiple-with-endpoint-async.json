@@ -608,25 +608,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "testChannel_sendMessage",
+                "originalName": "sendMessage",
                 "camelCase": {
-                  "unsafeName": "testChannelSendMessage",
-                  "safeName": "testChannelSendMessage"
+                  "unsafeName": "sendMessage",
+                  "safeName": "sendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "test_channel_send_message",
-                  "safeName": "test_channel_send_message"
+                  "unsafeName": "send_message",
+                  "safeName": "send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
-                  "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                  "unsafeName": "SEND_MESSAGE",
+                  "safeName": "SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "TestChannelSendMessage",
-                  "safeName": "TestChannelSendMessage"
+                  "unsafeName": "SendMessage",
+                  "safeName": "SendMessage"
                 }
               },
-              "typeId": "testChannel_sendMessage",
+              "typeId": "sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -634,67 +634,7 @@
           }
         }
       ],
-      "examples": [
-        {
-          "pathParameters": [],
-          "headers": [],
-          "queryParameters": [],
-          "messages": [
-            {
-              "type": "send",
-              "body": {
-                "jsonExample": "string",
-                "shape": {
-                  "shape": {
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "string"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "alias"
-                  },
-                  "typeName": {
-                    "typeId": "testChannel_sendMessage",
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "name": {
-                      "originalName": "testChannel_sendMessage",
-                      "camelCase": {
-                        "unsafeName": "testChannelSendMessage",
-                        "safeName": "testChannelSendMessage"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "test_channel_send_message",
-                        "safeName": "test_channel_send_message"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
-                        "safeName": "TEST_CHANNEL_SEND_MESSAGE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "TestChannelSendMessage",
-                        "safeName": "TestChannelSendMessage"
-                      }
-                    }
-                  },
-                  "type": "named"
-                },
-                "type": "reference"
-              }
-            }
-          ],
-          "url": "/test"
-        }
-      ]
+      "examples": []
     },
     "testChannel2": {
       "name": {
@@ -738,25 +678,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "testChannel2_sendMessage",
+                "originalName": "sendMessage",
                 "camelCase": {
-                  "unsafeName": "testChannel2SendMessage",
-                  "safeName": "testChannel2SendMessage"
+                  "unsafeName": "sendMessage",
+                  "safeName": "sendMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "test_channel_2_send_message",
-                  "safeName": "test_channel_2_send_message"
+                  "unsafeName": "send_message",
+                  "safeName": "send_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TEST_CHANNEL_2_SEND_MESSAGE",
-                  "safeName": "TEST_CHANNEL_2_SEND_MESSAGE"
+                  "unsafeName": "SEND_MESSAGE",
+                  "safeName": "SEND_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "TestChannel2SendMessage",
-                  "safeName": "TestChannel2SendMessage"
+                  "unsafeName": "SendMessage",
+                  "safeName": "SendMessage"
                 }
               },
-              "typeId": "testChannel2_sendMessage",
+              "typeId": "sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -764,67 +704,7 @@
           }
         }
       ],
-      "examples": [
-        {
-          "pathParameters": [],
-          "headers": [],
-          "queryParameters": [],
-          "messages": [
-            {
-              "type": "send2",
-              "body": {
-                "jsonExample": "string",
-                "shape": {
-                  "shape": {
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "string"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "alias"
-                  },
-                  "typeName": {
-                    "typeId": "testChannel2_sendMessage",
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "name": {
-                      "originalName": "testChannel2_sendMessage",
-                      "camelCase": {
-                        "unsafeName": "testChannel2SendMessage",
-                        "safeName": "testChannel2SendMessage"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "test_channel_2_send_message",
-                        "safeName": "test_channel_2_send_message"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "TEST_CHANNEL_2_SEND_MESSAGE",
-                        "safeName": "TEST_CHANNEL_2_SEND_MESSAGE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "TestChannel2SendMessage",
-                        "safeName": "TestChannel2SendMessage"
-                      }
-                    }
-                  },
-                  "type": "named"
-                },
-                "type": "reference"
-              }
-            }
-          ],
-          "url": "/test2"
-        }
-      ]
+      "examples": []
     }
   },
   "rootPackage": {
