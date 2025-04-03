@@ -32,7 +32,7 @@ fern/
 Once you've configured your changelog, specify where it should appear within your docs in your `docs.yml`.
 
 <CodeBlock title="docs.yml">
-```yaml {8-11}
+```yaml {8-11,17}
 tabs:
   guides:
     display-name: Guides
@@ -44,6 +44,12 @@ tabs:
     display-name: Changelog
     icon: light clock
     changelog: ./changelog
+
+navigation: 
+  - tab: guides
+    layout: 
+      ...
+  - tab: changelog
 ```
 </CodeBlock>
 
