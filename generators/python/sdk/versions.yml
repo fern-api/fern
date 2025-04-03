@@ -1,4 +1,10 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.7.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for user-agent header
 - version: 4.6.0
   irVersion: 57
   changelogEntry:
