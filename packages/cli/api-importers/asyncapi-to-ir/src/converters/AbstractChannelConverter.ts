@@ -1,5 +1,4 @@
-import { TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
-import { FernIr } from "@fern-api/ir-sdk";
+import { FernIr, TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
@@ -52,7 +51,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         baseUrl: string | undefined;
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): FernIr.dynamic.WebSocketSessionSnippet[] {
+    }): FernIr.V2WebSocketSessionExample[] {
         const fernExamplesExtension = new FernExamplesExtension({
             breadcrumbs: this.breadcrumbs,
             channel: this.channel as object
@@ -73,7 +72,12 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
                 pathParameters: undefined,
                 queryParameters: example.queryParameters,
                 headers: example.headers,
-                messages: example.messages
+                messages: example.messages.map((message) => {
+                    return {
+                        type: message.messageId,
+                        body: message.value
+                    };
+                })
             };
         });
     }

@@ -1,6 +1,5 @@
 export * from "./WebSocketMessageId";
 export * from "./WebSocketChannel";
-export * from "./V2WebSocketSessionExamples";
 export * from "./WebSocketName";
 export * from "./WebSocketMessage";
 export * from "./WebSocketMessageOrigin";

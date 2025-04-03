@@ -13,7 +13,7 @@ import { QueryParameter } from "../../http/types/QueryParameter";
 import { PathParameter } from "../../http/types/PathParameter";
 import { WebSocketMessage } from "./WebSocketMessage";
 import { ExampleWebSocketSession } from "./ExampleWebSocketSession";
-import { V2WebSocketSessionExamples } from "./V2WebSocketSessionExamples";
+import { V2WebSocketSessionExamples } from "../../examples/types/V2WebSocketSessionExamples";
 import { Declaration } from "../../commons/types/Declaration";
 
 export const WebSocketChannel: core.serialization.ObjectSchema<

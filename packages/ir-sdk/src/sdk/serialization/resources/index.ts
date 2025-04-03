@@ -9,6 +9,8 @@ export * as environment from "./environment";
 export * from "./environment/types";
 export * as errors from "./errors";
 export * from "./errors/types";
+export * as examples from "./examples";
+export * from "./examples/types";
 export * as generatorExec from "./generatorExec";
 export * as http from "./http";
 export * from "./http/types";

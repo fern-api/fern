@@ -55,18 +55,3 @@ types:
     properties:
       snippet: string
       errors: optional<list<Error>>
-
-  WebSocketSessionSnippet:
-    audiences:
-      - dynamic
-    docs: |
-      The snippet representation of a Websocket session.
-    properties:
-      channel: endpoints.EndpointLocation
-      baseURL: optional<string>
-      environment: optional<environment.EnvironmentValues>
-      auth: optional<auth.AuthValues>
-      pathParameters: optional<Values>
-      queryParameters: optional<Values>
-      headers: optional<Values>
-      messages: optional<list<unknown>>
