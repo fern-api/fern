@@ -3,9 +3,7 @@
 exports[`class > Renders docs correctly 1`] = `
 "class MyClass:
     """This is a class"""
-
-    pass
-"
+    pass"
 `;
 
 exports[`class > Renders docs with multi-line strings correctly 1`] = `
@@ -13,28 +11,23 @@ exports[`class > Renders docs with multi-line strings correctly 1`] = `
     """This is a class.
     I'm on a new line.
     So am I."""
-
-    pass
-"
+    pass"
 `;
 
 exports[`class > basic 1`] = `
 "class Car:
-    pass
-"
+    pass"
 `;
 
 exports[`class > class with a decorator 1`] = `
 "@dataclass
 class MyDataClass:
-    pass
-"
+    pass"
 `;
 
 exports[`class > class with generic parent reference 1`] = `
 "class MyClass(MyParentClass[MyParentType]):
-    pass
-"
+    pass"
 `;
 
 exports[`class > class with various forms of multi-line strings 1`] = `
@@ -57,27 +50,24 @@ World!\\
 
 exports[`class > fields with annotation and initializer 1`] = `
 "class Car:
-    color: str = "red"
+    color: str = 'red'
     partNameById: Dict[int, str] = {}
 "
 `;
 
 exports[`class > inherits from a parent class imported from another module 1`] = `
 "class SportsCar(Vehicle):
-    pass
-"
+    pass"
 `;
 
 exports[`class > inherits from one parent class 1`] = `
 "class ElectricCar(Car):
-    pass
-"
+    pass"
 `;
 
 exports[`class > inherits from two parent classes 1`] = `
 "class HybridCar(ElectricCar, GasCar):
-    pass
-"
+    pass"
 `;
 
 exports[`class > should generate a class with local classes 1`] = `

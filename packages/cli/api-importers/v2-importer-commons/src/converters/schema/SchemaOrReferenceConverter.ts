@@ -56,7 +56,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (!response.ok) {
                 return undefined;
             }
-            return { type: response.reference, inlinedTypes: {} };
+            return { type: this.wrapTypeReference(response.reference), inlinedTypes: {} };
         }
 
         const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);

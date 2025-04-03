@@ -2501,7 +2501,7 @@
       "enum": [
         "claude-3.5",
         "claude-3.7",
-        "command-r-plus"
+        "command-a"
       ]
     },
     "docs.AIChatConfig": {

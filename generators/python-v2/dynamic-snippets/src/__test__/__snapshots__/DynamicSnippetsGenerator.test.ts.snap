@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets > examples > 'GET /metadata (allow-multiple)' 1`] = `""`;
+
+exports[`snippets > examples > 'GET /metadata (simple)' 1`] = `""`;
+
+exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `""`;
+
+exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `""`;
+
+exports[`snippets > examples > 'POST /movie (simple)' 1`] = `""`;
+
+exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `""`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `""`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `""`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `""`;
+
+exports[`snippets > file-upload > 'POST /' 1`] = `""`;
+
+exports[`snippets > file-upload > 'POST /just-file' 1`] = `""`;
+
+exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `""`;
+
+exports[`snippets > imdb > 'GET /movies/{movieId} (simple)' 1`] = `""`;
+
+exports[`snippets > imdb > 'POST /movies/create-movie (simple)' 1`] = `""`;
+
+exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `""`;
+
+exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `""`;
+
+exports[`snippets > multi-url-environment > 'Production environment' 1`] = `""`;
+
+exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `""`;
+
+exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `""`;
+
+exports[`snippets > nullable > 'Body properties' 1`] = `""`;
+
+exports[`snippets > nullable > 'Invalid null value' 1`] = `""`;
+
+exports[`snippets > nullable > 'Query parameters' 1`] = `""`;
+
+exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `""`;
+
+exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `""`;
+
+exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `""`;
+
+exports[`snippets > single-url-environment-default > 'invalid baseURL and environment' 1`] = `""`;
+
+exports[`snippets > single-url-environment-default > 'invalid environment' 1`] = `""`;
