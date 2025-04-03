@@ -1,8 +1,9 @@
 import { TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
+import { FernIr } from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
-import { FernExamplesExtension, WebsocketSessionExtensionExample } from "../extensions/x-fern-examples";
+import { FernExamplesExtension } from "../extensions/x-fern-examples";
 
 export declare namespace AbstractChannelConverter {
     export interface Args<TChannel> extends AbstractConverter.Args {
@@ -42,12 +43,16 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     }): Promise<AbstractChannelConverter.Output | undefined>;
 
     protected convertExamples({
+        pathHead,
+        baseUrl,
         context,
         errorCollector
     }: {
+        pathHead: string;
+        baseUrl: string | undefined;
         context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
-    }): WebsocketSessionExtensionExample[] {
+    }): FernIr.dynamic.WebSocketSessionSnippet[] {
         const fernExamplesExtension = new FernExamplesExtension({
             breadcrumbs: this.breadcrumbs,
             channel: this.channel as object
@@ -56,7 +61,21 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         if (fernExamples == null) {
             return [];
         }
-        return fernExamples;
+        return fernExamples.map((example) => {
+            return {
+                channel: {
+                    method: "GET",
+                    path: pathHead
+                },
+                baseUrl: undefined,
+                environment: baseUrl,
+                auth: undefined,
+                pathParameters: undefined,
+                queryParameters: example.queryParameters,
+                headers: example.headers,
+                messages: example.messages
+            };
+        });
     }
 
     protected transformToValidPath(path: string): string {
