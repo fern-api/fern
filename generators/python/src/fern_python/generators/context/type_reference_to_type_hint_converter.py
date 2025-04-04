@@ -1,4 +1,4 @@
-from typing import Callable, Optional, cast
+from typing import Any, Callable, Optional, cast
 
 from .pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST
@@ -39,7 +39,21 @@ class TypeReferenceToTypeHintConverter:
                 as_if_type_checking_import=as_if_type_checking_import,
             ),
             primitive=self._get_type_hint_for_primitive,
+            union=lambda union_type: self._get_type_hint_for_union(
+                union_type=union_type,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+                in_endpoint=in_endpoint,
+                as_if_type_checking_import=as_if_type_checking_import,
+                for_typeddict=for_typeddict,
+            ),
             unknown=lambda: AST.TypeHint.optional(AST.TypeHint.any()),
+            undiscriminated_union=lambda undiscriminated_union: self._get_type_hint_for_undiscriminated_union(
+                undiscriminated_union=undiscriminated_union,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+                in_endpoint=in_endpoint,
+                as_if_type_checking_import=as_if_type_checking_import,
+                for_typeddict=for_typeddict,
+            ),
         )
 
     def _get_set_type_hint_for_named(
@@ -227,6 +241,49 @@ class TypeReferenceToTypeHintConverter:
             float_=AST.TypeHint.float_,
         )
         return to_return
+    
+    def _get_type_hint_for_union(
+        self,
+        union_type: ir_types.UnionTypeDeclaration,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        in_endpoint: Optional[bool],
+        as_if_type_checking_import: bool = False,
+        for_typeddict: bool = False,
+    ) -> AST.TypeHint:
+        member_hints = []
+        for member in union_type.members:
+            member_hint = self.get_type_hint_for_type_reference(
+                type_reference=member.type,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+                as_if_type_checking_import=as_if_type_checking_import,
+                in_endpoint=in_endpoint,
+                for_typeddict=for_typeddict,
+            )
+            member_hints.append(member_hint)
+        
+        return AST.TypeHint.union(*member_hints)
+
+    def _get_type_hint_for_undiscriminated_union(
+        self,
+        undiscriminated_union: ir_types.UndiscriminatedUnionTypeDeclaration,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        in_endpoint: Optional[bool],
+        as_if_type_checking_import: bool = False,
+        for_typeddict: bool = False,
+    ) -> AST.TypeHint:
+        member_hints = []
+        for member in undiscriminated_union.members:
+            member_hint = self.get_type_hint_for_type_reference(
+                type_reference=member,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+                as_if_type_checking_import=as_if_type_checking_import,
+                in_endpoint=in_endpoint,
+                for_typeddict=for_typeddict,
+            )
+            member_hints.append(member_hint)
+        
+        return AST.TypeHint.union(*member_hints)
+
 
     def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
         return type_reference.visit(
