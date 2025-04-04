@@ -28170,13 +28170,13 @@
                                 "shape": {
                                   "primitive": {
                                     "string": {
-                                      "original": "audio_data"
+                                      "original": "base64-encoded-audio-data"
                                     },
                                     "type": "string"
                                   },
                                   "type": "primitive"
                                 },
-                                "jsonExample": "audio_data"
+                                "jsonExample": "base64-encoded-audio-data"
                               },
                               "originalTypeDeclaration": {
                                 "typeId": "type_:AudioData",
@@ -28211,7 +28211,7 @@
                         "type": "named"
                       },
                       "jsonExample": {
-                        "audio_data": "audio_data"
+                        "audio_data": "base64-encoded-audio-data"
                       }
                     },
                     "type": "undiscriminatedUnion"
@@ -28219,7 +28219,7 @@
                   "type": "named"
                 },
                 "jsonExample": {
-                  "audio_data": "audio_data"
+                  "audio_data": "base64-encoded-audio-data"
                 },
                 "type": "reference"
               }

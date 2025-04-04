@@ -14,13 +14,13 @@ export const V2HttpEndpointResponse: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         statusCode: core.serialization.number().optional(),
-        body: V2HttpEndpointResponseBody,
+        body: V2HttpEndpointResponseBody.optional(),
     })
     .extend(WithDocs);
 
 export declare namespace V2HttpEndpointResponse {
     export interface Raw extends WithDocs.Raw {
         statusCode?: number | null;
-        body: V2HttpEndpointResponseBody.Raw;
+        body?: V2HttpEndpointResponseBody.Raw | null;
     }
 }
