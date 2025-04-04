@@ -74,6 +74,12 @@ types:
       type: websocket.WebSocketMessageId
       body: unknown
   
+  # Schema, Property, and Parameter Types
+
+  V2PropertyExample:
+    properties:
+      value: unknown
+  
   # Simplified Example Types
 
   V2WebSocketEndpointLocation:

@@ -99,6 +99,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
+                        example: undefined,
                         availability
                     },
                     inlinedTypes
@@ -114,6 +115,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         env: undefined,
+                        example: undefined,
                         availability
                     },
                     inlinedTypes
@@ -126,7 +128,8 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.STRING,
                         location: "ENDPOINT",
-                        variable: undefined
+                        variable: undefined,
+                        example: undefined
                     },
                     inlinedTypes
                 };

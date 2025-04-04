@@ -9,6 +9,7 @@ import { TypeId } from "../../commons/types/TypeId";
 import { FernFilepath } from "../../commons/types/FernFilepath";
 import { Name } from "../../commons/types/Name";
 import { NamedTypeDefault } from "./NamedTypeDefault";
+import { V2PropertyExample } from "../../examples/types/V2PropertyExample";
 
 export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Raw, FernIr.NamedType> =
     core.serialization.objectWithoutOptionalProperties({
@@ -16,6 +17,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
         fernFilepath: FernFilepath,
         name: Name,
         default: NamedTypeDefault.optional(),
+        example: V2PropertyExample.optional(),
         inline: core.serialization.boolean().optional(),
     });
 
@@ -25,6 +27,7 @@ export declare namespace NamedType {
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
         default?: NamedTypeDefault.Raw | null;
+        example?: V2PropertyExample.Raw | null;
         inline?: boolean | null;
     }
 }

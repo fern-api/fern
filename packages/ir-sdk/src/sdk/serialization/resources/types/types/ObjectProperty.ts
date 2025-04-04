@@ -7,6 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { ObjectPropertyAccess } from "./ObjectPropertyAccess";
+import { V2PropertyExample } from "../../examples/types/V2PropertyExample";
 import { Declaration } from "../../commons/types/Declaration";
 
 export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectProperty.Raw, FernIr.ObjectProperty> =
@@ -15,6 +16,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectP
             name: NameAndWireValue,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             propertyAccess: ObjectPropertyAccess.optional(),
+            example: V2PropertyExample.optional(),
         })
         .extend(Declaration);
 
@@ -23,5 +25,6 @@ export declare namespace ObjectProperty {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
+        example?: V2PropertyExample.Raw | null;
     }
 }

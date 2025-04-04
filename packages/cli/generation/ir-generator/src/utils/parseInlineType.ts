@@ -34,7 +34,8 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
                         file
                     }),
                     default: undefined,
-                    inline: undefined
+                    inline: undefined,
+                    example: undefined
                 })
         }
     });

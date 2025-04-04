@@ -3,6 +3,8 @@
 imports:
   commons: commons.yml
   proto: proto.yml
+  examples: examples.yml
+
 types:
   Source:
     docs: |
@@ -59,6 +61,7 @@ types:
     properties:
       aliasOf: TypeReference
       resolvedType: ResolvedTypeReference
+
   ResolvedTypeReference:
     discriminant:
       value: _type
@@ -72,6 +75,7 @@ types:
         type: PrimitiveType
         key: primitive
       unknown: {}
+
   ResolvedNamedType:
     properties:
       name: DeclaredTypeName
@@ -83,10 +87,12 @@ types:
       - OBJECT
       - UNION
       - UNDISCRIMINATED_UNION
+
   EnumTypeDeclaration:
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
+
   EnumValue:
     extends: commons.Declaration
     properties:
@@ -111,6 +117,7 @@ types:
       name: commons.NameAndWireValue
       valueType: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
+      example: optional<examples.V2PropertyExample>
 
   ObjectPropertyAccess:
     enum:
@@ -125,6 +132,7 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+
   SingleUnionType:
     extends: commons.WithDocs
     properties:
@@ -132,6 +140,7 @@ types:
       shape: SingleUnionTypeProperties
       displayName: optional<string>
       availability: optional<commons.Availability>
+
   SingleUnionTypeProperties:
     discriminant:
       value: _type
@@ -140,6 +149,7 @@ types:
       samePropertiesAsObject: DeclaredTypeName
       singleProperty: SingleUnionTypeProperty
       noProperties: {}
+
   SingleUnionTypeProperty:
     properties:
       name: commons.NameAndWireValue
@@ -148,6 +158,7 @@ types:
   UndiscriminatedUnionTypeDeclaration:
     properties:
       members: list<UndiscriminatedUnionMember>
+
   UndiscriminatedUnionMember:
     extends: commons.WithDocs
     properties:
@@ -176,6 +187,7 @@ types:
       fernFilepath: commons.FernFilepath
       name: commons.Name
       default: optional<NamedTypeDefault>
+      example: optional<examples.V2PropertyExample>
       inline:
         type: optional<boolean>
         availability: deprecated
@@ -211,6 +223,7 @@ types:
       literal:
         type: Literal
         key: literal
+
   MapType:
     properties:
       keyType: TypeReference
@@ -220,6 +233,7 @@ types:
     properties:
       v1: PrimitiveTypeV1
       v2: optional<PrimitiveTypeV2>
+
   PrimitiveTypeV1:
     enum:
       - INTEGER
@@ -236,6 +250,7 @@ types:
       - UUID
       - BASE_64
       - BIG_INTEGER
+
   PrimitiveTypeV2:
     union:
       integer: IntegerType
@@ -256,6 +271,7 @@ types:
     properties:
       default: optional<integer>
       validation: optional<IntegerValidationRules>
+
   IntegerValidationRules:
     properties:
       min: optional<integer>
@@ -263,19 +279,25 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<integer>
+
   LongType:
     properties:
       default: optional<long>
+
   UintType:
     properties: {}
+
   Uint64Type:
     properties: {}
+
   FloatType:
     properties: {}
+
   DoubleType:
     properties:
       default: optional<double>
       validation: optional<DoubleValidationRules>
+
   DoubleValidationRules:
     properties:
       min: optional<double>
@@ -283,27 +305,35 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<double>
+
   BooleanType:
     properties:
       default: optional<boolean>
+
   StringType:
     properties:
       default: optional<string>
       validation: optional<StringValidationRules>
+
   StringValidationRules:
     properties:
       format: optional<string>
       pattern: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
+
   DateType:
     properties: {}
+
   DateTimeType:
     properties: {}
+
   UuidType:
     properties: {}
+
   Base64Type:
     properties: {}
+
   BigIntegerType:
     properties:
       default: optional<string>

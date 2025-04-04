@@ -8,4 +8,5 @@ export interface ObjectProperty extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     propertyAccess: FernIr.ObjectPropertyAccess | undefined;
+    example: FernIr.V2PropertyExample | undefined;
 }

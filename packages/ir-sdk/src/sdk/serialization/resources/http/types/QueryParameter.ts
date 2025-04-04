@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { V2PropertyExample } from "../../examples/types/V2PropertyExample";
 import { Declaration } from "../../commons/types/Declaration";
 
 export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryParameter.Raw, FernIr.QueryParameter> =
@@ -14,6 +15,7 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
             name: NameAndWireValue,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             allowMultiple: core.serialization.boolean(),
+            example: V2PropertyExample.optional(),
         })
         .extend(Declaration);
 
@@ -22,5 +24,6 @@ export declare namespace QueryParameter {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;
+        example?: V2PropertyExample.Raw | null;
     }
 }

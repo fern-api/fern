@@ -13,6 +13,7 @@ export interface NamedType {
     fernFilepath: FernIr.FernFilepath;
     name: FernIr.Name;
     default: FernIr.NamedTypeDefault | undefined;
+    example: FernIr.V2PropertyExample | undefined;
     /** Use the inline property on the TypeDeclaration instead. */
     inline: boolean | undefined;
 }

@@ -173,6 +173,7 @@ function convertInlinedRequestProperty({
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
-        valueType: file.parseTypeReference(propertyDefinition)
+        valueType: file.parseTypeReference(propertyDefinition),
+        example: undefined
     };
 }

@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { V2PropertyExample } from "../../examples/types/V2PropertyExample";
 import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability";
 
 export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: NameAndWireValue,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
+        example: V2PropertyExample.optional(),
     })
     .extend(WithDocsAndAvailability);
 
@@ -22,5 +24,6 @@ export declare namespace InlinedRequestBodyProperty {
     export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
+        example?: V2PropertyExample.Raw | null;
     }
 }

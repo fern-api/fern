@@ -213,7 +213,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 name: convertedTypeDeclaration.name.name,
                 typeId: convertedTypeDeclaration.name.typeId,
                 default: undefined,
-                inline: false
+                inline: false,
+                example: undefined
             });
 
             const body = WebSocketMessageBody.reference({
