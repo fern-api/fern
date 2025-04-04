@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "seed_exhaustive_client/endpoints/put/types/error"
+require_relative "seed_exhaustive_client/endpoints/put/types/error_category"
+require_relative "seed_exhaustive_client/endpoints/put/types/error_code"
+require_relative "seed_exhaustive_client/endpoints/put/types/put_response"
 require_relative "seed_exhaustive_client/general_errors/types/bad_object_request_info"
 require_relative "seed_exhaustive_client/types/enum/types/weather_report"
 require_relative "seed_exhaustive_client/types/object/types/object_with_optional_field"
