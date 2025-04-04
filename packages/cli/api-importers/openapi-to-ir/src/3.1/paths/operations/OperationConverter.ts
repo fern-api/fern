@@ -160,7 +160,7 @@ export class OperationConverter extends AbstractOperationConverter {
         if (fernExamples == null) {
             return [];
         }
-        return fernExamples.map((example) => {
+        return fernExamples.map((example: any) => {
             return {
                 request: {
                     docs: undefined,
@@ -181,7 +181,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     statusCode: undefined,
                     body: FernIr.V2HttpEndpointResponseBody.json(example["response"])
                 },
-                codeSamples: example["code-samples"]?.map((codeSample) => {
+                codeSamples: example["code-samples"]?.map((codeSample: any) => {
                     const language = ("language" in codeSample ? codeSample.language : codeSample.sdk) ?? undefined;
                     return {
                         docs: undefined,
