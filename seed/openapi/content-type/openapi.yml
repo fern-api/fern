@@ -1,0 +1,30 @@
+openapi: 3.0.1
+info:
+  title: content-types
+  version: ''
+paths:
+  /:
+    patch:
+      operationId: service_patch
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application:
+                  type: string
+                  nullable: true
+                require_auth:
+                  type: boolean
+                  nullable: true
+components:
+  schemas: {}
+  securitySchemes: {}
