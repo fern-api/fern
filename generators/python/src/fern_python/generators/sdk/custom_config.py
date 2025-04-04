@@ -61,6 +61,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # If true, treats path parameters as named parameters in endpoint functions
+    inline_path_params: bool = False
+
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
 
