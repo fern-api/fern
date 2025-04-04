@@ -20,11 +20,11 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
 
     // Create caches for performance
     const importModificationCache = new Map<string, ImportModificationType>();
-    const fileExistenceCache = new Map<string, string>();
+    const fileExistenceCache = new Set<string>();
 
     // Build file existence map for faster lookups
     for (const file of project.getSourceFiles()) {
-        fileExistenceCache.set(file.getFilePath(), "");
+        fileExistenceCache.add(file.getFilePath());
     }
 
     for (const sourceFile of project.getSourceFiles()) {
@@ -82,7 +82,7 @@ function getNormalizedPath(moduleSpecifier: string, currentFilePath: string): st
 function determineModification(
     moduleSpecifier: string,
     currentFilePath: string,
-    fileExistenceCache: Map<string, string>
+    fileExistenceCache: Set<string>
 ): ImportModificationType {
     // Case 1: Import with explicit .ts extension
     if (moduleSpecifier.endsWith(".ts")) {
