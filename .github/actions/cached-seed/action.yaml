@@ -69,6 +69,7 @@ runs:
       shell: bash
       env:
         FORCE_COLOR: "2"
+        RUFF_NO_CACHE: "1"
       run: |
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \

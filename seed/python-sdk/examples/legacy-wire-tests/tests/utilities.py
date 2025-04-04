@@ -89,10 +89,10 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
 
     # When dealing with containers of models, etc. we're validating them implicitly, so no need to check the resultant list
     if not is_container_of_complex_type:
-        assert (
-            json_expectation == response
-        ), "Primitives found, expected: {0} (type: {1}), Actual: {2} (type: {3})".format(
-            json_expectation, type(json_expectation), response, type(response)
+        assert json_expectation == response, (
+            "Primitives found, expected: {0} (type: {1}), Actual: {2} (type: {3})".format(
+                json_expectation, type(json_expectation), response, type(response)
+            )
         )
 
 

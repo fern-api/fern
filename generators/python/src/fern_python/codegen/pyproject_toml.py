@@ -232,8 +232,8 @@ packages = [
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
-[tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.14.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
@@ -254,6 +254,24 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E501",  # Line too long
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 """
 
     @dataclass(frozen=True)

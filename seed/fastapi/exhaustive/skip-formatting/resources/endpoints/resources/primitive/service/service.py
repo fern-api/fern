@@ -13,49 +13,56 @@ from ......core.exceptions.fern_http_exception import FernHTTPException
 import logging
 import functools
 from ......core.route_args import get_route_args
-
-
 class AbstractEndpointsPrimitiveService(AbstractFernService):
     """
     AbstractEndpointsPrimitiveService is an abstract class containing the methods that you should implement.
-
+    
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
-
+    
     @abc.abstractmethod
-    def get_and_return_string(self, *, body: str, auth: ApiAuth) -> str: ...
-
+    def get_and_return_string(self, *, body: str, auth: ApiAuth) -> str:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_int(self, *, body: int, auth: ApiAuth) -> int: ...
-
+    def get_and_return_int(self, *, body: int, auth: ApiAuth) -> int:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_long(self, *, body: int, auth: ApiAuth) -> int: ...
-
+    def get_and_return_long(self, *, body: int, auth: ApiAuth) -> int:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_double(self, *, body: float, auth: ApiAuth) -> float: ...
-
+    def get_and_return_double(self, *, body: float, auth: ApiAuth) -> float:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_bool(self, *, body: bool, auth: ApiAuth) -> bool: ...
-
+    def get_and_return_bool(self, *, body: bool, auth: ApiAuth) -> bool:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_datetime(self, *, body: dt.datetime, auth: ApiAuth) -> dt.datetime: ...
-
+    def get_and_return_datetime(self, *, body: dt.datetime, auth: ApiAuth) -> dt.datetime:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_date(self, *, body: dt.date, auth: ApiAuth) -> dt.date: ...
-
+    def get_and_return_date(self, *, body: dt.date, auth: ApiAuth) -> dt.date:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_uuid(self, *, body: uuid.UUID, auth: ApiAuth) -> uuid.UUID: ...
-
+    def get_and_return_uuid(self, *, body: uuid.UUID, auth: ApiAuth) -> uuid.UUID:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_base_64(self, *, body: str, auth: ApiAuth) -> str: ...
-
+    def get_and_return_base_64(self, *, body: str, auth: ApiAuth) -> str:
+        ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
-
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_string(router=router)
@@ -67,7 +74,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         cls.__init_get_and_return_date(router=router)
         cls.__init_get_and_return_uuid(router=router)
         cls.__init_get_and_return_base_64(router=router)
-
+    
     @classmethod
     def __init_get_and_return_string(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_string)
@@ -82,7 +89,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_string, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_string)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
             try:
@@ -94,18 +101,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_string.__globals__)
-
+        
         router.post(
             path="/primitive/string",
             response_model=str,
             description=AbstractEndpointsPrimitiveService.get_and_return_string.__doc__,
             **get_route_args(cls.get_and_return_string, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_int(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_int)
@@ -120,7 +127,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_int, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_int)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> int:
             try:
@@ -132,18 +139,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_int.__globals__)
-
+        
         router.post(
             path="/primitive/integer",
             response_model=int,
             description=AbstractEndpointsPrimitiveService.get_and_return_int.__doc__,
             **get_route_args(cls.get_and_return_int, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_long(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_long)
@@ -158,7 +165,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_long, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_long)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> int:
             try:
@@ -170,18 +177,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_long.__globals__)
-
+        
         router.post(
             path="/primitive/long",
             response_model=int,
             description=AbstractEndpointsPrimitiveService.get_and_return_long.__doc__,
             **get_route_args(cls.get_and_return_long, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_double(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_double)
@@ -196,7 +203,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_double, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_double)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> float:
             try:
@@ -208,18 +215,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_double.__globals__)
-
+        
         router.post(
             path="/primitive/double",
             response_model=float,
             description=AbstractEndpointsPrimitiveService.get_and_return_double.__doc__,
             **get_route_args(cls.get_and_return_double, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_bool(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_bool)
@@ -234,7 +241,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_bool, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_bool)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
             try:
@@ -246,18 +253,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_bool.__globals__)
-
+        
         router.post(
             path="/primitive/boolean",
             response_model=bool,
             description=AbstractEndpointsPrimitiveService.get_and_return_bool.__doc__,
             **get_route_args(cls.get_and_return_bool, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_datetime(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_datetime)
@@ -272,7 +279,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_datetime, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_datetime)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> dt.datetime:
             try:
@@ -284,18 +291,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_datetime.__globals__)
-
+        
         router.post(
             path="/primitive/datetime",
             response_model=dt.datetime,
             description=AbstractEndpointsPrimitiveService.get_and_return_datetime.__doc__,
             **get_route_args(cls.get_and_return_datetime, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_date(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_date)
@@ -310,7 +317,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_date, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_date)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> dt.date:
             try:
@@ -322,18 +329,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_date.__globals__)
-
+        
         router.post(
             path="/primitive/date",
             response_model=dt.date,
             description=AbstractEndpointsPrimitiveService.get_and_return_date.__doc__,
             **get_route_args(cls.get_and_return_date, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_uuid(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_uuid)
@@ -348,7 +355,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_uuid, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_uuid)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> uuid.UUID:
             try:
@@ -360,18 +367,18 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_uuid.__globals__)
-
+        
         router.post(
             path="/primitive/uuid",
             response_model=uuid.UUID,
             description=AbstractEndpointsPrimitiveService.get_and_return_uuid.__doc__,
             **get_route_args(cls.get_and_return_uuid, default_tag="endpoints.primitive"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_base_64(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_base_64)
@@ -386,7 +393,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_base_64, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_base_64)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
             try:
@@ -398,11 +405,11 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_base_64.__globals__)
-
+        
         router.post(
             path="/primitive/base64",
             response_model=str,

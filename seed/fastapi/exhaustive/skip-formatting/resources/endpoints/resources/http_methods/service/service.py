@@ -13,37 +13,40 @@ from ......core.exceptions.fern_http_exception import FernHTTPException
 import logging
 import functools
 from ......core.route_args import get_route_args
-
-
 class AbstractEndpointsHttpMethodsService(AbstractFernService):
     """
     AbstractEndpointsHttpMethodsService is an abstract class containing the methods that you should implement.
-
+    
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
-
+    
     @abc.abstractmethod
-    def test_get(self, *, id: str, auth: ApiAuth) -> str: ...
-
+    def test_get(self, *, id: str, auth: ApiAuth) -> str:
+        ...
+    
     @abc.abstractmethod
-    def test_post(self, *, body: ObjectWithRequiredField, auth: ApiAuth) -> ObjectWithOptionalField: ...
-
+    def test_post(self, *, body: ObjectWithRequiredField, auth: ApiAuth) -> ObjectWithOptionalField:
+        ...
+    
     @abc.abstractmethod
-    def test_put(self, *, body: ObjectWithRequiredField, id: str, auth: ApiAuth) -> ObjectWithOptionalField: ...
-
+    def test_put(self, *, body: ObjectWithRequiredField, id: str, auth: ApiAuth) -> ObjectWithOptionalField:
+        ...
+    
     @abc.abstractmethod
-    def test_patch(self, *, body: ObjectWithOptionalField, id: str, auth: ApiAuth) -> ObjectWithOptionalField: ...
-
+    def test_patch(self, *, body: ObjectWithOptionalField, id: str, auth: ApiAuth) -> ObjectWithOptionalField:
+        ...
+    
     @abc.abstractmethod
-    def test_delete(self, *, id: str, auth: ApiAuth) -> bool: ...
-
+    def test_delete(self, *, id: str, auth: ApiAuth) -> bool:
+        ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
-
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_test_get(router=router)
@@ -51,7 +54,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
         cls.__init_test_put(router=router)
         cls.__init_test_patch(router=router)
         cls.__init_test_delete(router=router)
-
+    
     @classmethod
     def __init_test_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_get)
@@ -66,7 +69,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_get, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.test_get)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
             try:
@@ -78,18 +81,18 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.test_get.__globals__)
-
+        
         router.get(
             path="/http-methods/{id}",
             response_model=str,
             description=AbstractEndpointsHttpMethodsService.test_get.__doc__,
             **get_route_args(cls.test_get, default_tag="endpoints.http_methods"),
         )(wrapper)
-
+    
     @classmethod
     def __init_test_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_post)
@@ -104,7 +107,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_post, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.test_post)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
             try:
@@ -116,18 +119,18 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.test_post.__globals__)
-
+        
         router.post(
             path="/http-methods",
             response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_post.__doc__,
             **get_route_args(cls.test_post, default_tag="endpoints.http_methods"),
         )(wrapper)
-
+    
     @classmethod
     def __init_test_put(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_put)
@@ -144,7 +147,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_put, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.test_put)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
             try:
@@ -156,18 +159,18 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.test_put.__globals__)
-
+        
         router.put(
             path="/http-methods/{id}",
             response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_put.__doc__,
             **get_route_args(cls.test_put, default_tag="endpoints.http_methods"),
         )(wrapper)
-
+    
     @classmethod
     def __init_test_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_patch)
@@ -184,7 +187,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.test_patch)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
             try:
@@ -196,18 +199,18 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.test_patch.__globals__)
-
+        
         router.patch(
             path="/http-methods/{id}",
             response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_patch.__doc__,
             **get_route_args(cls.test_patch, default_tag="endpoints.http_methods"),
         )(wrapper)
-
+    
     @classmethod
     def __init_test_delete(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_delete)
@@ -222,7 +225,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_delete, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.test_delete)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
             try:
@@ -234,11 +237,11 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.test_delete.__globals__)
-
+        
         router.delete(
             path="/http-methods/{id}",
             response_model=bool,

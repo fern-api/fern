@@ -2,7 +2,7 @@
 
 from . import service
 from .client import AsyncSeedMixedCase, SeedMixedCase
-from .service import NestedUser, Organization, Resource, ResourceStatus, Resource_Organization, Resource_User, User
+from .service import NestedUser, Organization, Resource, Resource_Organization, Resource_User, ResourceStatus, User
 from .version import __version__
 
 __all__ = [

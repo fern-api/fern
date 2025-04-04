@@ -97,6 +97,7 @@ class AbstractGenerator(ABC):
             )
 
         publisher = Publisher(
+            should_fix=self.should_fix_files(),
             should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
@@ -108,16 +109,15 @@ class AbstractGenerator(ABC):
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
             # we run ruff using the fern_python poetry.toml (copied into the docker)
-            publisher._run_command(
-                command=["poetry", "run", "ruff", "format", "/fern/output"],
-                safe_command="poetry run ruff format /fern/output",
-                cwd="/",
-            )
+            publisher.run_ruff_check_fix("/fern/output", cwd="/")
+            publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
             publisher.run_poetry_install()
+            publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
             publisher.run_poetry_install()
+            publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
 
@@ -155,20 +155,6 @@ class AbstractGenerator(ABC):
             else None,
         )
 
-    def _poetry_install_and_format(
-        self,
-        *,
-        generator_exec_wrapper: GeneratorExecWrapper,
-        generator_config: GeneratorConfig,
-    ) -> None:
-        publisher = Publisher(
-            should_format=self.should_format_files(generator_config=generator_config),
-            generator_exec_wrapper=generator_exec_wrapper,
-            generator_config=generator_config,
-        )
-        publisher.run_poetry_install()
-        publisher.run_ruff_format()
-
     def _publish(
         self,
         generator_exec_wrapper: GeneratorExecWrapper,
@@ -176,6 +162,7 @@ class AbstractGenerator(ABC):
         generator_config: GeneratorConfig,
     ) -> None:
         publisher = Publisher(
+            should_fix=self.should_fix_files(),
             should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
@@ -290,7 +277,7 @@ jobs:
 # Get started with writing tests with pytest at https://docs.pytest.org
 @pytest.mark.skip(reason="Unimplemented")
 def test_client() -> None:
-    assert True == True
+    assert True
 """
 
     @abstractmethod
@@ -305,6 +292,9 @@ def test_client() -> None:
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None: ...
+
+    @abstractmethod
+    def should_fix_files(self) -> bool: ...
 
     @abstractmethod
     def should_format_files(
