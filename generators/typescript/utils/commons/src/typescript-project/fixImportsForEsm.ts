@@ -1,3 +1,4 @@
+import path from "path";
 import { Project } from "ts-morph";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -73,7 +74,7 @@ function getModifiedSpecifier(moduleSpecifier: string, modification: ImportModif
 
 // Get a normalized path for consistent cache keys
 function getNormalizedPath(moduleSpecifier: string, currentFilePath: string): string {
-    const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf("/"));
+    const currentDir = path.dirname(currentFilePath);
     return join(AbsoluteFilePath.of(currentDir), RelativeFilePath.of(moduleSpecifier)).toString();
 }
 
@@ -88,7 +89,7 @@ function determineModification(
         return ImportModification.REPLACE_TS_WITH_JS;
     }
 
-    const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf("/"));
+    const currentDir = path.dirname(currentFilePath);
 
     // Case 2: Directory import with index file
     const dirPath = join(AbsoluteFilePath.of(currentDir), RelativeFilePath.of(moduleSpecifier));
