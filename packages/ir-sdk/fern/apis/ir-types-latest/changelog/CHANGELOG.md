@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v57.3.0] - 2024-04-04
+
+- Feature: HTTP and Websocket endpoints now support storing lightweight examples.
+
+## [v57.2.0] - 2024-04-01
+
+- Feature: HTTP Endpoints now support storing dynamic snippet requests as examples. (In the future, this will be the only path.)
+
 ## [v57.1.0] - 2024-03-05
 
 - Feature: File properties can now support descriptions.

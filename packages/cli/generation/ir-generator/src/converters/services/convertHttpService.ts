@@ -185,7 +185,8 @@ export function convertHttpService({
                     serviceTransport: transport,
                     endpointDeclaration: endpoint,
                     sourceResolver
-                })
+                }),
+                v2Examples: undefined
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
