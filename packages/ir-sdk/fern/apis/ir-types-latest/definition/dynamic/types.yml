@@ -28,6 +28,8 @@ types:
       optional: TypeReference
       primitive: root.PrimitiveTypeV1
       set: TypeReference
+      discriminatedUnion: DiscriminatedUnionType
+      undiscriminatedUnion: UndiscriminatedUnionType
       unknown: {}
   
   AliasType:

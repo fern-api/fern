@@ -13,6 +13,8 @@ export type TypeReference =
     | FernIr.dynamic.TypeReference.Optional
     | FernIr.dynamic.TypeReference.Primitive
     | FernIr.dynamic.TypeReference.Set
+    | FernIr.dynamic.TypeReference.DiscriminatedUnion
+    | FernIr.dynamic.TypeReference.UndiscriminatedUnion
     | FernIr.dynamic.TypeReference.Unknown;
 
 export namespace TypeReference {
@@ -55,6 +57,14 @@ export namespace TypeReference {
         value: FernIr.dynamic.TypeReference;
     }
 
+    export interface DiscriminatedUnion extends FernIr.dynamic.DiscriminatedUnionType, _Utils {
+        type: "discriminatedUnion";
+    }
+
+    export interface UndiscriminatedUnion extends FernIr.dynamic.UndiscriminatedUnionType, _Utils {
+        type: "undiscriminatedUnion";
+    }
+
     export interface Unknown extends _Utils {
         type: "unknown";
     }
@@ -72,6 +82,8 @@ export namespace TypeReference {
         optional: (value: FernIr.dynamic.TypeReference) => _Result;
         primitive: (value: FernIr.PrimitiveTypeV1) => _Result;
         set: (value: FernIr.dynamic.TypeReference) => _Result;
+        discriminatedUnion: (value: FernIr.dynamic.DiscriminatedUnionType) => _Result;
+        undiscriminatedUnion: (value: FernIr.dynamic.UndiscriminatedUnionType) => _Result;
         unknown: () => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -182,6 +194,32 @@ export const TypeReference = {
         };
     },
 
+    discriminatedUnion: (value: FernIr.dynamic.DiscriminatedUnionType): FernIr.dynamic.TypeReference.DiscriminatedUnion => {
+        return {
+            ...value,
+            type: "discriminatedUnion",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.TypeReference.DiscriminatedUnion,
+                visitor: FernIr.dynamic.TypeReference._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.TypeReference._visit(this, visitor);
+            },
+        };
+    },
+
+    undiscriminatedUnion: (value: FernIr.dynamic.UndiscriminatedUnionType): FernIr.dynamic.TypeReference.UndiscriminatedUnion => {
+        return {
+            ...value,
+            type: "undiscriminatedUnion",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.TypeReference.UndiscriminatedUnion,
+                visitor: FernIr.dynamic.TypeReference._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.TypeReference._visit(this, visitor);
+            },
+        };
+    },
+
     unknown: (): FernIr.dynamic.TypeReference.Unknown => {
         return {
             type: "unknown",
@@ -215,6 +253,10 @@ export const TypeReference = {
                 return visitor.primitive(value.value);
             case "set":
                 return visitor.set(value.value);
+            case "discriminatedUnion":
+                return visitor.discriminatedUnion(value);
+            case "undiscriminatedUnion":
+                return visitor.undiscriminatedUnion(value);
             case "unknown":
                 return visitor.unknown();
             default:

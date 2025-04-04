@@ -36,6 +36,8 @@ export const TypeReference: core.serialization.Schema<
         set: core.serialization.object({
             value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
         }),
+        discriminatedUnion: core.serialization.lazyObject(() => serializers.dynamic.DiscriminatedUnionType),
+        undiscriminatedUnion: core.serialization.lazyObject(() => serializers.dynamic.UndiscriminatedUnionType),
         unknown: core.serialization.object({}),
     })
     .transform<FernIr.dynamic.TypeReference>({
@@ -57,6 +59,10 @@ export const TypeReference: core.serialization.Schema<
                     return FernIr.dynamic.TypeReference.primitive(value.value);
                 case "set":
                     return FernIr.dynamic.TypeReference.set(value.value);
+                case "discriminatedUnion":
+                    return FernIr.dynamic.TypeReference.discriminatedUnion(value);
+                case "undiscriminatedUnion":
+                    return FernIr.dynamic.TypeReference.undiscriminatedUnion(value);
                 case "unknown":
                     return FernIr.dynamic.TypeReference.unknown();
                 default:
@@ -76,6 +82,8 @@ export declare namespace TypeReference {
         | TypeReference.Optional
         | TypeReference.Primitive
         | TypeReference.Set
+        | TypeReference.DiscriminatedUnion
+        | TypeReference.UndiscriminatedUnion
         | TypeReference.Unknown;
 
     export interface List {
@@ -115,6 +123,14 @@ export declare namespace TypeReference {
     export interface Set {
         type: "set";
         value: serializers.dynamic.TypeReference.Raw;
+    }
+
+    export interface DiscriminatedUnion extends serializers.dynamic.DiscriminatedUnionType.Raw {
+        type: "discriminatedUnion";
+    }
+
+    export interface UndiscriminatedUnion extends serializers.dynamic.UndiscriminatedUnionType.Raw {
+        type: "undiscriminatedUnion";
     }
 
     export interface Unknown {
