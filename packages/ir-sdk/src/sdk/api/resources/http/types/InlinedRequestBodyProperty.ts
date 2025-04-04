@@ -7,5 +7,5 @@ import * as FernIr from "../../../index";
 export interface InlinedRequestBodyProperty extends FernIr.WithDocsAndAvailability {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
-    example: FernIr.V2PropertyExample | undefined;
+    example: FernIr.V2SchemaExample | undefined;
 }

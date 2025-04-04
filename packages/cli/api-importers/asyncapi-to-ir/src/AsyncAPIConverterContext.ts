@@ -60,8 +60,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
                 default: undefined,
-                inline: false,
-                example: undefined
+                inline: false
             })
         };
     }

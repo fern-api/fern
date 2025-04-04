@@ -90,7 +90,7 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       env: optional<string>
-      example: optional<examples.V2PropertyExample>
+      example: optional<examples.V2SchemaExample>
 
   PathParameter:
     extends: commons.WithDocs
@@ -99,7 +99,7 @@ types:
       valueType: types.TypeReference
       location: PathParameterLocation
       variable: optional<variables.VariableId>
-      example: optional<examples.V2PropertyExample>
+      example: optional<examples.V2SchemaExample>
 
   PathParameterLocation:
     enum:
@@ -113,7 +113,7 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       allowMultiple: boolean
-      example: optional<examples.V2PropertyExample>
+      example: optional<examples.V2SchemaExample>
 
   HttpRequestBody:
     union:
@@ -141,7 +141,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
-      example: optional<examples.V2PropertyExample>
+      example: optional<examples.V2SchemaExample>
 
   FileUploadRequest:
     extends: commons.WithDocs

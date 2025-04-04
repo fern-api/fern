@@ -311,8 +311,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             name: this.casingsGenerator.generateName(id ?? "defaultName"),
             typeId: id,
             default: undefined,
-            inline: false,
-            example: undefined
+            inline: false
         });
     }
 
