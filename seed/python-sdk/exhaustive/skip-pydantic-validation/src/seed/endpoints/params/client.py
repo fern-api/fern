@@ -2,10 +2,12 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawParamsClient
 from ...core.request_options import RequestOptions
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.unchecked_base_model import construct_type
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawParamsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ParamsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawParamsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawParamsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawParamsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_with_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -53,11 +44,24 @@ class ParamsClient:
             param="param",
         )
         """
-        response = self._raw_client.get_with_path(
-            param,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -86,11 +90,24 @@ class ParamsClient:
             param="param",
         )
         """
-        response = self._raw_client.get_with_inline_path(
-            param,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_query(
         self, *, query: str, number: int, request_options: typing.Optional[RequestOptions] = None
@@ -124,12 +141,22 @@ class ParamsClient:
             number=1,
         )
         """
-        response = self._raw_client.get_with_query(
-            query=query,
-            number=number,
+        _response = self._client_wrapper.httpx_client.request(
+            "params",
+            method="GET",
+            params={
+                "query": query,
+                "number": number,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_allow_multiple_query(
         self,
@@ -167,12 +194,22 @@ class ParamsClient:
             number=1,
         )
         """
-        response = self._raw_client.get_with_allow_multiple_query(
-            query=query,
-            number=number,
+        _response = self._client_wrapper.httpx_client.request(
+            "params",
+            method="GET",
+            params={
+                "query": query,
+                "number": number,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_path_and_query(
         self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -206,12 +243,21 @@ class ParamsClient:
             query="query",
         )
         """
-        response = self._raw_client.get_with_path_and_query(
-            param,
-            query=query,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path-query/{jsonable_encoder(param)}",
+            method="GET",
+            params={
+                "query": query,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_with_inline_path_and_query(
         self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -245,12 +291,21 @@ class ParamsClient:
             query="query",
         )
         """
-        response = self._raw_client.get_with_inline_path_and_query(
-            param,
-            query=query,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path-query/{jsonable_encoder(param)}",
+            method="GET",
+            params={
+                "query": query,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def modify_with_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -284,12 +339,26 @@ class ParamsClient:
             request="string",
         )
         """
-        response = self._raw_client.modify_with_path(
-            param,
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="PUT",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def modify_with_inline_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -323,28 +392,31 @@ class ParamsClient:
             request="string",
         )
         """
-        response = self._raw_client.modify_with_inline_path(
-            param,
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="PUT",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawParamsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawParamsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawParamsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_with_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -381,11 +453,24 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_path(
-            param,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -422,11 +507,24 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_inline_path(
-            param,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_query(
         self, *, query: str, number: int, request_options: typing.Optional[RequestOptions] = None
@@ -468,12 +566,22 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_query(
-            query=query,
-            number=number,
+        _response = await self._client_wrapper.httpx_client.request(
+            "params",
+            method="GET",
+            params={
+                "query": query,
+                "number": number,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_allow_multiple_query(
         self,
@@ -519,12 +627,22 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_allow_multiple_query(
-            query=query,
-            number=number,
+        _response = await self._client_wrapper.httpx_client.request(
+            "params",
+            method="GET",
+            params={
+                "query": query,
+                "number": number,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_path_and_query(
         self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -566,12 +684,21 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_path_and_query(
-            param,
-            query=query,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path-query/{jsonable_encoder(param)}",
+            method="GET",
+            params={
+                "query": query,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_with_inline_path_and_query(
         self, param: str, *, query: str, request_options: typing.Optional[RequestOptions] = None
@@ -613,12 +740,21 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_inline_path_and_query(
-            param,
-            query=query,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path-query/{jsonable_encoder(param)}",
+            method="GET",
+            params={
+                "query": query,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def modify_with_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -660,12 +796,26 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.modify_with_path(
-            param,
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="PUT",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def modify_with_inline_path(
         self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -707,9 +857,23 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.modify_with_inline_path(
-            param,
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{jsonable_encoder(param)}",
+            method="PUT",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

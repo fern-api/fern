@@ -7,7 +7,6 @@ from uuid import uuid4
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
-from .client_generator.raw_client_generator import RawClientGenerator
 from .client_generator.root_client_generator import RootClientGenerator
 from .client_generator.socket_client_generator import SocketClientGenerator
 from .custom_config import (
@@ -485,56 +484,37 @@ class SdkGenerator(AbstractGenerator):
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
+        filepath = context.get_filepath_for_subpackage_service(subpackage_id)
         if websocket is not None and context.custom_config.should_generate_websocket_clients:
-            socket_client_filepath = context.get_socket_client_filepath_for_subpackage_service(subpackage_id)
+            socket_filepath = context.get_socket_filepath_for_subpackage_service(subpackage_id)
             socket_source_file = context.source_file_factory.create(
-                project=project, filepath=socket_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+                project=project, filepath=socket_filepath, generator_exec_wrapper=generator_exec_wrapper
             )
             SocketClientGenerator(
                 context=context,
                 subpackage_id=subpackage_id,
                 websocket=websocket,
-                class_name=context.get_socket_client_class_name_for_subpackage_service(subpackage_id),
-                async_class_name=context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id),
+                class_name=context.get_socket_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_socket_class_name_for_subpackage_service(subpackage_id),
                 generated_root_client=generated_root_client,
             ).generate(source_file=socket_source_file)
-            project.write_source_file(source_file=socket_source_file, filepath=socket_client_filepath)
-
-        client_filepath = context.get_client_filepath_for_subpackage_service(subpackage_id)
-        client_source_file = context.source_file_factory.create(
-            project=project, filepath=client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            project.write_source_file(source_file=socket_source_file, filepath=socket_filepath)
+        source_file = context.source_file_factory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ClientGenerator(
             context=context,
             package=subpackage,
             subpackage_id=subpackage_id,
-            class_name=context.get_client_class_name_for_subpackage_service(subpackage_id),
+            class_name=context.get_class_name_of_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
-        ).generate(source_file=client_source_file)
-        project.write_source_file(source_file=client_source_file, filepath=client_filepath)
-
-        raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
-        raw_client_source_file = context.source_file_factory.create(
-            project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
-        )
-        RawClientGenerator(
-            context=context,
-            package=subpackage,
-            subpackage_id=subpackage_id,
-            class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
-            async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
-            generated_root_client=generated_root_client,
-            snippet_registry=snippet_registry,
-            snippet_writer=snippet_writer,
-            endpoint_metadata_collector=endpoint_metadata_collector,
-            websocket=websocket,
-        ).generate(source_file=raw_client_source_file)
-        project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _generate_error(
         self,
