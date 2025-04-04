@@ -26,6 +26,7 @@
     "lint:spelling": "cspell **",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore --cache \"**\"",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
+    "format:fix:diff": "git diff --name-only --diff-filter=ACMR | xargs prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore --cache",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore --cache \"**\"",
     "add-workspace": "yarn mrlint add-workspace",
     "depcheck": "pnpm -r --no-bail depcheck",
