@@ -31,10 +31,7 @@ class SeedUnions:
     Examples
     --------
     from seed import SeedUnions
-
-    client = SeedUnions(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -82,10 +79,7 @@ class AsyncSeedUnions:
     Examples
     --------
     from seed import AsyncSeedUnions
-
-    client = AsyncSeedUnions(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

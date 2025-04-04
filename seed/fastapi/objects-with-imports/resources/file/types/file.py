@@ -11,13 +11,9 @@ class File(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.objects_with_imports.resources.file import File, FileInfo
-
-    File(
-        name="file.txt",
-        contents="...",
-        info=FileInfo.REGULAR,
-    )
+    from seed.objects_with_imports.resources.file import File
+    from seed.objects_with_imports.resources.file import FileInfo
+    File(name='file.txt', contents='...', info=FileInfo.REGULAR, )
     """
 
     name: str

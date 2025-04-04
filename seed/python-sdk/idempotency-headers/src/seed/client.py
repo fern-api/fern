@@ -30,11 +30,7 @@ class SeedIdempotencyHeaders:
     Examples
     --------
     from seed import SeedIdempotencyHeaders
-
-    client = SeedIdempotencyHeaders(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -84,11 +80,7 @@ class AsyncSeedIdempotencyHeaders:
     Examples
     --------
     from seed import AsyncSeedIdempotencyHeaders
-
-    client = AsyncSeedIdempotencyHeaders(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

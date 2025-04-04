@@ -12,53 +12,48 @@ from ......core.exceptions.fern_http_exception import FernHTTPException
 import logging
 import functools
 from ......core.route_args import get_route_args
-
-
 class AbstractEndpointsContainerService(AbstractFernService):
     """
     AbstractEndpointsContainerService is an abstract class containing the methods that you should implement.
-
+    
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
-
+    
     @abc.abstractmethod
-    def get_and_return_list_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.Sequence[str]: ...
-
+    def get_and_return_list_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.Sequence[str]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_list_of_objects(
-        self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth
-    ) -> typing.Sequence[ObjectWithRequiredField]: ...
-
+    def get_and_return_list_of_objects(self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth) -> typing.Sequence[ObjectWithRequiredField]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_set_of_primitives(self, *, body: typing.Set[str], auth: ApiAuth) -> typing.Set[str]: ...
-
+    def get_and_return_set_of_primitives(self, *, body: typing.Set[str], auth: ApiAuth) -> typing.Set[str]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_set_of_objects(
-        self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth
-    ) -> typing.Sequence[ObjectWithRequiredField]: ...
-
+    def get_and_return_set_of_objects(self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth) -> typing.Sequence[ObjectWithRequiredField]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_map_prim_to_prim(
-        self, *, body: typing.Dict[str, str], auth: ApiAuth
-    ) -> typing.Dict[str, str]: ...
-
+    def get_and_return_map_prim_to_prim(self, *, body: typing.Dict[str, str], auth: ApiAuth) -> typing.Dict[str, str]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_map_of_prim_to_object(
-        self, *, body: typing.Dict[str, ObjectWithRequiredField], auth: ApiAuth
-    ) -> typing.Dict[str, ObjectWithRequiredField]: ...
-
+    def get_and_return_map_of_prim_to_object(self, *, body: typing.Dict[str, ObjectWithRequiredField], auth: ApiAuth) -> typing.Dict[str, ObjectWithRequiredField]:
+        ...
+    
     @abc.abstractmethod
-    def get_and_return_optional(
-        self, *, body: typing.Optional[ObjectWithRequiredField] = None, auth: ApiAuth
-    ) -> typing.Optional[ObjectWithRequiredField]: ...
-
+    def get_and_return_optional(self, *, body: typing.Optional[ObjectWithRequiredField] = None, auth: ApiAuth) -> typing.Optional[ObjectWithRequiredField]:
+        ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
-
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_list_of_primitives(router=router)
@@ -68,7 +63,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         cls.__init_get_and_return_map_prim_to_prim(router=router)
         cls.__init_get_and_return_map_of_prim_to_object(router=router)
         cls.__init_get_and_return_optional(router=router)
-
+    
     @classmethod
     def __init_get_and_return_list_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_primitives)
@@ -82,10 +77,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_list_of_primitives, "__signature__", endpoint_function.replace(parameters=new_parameters)
-        )
-
+        setattr(cls.get_and_return_list_of_primitives, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_list_of_primitives)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[str]:
             try:
@@ -97,18 +90,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_list_of_primitives.__globals__)
-
+        
         router.post(
             path="/container/list-of-primitives",
             response_model=typing.Sequence[str],
             description=AbstractEndpointsContainerService.get_and_return_list_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_list_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_list_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_objects)
@@ -122,10 +115,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_list_of_objects, "__signature__", endpoint_function.replace(parameters=new_parameters)
-        )
-
+        setattr(cls.get_and_return_list_of_objects, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_list_of_objects)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ObjectWithRequiredField]:
             try:
@@ -137,18 +128,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_list_of_objects.__globals__)
-
+        
         router.post(
             path="/container/list-of-objects",
             response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_list_of_objects.__doc__,
             **get_route_args(cls.get_and_return_list_of_objects, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_set_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_primitives)
@@ -162,10 +153,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_set_of_primitives, "__signature__", endpoint_function.replace(parameters=new_parameters)
-        )
-
+        setattr(cls.get_and_return_set_of_primitives, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_set_of_primitives)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Set[str]:
             try:
@@ -177,18 +166,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_set_of_primitives.__globals__)
-
+        
         router.post(
             path="/container/set-of-primitives",
             response_model=typing.Set[str],
             description=AbstractEndpointsContainerService.get_and_return_set_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_set_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_set_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_objects)
@@ -202,10 +191,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_set_of_objects, "__signature__", endpoint_function.replace(parameters=new_parameters)
-        )
-
+        setattr(cls.get_and_return_set_of_objects, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_set_of_objects)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ObjectWithRequiredField]:
             try:
@@ -217,18 +204,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_set_of_objects.__globals__)
-
+        
         router.post(
             path="/container/set-of-objects",
             response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_set_of_objects.__doc__,
             **get_route_args(cls.get_and_return_set_of_objects, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_map_prim_to_prim(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_prim_to_prim)
@@ -242,10 +229,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_map_prim_to_prim, "__signature__", endpoint_function.replace(parameters=new_parameters)
-        )
-
+        setattr(cls.get_and_return_map_prim_to_prim, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_map_prim_to_prim)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Dict[str, str]:
             try:
@@ -257,18 +242,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_map_prim_to_prim.__globals__)
-
+        
         router.post(
             path="/container/map-prim-to-prim",
             response_model=typing.Dict[str, str],
             description=AbstractEndpointsContainerService.get_and_return_map_prim_to_prim.__doc__,
             **get_route_args(cls.get_and_return_map_prim_to_prim, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_map_of_prim_to_object(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_of_prim_to_object)
@@ -282,12 +267,8 @@ class AbstractEndpointsContainerService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_and_return_map_of_prim_to_object,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
-
+        setattr(cls.get_and_return_map_of_prim_to_object, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
         @functools.wraps(cls.get_and_return_map_of_prim_to_object)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Dict[str, ObjectWithRequiredField]:
             try:
@@ -299,18 +280,18 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_map_of_prim_to_object.__globals__)
-
+        
         router.post(
             path="/container/map-prim-to-object",
             response_model=typing.Dict[str, ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_object.__doc__,
             **get_route_args(cls.get_and_return_map_of_prim_to_object, default_tag="endpoints.container"),
         )(wrapper)
-
+    
     @classmethod
     def __init_get_and_return_optional(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_optional)
@@ -325,7 +306,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_optional, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_and_return_optional)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[ObjectWithRequiredField]:
             try:
@@ -337,11 +318,11 @@ class AbstractEndpointsContainerService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_and_return_optional.__globals__)
-
+        
         router.post(
             path="/container/opt-objects",
             response_model=typing.Optional[ObjectWithRequiredField],

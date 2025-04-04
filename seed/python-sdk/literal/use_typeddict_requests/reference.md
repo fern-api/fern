@@ -14,13 +14,8 @@
 
 ```python
 from seed import SeedLiteral
-
-client = SeedLiteral(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.headers.send(
-    query="What is the weather today",
-)
+client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+client.headers.send(query='What is the weather today', )
 
 ```
 </dd>
@@ -71,17 +66,8 @@ client.headers.send(
 
 ```python
 from seed import SeedLiteral
-
-client = SeedLiteral(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.inlined.send(
-    temperature=10.1,
-    context="You're super wise",
-    maybe_context="You're super wise",
-    object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
-    query="What is the weather today",
-)
+client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal={'nested_literal': {'my_literal': 'How super cool'}}, query='What is the weather today', )
 
 ```
 </dd>
@@ -164,10 +150,7 @@ client.inlined.send(
 
 ```python
 from seed import SeedLiteral
-
-client = SeedLiteral(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.path.send()
 
 ```
@@ -211,13 +194,8 @@ client.path.send()
 
 ```python
 from seed import SeedLiteral
-
-client = SeedLiteral(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.query.send(
-    query="What is the weather today",
-)
+client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+client.query.send(query='What is the weather today', )
 
 ```
 </dd>
@@ -300,22 +278,8 @@ client.query.send(
 
 ```python
 from seed import SeedLiteral
-
-client = SeedLiteral(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.reference.send(
-    query="What is the weather today",
-    container_object={
-        "nested_objects": [
-            {
-                "literal_1": "literal1",
-                "literal_2": "literal2",
-                "str_prop": "strProp",
-            }
-        ]
-    },
-)
+client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+client.reference.send(query='What is the weather today', container_object={'nested_objects': [{'literal_1': 'literal1', 'literal_2': 'literal2', 'str_prop': 'strProp'}]}, )
 
 ```
 </dd>

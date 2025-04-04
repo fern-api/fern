@@ -35,14 +35,8 @@ class DatetimeUnionWithOptionalTime(UniversalBaseModel):
 
 
 """
-import datetime
-
 from seed.types import DateUnionWithOptionalTime
-
-DateUnionWithOptionalTime(
-    value=datetime.date.fromisoformat(
-        "1994-01-01",
-    )
-)
+import datetime
+DateUnionWithOptionalTime(value=datetime.date.fromisoformat("1994-01-01", ))
 """
 UnionWithOptionalTime = typing.Union[DateUnionWithOptionalTime, DatetimeUnionWithOptionalTime]

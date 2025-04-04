@@ -5,8 +5,6 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 import typing_extensions
 from ...commons.types.variable_value import VariableValue
 from ...core.serialization import FieldMetadata

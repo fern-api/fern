@@ -13,21 +13,10 @@ class Movie(UniversalBaseModel):
     Examples
     --------
     from seed.examples.resources import Movie
-
-    Movie(
-        id="movie-c06a4ad7",
-        prequel="movie-cv9b914f",
-        title="The Boy and the Heron",
-        from_="Hayao Miyazaki",
-        rating=8.0,
-        tag="tag-wf9as23d",
-        metadata={
-            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-            "releaseDate": "2023-12-08",
-            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-        },
-        revenue=1000000,
-    )
+    Movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
+    , 'releaseDate': '2023-12-08'
+    , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
+    }, revenue=1000000, )
     """
 
     id: MovieId

@@ -13,33 +13,10 @@ class Directory(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.objects_with_imports.resources.file import File, FileInfo
-    from seed.objects_with_imports.resources.file.resources.directory import (
-        Directory,
-    )
-
-    Directory(
-        name="root",
-        files=[
-            File(
-                name="file.txt",
-                contents="...",
-                info=FileInfo.REGULAR,
-            )
-        ],
-        directories=[
-            Directory(
-                name="tmp",
-                files=[
-                    File(
-                        name="another_file.txt",
-                        contents="...",
-                        info=FileInfo.REGULAR,
-                    )
-                ],
-            )
-        ],
-    )
+    from seed.objects_with_imports.resources.file.resources.directory import Directory
+    from seed.objects_with_imports.resources.file import File
+    from seed.objects_with_imports.resources.file import FileInfo
+    Directory(name='root', files=[File(name='file.txt', contents='...', info=FileInfo.REGULAR, )], directories=[Directory(name='tmp', files=[File(name='another_file.txt', contents='...', info=FileInfo.REGULAR, )], )], )
     """
 
     name: str

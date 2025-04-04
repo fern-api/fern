@@ -10,14 +10,8 @@ class Metadata(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.objects_with_imports.resources.commons.resources.metadata import (
-        Metadata,
-    )
-
-    Metadata(
-        id="metadata-js8dg24b",
-        data={"foo": "bar", "baz": "qux"},
-    )
+    from seed.objects_with_imports.resources.commons.resources.metadata import Metadata
+    Metadata(id='metadata-js8dg24b', data={'foo': 'bar', 'baz': 'qux'}, )
     """
 
     id: str

@@ -19,9 +19,9 @@ class FirstUnionSecondElement(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .first_union_first_element import FirstUnionFirstElement  # noqa: E402
-from .second_union_first_element import SecondUnionFirstElement  # noqa: E402
-from .second_union_second_element import SecondUnionSecondElement  # noqa: E402
-from .second_union import SecondUnion  # noqa: E402
+from .first_union_first_element import FirstUnionFirstElement  # noqa: E402, F401
+from .second_union_first_element import SecondUnionFirstElement  # noqa: E402, F401
+from .second_union_second_element import SecondUnionSecondElement  # noqa: E402, F401
+from .second_union import SecondUnion  # noqa: E402, F401
 
 update_forward_refs(FirstUnionSecondElement)

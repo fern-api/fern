@@ -6,8 +6,6 @@ from .test_case_template_id import TestCaseTemplateId
 import typing
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from .....commons.types.list_type import ListType
-from .....commons.types.map_type import MapType
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_function import TestCaseFunction
 

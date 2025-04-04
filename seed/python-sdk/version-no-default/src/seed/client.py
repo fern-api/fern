@@ -29,10 +29,7 @@ class SeedVersion:
     Examples
     --------
     from seed import SeedVersion
-
-    client = SeedVersion(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedVersion(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedVersion:
     Examples
     --------
     from seed import AsyncSeedVersion
-
-    client = AsyncSeedVersion(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedVersion(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

@@ -7,8 +7,6 @@ import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .error_info import ErrorInfo
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .test_case_grade import TestCaseGrade
 

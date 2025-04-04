@@ -20,6 +20,6 @@ class Memo(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .account import Account  # noqa: E402
+from .account import Account  # noqa: E402, F401
 
 update_forward_refs(Memo)

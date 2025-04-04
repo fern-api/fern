@@ -54,17 +54,8 @@ class AuthClient:
         Examples
         --------
         from seed import SeedAnyAuth
-
-        client = SeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-        client.auth.get_token(
-            client_id="client_id",
-            client_secret="client_secret",
-            scope="scope",
-        )
+        client = SeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+        client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
         """
         response = self._raw_client.get_token(
             client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
@@ -113,25 +104,11 @@ class AsyncAuthClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedAnyAuth
-
-        client = AsyncSeedAnyAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-
-
+        import asyncio
+        client = AsyncSeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
         async def main() -> None:
-            await client.auth.get_token(
-                client_id="client_id",
-                client_secret="client_secret",
-                scope="scope",
-            )
-
-
+            await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_token(

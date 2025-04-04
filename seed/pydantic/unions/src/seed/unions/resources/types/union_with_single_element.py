@@ -12,10 +12,7 @@ class UnionWithSingleElement_Foo(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import UnionWithSingleElement_Foo
-
-    UnionWithSingleElement_Foo(
-        name="example1",
-    )
+    UnionWithSingleElement_Foo(name='example1', )
     """
 
     type: typing.Literal["foo"] = "foo"
@@ -31,9 +28,6 @@ class UnionWithSingleElement_Foo(UniversalBaseModel):
 
 """
 from seed.unions.resources import UnionWithSingleElement_Foo
-
-UnionWithSingleElement_Foo(
-    name="example1",
-)
+UnionWithSingleElement_Foo(name='example1', )
 """
 UnionWithSingleElement = UnionWithSingleElement_Foo

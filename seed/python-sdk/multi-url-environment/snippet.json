@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_ec2.bootInstance"
             },
             "snippet": {
-                "sync_client": "from seed import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.ec_2.boot_instance(\n    size=\"size\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.ec_2.boot_instance(\n        size=\"size\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedMultiUrlEnvironment\nclient = SeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nclient.ec_2.boot_instance(size='size', )\n",
+                "async_client": "from seed import AsyncSeedMultiUrlEnvironment\nimport asyncio\nclient = AsyncSeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nasync def main() -> None:\n    await client.ec_2.boot_instance(size='size', )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_s3.getPresignedUrl"
             },
             "snippet": {
-                "sync_client": "from seed import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.s_3.get_presigned_url(\n    s_3_key=\"s3Key\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.s_3.get_presigned_url(\n        s_3_key=\"s3Key\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedMultiUrlEnvironment\nclient = SeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nclient.s_3.get_presigned_url(s_3_key='s3Key', )\n",
+                "async_client": "from seed import AsyncSeedMultiUrlEnvironment\nimport asyncio\nclient = AsyncSeedMultiUrlEnvironment(token=\"YOUR_TOKEN\", )\nasync def main() -> None:\n    await client.s_3.get_presigned_url(s_3_key='s3Key', )\nasyncio.run(main())",
                 "type": "python"
             }
         }

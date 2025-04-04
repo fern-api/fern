@@ -38,11 +38,7 @@ class SeedExhaustive:
     Examples
     --------
     from seed import SeedExhaustive
-
-    client = SeedExhaustive(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -96,11 +92,7 @@ class AsyncSeedExhaustive:
     Examples
     --------
     from seed import AsyncSeedExhaustive
-
-    client = AsyncSeedExhaustive(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

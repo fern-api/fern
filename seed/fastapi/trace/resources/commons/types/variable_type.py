@@ -188,8 +188,8 @@ class VariableType(UniversalRootModel):
             return doubly_linked_list_type()
 
 
-from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402
-from .map_type import MapType as resources_commons_types_map_type_MapType  # noqa: E402
+from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402, F401
+from .map_type import MapType as resources_commons_types_map_type_MapType  # noqa: E402, F401
 
 
 class _VariableType:

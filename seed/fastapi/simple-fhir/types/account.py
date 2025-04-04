@@ -22,7 +22,7 @@ class Account(BaseResource):
             extra = pydantic.Extra.forbid
 
 
-from .patient import Patient  # noqa: E402
-from .practitioner import Practitioner  # noqa: E402
+from .patient import Patient  # noqa: E402, F401
+from .practitioner import Practitioner  # noqa: E402, F401
 
 update_forward_refs(Account)

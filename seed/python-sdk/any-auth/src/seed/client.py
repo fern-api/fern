@@ -37,12 +37,7 @@ class SeedAnyAuth:
     Examples
     --------
     from seed import SeedAnyAuth
-
-    client = SeedAnyAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = SeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
     """
 
     def __init__(
@@ -116,12 +111,7 @@ class AsyncSeedAnyAuth:
     Examples
     --------
     from seed import AsyncSeedAnyAuth
-
-    client = AsyncSeedAnyAuth(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = AsyncSeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
     """
 
     def __init__(

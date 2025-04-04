@@ -20,21 +20,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
 from seed.submission import TestSubmissionStatus
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.update_test_submission_status(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    request=TestSubmissionStatus(),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.update_test_submission_status(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=TestSubmissionStatus(), )
 ```
 
 ## Async Client
@@ -42,29 +32,14 @@ client.admin.update_test_submission_status(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-import uuid
-
 from seed import AsyncSeedTrace
+import uuid
 from seed.submission import TestSubmissionStatus
-
-client = AsyncSeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-
-
+import asyncio
+client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 async def main() -> None:
-    await client.admin.update_test_submission_status(
-        submission_id=uuid.UUID(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request=TestSubmissionStatus(),
-    )
-
-
-asyncio.run(main())
-```
+    await client.admin.update_test_submission_status(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=TestSubmissionStatus(), )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -73,7 +48,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.admin.update_test_submission_status(...)
 except ApiError as e:
@@ -110,12 +84,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedTrace
-
-client = SeedTrace(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedTrace(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.admin.update_test_submission_status(..., request_options={
@@ -129,17 +98,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedTrace
-
-client = SeedTrace(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedTrace(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

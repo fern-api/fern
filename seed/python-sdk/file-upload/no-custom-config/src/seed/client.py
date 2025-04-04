@@ -29,10 +29,7 @@ class SeedFileUpload:
     Examples
     --------
     from seed import SeedFileUpload
-
-    client = SeedFileUpload(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedFileUpload(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedFileUpload:
     Examples
     --------
     from seed import AsyncSeedFileUpload
-
-    client = AsyncSeedFileUpload(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedFileUpload(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

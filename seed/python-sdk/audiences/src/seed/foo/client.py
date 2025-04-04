@@ -56,15 +56,8 @@ class FooClient:
         --------
         from seed import SeedAudiences
         from seed.environment import SeedAudiencesEnvironment
-
-        client = SeedAudiences(
-            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-        )
-        client.foo.find(
-            optional_string="optionalString",
-            public_property="publicProperty",
-            private_property=1,
-        )
+        client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
+        client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
         """
         response = self._raw_client.find(
             optional_string=optional_string,
@@ -116,24 +109,12 @@ class AsyncFooClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedAudiences
         from seed.environment import SeedAudiencesEnvironment
-
-        client = AsyncSeedAudiences(
-            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-        )
-
-
+        import asyncio
+        client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
         async def main() -> None:
-            await client.foo.find(
-                optional_string="optionalString",
-                public_property="publicProperty",
-                private_property=1,
-            )
-
-
+            await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.find(

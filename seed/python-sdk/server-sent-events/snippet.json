@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_completions.stream"
             },
             "snippet": {
-                "sync_client": "from seed import SeedServerSentEvents\n\nclient = SeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.completions.stream(\n    query=\"query\",\n)\nfor chunk in response.data:\n    yield chunk\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedServerSentEvents\n\nclient = AsyncSeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.completions.stream(\n        query=\"query\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedServerSentEvents\nclient = SeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.completions.stream(query='query', )\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "from seed import AsyncSeedServerSentEvents\nimport asyncio\nclient = AsyncSeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.completions.stream(query='query', )\n    async for chunk in response.data:\n        yield chunk\nasyncio.run(main())",
                 "type": "python"
             }
         }

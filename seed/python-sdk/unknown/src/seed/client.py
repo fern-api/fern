@@ -29,10 +29,7 @@ class SeedUnknownAsAny:
     Examples
     --------
     from seed import SeedUnknownAsAny
-
-    client = SeedUnknownAsAny(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedUnknownAsAny:
     Examples
     --------
     from seed import AsyncSeedUnknownAsAny
-
-    client = AsyncSeedUnknownAsAny(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

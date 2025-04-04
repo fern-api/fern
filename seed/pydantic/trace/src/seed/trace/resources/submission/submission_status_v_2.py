@@ -2,10 +2,6 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
-from ..commons.list_type import ListType
-from ..commons.map_type import MapType
 import typing
 from .test_submission_update import TestSubmissionUpdate
 from ..commons.problem_id import ProblemId

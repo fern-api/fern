@@ -84,9 +84,9 @@ class RawDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    def stream() -> (
-                        HttpResponse[typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]]
-                    ):
+                    def stream() -> HttpResponse[
+                        typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]
+                    ]:
                         try:
                             if 200 <= _response.status_code < 300:
 
@@ -207,11 +207,9 @@ class AsyncRawDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    async def stream() -> (
-                        AsyncHttpResponse[
-                            typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
-                        ]
-                    ):
+                    async def stream() -> AsyncHttpResponse[
+                        typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
+                    ]:
                         try:
                             if 200 <= _response.status_code < 300:
 

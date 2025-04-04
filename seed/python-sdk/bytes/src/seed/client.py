@@ -29,10 +29,7 @@ class SeedBytes:
     Examples
     --------
     from seed import SeedBytes
-
-    client = SeedBytes(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedBytes(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedBytes:
     Examples
     --------
     from seed import AsyncSeedBytes
-
-    client = AsyncSeedBytes(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedBytes(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

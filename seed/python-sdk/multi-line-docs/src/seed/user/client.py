@@ -48,13 +48,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedMultiLineDocs
-
-        client = SeedMultiLineDocs(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.get_user(
-            user_id="userId",
-        )
+        client = SeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
+        client.user.get_user(user_id='userId', )
         """
         response = self._raw_client.get_user(user_id, request_options=request_options)
         return response.data
@@ -86,14 +81,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedMultiLineDocs
-
-        client = SeedMultiLineDocs(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.create_user(
-            name="name",
-            age=1,
-        )
+        client = SeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
+        client.user.create_user(name='name', age=1, )
         """
         response = self._raw_client.create_user(name=name, age=age, request_options=request_options)
         return response.data
@@ -134,21 +123,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMultiLineDocs
-
-        client = AsyncSeedMultiLineDocs(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.get_user(
-                user_id="userId",
-            )
-
-
+            await client.user.get_user(user_id='userId', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_user(user_id, request_options=request_options)
@@ -180,22 +159,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMultiLineDocs
-
-        client = AsyncSeedMultiLineDocs(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.create_user(
-                name="name",
-                age=1,
-            )
-
-
+            await client.user.create_user(name='name', age=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.create_user(name=name, age=age, request_options=request_options)

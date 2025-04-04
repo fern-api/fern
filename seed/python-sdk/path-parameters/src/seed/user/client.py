@@ -47,14 +47,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.get_user(
-            tenant_id="tenant_id",
-            user_id="user_id",
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
         """
         response = self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
         return response.data
@@ -86,15 +80,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.create_user(
-            tenant_id="tenant_id",
-            name="name",
-            tags=["tags", "tags"],
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
         """
         response = self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
         return response.data
@@ -129,16 +116,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.update_user(
-            tenant_id="tenant_id",
-            user_id="user_id",
-            name="name",
-            tags=["tags", "tags"],
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', tags=['tags', 'tags'], )
         """
         response = self._raw_client.update_user(
             tenant_id, user_id, name=name, tags=tags, request_options=request_options
@@ -172,15 +151,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.search_users(
-            tenant_id="tenant_id",
-            user_id="user_id",
-            limit=1,
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.user.search_users(tenant_id='tenant_id', user_id='user_id', limit=1, )
         """
         response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
         return response.data
@@ -220,22 +192,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.get_user(
-                tenant_id="tenant_id",
-                user_id="user_id",
-            )
-
-
+            await client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
@@ -267,23 +228,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.create_user(
-                tenant_id="tenant_id",
-                name="name",
-                tags=["tags", "tags"],
-            )
-
-
+            await client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
         asyncio.run(main())
         """
         response = await self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
@@ -318,24 +267,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.update_user(
-                tenant_id="tenant_id",
-                user_id="user_id",
-                name="name",
-                tags=["tags", "tags"],
-            )
-
-
+            await client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', tags=['tags', 'tags'], )
         asyncio.run(main())
         """
         response = await self._raw_client.update_user(
@@ -369,23 +305,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.search_users(
-                tenant_id="tenant_id",
-                user_id="user_id",
-                limit=1,
-            )
-
-
+            await client.user.search_users(tenant_id='tenant_id', user_id='user_id', limit=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)

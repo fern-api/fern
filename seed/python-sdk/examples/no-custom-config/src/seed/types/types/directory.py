@@ -13,28 +13,9 @@ class Directory(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Directory, File
-
-    Directory(
-        name="root",
-        files=[
-            File(
-                name="file.txt",
-                contents="...",
-            )
-        ],
-        directories=[
-            Directory(
-                name="tmp",
-                files=[
-                    File(
-                        name="another_file.txt",
-                        contents="...",
-                    )
-                ],
-            )
-        ],
-    )
+    from seed.types import Directory
+    from seed.types import File
+    Directory(name='root', files=[File(name='file.txt', contents='...', )], directories=[Directory(name='tmp', files=[File(name='another_file.txt', contents='...', )], )], )
     """
 
     name: str

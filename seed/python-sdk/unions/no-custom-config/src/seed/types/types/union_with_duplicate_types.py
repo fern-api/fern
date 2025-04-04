@@ -12,10 +12,7 @@ class UnionWithDuplicateTypes_Foo1(UniversalBaseModel):
     Examples
     --------
     from seed.types import UnionWithDuplicateTypes_Foo1
-
-    UnionWithDuplicateTypes_Foo1(
-        name="example1",
-    )
+    UnionWithDuplicateTypes_Foo1(name='example1', )
     """
 
     type: typing.Literal["foo1"] = "foo1"
@@ -36,10 +33,7 @@ class UnionWithDuplicateTypes_Foo2(UniversalBaseModel):
     Examples
     --------
     from seed.types import UnionWithDuplicateTypes_Foo1
-
-    UnionWithDuplicateTypes_Foo1(
-        name="example1",
-    )
+    UnionWithDuplicateTypes_Foo1(name='example1', )
     """
 
     type: typing.Literal["foo2"] = "foo2"
@@ -57,9 +51,6 @@ class UnionWithDuplicateTypes_Foo2(UniversalBaseModel):
 
 """
 from seed.types import UnionWithDuplicateTypes_Foo1
-
-UnionWithDuplicateTypes_Foo1(
-    name="example1",
-)
+UnionWithDuplicateTypes_Foo1(name='example1', )
 """
 UnionWithDuplicateTypes = typing.Union[UnionWithDuplicateTypes_Foo1, UnionWithDuplicateTypes_Foo2]

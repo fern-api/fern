@@ -12,18 +12,9 @@ class Tree(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Node, Tree
-
-    Tree(
-        nodes=[
-            Node(
-                name="left",
-            ),
-            Node(
-                name="right",
-            ),
-        ],
-    )
+    from seed.types import Tree
+    from seed.types import Node
+    Tree(nodes=[Node(name='left', ), Node(name='right', )], )
     """
 
     nodes: typing.Optional[typing.List["Node"]] = None
@@ -38,6 +29,6 @@ class Tree(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .node import Node  # noqa: E402
+from .node import Node  # noqa: E402, F401
 
 update_forward_refs(Tree)

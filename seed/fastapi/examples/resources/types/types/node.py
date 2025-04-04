@@ -12,31 +12,9 @@ class Node(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples.resources.types import Node, Tree
-
-    Node(
-        name="root",
-        nodes=[
-            Node(
-                name="left",
-            ),
-            Node(
-                name="right",
-            ),
-        ],
-        trees=[
-            Tree(
-                nodes=[
-                    Node(
-                        name="left",
-                    ),
-                    Node(
-                        name="right",
-                    ),
-                ],
-            )
-        ],
-    )
+    from seed.examples.resources.types import Node
+    from seed.examples.resources.types import Tree
+    Node(name='root', nodes=[Node(name='left', ), Node(name='right', )], trees=[Tree(nodes=[Node(name='left', ), Node(name='right', )], )], )
     """
 
     name: str
@@ -51,6 +29,6 @@ class Node(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .tree import Tree  # noqa: E402
+from .tree import Tree  # noqa: E402, F401
 
 update_forward_refs(Node)

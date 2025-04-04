@@ -58,14 +58,8 @@ class InlinedRequestClient:
         Examples
         --------
         from seed import SeedEnum
-
-        client = SeedEnum(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.inlined_request.send(
-            operand=">",
-            operand_or_color="red",
-        )
+        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
+        client.inlined_request.send(operand=">", operand_or_color="red", )
         """
         response = self._raw_client.send(
             operand=operand,
@@ -121,22 +115,11 @@ class AsyncInlinedRequestClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedEnum
-
-        client = AsyncSeedEnum(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.inlined_request.send(
-                operand=">",
-                operand_or_color="red",
-            )
-
-
+            await client.inlined_request.send(operand=">", operand_or_color="red", )
         asyncio.run(main())
         """
         response = await self._raw_client.send(

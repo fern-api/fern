@@ -29,10 +29,7 @@ class SeedQueryParameters:
     Examples
     --------
     from seed import SeedQueryParameters
-
-    client = SeedQueryParameters(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedQueryParameters(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedQueryParameters:
     Examples
     --------
     from seed import AsyncSeedQueryParameters
-
-    client = AsyncSeedQueryParameters(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedQueryParameters(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

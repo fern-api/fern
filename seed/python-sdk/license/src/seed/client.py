@@ -30,10 +30,7 @@ class SeedLicense:
     Examples
     --------
     from seed import SeedLicense
-
-    client = SeedLicense(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedLicense(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -83,10 +80,7 @@ class SeedLicense:
         Examples
         --------
         from seed import SeedLicense
-
-        client = SeedLicense(
-            base_url="https://yourhost.com/path/to/api",
-        )
+        client = SeedLicense(base_url="https://yourhost.com/path/to/api", )
         client.get()
         """
         response = self._raw_client.get(request_options=request_options)
@@ -114,10 +108,7 @@ class AsyncSeedLicense:
     Examples
     --------
     from seed import AsyncSeedLicense
-
-    client = AsyncSeedLicense(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedLicense(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -166,19 +157,11 @@ class AsyncSeedLicense:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedLicense
-
-        client = AsyncSeedLicense(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedLicense(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
             await client.get()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get(request_options=request_options)
