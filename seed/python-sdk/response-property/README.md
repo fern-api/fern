@@ -21,13 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedResponseProperty
-
-client = SeedResponseProperty(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.service.get_movie(
-    request="string",
-)
+client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+client.service.get_movie(request='string', )
 ```
 
 ## Async Client
@@ -35,23 +30,12 @@ client.service.get_movie(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedResponseProperty
-
-client = AsyncSeedResponseProperty(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.service.get_movie(
-        request="string",
-    )
-
-
-asyncio.run(main())
-```
+    await client.service.get_movie(request='string', )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -60,7 +44,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.service.get_movie(...)
 except ApiError as e:
@@ -97,12 +80,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedResponseProperty
-
-client = SeedResponseProperty(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedResponseProperty(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.service.get_movie(..., request_options={
@@ -116,17 +94,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedResponseProperty
-
-client = SeedResponseProperty(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedResponseProperty(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

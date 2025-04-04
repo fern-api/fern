@@ -44,11 +44,7 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_lightweight_problems()
         """
         response = self._raw_client.get_lightweight_problems(request_options=request_options)
@@ -70,11 +66,7 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_problems()
         """
         response = self._raw_client.get_problems(request_options=request_options)
@@ -100,14 +92,8 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-        client.v_2.v_3.problem.get_latest_problem(
-            problem_id="problemId",
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+        client.v_2.v_3.problem.get_latest_problem(problem_id='problemId', )
         """
         response = self._raw_client.get_latest_problem(problem_id, request_options=request_options)
         return response.data
@@ -134,15 +120,8 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-        client.v_2.v_3.problem.get_problem_version(
-            problem_id="problemId",
-            problem_version=1,
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+        client.v_2.v_3.problem.get_problem_version(problem_id='problemId', problem_version=1, )
         """
         response = self._raw_client.get_problem_version(problem_id, problem_version, request_options=request_options)
         return response.data
@@ -180,20 +159,11 @@ class AsyncProblemClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
             await client.v_2.v_3.problem.get_lightweight_problems()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get_lightweight_problems(request_options=request_options)
@@ -216,20 +186,11 @@ class AsyncProblemClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
             await client.v_2.v_3.problem.get_problems()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get_problems(request_options=request_options)
@@ -254,22 +215,11 @@ class AsyncProblemClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
-            await client.v_2.v_3.problem.get_latest_problem(
-                problem_id="problemId",
-            )
-
-
+            await client.v_2.v_3.problem.get_latest_problem(problem_id='problemId', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_latest_problem(problem_id, request_options=request_options)
@@ -296,23 +246,11 @@ class AsyncProblemClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
-            await client.v_2.v_3.problem.get_problem_version(
-                problem_id="problemId",
-                problem_version=1,
-            )
-
-
+            await client.v_2.v_3.problem.get_problem_version(problem_id='problemId', problem_version=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.get_problem_version(

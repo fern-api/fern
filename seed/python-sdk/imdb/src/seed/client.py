@@ -30,11 +30,7 @@ class SeedApi:
     Examples
     --------
     from seed import SeedApi
-
-    client = SeedApi(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -84,11 +80,7 @@ class AsyncSeedApi:
     Examples
     --------
     from seed import AsyncSeedApi
-
-    client = AsyncSeedApi(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

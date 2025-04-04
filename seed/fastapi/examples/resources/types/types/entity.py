@@ -11,13 +11,9 @@ class Entity(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import ComplexType
     from seed.examples.resources.types import Entity
-
-    Entity(
-        type=ComplexType.UNKNOWN,
-        name="unknown",
-    )
+    from seed.examples import ComplexType
+    Entity(type=ComplexType.UNKNOWN, name='unknown', )
     """
 
     type: Type

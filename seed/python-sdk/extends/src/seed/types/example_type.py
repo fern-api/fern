@@ -11,11 +11,7 @@ class ExampleType(Docs):
     Examples
     --------
     from seed import ExampleType
-
-    ExampleType(
-        docs="This is an example type.",
-        name="Example",
-    )
+    ExampleType(docs='This is an example type.', name='Example', )
     """
 
     name: str

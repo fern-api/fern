@@ -23,7 +23,7 @@ class ListType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .map_type import MapType  # noqa: E402
-from .variable_type import VariableType  # noqa: E402
+from .map_type import MapType  # noqa: E402, F401
+from .variable_type import VariableType  # noqa: E402, F401
 
 update_forward_refs(ListType)

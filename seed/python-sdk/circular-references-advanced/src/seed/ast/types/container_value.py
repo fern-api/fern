@@ -35,7 +35,7 @@ class ContainerValue_Optional(UniversalBaseModel):
 
 
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
-from .field_value import FieldValue  # noqa: E402
+from .field_value import FieldValue  # noqa: E402, F401
 
 update_forward_refs(ContainerValue_List)
 update_forward_refs(ContainerValue_Optional)

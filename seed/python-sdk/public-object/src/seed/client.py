@@ -29,10 +29,7 @@ class SeedPublicObject:
     Examples
     --------
     from seed import SeedPublicObject
-
-    client = SeedPublicObject(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedPublicObject(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedPublicObject:
     Examples
     --------
     from seed import AsyncSeedPublicObject
-
-    client = AsyncSeedPublicObject(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedPublicObject(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

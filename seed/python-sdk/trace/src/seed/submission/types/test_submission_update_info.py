@@ -7,8 +7,6 @@ import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .error_info import ErrorInfo
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 import typing_extensions
 from ...v_2.problem.types.test_case_id import TestCaseId
 from ...core.serialization import FieldMetadata

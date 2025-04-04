@@ -14,17 +14,8 @@
 
 ```python
 from seed import SeedNullable
-
-client = SeedNullable(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.nullable.get_users(
-    usernames="usernames",
-    avatar="avatar",
-    activated=True,
-    tags="tags",
-    extra=True,
-)
+client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
+client.nullable.get_users(usernames='usernames', avatar='avatar', activated=True, tags='tags', extra=True, )
 
 ```
 </dd>
@@ -105,30 +96,10 @@ client.nullable.get_users(
 <dd>
 
 ```python
-import datetime
-
 from seed import SeedNullable
-
-client = SeedNullable(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.nullable.create_user(
-    username="username",
-    tags=["tags", "tags"],
-    metadata={
-        "created_at": datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        "updated_at": datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        "avatar": "avatar",
-        "activated": True,
-        "status": {"type": "active"},
-        "values": {"values": "values"},
-    },
-    avatar="avatar",
-)
+import datetime
+client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
+client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata={'created_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'updated_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'avatar': 'avatar', 'activated': True, 'status': {'type': 'active'}, 'values': {'values': 'values'}}, avatar='avatar', )
 
 ```
 </dd>
@@ -202,13 +173,8 @@ client.nullable.create_user(
 
 ```python
 from seed import SeedNullable
-
-client = SeedNullable(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.nullable.delete_user(
-    username="xy",
-)
+client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
+client.nullable.delete_user(username='xy', )
 
 ```
 </dd>

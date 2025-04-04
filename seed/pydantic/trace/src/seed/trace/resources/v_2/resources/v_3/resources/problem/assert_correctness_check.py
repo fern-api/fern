@@ -6,8 +6,6 @@ import typing
 from .parameter_id import ParameterId
 import pydantic
 from .......core.pydantic_utilities import IS_PYDANTIC_V2
-from ......commons.list_type import ListType
-from ......commons.map_type import MapType
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 

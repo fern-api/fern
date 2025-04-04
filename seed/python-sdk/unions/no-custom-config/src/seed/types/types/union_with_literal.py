@@ -12,7 +12,6 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.types import UnionWithLiteral_Fern
-
     UnionWithLiteral_Fern()
     """
 
@@ -43,7 +42,6 @@ class UnionWithLiteral_Fern(Base):
 
 """
 from seed.types import UnionWithLiteral_Fern
-
 UnionWithLiteral_Fern()
 """
 UnionWithLiteral = UnionWithLiteral_Fern

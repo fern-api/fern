@@ -14,13 +14,8 @@
 
 ```python
 from seed import SeedVariables
-
-client = SeedVariables(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.service.post(
-    endpoint_param="endpointParam",
-)
+client = SeedVariables(base_url="https://yourhost.com/path/to/api", )
+client.service.post(endpoint_param='endpointParam', )
 
 ```
 </dd>

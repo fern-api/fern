@@ -28,7 +28,7 @@ class RawPathClient:
         HttpResponse[SendResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/123",
+            "path/123",
             method="POST",
             request_options=request_options,
         )
@@ -64,7 +64,7 @@ class AsyncRawPathClient:
         AsyncHttpResponse[SendResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/123",
+            "path/123",
             method="POST",
             request_options=request_options,
         )

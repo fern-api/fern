@@ -20,30 +20,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-import datetime
-
 from seed import SeedNullable
-
-client = SeedNullable(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.nullable.create_user(
-    username="username",
-    tags=["tags", "tags"],
-    metadata={
-        "created_at": datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        "updated_at": datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        "avatar": "avatar",
-        "activated": True,
-        "status": {"type": "active"},
-        "values": {"values": "values"},
-    },
-    avatar="avatar",
-)
+import datetime
+client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
+client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata={'created_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'updated_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'avatar': 'avatar', 'activated': True, 'status': {'type': 'active'}, 'values': {'values': 'values'}}, avatar='avatar', )
 ```
 
 ## Async Client
@@ -51,38 +31,13 @@ client.nullable.create_user(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-import datetime
-
 from seed import AsyncSeedNullable
-
-client = AsyncSeedNullable(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import datetime
+import asyncio
+client = AsyncSeedNullable(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.nullable.create_user(
-        username="username",
-        tags=["tags", "tags"],
-        metadata={
-            "created_at": datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            "updated_at": datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            "avatar": "avatar",
-            "activated": True,
-            "status": {"type": "active"},
-            "values": {"values": "values"},
-        },
-        avatar="avatar",
-    )
-
-
-asyncio.run(main())
-```
+    await client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata={'created_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'updated_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'avatar': 'avatar', 'activated': True, 'status': {'type': 'active'}, 'values': {'values': 'values'}}, avatar='avatar', )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -91,7 +46,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.nullable.create_user(...)
 except ApiError as e:
@@ -128,12 +82,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedNullable
-
-client = SeedNullable(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedNullable(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.nullable.create_user(..., request_options={
@@ -147,17 +96,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedNullable
-
-client = SeedNullable(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedNullable(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

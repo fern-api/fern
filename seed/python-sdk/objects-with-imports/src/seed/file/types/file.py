@@ -12,12 +12,7 @@ class File(UniversalBaseModel):
     Examples
     --------
     from seed.file import File
-
-    File(
-        name="file.txt",
-        contents="...",
-        info="REGULAR",
-    )
+    File(name='file.txt', contents='...', info="REGULAR", )
     """
 
     name: str

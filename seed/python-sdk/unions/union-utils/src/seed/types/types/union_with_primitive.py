@@ -31,7 +31,6 @@ class UnionWithPrimitive(UniversalRootModel):
     Examples
     --------
     from seed.types import UnionWithPrimitive_Integer
-
     UnionWithPrimitive_Integer(value=9)
     """
 

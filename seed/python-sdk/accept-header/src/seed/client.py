@@ -30,11 +30,7 @@ class SeedAccept:
     Examples
     --------
     from seed import SeedAccept
-
-    client = SeedAccept(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -84,11 +80,7 @@ class AsyncSeedAccept:
     Examples
     --------
     from seed import AsyncSeedAccept
-
-    client = AsyncSeedAccept(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

@@ -29,10 +29,7 @@ class SeedNurseryApi:
     Examples
     --------
     from seed import SeedNurseryApi
-
-    client = SeedNurseryApi(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedNurseryApi(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedNurseryApi:
     Examples
     --------
     from seed import AsyncSeedNurseryApi
-
-    client = AsyncSeedNurseryApi(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedNurseryApi(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

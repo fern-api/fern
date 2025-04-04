@@ -33,10 +33,7 @@ class SeedEnum:
     Examples
     --------
     from seed import SeedEnum
-
-    client = SeedEnum(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -85,10 +82,7 @@ class AsyncSeedEnum:
     Examples
     --------
     from seed import AsyncSeedEnum
-
-    client = AsyncSeedEnum(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

@@ -14,7 +14,6 @@ class Operand(str, enum.Enum):
     Examples
     --------
     from seed.multi_line_docs import Operand
-
     Operand.GREATER_THAN
     """
 

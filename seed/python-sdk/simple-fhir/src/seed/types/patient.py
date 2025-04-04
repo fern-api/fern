@@ -22,10 +22,10 @@ class Patient(BaseResource):
             extra = pydantic.Extra.allow
 
 
-from .base_resource import BaseResource  # noqa: E402
-from .account import Account  # noqa: E402
-from .memo import Memo  # noqa: E402
-from .practitioner import Practitioner  # noqa: E402
-from .script import Script  # noqa: E402
+from .base_resource import BaseResource  # noqa: E402, F401
+from .account import Account  # noqa: E402, F401
+from .memo import Memo  # noqa: E402, F401
+from .practitioner import Practitioner  # noqa: E402, F401
+from .script import Script  # noqa: E402, F401
 
 update_forward_refs(Patient)

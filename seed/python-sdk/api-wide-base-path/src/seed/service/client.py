@@ -53,16 +53,8 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedApiWideBasePath
-
-        client = SeedApiWideBasePath(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.post(
-            path_param="pathParam",
-            service_param="serviceParam",
-            resource_param="resourceParam",
-            endpoint_param=1,
-        )
+        client = SeedApiWideBasePath(base_url="https://yourhost.com/path/to/api", )
+        client.service.post(path_param='pathParam', service_param='serviceParam', resource_param='resourceParam', endpoint_param=1, )
         """
         response = self._raw_client.post(
             path_param, service_param, resource_param, endpoint_param, request_options=request_options
@@ -114,24 +106,11 @@ class AsyncServiceClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedApiWideBasePath
-
-        client = AsyncSeedApiWideBasePath(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedApiWideBasePath(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.service.post(
-                path_param="pathParam",
-                service_param="serviceParam",
-                resource_param="resourceParam",
-                endpoint_param=1,
-            )
-
-
+            await client.service.post(path_param='pathParam', service_param='serviceParam', resource_param='resourceParam', endpoint_param=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.post(

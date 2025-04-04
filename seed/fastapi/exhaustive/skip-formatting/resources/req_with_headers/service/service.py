@@ -12,29 +12,28 @@ import logging
 import functools
 import starlette
 from ....core.route_args import get_route_args
-
-
 class AbstractReqWithHeadersService(AbstractFernService):
     """
     AbstractReqWithHeadersService is an abstract class containing the methods that you should implement.
-
+    
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
-
+    
     @abc.abstractmethod
-    def get_with_custom_header(self, *, body: str, x_test_endpoint_header: str, auth: ApiAuth) -> None: ...
-
+    def get_with_custom_header(self, *, body: str, x_test_endpoint_header: str, auth: ApiAuth) -> None:
+        ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
-
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_with_custom_header(router=router)
-
+    
     @classmethod
     def __init_get_with_custom_header(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_custom_header)
@@ -51,7 +50,7 @@ class AbstractReqWithHeadersService(AbstractFernService):
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_with_custom_header, "__signature__", endpoint_function.replace(parameters=new_parameters))
-
+        
         @functools.wraps(cls.get_with_custom_header)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
@@ -63,11 +62,11 @@ class AbstractReqWithHeadersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
+        
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.get_with_custom_header.__globals__)
-
+        
         router.post(
             path="/test-headers/custom-header",
             response_model=None,

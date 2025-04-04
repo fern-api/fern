@@ -31,10 +31,7 @@ class SeedMixedFileDirectory:
     Examples
     --------
     from seed import SeedMixedFileDirectory
-
-    client = SeedMixedFileDirectory(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -82,10 +79,7 @@ class AsyncSeedMixedFileDirectory:
     Examples
     --------
     from seed import AsyncSeedMixedFileDirectory
-
-    client = AsyncSeedMixedFileDirectory(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

@@ -29,10 +29,7 @@ class SeedUndiscriminatedUnions:
     Examples
     --------
     from seed import SeedUndiscriminatedUnions
-
-    client = SeedUndiscriminatedUnions(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedUndiscriminatedUnions:
     Examples
     --------
     from seed import AsyncSeedUndiscriminatedUnions
-
-    client = AsyncSeedUndiscriminatedUnions(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

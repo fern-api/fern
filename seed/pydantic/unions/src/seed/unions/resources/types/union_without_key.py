@@ -12,10 +12,7 @@ class UnionWithoutKey_Foo(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import UnionWithoutKey_Foo
-
-    UnionWithoutKey_Foo(
-        name="example1",
-    )
+    UnionWithoutKey_Foo(name='example1', )
     """
 
     type: typing.Literal["foo"] = "foo"
@@ -34,10 +31,7 @@ class UnionWithoutKey_Bar(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import UnionWithoutKey_Foo
-
-    UnionWithoutKey_Foo(
-        name="example1",
-    )
+    UnionWithoutKey_Foo(name='example1', )
     """
 
     type: typing.Literal["bar"] = "bar"
@@ -53,9 +47,6 @@ class UnionWithoutKey_Bar(UniversalBaseModel):
 
 """
 from seed.unions.resources import UnionWithoutKey_Foo
-
-UnionWithoutKey_Foo(
-    name="example1",
-)
+UnionWithoutKey_Foo(name='example1', )
 """
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]

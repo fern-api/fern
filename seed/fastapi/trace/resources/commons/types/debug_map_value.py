@@ -19,6 +19,6 @@ class DebugMapValue(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
+from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, F401
 
 update_forward_refs(DebugMapValue)

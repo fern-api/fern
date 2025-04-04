@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 import typing
 import typing_extensions
 from ...commons.types.problem_id import ProblemId

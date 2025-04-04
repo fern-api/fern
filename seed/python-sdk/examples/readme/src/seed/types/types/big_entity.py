@@ -2,7 +2,6 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .node import Node
-from .tree import Tree
 from .directory import Directory
 import typing_extensions
 import typing

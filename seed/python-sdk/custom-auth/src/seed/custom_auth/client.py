@@ -42,11 +42,7 @@ class CustomAuthClient:
         Examples
         --------
         from seed import SeedCustomAuth
-
-        client = SeedCustomAuth(
-            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-            base_url="https://yourhost.com/path/to/api",
-        )
+        client = SeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
         client.custom_auth.get_with_custom_auth()
         """
         response = self._raw_client.get_with_custom_auth(request_options=request_options)
@@ -72,14 +68,9 @@ class CustomAuthClient:
         Examples
         --------
         from seed import SeedCustomAuth
-
-        client = SeedCustomAuth(
-            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.custom_auth.post_with_custom_auth(
-            request={"key": "value"},
-        )
+        client = SeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
+        client.custom_auth.post_with_custom_auth(request={'key': 'value'}
+        , )
         """
         response = self._raw_client.post_with_custom_auth(request=request, request_options=request_options)
         return response.data
@@ -115,20 +106,11 @@ class AsyncCustomAuthClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedCustomAuth
-
-        client = AsyncSeedCustomAuth(
-            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
             await client.custom_auth.get_with_custom_auth()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get_with_custom_auth(request_options=request_options)
@@ -153,22 +135,12 @@ class AsyncCustomAuthClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedCustomAuth
-
-        client = AsyncSeedCustomAuth(
-            custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.custom_auth.post_with_custom_auth(
-                request={"key": "value"},
-            )
-
-
+            await client.custom_auth.post_with_custom_auth(request={'key': 'value'}
+            , )
         asyncio.run(main())
         """
         response = await self._raw_client.post_with_custom_auth(request=request, request_options=request_options)

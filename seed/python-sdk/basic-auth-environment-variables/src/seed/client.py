@@ -33,12 +33,7 @@ class SeedBasicAuthEnvironmentVariables:
     Examples
     --------
     from seed import SeedBasicAuthEnvironmentVariables
-
-    client = SeedBasicAuthEnvironmentVariables(
-        username="YOUR_USERNAME",
-        access_token="YOUR_ACCESS_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -95,12 +90,7 @@ class AsyncSeedBasicAuthEnvironmentVariables:
     Examples
     --------
     from seed import AsyncSeedBasicAuthEnvironmentVariables
-
-    client = AsyncSeedBasicAuthEnvironmentVariables(
-        username="YOUR_USERNAME",
-        access_token="YOUR_ACCESS_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

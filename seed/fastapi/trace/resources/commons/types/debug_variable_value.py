@@ -269,8 +269,8 @@ class DebugVariableValue(UniversalRootModel):
             )
 
 
-from .debug_map_value import DebugMapValue  # noqa: E402
-from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
+from .debug_map_value import DebugMapValue  # noqa: E402, F401
+from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, F401
 
 
 class _DebugVariableValue:

@@ -3,7 +3,6 @@
 from __future__ import annotations
 import typing
 from .single_filter_search_request import SingleFilterSearchRequest
-import typing
 
 if typing.TYPE_CHECKING:
     from .multiple_filter_search_request import MultipleFilterSearchRequest

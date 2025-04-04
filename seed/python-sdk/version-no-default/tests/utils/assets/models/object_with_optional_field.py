@@ -4,7 +4,6 @@
 
 import typing_extensions
 import typing
-import typing_extensions
 from seed.core.serialization import FieldMetadata
 import datetime as dt
 import uuid

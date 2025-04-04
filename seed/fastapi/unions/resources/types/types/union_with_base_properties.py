@@ -42,7 +42,6 @@ class UnionWithBaseProperties(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithBaseProperties_Integer
-
     UnionWithBaseProperties_Integer(value=5)
     """
 

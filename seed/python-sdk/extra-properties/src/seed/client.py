@@ -29,10 +29,7 @@ class SeedExtraProperties:
     Examples
     --------
     from seed import SeedExtraProperties
-
-    client = SeedExtraProperties(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedExtraProperties(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedExtraProperties:
     Examples
     --------
     from seed import AsyncSeedExtraProperties
-
-    client = AsyncSeedExtraProperties(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedExtraProperties(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

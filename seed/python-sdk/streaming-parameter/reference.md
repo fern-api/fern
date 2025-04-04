@@ -14,14 +14,8 @@
 
 ```python
 from seed import SeedStreaming
-
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.dummy.generate(
-    stream=False,
-    num_events=5,
-)
+client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+client.dummy.generate(stream=False, num_events=5, )
 
 ```
 </dd>

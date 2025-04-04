@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 from .......core.pydantic_utilities import UniversalBaseModel
-from ......commons.list_type import ListType
-from ......commons.map_type import MapType
 import typing
 from .parameter import Parameter
 from .......core.pydantic_utilities import IS_PYDANTIC_V2

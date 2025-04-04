@@ -11,7 +11,6 @@ class Color(str, enum.Enum):
     Examples
     --------
     from seed import Color
-
     Color.RED
     """
 

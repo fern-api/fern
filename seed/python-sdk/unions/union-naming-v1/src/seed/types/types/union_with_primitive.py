@@ -35,7 +35,6 @@ class StringUnionWithPrimitive(UniversalBaseModel):
 
 """
 from seed.types import IntegerUnionWithPrimitive
-
 IntegerUnionWithPrimitive(value=9)
 """
 UnionWithPrimitive = typing.Union[IntegerUnionWithPrimitive, StringUnionWithPrimitive]
