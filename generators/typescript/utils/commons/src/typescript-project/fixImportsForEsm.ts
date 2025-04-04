@@ -13,6 +13,20 @@ const ImportModification = {
 
 type ImportModificationType = (typeof ImportModification)[keyof typeof ImportModification];
 
+/**
+ * Fixes imports in a TypeScript project to ensure compatibility with ESM (ECMAScript Modules).
+ *
+ * TypeScript's `tsc` compiler does not generate valid ESM unless the source code follows specific conventions:
+ * - All imports must include the `.js` extension.
+ * - Folder imports must explicitly reference `index.js`.
+ *
+ * This function modifies the imports in the project to adhere to these conventions by:
+ * - Adding `.js` extensions to imports where necessary.
+ * - Replacing folder imports with explicit `index.js` imports.
+ * - Ensuring compatibility with the generated ESM output.
+ *
+ * @param pathToProject - The absolute path to the root of the TypeScript project.
+ */
 export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
     const project = new Project({
         tsConfigFilePath: join(pathToProject, RelativeFilePath.of("tsconfig.json"))
