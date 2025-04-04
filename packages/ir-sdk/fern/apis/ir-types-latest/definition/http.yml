@@ -70,10 +70,12 @@ types:
     properties:
       head: string
       parts: list<HttpPathPart>
+
   HttpPathPart:
     properties:
       pathParameter: string
       tail: string
+
   HttpMethod:
     enum:
       - GET
@@ -81,12 +83,15 @@ types:
       - PUT
       - PATCH
       - DELETE
+
   HttpHeader:
     extends: commons.Declaration
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       env: optional<string>
+      example: optional<examples.V2SchemaExample>
+
   PathParameter:
     extends: commons.WithDocs
     properties:
@@ -94,23 +99,29 @@ types:
       valueType: types.TypeReference
       location: PathParameterLocation
       variable: optional<variables.VariableId>
+      example: optional<examples.V2SchemaExample>
+
   PathParameterLocation:
     enum:
       - ROOT
       - SERVICE
       - ENDPOINT
+
   QueryParameter:
     extends: commons.Declaration
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       allowMultiple: boolean
+      example: optional<examples.V2SchemaExample>
+
   HttpRequestBody:
     union:
       inlinedRequestBody: InlinedRequestBody
       reference: HttpRequestBodyReference
       fileUpload: FileUploadRequest
       bytes: BytesRequest
+
   InlinedRequestBody:
     extends: commons.WithDocs
     properties:
@@ -124,60 +135,73 @@ types:
       extra-properties:
         docs: Whether to allow extra properties on the request.
         type: boolean
+
   InlinedRequestBodyProperty:
     extends: commons.WithDocsAndAvailability
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
+      example: optional<examples.V2SchemaExample>
+
   FileUploadRequest:
     extends: commons.WithDocs
     properties:
       name: commons.Name
       properties: list<FileUploadRequestProperty>
+
   BytesRequest:
     extends: commons.WithDocs
     properties:
       isOptional: boolean
       contentType: optional<string>
+
   FileUploadRequestProperty:
     union:
       file: FileProperty
       bodyProperty: FileUploadBodyProperty
+
   FileUploadBodyProperty:
     extends: InlinedRequestBodyProperty
     properties:
       contentType: optional<string>
       style: optional<FileUploadBodyPropertyEncoding>
+
   FileUploadBodyPropertyEncoding:
     enum:
       - exploded
       - json
       - form
+
   FileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
+
   FilePropertySingle:
     extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
+
   FilePropertyArray:
     extends: commons.WithDocs
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
+
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:
       requestBodyType: types.TypeReference
       contentType: optional<string>
+
   SdkRequestBodyType:
     union:
       typeReference: HttpRequestBodyReference
       bytes: BytesRequest
+
   SdkRequest:
     properties:
       streamParameter:
@@ -186,10 +210,12 @@ types:
           The request property that controls whether or not the response is streamed.
       requestParameterName: commons.Name
       shape: SdkRequestShape
+
   SdkRequestShape:
     union:
       justRequestBody: SdkRequestBodyType
       wrapper: SdkRequestWrapper
+
   SdkRequestWrapper:
     properties:
       wrapperName: commons.Name
@@ -282,6 +308,7 @@ types:
       terminator: optional<string>
 
   ResponseErrors: list<ResponseError>
+
   ResponseError:
     extends: commons.WithDocs
     properties:

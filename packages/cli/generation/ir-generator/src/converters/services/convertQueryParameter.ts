@@ -25,7 +25,8 @@ export function convertQueryParameter({
         allowMultiple:
             typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
                 ? queryParameter["allow-multiple"]
-                : false
+                : false,
+        example: undefined
     };
 }
 

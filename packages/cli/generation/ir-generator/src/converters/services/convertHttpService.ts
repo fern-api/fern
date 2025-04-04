@@ -240,7 +240,8 @@ function convertPathParameter({
         location,
         variable: isVariablePathParameter(parameter)
             ? variableResolver.getVariableIdOrThrow(typeof parameter === "string" ? parameter : parameter.variable)
-            : undefined
+            : undefined,
+        example: undefined
     };
 }
 
@@ -349,7 +350,8 @@ export function convertHttpHeader({
             name
         }),
         valueType: file.parseTypeReference(header),
-        env: typeof header === "string" ? undefined : header.env
+        env: typeof header === "string" ? undefined : header.env,
+        example: undefined
     };
 }
 

@@ -125,7 +125,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     valueType: convertedProperty.type,
                     docs: propertySchema.description,
                     availability: convertedProperty.availability,
-                    propertyAccess: await context.getPropertyAccess(propertySchema)
+                    propertyAccess: await context.getPropertyAccess(propertySchema),
+                    example: undefined
                 });
                 inlinedTypes = {
                     ...inlinedTypes,

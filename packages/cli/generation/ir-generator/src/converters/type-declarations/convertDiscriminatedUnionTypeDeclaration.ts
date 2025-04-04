@@ -37,7 +37,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
                           name: getPropertyName({ propertyKey, property: propertyDefinition }).name
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
-                      propertyAccess: getPropertyAccess({ property: propertyDefinition })
+                      propertyAccess: getPropertyAccess({ property: propertyDefinition }),
+                      example: undefined
                   }))
                 : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
