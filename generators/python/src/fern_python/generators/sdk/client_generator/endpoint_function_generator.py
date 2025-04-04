@@ -239,22 +239,7 @@ class EndpointFunctionGenerator:
             named_parameters = cleaned_parameters
         
         if self._context.custom_config.inline_path_params:
-            named_path_parameters: List[AST.NamedFunctionParameter] = []
-            for path_parameter in self._endpoint.all_path_parameters:
-                if not self._is_type_literal(path_parameter.value_type):
-                    name = self._path_parameter_names[path_parameter.name]
-                    named_path_parameters.append(
-                        AST.NamedFunctionParameter(
-                            name=name,
-                            docs=path_parameter.docs,
-                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                path_parameter.value_type,
-                                in_endpoint=True,
-                            ),
-                            raw_name=path_parameter.name.original_name,
-                            raw_type=path_parameter.value_type
-                        ),
-                    )
+            named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
             # path parameters go first because it's important that request options is the last parameter
             named_parameters = named_path_parameters + named_parameters
 
@@ -694,7 +679,9 @@ class EndpointFunctionGenerator:
 
         # Consolidate the named parameters and path parameters in a single list.
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(path_parameters)
+        inline_path_params = self._context.custom_config.inline_path_params
+        # If inline_path_params is true, named_parameters already includes path params
+        parameters = self._named_parameters_from_path_parameters(path_parameters) if not inline_path_params else []
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
