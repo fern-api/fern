@@ -2,5 +2,4 @@
 
 from .post_with_object_body import PostWithObjectBody
 from .service import AbstractInlinedRequestsService
-
 __all__ = ["AbstractInlinedRequestsService", "PostWithObjectBody"]

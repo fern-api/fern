@@ -67,6 +67,8 @@ from .types import (
     Foo,
     FooExtended,
     Union,
+    Union_Bar,
+    Union_Foo,
     UnionWithBaseProperties,
     UnionWithBaseProperties_Foo,
     UnionWithBaseProperties_Integer,
@@ -94,6 +96,9 @@ from .types import (
     UnionWithOptionalTime,
     UnionWithOptionalTime_Date,
     UnionWithOptionalTime_Datetime,
+    UnionWithoutKey,
+    UnionWithoutKey_Bar,
+    UnionWithoutKey_Foo,
     UnionWithPrimitive,
     UnionWithPrimitive_Integer,
     UnionWithPrimitive_String,
@@ -106,11 +111,6 @@ from .types import (
     UnionWithTime_Date,
     UnionWithTime_Datetime,
     UnionWithTime_Value,
-    UnionWithoutKey,
-    UnionWithoutKey_Bar,
-    UnionWithoutKey_Foo,
-    Union_Bar,
-    Union_Foo,
 )
 from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square
 

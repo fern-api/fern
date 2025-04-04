@@ -26,26 +26,7 @@ import types
 import os
 import glob
 import importlib
-
-
-def register(
-    _app: fastapi.FastAPI,
-    *,
-    endpoints_container: AbstractEndpointsContainerService,
-    endpoints_content_type: AbstractEndpointsContentTypeService,
-    endpoints_enum: AbstractEndpointsEnumService,
-    endpoints_http_methods: AbstractEndpointsHttpMethodsService,
-    endpoints_object: AbstractEndpointsObjectService,
-    endpoints_params: AbstractEndpointsParamsService,
-    endpoints_primitive: AbstractEndpointsPrimitiveService,
-    endpoints_put: AbstractEndpointsPutService,
-    endpoints_union: AbstractEndpointsUnionService,
-    inlined_requests: AbstractInlinedRequestsService,
-    no_auth: AbstractNoAuthService,
-    no_req_body: AbstractNoReqBodyService,
-    req_with_headers: AbstractReqWithHeadersService,
-    dependencies: typing.Optional[typing.Sequence[params.Depends]] = None,
-) -> None:
+def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsContainerService, endpoints_content_type: AbstractEndpointsContentTypeService, endpoints_enum: AbstractEndpointsEnumService, endpoints_http_methods: AbstractEndpointsHttpMethodsService, endpoints_object: AbstractEndpointsObjectService, endpoints_params: AbstractEndpointsParamsService, endpoints_primitive: AbstractEndpointsPrimitiveService, endpoints_put: AbstractEndpointsPutService, endpoints_union: AbstractEndpointsUnionService, inlined_requests: AbstractInlinedRequestsService, no_auth: AbstractNoAuthService, no_req_body: AbstractNoReqBodyService, req_with_headers: AbstractReqWithHeadersService, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
     _app.include_router(__register_service(endpoints_container), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_content_type), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_enum), dependencies=dependencies)
@@ -59,18 +40,14 @@ def register(
     _app.include_router(__register_service(no_auth), dependencies=dependencies)
     _app.include_router(__register_service(no_req_body), dependencies=dependencies)
     _app.include_router(__register_service(req_with_headers), dependencies=dependencies)
-
+    
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore
     _app.add_exception_handler(Exception, default_exception_handler)  # type: ignore
-
-
 def __register_service(service: AbstractFernService) -> fastapi.APIRouter:
     router = fastapi.APIRouter()
     type(service)._init_fern(router)
     return router
-
-
 def register_validators(module: types.ModuleType) -> None:
     validators_directory: str = os.path.dirname(module.__file__)  # type: ignore
     for path in glob.glob(os.path.join(validators_directory, "**/*.py"), recursive=True):
