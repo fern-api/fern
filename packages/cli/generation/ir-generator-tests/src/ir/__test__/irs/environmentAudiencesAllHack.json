@@ -293,9 +293,11 @@
                             },
                             "typeId": "type_imdb:MovieId",
                             "default": null,
-                            "inline": null
+                            "inline": null,
+                            "example": null
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     },
@@ -334,6 +336,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     },
@@ -372,6 +375,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": "The rating scale out of ten stars"
                     }
@@ -498,6 +502,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     },
@@ -536,6 +541,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     }
@@ -660,6 +666,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     }
@@ -835,7 +842,8 @@
                 },
                 "typeId": "type_imdb:MovieId",
                 "default": null,
-                "inline": null
+                "inline": null,
+                "example": null
             },
             "examples": [],
             "docs": null
@@ -1011,7 +1019,8 @@
                             },
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
-                            "inline": null
+                            "inline": null,
+                            "example": null
                         },
                         "contentType": null,
                         "docs": null
@@ -1087,7 +1096,8 @@
                                     },
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -1185,7 +1195,8 @@
                                     },
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "docs": null
                             }
@@ -1720,10 +1731,12 @@
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
-                                "inline": null
+                                "inline": null,
+                                "example": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
+                            "example": null,
                             "docs": null
                         }
                     ],
@@ -1814,10 +1827,12 @@
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
-                                "inline": null
+                                "inline": null,
+                                "example": null
                             },
                             "location": "ENDPOINT",
                             "variable": null,
+                            "example": null,
                             "docs": null
                         }
                     ],
@@ -1896,7 +1911,8 @@
                                     },
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "docs": null
                             }
@@ -3625,7 +3641,8 @@
                         },
                         "typeId": "type_webhooks:User",
                         "default": null,
-                        "inline": null
+                        "inline": null,
+                        "example": null
                     },
                     "docs": null
                 },
@@ -3725,7 +3742,8 @@
                         },
                         "typeId": "type_webhooks:User",
                         "default": null,
-                        "inline": null
+                        "inline": null,
+                        "example": null
                     },
                     "docs": null
                 },

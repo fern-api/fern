@@ -136,6 +136,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": {
                             "status": "PRE_RELEASE",
                             "message": null
@@ -319,6 +320,7 @@
                                         }
                                     }
                                 },
+                                "example": null,
                                 "availability": {
                                     "status": "PRE_RELEASE",
                                     "message": null

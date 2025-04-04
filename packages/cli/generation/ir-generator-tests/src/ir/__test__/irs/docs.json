@@ -136,6 +136,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     }
@@ -316,6 +317,7 @@
                                         }
                                     }
                                 },
+                                "example": null,
                                 "availability": null,
                                 "docs": null
                             }
@@ -460,7 +462,8 @@
                                     },
                                     "typeId": "type_service:Object",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "docs": null
                             }

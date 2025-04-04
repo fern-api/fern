@@ -934,7 +934,7 @@ exports[`migrateFromV47ToV46 > snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "ba664de9",
+              "id": "e343c565",
               "name": null,
               "queryParameters": [
                 {

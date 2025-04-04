@@ -239,6 +239,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     },
@@ -277,6 +278,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     }
@@ -401,6 +403,7 @@
                             }
                         },
                         "propertyAccess": null,
+                        "example": null,
                         "availability": null,
                         "docs": null
                     }
@@ -591,7 +594,8 @@
                             },
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
-                            "inline": null
+                            "inline": null,
+                            "example": null
                         },
                         "contentType": null,
                         "docs": null
@@ -667,7 +671,8 @@
                                     },
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -765,7 +770,8 @@
                                     },
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
-                                    "inline": null
+                                    "inline": null,
+                                    "example": null
                                 },
                                 "docs": null
                             }
@@ -1362,7 +1368,8 @@
                         },
                         "typeId": "type_webhooks:User",
                         "default": null,
-                        "inline": null
+                        "inline": null,
+                        "example": null
                     },
                     "docs": null
                 },
