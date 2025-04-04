@@ -185,8 +185,8 @@ function mergeEnvironments(
                     }))
                 })
             },
-            changedBaseUrlIds1,
-            changedBaseUrlIds2
+            changedBaseUrlIds1: isWebsocketEnvironment1 ? changedBaseUrlIds2 : changedBaseUrlIds1,
+            changedBaseUrlIds2: isWebsocketEnvironment1 ? changedBaseUrlIds1 : changedBaseUrlIds2
         };
     }
 

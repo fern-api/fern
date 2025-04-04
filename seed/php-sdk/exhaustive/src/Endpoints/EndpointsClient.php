@@ -9,6 +9,7 @@ use Seed\Endpoints\HttpMethods\HttpMethodsClient;
 use Seed\Endpoints\Object\ObjectClient;
 use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
+use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -49,6 +50,11 @@ class EndpointsClient
      * @var PrimitiveClient $primitive
      */
     public PrimitiveClient $primitive;
+
+    /**
+     * @var PutClient $put
+     */
+    public PutClient $put;
 
     /**
      * @var UnionClient $union
@@ -94,6 +100,7 @@ class EndpointsClient
         $this->object = new ObjectClient($this->client, $this->options);
         $this->params = new ParamsClient($this->client, $this->options);
         $this->primitive = new PrimitiveClient($this->client, $this->options);
+        $this->put = new PutClient($this->client, $this->options);
         $this->union = new UnionClient($this->client, $this->options);
     }
 }

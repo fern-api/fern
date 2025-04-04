@@ -4637,6 +4637,9 @@ importers:
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.23.8
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4830,6 +4833,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -5145,6 +5151,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger

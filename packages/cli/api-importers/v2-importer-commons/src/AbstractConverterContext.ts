@@ -17,6 +17,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { ExampleGenerationArgs } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
@@ -30,6 +31,7 @@ export declare namespace Spec {
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
         namespace?: string;
+        exampleGenerationArgs: ExampleGenerationArgs;
     }
 }
 
@@ -45,6 +47,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly smartCasing: boolean;
     public readonly casingsGenerator: CasingsGenerator;
     public readonly namespace?: string;
+    public readonly exampleGenerationArgs: ExampleGenerationArgs;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -58,6 +61,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             keywords: undefined,
             smartCasing: args.smartCasing
         });
+        this.exampleGenerationArgs = args.exampleGenerationArgs;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];

@@ -2119,6 +2119,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           },
           "transport": null,
           "userSpecifiedExamples": [],
+          "v2Examples": null,
         },
       ],
       "headers": [],
@@ -4161,6 +4162,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               },
             },
           ],
+          "v2Examples": null,
         },
         {
           "allPathParameters": [],
@@ -5219,6 +5221,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           },
           "transport": null,
           "userSpecifiedExamples": [],
+          "v2Examples": null,
         },
       ],
       "headers": [],

@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.patch"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.patch(application: \"application\", require_auth: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_service.patch"
+            },
+            "snippet": {
+                "client": "require \"fern_content_type\"\n\ncontent_types = SeedContentTypesClient::Client.new(base_url: \"https://api.example.com\")\ncontent_types.service.patch(application: \"application\", require_auth: true)",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -717,6 +717,7 @@
                     ],
                     "pagination": null,
                     "transport": null,
+                    "v2Examples": null,
                     "availability": null,
                     "docs": null
                 }
