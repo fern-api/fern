@@ -15,16 +15,13 @@ export const V2HttpEndpointExample: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     request: V2HttpEndpointRequest.optional(),
     response: V2HttpEndpointResponse.optional(),
-    codeSamples: core.serialization.property(
-        "code-samples",
-        core.serialization.list(V2HttpEndpointCodeSample).optional(),
-    ),
+    codeSamples: core.serialization.list(V2HttpEndpointCodeSample).optional(),
 });
 
 export declare namespace V2HttpEndpointExample {
     export interface Raw {
         request?: V2HttpEndpointRequest.Raw | null;
         response?: V2HttpEndpointResponse.Raw | null;
-        "code-samples"?: V2HttpEndpointCodeSample.Raw[] | null;
+        codeSamples?: V2HttpEndpointCodeSample.Raw[] | null;
     }
 }

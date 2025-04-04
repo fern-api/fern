@@ -5,7 +5,7 @@
 import * as FernIr from "../../../index";
 
 export interface V2WebSocketSessionExample {
-    channel: FernIr.V2EndpointLocation;
+    channel: FernIr.V2WebSocketEndpointLocation;
     baseUrl: string | undefined;
     environment: FernIr.V2EnvironmentValues | undefined;
     auth: FernIr.V2AuthValues | undefined;

@@ -20,7 +20,7 @@ types:
     properties:
       request: optional<V2HttpEndpointRequest>
       response: optional<V2HttpEndpointResponse>
-      code-samples: optional<list<V2HttpEndpointCodeSample>>
+      codeSamples: optional<list<V2HttpEndpointCodeSample>>
 
   V2HttpEndpointRequest:
     extends: commons.WithDocs
@@ -60,7 +60,7 @@ types:
 
   V2WebSocketSessionExample:
     properties:
-      channel: V2EndpointLocation
+      channel: V2WebSocketEndpointLocation
       baseURL: optional<string>
       environment: optional<V2EnvironmentValues>
       auth: optional<V2AuthValues>
@@ -75,6 +75,10 @@ types:
       body: unknown
   
   # Simplified Example Types
+
+  V2WebSocketEndpointLocation:
+    properties:
+      path: string
 
   V2EndpointLocation:
     properties:

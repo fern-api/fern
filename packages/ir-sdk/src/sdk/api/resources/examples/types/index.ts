@@ -7,6 +7,7 @@ export * from "./V2HttpEndpointCodeSample";
 export * from "./V2WebSocketSessionExamples";
 export * from "./V2WebSocketSessionExample";
 export * from "./V2WebSocketMessageExample";
+export * from "./V2WebSocketEndpointLocation";
 export * from "./V2EndpointLocation";
 export * from "./V2EnvironmentValues";
 export * from "./MultipleEnvironmentUrlValues";

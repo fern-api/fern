@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { V2EndpointLocation } from "./V2EndpointLocation";
+import { V2WebSocketEndpointLocation } from "./V2WebSocketEndpointLocation";
 import { V2EnvironmentValues } from "./V2EnvironmentValues";
 import { V2AuthValues } from "./V2AuthValues";
 import { V2ExampleValues } from "./V2ExampleValues";
@@ -15,7 +15,7 @@ export const V2WebSocketSessionExample: core.serialization.ObjectSchema<
     serializers.V2WebSocketSessionExample.Raw,
     FernIr.V2WebSocketSessionExample
 > = core.serialization.objectWithoutOptionalProperties({
-    channel: V2EndpointLocation,
+    channel: V2WebSocketEndpointLocation,
     baseUrl: core.serialization.property("baseURL", core.serialization.string().optional()),
     environment: V2EnvironmentValues.optional(),
     auth: V2AuthValues.optional(),
@@ -27,7 +27,7 @@ export const V2WebSocketSessionExample: core.serialization.ObjectSchema<
 
 export declare namespace V2WebSocketSessionExample {
     export interface Raw {
-        channel: V2EndpointLocation.Raw;
+        channel: V2WebSocketEndpointLocation.Raw;
         baseURL?: string | null;
         environment?: V2EnvironmentValues.Raw | null;
         auth?: V2AuthValues.Raw | null;
