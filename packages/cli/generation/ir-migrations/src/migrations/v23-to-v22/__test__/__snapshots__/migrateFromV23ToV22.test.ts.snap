@@ -180,7 +180,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -381,7 +380,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -621,7 +619,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -861,7 +858,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1101,7 +1097,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1341,7 +1336,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1581,7 +1575,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
-        "example": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1929,7 +1922,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2050,7 +2042,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2192,7 +2183,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
-                    "example": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -2473,7 +2463,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2594,7 +2583,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2736,7 +2724,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
-                    "example": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -3033,7 +3020,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3158,7 +3144,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3304,7 +3289,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
-                    "example": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -3567,7 +3551,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3682,7 +3665,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3818,7 +3800,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4207,7 +4188,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4322,7 +4302,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4458,7 +4437,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4692,7 +4670,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4807,7 +4784,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4943,7 +4919,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5177,7 +5152,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5292,7 +5266,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5428,7 +5401,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5817,7 +5789,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5932,7 +5903,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6068,7 +6038,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6230,7 +6199,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6345,7 +6313,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6481,7 +6448,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6643,7 +6609,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6758,7 +6723,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6894,7 +6858,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -7056,7 +7019,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7171,7 +7133,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7307,7 +7268,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -9502,7 +9462,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9617,7 +9576,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9753,7 +9711,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
-                "example": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -10194,7 +10151,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -10311,7 +10267,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -10819,7 +10774,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -13565,7 +13519,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
-                  "example": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -13971,7 +13924,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15257,7 +15209,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15395,7 +15346,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
               "default": undefined,
-              "example": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
