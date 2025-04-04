@@ -2,11 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawOptionalClient
 from ..core.request_options import RequestOptions
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawOptionalClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -14,7 +13,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class OptionalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawOptionalClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawOptionalClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawOptionalClient
+        """
+        return self._raw_client
 
     def send_optional_body(
         self,
@@ -46,31 +56,27 @@ class OptionalClient:
             request={"string": {"key": "value"}},
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "send-optional-body",
-            method="POST",
-            json=request,
+        response = self._raw_client.send_optional_body(
+            request=request,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawOptionalClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawOptionalClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawOptionalClient
+        """
+        return self._raw_client
 
     async def send_optional_body(
         self,
@@ -110,23 +116,8 @@ class AsyncOptionalClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "send-optional-body",
-            method="POST",
-            json=request,
+        response = await self._raw_client.send_optional_body(
+            request=request,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
