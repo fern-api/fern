@@ -5,10 +5,33 @@ import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
+export interface NamedValue {
+    name: string;
+    value: AstNode;
+}
+
+type InternalTypeInstantiation =
+    | Int
+    | Float
+    | Bool
+    | Str
+    | Date
+    | DateTime
+    | Bytes
+    | List
+    | Set
+    | Tuple
+    | Dict
+    | TypedDict
+    | Reference_
+    | None
+    | Unknown
+    | Uuid
+    | Nop;
 
 interface IterableConfig {
     endWithComma?: boolean;
+    multiline?: boolean;
 }
 
 interface StrConfig {
@@ -38,9 +61,25 @@ interface Str {
     config?: StrConfig;
 }
 
+interface Date {
+    type: "date";
+    value: string;
+}
+
+interface DateTime {
+    type: "datetime";
+    value: string;
+}
+
 interface Bytes {
     type: "bytes";
     value: string;
+}
+
+interface TypedDict {
+    type: "typedDict";
+    entries: NamedValue[];
+    config?: IterableConfig;
 }
 
 interface List {
@@ -72,13 +111,27 @@ interface DictEntry {
     value: AstNode;
 }
 
+interface Reference_ {
+    type: "reference";
+    value: AstNode;
+}
+
 interface None {
     type: "none";
+}
+
+interface Unknown {
+    type: "unknown";
+    value: unknown;
 }
 
 interface Uuid {
     type: "uuid";
     value: string;
+}
+
+interface Nop {
+    type: "nop";
 }
 
 export class TypeInstantiation extends AstNode {
@@ -131,6 +184,27 @@ export class TypeInstantiation extends AstNode {
         return tuple;
     }
 
+    public static typedDict(
+        entries: NamedValue[],
+        config: IterableConfig = { endWithComma: false }
+    ): TypeInstantiation {
+        const typedDict = new this({ type: "typedDict", entries, config });
+        entries.forEach((entry) => typedDict.inheritReferences(entry.value));
+        return typedDict;
+    }
+
+    public static date(value: string): TypeInstantiation {
+        const date = new this({ type: "date", value });
+        date.addReference(new Reference({ name: "date", modulePath: ["datetime"] }));
+        return date;
+    }
+
+    public static datetime(value: string): TypeInstantiation {
+        const datetime = new this({ type: "datetime", value });
+        datetime.addReference(new Reference({ name: "datetime", modulePath: ["datetime"] }));
+        return datetime;
+    }
+
     public static dict(entries: DictEntry[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
         const dict = new this({ type: "dict", entries, config });
         entries.forEach((entry) => {
@@ -140,14 +214,32 @@ export class TypeInstantiation extends AstNode {
         return dict;
     }
 
+    public static reference(value: AstNode): TypeInstantiation {
+        const ref = new this({ type: "reference", value });
+        ref.inheritReferences(value);
+        return ref;
+    }
+
     public static none(): TypeInstantiation {
         return new this({ type: "none" });
+    }
+
+    public static unknown(value: unknown): TypeInstantiation {
+        return new this({ type: "unknown", value });
     }
 
     public static uuid(value: string): TypeInstantiation {
         const uuid = new this({ type: "uuid", value });
         uuid.addReference(new Reference({ name: "UUID", modulePath: ["uuid"] }));
         return uuid;
+    }
+
+    public static nop(): TypeInstantiation {
+        return new this({ type: "nop" });
+    }
+
+    public static isNop(typeInstantiation: AstNode): boolean {
+        return typeInstantiation instanceof TypeInstantiation && typeInstantiation.internalType.type === "nop";
     }
 
     public write(writer: Writer): void {
@@ -178,81 +270,199 @@ export class TypeInstantiation extends AstNode {
                     writer.write(`"${this.escapeString(this.internalType.value)}"`);
                 }
                 break;
+            case "date":
+                writer.write(`date.fromisoformat("${this.internalType.value}")`);
+                break;
+            case "datetime":
+                writer.write(`datetime.fromisoformat("${this.internalType.value}")`);
+                break;
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;
             case "list": {
                 const internalType = this.internalType;
+                const values = filterNopValues({ values: internalType.values });
+                if (values.length === 0) {
+                    writer.write("[]");
+                    break;
+                }
                 writer.write("[");
-                internalType.values.forEach((value, index) => {
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                }
+                values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(", ");
+                        writer.write(",");
+                        if (internalType.config?.multiline) {
+                            writer.newLine();
+                        } else {
+                            writer.write(" ");
+                        }
                     }
                     value.write(writer);
-                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                    if (index === values.length - 1 && internalType.config?.endWithComma) {
                         writer.write(",");
                     }
                 });
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                }
                 writer.write("]");
                 break;
             }
             case "set": {
                 const internalType = this.internalType;
+                const values = filterNopValues({ values: internalType.values });
+                if (values.length === 0) {
+                    writer.write("{}");
+                    break;
+                }
                 writer.write("{");
-                internalType.values.forEach((value, index) => {
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                }
+                values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(", ");
+                        writer.write(",");
+                        if (internalType.config?.multiline) {
+                            writer.newLine();
+                        } else {
+                            writer.write(" ");
+                        }
                     }
                     value.write(writer);
-                    if (index === internalType.values.length - 1 && internalType.config?.endWithComma) {
+                    if (index === values.length - 1 && internalType.config?.endWithComma) {
                         writer.write(",");
                     }
                 });
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                }
                 writer.write("}");
                 break;
             }
             case "tuple": {
                 const internalType = this.internalType;
+                const values = filterNopValues({ values: internalType.values });
+                if (values.length === 0) {
+                    writer.write("()");
+                    break;
+                }
                 writer.write("(");
-                this.internalType.values.forEach((value, index) => {
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                }
+                values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(", ");
+                        writer.write(",");
+                        if (internalType.config?.multiline) {
+                            writer.newLine();
+                        } else {
+                            writer.write(" ");
+                        }
                     }
                     value.write(writer);
                     if (
                         // If the tuple is of length 1, then we must always add a trailing comma
-                        internalType.values.length === 1 ||
+                        values.length === 1 ||
                         // Otherwise, check the config that was specified
-                        (index === internalType.values.length - 1 && internalType.config?.endWithComma)
+                        (index === values.length - 1 && internalType.config?.endWithComma)
                     ) {
                         writer.write(",");
                     }
                 });
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                }
                 writer.write(")");
                 break;
             }
             case "dict": {
                 const internalType = this.internalType;
+                const entries = filterNopDictEntries({ entries: internalType.entries });
+                if (entries.length === 0) {
+                    writer.write("{}");
+                    break;
+                }
                 writer.write("{");
-                internalType.entries.forEach((entry, index) => {
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                }
+                entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(", ");
+                        writer.write(",");
+                        if (internalType.config?.multiline) {
+                            writer.newLine();
+                        } else {
+                            writer.write(" ");
+                        }
                     }
                     entry.key.write(writer);
                     writer.write(": ");
                     entry.value.write(writer);
-                    if (index === internalType.entries.length - 1 && internalType.config?.endWithComma) {
+                    if (index === entries.length - 1 && internalType.config?.endWithComma) {
                         writer.write(",");
                     }
                 });
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                }
                 writer.write("}");
+                break;
+            }
+            case "typedDict": {
+                const internalType = this.internalType;
+                const entries = filterNopNamedValues({ entries: internalType.entries });
+                if (entries.length === 0) {
+                    writer.write("{}");
+                    break;
+                }
+                writer.write("{");
+                if (internalType.config?.multiline) {
+                    writer.writeLine();
+                    writer.indent();
+                }
+                entries.forEach((entry, index) => {
+                    if (index > 0) {
+                        writer.write(",");
+                        if (internalType.config?.multiline) {
+                            writer.newLine();
+                        } else {
+                            writer.write(" ");
+                        }
+                    }
+                    writer.write(`"${entry.name}": `);
+                    entry.value.write(writer);
+                });
+                if (internalType.config?.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                }
+                writer.write("}");
+                break;
+            }
+            case "reference": {
+                this.internalType.value.write(writer);
                 break;
             }
             case "none":
                 writer.write("None");
                 break;
+            case "unknown":
+                this.writeUnknown({ writer, value: this.internalType.value });
+                break;
             case "uuid":
                 writer.write(`UUID("${this.internalType.value}")`);
+                break;
+            case "nop":
                 break;
             default:
                 assertNever(this.internalType);
@@ -330,6 +540,83 @@ export class TypeInstantiation extends AstNode {
 
         return input.replace(pattern, (char) => replacements[char] ?? char);
     }
+
+    private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
+        switch (typeof value) {
+            case "boolean":
+                writer.write(value.toString());
+                return;
+            case "string":
+                writer.write(`"${this.escapeString(value)}"`);
+                return;
+            case "number":
+                writer.write(value.toString());
+                return;
+            case "object":
+                if (value == null) {
+                    writer.write("None");
+                    return;
+                }
+                if (Array.isArray(value)) {
+                    this.writeUnknownArray({ writer, value });
+                    return;
+                }
+                this.writeUnknownObject({ writer, value });
+                return;
+            default:
+                throw new Error(`Internal error; unsupported unknown type: ${typeof value}`);
+        }
+    }
+
+    private writeUnknownArray({
+        writer,
+        value
+    }: {
+        writer: Writer;
+        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    }): void {
+        if (value.length === 0) {
+            writer.write("[]");
+            return;
+        }
+        writer.writeLine("[");
+        writer.indent();
+        for (const element of value) {
+            writer.writeNode(TypeInstantiation.unknown(element));
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("]");
+    }
+
+    private writeUnknownObject({ writer, value }: { writer: Writer; value: object }): void {
+        const entries = Object.entries(value);
+        if (entries.length === 0) {
+            writer.write("{}");
+            return;
+        }
+        writer.writeLine("{");
+        writer.indent();
+        for (const [key, val] of entries) {
+            writer.write(`"${key}": `);
+            writer.writeNode(TypeInstantiation.unknown(val));
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
+    }
+}
+
+function filterNopDictEntries({ entries }: { entries: DictEntry[] }): DictEntry[] {
+    return entries.filter((entry) => !TypeInstantiation.isNop(entry.key) && !TypeInstantiation.isNop(entry.value));
+}
+
+function filterNopNamedValues({ entries }: { entries: NamedValue[] }): NamedValue[] {
+    return entries.filter((entry) => !TypeInstantiation.isNop(entry.value));
+}
+
+function filterNopValues({ values }: { values: AstNode[] }): AstNode[] {
+    return values.filter((value) => !TypeInstantiation.isNop(value));
 }
 
 export { Type };
