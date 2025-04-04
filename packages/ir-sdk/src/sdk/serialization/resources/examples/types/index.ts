@@ -9,6 +9,7 @@ export * from "./V2WebSocketSessionExample";
 export * from "./V2WebSocketMessageExample";
 export * from "./V2WebhookExamples";
 export * from "./V2WebhookExample";
+export * from "./V2SchemaExamples";
 export * from "./V2SchemaExample";
 export * from "./V2WebSocketEndpointLocation";
 export * from "./V2EndpointLocation";

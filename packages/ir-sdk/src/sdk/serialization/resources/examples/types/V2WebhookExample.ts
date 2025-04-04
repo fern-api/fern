@@ -5,19 +5,18 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { Name } from "../../commons/types/Name";
 
 export const V2WebhookExample: core.serialization.ObjectSchema<
     serializers.V2WebhookExample.Raw,
     FernIr.V2WebhookExample
 > = core.serialization.objectWithoutOptionalProperties({
-    name: Name.optional(),
+    name: core.serialization.string().optional(),
     payload: core.serialization.unknown(),
 });
 
 export declare namespace V2WebhookExample {
     export interface Raw {
-        name?: Name.Raw | null;
+        name?: string | null;
         payload?: unknown;
     }
 }
