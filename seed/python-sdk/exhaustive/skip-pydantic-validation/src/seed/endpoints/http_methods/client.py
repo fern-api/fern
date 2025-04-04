@@ -2,13 +2,15 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawHttpMethodsClient
 from ...core.request_options import RequestOptions
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.unchecked_base_model import construct_type
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 import datetime as dt
 import uuid
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawHttpMethodsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -16,18 +18,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class HttpMethodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawHttpMethodsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawHttpMethodsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawHttpMethodsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -54,11 +45,24 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        response = self._raw_client.test_get(
-            id,
+        _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -87,11 +91,28 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        response = self._raw_client.test_post(
-            string=string,
+        _response = self._client_wrapper.httpx_client.request(
+            "http-methods",
+            method="POST",
+            json={
+                "string": string,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -123,12 +144,28 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        response = self._raw_client.test_put(
-            id,
-            string=string,
+        _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="PUT",
+            json={
+                "string": string,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_patch(
         self,
@@ -222,24 +259,40 @@ class HttpMethodsClient:
             bigint=1000000,
         )
         """
-        response = self._raw_client.test_patch(
-            id,
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -266,27 +319,29 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        response = self._raw_client.test_delete(
-            id,
+        _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="DELETE",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    construct_type(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncHttpMethodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawHttpMethodsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawHttpMethodsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawHttpMethodsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -321,11 +376,24 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_get(
-            id,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    construct_type(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -362,11 +430,28 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_post(
-            string=string,
+        _response = await self._client_wrapper.httpx_client.request(
+            "http-methods",
+            method="POST",
+            json={
+                "string": string,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -406,12 +491,28 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_put(
-            id,
-            string=string,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="PUT",
+            json={
+                "string": string,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_patch(
         self,
@@ -512,24 +613,40 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_patch(
-            id,
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ObjectWithOptionalField,
+                    construct_type(
+                        type_=ObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -564,8 +681,21 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_delete(
-            id,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
+            method="DELETE",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    construct_type(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

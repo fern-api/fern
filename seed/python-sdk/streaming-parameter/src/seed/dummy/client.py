@@ -2,7 +2,6 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawDummyClient
 from ..core.request_options import RequestOptions
 from .types.stream_response import StreamResponse
 from .types.regular_response import RegularResponse
@@ -11,7 +10,6 @@ import json
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawDummyClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -19,18 +17,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class DummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawDummyClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawDummyClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawDummyClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     @typing.overload
     def generate(
@@ -113,7 +100,7 @@ class DummyClient:
         if stream:
 
             async def stream_generator():
-                with self._raw_client._client_wrapper.httpx_client.stream(
+                with self._client_wrapper.httpx_client.stream(
                     "generate",
                     method="POST",
                     json=_request_json,
@@ -144,7 +131,7 @@ class DummyClient:
 
             return stream_generator()
         else:
-            _response = self._raw_client._client_wrapper.httpx_client.request(
+            _response = self._client_wrapper.httpx_client.request(
                 "generate",
                 method="POST",
                 json=_request_json,
@@ -168,18 +155,7 @@ class DummyClient:
 
 class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawDummyClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawDummyClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawDummyClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     @typing.overload
     async def generate(
@@ -278,7 +254,7 @@ class AsyncDummyClient:
         if stream:
 
             async def stream_generator():
-                async with self._raw_client._client_wrapper.httpx_client.stream(
+                async with self._client_wrapper.httpx_client.stream(
                     "generate",
                     method="POST",
                     json=_request_json,
@@ -309,7 +285,7 @@ class AsyncDummyClient:
 
             return stream_generator()
         else:
-            _response = await self._raw_client._client_wrapper.httpx_client.request(
+            _response = await self._client_wrapper.httpx_client.request(
                 "generate",
                 method="POST",
                 json=_request_json,

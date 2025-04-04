@@ -2,10 +2,13 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawNoAuthClient
 from ..core.request_options import RequestOptions
+from ..core.pydantic_utilities import parse_obj_as
+from ..general_errors.errors.bad_request_body import BadRequestBody
+from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawNoAuthClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +16,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class NoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawNoAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawNoAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawNoAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def post_with_no_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -55,27 +47,41 @@ class NoAuthClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post_with_no_auth(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "no-auth",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestBody(
+                    typing.cast(
+                        BadObjectRequestInfo,
+                        parse_obj_as(
+                            type_=BadObjectRequestInfo,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawNoAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawNoAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawNoAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def post_with_no_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -114,8 +120,33 @@ class AsyncNoAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_no_auth(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "no-auth",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestBody(
+                    typing.cast(
+                        BadObjectRequestInfo,
+                        parse_obj_as(
+                            type_=BadObjectRequestInfo,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
