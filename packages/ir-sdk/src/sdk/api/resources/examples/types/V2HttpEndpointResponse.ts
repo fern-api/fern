@@ -6,5 +6,5 @@ import * as FernIr from "../../../index";
 
 export interface V2HttpEndpointResponse extends FernIr.WithDocs {
     statusCode: number | undefined;
-    body: FernIr.V2HttpEndpointResponseBody;
+    body: FernIr.V2HttpEndpointResponseBody | undefined;
 }

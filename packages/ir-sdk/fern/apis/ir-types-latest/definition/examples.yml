@@ -38,7 +38,7 @@ types:
     extends: commons.WithDocs
     properties:
       statusCode: optional<integer>
-      body: V2HttpEndpointResponseBody
+      body: optional<V2HttpEndpointResponseBody>
 
   V2HttpEndpointResponseBody:
     union:
