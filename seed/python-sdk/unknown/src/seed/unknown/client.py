@@ -2,10 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawUnknownClient
 from ..core.request_options import RequestOptions
+from ..core.pydantic_utilities import parse_obj_as
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawUnknownClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UnknownClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawUnknownClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawUnknownClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawUnknownClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def post(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -52,11 +42,25 @@ class UnknownClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[typing.Optional[typing.Any]],
+                    parse_obj_as(
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_object(
         self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -84,27 +88,33 @@ class UnknownClient:
             unknown={"key": "value"},
         )
         """
-        response = self._raw_client.post_object(
-            unknown=unknown,
+        _response = self._client_wrapper.httpx_client.request(
+            "with-object",
+            method="POST",
+            json={
+                "unknown": unknown,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[typing.Optional[typing.Any]],
+                    parse_obj_as(
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncUnknownClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawUnknownClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawUnknownClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawUnknownClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def post(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -140,11 +150,25 @@ class AsyncUnknownClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[typing.Optional[typing.Any]],
+                    parse_obj_as(
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_object(
         self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -180,8 +204,25 @@ class AsyncUnknownClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_object(
-            unknown=unknown,
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-object",
+            method="POST",
+            json={
+                "unknown": unknown,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[typing.Optional[typing.Any]],
+                    parse_obj_as(
+                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

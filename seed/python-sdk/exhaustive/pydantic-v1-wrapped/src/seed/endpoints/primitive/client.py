@@ -2,12 +2,13 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawPrimitiveClient
 from ...core.request_options import RequestOptions
+from ...core.pydantic_utilities import parse_obj_as
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 import datetime as dt
 import uuid
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawPrimitiveClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -15,18 +16,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class PrimitiveClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawPrimitiveClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawPrimitiveClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawPrimitiveClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_and_return_string(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -53,11 +43,26 @@ class PrimitiveClient:
             request="string",
         )
         """
-        response = self._raw_client.get_and_return_string(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/string",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -84,11 +89,26 @@ class PrimitiveClient:
             request=1,
         )
         """
-        response = self._raw_client.get_and_return_int(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/integer",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    int,
+                    parse_obj_as(
+                        type_=int,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_long(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -115,11 +135,26 @@ class PrimitiveClient:
             request=1000000,
         )
         """
-        response = self._raw_client.get_and_return_long(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/long",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    int,
+                    parse_obj_as(
+                        type_=int,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_double(
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
@@ -148,11 +183,26 @@ class PrimitiveClient:
             request=1.1,
         )
         """
-        response = self._raw_client.get_and_return_double(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/double",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    float,
+                    parse_obj_as(
+                        type_=float,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_bool(self, *, request: bool, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -179,11 +229,26 @@ class PrimitiveClient:
             request=True,
         )
         """
-        response = self._raw_client.get_and_return_bool(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/boolean",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_datetime(
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
@@ -216,11 +281,26 @@ class PrimitiveClient:
             ),
         )
         """
-        response = self._raw_client.get_and_return_datetime(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/datetime",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    dt.datetime,
+                    parse_obj_as(
+                        type_=dt.datetime,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_date(
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
@@ -253,11 +333,26 @@ class PrimitiveClient:
             ),
         )
         """
-        response = self._raw_client.get_and_return_date(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/date",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    dt.date,
+                    parse_obj_as(
+                        type_=dt.date,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_uuid(
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
@@ -290,11 +385,26 @@ class PrimitiveClient:
             ),
         )
         """
-        response = self._raw_client.get_and_return_uuid(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/uuid",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    uuid.UUID,
+                    parse_obj_as(
+                        type_=uuid.UUID,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -321,27 +431,31 @@ class PrimitiveClient:
             request="SGVsbG8gd29ybGQh",
         )
         """
-        response = self._raw_client.get_and_return_base_64(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "primitive/base64",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncPrimitiveClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPrimitiveClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawPrimitiveClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawPrimitiveClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_and_return_string(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -378,11 +492,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_string(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/string",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -417,11 +546,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_int(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/integer",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    int,
+                    parse_obj_as(
+                        type_=int,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_long(
         self, *, request: int, request_options: typing.Optional[RequestOptions] = None
@@ -458,11 +602,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_long(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/long",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    int,
+                    parse_obj_as(
+                        type_=int,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_double(
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
@@ -499,11 +658,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_double(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/double",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    float,
+                    parse_obj_as(
+                        type_=float,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_bool(
         self, *, request: bool, request_options: typing.Optional[RequestOptions] = None
@@ -540,11 +714,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_bool(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/boolean",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_datetime(
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
@@ -584,11 +773,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_datetime(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/datetime",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    dt.datetime,
+                    parse_obj_as(
+                        type_=dt.datetime,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_date(
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
@@ -628,11 +832,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_date(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/date",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    dt.date,
+                    parse_obj_as(
+                        type_=dt.date,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_uuid(
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
@@ -672,11 +891,26 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_uuid(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/uuid",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    uuid.UUID,
+                    parse_obj_as(
+                        type_=uuid.UUID,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_base_64(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -713,8 +947,23 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_base_64(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "primitive/base64",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

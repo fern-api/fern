@@ -112,12 +112,12 @@ class WebsocketConnectMethodGenerator:
 
     def _get_websocket_return_type(self) -> AST.TypeHint:
         if self._is_async:
-            reference = self._context.get_async_socket_client_class_reference_for_subpackage_service(
+            reference = self._context.get_async_socket_class_reference_for_subpackage_service(
                 subpackage_id=self._subpackage_id
             )
             return AST.TypeHint.async_iterator(wrapped_type=AST.TypeHint(type=reference))
         else:
-            reference = self._context.get_socket_client_class_reference_for_subpackage_service(
+            reference = self._context.get_socket_class_reference_for_subpackage_service(
                 subpackage_id=self._subpackage_id
             )
             return AST.TypeHint.iterator(wrapped_type=AST.TypeHint(type=reference))
@@ -294,12 +294,12 @@ class WebsocketConnectMethodGenerator:
                 if is_async:
                     writer.write_node(Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"))
                     writer.write_line(
-                        f"yield {self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        f"yield {self._context.get_async_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
                     )
                 else:
                     writer.write_node(Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"))
                     writer.write_line(
-                        f"yield {self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        f"yield {self._context.get_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
                     )
             response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
             response_code_writer.write(writer)
@@ -458,13 +458,11 @@ class WebsocketConnectMethodGenerator:
         writer.write_line("-------")
         if self._is_async:
             writer.write_line(
-                self._context.get_async_socket_client_class_name_for_subpackage_service(
-                    subpackage_id=self._subpackage_id
-                )
+                self._context.get_async_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)
             )
         else:
             writer.write_line(
-                self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)
+                self._context.get_socket_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)
             )
 
     def _write_docs(self, writer: NodeWriter, docs: str) -> None:
