@@ -3,8 +3,6 @@ import { AbstractFormatter, AbstractWriter } from "@fern-api/browser-compatible-
 import { Reference } from "../Reference";
 import { ImportedName } from "./types";
 
-export declare namespace Writer {}
-
 export class Writer extends AbstractWriter {
     private fullyQualifiedModulePathsToImportedNames: Record<string, ImportedName> = {};
 

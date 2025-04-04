@@ -28,9 +28,6 @@ const RESERVED_NAMES = new Set([
     "assert",
     "switch",
     "getClass"
-
-    // TODO(amckinney): The Java SDK generator currently supports "object" as a reserved name, but it
-    // doesn't need to be. We should update the Java generator so that we don't need to include this here.
 ]);
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {

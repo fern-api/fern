@@ -1,4 +1,5 @@
 import { AccessAttribute } from "./AccessAttribute";
+import { BaseInvocation } from "./BaseInvocation";
 import { Class } from "./Class";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { CodeBlock } from "./CodeBlock";
@@ -35,7 +36,7 @@ export { Operator } from "./Operator";
 export { Reference } from "./Reference";
 export { StarImport } from "./StarImport";
 export { Type } from "./Type";
-export { TypeInstantiation } from "./TypeInstantiation";
+export { type NamedValue, TypeInstantiation } from "./TypeInstantiation";
 
 export function accessAttribute(args: AccessAttribute.Args): AccessAttribute {
     return new AccessAttribute(args);
@@ -87,6 +88,10 @@ export function lambdaParameter(args: LambdaParameter.Args): LambdaParameter {
 
 export function method(args: Method.Args): Method {
     return new Method(args);
+}
+
+export function invokeFunction(args: BaseInvocation.Args): BaseInvocation {
+    return new BaseInvocation(args);
 }
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {

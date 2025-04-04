@@ -223,6 +223,9 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[] }>;
     }): void {
+        if (uniqueReferences.size === 0) {
+            return;
+        }
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
 
@@ -269,13 +272,9 @@ export class PythonFile extends AstNode {
                         .join(", ")}`
                 );
             }
-
             writer.newLine();
         }
-
-        if (Object.keys(uniqueReferences).length > 0) {
-            writer.newLine();
-        }
+        writer.newLine();
     }
 
     private isDefinedInFile(modulePath: readonly string[]): boolean {

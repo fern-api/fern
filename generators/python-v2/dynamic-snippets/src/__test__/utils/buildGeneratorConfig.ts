@@ -23,12 +23,17 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         })
     },
     organization: "acme",
-    workspaceName: "acme",
+    workspaceName: "api",
     environment: FernGeneratorExec.GeneratorEnvironment.local(),
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
-    customConfig: {} as BasePythonCustomConfigSchema
+    customConfig: {
+        client: {
+            filename: "acme.py",
+            class_name: "Acme"
+        }
+    } as BasePythonCustomConfigSchema
 };
 
 export function buildGeneratorConfig({
