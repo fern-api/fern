@@ -58879,10 +58879,16 @@
             "environment": "API",
             "messages": [
               {
-                "type": "SendAudio"
+                "type": "SendAudio",
+                "body": {
+                  "audio_data": "base64-encoded-audio-data"
+                }
               },
               {
-                "type": "TerminateSession"
+                "type": "TerminateSession",
+                "body": {
+                  "terminate_session": true
+                }
               }
             ]
           }
