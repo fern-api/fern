@@ -1,4 +1,10 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.8.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for inlining path parameters
 - version: 4.7.0
   irVersion: 57
   changelogEntry:

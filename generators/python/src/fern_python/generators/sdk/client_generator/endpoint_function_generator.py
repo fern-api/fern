@@ -205,9 +205,10 @@ class EndpointFunctionGenerator:
         else:
             return [self.generate_single_function(is_overloaded=False)]
 
-    def _get_overridden_parameter_types(
+    def _get_named_parameter_types(
         self, streaming_parameter: Optional[StreamingParameterType] = None
     ) -> List[AST.NamedFunctionParameter]:
+        named_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_raw.copy()
         if (
             streaming_parameter is not None
             and self._endpoint.sdk_request is not None
@@ -233,8 +234,29 @@ class EndpointFunctionGenerator:
                     )
                 else:
                     cleaned_parameters.append(param)
-            return cleaned_parameters
-        return self._named_parameters_raw
+            named_parameters = cleaned_parameters
+        
+        if self._context.custom_config.inline_path_params:
+            named_path_parameters: List[AST.NamedFunctionParameter] = []
+            for path_parameter in self._endpoint.all_path_parameters:
+                if not self._is_type_literal(path_parameter.value_type):
+                    name = self._path_parameter_names[path_parameter.name]
+                    named_path_parameters.append(
+                        AST.NamedFunctionParameter(
+                            name=name,
+                            docs=path_parameter.docs,
+                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                path_parameter.value_type,
+                                in_endpoint=True,
+                            ),
+                            raw_name=path_parameter.name.original_name,
+                            raw_type=path_parameter.value_type
+                        ),
+                    )
+            # path parameters go first because it's important that request options is the last parameter
+            named_parameters = named_path_parameters + named_parameters
+
+        return named_parameters
 
     def generate_single_function(
         self,
@@ -252,8 +274,8 @@ class EndpointFunctionGenerator:
             streaming_parameter=streaming_parameter,
         )
 
-        unnamed_parameters = self._get_endpoint_path_parameters()
-        named_parameters = self._get_overridden_parameter_types(streaming_parameter)
+        unnamed_parameters = self._get_unnamed_parameters()
+        named_parameters = self._get_named_parameter_types(streaming_parameter)
 
         function_declaration = AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
@@ -322,20 +344,22 @@ class EndpointFunctionGenerator:
             name += "_"
         return name
 
-    def _get_endpoint_path_parameters(self) -> List[AST.FunctionParameter]:
+    def _get_unnamed_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
-        for path_parameter in self._endpoint.all_path_parameters:
-            if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
-                parameters.append(
-                    AST.FunctionParameter(
-                        name=name,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type,
-                            in_endpoint=True,
+
+        if not self._context.custom_config.inline_path_params:
+            for path_parameter in self._endpoint.all_path_parameters:
+                if not self._is_type_literal(path_parameter.value_type):
+                    name = self._path_parameter_names[path_parameter.name]
+                    parameters.append(
+                        AST.FunctionParameter(
+                            name=name,
+                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                path_parameter.value_type,
+                                in_endpoint=True,
+                            ),
                         ),
-                    ),
-                )
+                    )
         return parameters
 
     def _get_endpoint_named_parameters(
