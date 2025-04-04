@@ -14,13 +14,8 @@
 
 ```python
 from seed import SeedMixedCase
-
-client = SeedMixedCase(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.service.get_resource(
-    resource_id="rsc-xyz",
-)
+client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )
+client.service.get_resource(resource_id='rsc-xyz', )
 
 ```
 </dd>
@@ -69,19 +64,10 @@ client.service.get_resource(
 <dd>
 
 ```python
-import datetime
-
 from seed import SeedMixedCase
-
-client = SeedMixedCase(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.service.list_resources(
-    page_limit=10,
-    before_date=datetime.date.fromisoformat(
-        "2023-01-01",
-    ),
-)
+import datetime
+client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )
+client.service.list_resources(page_limit=10, before_date=datetime.date.fromisoformat("2023-01-01", ), )
 
 ```
 </dd>

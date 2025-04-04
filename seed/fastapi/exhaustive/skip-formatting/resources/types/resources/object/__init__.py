@@ -16,16 +16,4 @@ from .types import (
     OptionalAlias,
 )
 
-__all__ = [
-    "DoubleOptional",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithOptionalFieldError",
-    "NestedObjectWithRequiredField",
-    "NestedObjectWithRequiredFieldError",
-    "ObjectWithMapOfMap",
-    "ObjectWithOptionalField",
-    "ObjectWithOptionalFieldError",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredFieldError",
-    "OptionalAlias",
-]
+__all__ = ["DoubleOptional", "NestedObjectWithOptionalField", "NestedObjectWithOptionalFieldError", "NestedObjectWithRequiredField", "NestedObjectWithRequiredFieldError", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithOptionalFieldError", "ObjectWithRequiredField", "ObjectWithRequiredFieldError", "OptionalAlias"]

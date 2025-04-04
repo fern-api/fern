@@ -1,8 +1,8 @@
 {
     "types": {
-        "type_:AliasType": "from seed import Parent\n\nParent(\n    parent=\"Property from the parent\",\n)\n",
-        "type_:Parent": "from seed import Parent\n\nParent(\n    parent=\"Property from the parent\",\n)\n",
-        "type_:Child": "from seed import Child\n\nChild(\n    parent=\"Property from the parent\",\n    child=\"Property from the child\",\n)\n"
+        "type_:AliasType": "from seed import Parent\nParent(parent='Property from the parent', )",
+        "type_:Parent": "from seed import Parent\nParent(parent='Property from the parent', )",
+        "type_:Child": "from seed import Child\nChild(parent='Property from the parent', child='Property from the child', )"
     },
     "endpoints": [
         {
@@ -13,8 +13,8 @@
                 "identifier_override": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAliasExtends\n\nclient = SeedAliasExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.extended_inline_request_body(\n    child=\"child\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAliasExtends\n\nclient = AsyncSeedAliasExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.extended_inline_request_body(\n        child=\"child\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAliasExtends\nclient = SeedAliasExtends(base_url=\"https://yourhost.com/path/to/api\", )\nclient.extended_inline_request_body(child='child', )\n",
+                "async_client": "from seed import AsyncSeedAliasExtends\nimport asyncio\nclient = AsyncSeedAliasExtends(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.extended_inline_request_body(child='child', )\nasyncio.run(main())",
                 "type": "python"
             }
         }

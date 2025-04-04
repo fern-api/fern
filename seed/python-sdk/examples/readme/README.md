@@ -28,25 +28,11 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
-
-client = SeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
-)
-client.service.create_movie(
-    id="movie-c06a4ad7",
-    prequel="movie-cv9b914f",
-    title="The Boy and the Heron",
-    from_="Hayao Miyazaki",
-    rating=8.0,
-    tag="tag-wf9as23d",
-    metadata={
-        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-        "releaseDate": "2023-12-08",
-        "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-    },
-    revenue=1000000,
-)
+client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
+, 'releaseDate': '2023-12-08'
+, 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
+}, revenue=1000000, )
 ```
 
 ## Async Client
@@ -54,57 +40,25 @@ client.service.create_movie(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
-
-client = AsyncSeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
-)
-
-
+import asyncio
+client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
 async def main() -> None:
-    await client.service.get_movie(
-        movie_id="movie-c06a4ad7",
-    )
-
-
-asyncio.run(main())
-```
+    await client.service.get_movie(movie_id='movie-c06a4ad7', )
+asyncio.run(main())```
 
 ```python
-import asyncio
-
 from seed import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
-
-client = AsyncSeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
-)
-
-
+import asyncio
+client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
 async def main() -> None:
-    await client.service.create_movie(
-        id="movie-c06a4ad7",
-        prequel="movie-cv9b914f",
-        title="The Boy and the Heron",
-        from_="Hayao Miyazaki",
-        rating=8.0,
-        tag="tag-wf9as23d",
-        metadata={
-            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-            "releaseDate": "2023-12-08",
-            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-        },
-        revenue=1000000,
-    )
-
-
-asyncio.run(main())
-```
+    await client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
+    , 'releaseDate': '2023-12-08'
+    , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
+    }, revenue=1000000, )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -113,7 +67,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.service.create_movie(...)
 except ApiError as e:
@@ -150,12 +103,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedExamples
-
-client = SeedExamples(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExamples(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.service.create_movie(..., request_options={
@@ -169,17 +117,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedExamples
-
-client = SeedExamples(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedExamples(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

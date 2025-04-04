@@ -1,5 +1,5 @@
-dist/
 .mypy_cache/
-__pycache__/
-poetry.toml
 .ruff_cache/
+__pycache__/
+dist/
+poetry.toml

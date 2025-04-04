@@ -4,26 +4,22 @@ import enum
 import typing
 
 T_Result = typing.TypeVar("T_Result")
-
-
 class WeatherReport(str, enum.Enum):
     SUNNY = "SUNNY"
     CLOUDY = "CLOUDY"
     RAINING = "RAINING"
     SNOWING = "SNOWING"
-
-    def visit(
-        self,
-        sunny: typing.Callable[[], T_Result],
-        cloudy: typing.Callable[[], T_Result],
-        raining: typing.Callable[[], T_Result],
-        snowing: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    
+    def visit(self, sunny: typing.Callable[[], T_Result], cloudy: typing.Callable[[], T_Result], raining: typing.Callable[[], T_Result], snowing: typing.Callable[[], T_Result]) -> T_Result:
         if self is WeatherReport.SUNNY:
-            return sunny()
+            return sunny(
+            )
         if self is WeatherReport.CLOUDY:
-            return cloudy()
+            return cloudy(
+            )
         if self is WeatherReport.RAINING:
-            return raining()
+            return raining(
+            )
         if self is WeatherReport.SNOWING:
-            return snowing()
+            return snowing(
+            )

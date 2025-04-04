@@ -22,11 +22,7 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
 from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-
-client = SeedSingleUrlEnvironmentNoDefault(
-    token="YOUR_TOKEN",
-    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
-)
+client = SeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
 client.dummy.get_dummy()
 ```
 
@@ -35,23 +31,13 @@ client.dummy.get_dummy()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedSingleUrlEnvironmentNoDefault
 from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-
-client = AsyncSeedSingleUrlEnvironmentNoDefault(
-    token="YOUR_TOKEN",
-    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
-)
-
-
+import asyncio
+client = AsyncSeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
 async def main() -> None:
     await client.dummy.get_dummy()
-
-
-asyncio.run(main())
-```
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -60,7 +46,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.dummy.get_dummy()
 except ApiError as e:
@@ -97,12 +82,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedSingleUrlEnvironmentNoDefault
-
-client = SeedSingleUrlEnvironmentNoDefault(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedSingleUrlEnvironmentNoDefault(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.dummy.get_dummy(request_options={
@@ -116,17 +96,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedSingleUrlEnvironmentNoDefault
-
-client = SeedSingleUrlEnvironmentNoDefault(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedSingleUrlEnvironmentNoDefault(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

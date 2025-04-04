@@ -31,11 +31,11 @@ from .union_with_multiple_no_properties import (
     UnionWithMultipleNoProperties,
 )
 from .union_with_no_properties import EmptyUnionWithNoProperties, FooUnionWithNoProperties, UnionWithNoProperties
-from .union_with_optional_time import DateUnionWithOptionalTime, DatetimeUnionWithOptionalTime, UnionWithOptionalTime
+from .union_with_optional_time import DatetimeUnionWithOptionalTime, DateUnionWithOptionalTime, UnionWithOptionalTime
 from .union_with_primitive import IntegerUnionWithPrimitive, StringUnionWithPrimitive, UnionWithPrimitive
 from .union_with_single_element import FooUnionWithSingleElement, UnionWithSingleElement
 from .union_with_sub_types import FooExtendedUnionWithSubTypes, FooUnionWithSubTypes, UnionWithSubTypes
-from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
+from .union_with_time import DatetimeUnionWithTime, DateUnionWithTime, UnionWithTime, ValueUnionWithTime
 from .union_without_key import BarUnionWithoutKey, FooUnionWithoutKey, UnionWithoutKey
 
 __all__ = [

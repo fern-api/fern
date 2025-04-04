@@ -17,25 +17,4 @@ from .object import (
 )
 from .union import Animal, Cat, Dog, ErrorWithUnionBody
 
-__all__ = [
-    "Animal",
-    "Cat",
-    "Dog",
-    "DoubleOptional",
-    "ErrorWithEnumBody",
-    "ErrorWithUnionBody",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithOptionalFieldError",
-    "NestedObjectWithRequiredField",
-    "NestedObjectWithRequiredFieldError",
-    "ObjectWithMapOfMap",
-    "ObjectWithOptionalField",
-    "ObjectWithOptionalFieldError",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredFieldError",
-    "OptionalAlias",
-    "WeatherReport",
-    "enum",
-    "object",
-    "union",
-]
+__all__ = ["Animal", "Cat", "Dog", "DoubleOptional", "ErrorWithEnumBody", "ErrorWithUnionBody", "NestedObjectWithOptionalField", "NestedObjectWithOptionalFieldError", "NestedObjectWithRequiredField", "NestedObjectWithRequiredFieldError", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithOptionalFieldError", "ObjectWithRequiredField", "ObjectWithRequiredFieldError", "OptionalAlias", "WeatherReport", "enum", "object", "union"]
