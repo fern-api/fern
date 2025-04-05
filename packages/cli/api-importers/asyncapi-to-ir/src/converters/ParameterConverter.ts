@@ -8,7 +8,8 @@ import {
     QueryParameter,
     TypeDeclaration,
     TypeId,
-    TypeReference
+    TypeReference,
+    V2SchemaExample
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
 
@@ -81,13 +82,14 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                 enum: this.parameter.enum,
                 default: this.parameter.default,
                 example: this.parameter.examples?.[0],
-                examples: undefined,
+                examples: Object.values(this.parameter.examples ?? {}),
                 required: undefined
             };
         }
 
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let example: V2SchemaExample | undefined;
         const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
             breadcrumbs: [...this.breadcrumbs, "schema"],
             schemaIdOverride: this.parameter.name,
@@ -97,6 +99,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
         const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
         if (converted != null) {
             typeReference = converted.type;
+            example = converted.schema?.v2Examples?.userSpecifiedExamples[0];
             inlinedTypes = converted.inlinedTypes ?? {};
         }
 
@@ -121,7 +124,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         allowMultiple: this.parameter.explode ?? false,
                         availability,
-                        example: this.parameter.example
+                        example
                     },
                     inlinedTypes
                 };
@@ -139,7 +142,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         env: undefined,
                         availability,
-                        example: this.parameter.example
+                        example
                     },
                     inlinedTypes
                 };
@@ -154,7 +157,7 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         location: "ENDPOINT",
                         variable: undefined,
-                        example: this.parameter.example
+                        example
                     },
                     inlinedTypes
                 };

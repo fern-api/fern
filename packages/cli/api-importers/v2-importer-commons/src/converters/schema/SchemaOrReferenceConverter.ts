@@ -77,6 +77,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 const type = convertedSchema.typeDeclaration.shape.aliasOf;
                 return {
                     type: this.wrapTypeReference(type),
+                    schema: convertedSchema.typeDeclaration,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     availability
                 };

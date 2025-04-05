@@ -74,7 +74,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                     docs: propertySchema.description,
                     availability: convertedProperty.availability,
                     propertyAccess: await context.getPropertyAccess(propertySchema),
-                    example: undefined
+                    example: convertedProperty.schema?.v2Examples?.userSpecifiedExamples[0]
                 });
                 inlinedTypes = {
                     ...inlinedTypes,
