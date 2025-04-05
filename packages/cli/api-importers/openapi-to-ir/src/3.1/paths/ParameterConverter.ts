@@ -8,7 +8,8 @@ import {
     QueryParameter,
     TypeDeclaration,
     TypeId,
-    TypeReference
+    TypeReference,
+    V2SchemaExample
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
@@ -67,7 +68,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
     }): Promise<ParameterConverter.Output | undefined> {
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
-
+        let example: V2SchemaExample | undefined;
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "schema"],
@@ -77,6 +78,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
             const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
             if (converted != null) {
                 typeReference = converted.type;
+                example = converted.schema?.v2Examples?.userSpecifiedExamples[0];
                 inlinedTypes = converted.inlinedTypes ?? {};
             }
         }
@@ -99,7 +101,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
-                        example: undefined,
+                        example,
                         availability
                     },
                     inlinedTypes
@@ -115,7 +117,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         docs: this.parameter.description,
                         valueType: typeReference ?? ParameterConverter.OPTIONAL_STRING,
                         env: undefined,
-                        example: undefined,
+                        example,
                         availability
                     },
                     inlinedTypes
@@ -129,7 +131,7 @@ export class ParameterConverter extends AbstractConverter<OpenAPIConverterContex
                         valueType: typeReference ?? ParameterConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
-                        example: undefined
+                        example
                     },
                     inlinedTypes
                 };
