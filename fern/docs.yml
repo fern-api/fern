@@ -688,6 +688,7 @@ layout:
 analytics:
   posthog:
     api-key: ${POSTHOG_API_KEY}
+    endpoint: https://buildwithfern.com/learn/api/fern-docs/analytics/posthog
   gtm:
     container-id: GTM-55W3VNDW
 
